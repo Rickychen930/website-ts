@@ -1,0 +1,64 @@
+html {
+  scroll-behavior: smooth;
+}
+
+
+.contents-section {
+  padding: 2em;
+  background-image: url("/public/assets/images/texture-1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /* background-image: linear-gradient(rgb(255 255 255 / 25%), rgb(255 255 255 / 25%)), url("/public/assets/images/texture.jpg"); */
+}
+
+/* Footer container */
+.footer {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f0f4f8, #ffeef2);
+  color: #34495e;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: center;
+  border-top: 1px solid #dce3ea;
+  box-shadow: 0 -4px 12px rgb(22 81 243 / 25%);
+  scroll-margin-top: 6em;
+}
+
+/* Footer links */
+.footer a {
+  color: #78a2f0; /* violet */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #11447d;
+}
+
+.footer::before {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #b1d8ff, #87add8);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgb(166 120 240 / 30%);
+}
+
+/* Responsive tweaks */
+@media (width <= 768px) {
+  .footer {
+    padding: 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (width <= 480px) {
+  .footer {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+}
