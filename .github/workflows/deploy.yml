@@ -23,3 +23,12 @@ jobs:
 
       - name: Build React app
         run: npm run build
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.ricky930.com
+          username: ${{ WEBSITE_RICKY_SECRET }}
+          password: ${{ RICKY_SECRET_WEBSITE }}
+          local-dir: build
+          server-dir: public_html
