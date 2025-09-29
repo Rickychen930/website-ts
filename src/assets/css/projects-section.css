@@ -1,0 +1,272 @@
+/* Root container */
+#projects-section {
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background: linear-gradient(180deg, #f9fbfd 0%, #f3f6fa 100%);
+  color: #1f2d3d;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  animation: fadeIn 0.6s ease-in-out;
+  box-sizing: border-box;
+  max-width: 1200px;
+  overflow-x: hidden;
+}
+
+/* Card wrapper */
+#projects-section .card {
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff, #f0f4f8);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
+  max-width: 1000px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow-x: auto;
+}
+
+#projects-section .card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 48px rgb(0 0 0 / 12%);
+}
+
+/* Horizontal scroll flow */
+.projects-flow {
+  display: flex;
+  position: relative;
+  padding: 2rem 1rem;
+  flex-direction: row;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.projects-flow::-webkit-scrollbar {
+  height: 6px;
+}
+
+.projects-flow::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #608aed, #11447d);
+  border-radius: 4px;
+}
+
+.projects-flow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Fade gradient edges */
+.projects-flow::before,
+.projects-flow::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 3rem;
+  content: "";
+  pointer-events: none;
+}
+
+.projects-flow::before {
+  left: 0;
+}
+
+.projects-flow::after {
+  right: 0;
+}
+
+/* Flow item (card) */
+#projects-section .flow-item {
+  display: flex;
+  position: relative;
+  width: 300px;
+  padding: 1.5rem;
+  background: #fff;
+  opacity: 0;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+  flex: 0 0 auto;
+  min-height: 220px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 6%);
+  scroll-snap-align: start;
+  flex-direction: column;
+  gap: 0.8rem;
+  transform: translateY(20px) scale(0.95);
+  animation: zoomInCard 0.6s ease forwards;
+}
+
+#projects-section .flow-item:nth-child(1) { animation-delay: 0.05s; }
+#projects-section .flow-item:nth-child(2) { animation-delay: 0.15s; }
+#projects-section .flow-item:nth-child(3) { animation-delay: 0.25s; }
+
+#projects-section .flow-item:hover,
+#projects-section .flow-item:focus {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 14px 32px rgb(22 81 243 / 25%);
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(135deg, #608aed, #11447d);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  outline: none;
+}
+
+/* First & last margin for scroll */
+.projects-flow .flow-item:first-child {
+  margin-inline-start: 2rem;
+}
+
+.projects-flow .flow-item:last-child {
+  margin-inline-end: 2rem;
+}
+
+/* Icon (kanan atas dalam kotak) */
+#projects-section .flow-icon {
+  display: flex;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 2px solid #dce3ea;
+  background: #fff;
+  color: #78a2f0;
+  font-size: 1.4rem;
+  transition: transform 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 5%);
+  align-items: center;
+  justify-content: center;
+}
+
+#projects-section .flow-item:hover .flow-icon,
+#projects-section .flow-item:focus .flow-icon {
+  transform: scale(1.2) rotate(6deg);
+  color: #6fb1fc;
+  border-color: #78a2f0;
+  animation: pulse 1s infinite alternate;
+}
+
+/* Content */
+#projects-section .flow-title {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.3s ease;
+  padding-right: 3rem; /* ruang agar tidak tabrakan dengan icon */
+}
+
+#projects-section .flow-item:hover .flow-title,
+#projects-section .flow-item:focus .flow-title {
+  color: #78a2f0;
+  transform: translateY(-2px);
+}
+
+#projects-section .flow-subtitle {
+  margin: 0;
+  color: #5c6b7a;
+  font-size: 1rem;
+}
+
+#projects-section .flow-period {
+  color: #3b4a59;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+#projects-section .flow-description {
+  margin: 0;
+  color: #5c6b7a;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (width <= 992px) {
+  #projects-section .card {
+    padding: 1.8rem;
+  }
+
+  #projects-section .flow-item {
+    width: 260px;
+    padding: 1.3rem;
+  }
+
+  #projects-section .flow-title {
+    font-size: 1.1rem;
+  }
+
+  #projects-section .flow-description {
+    font-size: 0.9rem;
+  }
+
+  #projects-section .flow-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (width <= 600px) {
+  #projects-section {
+    padding: 2rem 1rem;
+  }
+
+  #projects-section .flow-item {
+    width: 220px;
+    padding: 1.1rem;
+  }
+
+  #projects-section .flow-title {
+    font-size: 1rem;
+  }
+
+  #projects-section .flow-description {
+    font-size: 0.85rem;
+  }
+
+  #projects-section .flow-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (width <= 400px) {
+  #projects-section .flow-item {
+    width: 180px;
+    padding: 1rem;
+  }
+
+  #projects-section .flow-title {
+    font-size: 0.95rem;
+  }
+
+  #projects-section .flow-description {
+    font-size: 0.8rem;
+  }
+
+  #projects-section .flow-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomInCard {
+  0%   { opacity: 0; transform: scale(0.9) translateY(20px); }
+  60%  { opacity: 1; transform: scale(1.05) translateY(0); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1.2) rotate(6deg); }
+  50%  { transform: scale(1.27) rotate(6deg); }
+  100% { transform: scale(1.35) rotate(6deg); }
+}
