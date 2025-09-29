@@ -1,0 +1,106 @@
+:root {
+  /* ─── Base Colors ─── */
+  --white: #fff;
+  --black: #000;
+
+  /* ─── Backgrounds ─── */
+  --bg-light: #f9fbfd;
+  --bg-lighter: #f3f6fa;
+  --bg-card: #fff;
+  --bg-card-alt: #f0f4f8;
+  --bg-footer: #e6edf5;
+  --bg-footer-alt: #e6edf5;
+  --bg-timeline: #eef3fa;
+  --bg-content-hover: #f0f5fa;
+  --bg-card-hover: #f3f7ff;
+  --bg-navbar: rgb(249 251 253 / 75%);
+  --bg-navbar-scrolled: rgb(249 251 253 / 95%);
+  --bg-stat: #eef2f7;
+
+  /* ─── Text Colors ─── */
+  --text-main: #1f2d3d;
+  --text-heading: #2c3e50;
+  --text-subtle: #5c6b7a;
+  --text-muted: #3b4a59;
+  --text-muted-alt: #7a8b9c;
+  --text-accent: #34495e;
+  --text-hover: #0073b1;
+
+  /* ─── Accent Colors ─── */
+  --accent: #78a2f0;
+  --accent-alt: #6fb1fc;
+  --accent-hover: #8b5cf6;
+
+  /* ─── Borders ─── */
+  --border-light: rgb(220 227 234 / 60%);
+  --border-default: #dce3ea;
+  --border-navbar: rgb(220 227 234 / 50%);
+  --border-navbar-dropdown: rgb(220 227 234 / 60%);
+  --border-glow: rgb(166 120 240 / 4%);
+  --border-image: #dbe5f1;
+  --border-period: #e2e8f0;
+
+  /* ─── Shadows ─── */
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 3%);
+  --shadow-sm: 0 4px 8px rgb(0 0 0 / 6%);
+  --shadow-md: 0 12px 24px rgb(0 0 0 / 8%);
+  --shadow-lg: 0 24px 48px rgb(0 0 0 / 5%);
+  --shadow-card: 0 12px 32px rgb(0 0 0 / 8%);
+  --shadow-card-hover: 0 18px 48px rgb(0 0 0 / 12%);
+  --shadow-card-alt: 0 8px 24px rgb(0 0 0 / 8%);
+  --shadow-item: 0 6px 18px rgb(0 0 0 / 6%);
+  --shadow-item-hover: 0 14px 32px rgb(22 81 243 / 25%);
+  --shadow-icon: 0 2px 6px rgb(0 0 0 / 5%);
+  --shadow-icon-alt: 0 4px 12px rgb(0 0 0 / 5%);
+  --shadow-icon-hover: rgb(166 120 240 / 50%);
+  --shadow-focus: 0 14px 32px rgb(22 81 243 / 25%);
+  --shadow-glow: 0 0 12px rgb(166 120 240 / 40%);
+  --shadow-accent: 0 0 8px rgb(166 120 240 / 30%);
+  --shadow-footer: 0 -4px 12px rgb(0 0 0 / 4%);
+  --shadow-navbar: 0 6px 20px rgb(0 0 0 / 6%);
+  --shadow-navbar-scrolled: 0 8px 24px rgb(0 0 0 / 8%);
+  --shadow-dropdown: 0 6px 20px rgb(0 0 0 / 8%);
+  --shadow-composite:
+    0 1px 2px rgb(0 0 0 / 3%),
+    0 4px 8px rgb(0 0 0 / 6%),
+    0 12px 24px rgb(0 0 0 / 8%),
+    0 24px 48px rgb(0 0 0 / 5%);
+  --shadow-composite-hover:
+    0 2px 4px rgb(0 0 0 / 4%),
+    0 8px 16px rgb(0 0 0 / 8%),
+    0 24px 48px rgb(0 0 0 / 12%),
+    0 40px 80px rgb(0 0 0 / 8%);
+
+  /* ─── Typography ─── */
+  --font-main: inter, "Segoe UI", roboto, helvetica, arial, sans-serif;
+  --font-title-size: 1.8rem;
+  --font-title-weight: 700;
+  --font-title-spacing: -0.5px;
+  --font-size-base: 1rem;
+  --font-size-title: 1.35rem;
+  --font-size-subtitle: 1.05rem;
+  --font-size-period: 0.9rem;
+  --font-size-footer: 0.95rem;
+
+  /* ─── Layout & Sizing ─── */
+  --section-padding: 3rem 2rem;
+  --section-padding-alt: 2.5rem;
+  --section-padding-mobile: 2rem 1rem;
+  --section-margin: 3rem;
+  --footer-padding: 2rem;
+  --card-padding: 2.5rem;
+  --card-padding-alt: 3rem 2.5rem;
+  --card-max-width: 1080px;
+  --card-radius: 20px;
+  --card-radius-alt: 22px;
+  --card-radius-lg: 24px;
+  --item-radius: 16px;
+  --content-radius: 12px;
+  --btn-radius: 10px;
+  --stat-radius: 14px;
+  --timeline-padding: 3rem;
+  --icon-size: 2.8rem;
+  --icon-size-lg: 3.2rem;
+  --icon-font: 1.4rem;
+  --icon-font-lg: 2rem;
+}
