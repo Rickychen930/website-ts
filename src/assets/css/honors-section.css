@@ -1,0 +1,270 @@
+/* Root container khusus honors */
+#honors {
+  padding: 4rem 1.5rem;
+  background: linear-gradient(180deg, #f9fbfd 0%, #f3f6fa 100%);
+  color: #1f2d3d;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+
+  /* max-width: 1200px; */
+}
+
+/* Flow layout */
+#honors-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  position: relative;
+}
+
+/* Individual item */
+#honors .flow-item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 1.6rem 1.4rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 5%);
+  gap: 0.8rem;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  filter: blur(4px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    filter 0.45s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+  will-change: transform, opacity, filter;
+}
+
+/* Staggered animation lebih cepat */
+#honors .flow-item.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  animation: zoomInOut 0.45s ease forwards;
+  margin-block-end: 1.2em;
+}
+
+#honors .flow-item.visible:last-child {
+  margin-block-end: 0;
+}
+
+#honors .flow-item.visible:nth-child(1) { animation-delay: 0.05s; }
+#honors .flow-item.visible:nth-child(2) { animation-delay: 0.1s; }
+#honors .flow-item.visible:nth-child(3) { animation-delay: 0.15s; }
+#honors .flow-item.visible:nth-child(4) { animation-delay: 0.2s; }
+
+/* Hover + Focus effect */
+#honors .flow-item.visible:hover,
+#honors .flow-item:focus-within {
+  transform: translateY(-0.4rem) scale(1.03);
+  border-color: #78a2f0;
+  background: linear-gradient(135deg, #fff, #f3f7ff);
+  box-shadow: 0 14px 32px rgb(22 81 243 / 25%);
+  outline: none;
+}
+
+/* Icon styling */
+#honors .flow-icon {
+  display: flex;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: linear-gradient(135deg, #608aed, #11447d);
+  color: #fff;
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 10%);
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#honors .flow-item.visible:hover .flow-icon,
+#honors .flow-item:focus-within .flow-icon {
+  transform: scale(1.15);
+  box-shadow: 0 6px 16px rgb(166 120 240 / 50%);
+  animation: pulse 1s infinite alternate;
+}
+
+/* Content box */
+#honors .flow-content {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  background-color: #f9fbfd;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#honors .flow-content:hover {
+  background-color: #f0f5fa;
+  box-shadow: inset 0 0 10px rgb(0 0 0 / 5%);
+}
+
+/* Typography */
+#honors .flow-title {
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#honors .flow-item:hover .flow-title,
+#honors .flow-item:focus-within .flow-title {
+  color: #78a2f0;
+  transform: translateY(-2px);
+}
+
+#honors .flow-subtitle {
+  color: #5c6b7a;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+#honors .flow-period {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: #e6edf5;
+  color: #3b4a59;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+#honors .flow-description {
+  color: #5c6b7a;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* --- Responsive tweaks --- */
+
+/* Tablets */
+@media (width <= 992px) {
+  #honors {
+    padding: 3rem 1.2rem;
+  }
+
+  #honors-flow {
+    gap: 1.5rem;
+  }
+
+  #honors .flow-item {
+    padding: 1.3rem;  
+  }
+
+  #honors .flow-title {
+    font-size: 1.15rem;
+  }
+}
+
+/* Mobile */
+@media (width <= 768px) {
+  #honors {
+    padding: 2.2rem 1rem;
+  }
+
+  #honors-flow {
+    gap: 1.2rem;
+  }
+
+  #honors .flow-item {
+    padding: 1.1rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  #honors .flow-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+  }
+
+  #honors .flow-title {
+    font-size: 1.05rem;
+  }
+
+  #honors .flow-description {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+
+/* Extra small */
+@media (width <= 480px) {
+  #honors {
+    padding: 1.8rem 0.8rem;
+  }
+
+  #honors-flow {
+    gap: 1rem;
+  }
+
+  #honors .flow-item {
+    padding: 0.9rem;
+    border-radius: 10px;
+  }
+
+  #honors .flow-title {
+    font-size: 0.95rem;
+  }
+
+  #honors .flow-description {
+    font-size: 0.75rem;
+  }
+
+  #honors .flow-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* --- Animations --- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
