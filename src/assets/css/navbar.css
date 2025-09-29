@@ -1,0 +1,177 @@
+/* Navbar container */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background: linear-gradient(135deg, #f0f4f8, #ffeef2);
+  border-bottom: 1px solid rgb(220 227 234 / 50%);
+  backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 6%);
+  transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.3s ease;
+}
+
+/* Scroll effect */
+.navbar.scrolled {
+ background: linear-gradient(135deg, #f0f4f8, #ffeef2);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+  padding-block: 0.6rem;
+}
+
+/* Inner layout */
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+}
+
+/* Branding */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.navbar-brand:hover {
+  transform: translateY(-1px);
+}
+
+.navbar-brand-icon {
+  color: #78a2f0;
+  font-size: 1.8rem;
+  opacity: 1;
+  transform: scale(1);
+  transition: color 0.24s ease;
+  flex-shrink: 0;
+}
+
+/* Toggle button */
+.navbar-toggle {
+  display: none; /* default: hidden di desktop */
+  border: none;
+  background: none;
+  color: #34495e;
+  font-size: 2.4rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.navbar-toggle:hover {
+  transform: scale(1.1);
+  color: #78a2f0;
+}
+
+.navbar-toggle.open {
+  transform: rotate(180deg);
+}
+
+/* Navigation links (default: inline di desktop) */
+.navbar-links {
+  display: flex;
+  flex-direction: row;
+  gap: 2.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.navbar-links li a {
+  position: relative;
+  padding: 0.6rem 0;
+  color: #34495e;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-links li a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(to right, #78a2f0, #6fb1fc);
+  transition: width 0.35s ease, left 0.35s ease;
+}
+
+.navbar-links li a:hover {
+  color: #78a2f0;
+  transform: translateY(-2px);
+}
+
+.navbar-links li a:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+/* Responsive layout: ubah jadi dropdown */
+@media (width <= 992px) {
+  .navbar-inner {
+    padding: 1rem 1.5rem;
+  }
+
+  .navbar-toggle {
+    display: block;   /* tampilkan hamburger */
+    margin-left: auto;
+  }
+
+  .navbar-links {
+    display: none; /* default hidden */
+    position: absolute;
+    top: 100%;
+    right: 1.5rem;
+    padding: 0.75rem 0;
+    border: 1px solid rgb(220 227 234 / 60%);
+    background: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 6px 20px rgb(0 0 0 / 8%);
+    border-radius: 6px;
+    min-width: 180px;
+    pointer-events: none;
+    transform: translateY(-10px);
+  }
+
+  .navbar-links.open {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .navbar-links li a {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (width <= 480px) {
+  .navbar-toggle {
+    font-size: 2rem;
+  }
+
+  .navbar-links {
+    right: 1rem;
+    min-width: 150px;
+  }
+
+  .navbar-links li a {
+    font-size: 0.95rem;
+  }
+}
