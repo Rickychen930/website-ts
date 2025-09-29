@@ -1,0 +1,287 @@
+/* Root styling */
+#about-me-section {
+  padding: 2rem 1rem;
+  background-color: #f9fbfd;
+  color: #1f2d3d;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  animation: fade-in 0.6s ease-in-out;
+  box-sizing: border-box;
+
+}
+
+/* Card container */
+#about-me-section .card {
+  position: relative;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #fff, #f0f4f8);
+  border-radius: 24px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
+  max-width: 840px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+#about-me-section .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 12%);
+}
+
+/* Hero layout */
+.about-me-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  text-align: center;
+  justify-content: space-between
+  
+}
+
+/* Text section */
+.about-me-text {
+  flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.about-me-name {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.about-me-name span {
+  color: #78a2f0;
+}
+
+.about-me-title {
+  color: #5c6b7a;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.about-me-location {
+  color: #7a8b9c;
+  font-size: 1rem;
+}
+
+.about-me-bio {
+  color: #34495e;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* Actions */
+.about-me-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.profile-btn {
+  position: relative;
+  z-index: 1;
+  padding: 0.9rem 1.6rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.profile-btn::after {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: left 0.3s ease;
+  content: "";
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.profile-btn:hover::after {
+  left: 0;
+}
+
+.profile-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 10%);
+}
+
+.profile-btn.primary {
+  background-color: #78a2f0;
+  color: #fff;
+}
+
+.profile-btn.primary:hover {
+  background-color: #8b5cf6;
+}
+
+.profile-btn.secondary {
+  border: 2px solid #78a2f0;
+  background-color: transparent;
+  color: #78a2f0;
+}
+
+.profile-btn.secondary:hover {
+  background-color: #78a2f0;
+  color: #fff;
+}
+
+/* Stats */
+.about-me-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1rem; /* ✅ spacing tambahan */
+}
+
+.profile-stat {
+  background-color: #eef2f7;
+  padding: 1rem 1.4rem;
+  border-radius: 14px;
+  text-align: center;
+  min-width: 120px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 8%);
+}
+
+.profile-stat strong {
+  display: block;
+  color: #78a2f0;
+  font-size: 1.5rem;
+}
+
+.profile-stat span {
+  color: #34495e;
+  font-size: 0.95rem;
+}
+
+/* Image section */
+.about-me-image {
+  flex: 0 0 240px;
+  text-align: center;
+  align-self: flex-start;
+}
+
+.about-me-image .image-component {
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 6px solid #dbe5f1;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: float-up 0.8s ease-in-out, fade-in 0.6s ease-in-out;
+}
+
+/* Hover effect */
+.about-me-image .image-component:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 15%);
+}
+
+/* Responsive tweaks */
+@media (width <= 768px) {
+  .about-me-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-me-text {
+    align-items: center;
+  }
+
+  .about-me-actions,
+  .about-me-stats {
+    justify-content: center;
+  }
+
+  .about-me-image .image-component {
+    width: 180px;
+    height: 180px;
+  }
+
+  .profile-btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.95rem;
+  }
+
+  .profile-stat {
+    min-width: 100px;
+    padding: 0.8rem 1rem;
+  }
+}
+
+@media (width <= 480px) {
+  #about-me-section .card {
+    padding: 1.5rem;
+  }
+
+  .about-me-name {
+    font-size: 2rem;
+  }
+
+  .about-me-title {
+    font-size: 1.1rem;
+  }
+
+  .about-me-bio {
+    font-size: 0.95rem;
+  }
+
+  .about-me-image .image-component {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .profile-stat {
+    min-width: 90px;
+    padding: 0.7rem 0.9rem;
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-up {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
