@@ -1,0 +1,245 @@
+/* Root container */
+#soft-skills-section {
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background: linear-gradient(180deg, #f9fbfd 0%, #f3f6fa 100%);
+  color: #1f2d3d;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  animation: fadeIn 0.6s ease-in-out;
+  box-sizing: border-box;
+  max-width: 1200px;
+}
+
+/* Card container */
+#soft-skills-section .card {
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff, #f0f4f8);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
+  max-width: 1000px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow-x: auto;
+}
+
+#soft-skills-section .card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 48px rgb(0 0 0 / 12%);
+}
+
+/* Scrollable flow */
+#soft-skills-section .soft-skills-flow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+#soft-skills-section .soft-skills-flow::-webkit-scrollbar {
+  height: 6px;
+}
+
+#soft-skills-section .soft-skills-flow::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #608aed, #11447d);
+  border-radius: 4px;
+}
+
+#soft-skills-section .soft-skills-flow::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Individual card */
+#soft-skills-section .flow-item {
+  display: flex;
+  width: 280px;
+  padding: 1.5rem;
+  background: #fff;
+  opacity: 0;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 180px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 6%);
+  scroll-snap-align: start;
+  transform: translateY(20px) scale(0.95);
+  animation: zoomInCard 0.6s ease forwards;
+}
+
+#soft-skills-section .flow-item:nth-child(1) { animation-delay: 0.05s; }
+#soft-skills-section .flow-item:nth-child(2) { animation-delay: 0.15s; }
+#soft-skills-section .flow-item:nth-child(3) { animation-delay: 0.25s; }
+#soft-skills-section .flow-item:nth-child(4) { animation-delay: 0.35s; }
+
+#soft-skills-section .flow-item:hover,
+#soft-skills-section .flow-item:focus {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 14px 32px rgb(22 81 243 / 25%);
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(135deg, #608aed, #11447d);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  outline: none;
+}
+
+/* First & last margin for scroll */
+#soft-skills-section .soft-skills-flow .flow-item:first-child {
+  margin-inline-start: 2rem;
+}
+
+#soft-skills-section .soft-skills-flow .flow-item:last-child {
+  margin-inline-end: 2rem;
+}
+
+/* Icon styling */
+#soft-skills-section .flow-icon {
+  display: flex;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 2px solid #dce3ea;
+  background: #fff;
+  color: #78a2f0;
+  font-size: 2rem;
+  transition: transform 0.35s ease, color 0.35s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 5%);
+  align-items: center;
+  justify-content: center;
+}
+
+#soft-skills-section .flow-item:hover .flow-icon,
+#soft-skills-section .flow-item:focus .flow-icon {
+  transform: scale(1.2) rotate(6deg);
+  color: #6fb1fc;
+  border-color: #78a2f0;
+}
+
+/* Content */
+#soft-skills-section .flow-title {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#soft-skills-section .flow-item:hover .flow-title,
+#soft-skills-section .flow-item:focus .flow-title {
+  color: #78a2f0;
+  transform: translateY(-2px);
+}
+
+#soft-skills-section .flow-description {
+  margin: 0;
+  color: #5c6b7a;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive tweaks */
+@media (width <= 992px) {
+  #soft-skills-section .card {
+    padding: 1.8rem;
+  }
+
+  #soft-skills-section .flow-item {
+    width: 240px;
+    padding: 1.3rem;
+  }
+
+  #soft-skills-section .flow-title {
+    font-size: 1.1rem;
+  }
+
+  #soft-skills-section .flow-description {
+    font-size: 0.95rem;
+  }
+
+  #soft-skills-section .flow-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.8rem;
+  }
+}
+
+@media (width <= 600px) {
+  #soft-skills-section {
+    padding: 2rem 1rem;
+  }
+
+  #soft-skills-section .flow-item {
+    width: 220px;
+    padding: 1.1rem;
+  }
+
+  #soft-skills-section .flow-title {
+    font-size: 1rem;
+  }
+
+  #soft-skills-section .flow-description {
+    font-size: 0.9rem;
+  }
+
+  #soft-skills-section .flow-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.6rem;
+  }
+}
+
+@media (width <= 400px) {
+  #soft-skills-section .flow-item {
+    width: 180px;
+    padding: 1rem;
+  }
+
+  #soft-skills-section .flow-title {
+    font-size: 0.95rem;
+  }
+
+  #soft-skills-section .flow-description {
+    font-size: 0.85rem;
+  }
+
+  #soft-skills-section .flow-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.4rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomInCard {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.05) translateY(0);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
