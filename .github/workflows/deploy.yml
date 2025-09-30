@@ -46,7 +46,7 @@ jobs:
       # BACKEND
       - name: Install backend dependencies
         run: |
-          cd backend-ts
+          cd website-ts/backend-ts
           npm install
 
       - name: Deploy backend to VPS
