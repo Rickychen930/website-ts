@@ -33,10 +33,12 @@ jobs:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          passphrase: ""
           port: 22
           source: "website-ts/build"
           target: "/var/www/react-app"
           strip_components: 1
+          debug: true
 
       - name: Debug SSH key length
         run: echo "${{ secrets.HOSTINGER_SSH_KEY }}" | wc -c
