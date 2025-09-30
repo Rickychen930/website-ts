@@ -27,7 +27,7 @@ jobs:
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ftp.ricky930.com
+          server: ftp.rickychen930.com
           username: ${{secrets.WEBSITE_RICKY_SECRET}}
           password: ${{secrets.RICKY_WEBSITE_SECRET_PASSWORD}}
           local-dir: build/
