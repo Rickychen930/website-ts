@@ -1,6 +1,6 @@
-import { IUser } from "../../../src/types/user";
 import { DeleteResult } from "mongodb";
 import { UserModel } from "../models/user-model";
+import { IUser } from "../types/user";
 
 export const upsertUserByName = async (
   name: string,

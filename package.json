@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.12.6",
+    "ajv-keywords": "^3.5.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "mongoose": "^8.18.2",
+    "pm2": "^6.0.13",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.2",
@@ -21,7 +24,7 @@
     "server": "ts-node backend/src/main.ts",
     "server:watch": "nodemon --exec ts-node backend/src/main.ts",
     "seed": "ts-node -P tsconfig.backend.json backend/src/seed/seed.ts",
-    "backend:build": "tsc -p tsconfig.backend.json",
+    "backend:build": "tsc -p backend/tsconfig.backend.json",
     "backend:start": "node backend/dist/main.js",
     "dev": "concurrently \"npm run server:watch\" \"npm start\""
   },
@@ -65,8 +68,7 @@
     "stylelint-config-standard": "^39.0.0",
     "stylelint-order": "^7.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2",
+    "typescript": "^4.9.5",
     "typescript-eslint": "^8.44.1"
-  },
-  "proxy": "http://localhost:5050"
+  }
 }

@@ -1,5 +1,6 @@
 // src/data/user.ts
-import { UserProfile } from "../../../src/types/user";
+
+import { UserProfile } from "../types/user";
 
 export const userData: UserProfile = {
   name: "Ricky Chen",

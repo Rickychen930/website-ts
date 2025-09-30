@@ -2,16 +2,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
-.contents-section {
-  padding: 2em;
-  background-image: url("/public/assets/images/texture-1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  /* background-image: linear-gradient(rgb(255 255 255 / 25%), rgb(255 255 255 / 25%)), url("/public/assets/images/texture.jpg"); */
-}
-
 /* Footer container */
 .footer {
   padding: 2rem;
