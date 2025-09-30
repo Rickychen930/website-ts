@@ -1,6 +1,5 @@
-import React, { Component, ReactNode } from "react";
-import Button from "./button-component";
-import { ButtonType, ButtonVariant, ComponentState } from "../../types/ui";
+import { Component, ReactNode } from "react";
+import { ButtonVariant } from "../../types/ui";
 
 type ProfileActionProps = {
   label: string;
