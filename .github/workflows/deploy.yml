@@ -38,6 +38,9 @@ jobs:
           target: "/var/www/react-app"
           strip_components: 1
 
+      - name: Debug SSH key length
+        run: echo "${{ secrets.HOSTINGER_SSH_KEY }}" | wc -c
+
       # BACKEND
       - name: Install backend dependencies
         run: |
