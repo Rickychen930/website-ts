@@ -70,4 +70,4 @@ jobs:
           script: |
             sudo systemctl restart nginx
             npm install --legacy-peer-deps
-            pm2 restart backend || pm2 start main.ts --name backend --interpreter ts-node
+            pm2 restart backend || pm2 start backend/main.ts --name backend --interpreter ts-node
