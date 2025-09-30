@@ -35,7 +35,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           passphrase: ""
           port: 22
-          source: "website-ts/build"
+          source: /build"
           target: "/var/www/react-app"
           strip_components: 1
           debug: true
