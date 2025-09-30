@@ -46,7 +46,6 @@ jobs:
       # BACKEND
       - name: Install backend dependencies
         run: |
-          cd website-ts/backend-ts
           npm install
 
       - name: Deploy backend to VPS
@@ -56,8 +55,8 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend-ts"
-          target: "/home/${{ secrets.HOSTINGER_USER }}/backend-ts"
+          source: "backend"
+          target: "/home/${{ secrets.HOSTINGER_USER }}/backend"
           strip_components: 1
 
       # RESTART SERVICES
@@ -70,6 +69,6 @@ jobs:
           port: 22
           script: |
             sudo systemctl restart nginx
-            cd ~/backend-ts
+            cd ~/backend
             npm install --legacy-peer-deps
             pm2 restart backend || pm2 start server.js --name backend
