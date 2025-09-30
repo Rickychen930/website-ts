@@ -19,13 +19,10 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build React app
         run: npm run build
-
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -33,5 +30,5 @@ jobs:
           server: ftp.ricky930.com
           username: ${{secrets.WEBSITE_RICKY_SECRET}}
           password: ${{secrets.RICKY_WEBSITE_SECRET_PASSWORD}}
-          local-dir: build
+          local-dir: build/
           server-dir: public_html
