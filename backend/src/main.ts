@@ -14,7 +14,7 @@ connectDB(mongoUri);
 
 // ✅ CORS setup — izinkan frontend di port 3000
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://72.60.208.150",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,

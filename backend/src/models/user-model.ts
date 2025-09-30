@@ -217,4 +217,4 @@ UserSchema.index({ name: 1, location: 1 }, { unique: true });
 
 // ❌ jangan pakai : Model<IUser> atau ReturnType<…>
 // ✅ biarkan infer otomatis
-export const UserModel = mongoose.model<IUser>("User", UserSchema);
+export const UserModel = mongoose.model("User", UserSchema);
