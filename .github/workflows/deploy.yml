@@ -69,6 +69,6 @@ jobs:
           port: 22
           script: |
             sudo systemctl restart nginx
+            cd /home/${{ secrets.HOSTINGER_USER }}/backend/src
             npm install --legacy-peer-deps
-            cd backend/src
             pm2 restart backend || pm2 start main.ts --name backend --interpreter ts-node
