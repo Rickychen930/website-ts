@@ -45,19 +45,23 @@ jobs:
 
       # BACKEND
       - name: Install backend dependencies
-        run: |
-          npm install
+        working-directory: ./backend
+        run: npm install
 
-      - name: Deploy backend to VPS
+      - name: Build backend (TypeScript → JavaScript)
+        working-directory: ./backend
+        run: npx tsc
+
+      - name: Deploy compiled backend to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend"
+          source: "backend/dist"
           target: "/home/${{ secrets.HOSTINGER_USER }}/backend"
-          strip_components: 1
+          strip_components: 2
 
       # RESTART SERVICES
       - name: Restart Nginx and Backend
