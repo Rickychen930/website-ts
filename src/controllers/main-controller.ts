@@ -19,7 +19,7 @@ class MainController {
   async getUserProfile(): Promise<UserProfile | null> {
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
-      const endpoint = `${apiUrl}/api/Ricky%20Chen`;
+      const endpoint = `${apiUrl}/Ricky%20Chen`;
 
       console.log("🔍 Fetching user profile from:", endpoint);
 
