@@ -45,11 +45,11 @@ jobs:
 
       # BACKEND
       - name: Install backend dependencies
-        working-directory: ./backend
+        working-directory: backend
         run: npm install
 
       - name: Build backend (TypeScript → JavaScript)
-        working-directory: ./backend
+        working-directory: backend
         run: npx tsc
 
       - name: Deploy compiled backend to VPS
@@ -59,7 +59,7 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend/dist"
+          source: "backend/src"
           target: "/home/${{ secrets.HOSTINGER_USER }}/backend"
           strip_components: 2
 
