@@ -7,14 +7,14 @@ import userRoutes from "./routes/user-routes";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = Number(process.env.PORT) || 5050;
 const mongoUri = process.env.MONGODB_URI as string;
 // ✅ Connect to DB
 connectDB(mongoUri);
 
 // ✅ CORS setup — izinkan frontend di port 3000
 const corsOptions = {
-  origin: "http://72.60.208.150",
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -30,6 +30,6 @@ app.get("/", (_, res) => {
   res.send("Server is running 🚀");
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend running at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Backend running at http://0.0.0.0:${PORT}`);
 });
