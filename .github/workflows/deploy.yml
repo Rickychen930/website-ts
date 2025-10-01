@@ -72,3 +72,5 @@ jobs:
             cd /home/${{ secrets.HOSTINGER_USER }}/backend/src
             npm install --legacy-peer-deps
             pm2 restart backend || pm2 start main.ts --name backend --interpreter ts-node
+            pm2 save
+            pm2 startup
