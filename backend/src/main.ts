@@ -11,7 +11,7 @@ import userRoutes from "./routes/user-routes";
 dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.PORT) || 5050;
+const PORT = Number(process.env.PORT) || 4000;
 const mongoUri = process.env.MONGODB_URI as string;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
