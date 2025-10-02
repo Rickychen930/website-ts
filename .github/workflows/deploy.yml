@@ -76,7 +76,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           script: |
-            cd /home/root/backend
+            cd /home/${{ secrets.HOSTINGER_USER }}/backend
             npm install
             pm2 restart dist/main.js --name backend || pm2 start dist/main.js --name backend
             pm2 save
