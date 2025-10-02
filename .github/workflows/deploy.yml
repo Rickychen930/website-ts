@@ -89,8 +89,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           script: |
-            cat <<EOF > /root/backend/ecosystem.config.js
-            module.exports = {
+            echo "module.exports = {
               apps: [
                 {
                   name: 'backend',
@@ -101,15 +100,26 @@ jobs:
                   watch: false,
                   max_restarts: 10,
                   env: {
-                    NODE_ENV: 'development',
+                    NODE_ENV: 'development'
                   },
                   env_production: {
-                    NODE_ENV: 'production',
+                    NODE_ENV: 'production'
                   }
                 }
               ]
-            };
-            EOF
+            };" > /root/backend/ecosystem.config.js
+
+      # Optional: Confirm ecosystem.config.js exists
+      - name: Confirm PM2 config exists
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            ls -la /root/backend/ecosystem.config.js
+            cat /root/backend/ecosystem.config.js
 
       # Restart backend and Nginx using PM2
       - name: Restart services with PM2
