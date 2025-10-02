@@ -15,6 +15,11 @@ const PORT = Number(process.env.PORT) || 4000;
 const mongoUri = process.env.MONGODB_URI as string;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
+if (!mongoUri) {
+  console.error("❌ MONGODB_URI is missing in .env");
+  process.exit(1);
+}
+
 // ✅ Connect to MongoDB
 connectDB(mongoUri);
 
