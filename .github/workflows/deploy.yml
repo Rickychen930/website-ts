@@ -44,7 +44,7 @@ jobs:
 
       - name: Build backend (TypeScript → JavaScript)
         working-directory: backend
-        run: npx tsc
+        run: npx tsc -p tsconfig.backend.json
 
       - name: Deploy compiled backend to VPS
         uses: appleboy/scp-action@master
