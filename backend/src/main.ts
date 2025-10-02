@@ -12,15 +12,21 @@ const mongoUri = process.env.MONGODB_URI as string;
 // ✅ Connect to DB
 connectDB(mongoUri);
 
-// ✅ CORS setup — izinkan frontend di port 3000
 const corsOptions = {
-  origin: ["http://localhost:5051", "https://rickychen930.cloud"],
+  origin: [
+    "http://localhost:5051",
+    "https://rickychen930.cloud",
+    "rickychen930.cloud",
+    "www.rickychen930.cloud",
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 app.use("/api", userRoutes);
