@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import fs from "fs";
+import https from "https";
 import { connectDB } from "./config/mongoose";
 import userRoutes from "./routes/user-routes";
 
@@ -9,8 +11,17 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 5050;
 const mongoUri = process.env.MONGODB_URI as string;
+
 // ✅ Connect to DB
 connectDB(mongoUri);
+
+// 🔐 Sertifikat SSL dari Let's Encrypt
+const sslOptions = {
+  key: fs.readFileSync("/etc/letsencrypt/live/rickychen930.cloud/privkey.pem"),
+  cert: fs.readFileSync(
+    "/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem"
+  ),
+};
 
 const corsOptions = {
   origin: [
@@ -32,9 +43,10 @@ app.use(express.json());
 app.use("/api", userRoutes);
 
 app.get("/", (_, res) => {
-  res.send("Server is running 🚀");
+  res.send("🔐 Secure backend is running 🚀");
 });
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Backend running at http://0.0.0.0:${PORT}`);
+// ✅ Jalankan HTTPS server
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`🚀 Secure backend running at https://localhost:${PORT}`);
 });
