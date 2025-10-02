@@ -11,5 +11,16 @@
     "types": ["node"],
     "verbatimModuleSyntax": false
   },
-  "include": ["src"]
+  "include": [
+    "src/main.ts",
+    "src/config",
+    "src/controllers",
+    "src/models",
+    "src/routes",
+    "src/types"
+  ],
+  "exclude": [
+    "src/**/*.tsx",
+    "src/**/*.jsx"
+  ]
 }
