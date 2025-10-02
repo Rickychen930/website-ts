@@ -29,7 +29,7 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
+          username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           source: "build"
@@ -50,43 +50,33 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
+          username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           source: "backend/dist"
-          target: "/home/${{ secrets.HOSTINGER_USER }}/backend/dist"
+          target: "/root/backend/dist"
           strip_components: 2
 
-      - name: Deploy backend .env file
+      - name: Deploy backend config and .env
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend/.env"
-          target: "/home/${{ secrets.HOSTINGER_USER }}/backend"
-
-      - name: Deploy backend config and env
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          port: 22
           source: "backend/package.json,backend/package-lock.json,backend/.env"
-          target: "/home/${{ secrets.HOSTINGER_USER }}/backend"
+          target: "/root/backend"
 
       # RESTART SERVICES
       - name: Restart Nginx and Backend
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
+          username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           script: |
-            cd /home/${{ secrets.HOSTINGER_USER }}/backend
+            cd /root/backend
             npm install
             pm2 restart dist/main.js --name backend || pm2 start dist/main.js --name backend
             pm2 save
