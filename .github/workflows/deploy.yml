@@ -57,6 +57,16 @@ jobs:
           target: "/home/${{ secrets.HOSTINGER_USER }}/backend/dist"
           strip_components: 2
 
+      - name: Deploy backend .env file
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "backend/.env"
+          target: "/home/${{ secrets.HOSTINGER_USER }}/backend"
+
       - name: Deploy backend config and env
         uses: appleboy/scp-action@master
         with:
