@@ -60,3 +60,72 @@ export interface IUser {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export type UserProfile = {
+  name: string;
+  title: string;
+  location: string;
+  bio: string;
+  stats: { value: string; label: string }[];
+  academics: {
+    key: string;
+    icon: string;
+    title: string;
+    institution: string;
+    period: string;
+    description: string;
+  }[];
+  certifications: {
+    key: string;
+    icon: string;
+    title: string;
+    provider: string;
+    date: string;
+  }[];
+  contacts: {
+    key: string;
+    icon: string;
+    label: string;
+    value: string;
+    link?: string;
+  }[];
+  honors: {
+    key: string;
+    icon: string;
+    title: string;
+    event: string;
+    date: string;
+    description: string;
+  }[];
+  languages: {
+    key: string;
+    icon: string;
+    name: string;
+    proficiency: string;
+  }[];
+  projects: {
+    key: string;
+    icon: string;
+    name: string;
+    date: string;
+    description: string;
+  }[];
+  softSkills: {
+    key: string;
+    icon: string;
+    name: string;
+    description: string;
+  }[];
+  technicalSkills: {
+    category: string;
+    items: string[];
+  }[];
+  experiences: {
+    key: string;
+    icon: string;
+    title: string;
+    company: string;
+    period: string;
+    description: string;
+  }[];
+};
