@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -57,18 +59,60 @@ jobs:
           target: "/root/backend/dist"
           strip_components: 2
 
-      - name: Deploy backend config and .env
+      - name: Deploy backend config files
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend/package.json,backend/package-lock.json,backend/.env"
+          source: "backend/package.json,backend/package-lock.json"
           target: "/root/backend"
 
-      # RESTART SERVICES
-      - name: Restart Nginx and Backend
+      # Upload .env securely from GitHub Secrets
+      - name: Upload .env from secret
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            echo "${{ secrets.HOSTINGER_ENV_CONTENT }}" > /root/backend/.env
+
+      # Generate PM2 ecosystem.config.js on VPS
+      - name: Generate PM2 config on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            cat <<EOF > /root/backend/ecosystem.config.js
+            module.exports = {
+              apps: [
+                {
+                  name: 'backend',
+                  script: './dist/main.js',
+                  cwd: '/root/backend',
+                  instances: 1,
+                  autorestart: true,
+                  watch: false,
+                  max_restarts: 10,
+                  env: {
+                    NODE_ENV: 'development',
+                  },
+                  env_production: {
+                    NODE_ENV: 'production',
+                  }
+                }
+              ]
+            };
+            EOF
+
+      # Restart backend and Nginx using PM2
+      - name: Restart services with PM2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -78,6 +122,21 @@ jobs:
           script: |
             cd /root/backend
             npm install
-            pm2 restart dist/main.js --name backend || pm2 start dist/main.js --name backend
+            pm2 start ecosystem.config.js --env production
             pm2 save
             sudo systemctl restart nginx
+
+      # Optional: Health check backend
+      - name: Check backend health
+        run: curl -f http://${{ secrets.HOSTINGER_HOST }}:3001/health || exit 1
+
+      # Optional: Clear PM2 logs
+      - name: Flush PM2 logs
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            pm2 flush
