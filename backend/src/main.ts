@@ -6,9 +6,17 @@ import https from "https";
 import http from "http";
 import { connectDB } from "./config/mongoose";
 import userRoutes from "./routes/user-routes";
+import path from "path";
 
-dotenv.config();
-
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+console.log("Loaded MONGODB_URI:", process.env.MONGODB_URI);
+const envPath = path.resolve(__dirname, "../.env");
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+  console.log("✅ .env loaded from", envPath);
+} else {
+  console.warn("⚠️ .env file not found at", envPath);
+}
 const app = express();
 const PORT = Number(process.env.PORT) || 5050;
 const mongoUri = process.env.MONGODB_URI as string;

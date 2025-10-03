@@ -102,6 +102,17 @@ jobs:
       # ⚙️ PM2 CONFIG
       # ============================
 
+      - name: Install backend dependencies on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /root/backend
+            npm install
+
       - name: Generate PM2 config on VPS
         uses: appleboy/ssh-action@master
         with:
