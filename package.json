@@ -24,7 +24,7 @@
     "server": "ts-node backend/src/main.ts",
     "server:watch": "nodemon --exec ts-node backend/src/main.ts",
     "seed": "ts-node -P tsconfig.backend.json backend/src/seed/seed.ts",
-    "backend:build": "tsc -p tsconfig.backend.json",
+    "backend:build": "tsc -p backend/tsconfig.backend.json",
     "backend:start": "node backend/dist/main.js",
     "dev": "concurrently \"npm run server:watch\" \"npm start\""
   },

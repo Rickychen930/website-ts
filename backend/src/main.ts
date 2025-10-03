@@ -7,9 +7,8 @@ import http from "http";
 import path from "path";
 import { connectDB } from "./config/mongoose";
 import userRoutes from "./routes/user-routes";
-
 // ✅ Load .env
-const envPath = path.join(__dirname, "../.env");
+const envPath = path.join(__dirname, "../../.env");
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
   console.log("✅ .env loaded from", envPath);
@@ -18,9 +17,16 @@ if (fs.existsSync(envPath)) {
 }
 
 // ✅ Environment variables
-const PORT = Number(process.env.PORT) || 4000;
+const PORT = Number(process.env.PORT);
 const mongoUri = process.env.MONGODB_URI;
-const NODE_ENV = process.env.NODE_ENV || "development";
+const NODE_ENV = process.env.NODE_ENV;
+
+console.log("a: ", process.env.PORT);
+console.log("b: ", process.env.MONGODB_URI);
+console.log("c: ", process.env.MONGODB_URI);
+if (!PORT) {
+  throw new Error("❌ PORT is not defined in .env");
+}
 
 if (!mongoUri) {
   throw new Error("❌ MONGODB_URI is not defined in .env");
@@ -84,27 +90,18 @@ app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-// ✅ SSL options (production only)
+const sslPath = "/etc/letsencrypt/live/rickychen930.cloud";
 const sslOptions =
-  NODE_ENV === "production"
+  NODE_ENV === "production" && fs.existsSync(sslPath)
     ? {
-        key: fs.readFileSync(
-          "/etc/letsencrypt/live/rickychen930.cloud/privkey.pem"
-        ),
-        cert: fs.readFileSync(
-          "/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem"
-        ),
+        key: fs.readFileSync(`${sslPath}/privkey.pem`),
+        cert: fs.readFileSync(`${sslPath}/fullchain.pem`),
       }
     : undefined;
 
 // ✅ Create server
-const server =
-  NODE_ENV === "production" && sslOptions
-    ? https.createServer(sslOptions, app)
-    : http.createServer(app);
+const server = http.createServer(app);
 
-server.listen(PORT, () => {
-  console.log(
-    `🚀 ${NODE_ENV === "production" ? "Secure" : "Dev"} backend running at ${NODE_ENV === "production" ? "https" : "http"}://localhost:${PORT}`
-  );
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Backend running at http://0.0.0.0:${PORT}`);
 });

@@ -48,6 +48,8 @@ jobs:
       # ============================
       # 🔶 BACKEND BUILD & DEPLOY
       # ============================
+      - name: Run backend:build script
+        run: npm run backend:build
 
       - name: Build backend (TypeScript → JavaScript)
         run: npx tsc -p backend/tsconfig.backend.json
