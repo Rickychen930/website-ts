@@ -137,7 +137,7 @@ jobs:
                   }
                 }
               ]
-            };" > ecosystem.config.js
+            };" > /backend/ecosystem.config.js
 
       # ============================
       # 🔁 RESTART SERVICES
