@@ -81,7 +81,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           source: "package.json"
-          target: "/root/backend"
+          target: "backend"
           debug: true
 
       - name: Deploy backend .env
@@ -92,7 +92,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           source: ".env"
-          target: "/root/backend"
+          target: "backend"
           debug: true
 
       # ============================
