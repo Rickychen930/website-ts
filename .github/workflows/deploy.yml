@@ -76,36 +76,25 @@ jobs:
       # 🔐 BACKEND CONFIG & ENV
       # ============================
 
-      - name: Deploy backend package.json
+      - name: Deploy package.json (from root)
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend/package.json"
+          source: "package.json"
           target: "/root/backend"
           debug: true
 
-      - name: Deploy backend package-lock.json
+      - name: Deploy .env (from root)
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend/package-lock.json"
-          target: "/root/backend"
-          debug: true
-
-      - name: Deploy backend .env
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: root
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          port: 22
-          source: "backend/.env"
+          source: ".env"
           target: "/root/backend"
           debug: true
 
