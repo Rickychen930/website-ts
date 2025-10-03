@@ -8,8 +8,8 @@ import { connectDB } from "./config/mongoose";
 import userRoutes from "./routes/user-routes";
 import path from "path";
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
-console.log("Loaded MONGODB_URI:", process.env.MONGODB_URI);
+dotenv.config();
+
 const envPath = path.resolve(__dirname, "../.env");
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
@@ -18,7 +18,7 @@ if (fs.existsSync(envPath)) {
   console.warn("⚠️ .env file not found at", envPath);
 }
 const app = express();
-const PORT = Number(process.env.PORT) || 5050;
+const PORT = Number(process.env.PORT) || 4000;
 const mongoUri = process.env.MONGODB_URI as string;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
@@ -28,7 +28,7 @@ connectDB(mongoUri);
 // ✅ CORS setup — izinkan frontend di port 4000 dan domain cloud
 const allowedOrigins = [
   "http://localhost:4000",
-  "http://172.19.11.34:4000",
+  "http://72.60.208.150:4000",
   "http://rickychen930.cloud",
   "https://rickychen930.cloud",
 ];
