@@ -24,7 +24,7 @@ jobs:
       # 🔷 FRONTEND BUILD & DEPLOY
       # ============================
 
-      - name: Install frontend dependencies
+      - name: Install dependencies (frontend + backend)
         run: npm install --legacy-peer-deps
 
       - name: Build React app
@@ -49,13 +49,8 @@ jobs:
       # 🔶 BACKEND BUILD & DEPLOY
       # ============================
 
-      - name: Install backend dependencies
-        working-directory: backend
-        run: npm install
-
       - name: Build backend (TypeScript → JavaScript)
-        working-directory: backend
-        run: npx tsc -p tsconfig.backend.json
+        run: npx tsc -p backend/tsconfig.backend.json
 
       - name: Check backend build output
         run: ls -la backend/dist
@@ -76,7 +71,7 @@ jobs:
       # 🔐 BACKEND CONFIG & ENV
       # ============================
 
-      - name: Deploy package.json (from root)
+      - name: Deploy root package.json
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -87,14 +82,14 @@ jobs:
           target: "/root/backend"
           debug: true
 
-      - name: Deploy .env (from root)
+      - name: Deploy backend .env
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: root
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: ".env"
+          source: "backend/.env"
           target: "/root/backend"
           debug: true
 
@@ -102,7 +97,7 @@ jobs:
       # ⚙️ PM2 CONFIG
       # ============================
 
-      - name: Install backend dependencies on VPS
+      - name: Install dependencies on VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -154,7 +149,6 @@ jobs:
           port: 22
           script: |
             cd /root/backend
-            npm install
             pm2 start ecosystem.config.js --env production
             pm2 save
             sudo systemctl restart nginx
