@@ -4,28 +4,41 @@ import cors from "cors";
 import fs from "fs";
 import https from "https";
 import http from "http";
+import path from "path";
 import { connectDB } from "./config/mongoose";
 import userRoutes from "./routes/user-routes";
-import path from "path";
 
-dotenv.config();
-
-const envPath = path.resolve(__dirname, "../.env");
+// ✅ Load .env
+const envPath = path.join(__dirname, "../.env");
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
   console.log("✅ .env loaded from", envPath);
 } else {
   console.warn("⚠️ .env file not found at", envPath);
 }
-const app = express();
+
+// ✅ Environment variables
 const PORT = Number(process.env.PORT) || 4000;
-const mongoUri = process.env.MONGODB_URI as string;
+const mongoUri = process.env.MONGODB_URI;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
-// ✅ Connect to DB
-connectDB(mongoUri);
+if (!mongoUri) {
+  throw new Error("❌ MONGODB_URI is not defined in .env");
+}
 
-// ✅ CORS setup — izinkan frontend di port 4000 dan domain cloud
+// ✅ Connect to DB
+connectDB(mongoUri)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => {
+    console.error("❌ MongoDB connection failed:", err);
+    process.exit(1);
+  });
+
+// ✅ Express setup
+const app = express();
+app.use(express.json());
+
+// ✅ CORS setup
 const allowedOrigins = [
   "http://localhost:4000",
   "http://72.60.208.150:4000",
@@ -41,6 +54,7 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.warn(`❌ CORS blocked origin: ${origin}`);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -51,10 +65,14 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.json());
 
 // ✅ Routes
 app.use("/api", userRoutes);
+
+// ✅ Health check
+app.get("/health", (_, res) => {
+  res.status(200).json({ status: "ok", env: NODE_ENV });
+});
 
 // ✅ Root route
 app.get("/", (_, res) => {
@@ -66,7 +84,7 @@ app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-// ✅ Sertifikat SSL (hanya untuk production)
+// ✅ SSL options (production only)
 const sslOptions =
   NODE_ENV === "production"
     ? {
@@ -79,15 +97,14 @@ const sslOptions =
       }
     : undefined;
 
-// ✅ Jalankan server
-if (NODE_ENV === "production" && sslOptions) {
-  https.createServer(sslOptions, app).listen(PORT, () => {
-    console.log(
-      `🚀 Secure backend running at https://rickychen930.cloud:${PORT}`
-    );
-  });
-} else {
-  http.createServer(app).listen(PORT, () => {
-    console.log(`🚀 Dev backend running at http://localhost:${PORT}`);
-  });
-}
+// ✅ Create server
+const server =
+  NODE_ENV === "production" && sslOptions
+    ? https.createServer(sslOptions, app)
+    : http.createServer(app);
+
+server.listen(PORT, () => {
+  console.log(
+    `🚀 ${NODE_ENV === "production" ? "Secure" : "Dev"} backend running at ${NODE_ENV === "production" ? "https" : "http"}://localhost:${PORT}`
+  );
+});
