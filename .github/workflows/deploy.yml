@@ -106,6 +106,7 @@ jobs:
           username: ${{secrets.HOSTINGER_USER}}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
+          target: "backend"
           script: |
             cd /root/backend
             npm install
@@ -137,7 +138,7 @@ jobs:
                   }
                 }
               ]
-            };" > /backend/ecosystem.config.js
+            };" > ecosystem.config.js
 
       # ============================
       # 🔁 RESTART SERVICES

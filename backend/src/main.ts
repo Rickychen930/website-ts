@@ -86,7 +86,7 @@ app.get("/", (_, res) => {
 });
 
 // ✅ Fallback route
-app.use((_, res) => {
+app.use("*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
