@@ -1,32 +1,181 @@
-- name: Deploy backend package.json
-  uses: appleboy/scp-action@master
-  with:
-    host: ${{ secrets.HOSTINGER_HOST }}
-    username: root
-    key: ${{ secrets.HOSTINGER_SSH_KEY }}
-    port: 22
-    source: "backend/package.json"
-    target: "/root/backend"
-    debug: true
+name: Deploy Fullstack App to VPS
 
-- name: Deploy backend package-lock.json
-  uses: appleboy/scp-action@master
-  with:
-    host: ${{ secrets.HOSTINGER_HOST }}
-    username: root
-    key: ${{ secrets.HOSTINGER_SSH_KEY }}
-    port: 22
-    source: "backend/package-lock.json"
-    target: "/root/backend"
-    debug: true
+on:
+  push:
+    branches:
+      - main
 
-- name: Deploy backend .env
-  uses: appleboy/scp-action@master
-  with:
-    host: ${{ secrets.HOSTINGER_HOST }}
-    username: root
-    key: ${{ secrets.HOSTINGER_SSH_KEY }}
-    port: 22
-    source: "backend/.env"
-    target: "/root/backend"
-    debug: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 🔄 Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 🛠 Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # ============================
+      # 🔷 FRONTEND BUILD & DEPLOY
+      # ============================
+
+      - name: Install frontend dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build React app
+        run: npm run build
+
+      - name: Check frontend build output
+        run: ls -la build
+
+      - name: Deploy frontend to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "build"
+          target: "/var/www/website-ts"
+          strip_components: 1
+          debug: true
+
+      # ============================
+      # 🔶 BACKEND BUILD & DEPLOY
+      # ============================
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Build backend (TypeScript → JavaScript)
+        working-directory: backend
+        run: npx tsc -p tsconfig.backend.json
+
+      - name: Check backend build output
+        run: ls -la backend/dist
+
+      - name: Deploy compiled backend to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "backend/dist"
+          target: "/root/backend/dist"
+          strip_components: 1
+          debug: true
+
+      # ============================
+      # 🔐 BACKEND CONFIG & ENV
+      # ============================
+
+      - name: Deploy backend package.json
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "backend/package.json"
+          target: "/root/backend"
+          debug: true
+
+      - name: Deploy backend package-lock.json
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "backend/package-lock.json"
+          target: "/root/backend"
+          debug: true
+
+      - name: Deploy backend .env
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "backend/.env"
+          target: "/root/backend"
+          debug: true
+
+      # ============================
+      # ⚙️ PM2 CONFIG
+      # ============================
+
+      - name: Generate PM2 config on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            echo "module.exports = {
+              apps: [
+                {
+                  name: 'backend',
+                  script: './dist/main.js',
+                  cwd: '/root/backend',
+                  instances: 1,
+                  autorestart: true,
+                  watch: false,
+                  max_restarts: 10,
+                  env: {
+                    NODE_ENV: 'development'
+                  },
+                  env_production: {
+                    NODE_ENV: 'production'
+                  }
+                }
+              ]
+            };" > /root/backend/ecosystem.config.js
+
+      # ============================
+      # 🔁 RESTART SERVICES
+      # ============================
+
+      - name: Restart backend and Nginx using PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /root/backend
+            npm install
+            pm2 start ecosystem.config.js --env production
+            pm2 save
+            sudo systemctl restart nginx
+
+      # ============================
+      # ✅ HEALTH CHECK
+      # ============================
+
+      - name: Check backend health
+        run: curl -f http://${{ secrets.HOSTINGER_HOST }}:4000/health || exit 1
+
+      # ============================
+      # 🧹 CLEANUP LOGS
+      # ============================
+
+      - name: Flush PM2 logs
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: root
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            pm2 flush
