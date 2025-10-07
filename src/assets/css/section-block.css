@@ -1,11 +1,11 @@
 .section-block {
   position: relative;
-  padding: 4px;
+  margin: 2rem auto;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem);
   background: linear-gradient(135deg, #f0f4f8, #ffeef2);
   border-radius: 20px;
-  margin-bottom: 3rem;
+  max-width: 960px;
   overflow: hidden;
-  animation: fadeInSection 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
     0 1px 2px rgb(0 0 0 / 3%),
     0 4px 8px rgb(0 0 0 / 6%),
@@ -15,52 +15,8 @@
     transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.4s ease,
     background-color 0.3s ease;
+  animation: fadeInSection 0.8s ease-out;
   will-change: transform, box-shadow;
-  
-}
-
-.section-block::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  box-shadow: inset 0 0 0 1px rgb(166 120 240 / 4%);
-  pointer-events: none;
-  
-}
-
-.section-block:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    0 2px 4px rgb(0 0 0 / 4%),
-    0 8px 16px rgb(0 0 0 / 8%),
-    0 24px 48px rgb(0 0 0 / 12%),
-    0 40px 80px rgb(0 0 0 / 8%);
-  background-color: #fefefe;
-}
-
-.section-title {
-  color: #2c3e50;
-  font-size: 1.7rem;
-  font-weight: 700;
-  margin-bottom: 1.2rem;
-  letter-spacing: -0.5px;
-  transition: color 0.3s ease;
-}
-
-.section-block:hover .section-title {
-  color: #78a2f0;
-}
-
-.section-block .section-content {
-  color: #5c6b7a;
-  font-size: 1.05rem;
-  line-height: 1.75;
-  transition: color 0.3s ease;
-}
-
-.section-block:hover .section-content {
-  color: #3b4a59;
 }
 
 .section-block::before {
@@ -73,6 +29,50 @@
   background: linear-gradient(to bottom, #608aed, #11447d);
   border-radius: 6px 0 0 6px;
   box-shadow: 0 0 12px rgb(97 97 186 / 40%);
+}
+
+.section-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 1px rgb(166 120 240 / 4%);
+  pointer-events: none;
+}
+
+.section-block:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 4%),
+    0 8px 16px rgb(0 0 0 / 8%),
+    0 24px 48px rgb(0 0 0 / 12%),
+    0 40px 80px rgb(0 0 0 / 8%);
+  background-color: #fefefe;
+}
+
+/* Typography */
+.section-title {
+  color: #2c3e50;
+  font-size: clamp(1.4rem, 2vw, 1.7rem);
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
+
+.section-block:hover .section-title {
+  color: #78a2f0;
+}
+
+.section-content {
+  color: #5c6b7a;
+  font-size: clamp(1rem, 1.5vw, 1.05rem);
+  line-height: 1.75;
+  transition: color 0.3s ease;
+}
+
+.section-block:hover .section-content {
+  color: #3b4a59;
 }
 
 /* Entry animation */
@@ -91,5 +91,40 @@
 
   100% {
     transform: scale(1);
+  }
+}
+
+/* Responsive tweaks */
+@media (width <= 768px) {
+  .section-block {
+    margin: 1.5rem 1rem;
+    padding: 1.5rem 1.2rem;
+    border-radius: 16px;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .section-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+@media (width <= 480px) {
+  .section-block {
+    margin: 1rem 0.5rem;
+    padding: 1.2rem 1rem;
+    border-radius: 14px;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .section-content {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 }

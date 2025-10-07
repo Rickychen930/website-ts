@@ -1,32 +1,3 @@
-/* Root styling */
-#about-me-section {
-  padding: 2rem 1rem;
-  background-color: #f9fbfd;
-  color: #1f2d3d;
-  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  animation: fade-in 0.6s ease-in-out;
-  box-sizing: border-box;
-
-}
-
-/* Card container */
-#about-me-section .card {
-  position: relative;
-  margin: 3rem auto;
-  padding: 2.5rem;
-  background: linear-gradient(135deg, #fff, #f0f4f8);
-  border-radius: 24px;
-  box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
-  max-width: 840px;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  overflow: hidden;
-}
-
-#about-me-section .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgb(0 0 0 / 12%);
-}
-
 /* Hero layout */
 .about-me-hero {
   display: flex;
@@ -196,41 +167,31 @@
   box-shadow: 0 10px 28px rgb(0 0 0 / 15%);
 }
 
-/* Responsive tweaks */
 @media (width <= 768px) {
   .about-me-hero {
     flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 1.5rem;
     text-align: center;
   }
 
   .about-me-text {
+    flex: 1 1 100%;
     align-items: center;
+    gap: 1rem;
+    padding: 0 1rem;
   }
 
-  .about-me-actions,
-  .about-me-stats {
-    justify-content: center;
+  .about-me-image {
+    flex: 1 1 100%;
+    text-align: center;
+    margin-bottom: 1rem;
   }
 
   .about-me-image .image-component {
-    width: 180px;
-    height: 180px;
-  }
-
-  .profile-btn {
-    padding: 0.8rem 1.4rem;
-    font-size: 0.95rem;
-  }
-
-  .profile-stat {
-    min-width: 100px;
-    padding: 0.8rem 1rem;
-  }
-}
-
-@media (width <= 480px) {
-  #about-me-section .card {
-    padding: 1.5rem;
+    width: 160px;
+    height: 160px;
   }
 
   .about-me-name {
@@ -243,6 +204,48 @@
 
   .about-me-bio {
     font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .about-me-actions {
+    justify-content: center;
+    gap: 0.8rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-btn {
+    width: 100%;
+    max-width: 280px;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .about-me-stats {
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .profile-stat {
+    min-width: 100px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .profile-stat strong {
+    font-size: 1.3rem;
+  }
+
+  .profile-stat span {
+    font-size: 0.85rem;
+  }
+}
+
+@media (width <= 480px) {
+  .about-me-hero {
+    padding: 1rem;
+    gap: 2rem;
   }
 
   .about-me-image .image-component {
@@ -250,8 +253,20 @@
     height: 140px;
   }
 
+  .about-me-name {
+    font-size: 1.8rem;
+  }
+
+  .about-me-title {
+    font-size: 1rem;
+  }
+
+  .about-me-bio {
+    font-size: 0.9rem;
+  }
+
   .profile-btn {
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 1rem;
     font-size: 0.9rem;
   }
 
@@ -260,6 +275,7 @@
     padding: 0.7rem 0.9rem;
   }
 }
+
 
 /* Animations */
 @keyframes fade-in {

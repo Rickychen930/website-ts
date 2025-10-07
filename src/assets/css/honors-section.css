@@ -1,14 +1,3 @@
-/* Root container khusus honors */
-#honors {
-  padding: 4rem 1.5rem;
-  background: linear-gradient(180deg, #f9fbfd 0%, #f3f6fa 100%);
-  color: #1f2d3d;
-  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
-
-  /* max-width: 1200px; */
-}
-
 /* Flow layout */
 #honors-flow {
   display: grid;
