@@ -47,7 +47,7 @@ class MainPage extends BasePage<{}, MainPageState> {
     }
   }
 
-  private renderNavbar(): ReactNode {
+  protected renderHeader(): ReactNode {
     return <Navbar items={this.controller.getNavbarItems()} />;
   }
 
@@ -101,13 +101,13 @@ class MainPage extends BasePage<{}, MainPageState> {
   protected renderContent(): ReactNode {
     return (
       <div className="main-page">
-        {this.renderNavbar()}
         {this.renderSections()}
+        {this.renderFoot()}
       </div>
     );
   }
 
-  protected renderFooter(): ReactNode {
+  private renderFoot(): ReactNode {
     return <footer className="footer">© 2025 Ricky Inc.</footer>;
   }
 }

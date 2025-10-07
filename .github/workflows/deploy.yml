@@ -24,6 +24,16 @@ jobs:
       # 🔷 FRONTEND BUILD & DEPLOY
       # ============================
 
+      - name: Clean old frontend build
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            rm -rf /var/www/website-ts/*
+
       - name: Install dependencies (frontend + backend)
         run: npm install --legacy-peer-deps
 

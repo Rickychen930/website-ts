@@ -31,8 +31,7 @@ class BasePage<
 
   // 🔹 Render helper methods
   protected renderHeader(): ReactNode {
-    const { title } = this.props;
-    return title ? <h1 className="page-title">{title}</h1> : null;
+    return null;
   }
 
   protected renderLoading(): ReactNode {

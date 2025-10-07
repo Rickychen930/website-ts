@@ -1,15 +1,10 @@
-/* Root container khusus honors */
-#honors {
-  padding: 4rem 1.5rem;
-  background: linear-gradient(180deg, #f9fbfd 0%, #f3f6fa 100%);
-  color: #1f2d3d;
-  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
+/* Flow layout */
 
-  /* max-width: 1200px; */
+* {
+  box-sizing: border-box;
 }
 
-/* Flow layout */
+
 #honors-flow {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -101,6 +96,12 @@
   border-radius: 12px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+#honors-flow::after {
+  content: "";
+  flex-grow: 1;
+}
+
 
 #honors .flow-content:hover {
   background-color: #f0f5fa;
@@ -268,3 +269,37 @@
     transform: scale(1);
   }
 }
+
+/* Landscape orientation */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  #honors {
+    padding: 2rem 2.5rem;
+  }
+
+  #honors-flow {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  #honors .flow-item {
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  #honors .flow-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.95rem;
+  }
+
+  #honors .flow-title {
+    font-size: 1rem;
+  }
+
+  #honors .flow-description {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+

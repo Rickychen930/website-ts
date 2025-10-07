@@ -1,32 +1,53 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
+  background: url("/public/assets/images/texture-10.jpeg");
+  background-size: 100% auto;
+  background-repeat:repeat-y;
+}
+
+body {
+  overflow: hidden auto;
+}
+
+.page-content{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 100vh;
+  
+}
+
+.contents-section {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-block: 24px;
 }
 
 /* Footer container */
 .footer {
+  width: 100%;
   padding: 2rem;
   background: linear-gradient(135deg, #f0f4f8, #ffeef2);
-  color: #34495e;
-  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #fff;
+  background-image: url("/public/assets/images/texture-2.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
   font-size: 0.95rem;
   line-height: 1.6;
   text-align: center;
-  border-top: 1px solid #dce3ea;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   box-shadow: 0 -4px 12px rgb(22 81 243 / 25%);
   scroll-margin-top: 6em;
+  max-width: 100%;
 }
 
-/* Footer links */
-.footer a {
-  color: #78a2f0; /* violet */
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer a:hover {
-  color: #11447d;
-}
-
+/* Decorative line above footer */
 .footer::before {
   content: "";
   display: block;
@@ -38,17 +59,46 @@ html {
   box-shadow: 0 0 8px rgb(166 120 240 / 30%);
 }
 
+/* Footer links */
+.footer a {
+  color: #78a2f0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #11447d;
+}
+
 /* Responsive tweaks */
-@media (width <= 768px) {
+
+/* Tablet */
+@media screen and (width <= 768px) {
   .footer {
     padding: 1.5rem;
     font-size: 0.9rem;
   }
 }
 
-@media (width <= 480px) {
+/* Mobile */
+@media screen and (width <= 480px) {
   .footer {
     padding: 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Landscape orientation */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .footer {
+    padding: 1.5rem 2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (orientation: landscape) and (width <= 480px) {
+  .footer {
+    padding: 1rem 1.5rem;
     font-size: 0.85rem;
   }
 }

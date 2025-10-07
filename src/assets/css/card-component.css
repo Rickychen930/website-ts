@@ -1,3 +1,8 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+}
+
 /* Card Title */
 .card-title {
   display: flex;
@@ -13,6 +18,7 @@
   transition: color 0.35s ease, transform 0.35s ease;
   outline: none;
   user-select: none;
+  font-family: 'Segoe UI', Inter, sans-serif;
 }
 
 .card-title:hover,
@@ -26,11 +32,11 @@
 /* Card Styling */
 .card {
   width: 100%;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 3rem 2.5rem;
   background: linear-gradient(135deg, #fff, #f7f8fc);
   border-radius: 24px;
-  max-width: 1080px;
   overflow: hidden;
   box-shadow:
     0 2px 6px rgb(0 0 0 / 4%),
@@ -43,8 +49,10 @@
     border-color 0.35s ease;
   outline: none;
   user-select: none;
+  font-family: 'Segoe UI', Inter, sans-serif;
 }
 
+/* Hover & Focus */
 .card:hover,
 .card:focus {
   transform: translateY(-8px) scale(1.02);
@@ -84,14 +92,14 @@
 }
 
 /* Responsive tweaks */
-@media (width <= 1200px) {
+@media screen and (width <= 1200px) {
   .card {
     max-width: 95%;
     padding: 2.5rem 2rem;
   }
 }
 
-@media (width <= 992px) {
+@media screen and (width <= 992px) {
   .card {
     padding: 2.2rem 1.8rem;
     border-radius: 20px;
@@ -102,7 +110,7 @@
   }
 }
 
-@media (width <= 768px) {
+@media screen and (width <= 768px) {
   .card {
     padding: 1.8rem 1.4rem;
     border-radius: 18px;
@@ -113,7 +121,7 @@
   }
 }
 
-@media (width <= 480px) {
+@media screen and (width <= 480px) {
   .card {
     padding: 1.4rem 1rem;
     border-radius: 14px;
@@ -121,5 +129,17 @@
 
   .card-title {
     font-size: 1.2rem;
+  }
+}
+
+/* Landscape orientation */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .card {
+    padding: 1.6rem 2rem;
+    border-radius: 18px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
   }
 }
