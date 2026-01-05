@@ -13,9 +13,9 @@
  * - KISS: Clear, simple structure
  * - Component-Based: Composed of smaller, focused components
  */
-import React, { Component, ReactNode, createRef, RefObject } from "react";
+import React, { Component, ReactNode, createRef } from "react";
 import NavbarController from "../../../controllers/navbar-controller";
-import { NavbarItem, NavbarConfig } from "../../../types/navbar";
+import { NavbarConfig } from "../../../types/navbar";
 import NavbarBrand from "./NavbarBrand";
 import NavbarToggle from "./NavbarToggle";
 import NavbarLinks from "./NavbarLinks";
