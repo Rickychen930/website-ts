@@ -1,0 +1,93 @@
+/**
+ * HonorBadge Component Styles
+ * Professional, Luxury Badge Design
+ */
+
+/* ─── Base Badge Styles ─── */
+.honor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.honor-badge__icon {
+  font-size: 1rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.honor-badge__label {
+  letter-spacing: 0.3px;
+}
+
+/* ─── Category Variants ─── */
+.honor-badge--award {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.honor-badge--recognition {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.honor-badge--competition {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.honor-badge--achievement {
+  background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+  color: #6b21a8;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.honor-badge--other {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  color: #3730a3;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+/* ─── Hover Effects ─── */
+.honor-badge:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Responsive: Mobile ─── */
+@media screen and (width <= 768px) {
+  .honor-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 16px;
+  }
+
+  .honor-badge__icon {
+    font-size: 0.9rem;
+  }
+}
+
+/* ─── Responsive: Small Mobile ─── */
+@media screen and (width <= 480px) {
+  .honor-badge {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    border-radius: 14px;
+  }
+
+  .honor-badge__icon {
+    font-size: 0.85rem;
+  }
+}
+

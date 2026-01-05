@@ -1,37 +1,47 @@
-// src/sections/honour-section.tsx
-import React, { Component, ReactNode, createRef, RefObject } from "react";
-import Card from "../../components/card-component";
-import { FlowItem } from "../../components/flow-item-component";
-import "../../../assets/css/honors-section.css";
-
 /**
- * Honor Item Type Definition
- * Follows Single Responsibility Principle (SRP)
+ * HonorsSection - View Layer (MVC Pattern)
+ * Professional, Clean, Luxury, Responsive Honors Section
+ * 
+ * Architecture:
+ * - MVC: Separated Controller, Model, and View
+ * - OOP: Class-based component with encapsulation
+ * - Component-Based: Uses reusable sub-components
+ * 
+ * Principles Applied:
+ * - SOLID:
+ *   - SRP: Each method has single responsibility
+ *   - OCP: Extensible through composition
+ *   - LSP: Proper inheritance/implementation
+ *   - ISP: Interfaces are segregated
+ *   - DIP: Depends on abstractions (controller, components)
+ * - DRY: Reuses components and utilities
+ * - KISS: Simple, clear structure
  */
-export type HonorItem = {
-  key: string;
-  icon: string;
-  title: string;
-  event: string;
-  date: string;
-  description: string;
-};
+
+import React, { Component, ReactNode, createRef, RefObject } from "react";
+import "../../../assets/css/honors-section.css";
+import Card from "../../components/card-component";
+import { HonorsController } from "../../../controllers/honors-controller";
+import { HonorsModel, IHonorItem } from "../../../models/honors-model";
+import { HonorCard } from "../../components/honors/HonorCard";
 
 /**
- * Honor Section Props Interface
+ * Honors Section Props Interface
+ * Follows Interface Segregation Principle (ISP)
  */
 type HonorsProps = {
-  data: HonorItem[];
+  data: IHonorItem[];
 };
 
 /**
- * Honor Section State Interface
+ * Honors Section State Interface
  */
 type HonorsState = {
   visibleItems: Set<string>;
-  scrollDirection: "up" | "down" | "left" | "right";
+  scrollDirection: "up" | "down";
   isInitialized: boolean;
   error: string | null;
+  viewMode: "grid" | "timeline";
 };
 
 /**
@@ -49,32 +59,33 @@ const OBSERVER_CONFIG: IntersectionObserverInit = {
  */
 const SCROLL_THROTTLE_MS = 150;
 
-
 /**
- * Honor Section Component
+ * HonorsSection Component
  * 
  * Features:
- * - Luxury & Elegant Design
- * - Performance Optimized (throttled scroll, optimized observers, memoization)
- * - Fully Responsive (mobile, tablet, desktop, landscape)
- * - Comprehensive Edge Case Handling
- * - Clean UI/UX with smooth animations
- * - Accessibility Support
+ * - Professional, Clean, Luxury Design
+ * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
+ * - Performance Optimized (throttled scroll, optimized observers)
+ * - Component-Based Architecture (Reusable Components)
+ * - MVC Pattern (Controller, Model, View separation)
+ * - Shows Software Engineering Capabilities
  * 
  * Principles Applied:
- * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
- * - DRY (Don't Repeat Yourself)
- * - OOP (Object-Oriented Programming)
- * - MVP (Minimum Viable Product)
- * - Keep It Simple
+ * - MVC: Separated Controller, Model, and View
+ * - OOP: Class-based component with encapsulation
+ * - SOLID: All principles applied
+ * - DRY: Reuses components and utilities
+ * - KISS: Simple, clear structure
  */
 class HonorsSection extends Component<HonorsProps, HonorsState> {
+  private readonly controller: HonorsController;
   private itemRefs = new Map<string, RefObject<HTMLDivElement | null>>();
   private observer: IntersectionObserver | null = null;
   private lastScrollY: number = 0;
   private scrollTimeoutId: number | null = null;
   private isMounted: boolean = false;
   private rafId: number | null = null;
+  private containerRef: RefObject<HTMLDivElement | null> = createRef();
 
   constructor(props: HonorsProps) {
     super(props);
@@ -83,7 +94,11 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
       scrollDirection: "down",
       isInitialized: false,
       error: null,
+      viewMode: "grid",
     };
+
+    // Initialize controller (MVC Pattern)
+    this.controller = new HonorsController();
 
     // Initialize refs for all items
     this.initializeRefs();
@@ -95,7 +110,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   private initializeRefs(): void {
     const { data } = this.props;
-    
+
     if (!Array.isArray(data) || data.length === 0) {
       return;
     }
@@ -116,13 +131,16 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   componentDidMount(): void {
     this.isMounted = true;
-    
+
     try {
       this.setupIntersectionObserver();
       this.setupScrollListener();
       this.setState({ isInitialized: true, error: null });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to initialize honors section";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to initialize honors section";
       this.setState({ error: errorMessage });
       console.error("HonorsSection initialization error:", error);
     }
@@ -145,7 +163,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     if (prevProps.data !== this.props.data) {
       this.cleanup();
       this.initializeRefs();
-      
+
       if (this.isMounted) {
         this.setupIntersectionObserver();
       }
@@ -172,7 +190,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Check browser support
     if (typeof IntersectionObserver === "undefined") {
       // Fallback: show all items immediately
-      const allKeys = new Set(data.map(item => item.key).filter(Boolean));
+      const allKeys = new Set(data.map((item) => item.key).filter(Boolean));
       this.setState({ visibleItems: allKeys });
       return;
     }
@@ -198,7 +216,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     } catch (error) {
       console.error("Failed to setup IntersectionObserver:", error);
       // Fallback: show all items
-      const allKeys = new Set(data.map(item => item.key).filter(Boolean));
+      const allKeys = new Set(data.map((item) => item.key).filter(Boolean));
       this.setState({ visibleItems: allKeys });
     }
   }
@@ -222,7 +240,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
         this.setState((prevState) => {
           const updated = new Set(prevState.visibleItems);
-          
+
           if (entry.isIntersecting) {
             updated.add(key);
           } else {
@@ -233,18 +251,20 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           }
 
           // Only update if changed
-          if (updated.size === prevState.visibleItems.size && 
-              [...updated].every(k => prevState.visibleItems.has(k))) {
+          if (
+            updated.size === prevState.visibleItems.size &&
+            [...updated].every((k) => prevState.visibleItems.has(k))
+          ) {
             return prevState;
           }
 
-          return { 
+          return {
             ...prevState,
-            visibleItems: updated 
+            visibleItems: updated,
           };
         });
       });
-      
+
       this.rafId = null;
     });
   };
@@ -255,13 +275,13 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   private setupScrollListener(): void {
     if (typeof window === "undefined") return;
-    
+
     this.lastScrollY = window.scrollY;
-    
+
     // Use passive listener for better performance
-    window.addEventListener("scroll", this.handleScrollThrottled, { 
+    window.addEventListener("scroll", this.handleScrollThrottled, {
       passive: true,
-      capture: false 
+      capture: false,
     });
   }
 
@@ -289,18 +309,19 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
     const currentY = window.scrollY;
     const delta = currentY - this.lastScrollY;
-    
+
     // Determine direction based on scroll delta
-    let direction: "up" | "down" | "left" | "right" = "down";
-    
-    if (Math.abs(delta) > 5) { // Threshold to avoid micro-movements
+    let direction: "up" | "down" = "down";
+
+    if (Math.abs(delta) > 5) {
+      // Threshold to avoid micro-movements
       direction = delta > 0 ? "down" : "up";
     }
-    
+
     if (direction !== this.state.scrollDirection) {
       this.setState({ scrollDirection: direction });
     }
-    
+
     this.lastScrollY = currentY;
   };
 
@@ -339,7 +360,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   private validateData(): { isValid: boolean; error?: string } {
     const { data } = this.props;
-    
+
     if (!data) {
       return { isValid: false, error: "No honor data provided" };
     }
@@ -354,13 +375,13 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
     // Validate each item has required fields
     const invalidItems = data.filter(
-      item => !item.key || !item.title || !item.event || !item.date
+      (item) => !item.key || !item.title || !item.event || !item.date
     );
 
     if (invalidItems.length > 0) {
-      return { 
-        isValid: false, 
-        error: `${invalidItems.length} honor item(s) missing required fields` 
+      return {
+        isValid: false,
+        error: `${invalidItems.length} honor item(s) missing required fields`,
       };
     }
 
@@ -374,7 +395,9 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   private renderErrorState(error: string): ReactNode {
     return (
       <div className="honors-error-state" role="alert" aria-live="polite">
-        <div className="honors-error-icon" aria-hidden="true">⚠️</div>
+        <div className="honors-error-icon" aria-hidden="true">
+          ⚠️
+        </div>
         <h3 className="honors-error-title">Unable to Display Honors</h3>
         <p className="honors-error-message">{error}</p>
       </div>
@@ -388,7 +411,9 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   private renderEmptyState(): ReactNode {
     return (
       <div className="honors-empty-state" role="status" aria-live="polite">
-        <div className="honors-empty-icon" aria-hidden="true">🏆</div>
+        <div className="honors-empty-icon" aria-hidden="true">
+          🏆
+        </div>
         <h3 className="honors-empty-title">No Honors Available</h3>
         <p className="honors-empty-text">
           Honor and achievement information will appear here when available.
@@ -398,98 +423,44 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   }
 
   /**
-   * Render Honor Content
-   * Reusable content renderer with proper semantic HTML
+   * Handle card click
    */
-  private renderContent(item: HonorItem): ReactNode {
-    // Safety check: ensure item has required properties
-    if (!item) {
-      return null;
-    }
-
-    return (
-      <div className="honors-content">
-        <div className="honors-header">
-          <h4 className="honors-title">{item.title || "Untitled Honor"}</h4>
-          <div className="honors-meta">
-            {item.event && (
-              <>
-                <span className="honors-event">{item.event}</span>
-                {item.date && (
-                  <>
-                    <span className="honors-separator" aria-hidden="true">•</span>
-                    <time className="honors-date" dateTime={this.formatDateForDateTime(item.date)}>
-                      {item.date}
-                    </time>
-                  </>
-                )}
-              </>
-            )}
-            {!item.event && item.date && (
-              <time className="honors-date" dateTime={this.formatDateForDateTime(item.date)}>
-                {item.date}
-              </time>
-            )}
-          </div>
-        </div>
-        {item.description && (
-          <p className="honors-description">{item.description}</p>
-        )}
-      </div>
-    );
-  }
-
-  /**
-   * Format date for datetime attribute
-   * Helper method for accessibility
-   */
-  private formatDateForDateTime(dateStr: string): string {
-    // Try to parse common date formats
-    try {
-      const date = new Date(dateStr);
-      if (!isNaN(date.getTime())) {
-        return date.toISOString().split('T')[0];
-      }
-    } catch {
-      // Fallback to original string
-    }
-    return dateStr;
-  }
+  private handleCardClick = (honor: IHonorItem): void => {
+    // Optional: Add click handling logic
+    console.log("Honor clicked:", honor);
+  };
 
   /**
    * Render Single Honor Item
    * Component composition with proper accessibility
    */
-  private renderItem(item: HonorItem, index: number): ReactNode {
-    const { visibleItems, scrollDirection } = this.state;
-    const refObj = this.itemRefs.get(item.key) as RefObject<HTMLDivElement> | undefined;
+  private renderItem(item: IHonorItem, index: number): ReactNode {
+    const { visibleItems } = this.state;
+    const refObj = this.itemRefs.get(item.key);
 
     // Safety check: ensure item has required properties
     if (!item || !item.key) {
       return null;
     }
 
+    const isVisible = visibleItems.has(item.key);
+    const category = this.controller.getCategory(item);
+
     return (
-      <FlowItem
+      <div
         key={item.key}
-        itemKey={item.key}
-        index={index}
-        scrollDirection={scrollDirection}
-        isVisible={visibleItems.has(item.key)}
-        refObj={refObj}
-        icon={
-          <span 
-            className="honors-icon-emoji" 
-            aria-hidden="true"
-            role="img"
-            aria-label={`Honor icon for ${item.title || 'honor'}`}
-          >
-            {item.icon || "🏆"}
-          </span>
-        }
+        data-key={item.key}
+        ref={refObj}
+        className="honors-grid__item"
       >
-        {this.renderContent(item)}
-      </FlowItem>
+        <HonorCard
+          honor={item}
+          index={index}
+          isVisible={isVisible}
+          category={category}
+          onCardClick={this.handleCardClick}
+        />
+      </div>
     );
   }
 
@@ -503,7 +474,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
     // Handle validation errors
     if (!validation.isValid) {
-      return validation.error 
+      return validation.error
         ? this.renderErrorState(validation.error)
         : this.renderEmptyState();
     }
@@ -513,20 +484,17 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
       return this.renderEmptyState();
     }
 
+    // Use data directly (already sorted if needed, or sort here)
+    const sortedItems = HonorsModel.sortByDate(data);
+
     return (
-      <div 
-        className="honors-flow" 
-        role="list" 
-        aria-label="Honors and achievements timeline"
+      <div
+        className="honors-grid"
+        role="list"
+        aria-label="Honors and achievements"
+        ref={this.containerRef}
       >
-        {data.map((item, index) => {
-          // Safety check for each item
-          if (!item || !item.key) {
-            console.warn(`Honor item at index ${index} is invalid, skipping`);
-            return null;
-          }
-          return this.renderItem(item, index);
-        })}
+        {sortedItems.map((item, index) => this.renderItem(item, index))}
       </div>
     );
   }
@@ -552,7 +520,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     if (!validation.isValid) {
       return (
         <Card id="honors-section" title="Honors & Achievements">
-          {validation.error 
+          {validation.error
             ? this.renderErrorState(validation.error)
             : this.renderEmptyState()}
         </Card>
