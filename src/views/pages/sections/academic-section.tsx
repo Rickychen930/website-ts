@@ -342,8 +342,6 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    * Main Render Method
    */
   public render(): ReactNode {
-    const { data } = this.props;
-
     // Edge case: No data
     if (!this.validateData()) {
       return (

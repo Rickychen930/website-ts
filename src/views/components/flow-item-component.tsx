@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, RefObject, PureComponent } from "react";
+import React, { ReactNode, RefObject, PureComponent } from "react";
 
 /**
  * FlowItem Props Interface
