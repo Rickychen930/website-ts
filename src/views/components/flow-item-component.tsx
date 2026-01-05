@@ -1,7 +1,9 @@
 import React, { ReactNode, RefObject, PureComponent } from "react";
+import "../../assets/css/flow-item-component.css";
 
 /**
  * FlowItem Props Interface
+ * Follows Interface Segregation Principle (ISP)
  */
 type FlowItemProps = {
   itemKey: string;
@@ -11,58 +13,77 @@ type FlowItemProps = {
   refObj?: RefObject<HTMLDivElement>;
   icon?: ReactNode;
   children: ReactNode;
+  variant?: "default" | "elevated" | "minimal";
+  className?: string;
 };
 
 /**
  * FlowItem Component
  * 
- * Optimized reusable component for timeline items
- * - Performance optimized with PureComponent
- * - Clean class name generation
- * - Proper ref handling
+ * Features:
+ * - Luxury & Elegant Design with smooth animations
+ * - Performance Optimized (PureComponent for memoization)
+ * - Fully Responsive (mobile, tablet, desktop, landscape)
+ * - Comprehensive Edge Case Handling
+ * - Clean UI/UX with staggered animations
+ * - Accessibility Support (ARIA labels, semantic HTML)
  * 
- * Principles: DRY, OOP, Performance
+ * Principles Applied:
+ * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
+ * - DRY (Don't Repeat Yourself)
+ * - OOP (Object-Oriented Programming)
+ * - MVP (Minimum Viable Product)
+ * - Keep It Simple
  */
 export class FlowItem extends PureComponent<FlowItemProps> {
-  private readonly TRANSITION_DELAY_MS = 150;
+  private readonly TRANSITION_DELAY_MS = 120;
+  private readonly MAX_DELAY_MS = 800; // Prevent excessive delays
 
   /**
    * Generate class names efficiently
    * Follows DRY principle
    */
   private getClassNames(): string {
-    const { scrollDirection, isVisible, index } = this.props;
-    const classes = ["flow-item"];
-    
-    if (isVisible) {
-      classes.push("visible");
-    }
-    
-    classes.push(`scroll-${scrollDirection}`);
-    classes.push(index % 2 === 0 ? "left" : "right");
+    const { scrollDirection, isVisible, index, variant = "default", className = "" } = this.props;
+    const classes = [
+      "flow-item",
+      `flow-variant-${variant}`,
+      isVisible ? "flow-visible" : "flow-hidden",
+      `flow-scroll-${scrollDirection}`,
+      index % 2 === 0 ? "flow-left" : "flow-right",
+      className,
+    ];
     
     return classes.filter(Boolean).join(" ");
   }
 
   /**
    * Render icon if provided
-   * Null-safe rendering
+   * Null-safe rendering with elegant styling
    */
   private renderIcon(): ReactNode {
     const { icon } = this.props;
     if (!icon) return null;
     
-    return <div className="flow-icon" aria-hidden="true">{icon}</div>;
+    return (
+      <div className="flow-icon-wrapper" aria-hidden="true">
+        <div className="flow-icon-glow"></div>
+        <div className="flow-icon">{icon}</div>
+      </div>
+    );
   }
 
   /**
    * Get transition delay style
-   * Performance: Memoized calculation
+   * Performance: Optimized calculation with max delay cap
    */
   private getTransitionStyle(): React.CSSProperties {
     const { index } = this.props;
+    const delay = Math.min(index * this.TRANSITION_DELAY_MS, this.MAX_DELAY_MS);
+    
     return {
-      transitionDelay: `${index * this.TRANSITION_DELAY_MS}ms`,
+      transitionDelay: `${delay}ms`,
+      animationDelay: `${delay}ms`,
     };
   }
 
@@ -72,18 +93,25 @@ export class FlowItem extends PureComponent<FlowItemProps> {
   public render(): ReactNode {
     const { itemKey, refObj, children } = this.props;
 
+    // Edge case: Ensure we have content
+    if (!children) {
+      return null;
+    }
+
     return (
-      <div
+      <article
         key={itemKey}
         data-key={itemKey}
         ref={refObj}
         className={this.getClassNames()}
         style={this.getTransitionStyle()}
-        role="listitem"
+        aria-label={`Item ${this.props.index + 1}`}
       >
         {this.renderIcon()}
-        {children}
-      </div>
+        <div className="flow-content">
+          {children}
+        </div>
+      </article>
     );
   }
 }

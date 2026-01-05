@@ -1,106 +1,181 @@
 :root {
-  /* ─── Base Colors ─── */
-  --white: #fff;
-  --black: #000;
+  /* ============================================
+     Base Colors - Luxury Palette
+     ============================================ */
+  --white: #ffffff;
+  --black: #000000;
+  --transparent: transparent;
 
-  /* ─── Backgrounds ─── */
+  /* ============================================
+     Backgrounds - Elegant & Clean
+     ============================================ */
   --bg-light: #f9fbfd;
   --bg-lighter: #f3f6fa;
-  --bg-card: #fff;
-  --bg-card-alt: #f0f4f8;
-  --bg-footer: #e6edf5;
-  --bg-footer-alt: #e6edf5;
-  --bg-timeline: #eef3fa;
-  --bg-content-hover: #f0f5fa;
-  --bg-card-hover: #f3f7ff;
-  --bg-navbar: rgb(249 251 253 / 75%);
-  --bg-navbar-scrolled: rgb(249 251 253 / 95%);
-  --bg-stat: #eef2f7;
+  --bg-lightest: #f0f4f8;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f8fafc;
+  --bg-card-hover: #fafbfd;
+  --bg-footer: #f1f5f9;
+  --bg-footer-alt: #e8edf3;
+  --bg-timeline: #f0f4f8;
+  --bg-content-hover: #f5f8fc;
+  --bg-navbar: rgba(249, 251, 253, 0.85);
+  --bg-navbar-scrolled: rgba(255, 255, 255, 0.98);
+  --bg-stat: #f0f4f8;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --bg-gradient-primary: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+  --bg-gradient-accent: linear-gradient(135deg, #78a2f0 0%, #6fb1fc 100%);
+  --bg-gradient-luxury: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f3f6fa 100%);
 
-  /* ─── Text Colors ─── */
-  --text-main: #1f2d3d;
-  --text-heading: #2c3e50;
+  /* ============================================
+     Text Colors - Professional & Readable
+     ============================================ */
+  --text-main: #1a2332;
+  --text-heading: #1f2d3d;
+  --text-heading-alt: #2c3e50;
   --text-subtle: #5c6b7a;
   --text-muted: #3b4a59;
   --text-muted-alt: #7a8b9c;
+  --text-light: #9ca3af;
   --text-accent: #34495e;
   --text-hover: #0073b1;
+  --text-on-accent: #ffffff;
+  --text-link: #78a2f0;
+  --text-link-hover: #6fb1fc;
 
-  /* ─── Accent Colors ─── */
+  /* ============================================
+     Accent Colors - Luxury Blue Palette
+     ============================================ */
   --accent: #78a2f0;
   --accent-alt: #6fb1fc;
-  --accent-hover: #8b5cf6;
+  --accent-hover: #8bb3ff;
+  --accent-light: #a8c5ff;
+  --accent-dark: #5a8de8;
+  --accent-gradient: linear-gradient(135deg, #78a2f0 0%, #6fb1fc 50%, #8bb3ff 100%);
+  --accent-glow: rgba(120, 162, 240, 0.3);
 
-  /* ─── Borders ─── */
-  --border-light: rgb(220 227 234 / 60%);
+  /* ============================================
+     Borders - Subtle & Elegant
+     ============================================ */
+  --border-light: rgba(220, 227, 234, 0.6);
   --border-default: #dce3ea;
-  --border-navbar: rgb(220 227 234 / 50%);
-  --border-navbar-dropdown: rgb(220 227 234 / 60%);
-  --border-glow: rgb(166 120 240 / 4%);
+  --border-medium: #cbd5e1;
+  --border-dark: #94a3b8;
+  --border-navbar: rgba(220, 227, 234, 0.5);
+  --border-navbar-dropdown: rgba(220, 227, 234, 0.6);
+  --border-glow: rgba(120, 162, 240, 0.2);
   --border-image: #dbe5f1;
   --border-period: #e2e8f0;
+  --border-accent: rgba(120, 162, 240, 0.3);
+  --border-accent-hover: rgba(120, 162, 240, 0.5);
 
-  /* ─── Shadows ─── */
-  --shadow-xs: 0 1px 2px rgb(0 0 0 / 3%);
-  --shadow-sm: 0 4px 8px rgb(0 0 0 / 6%);
-  --shadow-md: 0 12px 24px rgb(0 0 0 / 8%);
-  --shadow-lg: 0 24px 48px rgb(0 0 0 / 5%);
-  --shadow-card: 0 12px 32px rgb(0 0 0 / 8%);
-  --shadow-card-hover: 0 18px 48px rgb(0 0 0 / 12%);
-  --shadow-card-alt: 0 8px 24px rgb(0 0 0 / 8%);
-  --shadow-item: 0 6px 18px rgb(0 0 0 / 6%);
-  --shadow-item-hover: 0 14px 32px rgb(22 81 243 / 25%);
-  --shadow-icon: 0 2px 6px rgb(0 0 0 / 5%);
-  --shadow-icon-alt: 0 4px 12px rgb(0 0 0 / 5%);
-  --shadow-icon-hover: rgb(166 120 240 / 50%);
-  --shadow-focus: 0 14px 32px rgb(22 81 243 / 25%);
-  --shadow-glow: 0 0 12px rgb(166 120 240 / 40%);
-  --shadow-accent: 0 0 8px rgb(166 120 240 / 30%);
-  --shadow-footer: 0 -4px 12px rgb(0 0 0 / 4%);
-  --shadow-navbar: 0 6px 20px rgb(0 0 0 / 6%);
-  --shadow-navbar-scrolled: 0 8px 24px rgb(0 0 0 / 8%);
-  --shadow-dropdown: 0 6px 20px rgb(0 0 0 / 8%);
+  /* ============================================
+     Shadows - Depth & Luxury
+     ============================================ */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06), 0 16px 32px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.08), 0 24px 48px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06), 0 24px 64px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 40px 96px rgba(120, 162, 240, 0.15);
+  --shadow-card-alt: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-item: 0 4px 12px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-item-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(120, 162, 240, 0.12);
+  --shadow-icon: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-icon-alt: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-icon-hover: 0 8px 24px rgba(120, 162, 240, 0.25);
+  --shadow-focus: 0 0 0 3px rgba(120, 162, 240, 0.2);
+  --shadow-glow: 0 0 20px rgba(120, 162, 240, 0.4);
+  --shadow-accent: 0 0 12px rgba(120, 162, 240, 0.3);
+  --shadow-footer: 0 -4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-navbar: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-navbar-scrolled: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: 0 6px 20px rgba(0, 0, 0, 0.08);
   --shadow-composite:
-    0 1px 2px rgb(0 0 0 / 3%),
-    0 4px 8px rgb(0 0 0 / 6%),
-    0 12px 24px rgb(0 0 0 / 8%),
-    0 24px 48px rgb(0 0 0 / 5%);
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 12px 24px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.05);
   --shadow-composite-hover:
-    0 2px 4px rgb(0 0 0 / 4%),
-    0 8px 16px rgb(0 0 0 / 8%),
-    0 24px 48px rgb(0 0 0 / 12%),
-    0 40px 80px rgb(0 0 0 / 8%);
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.12),
+    0 40px 80px rgba(120, 162, 240, 0.15);
 
-  /* ─── Typography ─── */
-  --font-main: inter, "Segoe UI", roboto, helvetica, arial, sans-serif;
-  --font-title-size: 1.8rem;
+  /* ============================================
+     Typography - Professional & Elegant
+     ============================================ */
+  --font-main: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  --font-title-size: 2rem;
   --font-title-weight: 700;
-  --font-title-spacing: -0.5px;
+  --font-title-spacing: -0.8px;
+  --font-subtitle-weight: 600;
+  --font-subtitle-spacing: -0.5px;
   --font-size-base: 1rem;
-  --font-size-title: 1.35rem;
-  --font-size-subtitle: 1.05rem;
+  --font-size-title: 1.5rem;
+  --font-size-subtitle: 1.1rem;
   --font-size-period: 0.9rem;
   --font-size-footer: 0.95rem;
+  --font-size-small: 0.875rem;
+  --font-size-xs: 0.75rem;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
 
-  /* ─── Layout & Sizing ─── */
-  --section-padding: 3rem 2rem;
-  --section-padding-alt: 2.5rem;
-  --section-padding-mobile: 2rem 1rem;
+  /* ============================================
+     Layout & Sizing - Consistent Spacing
+     ============================================ */
+  --section-padding: 3.5rem 2.5rem;
+  --section-padding-alt: 3rem;
+  --section-padding-mobile: 2rem 1.5rem;
   --section-margin: 3rem;
-  --footer-padding: 2rem;
-  --card-padding: 2.5rem;
+  --section-margin-mobile: 2rem;
+  --footer-padding: 2.5rem 2rem;
+  --card-padding: 3.5rem clamp(2rem, 5vw, 4rem);
   --card-padding-alt: 3rem 2.5rem;
-  --card-max-width: 1080px;
-  --card-radius: 20px;
-  --card-radius-alt: 22px;
-  --card-radius-lg: 24px;
-  --item-radius: 16px;
-  --content-radius: 12px;
-  --btn-radius: 10px;
-  --stat-radius: 14px;
+  --card-padding-mobile: 2rem 1.5rem;
+  --card-max-width: 1200px;
+  --card-radius: 24px;
+  --card-radius-alt: 20px;
+  --card-radius-lg: 28px;
+  --card-radius-mobile: 18px;
+  --item-radius: 18px;
+  --item-radius-mobile: 14px;
+  --content-radius: 14px;
+  --btn-radius: 12px;
+  --btn-radius-mobile: 10px;
+  --stat-radius: 16px;
   --timeline-padding: 3rem;
-  --icon-size: 2.8rem;
-  --icon-size-lg: 3.2rem;
-  --icon-font: 1.4rem;
-  --icon-font-lg: 2rem;
+  --icon-size: 3rem;
+  --icon-size-lg: 3.5rem;
+  --icon-size-mobile: 2.5rem;
+  --icon-font: 1.5rem;
+  --icon-font-lg: 1.75rem;
+  --icon-font-mobile: 1.25rem;
+
+  /* ============================================
+     Transitions & Animations
+     ============================================ */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animation-duration-fast: 0.3s;
+  --animation-duration-base: 0.6s;
+  --animation-duration-slow: 0.9s;
+
+  /* ============================================
+     Z-Index Layers
+     ============================================ */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal: 400;
+  --z-tooltip: 500;
+  --z-max: 9999;
 }

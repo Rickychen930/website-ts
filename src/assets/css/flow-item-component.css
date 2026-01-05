@@ -1,0 +1,373 @@
+/* ============================================
+   Flow Item Component - Luxury & Elegant Design
+   ============================================ */
+
+/* ============================================
+   Flow Item Container
+   ============================================ */
+.flow-item {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 2rem clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(249, 251, 253, 0.98)
+  );
+  border-radius: 20px;
+  border: 1px solid rgba(220, 227, 234, 0.5);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease,
+    background 0.4s ease;
+  will-change: opacity, transform;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Visible State */
+.flow-item.flow-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated State - Performance optimization */
+.flow-item.flow-visible {
+  will-change: auto;
+}
+
+/* Variant Styles */
+.flow-item.flow-variant-default {
+  /* Default styling already applied */
+}
+
+.flow-item.flow-variant-elevated {
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.06),
+    0 16px 40px rgba(0, 0, 0, 0.08),
+    0 24px 60px rgba(120, 162, 240, 0.1);
+  border: 1px solid rgba(120, 162, 240, 0.2);
+}
+
+.flow-item.flow-variant-minimal {
+  background: transparent;
+  border: 1px solid rgba(220, 227, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
+}
+
+/* Hover States */
+.flow-item:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.08),
+    0 24px 64px rgba(0, 0, 0, 0.1),
+    0 32px 80px rgba(120, 162, 240, 0.12);
+  border-color: rgba(120, 162, 240, 0.4);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 1),
+    rgba(249, 251, 253, 0.99)
+  );
+}
+
+.flow-item.flow-variant-elevated:hover {
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.1),
+    0 32px 80px rgba(0, 0, 0, 0.12),
+    0 48px 120px rgba(120, 162, 240, 0.18);
+}
+
+.flow-item.flow-variant-minimal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-color: rgba(120, 162, 240, 0.3);
+}
+
+/* ============================================
+   Flow Icon
+   ============================================ */
+.flow-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+}
+
+.flow-icon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle,
+    rgba(120, 162, 240, 0.2),
+    rgba(120, 162, 240, 0.05),
+    transparent
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.flow-item:hover .flow-icon-glow {
+  opacity: 1;
+}
+
+.flow-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.75rem;
+  background: linear-gradient(135deg,
+    rgba(120, 162, 240, 0.1),
+    rgba(111, 177, 252, 0.15)
+  );
+  border: 2px solid rgba(120, 162, 240, 0.2);
+  border-radius: 16px;
+  box-shadow:
+    0 4px 12px rgba(120, 162, 240, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.flow-item:hover .flow-icon {
+  transform: scale(1.1) rotate(5deg);
+  border-color: rgba(120, 162, 240, 0.4);
+  box-shadow:
+    0 8px 24px rgba(120, 162, 240, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg,
+    rgba(120, 162, 240, 0.15),
+    rgba(111, 177, 252, 0.2)
+  );
+}
+
+/* ============================================
+   Flow Content
+   ============================================ */
+.flow-content {
+  position: relative;
+  color: var(--text-subtle, #5c6b7a);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  line-height: 1.75;
+  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+.flow-item:hover .flow-content {
+  color: var(--text-muted, #3b4a59);
+}
+
+/* ============================================
+   Scroll Direction Animations
+   ============================================ */
+.flow-item.flow-scroll-up.flow-hidden {
+  transform: translateY(30px);
+}
+
+.flow-item.flow-scroll-down.flow-hidden {
+  transform: translateY(-30px);
+}
+
+.flow-item.flow-scroll-left.flow-hidden {
+  transform: translateX(30px);
+}
+
+.flow-item.flow-scroll-right.flow-hidden {
+  transform: translateX(-30px);
+}
+
+/* ============================================
+   Responsive Design - Tablet
+   ============================================ */
+@media screen and (width <= 992px) {
+  .flow-item {
+    padding: 1.75rem clamp(1.25rem, 2.5vw, 2rem);
+    border-radius: 18px;
+    margin-bottom: 1.75rem;
+  }
+
+  .flow-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    border-radius: 14px;
+  }
+
+  .flow-icon-glow {
+    width: 70px;
+    height: 70px;
+  }
+
+  .flow-content {
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+    line-height: 1.7;
+  }
+}
+
+@media screen and (width <= 768px) {
+  .flow-item {
+    padding: 1.5rem clamp(1.25rem, 2vw, 1.75rem);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  .flow-icon-wrapper {
+    margin-bottom: 1.25rem;
+  }
+
+  .flow-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.35rem;
+    border-radius: 12px;
+  }
+
+  .flow-icon-glow {
+    width: 60px;
+    height: 60px;
+  }
+
+  .flow-content {
+    font-size: clamp(0.875rem, 1.3vw, 0.95rem);
+    line-height: 1.65;
+  }
+
+  .flow-item.flow-variant-minimal {
+    padding: 1.25rem clamp(1rem, 2vw, 1.5rem);
+  }
+}
+
+/* ============================================
+   Responsive Design - Mobile
+   ============================================ */
+@media screen and (width <= 480px) {
+  .flow-item {
+    padding: 1.25rem clamp(1rem, 2vw, 1.5rem);
+    border-radius: 14px;
+    margin-bottom: 1.25rem;
+  }
+
+  .flow-icon-wrapper {
+    margin-bottom: 1rem;
+  }
+
+  .flow-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+  }
+
+  .flow-icon-glow {
+    width: 55px;
+    height: 55px;
+  }
+
+  .flow-content {
+    font-size: clamp(0.85rem, 1.2vw, 0.9rem);
+    line-height: 1.6;
+  }
+
+  .flow-item.flow-variant-minimal {
+    padding: 1rem clamp(0.875rem, 1.5vw, 1.25rem);
+  }
+}
+
+/* ============================================
+   Landscape Orientation
+   ============================================ */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .flow-item {
+    padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .flow-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.35rem;
+  }
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .flow-item {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+
+  .flow-item.flow-visible {
+    transform: none;
+  }
+
+  .flow-item:hover {
+    transform: none;
+  }
+
+  .flow-item:hover .flow-icon {
+    transform: none;
+  }
+
+  .flow-item.flow-scroll-up.flow-hidden,
+  .flow-item.flow-scroll-down.flow-hidden,
+  .flow-item.flow-scroll-left.flow-hidden,
+  .flow-item.flow-scroll-right.flow-hidden {
+    transform: none;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .flow-item {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
+    padding: 1.5rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .flow-icon-glow {
+    display: none;
+  }
+
+  .flow-icon {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
+
+/* ============================================
+   High Contrast Mode (Accessibility)
+   ============================================ */
+@media (prefers-contrast: high) {
+  .flow-item {
+    border: 2px solid var(--text-heading, #1f2d3d);
+  }
+
+  .flow-icon {
+    border: 2px solid var(--text-heading, #1f2d3d);
+  }
+}
+

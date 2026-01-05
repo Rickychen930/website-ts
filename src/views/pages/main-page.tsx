@@ -161,8 +161,9 @@ class MainPage extends BasePage<{}, MainPageState> {
 
   /**
    * Render a single section
+   * Enhanced with staggered animations and variant support
    */
-  private renderSection(config: SectionConfig, profile: UserProfile): ReactNode {
+  private renderSection(config: SectionConfig, profile: UserProfile, index: number): ReactNode {
     const { id, title, component: SectionComponent, dataKey } = config;
     const data = profile[dataKey];
 
@@ -174,8 +175,18 @@ class MainPage extends BasePage<{}, MainPageState> {
     // Special handling for AboutMeSection which needs the entire profile
     const sectionData = dataKey === "name" ? profile : data;
 
+    // Determine variant based on section type for visual hierarchy
+    const variant = index === 0 ? "elevated" : "default";
+    const animationDelay = index * 100; // Staggered animation delay
+
     return (
-      <SectionBlock key={id} id={id} title={title}>
+      <SectionBlock 
+        key={id} 
+        id={id} 
+        title={title}
+        variant={variant}
+        animationDelay={animationDelay}
+      >
         <SectionComponent data={sectionData} />
       </SectionBlock>
     );
@@ -183,6 +194,7 @@ class MainPage extends BasePage<{}, MainPageState> {
 
   /**
    * Render all sections
+   * Enhanced with index for staggered animations
    */
   private renderSections(): ReactNode {
     const { profile } = this.state;
@@ -193,8 +205,8 @@ class MainPage extends BasePage<{}, MainPageState> {
 
     return (
       <div className="contents-section">
-        {this.SECTION_CONFIGS.map((config) => 
-          this.renderSection(config, profile)
+        {this.SECTION_CONFIGS.map((config, index) => 
+          this.renderSection(config, profile, index)
         )}
       </div>
     );

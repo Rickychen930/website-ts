@@ -1,3 +1,7 @@
+/* ============================================
+   Section Block - Luxury & Elegant Design
+   ============================================ */
+
 /* Global Reset */
 * {
   box-sizing: border-box;
@@ -7,93 +11,348 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Section Block Container */
+/* ============================================
+   Section Block Container
+   ============================================ */
 .section-block {
   position: relative;
   width: 100%;
-  margin: 2rem auto;
-  padding: 2rem clamp(1rem, 4vw, 2.5rem);
+  margin: 3rem auto;
+  padding: 3rem clamp(1.5rem, 5vw, 4rem);
   background: transparent;
-  border-radius: 20px;
-  max-width: 960px;
+  border-radius: 24px;
+  max-width: 1200px;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
-/* Typography */
+/* Visible State - Smooth Animation */
+.section-block.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated State - Performance optimization */
+.section-block.section-animated {
+  will-change: auto;
+}
+
+/* Variant Styles */
+.section-block.section-variant-default {
+  /* Default variant - clean and minimal */
+}
+
+.section-block.section-variant-elevated {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(249, 251, 253, 0.98));
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.04),
+    0 12px 32px rgba(0, 0, 0, 0.06),
+    0 24px 64px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(220, 227, 234, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.section-block.section-variant-elevated:hover {
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.06),
+    0 16px 48px rgba(0, 0, 0, 0.08),
+    0 32px 80px rgba(120, 162, 240, 0.12);
+  transform: translateY(-4px);
+  border-color: rgba(120, 162, 240, 0.3);
+}
+
+.section-block.section-variant-minimal {
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  background: transparent;
+}
+
+/* ============================================
+   Section Header & Title
+   ============================================ */
+.section-header {
+  position: relative;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
 .section-title {
-  color: #2c3e50;
-  font-size: clamp(1.4rem, 2vw, 1.7rem);
+  position: relative;
+  display: inline-block;
+  color: var(--text-heading, #1f2d3d);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
   font-weight: 700;
-  margin-bottom: 1.2rem;
-  letter-spacing: -0.5px;
-  transition: color 0.3s ease;
+  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  margin: 0 0 1rem;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, var(--text-heading, #1f2d3d), var(--accent, #78a2f0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
 }
 
 .section-block:hover .section-title {
-  color: #78a2f0;
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }
 
+/* Elegant Underline Animation */
+.section-title-underline {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent,
+    var(--accent, #78a2f0),
+    var(--accent-alt, #6fb1fc),
+    var(--accent, #78a2f0),
+    transparent
+  );
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(120, 162, 240, 0.3);
+}
+
+.section-block.section-visible .section-title-underline {
+  width: min(80px, 30%);
+}
+
+/* ============================================
+   Section Content
+   ============================================ */
 .section-content {
-  color: #5c6b7a;
-  font-size: clamp(1rem, 1.5vw, 1.05rem);
-  line-height: 1.75;
-  transition: color 0.3s ease;
+  position: relative;
+  color: var(--text-subtle, #5c6b7a);
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  line-height: 1.8;
+  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  transition: color 0.4s ease;
+  z-index: 1;
 }
 
 .section-block:hover .section-content {
-  color: #3b4a59;
+  color: var(--text-muted, #3b4a59);
 }
 
+/* ============================================
+   Responsive Design - Tablet
+   ============================================ */
+@media screen and (width <= 992px) {
+  .section-block {
+    margin: 2.5rem auto;
+    padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+    border-radius: 20px;
+  }
 
-/* Tablet */
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.875rem;
+  }
+
+  .section-title-underline {
+    height: 2.5px;
+    bottom: -0.4rem;
+  }
+
+  .section-content {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    line-height: 1.75;
+  }
+}
+
 @media screen and (width <= 768px) {
   .section-block {
-    margin: 1.5rem 1rem;
-    padding: 1.5rem 1.2rem;
+    margin: 2rem 1rem;
+    padding: 2rem clamp(1.25rem, 3vw, 2rem);
+    border-radius: 18px;
+  }
+
+  .section-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+    letter-spacing: -0.6px;
+  }
+
+  .section-title-underline {
+    height: 2px;
+    width: min(60px, 25%) !important;
+  }
+
+  .section-content {
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+    line-height: 1.7;
+  }
+
+  .section-block.section-variant-elevated {
+    padding: 1.75rem clamp(1.25rem, 3vw, 2rem);
+  }
+}
+
+/* ============================================
+   Responsive Design - Mobile
+   ============================================ */
+@media screen and (width <= 480px) {
+  .section-block {
+    margin: 1.5rem 0.75rem;
+    padding: 1.75rem clamp(1rem, 2.5vw, 1.5rem);
     border-radius: 16px;
   }
 
-  .section-title {
-    font-size: 1.4rem;
-  }
-
-  .section-content {
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-}
-
-/* Mobile */
-@media screen and (width <= 480px) {
-  .section-block {
-    margin: 1rem 0.5rem;
-    padding: 1.2rem 1rem;
-    border-radius: 14px;
+  .section-header {
+    margin-bottom: 1.5rem;
   }
 
   .section-title {
-    font-size: 1.2rem;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title-underline {
+    height: 2px;
+    width: min(50px, 20%) !important;
+    bottom: -0.3rem;
   }
 
   .section-content {
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: clamp(0.875rem, 1.3vw, 0.95rem);
+    line-height: 1.65;
+  }
+
+  .section-block.section-variant-elevated {
+    padding: 1.5rem clamp(1rem, 2.5vw, 1.5rem);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .section-block.section-variant-minimal {
+    padding: 1.5rem clamp(1rem, 2.5vw, 1.5rem);
   }
 }
 
-/* Landscape orientation */
+/* ============================================
+   Landscape Orientation
+   ============================================ */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .section-block {
-    margin: 1.2rem 2rem;
-    padding: 1.5rem 2rem;
+    margin: 1.75rem 1.5rem;
+    padding: 2rem clamp(1.5rem, 3vw, 2.5rem);
   }
 
   .section-title {
-    font-size: 1.3rem;
+    font-size: clamp(1.35rem, 2.2vw, 1.6rem);
   }
 
   .section-content {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+  }
+}
+
+/* ============================================
+   Large Screens
+   ============================================ */
+@media screen and (width >= 1400px) {
+  .section-block {
+    max-width: 1400px;
+    padding: 3.5rem clamp(2rem, 5vw, 5rem);
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .section-content {
+    font-size: clamp(1.05rem, 1.6vw, 1.15rem);
+    line-height: 1.85;
+  }
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .section-block {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+
+  .section-block.section-visible {
+    transform: none;
+  }
+
+  .section-title-underline {
+    transition: width 0.3s ease;
+  }
+
+  .section-block:hover .section-title {
+    transform: none;
+  }
+
+  .section-block.section-variant-elevated:hover {
+    transform: none;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .section-block {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    page-break-inside: avoid;
+    opacity: 1;
+    transform: none;
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
+  }
+
+  .section-title {
+    -webkit-text-fill-color: #1f2d3d;
+    color: #1f2d3d;
+  }
+
+  .section-title-underline {
+    display: none;
+  }
+}
+
+/* ============================================
+   High Contrast Mode (Accessibility)
+   ============================================ */
+@media (prefers-contrast: high) {
+  .section-block.section-variant-elevated {
+    border: 2px solid var(--text-heading, #1f2d3d);
+  }
+
+  .section-title {
+    -webkit-text-fill-color: var(--text-heading, #1f2d3d);
+    color: var(--text-heading, #1f2d3d);
+  }
+
+  .section-title-underline {
+    background: var(--text-heading, #1f2d3d);
   }
 }
