@@ -1,0 +1,82 @@
+/* ============================================
+   CONTACT GRID - ADVANCED LUXURY LAYOUT
+   ============================================
+   
+   Advanced Features:
+   - Responsive grid with optimal spacing
+   - Staggered animations
+   - Advanced layout patterns
+   ============================================ */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Staggered Animation Support */
+.contact-grid > * {
+  animation-delay: calc(var(--index, 0) * 0.1s);
+}
+
+/* Responsive Grid Adjustments */
+@media screen and (min-width: 1600px) {
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.25rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .contact-grid {
+    gap: 1.5rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .contact-grid > * {
+    animation-delay: 0s !important;
+  }
+}

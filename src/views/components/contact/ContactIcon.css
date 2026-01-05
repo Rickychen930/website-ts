@@ -1,0 +1,284 @@
+/* ============================================
+   CONTACT ICON - ADVANCED LUXURY DESIGN
+   ============================================
+   
+   Advanced Features:
+   - Glassmorphism effects
+   - 3D transforms
+   - Advanced gradient animations
+   - Particle effects
+   - Smooth micro-interactions
+   ============================================ */
+
+.contact-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, box-shadow, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  isolation: isolate;
+}
+
+/* Icon Sizes */
+.contact-icon--small {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.4rem;
+}
+
+.contact-icon--medium {
+  width: 5rem;
+  height: 5rem;
+  font-size: 2rem;
+}
+
+.contact-icon--large {
+  width: 7rem;
+  height: 7rem;
+  font-size: 2.75rem;
+}
+
+/* Icon Background with Animated Gradient */
+.contact-icon-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.15;
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: contactIconGradientMove 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes contactIconGradientMove {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Icon Content */
+.contact-icon-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.contact-icon-emoji {
+  display: block;
+  line-height: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  filter: grayscale(0%);
+}
+
+/* Icon Glow Effect */
+.contact-icon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(15px);
+}
+
+.contact-icon--active .contact-icon-glow {
+  width: 180%;
+  height: 180%;
+  opacity: 0.5;
+  animation: contactIconGlowPulse 2s ease-in-out infinite;
+}
+
+@keyframes contactIconGlowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Type-based Gradients with Animation */
+.contact-icon-gradient--email {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+}
+
+.contact-icon-gradient--phone {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #f093fb 100%);
+}
+
+.contact-icon-gradient--social {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #4facfe 100%);
+}
+
+.contact-icon-gradient--location {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 50%, #43e97b 100%);
+}
+
+.contact-icon-gradient--website {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 50%, #fa709a 100%);
+}
+
+.contact-icon-gradient--other {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+}
+
+/* Shine Effect */
+.contact-icon::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Active State with 3D Transform */
+.contact-icon--active {
+  transform: scale(1.2) rotate(10deg) rotateY(5deg);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 8px 32px rgba(102, 126, 234, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 0 2px rgba(102, 126, 234, 0.2);
+  filter: brightness(1.1);
+}
+
+.contact-icon--active::before {
+  transform: rotate(45deg) translateX(100%);
+  transition-duration: 1.5s;
+}
+
+.contact-icon--active .contact-icon-background {
+  opacity: 0.3;
+  animation-duration: 4s;
+}
+
+.contact-icon--active .contact-icon-emoji {
+  transform: scale(1.15) rotate(-5deg);
+  filter: grayscale(0%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Type-specific Active Glow Colors */
+.contact-icon--email.contact-icon--active .contact-icon-glow {
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.4), transparent);
+}
+
+.contact-icon--phone.contact-icon--active .contact-icon-glow {
+  background: radial-gradient(circle, rgba(245, 87, 108, 0.6), rgba(240, 147, 251, 0.4), transparent);
+}
+
+.contact-icon--social.contact-icon--active .contact-icon-glow {
+  background: radial-gradient(circle, rgba(79, 172, 254, 0.6), rgba(0, 242, 254, 0.4), transparent);
+}
+
+.contact-icon--location.contact-icon--active .contact-icon-glow {
+  background: radial-gradient(circle, rgba(67, 233, 123, 0.6), rgba(56, 249, 215, 0.4), transparent);
+}
+
+.contact-icon--website.contact-icon--active .contact-icon-glow {
+  background: radial-gradient(circle, rgba(250, 112, 154, 0.6), rgba(254, 225, 64, 0.4), transparent);
+}
+
+.contact-icon--other.contact-icon--active .contact-icon-glow {
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.4), transparent);
+}
+
+/* Hover State (when parent card is hovered) */
+.contact-card--active .contact-icon {
+  transform: scale(1.15) rotate(8deg);
+  box-shadow: 
+    0 12px 40px rgba(102, 126, 234, 0.25),
+    0 6px 20px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Focus State */
+.contact-icon:focus-visible {
+  outline: 3px solid var(--contact-primary, #667eea);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .contact-icon--medium {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 1.85rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .contact-icon--medium {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.7rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .contact-icon,
+  .contact-icon-background,
+  .contact-icon-emoji,
+  .contact-icon-glow,
+  .contact-icon::before {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .contact-icon--active {
+    transform: scale(1.1);
+  }
+
+  .contact-icon--active .contact-icon-emoji {
+    transform: scale(1.05);
+  }
+}
