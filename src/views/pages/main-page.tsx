@@ -18,97 +18,227 @@ import MainController from "../../controllers/main-controller";
 import { UserProfile } from "../../types/user";
 
 type MainPageState = BasePageState & {
-  name: string;
   profile: UserProfile | null;
   loading: boolean;
+  error: string | null;
+  retryCount: number;
 };
+
+interface SectionConfig {
+  id: string;
+  title: string;
+  component: React.ComponentType<any>;
+  dataKey: keyof UserProfile;
+}
 
 class MainPage extends BasePage<{}, MainPageState> {
   private controller: MainController;
+  private readonly MAX_RETRIES = 3;
+  private readonly RETRY_DELAY = 2000;
+
+  private readonly SECTION_CONFIGS: SectionConfig[] = [
+    { id: "about", title: "About Me", component: AboutMeSection, dataKey: "name" },
+    { id: "academic", title: "Academic", component: AcademicSection, dataKey: "academics" },
+    { id: "honors", title: "Honors", component: HonorsSection, dataKey: "honors" },
+    { id: "certifications", title: "Certifications", component: CertificationSection, dataKey: "certifications" },
+    { id: "skills", title: "Technical Skills", component: TechnicalSkillsSection, dataKey: "technicalSkills" },
+    { id: "experience", title: "Work Experience", component: WorkExperienceSection, dataKey: "experiences" },
+    { id: "projects", title: "Projects", component: ProjectsSection, dataKey: "projects" },
+    { id: "soft-skills", title: "Soft Skills", component: SoftSkillsSection, dataKey: "softSkills" },
+    { id: "languages", title: "Languages", component: LanguagesSection, dataKey: "languages" },
+    { id: "contact", title: "Contact", component: ContactSection, dataKey: "contacts" },
+  ];
 
   constructor(props: {}) {
     super(props);
     this.state = {
       ...this.state,
-      name: "",
       profile: null,
       loading: true,
+      error: null,
+      retryCount: 0,
     };
     this.controller = new MainController();
   }
 
   async componentDidMount(): Promise<void> {
+    await this.loadProfile();
+  }
+
+  /**
+   * Load user profile with retry logic
+   */
+  private async loadProfile(): Promise<void> {
+    this.setState({ loading: true, error: null });
+
     try {
       const profile = await this.controller.getUserProfile();
-      this.setState({ profile, loading: false });
+
+      if (!profile) {
+        throw new Error("Failed to load profile data");
+      }
+
+      this.setState({ 
+        profile, 
+        loading: false, 
+        error: null,
+        retryCount: 0,
+      });
     } catch (err) {
-      console.error("Failed to load profile:", err);
-      this.setState({ loading: false });
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
+      const newRetryCount = this.state.retryCount + 1;
+
+      if (newRetryCount < this.MAX_RETRIES) {
+        // Retry after delay
+        setTimeout(() => {
+          this.setState({ retryCount: newRetryCount });
+          this.loadProfile();
+        }, this.RETRY_DELAY);
+      } else {
+        this.setState({ 
+          loading: false, 
+          error: errorMessage,
+          retryCount: 0,
+        });
+      }
     }
   }
+
+  /**
+   * Handle retry button click
+   */
+  private handleRetry = (): void => {
+    this.setState({ retryCount: 0 });
+    this.loadProfile();
+  };
 
   protected renderHeader(): ReactNode {
     return <Navbar items={this.controller.getNavbarItems()} />;
   }
 
-  private renderSections(): ReactNode {
-    const { profile, loading } = this.state;
+  /**
+   * Render loading state
+   */
+  protected renderLoading(): ReactNode {
+    return (
+      <div className="main-page-loading">
+        <div className="loading-spinner" aria-label="Loading">
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+        </div>
+        <p className="loading-text">Loading profile...</p>
+      </div>
+    );
+  }
 
-    if (loading) {
-      return <div className="loading">Loading profile...</div>;
+  /**
+   * Render error state
+   */
+  private renderError(): ReactNode {
+    const { error, retryCount } = this.state;
+    
+    return (
+      <div className="main-page-error">
+        <div className="error-content">
+          <div className="error-icon" aria-hidden="true">⚠️</div>
+          <h2 className="error-title">Unable to Load Profile</h2>
+          <p className="error-message">{error || "An unexpected error occurred"}</p>
+          {retryCount > 0 && retryCount < this.MAX_RETRIES && (
+            <p className="error-retry-info">Retrying... ({retryCount}/{this.MAX_RETRIES})</p>
+          )}
+          <button 
+            className="error-retry-button" 
+            onClick={this.handleRetry}
+            type="button"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Render a single section
+   */
+  private renderSection(config: SectionConfig, profile: UserProfile): ReactNode {
+    const { id, title, component: SectionComponent, dataKey } = config;
+    const data = profile[dataKey];
+
+    // Skip section if data is empty or undefined
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      return null;
     }
 
+    // Special handling for AboutMeSection which needs the entire profile
+    const sectionData = dataKey === "name" ? profile : data;
+
+    return (
+      <SectionBlock key={id} id={id} title={title}>
+        <SectionComponent data={sectionData} />
+      </SectionBlock>
+    );
+  }
+
+  /**
+   * Render all sections
+   */
+  private renderSections(): ReactNode {
+    const { profile } = this.state;
+
     if (!profile) {
-      return <div className="error">Failed to load profile data.</div>;
+      return null;
     }
 
     return (
       <div className="contents-section">
-        <SectionBlock id="about" title="About Me">
-          <AboutMeSection data={profile} />
-        </SectionBlock>
-        <SectionBlock id="academic" title="Academic">
-          <AcademicSection data={profile.academics} />
-        </SectionBlock>
-        <SectionBlock id="honors" title="Honors">
-          <HonorsSection data={profile.honors} />
-        </SectionBlock>
-        <SectionBlock id="certifications" title="Certifications">
-          <CertificationSection data={profile.certifications} />
-        </SectionBlock>
-        <SectionBlock id="skills" title="Technical Skills">
-          <TechnicalSkillsSection data={profile.technicalSkills} />
-        </SectionBlock>
-        <SectionBlock id="experience" title="Work Experience">
-          <WorkExperienceSection data={profile.experiences} />
-        </SectionBlock>
-        <SectionBlock id="projects" title="Projects">
-          <ProjectsSection data={profile.projects} />
-        </SectionBlock>
-        <SectionBlock id="soft-skills" title="Soft Skills">
-          <SoftSkillsSection data={profile.softSkills} />
-        </SectionBlock>
-        <SectionBlock id="languages" title="Languages">
-          <LanguagesSection data={profile.languages} />
-        </SectionBlock>
-        <SectionBlock id="contact" title="Contact">
-          <ContactSection data={profile.contacts} />
-        </SectionBlock>
+        {this.SECTION_CONFIGS.map((config) => 
+          this.renderSection(config, profile)
+        )}
       </div>
+    );
+  }
+
+  /**
+   * Render footer
+   */
+  protected renderFooter(): ReactNode {
+    const currentYear = new Date().getFullYear();
+    return (
+      <footer className="footer" role="contentinfo">
+        <div className="footer-content">
+          <p className="footer-text">© {currentYear} Ricky Inc. All rights reserved.</p>
+        </div>
+      </footer>
     );
   }
 
   protected renderContent(): ReactNode {
+    const { loading, error, profile } = this.state;
+
+    if (loading) {
+      return (
+        <div className="main-page">
+          {this.renderLoading()}
+        </div>
+      );
+    }
+
+    if (error || !profile) {
+      return (
+        <div className="main-page">
+          {this.renderError()}
+        </div>
+      );
+    }
+
     return (
       <div className="main-page">
         {this.renderSections()}
-        {this.renderFoot()}
+        {this.renderFooter()}
       </div>
     );
-  }
-
-  private renderFoot(): ReactNode {
-    return <footer className="footer">© 2025 Ricky Inc.</footer>;
   }
 }
 

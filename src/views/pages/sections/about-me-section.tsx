@@ -50,7 +50,7 @@ class AboutMeSection extends Component<AboutMeProps> {
         />
         <ProfileAction
           label="Hire Me"
-          href="#contact-section"
+          href="#contact"
           variant={ButtonVariant.SECONDARY}
         />
       </div>
