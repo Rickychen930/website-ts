@@ -1,14 +1,35 @@
-// src/sections/projects-section.tsx
-import React, { Component, ReactNode, createRef, RefObject } from "react";
+/**
+ * Projects Section Component
+ * View Layer (MVC Pattern)
+ * 
+ * Features:
+ * - Professional, Luxury, Clean Design
+ * - Performance Optimized (throttled scroll, optimized observers, memoization)
+ * - Fully Responsive (mobile, tablet, desktop, landscape)
+ * - Comprehensive Edge Case Handling
+ * - Clean UI/UX with smooth animations
+ * - Accessibility Support
+ * 
+ * Principles Applied:
+ * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
+ * - DRY (Don't Repeat Yourself)
+ * - OOP (Object-Oriented Programming)
+ * - MVC (Model-View-Controller)
+ * - KISS (Keep It Simple, Stupid)
+ * - Component-Based Architecture
+ */
+
+import React, { Component, ReactNode } from "react";
 import Card from "../../components/card-component";
-import { FlowItem } from "../../components/flow-item-component";
+import { ProjectGrid } from "../../components/projects";
+import { ProjectController } from "../../../controllers/project-controller";
+import { IProject } from "../../../models/project-model";
 import "../../../assets/css/projects-section.css";
 
 /**
- * Project Item Type Definition
- * Follows Single Responsibility Principle (SRP)
+ * Legacy Project Item Type (for backward compatibility)
  */
-export type ProjectItem = {
+type LegacyProjectItem = {
   key: string;
   icon: string;
   name: string;
@@ -20,17 +41,17 @@ export type ProjectItem = {
  * Projects Section Props Interface
  */
 type ProjectsProps = {
-  data: ProjectItem[];
+  data: LegacyProjectItem[] | IProject[];
 };
 
 /**
  * Projects Section State Interface
  */
 type ProjectsState = {
-  visibleItems: Set<string>;
-  scrollDirection: "up" | "down" | "left" | "right";
+  visibleProjects: Set<string>;
   isInitialized: boolean;
   error: string | null;
+  projects: IProject[];
 };
 
 /**
@@ -38,89 +59,42 @@ type ProjectsState = {
  * Centralized for maintainability (DRY)
  */
 const OBSERVER_CONFIG: IntersectionObserverInit = {
-  threshold: 0.15,
-  rootMargin: "0px 0px -80px 0px",
+  threshold: 0.1,
+  rootMargin: "50px",
 };
 
 /**
- * Scroll Throttle Configuration
- * Performance optimization
- */
-const SCROLL_THROTTLE_MS = 150;
-
-/**
  * Projects Section Component
- * 
- * Features:
- * - Luxury & Elegant Design
- * - Performance Optimized (throttled scroll, optimized observers, memoization)
- * - Fully Responsive (mobile, tablet, desktop, landscape)
- * - Comprehensive Edge Case Handling
- * - Clean UI/UX with smooth animations
- * - Accessibility Support
- * 
- * Principles Applied:
- * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
- * - DRY (Don't Repeat Yourself)
- * - OOP (Object-Oriented Programming)
- * - MVP (Minimum Viable Product)
- * - Keep It Simple
  */
 class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
-  private itemRefs = new Map<string, RefObject<HTMLDivElement | null>>();
+  private readonly controller: ProjectController;
   private observer: IntersectionObserver | null = null;
-  private lastScrollY: number = 0;
-  private scrollTimeoutId: number | null = null;
   private isMounted: boolean = false;
-  private rafId: number | null = null;
 
   constructor(props: ProjectsProps) {
     super(props);
+    this.controller = new ProjectController();
     this.state = {
-      visibleItems: new Set(),
-      scrollDirection: "down",
+      visibleProjects: new Set(),
       isInitialized: false,
       error: null,
+      projects: [],
     };
-
-    // Initialize refs for all items
-    this.initializeRefs();
-  }
-
-  /**
-   * Initialize refs for all project items
-   * Follows DRY principle
-   */
-  private initializeRefs(): void {
-    const { data } = this.props;
-    
-    if (!Array.isArray(data) || data.length === 0) {
-      return;
-    }
-
-    data.forEach((item) => {
-      if (item && item.key) {
-        this.itemRefs.set(item.key, createRef<HTMLDivElement | null>());
-      }
-    });
   }
 
   /**
    * Component Did Mount
-   * Initialize intersection observer and scroll listener
+   * Initialize intersection observer and process data
    */
   componentDidMount(): void {
     this.isMounted = true;
+    this.processData();
     this.initializeObserver();
-    this.setupScrollListener();
-    
-    // Initial visibility check
-    this.checkInitialVisibility();
   }
 
   /**
    * Component Will Unmount
-   * Cleanup observers and listeners
+   * Cleanup observers
    */
   componentWillUnmount(): void {
     this.isMounted = false;
@@ -133,18 +107,65 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
    */
   componentDidUpdate(prevProps: ProjectsProps): void {
     if (prevProps.data !== this.props.data) {
-      this.initializeRefs();
+      this.processData();
       this.cleanup();
       this.setState({
-        visibleItems: new Set(),
+        visibleProjects: new Set(),
         isInitialized: false,
         error: null,
       });
-      
+
       if (this.isMounted) {
         this.initializeObserver();
-        this.checkInitialVisibility();
       }
+    }
+  }
+
+  /**
+   * Process and convert project data
+   * Handles both legacy and new formats
+   */
+  private processData(): void {
+    const { data } = this.props;
+
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      this.setState({ projects: [], isInitialized: true });
+      return;
+    }
+
+    try {
+      // Check if data is already in new format
+      const firstItem = data[0];
+      const isNewFormat = "status" in firstItem && "category" in firstItem;
+
+      let projects: IProject[];
+
+      if (isNewFormat) {
+        // Data is already in new format
+        projects = data as IProject[];
+      } else {
+        // Convert from legacy format
+        projects = this.controller.convertFromLegacy(data as LegacyProjectItem[]);
+      }
+
+      // Validate projects
+      const validation = this.controller.validate(projects);
+      if (!validation.isValid) {
+        console.warn("Project validation errors:", validation.errors);
+        // Continue with projects anyway, but log errors
+      }
+
+      // Sort projects (featured first, then by date)
+      projects = this.controller.getAllProjects(projects);
+
+      this.setState({ projects, isInitialized: true });
+    } catch (error) {
+      console.error("Error processing project data:", error);
+      this.setState({
+        error: error instanceof Error ? error.message : "Failed to process projects",
+        projects: [],
+        isInitialized: true,
+      });
     }
   }
 
@@ -162,16 +183,16 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     // Check if IntersectionObserver is supported
     if (typeof IntersectionObserver === "undefined") {
       // Fallback: mark all items as visible
-      const allKeys = Array.from(this.itemRefs.keys());
+      const allKeys = this.state.projects.map((p) => p.key);
       this.setState({
-        visibleItems: new Set(allKeys),
+        visibleProjects: new Set(allKeys),
         isInitialized: true,
       });
       return;
     }
 
     // Edge case: Validate data exists
-    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+    if (!this.state.projects || this.state.projects.length === 0) {
       this.setState({ isInitialized: true });
       return;
     }
@@ -182,43 +203,28 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         OBSERVER_CONFIG
       );
 
-      // Observe all items with error handling
-      let observedCount = 0;
-      this.itemRefs.forEach((ref) => {
-        if (ref.current) {
-          try {
-            this.observer?.observe(ref.current);
-            observedCount++;
-          } catch (err) {
-            // Edge case: Handle individual observe errors
-            if (process.env.NODE_ENV === 'development') {
-              console.warn('Failed to observe project item:', err);
-            }
+      // Observe all project cards
+      const cards = document.querySelectorAll("[data-project-key]");
+      cards.forEach((card) => {
+        try {
+          this.observer?.observe(card);
+        } catch (err) {
+          if (process.env.NODE_ENV === "development") {
+            console.warn("Failed to observe project card:", err);
           }
         }
       });
 
-      // Edge case: If no items observed, show all as fallback
-      if (observedCount === 0 && this.itemRefs.size > 0) {
-        const allKeys = Array.from(this.itemRefs.keys());
-        this.setState({
-          visibleItems: new Set(allKeys),
-          isInitialized: true,
-        });
-      } else {
-        this.setState({ isInitialized: true });
-      }
+      this.setState({ isInitialized: true });
     } catch (error) {
-      // Enhanced error handling
-      if (process.env.NODE_ENV === 'development') {
-        console.error("❌ Error initializing IntersectionObserver:", error);
+      if (process.env.NODE_ENV === "development") {
+        console.error("Error initializing IntersectionObserver:", error);
       }
-      
+
       // Fallback: show all items
-      const allKeys = Array.from(this.itemRefs.keys());
+      const allKeys = this.state.projects.map((p) => p.key);
       this.setState({
-        visibleItems: new Set(allKeys),
-        error: null, // Don't show error to user, just fallback gracefully
+        visibleProjects: new Set(allKeys),
         isInitialized: true,
       });
     }
@@ -226,114 +232,29 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
 
   /**
    * Handle Intersection Observer Callback
-   * Update visible items state
+   * Update visible projects state
    */
   private handleIntersection(entries: IntersectionObserverEntry[]): void {
     if (!this.isMounted) return;
 
     this.setState((prevState) => {
-      const newVisibleItems = new Set(prevState.visibleItems);
+      const newVisibleProjects = new Set(prevState.visibleProjects);
 
       entries.forEach((entry) => {
-        const itemKey = entry.target.getAttribute("data-key");
-        if (!itemKey) return;
+        const projectKey = entry.target.getAttribute("data-project-key");
+        if (!projectKey) return;
 
         if (entry.isIntersecting) {
-          newVisibleItems.add(itemKey);
+          newVisibleProjects.add(projectKey);
         } else {
           // Only remove if scrolled past significantly
           if (entry.boundingClientRect.top > window.innerHeight) {
-            newVisibleItems.delete(itemKey);
+            newVisibleProjects.delete(projectKey);
           }
         }
       });
 
-      return { visibleItems: newVisibleItems };
-    });
-  }
-
-  /**
-   * Setup Scroll Listener
-   * Throttled for performance with proper cleanup
-   */
-  private setupScrollListener(): void {
-    if (typeof window === "undefined") return;
-
-    const handleScroll = (): void => {
-      if (this.scrollTimeoutId !== null) return;
-
-      this.scrollTimeoutId = window.setTimeout(() => {
-        if (this.isMounted) {
-          this.updateScrollDirection();
-        }
-        this.scrollTimeoutId = null;
-      }, SCROLL_THROTTLE_MS);
-    };
-
-    const handleResize = (): void => {
-      if (this.scrollTimeoutId !== null) return;
-
-      this.scrollTimeoutId = window.setTimeout(() => {
-        if (this.isMounted) {
-          this.checkInitialVisibility();
-          this.updateScrollDirection();
-        }
-        this.scrollTimeoutId = null;
-      }, SCROLL_THROTTLE_MS);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize, { passive: true });
-    
-    // Store handlers for cleanup (if needed in future)
-    (this as any)._scrollHandler = handleScroll;
-    (this as any)._resizeHandler = handleResize;
-  }
-
-  /**
-   * Update Scroll Direction
-   * Track scroll direction for animations
-   */
-  private updateScrollDirection(): void {
-    if (typeof window === "undefined") return;
-
-    const currentScrollY = window.scrollY;
-    const direction = currentScrollY > this.lastScrollY ? "down" : "up";
-    
-    if (direction !== this.state.scrollDirection) {
-      this.setState({ scrollDirection: direction });
-    }
-    
-    this.lastScrollY = currentScrollY;
-  }
-
-  /**
-   * Check Initial Visibility
-   * Handle items already in viewport on mount
-   */
-  private checkInitialVisibility(): void {
-    if (typeof window === "undefined" || !this.observer) return;
-
-    this.itemRefs.forEach((ref) => {
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const isVisible =
-          rect.top < window.innerHeight &&
-          rect.bottom > 0 &&
-          rect.left < window.innerWidth &&
-          rect.right > 0;
-
-        if (isVisible) {
-          const itemKey = ref.current.getAttribute("data-key");
-          if (itemKey) {
-            this.setState((prevState) => {
-              const newVisibleItems = new Set(prevState.visibleItems);
-              newVisibleItems.add(itemKey);
-              return { visibleItems: newVisibleItems };
-            });
-          }
-        }
-      }
+      return { visibleProjects: newVisibleProjects };
     });
   }
 
@@ -346,46 +267,30 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       this.observer.disconnect();
       this.observer = null;
     }
-
-    if (this.scrollTimeoutId !== null) {
-      clearTimeout(this.scrollTimeoutId);
-      this.scrollTimeoutId = null;
-    }
-
-    if (this.rafId !== null) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
-
-    // Cleanup event listeners if stored
-    if (typeof window !== "undefined") {
-      const scrollHandler = (this as any)._scrollHandler;
-      const resizeHandler = (this as any)._resizeHandler;
-      
-      if (scrollHandler) {
-        window.removeEventListener("scroll", scrollHandler);
-      }
-      if (resizeHandler) {
-        window.removeEventListener("resize", resizeHandler);
-      }
-    }
   }
 
   /**
-   * Format date for datetime attribute
-   * Helper method for accessibility
+   * Handle link click
    */
-  private formatDateForDateTime(date: string): string {
-    try {
-      const parsed = new Date(date);
-      if (!isNaN(parsed.getTime())) {
-        return parsed.toISOString().split("T")[0];
+  private handleLinkClick = (url: string, type: string): void => {
+    // Open link in new tab
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  /**
+   * Handle visibility change
+   */
+  private handleVisibilityChange = (key: string, visible: boolean): void => {
+    this.setState((prevState) => {
+      const newVisibleProjects = new Set(prevState.visibleProjects);
+      if (visible) {
+        newVisibleProjects.add(key);
+      } else {
+        newVisibleProjects.delete(key);
       }
-    } catch {
-      // Invalid date, return original
-    }
-    return date;
-  }
+      return { visibleProjects: newVisibleProjects };
+    });
+  };
 
   /**
    * Render Empty State
@@ -404,100 +309,14 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
   }
 
   /**
-   * Render Error State
-   * Error handling UI
-   */
-  private renderErrorState(): ReactNode {
-    const { error } = this.state;
-    return (
-      <div className="projects-error-state" role="alert">
-        <div className="projects-error-icon" aria-hidden="true">⚠️</div>
-        <h3 className="projects-error-title">Error Loading Projects</h3>
-        <p className="projects-error-message">{error || "An unexpected error occurred"}</p>
-      </div>
-    );
-  }
-
-  /**
-   * Render Project Content
-   * Reusable content renderer with proper semantic HTML
-   */
-  private renderContent(item: ProjectItem): ReactNode {
-    // Safety check: ensure item has required properties
-    if (!item) {
-      return null;
-    }
-
-    return (
-      <div className="projects-content">
-        <div className="projects-header">
-          <h4 className="projects-title">{item.name || "Untitled Project"}</h4>
-          <div className="projects-meta">
-            {item.date && (
-              <time 
-                className="projects-date" 
-                dateTime={this.formatDateForDateTime(item.date)}
-              >
-                {item.date}
-              </time>
-            )}
-          </div>
-        </div>
-        {item.description && (
-          <p className="projects-description">{item.description}</p>
-        )}
-      </div>
-    );
-  }
-
-  /**
-   * Render Project Item
-   * Individual project card with animations
-   */
-  private renderItem(item: ProjectItem, index: number): ReactNode {
-    if (!item || !item.key) {
-      return null;
-    }
-
-    const refObj = this.itemRefs.get(item.key) as RefObject<HTMLDivElement> | undefined;
-    const isVisible = this.state.visibleItems.has(item.key);
-
-    return (
-      <FlowItem
-        key={item.key}
-        itemKey={item.key}
-        index={index}
-        scrollDirection={this.state.scrollDirection}
-        isVisible={isVisible}
-        refObj={refObj}
-        icon={<span className="projects-icon-emoji" aria-hidden="true">{item.icon}</span>}
-      >
-        {this.renderContent(item)}
-      </FlowItem>
-    );
-  }
-
-  /**
-   * Get accessible label for project item
-   * Helper for accessibility
-   */
-  private getAccessibleLabel(item: ProjectItem): string {
-    const parts: string[] = [];
-    if (item.name) parts.push(item.name);
-    if (item.date) parts.push(`Date: ${item.date}`);
-    return parts.join(", ");
-  }
-
-  /**
    * Main Render Method
-   * Render projects section with error handling and filtering
+   * Render projects section with error handling
    */
   public render(): ReactNode {
-    const { data } = this.props;
-    const { error } = this.state;
+    const { projects, error } = this.state;
 
     // Edge case: Empty data
-    if (!data || !Array.isArray(data) || data.length === 0) {
+    if (!projects || projects.length === 0) {
       return (
         <Card id="projects-section" title="Projects">
           {this.renderEmptyState()}
@@ -508,21 +327,9 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     // Edge case: Error state (but don't show error, just fallback gracefully)
     if (error) {
       // Don't show error state, just render empty state for better UX
-      // Error is logged in development mode only
-      return (
-        <Card id="projects-section" title="Projects">
-          {this.renderEmptyState()}
-        </Card>
-      );
-    }
-
-    // Filter and render items, removing null returns from invalid items
-    const renderedItems = data
-      .map((item, index) => this.renderItem(item, index))
-      .filter((item): item is ReactNode => item !== null);
-
-    // Edge case: No valid items after filtering
-    if (renderedItems.length === 0) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Projects section error:", error);
+      }
       return (
         <Card id="projects-section" title="Projects">
           {this.renderEmptyState()}
@@ -532,8 +339,14 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
 
     return (
       <Card id="projects-section" title="Projects">
-        <div className="projects-flow" role="list">
-          {renderedItems}
+        <div className="projects-section-container">
+          <ProjectGrid
+            projects={projects}
+            visibleProjects={this.state.visibleProjects}
+            onVisibilityChange={this.handleVisibilityChange}
+            onLinkClick={this.handleLinkClick}
+            layout="grid"
+          />
         </div>
       </Card>
     );
