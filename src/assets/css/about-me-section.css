@@ -1,301 +1,703 @@
-/* Global Reset */
-* {
-  box-sizing: border-box;
+/**
+ * About Me Section - Luxury & Elegant Design
+ * Responsive, Clean, Professional UI/UX
+ * Follows DRY principle with CSS variables
+ */
+
+/* ============================================
+   CSS Variables for Consistency (DRY)
+   ============================================ */
+#about-me-section.card,
+.card#about-me-section {
+  --about-me-spacing-xs: 0.5rem;
+  --about-me-spacing-sm: 1rem;
+  --about-me-spacing-md: 1.5rem;
+  --about-me-spacing-lg: 2rem;
+  --about-me-spacing-xl: 3rem;
+  
+  --about-me-color-primary: #78a2f0;
+  --about-me-color-primary-hover: #8b5cf6;
+  --about-me-color-text-heading: #2c3e50;
+  --about-me-color-text-body: #34495e;
+  --about-me-color-text-subtle: #5c6b7a;
+  --about-me-color-text-muted: #7a8b9c;
+  --about-me-color-bg-glow: rgba(120, 162, 240, 0.15);
+  --about-me-color-border: rgba(220, 227, 234, 0.6);
+  
+  --about-me-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --about-me-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --about-me-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --about-me-shadow-glow: 0 0 40px rgba(120, 162, 240, 0.3);
+  
+  --about-me-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --about-me-transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --about-me-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.about-me-hero {
-  display: flex;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: space-between;
-  max-width: 1200px;
-}
-
-/* Text section */
-.about-me-text {
-  flex: 1 1 60%;
+/* ============================================
+   Main Container & Layout
+   ============================================ */
+.about-me-content {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  align-items: center;
+  gap: var(--about-me-spacing-xl);
   width: 100%;
+  animation: about-me-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.about-me-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--about-me-spacing-xl);
+  align-items: start;
+  width: 100%;
+}
+
+/* ============================================
+   Image Section - Luxury Design
+   ============================================ */
+.about-me-image-container {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-me-image-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-me-image-glow {
+  position: absolute;
+  inset: -12px;
+  background: linear-gradient(135deg, var(--about-me-color-bg-glow), transparent);
+  border-radius: 50%;
+  opacity: 0;
+  animation: about-me-glow-pulse 3s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about-me-image-container:hover .about-me-image-glow {
+  opacity: 1;
+  animation: about-me-glow-pulse 2s ease-in-out infinite;
+}
+
+.about-me-image-container .image-component.about-me-image,
+.about-me-image-container img.about-me-image {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 6px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    var(--about-me-shadow-md),
+    inset 0 0 0 1px var(--about-me-color-border);
+  transition: 
+    transform var(--about-me-transition-base),
+    box-shadow var(--about-me-transition-base),
+    border-color var(--about-me-transition-base);
+  z-index: 1;
+  background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
+  animation: about-me-image-enter 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.about-me-image-container:hover .image-component.about-me-image,
+.about-me-image-container:hover img.about-me-image {
+  transform: scale(1.05) translateY(-4px);
+  box-shadow: 
+    var(--about-me-shadow-lg),
+    var(--about-me-shadow-glow),
+    inset 0 0 0 2px var(--about-me-color-primary);
+  border-color: var(--about-me-color-primary);
+}
+
+/* ============================================
+   Text Content Section
+   ============================================ */
+.about-me-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-me-spacing-md);
+  min-width: 0; /* Prevents grid overflow */
+}
+
+/* ============================================
+   Header - Name Section
+   ============================================ */
+.about-me-header {
+  margin-bottom: var(--about-me-spacing-xs);
 }
 
 .about-me-name {
   margin: 0;
-  color: #2c3e50;
-  font-size: 2.4rem;
+  color: var(--about-me-color-text-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.2;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--about-me-color-text-heading) 0%, var(--about-me-color-text-heading) 50%, var(--about-me-color-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: about-me-text-slide 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.about-me-name span {
-  color: #78a2f0;
+.about-me-name-accent {
+  background: linear-gradient(135deg, var(--about-me-color-primary), var(--about-me-color-primary-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+}
+
+.about-me-name-accent::after {
+  content: '';
+  position: absolute;
+  bottom: 0.1em;
+  left: 0;
+  right: 0;
+  height: 0.15em;
+  background: linear-gradient(90deg, transparent, var(--about-me-color-primary), transparent);
+  opacity: 0.3;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform var(--about-me-transition-base);
+}
+
+.about-me-header:hover .about-me-name-accent::after {
+  transform: scaleX(1);
+}
+
+/* ============================================
+   Information Section
+   ============================================ */
+.about-me-information {
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-me-spacing-sm);
+  animation: about-me-text-fade 0.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .about-me-title {
-  color: #5c6b7a;
-  font-size: 1.3rem;
+  margin: 0;
+  color: var(--about-me-color-text-subtle);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
 }
 
 .about-me-location {
-  color: #7a8b9c;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--about-me-color-text-muted);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.5;
+}
+
+.about-me-location-icon {
+  font-size: 1.1em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.about-me-location-text {
+  font-weight: 400;
 }
 
 .about-me-bio {
-  color: #34495e;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  max-width: 700px;
+  margin: var(--about-me-spacing-sm) 0 0 0;
+  color: var(--about-me-color-text-body);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  line-height: 1.75;
+  max-width: 65ch;
+  letter-spacing: 0.01em;
 }
 
-/* Actions */
+/* ============================================
+   Actions - CTA Buttons
+   ============================================ */
 .about-me-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--about-me-spacing-sm);
   flex-wrap: wrap;
-  margin-top: 1rem;
-  justify-content: center;
+  margin-top: var(--about-me-spacing-xs);
+  animation: about-me-text-fade 0.8s 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* Buttons */
-.profile-btn {
+/* Profile Button Styles - Enhanced */
+#about-me-section.card .profile-btn,
+.card#about-me-section .profile-btn {
   position: relative;
   z-index: 1;
-  width: fit-content;
-  padding: 0.9rem 1.6rem;
+  padding: 0.95rem 2rem;
   border: none;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.5vw, 1rem);
   font-weight: 600;
-  transition: all 0.3s ease;
-  border-radius: 10px;
+  letter-spacing: 0.02em;
+  border-radius: 12px;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
+  transition: all var(--about-me-transition-base);
+  box-shadow: var(--about-me-shadow-sm);
+  font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
 }
 
-.profile-btn::after {
+#about-me-section.card .profile-btn::before,
+.card#about-me-section .profile-btn::before {
+  content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity var(--about-me-transition-fast);
   z-index: -1;
-  width: 100%;
-  height: 100%;
-  transition: left 0.3s ease;
+}
+
+#about-me-section.card .profile-btn::after,
+.card#about-me-section .profile-btn::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: -1;
   content: "";
-  background-color: rgb(255 255 255 / 10%);
 }
 
-.profile-btn:hover::after {
-  left: 0;
+#about-me-section.card .profile-btn:hover::after,
+.card#about-me-section .profile-btn:hover::after {
+  width: 300px;
+  height: 300px;
 }
 
-.profile-btn:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 18px rgb(0 0 0 / 10%);
+#about-me-section.card .profile-btn:hover,
+.card#about-me-section .profile-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--about-me-shadow-md);
 }
 
-.profile-btn.primary {
-  background-color: #78a2f0;
+#about-me-section.card .profile-btn:active,
+.card#about-me-section .profile-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+#about-me-section.card .profile-btn.primary,
+.card#about-me-section .profile-btn.primary {
+  background: linear-gradient(135deg, var(--about-me-color-primary), #6b93e8);
   color: #fff;
+  border: 2px solid transparent;
 }
 
-.profile-btn.primary:hover {
-  background-color: #8b5cf6;
+#about-me-section.card .profile-btn.primary:hover,
+.card#about-me-section .profile-btn.primary:hover {
+  background: linear-gradient(135deg, var(--about-me-color-primary-hover), #7a6ff0);
+  box-shadow: var(--about-me-shadow-md), 0 0 20px rgba(120, 162, 240, 0.4);
 }
 
-.profile-btn.secondary {
-  border: 2px solid #78a2f0;
-  background-color: transparent;
-  color: #78a2f0;
+#about-me-section.card .profile-btn.secondary,
+.card#about-me-section .profile-btn.secondary {
+  border: 2px solid var(--about-me-color-primary);
+  background: transparent;
+  color: var(--about-me-color-primary);
+  backdrop-filter: blur(10px);
 }
 
-.profile-btn.secondary:hover {
-  background-color: #78a2f0;
+#about-me-section.card .profile-btn.secondary:hover,
+.card#about-me-section .profile-btn.secondary:hover {
+  background: var(--about-me-color-primary);
   color: #fff;
+  box-shadow: var(--about-me-shadow-md), 0 0 20px rgba(120, 162, 240, 0.3);
 }
 
-/* Stats */
+/* ============================================
+   Statistics Section
+   ============================================ */
 .about-me-stats {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--about-me-spacing-md);
+  margin-top: var(--about-me-spacing-xs);
+  padding-top: var(--about-me-spacing-lg);
+  border-top: 1px solid var(--about-me-color-border);
+  animation: about-me-text-fade 0.8s 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-.profile-stat {
-  background-color: #eef2f7;
-  padding: 1rem 1.4rem;
-  border-radius: 14px;
+#about-me-section.card .profile-stat,
+.card#about-me-section .profile-stat {
+  background: linear-gradient(135deg, rgba(238, 242, 247, 0.8), rgba(255, 255, 255, 0.9));
+  padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
+  border-radius: 16px;
   text-align: center;
   min-width: 120px;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--about-me-shadow-sm);
+  border: 1px solid var(--about-me-color-border);
+  transition: all var(--about-me-transition-base);
+  position: relative;
+  overflow: hidden;
 }
 
-.profile-stat:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 8%);
+#about-me-section.card .profile-stat::before,
+.card#about-me-section .profile-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--about-me-color-primary), var(--about-me-color-primary-hover));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--about-me-transition-base);
 }
 
-.profile-stat strong {
+#about-me-section.card .profile-stat:hover,
+.card#about-me-section .profile-stat:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--about-me-shadow-md);
+  border-color: var(--about-me-color-primary);
+}
+
+#about-me-section.card .profile-stat:hover::before,
+.card#about-me-section .profile-stat:hover::before {
+  transform: scaleX(1);
+}
+
+#about-me-section.card .profile-stat strong,
+.card#about-me-section .profile-stat strong {
   display: block;
-  color: #78a2f0;
-  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--about-me-color-primary), var(--about-me-color-primary-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
 }
 
-.profile-stat span {
-  color: #34495e;
-  font-size: 0.95rem;
+#about-me-section.card .profile-stat span,
+.card#about-me-section .profile-stat span {
+  color: var(--about-me-color-text-subtle);
+  font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1.4;
+  display: block;
 }
 
-/* Image section */
-.about-me-image {
-  flex: 0 0 240px;
-  text-align: center;
-  align-self: flex-start;
-}
-
-.about-me-image .image-component {
-  width: 240px;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 6px solid #dbe5f1;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  animation: float-up 0.8s ease-in-out, fade-in 0.6s ease-in-out;
-}
-
-.about-me-image .image-component:hover {
-  transform: scale(1.08);
-  box-shadow: 0 10px 28px rgb(0 0 0 / 15%);
-}
-
-/* Responsive Breakpoints */
-@media screen and (width <= 768px) {
-  .about-me-hero {
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5rem;
-    padding: 1.5rem;
-  }
-
-  .about-me-image .image-component {
-    width: 160px;
-    height: 160px;
-  }
-
-  .about-me-name {
-    font-size: 2rem;
-  }
-
-  .about-me-title {
-    font-size: 1.1rem;
-  }
-
-  .about-me-bio {
-    font-size: 0.95rem;
-  }
-
-  .profile-btn {
-    width: 100%;
-    max-width: 280px;
-    font-size: 0.95rem;
-  }
-
-  .profile-stat {
-    min-width: 100px;
-    font-size: 0.9rem;
-  }
-
-  .profile-stat strong {
-    font-size: 1.3rem;
-  }
-
-  .profile-stat span {
-    font-size: 0.85rem;
-  }
-}
-
-@media screen and (width <= 480px) {
-  .about-me-image .image-component {
-    width: 140px;
-    height: 140px;
-  }
-
-  .about-me-name {
-    font-size: 1.8rem;
-  }
-
-  .about-me-title {
-    font-size: 1rem;
-  }
-
-  .about-me-bio {
-    font-size: 0.9rem;
-  }
-
-  .profile-btn {
-    font-size: 0.9rem;
-  }
-
-  .profile-stat {
-    min-width: 90px;
-    font-size: 0.85rem;
-  }
-}
-
-/* Landscape orientation */
-@media screen and (orientation: landscape) and (width <= 768px) {
-  .about-me-hero {
-    flex-flow: row wrap;
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .about-me-text,
-  .about-me-image {
-    flex: 1 1 45%;
-    max-width: 100%;
-  }
-
-  .about-me-image .image-component {
-    width: 180px;
-    height: 180px;
-  }
-}
-
-/* Animations */
-@keyframes fade-in {
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes about-me-fade-in {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes float-up {
+@keyframes about-me-image-enter {
   from {
     opacity: 0;
-    transform: scale(0.9) translateY(10px);
+    transform: scale(0.9) translateY(20px);
+    filter: blur(4px);
   }
-
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+    filter: blur(0);
   }
 }
+
+@keyframes about-me-text-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes about-me-text-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes about-me-glow-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+/* ============================================
+   Responsive Design - Tablet
+   ============================================ */
+@media screen and (width <= 992px) {
+  .about-me-main {
+    gap: var(--about-me-spacing-lg);
+  }
+  
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* ============================================
+   Responsive Design - Mobile Tablet
+   ============================================ */
+@media screen and (width <= 768px) {
+  .about-me-content {
+    gap: var(--about-me-spacing-lg);
+  }
+
+  .about-me-main {
+    grid-template-columns: 1fr;
+    gap: var(--about-me-spacing-lg);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .about-me-image-container {
+    order: -1;
+    justify-self: center;
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 200px;
+    height: 200px;
+    border-width: 5px;
+  }
+
+  .about-me-text-content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-me-bio {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .about-me-actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  #about-me-section.card .profile-btn,
+  .card#about-me-section .profile-btn {
+    flex: 1;
+    min-width: 140px;
+    max-width: 220px;
+  }
+
+  .about-me-stats {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: var(--about-me-spacing-sm);
+  }
+
+  #about-me-section.card .profile-stat,
+.card#about-me-section .profile-stat {
+    min-width: 100px;
+    padding: var(--about-me-spacing-sm);
+  }
+}
+
+/* ============================================
+   Responsive Design - Mobile
+   ============================================ */
+@media screen and (width <= 480px) {
+  .about-me-content {
+    gap: var(--about-me-spacing-md);
+  }
+
+  .about-me-main {
+    gap: var(--about-me-spacing-md);
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 180px;
+    height: 180px;
+    border-width: 4px;
+  }
+
+  .about-me-name {
+    font-size: 1.75rem;
+  }
+
+  .about-me-title {
+    font-size: 1.1rem;
+  }
+
+  .about-me-location {
+    font-size: 0.95rem;
+  }
+
+  .about-me-bio {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .about-me-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #about-me-section.card .profile-btn,
+  .card#about-me-section .profile-btn {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .about-me-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--about-me-spacing-sm);
+    padding-top: var(--about-me-spacing-md);
+  }
+
+  #about-me-section.card .profile-stat,
+.card#about-me-section .profile-stat {
+    min-width: auto;
+    padding: var(--about-me-spacing-sm) var(--about-me-spacing-xs);
+  }
+
+  #about-me-section.card .profile-stat strong,
+.card#about-me-section .profile-stat strong {
+    font-size: 1.4rem;
+  }
+
+  #about-me-section.card .profile-stat span,
+.card#about-me-section .profile-stat span {
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================
+   Landscape Orientation - Mobile/Tablet
+   ============================================ */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .about-me-main {
+    grid-template-columns: auto 1fr;
+    gap: var(--about-me-spacing-md);
+    text-align: left;
+  }
+
+  .about-me-image-container {
+    order: 0;
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 160px;
+    height: 160px;
+  }
+
+  .about-me-text-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .about-me-bio {
+    text-align: left;
+  }
+
+  .about-me-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ============================================
+   Large Screens - Enhanced Spacing
+   ============================================ */
+@media screen and (width >= 1400px) {
+  .about-me-main {
+    gap: var(--about-me-spacing-xl);
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+/* ============================================
+   Reduced Motion - Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .about-me-content,
+  .about-me-content,
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image,
+  .about-me-name,
+  .about-me-information,
+  .about-me-actions,
+  .about-me-stats {
+    animation: none;
+    transition: none;
+  }
+
+  #about-me-section.card .profile-btn:hover,
+  .card#about-me-section .profile-btn:hover,
+  #about-me-section.card .profile-stat:hover,
+  .card#about-me-section .profile-stat:hover,
+  .about-me-image-container:hover .image-component.about-me-image,
+  .about-me-image-container:hover img.about-me-image {
+    transform: none;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .about-me-image-container,
+  .about-me-actions {
+    display: none;
+  }
+
+  #about-me-section.card .profile-stat,
+.card#about-me-section .profile-stat {
+    break-inside: avoid;
+  }
+
+  .about-me-name,
+  .about-me-title {
+    color: #000;
+    -webkit-text-fill-color: #000;
+  }
+}
+
