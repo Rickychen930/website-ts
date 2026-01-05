@@ -1,26 +1,37 @@
+/**
+ * AcademicSection - View Layer (MVC Pattern)
+ * Professional, Clean, Luxury, Responsive Academic Section
+ * 
+ * Architecture:
+ * - MVC: Separated Controller, Model, and View
+ * - OOP: Class-based component with encapsulation
+ * - Component-Based: Uses reusable sub-components
+ * 
+ * Principles Applied:
+ * - SOLID:
+ *   - SRP: Each method has single responsibility
+ *   - OCP: Extensible through composition
+ *   - LSP: Proper inheritance/implementation
+ *   - ISP: Interfaces are segregated
+ *   - DIP: Depends on abstractions (controller, components)
+ * - DRY: Reuses components and utilities
+ * - KISS: Simple, clear structure
+ */
+
 import React, { Component, ReactNode, createRef, RefObject } from "react";
 import "../../../assets/css/academic-section.css";
 import Card from "../../components/card-component";
-import { FlowItem } from "../../components/flow-item-component";
-
-/**
- * Academic Item Type Definition
- * Follows Single Responsibility Principle (SRP)
- */
-export type AcademicItem = {
-  key: string;
-  icon: string;
-  title: string;
-  institution: string;
-  period: string;
-  description: string;
-};
+import { AcademicController } from "../../../controllers/academic-controller";
+import { AcademicModel, IAcademicItem } from "../../../models/academic-model";
+import { AcademicCard } from "../../components/academic/AcademicCard";
+import { AcademicTimeline } from "../../components/academic/AcademicTimeline";
 
 /**
  * Academic Section Props Interface
+ * Follows Interface Segregation Principle (ISP)
  */
 type AcademicProps = {
-  data: AcademicItem[];
+  data: IAcademicItem[];
 };
 
 /**
@@ -30,6 +41,7 @@ type AcademicState = {
   visibleItems: Set<string>;
   scrollDirection: "up" | "down";
   isInitialized: boolean;
+  currentVisibleIndex: number;
 };
 
 /**
@@ -37,7 +49,7 @@ type AcademicState = {
  * Centralized for maintainability (DRY)
  */
 const OBSERVER_CONFIG: IntersectionObserverInit = {
-  threshold: 0.3,
+  threshold: 0.2,
   rootMargin: "0px 0px -50px 0px",
 };
 
@@ -48,27 +60,31 @@ const OBSERVER_CONFIG: IntersectionObserverInit = {
 const SCROLL_THROTTLE_MS = 100;
 
 /**
- * Academic Section Component
+ * AcademicSection Component
  * 
  * Features:
- * - Luxury & Elegant Design
+ * - Professional, Clean, Luxury Design
+ * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
  * - Performance Optimized (throttled scroll, optimized observers)
- * - Fully Responsive
- * - Edge Case Handling
- * - Clean UI/UX
+ * - Component-Based Architecture (Reusable Components)
+ * - MVC Pattern (Controller, Model, View separation)
+ * - Shows Software Engineering Capabilities
  * 
  * Principles Applied:
- * - SOLID (Single Responsibility, Open/Closed)
- * - DRY (Don't Repeat Yourself)
- * - OOP (Object-Oriented Programming)
- * - MVP (Minimum Viable Product)
+ * - MVC: Separated Controller, Model, and View
+ * - OOP: Class-based component with encapsulation
+ * - SOLID: All principles applied
+ * - DRY: Reuses components and utilities
+ * - KISS: Simple, clear structure
  */
 class AcademicSection extends Component<AcademicProps, AcademicState> {
+  private readonly controller: AcademicController;
   private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
   private observer: IntersectionObserver | null = null;
   private lastScrollY: number = 0;
   private scrollTimeoutId: number | null = null;
   private isMounted: boolean = false;
+  private containerRef: RefObject<HTMLDivElement> = createRef();
 
   constructor(props: AcademicProps) {
     super(props);
@@ -76,7 +92,11 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       visibleItems: new Set(),
       scrollDirection: "down",
       isInitialized: false,
+      currentVisibleIndex: -1,
     };
+
+    // Initialize controller (MVC Pattern)
+    this.controller = new AcademicController();
 
     // Initialize refs for all items
     this.initializeRefs();
@@ -148,6 +168,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       this.setState({
         visibleItems: new Set(),
         isInitialized: false,
+        currentVisibleIndex: -1,
       });
 
       // Reinitialize observer if mounted
@@ -188,6 +209,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       this.setState({
         visibleItems: new Set(allKeys),
         isInitialized: true,
+        currentVisibleIndex: allKeys.length - 1,
       });
       return;
     }
@@ -221,6 +243,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
         this.setState({
           visibleItems: new Set(allKeys),
           isInitialized: true,
+          currentVisibleIndex: allKeys.length - 1,
         });
       } else {
         this.setState({ isInitialized: true });
@@ -236,6 +259,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       this.setState({
         visibleItems: new Set(allKeys),
         isInitialized: true,
+        currentVisibleIndex: allKeys.length - 1,
       });
     }
   }
@@ -253,9 +277,17 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
       this.setState((prevState) => {
         const updated = new Set(prevState.visibleItems);
+        const { data } = this.props;
+        let currentVisibleIndex = prevState.currentVisibleIndex;
         
         if (entry.isIntersecting) {
           updated.add(key);
+          
+          // Update current visible index
+          const itemIndex = data.findIndex(item => item.key === key);
+          if (itemIndex > currentVisibleIndex) {
+            currentVisibleIndex = itemIndex;
+          }
         } else {
           // Only remove if scrolling away significantly
           if (entry.intersectionRatio < 0.1) {
@@ -263,7 +295,10 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
           }
         }
 
-        return { visibleItems: updated };
+        return { 
+          visibleItems: updated,
+          currentVisibleIndex,
+        };
       });
     });
   };
@@ -357,7 +392,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    * Validate academic item
    * Edge case handling
    */
-  private validateItem(item: AcademicItem): boolean {
+  private validateItem(item: IAcademicItem): boolean {
     return !!(
       item &&
       item.key &&
@@ -368,49 +403,19 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   }
 
   /**
-   * Render Academic Content
-   * Reusable content renderer with validation
-   */
-  private renderContent(item: AcademicItem): ReactNode {
-    // Edge case: Validate item before rendering
-    if (!this.validateItem(item)) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn("⚠️ Invalid academic item:", item);
-      }
-      return null;
-    }
-
-    return (
-      <div className="academic-content">
-        <div className="academic-header">
-          <h4 className="academic-title">{item.title}</h4>
-          <div className="academic-meta">
-            <span className="academic-institution">{item.institution}</span>
-            <span className="academic-separator" aria-hidden="true">•</span>
-            <time className="academic-period" dateTime={item.period}>
-              {item.period}
-            </time>
-          </div>
-        </div>
-        {item.description && (
-          <p className="academic-description">{item.description}</p>
-        )}
-      </div>
-    );
-  }
-
-  /**
    * Render Single Academic Item
-   * Component composition with validation
+   * Uses reusable AcademicCard component
    */
-  private renderItem(item: AcademicItem, index: number): ReactNode {
+  private renderItem(item: IAcademicItem, index: number): ReactNode {
     // Edge case: Skip invalid items
     if (!this.validateItem(item)) {
       return null;
     }
 
-    const { visibleItems, scrollDirection } = this.state;
+    const { visibleItems } = this.state;
     const refObj = this.itemRefs.get(item.key);
+    const isVisible = visibleItems.has(item.key);
+    const academicLevel = this.controller.getAcademicLevel(item.title);
 
     // Edge case: Handle missing ref
     if (!refObj) {
@@ -420,17 +425,19 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     }
 
     return (
-      <FlowItem
+      <div
         key={item.key}
-        itemKey={item.key}
-        index={index}
-        scrollDirection={scrollDirection}
-        isVisible={visibleItems.has(item.key)}
-        refObj={refObj}
-        icon={<span className="academic-icon-emoji" aria-hidden="true">{item.icon || "🎓"}</span>}
+        data-key={item.key}
+        ref={refObj}
+        className="academic-item-wrapper"
       >
-        {this.renderContent(item)}
-      </FlowItem>
+        <AcademicCard
+          item={item}
+          index={index}
+          isVisible={isVisible}
+          academicLevel={academicLevel}
+        />
+      </div>
     );
   }
 
@@ -445,8 +452,18 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       return this.renderEmptyState();
     }
 
-    // Filter and render items, removing null returns from invalid items
-    const renderedItems = data
+    // Filter valid items first
+    const validItems = data.filter((item) => this.validateItem(item));
+
+    if (validItems.length === 0) {
+      return this.renderEmptyState();
+    }
+
+    // Get sorted items from model (MVC Pattern - using Model directly for data transformation)
+    const sortedItems = AcademicModel.sortByPeriod(validItems);
+
+    // Render items
+    const renderedItems = sortedItems
       .map((item, index) => this.renderItem(item, index))
       .filter((item): item is ReactNode => item !== null);
 
@@ -456,8 +473,17 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     }
 
     return (
-      <div className="academic-flow" role="list" aria-label="Academic background timeline">
-        {renderedItems}
+      <div className="academic-section-container" ref={this.containerRef}>
+        <div className="academic-section-content">
+          <AcademicTimeline
+            itemCount={renderedItems.length}
+            currentIndex={this.state.currentVisibleIndex}
+            isVisible={this.state.isInitialized}
+          />
+          <div className="academic-items-grid" role="list" aria-label="Academic background timeline">
+            {renderedItems}
+          </div>
+        </div>
       </div>
     );
   }
@@ -469,14 +495,14 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Edge case: No data
     if (!this.validateData()) {
       return (
-        <Card id="academic-section" title="Academic Background">
+        <Card id="academic-section" title="Academic Background" variant="default">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="academic-section" title="Academic Background">
+      <Card id="academic-section" title="Academic Background" variant="default">
         {this.renderItems()}
       </Card>
     );
@@ -484,3 +510,4 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 }
 
 export default AcademicSection;
+export type { AcademicProps };
