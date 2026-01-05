@@ -20,7 +20,6 @@ import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
 import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
 import LoadingComponent from "../components/loading-component";
 import ErrorComponent from "../components/error-component";
-import SectionRendererComponent from "../components/section-renderer-component";
 import MainPageFooterComponent from "../components/main-page-footer-component";
 
 /**
@@ -223,8 +222,37 @@ class MainPage extends BasePage<{}, MainPageState> {
   }
 
   /**
-   * Render all sections using SectionRendererComponent
-   * Component-Based: Uses reusable component for each section
+   * Get section data from profile
+   */
+  private getSectionData(config: ISectionConfig, profile: UserProfile): unknown {
+    const { dataKey } = config;
+    const data = profile[dataKey];
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      return null;
+    }
+    return dataKey === "name" ? profile : data;
+  }
+
+  /**
+   * Render section header
+   */
+  private renderSectionHeader(config: ISectionConfig): ReactNode {
+    const { id, title } = config;
+    if (!title) return null;
+
+    return (
+      <header className="section-header">
+        <h2 className="section-title" id={`${id}-title`}>
+          {title}
+        </h2>
+        <div className="section-title-underline" aria-hidden="true"></div>
+      </header>
+    );
+  }
+
+  /**
+   * Render all sections directly
+   * Component-Based: Renders sections without wrapper component
    */
   private renderSections(): ReactNode {
     const { profile } = this.state;
@@ -235,13 +263,33 @@ class MainPage extends BasePage<{}, MainPageState> {
 
     return (
       <div className="contents-section">
-        {visibleSections.map((config) => (
-          <SectionRendererComponent
-            key={config.id}
-            config={config}
-            profile={profile}
-          />
-        ))}
+        {visibleSections.map((config) => {
+          const { component: SectionComponent, id } = config;
+          const sectionData = this.getSectionData(config, profile);
+
+          if (!SectionComponent || !sectionData) return null;
+
+          try {
+            return (
+              <section
+                key={id}
+                id={id}
+                className="section-block"
+                aria-label={config.title || "Content section"}
+              >
+                {this.renderSectionHeader(config)}
+                <div className="section-content" role="region" aria-labelledby={`${id}-title`}>
+                  <SectionComponent data={sectionData} />
+                </div>
+              </section>
+            );
+          } catch (error) {
+            if (process.env.NODE_ENV === 'development') {
+              console.error(`Error rendering section ${id}:`, error);
+            }
+            return null;
+          }
+        })}
       </div>
     );
   }
@@ -280,7 +328,6 @@ class MainPage extends BasePage<{}, MainPageState> {
     return (
       <div className="main-page">
         {this.renderSections()}
-        {this.renderFooter()}
       </div>
     );
   }

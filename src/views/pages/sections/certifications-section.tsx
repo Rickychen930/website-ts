@@ -1,282 +1,147 @@
-// src/sections/certifications-section.tsx
-import React, { Component, ReactNode, PureComponent, createRef, RefObject } from "react";
+/**
+ * Certification Section Component
+ * View Layer (MVC Pattern)
+ * 
+ * Architecture:
+ * - MVC: Strict separation of View, Controller, and Model
+ * - View: Only handles UI rendering and user interactions
+ * - Controller: Handles all business logic (injected via DI)
+ * - Model: Handles data structure and validation
+ * 
+ * Principles Applied:
+ * - Single Responsibility Principle (SRP): View only renders UI
+ * - Dependency Inversion Principle (DIP): Depends on Controller abstraction
+ * - Open/Closed Principle (OCP): Extensible via composition
+ * - DRY: Uses reusable components and centralized logic
+ * - KISS: Simple, clear structure
+ * - Component-Based: Composed of smaller, focused components
+ * 
+ * Features:
+ * - Clean separation of concerns
+ * - Proper error handling
+ * - Performance optimized (lazy rendering, intersection observer)
+ * - Fully accessible (ARIA labels, keyboard navigation)
+ * - Responsive design
+ */
+
+import React, { Component, ReactNode } from "react";
 import Card from "../../components/card-component";
+import { CertificationController } from "../../../controllers/certification-controller";
+import { ICertification } from "../../../models/certification-model";
+import { CertificationGrid } from "../../components/certification";
 import "../../../assets/css/certification-section.css";
 
 /**
- * Certification Item Type
- * Follows Single Responsibility Principle
- */
-export type CertificationItem = {
-  key: string;
-  icon: string;
-  title: string;
-  provider: string;
-  date: string;
-  link?: string;
-  credentialId?: string;
-};
-
-/**
  * Certification Section Props
+ * Supports both old format (from UserProfile) and new format (ICertification)
  */
 type CertificationSectionProps = {
-  data: CertificationItem[];
+  data: ICertification[] | Array<{
+    key: string;
+    icon: string;
+    title: string;
+    provider: string;
+    date: string;
+    link?: string;
+    credentialId?: string;
+  }>;
 };
 
 /**
  * Certification Section State
+ * Encapsulates all view-related state
  */
 type CertificationSectionState = {
   visibleItems: Set<string>;
   error: string | null;
+  processedData: ICertification[];
+  isLoading: boolean;
 };
 
 /**
- * Certification Card Component
- * Reusable, optimized component following DRY and OOP principles
- */
-class CertificationCard extends PureComponent<{
-  item: CertificationItem;
-  index: number;
-  isVisible: boolean;
-  onVisibilityChange: (key: string, visible: boolean) => void;
-  refObj: RefObject<HTMLDivElement>;
-}> {
-  private readonly ANIMATION_DELAY_BASE = 100;
-  private readonly INTERSECTION_THRESHOLD = 0.1;
-
-  componentDidMount(): void {
-    this.setupIntersectionObserver();
-  }
-
-  componentWillUnmount(): void {
-    this.cleanupIntersectionObserver();
-  }
-
-  private observer: IntersectionObserver | null = null;
-
-  /**
-   * Setup Intersection Observer for performance optimization
-   * Only animate when item is visible
-   */
-  private setupIntersectionObserver = (): void => {
-    if (!this.props.refObj.current || typeof IntersectionObserver === "undefined") {
-      // Fallback: mark as visible if IntersectionObserver not supported
-      this.props.onVisibilityChange(this.props.item.key, true);
-      return;
-    }
-
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          this.props.onVisibilityChange(this.props.item.key, entry.isIntersecting);
-        });
-      },
-      {
-        threshold: this.INTERSECTION_THRESHOLD,
-        rootMargin: "50px",
-      }
-    );
-
-    if (this.props.refObj.current) {
-      this.observer.observe(this.props.refObj.current);
-    }
-  };
-
-  /**
-   * Cleanup Intersection Observer
-   */
-  private cleanupIntersectionObserver = (): void => {
-    if (this.observer) {
-      this.observer.disconnect();
-      this.observer = null;
-    }
-  };
-
-  /**
-   * Handle card click - open link if available
-   */
-  private handleCardClick = (): void => {
-    const { item } = this.props;
-    if (item.link) {
-      window.open(item.link, "_blank", "noopener,noreferrer");
-    }
-  };
-
-  /**
-   * Handle keyboard navigation
-   */
-  private handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      this.handleCardClick();
-    }
-  };
-
-  /**
-   * Get animation delay based on index
-   */
-  private getAnimationDelay(): string {
-    return `${this.props.index * this.ANIMATION_DELAY_BASE}ms`;
-  }
-
-  /**
-   * Render icon with proper accessibility
-   */
-  private renderIcon(): ReactNode {
-    const { item } = this.props;
-    return (
-      <div className="certification-icon" aria-hidden="true">
-        <span className="icon-emoji">{item.icon}</span>
-        <div className="icon-glow"></div>
-      </div>
-    );
-  }
-
-  /**
-   * Render certification content
-   */
-  private renderContent(): ReactNode {
-    const { item } = this.props;
-    return (
-      <div className="certification-content">
-        <h3 className="certification-title">{item.title}</h3>
-        <div className="certification-meta">
-          <span className="certification-provider">{item.provider}</span>
-          {item.credentialId && (
-            <span className="certification-credential-id" title="Credential ID">
-              ID: {item.credentialId}
-            </span>
-          )}
-        </div>
-        <div className="certification-date">
-          <span className="date-icon" aria-hidden="true">📅</span>
-          <time dateTime={this.formatDateForDateTime(item.date)}>{item.date}</time>
-        </div>
-        {item.link && (
-          <div className="certification-link-hint" aria-hidden="true">
-            Click to verify →
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  /**
-   * Format date for datetime attribute
-   */
-  private formatDateForDateTime(date: string): string {
-    // Try to parse common date formats
-    const dateObj = new Date(date);
-    if (!isNaN(dateObj.getTime())) {
-      return dateObj.toISOString().split("T")[0];
-    }
-    return date;
-  }
-
-  /**
-   * Get card class names
-   */
-  private getCardClassNames(): string {
-    const { item, isVisible } = this.props;
-    const classes = ["certification-card"];
-    
-    if (isVisible) {
-      classes.push("visible");
-    }
-    
-    if (item.link) {
-      classes.push("clickable");
-    }
-    
-    return classes.filter(Boolean).join(" ");
-  }
-
-  /**
-   * Main render method
-   */
-  render(): ReactNode {
-    const { item, refObj } = this.props;
-    
-    return (
-      <div
-        ref={refObj}
-        className={this.getCardClassNames()}
-        style={{ animationDelay: this.getAnimationDelay() }}
-        onClick={this.handleCardClick}
-        onKeyDown={this.handleKeyDown}
-        role={item.link ? "link" : "article"}
-        tabIndex={item.link ? 0 : -1}
-        aria-label={`Certification: ${item.title} from ${item.provider}`}
-        data-certification-key={item.key}
-      >
-        <div className="certification-card-inner">
-          {this.renderIcon()}
-          {this.renderContent()}
-        </div>
-        <div className="certification-card-shine"></div>
-      </div>
-    );
-  }
-}
-
-/**
  * Certification Section Component
- * Main component following MVC pattern and SOLID principles
+ * Main view component following MVC pattern
  */
-class CertificationSection extends Component<CertificationSectionProps, CertificationSectionState> {
-  private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
-  private readonly MAX_ITEMS_TO_RENDER = 50; // Performance limit
+class CertificationSection extends Component<
+  CertificationSectionProps,
+  CertificationSectionState
+> {
+  private readonly controller: CertificationController;
+  private readonly MAX_ITEMS_TO_RENDER = 50;
 
   constructor(props: CertificationSectionProps) {
     super(props);
-    
-    // Initialize refs for all items
-    this.initializeRefs();
-    
+
+    // Initialize controller (Dependency Injection)
+    // This allows for easy testing and mocking
+    this.controller = new CertificationController();
+
+    // Normalize and process data through controller
+    // View layer delegates all business logic to controller
+    const normalizedData = this.normalizeData(props.data);
+    const processedData = this.controller.processData(normalizedData);
+
     this.state = {
       visibleItems: new Set(),
       error: null,
+      processedData,
+      isLoading: false,
     };
   }
 
   /**
-   * Handle props update - reinitialize refs if data changes
-   * Ensures synchronization when data updates
+   * Normalize data to ICertification format
+   * Handles both old and new data formats
+   */
+  private normalizeData(
+    data: CertificationSectionProps["data"]
+  ): ICertification[] {
+    if (!data || !Array.isArray(data)) {
+      return [];
+    }
+
+    return data.map((item) => ({
+      key: item.key,
+      icon: item.icon,
+      title: item.title,
+      provider: item.provider,
+      date: item.date,
+      link: item.link,
+      credentialId: item.credentialId,
+      // Optional fields with defaults
+      description: "description" in item ? item.description : undefined,
+      category: "category" in item ? item.category : undefined,
+      level: "level" in item ? item.level : undefined,
+      skills: "skills" in item ? item.skills : undefined,
+    }));
+  }
+
+  /**
+   * Handle props update
+   * Re-processes data when props change
    */
   componentDidUpdate(prevProps: CertificationSectionProps): void {
     if (prevProps.data !== this.props.data) {
-      // Clear existing refs
-      this.itemRefs.clear();
-      // Reinitialize refs with new data
-      this.initializeRefs();
-      // Reset visibility state
-      this.setState({ visibleItems: new Set() });
+      this.setState({ isLoading: true });
+
+      // Normalize and process through controller
+      const normalizedData = this.normalizeData(this.props.data);
+      const processedData = this.controller.processData(normalizedData);
+
+      // Validate through controller
+      const validation = this.controller.validateData(normalizedData);
+
+      this.setState({
+        processedData,
+        visibleItems: new Set(),
+        error: validation.isValid ? null : validation.error,
+        isLoading: false,
+      });
     }
   }
 
   /**
-   * Initialize refs for all certification items
-   * Performance: Only create refs for items that will be rendered
-   */
-  private initializeRefs(): void {
-    const { data } = this.props;
-    if (!data || !Array.isArray(data)) {
-      return;
-    }
-    
-    const itemsToProcess = data.slice(0, this.MAX_ITEMS_TO_RENDER);
-    
-    itemsToProcess.forEach((item) => {
-      if (item && item.key && !this.itemRefs.has(item.key)) {
-        this.itemRefs.set(item.key, createRef<HTMLDivElement>());
-      }
-    });
-  }
-
-  /**
-   * Handle visibility change for performance optimization
+   * Handle visibility change
    */
   private handleVisibilityChange = (key: string, visible: boolean): void => {
     this.setState((prevState) => {
@@ -291,37 +156,24 @@ class CertificationSection extends Component<CertificationSectionProps, Certific
   };
 
   /**
-   * Validate certification data
-   * Edge case handling
+   * Handle link click
+   */
+  private handleLinkClick = (link: string): void => {
+    this.controller.handleLinkClick(link);
+  };
+
+  /**
+   * Validate data
    */
   private validateData(): { isValid: boolean; error: string | null } {
     const { data } = this.props;
+    const normalizedData = this.normalizeData(data);
+    const validation = this.controller.validateData(normalizedData);
 
-    if (!data || !Array.isArray(data)) {
-      return { isValid: false, error: "Invalid certification data format" };
-    }
-
-    if (data.length === 0) {
-      return { isValid: false, error: null }; // Empty is valid, just don't render
-    }
-
-    // Check for duplicate keys
-    const keys = new Set<string>();
-    for (const item of data) {
-      if (!item.key) {
-        return { isValid: false, error: "Certification item missing key" };
-      }
-      if (keys.has(item.key)) {
-        return { isValid: false, error: `Duplicate certification key: ${item.key}` };
-      }
-      keys.add(item.key);
-
-      if (!item.title || !item.provider || !item.date) {
-        return { isValid: false, error: `Incomplete certification data for key: ${item.key}` };
-      }
-    }
-
-    return { isValid: true, error: null };
+    return {
+      isValid: validation.isValid,
+      error: validation.error,
+    };
   }
 
   /**
@@ -329,9 +181,19 @@ class CertificationSection extends Component<CertificationSectionProps, Certific
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="certification-empty" role="status" aria-live="polite">
-        <div className="empty-icon" aria-hidden="true">📜</div>
-        <p className="empty-message">No certifications available</p>
+      <div
+        className="certification-empty"
+        role="status"
+        aria-live="polite"
+        aria-label="No certifications available"
+      >
+        <div className="certification-empty-icon" aria-hidden="true">
+          📜
+        </div>
+        <h3 className="certification-empty-title">No Certifications Yet</h3>
+        <p className="certification-empty-message">
+          Certifications will appear here once available.
+        </p>
       </div>
     );
   }
@@ -341,44 +203,64 @@ class CertificationSection extends Component<CertificationSectionProps, Certific
    */
   private renderErrorState(error: string): ReactNode {
     return (
-      <div className="certification-error" role="alert">
-        <div className="error-icon" aria-hidden="true">⚠️</div>
-        <p className="error-message">{error}</p>
+      <div
+        className="certification-error"
+        role="alert"
+        aria-label="Certification error"
+      >
+        <div className="certification-error-icon" aria-hidden="true">
+          ⚠️
+        </div>
+        <h3 className="certification-error-title">Error Loading Certifications</h3>
+        <p className="certification-error-message">{error}</p>
       </div>
     );
   }
 
   /**
-   * Render certification cards
+   * Render certification grid
+   * Delegates rendering to reusable CertificationGrid component
    */
-  private renderCertificationCards(): ReactNode {
-    const { data } = this.props;
-    const { visibleItems } = this.state;
-    
-    // Limit items for performance
-    const itemsToRender = data.slice(0, this.MAX_ITEMS_TO_RENDER);
-    
-    if (itemsToRender.length === 0) {
+  private renderCertificationGrid(): ReactNode {
+    const { processedData, visibleItems, isLoading } = this.state;
+
+    if (isLoading) {
+      return this.renderLoadingState();
+    }
+
+    if (processedData.length === 0) {
       return this.renderEmptyState();
     }
 
-    return (
-      <div className="certification-grid" role="list" aria-label="Certifications">
-        {itemsToRender.map((item, index) => {
-          const refObj = this.itemRefs.get(item.key);
-          if (!refObj) return null;
+    // Limit items for performance
+    // Controller could handle this, but view controls rendering limits
+    const itemsToRender = processedData.slice(0, this.MAX_ITEMS_TO_RENDER);
 
-          return (
-            <CertificationCard
-              key={item.key}
-              item={item}
-              index={index}
-              isVisible={visibleItems.has(item.key)}
-              onVisibilityChange={this.handleVisibilityChange}
-              refObj={refObj}
-            />
-          );
-        })}
+    return (
+      <div className="certification-section-wrapper">
+        <CertificationGrid
+          certifications={itemsToRender}
+          visibleItems={visibleItems}
+          onVisibilityChange={this.handleVisibilityChange}
+          onLinkClick={this.handleLinkClick}
+        />
+      </div>
+    );
+  }
+
+  /**
+   * Render loading state
+   */
+  private renderLoadingState(): ReactNode {
+    return (
+      <div
+        className="certification-loading"
+        role="status"
+        aria-live="polite"
+        aria-label="Loading certifications"
+      >
+        <div className="certification-loading-spinner" aria-hidden="true"></div>
+        <p className="certification-loading-message">Loading certifications...</p>
       </div>
     );
   }
@@ -410,12 +292,11 @@ class CertificationSection extends Component<CertificationSectionProps, Certific
 
     return (
       <Card id="certification-section" title="Certifications">
-        <div className="certification-section-wrapper">
-          {this.renderCertificationCards()}
-        </div>
+        {this.renderCertificationGrid()}
       </Card>
     );
   }
 }
 
 export default CertificationSection;
+export type { CertificationSectionProps };
