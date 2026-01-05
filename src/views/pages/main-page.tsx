@@ -135,15 +135,17 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Load user profile with retry logic
    */
   private async loadProfile(): Promise<void> {
-    if (this.state.loading) return;
-
     this.setState({ loading: true, error: null });
 
     try {
       const profile = await this.controller.getUserProfile();
 
-      if (!profile || !profile.name?.trim()) {
-        throw new Error("Invalid profile data");
+      if (!profile) {
+        throw new Error("Failed to fetch profile. Please check if REACT_APP_API_URL is configured and the backend server is running.");
+      }
+
+      if (!profile.name?.trim()) {
+        throw new Error("Invalid profile data: profile name is missing");
       }
 
       this.setState({ 
