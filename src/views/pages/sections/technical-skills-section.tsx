@@ -1,54 +1,214 @@
-import React, { Component, ReactNode } from "react";
+import React, { Component, ReactNode, PureComponent } from "react";
 import Card from "../../components/card-component";
 import "../../../assets/css/technical-skills-section.css";
 
+/**
+ * Skill Category Interface
+ * Follows Interface Segregation Principle (ISP)
+ */
 export type SkillCategory = {
   category: string;
   items: string[];
 };
 
+/**
+ * Technical Skills Props Interface
+ */
 type TechnicalSkillsProps = {
   data: SkillCategory[];
 };
 
-class TechnicalSkillsSection extends Component<TechnicalSkillsProps> {
-  // 🔹 Render helper methods
-  private renderItem(item: string): ReactNode {
+/**
+ * Technical Skills Section State Interface
+ */
+type TechnicalSkillsState = {
+  isVisible: boolean;
+  hasAnimated: boolean;
+};
+
+/**
+ * Skill Item Component
+ * PureComponent for performance optimization (memoization)
+ * Follows Single Responsibility Principle (SRP)
+ */
+class SkillItem extends PureComponent<{ item: string; index: number }> {
+  public render(): ReactNode {
+    const { item, index } = this.props;
+    
     return (
-      <li className="skill-item" key={item}>
+      <li 
+        className="skill-item" 
+        style={{ animationDelay: `${index * 50}ms` }}
+        aria-label={`Skill: ${item}`}
+      >
+        <span className="skill-icon" aria-hidden="true">
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path 
+              d="M13.5 4.5L6 12L2.5 8.5" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
         <span className="skill-name">{item}</span>
       </li>
     );
   }
+}
 
-  private renderCategory(category: string): ReactNode {
+/**
+ * Skill Block Component
+ * PureComponent for performance optimization
+ * Follows Single Responsibility Principle (SRP)
+ */
+class SkillBlock extends PureComponent<{ skill: SkillCategory; index: number }> {
+  public render(): ReactNode {
+    const { skill, index } = this.props;
+    
     return (
-      <div className="skill-header">
-        <h4 className="skill-category">{category}</h4>
-      </div>
-    );
-  }
-
-  private renderBlock(skill: SkillCategory): ReactNode {
-    return (
-      <div className="skill-block" key={skill.category}>
-        {this.renderCategory(skill.category)}
+      <article 
+        className="skill-block" 
+        style={{ animationDelay: `${index * 100}ms` }}
+        aria-labelledby={`skill-category-${index}`}
+      >
+        <header className="skill-header">
+          <h3 
+            className="skill-category" 
+            id={`skill-category-${index}`}
+          >
+            {skill.category}
+          </h3>
+          <div className="skill-category-underline" aria-hidden="true"></div>
+        </header>
         <ul className="skill-list">
-          {skill.items.map((item) => this.renderItem(item))}
+          {skill.items.map((item, itemIndex) => (
+            <SkillItem 
+              key={`${skill.category}-${item}-${itemIndex}`}
+              item={item} 
+              index={itemIndex}
+            />
+          ))}
         </ul>
+      </article>
+    );
+  }
+}
+
+/**
+ * Technical Skills Section Component
+ * 
+ * Features:
+ * - Luxury & Elegant Design with smooth animations
+ * - Performance Optimized (PureComponent, memoization)
+ * - Fully Responsive (mobile, tablet, desktop, landscape)
+ * - Comprehensive Edge Case Handling
+ * - Clean UI/UX with hover effects and interactions
+ * - Accessibility Support (ARIA labels, semantic HTML)
+ * 
+ * Principles Applied:
+ * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
+ * - DRY (Don't Repeat Yourself)
+ * - OOP (Object-Oriented Programming)
+ * - MVP (Minimum Viable Product)
+ * - Keep It Simple
+ */
+class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSkillsState> {
+  constructor(props: TechnicalSkillsProps) {
+    super(props);
+    this.state = {
+      isVisible: false,
+      hasAnimated: false,
+    };
+  }
+
+  /**
+   * Validate data structure
+   * Edge case handling
+   */
+  private isValidData(data: SkillCategory[]): boolean {
+    if (!Array.isArray(data) || data.length === 0) {
+      return false;
+    }
+
+    return data.every(
+      (skill) =>
+        skill &&
+        typeof skill === "object" &&
+        typeof skill.category === "string" &&
+        skill.category.trim() !== "" &&
+        Array.isArray(skill.items) &&
+        skill.items.length > 0 &&
+        skill.items.every((item) => typeof item === "string" && item.trim() !== "")
+    );
+  }
+
+  /**
+   * Render empty state
+   * Edge case handling
+   */
+  private renderEmptyState(): ReactNode {
+    return (
+      <div className="skills-empty" role="status" aria-live="polite">
+        <div className="skills-empty-icon" aria-hidden="true">📋</div>
+        <p className="skills-empty-text">No technical skills available at the moment.</p>
       </div>
     );
   }
 
-  // 🔹 Main render
+  /**
+   * Render skill blocks
+   * Follows DRY principle
+   */
+  private renderSkillBlocks(): ReactNode {
+    const { data } = this.props;
+
+    if (!this.isValidData(data)) {
+      return this.renderEmptyState();
+    }
+
+    return (
+      <div className="skills-grid" role="region" aria-label="Technical Skills">
+        {data.map((skill, index) => (
+          <SkillBlock 
+            key={`skill-block-${skill.category}-${index}`}
+            skill={skill} 
+            index={index}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  /**
+   * Main render method
+   */
   public render(): ReactNode {
     const { data } = this.props;
 
+    // Edge case: Handle empty or invalid data
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return (
+        <Card id="technical-skills-section" title="Technical Skills">
+          {this.renderEmptyState()}
+        </Card>
+      );
+    }
+
     return (
-      <Card id="technical-skills-section" title="Technical Skills">
-        <div className="skills-grid">
-          {data.map((skill) => this.renderBlock(skill))}
-        </div>
+      <Card 
+        id="technical-skills-section" 
+        title="Technical Skills"
+        ariaLabel="Technical Skills Section"
+      >
+        {this.renderSkillBlocks()}
       </Card>
     );
   }
