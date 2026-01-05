@@ -25,12 +25,13 @@
   --skills-spacing-xl: 2.5rem;
   --skills-spacing-xxl: 3rem;
   
-  /* Colors - Luxury Palette from tokens.css */
-  --skills-color-primary: var(--accent, #78a2f0);
-  --skills-color-primary-light: var(--accent-light, #a8c5ff);
-  --skills-color-primary-dark: var(--accent-dark, #5a8de8);
-  --skills-color-secondary: var(--accent-alt, #6fb1fc);
-  --skills-color-accent: var(--accent-hover, #8bb3ff);
+  /* Colors - Luxury Palette from tokens.css (Updated) */
+  --skills-color-primary: var(--accent, #667eea);
+  --skills-color-primary-light: var(--accent-light, #a78bfa);
+  --skills-color-primary-dark: var(--accent-dark, #5b21b6);
+  --skills-color-secondary: var(--accent-alt, #764ba2);
+  --skills-color-accent: var(--accent-hover, #7c3aed);
+  --skills-color-tertiary: var(--accent-tertiary, #4facfe);
   
   --skills-color-text-heading: var(--text-heading, #1f2d3d);
   --skills-color-text-primary: var(--text-heading-alt, #2c3e50);
@@ -41,21 +42,21 @@
   --skills-color-bg-card: var(--bg-card, #ffffff);
   --skills-color-bg-card-hover: var(--bg-card-hover, #fafbfd);
   --skills-color-bg-gradient: var(--bg-gradient-luxury, linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f3f6fa 100%));
-  --skills-color-bg-icon: var(--bg-gradient-accent, linear-gradient(135deg, #78a2f0 0%, #6fb1fc 100%));
+  --skills-color-bg-icon: var(--bg-gradient-accent, linear-gradient(135deg, #667eea 0%, #764ba2 100%));
   
   --skills-color-border: var(--border-light, rgba(220, 227, 234, 0.6));
-  --skills-color-border-hover: var(--border-accent-hover, rgba(120, 162, 240, 0.5));
-  --skills-color-border-glow: var(--border-glow, rgba(120, 162, 240, 0.2));
+  --skills-color-border-glow: var(--border-glow, rgba(102, 126, 234, 0.25));
+  --skills-color-border-hover: var(--border-accent-hover, rgba(102, 126, 234, 0.5));
   
-  /* Shadows - Luxury Depth from tokens.css */
-  --skills-shadow-xs: var(--shadow-xs, 0 1px 2px rgba(0, 0, 0, 0.03));
-  --skills-shadow-sm: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.05));
-  --skills-shadow-md: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.07));
-  --skills-shadow-lg: var(--shadow-lg, 0 8px 16px rgba(0, 0, 0, 0.06), 0 16px 32px rgba(0, 0, 0, 0.05));
-  --skills-shadow-card: var(--shadow-card, 0 4px 16px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06), 0 24px 64px rgba(0, 0, 0, 0.04));
-  --skills-shadow-card-hover: var(--shadow-card-hover, 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 40px 96px rgba(120, 162, 240, 0.15));
-  --skills-shadow-glow: var(--shadow-glow, 0 0 20px rgba(120, 162, 240, 0.4));
-  --skills-shadow-accent: var(--shadow-accent, 0 0 12px rgba(120, 162, 240, 0.3));
+  /* Shadows - Luxury Depth from tokens.css (Updated) */
+  --skills-shadow-xs: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.04));
+  --skills-shadow-sm: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06));
+  --skills-shadow-md: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08));
+  --skills-shadow-lg: var(--shadow-lg, 0 10px 24px rgba(0, 0, 0, 0.08), 0 20px 40px rgba(0, 0, 0, 0.06));
+  --skills-shadow-card: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
+  --skills-shadow-card-hover: var(--shadow-card-hover, 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18));
+  --skills-shadow-glow: var(--shadow-glow, 0 0 24px rgba(102, 126, 234, 0.45));
+  --skills-shadow-accent: var(--shadow-accent, 0 0 16px rgba(102, 126, 234, 0.35));
   
   /* Transitions - Smooth & Elegant */
   --skills-transition-fast: var(--transition-fast, 0.15s ease);
@@ -98,7 +99,7 @@
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: var(--skills-color-primary, #78a2f0) transparent;
+  scrollbar-color: var(--skills-color-primary, #667eea) transparent;
   position: relative;
   width: 100%;
 }
@@ -115,13 +116,13 @@
 }
 
 .skills-grid::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--skills-color-primary, #78a2f0), var(--skills-color-secondary, #6fb1fc));
+  background: linear-gradient(135deg, var(--skills-color-primary, #667eea), var(--skills-color-secondary, #764ba2));
   border-radius: 10px;
   transition: background var(--skills-transition-base, 0.3s ease);
 }
 
 .skills-grid::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--skills-color-primary-dark, #5a8de8), var(--skills-color-primary, #78a2f0));
+  background: linear-gradient(135deg, var(--skills-color-primary-dark, #5b21b6), var(--skills-color-primary, #667eea));
 }
 
 /* ─── Skill Block (Card) ─── */
@@ -170,7 +171,7 @@
 }
 
 .skill-block:focus-within {
-  outline: 2px solid var(--skills-color-primary, #78a2f0);
+  outline: 2px solid var(--skills-color-primary, #667eea);
   outline-offset: 2px;
 }
 
@@ -200,7 +201,7 @@
   font-family: var(--skills-font-main, 'Inter', 'Segoe UI', sans-serif);
   background: linear-gradient(135deg, 
     var(--skills-color-text-heading, #1f2d3d),
-    var(--skills-color-primary, #78a2f0)
+    var(--skills-color-primary, #667eea)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -222,8 +223,8 @@
   width: 60px;
   height: 3px;
   background: linear-gradient(90deg, 
-    var(--skills-color-primary, #78a2f0),
-    var(--skills-color-secondary, #6fb1fc)
+    var(--skills-color-primary, #667eea),
+    var(--skills-color-secondary, #764ba2)
   );
   border-radius: 2px;
   transition: width var(--skills-transition-smooth, 0.4s cubic-bezier(0.4, 0, 0.2, 1));
@@ -277,7 +278,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--skills-color-primary, #78a2f0);
+  color: var(--skills-color-primary, #667eea);
   background: linear-gradient(135deg, 
     rgba(120, 162, 240, 0.1),
     rgba(111, 177, 252, 0.1)
@@ -312,7 +313,7 @@
 
 .skill-item:hover .skill-icon {
   transform: translateY(-50%) scale(1.15) rotate(5deg);
-  color: var(--skills-color-secondary, #6fb1fc);
+  color: var(--skills-color-secondary, #764ba2);
   background: linear-gradient(135deg, 
     rgba(120, 162, 240, 0.2),
     rgba(111, 177, 252, 0.2)

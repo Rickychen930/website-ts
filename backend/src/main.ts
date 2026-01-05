@@ -85,9 +85,13 @@ app.get("/", (_, res) => {
   res.send("🔐 Secure backend is running 🚀");
 });
 
-// ✅ Fallback route
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" });
+// ✅ Fallback route - catch all unmatched routes
+app.use((req, res) => {
+  res.status(404).json({ 
+    message: "Route not found",
+    path: req.path,
+    method: req.method 
+  });
 });
 
 const sslPath = "/etc/letsencrypt/live/rickychen930.cloud";

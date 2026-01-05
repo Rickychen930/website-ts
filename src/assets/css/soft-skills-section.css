@@ -64,8 +64,8 @@
   box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.08),
     0 24px 64px rgba(0, 0, 0, 0.1),
-    0 40px 96px rgba(120, 162, 240, 0.15);
-  border-color: rgba(120, 162, 240, 0.4);
+    0 48px 120px rgba(102, 126, 234, 0.18);
+  border-color: rgba(102, 126, 234, 0.5);
   background: linear-gradient(135deg,
     rgba(255, 255, 255, 1),
     rgba(249, 251, 253, 0.98)
@@ -75,9 +75,9 @@
 .soft-skill-item:hover .soft-skill-icon,
 .soft-skill-item:focus-within .soft-skill-icon {
   transform: scale(1.15) rotate(5deg);
-  border-color: rgba(120, 162, 240, 0.5);
+  border-color: rgba(102, 126, 234, 0.6);
   box-shadow:
-    0 8px 24px rgba(120, 162, 240, 0.25),
+    0 8px 24px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
@@ -88,7 +88,7 @@
 
 .soft-skill-item:hover .soft-skill-title,
 .soft-skill-item:focus-within .soft-skill-title {
-  color: var(--accent, #78a2f0);
+  color: var(--accent, #667eea);
   transform: translateY(-2px);
 }
 
@@ -112,8 +112,8 @@
   width: 100px;
   height: 100px;
   background: radial-gradient(circle,
-    rgba(120, 162, 240, 0.25),
-    rgba(120, 162, 240, 0.1),
+    rgba(102, 126, 234, 0.3),
+    rgba(102, 126, 234, 0.15),
     transparent
   );
   border-radius: 50%;
@@ -130,13 +130,13 @@
   width: 4.5rem;
   height: 4.5rem;
   background: linear-gradient(135deg,
-    rgba(120, 162, 240, 0.12),
+    rgba(102, 126, 234, 0.15),
     rgba(111, 177, 252, 0.18)
   );
-  border: 2px solid rgba(120, 162, 240, 0.25);
+  border: 2px solid rgba(102, 126, 234, 0.3);
   border-radius: 20px;
   box-shadow:
-    0 6px 16px rgba(120, 162, 240, 0.18),
+    0 6px 16px rgba(102, 126, 234, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;

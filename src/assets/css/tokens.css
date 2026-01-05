@@ -7,25 +7,26 @@
   --transparent: transparent;
 
   /* ============================================
-     Backgrounds - Elegant & Clean
+     Backgrounds - Elegant & Clean (Enhanced Luxury)
      ============================================ */
-  --bg-light: #f9fbfd;
-  --bg-lighter: #f3f6fa;
+  --bg-light: #fafbfc;
+  --bg-lighter: #f5f7fa;
   --bg-lightest: #f0f4f8;
   --bg-card: #ffffff;
-  --bg-card-alt: #f8fafc;
-  --bg-card-hover: #fafbfd;
+  --bg-card-alt: #fafbfd;
+  --bg-card-hover: #fefefe;
   --bg-footer: #f1f5f9;
   --bg-footer-alt: #e8edf3;
   --bg-timeline: #f0f4f8;
   --bg-content-hover: #f5f8fc;
-  --bg-navbar: rgba(249, 251, 253, 0.85);
+  --bg-navbar: rgba(255, 255, 255, 0.9);
   --bg-navbar-scrolled: rgba(255, 255, 255, 0.98);
-  --bg-stat: #f0f4f8;
-  --bg-overlay: rgba(0, 0, 0, 0.4);
-  --bg-gradient-primary: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
-  --bg-gradient-accent: linear-gradient(135deg, #78a2f0 0%, #6fb1fc 100%);
-  --bg-gradient-luxury: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f3f6fa 100%);
+  --bg-stat: #f5f7fa;
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+  --bg-gradient-primary: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+  --bg-gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-gradient-luxury: linear-gradient(135deg, #ffffff 0%, #fafbfd 40%, #f5f7fa 100%);
+  --bg-gradient-sublime: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
 
   /* ============================================
      Text Colors - Professional & Readable
@@ -44,15 +45,19 @@
   --text-link-hover: #6fb1fc;
 
   /* ============================================
-     Accent Colors - Luxury Blue Palette
+     Accent Colors - Luxury Premium Palette (Enhanced)
      ============================================ */
-  --accent: #78a2f0;
-  --accent-alt: #6fb1fc;
-  --accent-hover: #8bb3ff;
-  --accent-light: #a8c5ff;
-  --accent-dark: #5a8de8;
-  --accent-gradient: linear-gradient(135deg, #78a2f0 0%, #6fb1fc 50%, #8bb3ff 100%);
-  --accent-glow: rgba(120, 162, 240, 0.3);
+  --accent: #667eea;
+  --accent-alt: #764ba2;
+  --accent-hover: #7c3aed;
+  --accent-light: #a78bfa;
+  --accent-dark: #5b21b6;
+  --accent-secondary: #f093fb;
+  --accent-tertiary: #4facfe;
+  --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  --accent-glow: rgba(102, 126, 234, 0.35);
+  --accent-glow-strong: rgba(118, 75, 162, 0.4);
 
   /* ============================================
      Borders - Subtle & Elegant
@@ -70,44 +75,46 @@
   --border-accent-hover: rgba(120, 162, 240, 0.5);
 
   /* ============================================
-     Shadows - Depth & Luxury
+     Shadows - Depth & Luxury (Enhanced Premium)
      ============================================ */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06), 0 16px 32px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.08), 0 24px 48px rgba(0, 0, 0, 0.06);
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06), 0 24px 64px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 40px 96px rgba(120, 162, 240, 0.15);
-  --shadow-card-alt: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-item: 0 4px 12px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
-  --shadow-item-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(120, 162, 240, 0.12);
-  --shadow-icon: 0 2px 6px rgba(0, 0, 0, 0.05);
-  --shadow-icon-alt: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-icon-hover: 0 8px 24px rgba(120, 162, 240, 0.25);
-  --shadow-focus: 0 0 0 3px rgba(120, 162, 240, 0.2);
-  --shadow-glow: 0 0 20px rgba(120, 162, 240, 0.4);
-  --shadow-accent: 0 0 12px rgba(120, 162, 240, 0.3);
-  --shadow-footer: 0 -4px 12px rgba(0, 0, 0, 0.04);
-  --shadow-navbar: 0 6px 20px rgba(0, 0, 0, 0.06);
-  --shadow-navbar-scrolled: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-dropdown: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.08), 0 20px 40px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06);
+  --shadow-card-hover: 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18);
+  --shadow-card-alt: 0 10px 32px rgba(0, 0, 0, 0.09);
+  --shadow-item: 0 6px 16px rgba(0, 0, 0, 0.05), 0 12px 32px rgba(0, 0, 0, 0.07);
+  --shadow-item-hover: 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 40px 100px rgba(102, 126, 234, 0.15);
+  --shadow-icon: 0 4px 10px rgba(0, 0, 0, 0.06);
+  --shadow-icon-alt: 0 6px 16px rgba(0, 0, 0, 0.06);
+  --shadow-icon-hover: 0 12px 32px rgba(102, 126, 234, 0.3);
+  --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+  --shadow-glow: 0 0 24px rgba(102, 126, 234, 0.45);
+  --shadow-glow-strong: 0 0 40px rgba(118, 75, 162, 0.5);
+  --shadow-accent: 0 0 16px rgba(102, 126, 234, 0.35);
+  --shadow-footer: 0 -6px 20px rgba(0, 0, 0, 0.05);
+  --shadow-navbar: 0 8px 24px rgba(0, 0, 0, 0.07);
+  --shadow-navbar-scrolled: 0 12px 32px rgba(0, 0, 0, 0.1);
+  --shadow-dropdown: 0 10px 32px rgba(0, 0, 0, 0.1);
   --shadow-composite:
-    0 1px 2px rgba(0, 0, 0, 0.03),
-    0 4px 8px rgba(0, 0, 0, 0.06),
-    0 12px 24px rgba(0, 0, 0, 0.08),
-    0 24px 48px rgba(0, 0, 0, 0.05);
-  --shadow-composite-hover:
     0 2px 4px rgba(0, 0, 0, 0.04),
-    0 8px 16px rgba(0, 0, 0, 0.08),
-    0 24px 48px rgba(0, 0, 0, 0.12),
-    0 40px 80px rgba(120, 162, 240, 0.15);
+    0 6px 12px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.09),
+    0 32px 64px rgba(0, 0, 0, 0.06);
+  --shadow-composite-hover:
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 12px 24px rgba(0, 0, 0, 0.1),
+    0 32px 64px rgba(0, 0, 0, 0.14),
+    0 48px 120px rgba(102, 126, 234, 0.18);
 
   /* ============================================
-     Typography - Professional & Elegant
+     Typography - Professional & Elegant (Enhanced)
      ============================================ */
-  --font-main: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
-  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  --font-main: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Consolas', monospace;
+  --font-display: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
   --font-title-size: 2rem;
   --font-title-weight: 700;
   --font-title-spacing: -0.8px;

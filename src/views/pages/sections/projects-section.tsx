@@ -170,24 +170,55 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       return;
     }
 
+    // Edge case: Validate data exists
+    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+      this.setState({ isInitialized: true });
+      return;
+    }
+
     try {
       this.observer = new IntersectionObserver(
         this.handleIntersection.bind(this),
         OBSERVER_CONFIG
       );
 
-      // Observe all items
+      // Observe all items with error handling
+      let observedCount = 0;
       this.itemRefs.forEach((ref) => {
         if (ref.current) {
-          this.observer?.observe(ref.current);
+          try {
+            this.observer?.observe(ref.current);
+            observedCount++;
+          } catch (err) {
+            // Edge case: Handle individual observe errors
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('Failed to observe project item:', err);
+            }
+          }
         }
       });
 
-      this.setState({ isInitialized: true });
+      // Edge case: If no items observed, show all as fallback
+      if (observedCount === 0 && this.itemRefs.size > 0) {
+        const allKeys = Array.from(this.itemRefs.keys());
+        this.setState({
+          visibleItems: new Set(allKeys),
+          isInitialized: true,
+        });
+      } else {
+        this.setState({ isInitialized: true });
+      }
     } catch (error) {
-      console.error("❌ Error initializing IntersectionObserver:", error);
+      // Enhanced error handling
+      if (process.env.NODE_ENV === 'development') {
+        console.error("❌ Error initializing IntersectionObserver:", error);
+      }
+      
+      // Fallback: show all items
+      const allKeys = Array.from(this.itemRefs.keys());
       this.setState({
-        error: "Failed to initialize visibility observer",
+        visibleItems: new Set(allKeys),
+        error: null, // Don't show error to user, just fallback gracefully
         isInitialized: true,
       });
     }
@@ -459,7 +490,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
 
   /**
    * Main Render Method
-   * Render projects section with error handling
+   * Render projects section with error handling and filtering
    */
   public render(): ReactNode {
     const { data } = this.props;
@@ -474,11 +505,27 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       );
     }
 
-    // Edge case: Error state
+    // Edge case: Error state (but don't show error, just fallback gracefully)
     if (error) {
+      // Don't show error state, just render empty state for better UX
+      // Error is logged in development mode only
       return (
         <Card id="projects-section" title="Projects">
-          {this.renderErrorState()}
+          {this.renderEmptyState()}
+        </Card>
+      );
+    }
+
+    // Filter and render items, removing null returns from invalid items
+    const renderedItems = data
+      .map((item, index) => this.renderItem(item, index))
+      .filter((item): item is ReactNode => item !== null);
+
+    // Edge case: No valid items after filtering
+    if (renderedItems.length === 0) {
+      return (
+        <Card id="projects-section" title="Projects">
+          {this.renderEmptyState()}
         </Card>
       );
     }
@@ -486,7 +533,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     return (
       <Card id="projects-section" title="Projects">
         <div className="projects-flow" role="list">
-          {data.map((item, index) => this.renderItem(item, index))}
+          {renderedItems}
         </div>
       </Card>
     );

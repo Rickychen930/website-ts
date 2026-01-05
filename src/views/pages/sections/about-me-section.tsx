@@ -3,81 +3,224 @@ import Card from "../../components/card-component";
 import Image from "../../components/image-component";
 import ProfileStat from "../../components/profile-stat-component";
 import ProfileAction from "../../components/profile-action-component";
-import "../../../assets/css/about-me-section.css";
+import {
+  HeroHeader,
+  ProfessionalHighlight,
+  AnimatedCodeBlock,
+  TechBadgesGrid,
+} from "../../components/about-me";
+import { AboutMeController } from "../../../controllers/about-me-controller";
+import { UserProfile } from "../../../types/user";
 import { ButtonVariant } from "../../../types/ui";
+import "../../../assets/css/about-me-section.css";
 
 /**
- * About Me Data Interface
+ * AboutMeSection Props Interface
  * Follows Interface Segregation Principle (ISP)
  */
-type AboutMeData = {
-  name: string;
-  title: string;
-  location: string;
-  bio: string;
-  stats: { value: string; label: string }[];
+type AboutMeProps = {
+  data: UserProfile;
 };
 
-type AboutMeProps = {
-  data: AboutMeData;
+/**
+ * AboutMeSection State Interface
+ */
+type AboutMeState = {
+  isVisible: boolean;
 };
 
 /**
  * AboutMeSection Component
- * Follows Single Responsibility Principle (SRP) - Only handles About Me display
- * Follows Open/Closed Principle (OCP) - Extensible through props
- * Follows Dependency Inversion Principle (DIP) - Depends on abstractions (props)
+ * 
+ * Features:
+ * - Professional, Clean, Luxury, Responsive Design
+ * - Shows Software Engineering Capabilities Prominently
+ * - Component-Based Architecture (Reusable Components)
+ * - MVC Pattern (Controller, Model, View separation)
+ * 
+ * Principles Applied:
+ * - MVC: Separated Controller, Model, and View
+ * - OOP: Class-based component with encapsulation
+ * - SOLID:
+ *   - SRP: Each method has single responsibility
+ *   - OCP: Extensible through composition
+ *   - LSP: Proper inheritance/implementation
+ *   - ISP: Interfaces are segregated
+ *   - DIP: Depends on abstractions (controller, components)
+ * - DRY: Reuses components and utilities
+ * - KISS: Simple, clear structure
  */
-class AboutMeSection extends Component<AboutMeProps> {
+class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
+  private readonly controller: AboutMeController;
+
+  constructor(props: AboutMeProps) {
+    super(props);
+    this.state = {
+      isVisible: false,
+    };
+    this.controller = new AboutMeController();
+  }
+
   /**
-   * Render name header with elegant typography
+   * Component lifecycle - Mount
+   * Initialize visibility state
    */
-  private renderHeader(): ReactNode {
-    const { name } = this.props.data;
-    
-    if (!name || name.trim() === "") {
+  componentDidMount(): void {
+    this.setState({ isVisible: true });
+  }
+
+  /**
+   * Render hero header with name and title
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderHeroHeader(): ReactNode {
+    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+
+    if (!aboutMeData) {
       return null;
     }
 
     return (
-      <header className="about-me-header">
-        <h1 className="about-me-name">
-          I'm <span className="about-me-name-accent">{name}</span>
-        </h1>
-      </header>
+      <HeroHeader
+        name={aboutMeData.name}
+        title={aboutMeData.title}
+        location={aboutMeData.location}
+      />
     );
   }
 
   /**
-   * Render professional information section
+   * Render profile image with luxury styling
+   * Follows Single Responsibility Principle (SRP)
    */
-  private renderInformation(): ReactNode {
-    const { title, location, bio } = this.props.data;
-    
+  private renderProfileImage(): ReactNode {
+    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+
+    if (!aboutMeData) {
+      return null;
+    }
+
     return (
-      <div className="about-me-information">
-        {title && (
-          <h2 className="about-me-title" aria-label="Professional title">
-            {title}
-          </h2>
-        )}
-        {location && (
-          <div className="about-me-location" aria-label="Location">
-            <span className="about-me-location-icon" aria-hidden="true">📍</span>
-            <span className="about-me-location-text">{location}</span>
+      <div className="about-me-image-container">
+        <div className="about-me-image-wrapper">
+          <div className="about-me-image-glow" aria-hidden="true"></div>
+          <div className="about-me-image-border" aria-hidden="true"></div>
+          <div className="about-me-image-particles" aria-hidden="true">
+            <span className="particle">⚡</span>
+            <span className="particle">💻</span>
+            <span className="particle">🚀</span>
+            <span className="particle">⚛️</span>
           </div>
-        )}
-        {bio && (
-          <p className="about-me-bio" aria-label="Biography">
-            {bio}
-          </p>
-        )}
+          <Image
+            src="/assets/images/ricky-profile.jpeg"
+            alt={`${aboutMeData.name} profile picture`}
+            width={320}
+            height={320}
+            className="about-me-image"
+            style={{ borderRadius: '50%' }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Render bio/description section
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderBio(): ReactNode {
+    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+
+    if (!aboutMeData || !aboutMeData.bio) {
+      return null;
+    }
+
+    return (
+      <div className="about-me-bio-section">
+        <p className="about-me-bio" aria-label="Biography">
+          {aboutMeData.bio}
+        </p>
+      </div>
+    );
+  }
+
+  /**
+   * Render featured tech badges grid
+   * Shows software engineering capabilities prominently
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderFeaturedTechStack(): ReactNode {
+    const technologies = this.controller.getFeaturedTechnologies(this.props.data, 12);
+
+    if (!technologies || technologies.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="about-me-featured-tech">
+        <TechBadgesGrid
+          technologies={technologies}
+          title="Tech Stack"
+          variant="default"
+          maxItems={12}
+        />
+      </div>
+    );
+  }
+
+  /**
+   * Render professional highlights
+   * Shows key achievements and capabilities
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderProfessionalHighlights(): ReactNode {
+    const highlights = this.controller.getProfessionalHighlights(this.props.data);
+
+    if (!highlights || highlights.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="about-me-highlights">
+        <h3 className="about-me-highlights-title">Key Achievements</h3>
+        <div className="about-me-highlights-grid">
+          {highlights.map((highlight, index) => (
+            <ProfessionalHighlight
+              key={`highlight-${index}`}
+              icon={highlight.icon}
+              title={highlight.title}
+              description={highlight.description}
+              variant={index === 0 ? "primary" : "default"}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Render animated code block showing tech stack
+   * Demonstrates software engineering capabilities
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderTechStackCode(): ReactNode {
+    const technologies = this.controller.getFeaturedTechnologies(this.props.data, 8);
+
+    if (!technologies || technologies.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="about-me-tech-stack-code">
+        <h3 className="about-me-tech-stack-title">Code & Technologies</h3>
+        <AnimatedCodeBlock technologies={technologies} language="typescript" />
       </div>
     );
   }
 
   /**
    * Render call-to-action buttons
+   * Follows Single Responsibility Principle (SRP)
    */
   private renderActions(): ReactNode {
     return (
@@ -99,10 +242,12 @@ class AboutMeSection extends Component<AboutMeProps> {
 
   /**
    * Render statistics cards
+   * Follows Single Responsibility Principle (SRP)
    */
   private renderStats(): ReactNode {
-    const { stats } = this.props.data;
-    
+    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+    const { stats } = aboutMeData || { stats: [] };
+
     if (!stats || stats.length === 0) {
       return null;
     }
@@ -110,10 +255,10 @@ class AboutMeSection extends Component<AboutMeProps> {
     return (
       <div className="about-me-stats" role="group" aria-label="Profile statistics">
         {stats.map((stat, index) => (
-          <ProfileStat 
+          <ProfileStat
             key={`stat-${index}`}
-            value={stat.value} 
-            label={stat.label} 
+            value={stat.value}
+            label={stat.label}
           />
         ))}
       </div>
@@ -121,46 +266,50 @@ class AboutMeSection extends Component<AboutMeProps> {
   }
 
   /**
-   * Render profile image with elegant styling
+   * Render main content layout
+   * Follows Single Responsibility Principle (SRP)
    */
-  private renderImage(): ReactNode {
-    const { name } = this.props.data;
-    
-    if (!name) {
-      return null;
-    }
-
+  private renderMainContent(): ReactNode {
     return (
-      <div className="about-me-image-container">
-        <div className="about-me-image-wrapper">
-          <div className="about-me-image-glow" aria-hidden="true"></div>
-          <Image
-            src="/assets/images/ricky-profile.jpeg"
-            alt={`${name} profile picture`}
-            width={280}
-            height={280}
-            className="about-me-image"
-            style={{ borderRadius: '50%' }}
-          />
+      <div className="about-me-main-content">
+        <div className="about-me-hero-background" aria-hidden="true"></div>
+        <div className="about-me-hero-section">
+          <div className="about-me-hero-left">
+            {this.renderHeroHeader()}
+            {this.renderBio()}
+            {this.renderFeaturedTechStack()}
+            {this.renderActions()}
+          </div>
+          <div className="about-me-hero-right">
+            {this.renderProfileImage()}
+          </div>
         </div>
       </div>
     );
   }
 
   /**
+   * Render additional content (highlights, tech stack)
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderAdditionalContent(): ReactNode {
+    return (
+      <div className="about-me-additional-content">
+        {this.renderProfessionalHighlights()}
+        {this.renderTechStackCode()}
+      </div>
+    );
+  }
+
+  /**
    * Render main content wrapper
+   * Follows Single Responsibility Principle (SRP)
    */
   private renderContent(): ReactNode {
     return (
-      <div className="about-me-content">
-        <div className="about-me-main">
-          {this.renderImage()}
-          <div className="about-me-text-content">
-            {this.renderHeader()}
-            {this.renderInformation()}
-            {this.renderActions()}
-          </div>
-        </div>
+      <div className={`about-me-content ${this.state.isVisible ? "about-me-visible" : ""}`}>
+        {this.renderMainContent()}
+        {this.renderAdditionalContent()}
         {this.renderStats()}
       </div>
     );
@@ -171,14 +320,14 @@ class AboutMeSection extends Component<AboutMeProps> {
    */
   public render(): ReactNode {
     const { data } = this.props;
-    
+
     // Edge case: Handle missing or invalid data
-    if (!data || !data.name) {
+    if (!this.controller.shouldDisplay(data)) {
       return null;
     }
 
     return (
-      <Card id="about-me-section">
+      <Card id="about-me-section" ariaLabel="About Me Section">
         {this.renderContent()}
       </Card>
     );

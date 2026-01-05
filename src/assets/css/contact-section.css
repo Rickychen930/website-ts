@@ -4,12 +4,12 @@
 
 /* ─── CSS Variables ─── */
 #contact-section {
-  --contact-primary: #78a2f0;
-  --contact-primary-hover: #6fb1fc;
-  --contact-primary-light: #e8f0fe;
-  --contact-gradient-start: #608aed;
-  --contact-gradient-end: #11447d;
-  --contact-gradient-hover: linear-gradient(135deg, #6fb1fc, #4a90e2);
+  --contact-primary: var(--accent, #667eea);
+  --contact-primary-hover: var(--accent-hover, #7c3aed);
+  --contact-primary-light: rgba(102, 126, 234, 0.1);
+  --contact-gradient-start: #667eea;
+  --contact-gradient-end: #5b21b6;
+  --contact-gradient-hover: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
   --contact-text-primary: #2c3e50;
   --contact-text-secondary: #5c6b7a;
   --contact-text-muted: #7a8b9c;
@@ -114,7 +114,7 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: radial-gradient(circle, rgba(120, 162, 240, 0.3), transparent);
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.3), transparent);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: var(--contact-transition);

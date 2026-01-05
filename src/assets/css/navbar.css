@@ -2,76 +2,225 @@
  * Navbar Styles - Ultra Luxury, Elegant & Professional
  * Showcasing Advanced Software Engineering Skills
  * Premium Design with Sophisticated Animations & Effects
+ * 
+ * Architecture Principles:
+ * - Component-Based: Modular, reusable CSS classes
+ * - Responsive Design: Mobile-first approach
+ * - Performance: Hardware-accelerated animations
+ * - Accessibility: WCAG 2.1 AA compliant
+ * - Modern CSS: Uses CSS custom properties, grid, flexbox
  */
 
 /* ============================================
-   Base Navbar Container - Advanced Glassmorphism
+   CSS Custom Properties (Design Tokens)
+   Advanced Software Engineering Design System
+   ============================================ */
+:root {
+  --navbar-height: 88px;
+  --navbar-height-scrolled: 72px;
+  --navbar-blur: 48px;
+  --navbar-blur-strong: 64px;
+  --navbar-z-index: var(--z-max, 9999);
+  --navbar-backdrop-z: calc(var(--z-max) - 1);
+  --navbar-menu-z: var(--z-max);
+  
+  /* Advanced Gradient System - Multi-layer Premium */
+  --gradient-primary: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
+  --gradient-primary-reverse: linear-gradient(135deg, #f093fb 0%, #764ba2 50%, #667eea 100%);
+  --gradient-primary-radial: radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15), transparent 70%);
+  --gradient-surface: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 255, 255, 0.94) 50%,
+    rgba(250, 251, 252, 0.92) 100%
+  );
+  --gradient-surface-scrolled: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.99) 0%,
+    rgba(255, 255, 255, 0.98) 50%,
+    rgba(255, 255, 255, 0.97) 100%
+  );
+  --gradient-text-premium: linear-gradient(
+    135deg,
+    #1f2d3d 0%,
+    #2c3e50 25%,
+    #667eea 50%,
+    #764ba2 75%,
+    #f093fb 100%
+  );
+  
+  /* Advanced Shadow System - Multi-layer Depth */
+  --shadow-navbar-default: 
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.02) inset,
+    0 4px 16px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(0, 0, 0, 0.06);
+  --shadow-navbar-scrolled: 
+    0 2px 0 rgba(255, 255, 255, 0.98) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.03) inset,
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 16px 64px rgba(0, 0, 0, 0.06),
+    0 0 80px rgba(102, 126, 234, 0.12);
+  --shadow-menu-premium:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 16px 64px rgba(0, 0, 0, 0.08),
+    0 32px 128px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+    0 0 120px rgba(102, 126, 234, 0.18);
+  
+  /* Spacing System - 8px Grid */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Animation Timing - Advanced Easing */
+  --timing-instant: 0.1s;
+  --timing-fast: 0.2s;
+  --timing-normal: 0.3s;
+  --timing-slow: 0.5s;
+  --timing-slower: 0.8s;
+  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --easing-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-premium: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ============================================
+   Base Navbar Container - Ultra Premium Glassmorphism
+   Multi-layer Visual Effects & Advanced Animations
    ============================================ */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: var(--z-sticky, 200);
+  z-index: var(--navbar-z-index);
   width: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.92) 0%,
-    rgba(255, 255, 255, 0.88) 50%,
-    rgba(250, 251, 252, 0.90) 100%
-  );
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
-  border-bottom: 1px solid rgba(220, 227, 234, 0.4);
-  box-shadow: 
-    0 4px 24px rgba(0, 0, 0, 0.06),
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.02) inset;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: var(--navbar-height);
+  background: var(--gradient-surface);
+  backdrop-filter: blur(var(--navbar-blur)) saturate(220%) brightness(1.02);
+  -webkit-backdrop-filter: blur(var(--navbar-blur)) saturate(220%) brightness(1.02);
+  border-bottom: 1px solid rgba(220, 227, 234, 0.25);
+  box-shadow: var(--shadow-navbar-default);
+  transition: all var(--timing-slow) var(--easing-premium);
   position: relative;
   overflow: hidden;
+  will-change: transform, background, box-shadow, opacity;
+  transform: translateZ(0); /* GPU acceleration */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle animated gradient overlay */
+/* Multi-layer animated gradient overlay - Premium shimmer effect */
 .navbar::before {
   content: "";
   position: absolute;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 200%;
   height: 100%;
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(102, 126, 234, 0.03),
-    transparent
+    transparent 0%,
+    rgba(102, 126, 234, 0.06) 20%,
+    rgba(118, 75, 162, 0.08) 40%,
+    rgba(240, 147, 251, 0.06) 60%,
+    rgba(102, 126, 234, 0.04) 80%,
+    transparent 100%
   );
-  animation: shimmer 8s infinite;
+  animation: navbarShimmer 15s infinite linear;
   pointer-events: none;
+  z-index: 0;
+  transform: translateZ(0);
 }
 
-@keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+/* Radial gradient overlay for depth */
+.navbar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-primary-radial);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+  animation: gradientPulse 8s ease-in-out infinite;
+}
+
+/* Premium top border with gradient glow */
+.navbar {
+  position: relative;
+}
+
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(102, 126, 234, 0.4) 20%,
+    rgba(118, 75, 162, 0.5) 50%,
+    rgba(240, 147, 251, 0.4) 80%,
+    transparent
+  );
+  opacity: 0.6;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+@keyframes navbarShimmer {
+  0% { 
+    left: -100%; 
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  100% { 
+    left: 0%; 
+    opacity: 0;
+  }
+}
+
+@keyframes gradientPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
 }
 
 .navbar.scrolled {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(255, 255, 255, 0.96) 50%,
-    rgba(250, 251, 252, 0.97) 100%
-  );
-  box-shadow: 
-    0 8px 40px rgba(0, 0, 0, 0.1),
-    0 2px 0 rgba(255, 255, 255, 0.9) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.03) inset,
-    0 0 60px rgba(102, 126, 234, 0.08);
-  border-bottom-color: rgba(220, 227, 234, 0.6);
+  min-height: var(--navbar-height-scrolled);
+  background: var(--gradient-surface-scrolled);
+  backdrop-filter: blur(var(--navbar-blur-strong)) saturate(240%) brightness(1.03);
+  -webkit-backdrop-filter: blur(var(--navbar-blur-strong)) saturate(240%) brightness(1.03);
+  box-shadow: var(--shadow-navbar-scrolled);
+  border-bottom-color: rgba(220, 227, 234, 0.4);
+  transform: translateY(0);
 }
+
+.navbar.scrolled::after {
+  opacity: 0.6;
+  animation-duration: 6s;
+}
+
 
 /* ============================================
    Navbar Inner Container - Premium Spacing
+   Advanced Flexbox Layout with Performance Optimization
    ============================================ */
 .navbar-inner {
   display: flex;
@@ -80,14 +229,32 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 1.75rem clamp(1.5rem, 4vw, 3rem);
-  transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: padding var(--timing-slow) var(--easing-premium);
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  gap: var(--spacing-lg);
+  min-height: inherit;
 }
 
 .navbar.scrolled .navbar-inner {
-  padding-top: 1.125rem;
-  padding-bottom: 1.125rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+/* Premium hover effect on navbar - Advanced interaction */
+.navbar:hover {
+  backdrop-filter: blur(calc(var(--navbar-blur) * 1.1)) saturate(230%) brightness(1.03);
+  -webkit-backdrop-filter: blur(calc(var(--navbar-blur) * 1.1)) saturate(230%) brightness(1.03);
+}
+
+.navbar:hover::before {
+  animation-duration: 10s;
+  opacity: 1;
+}
+
+.navbar.scrolled:hover {
+  backdrop-filter: blur(calc(var(--navbar-blur-strong) * 1.1)) saturate(250%) brightness(1.04);
+  -webkit-backdrop-filter: blur(calc(var(--navbar-blur-strong) * 1.1)) saturate(250%) brightness(1.04);
 }
 
 /* ============================================
@@ -179,22 +346,167 @@
 }
 
 .navbar-brand-text {
-  font-size: 1.375rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #1f2d3d 0%, #2c3e50 50%, #667eea 100%);
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-text-premium);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.8px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -1px;
+  transition: all var(--timing-slow) var(--easing-premium);
   position: relative;
+  text-shadow: 0 0 30px rgba(102, 126, 234, 0.2);
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .navbar-brand:hover .navbar-brand-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation-duration: 3s;
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.4));
+}
+
+/* ============================================
+   Brand Logo - Ultra Premium & Elegant
+   ============================================ */
+.navbar-brand-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 12px;
+  transition: all var(--timing-slow) var(--easing-premium);
+  position: relative;
+  z-index: 1;
+  filter: 
+    drop-shadow(0 4px 12px rgba(102, 126, 234, 0.2))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  will-change: transform, filter;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translateZ(0); /* GPU acceleration */
+}
+
+/* Premium logo glow effect */
+.navbar-brand-logo::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  background: var(--gradient-primary);
+  border-radius: 16px;
+  opacity: 0;
+  filter: blur(16px);
+  transition: opacity var(--timing-slow) var(--easing-premium);
+  z-index: -1;
+  transform: translateZ(0);
+}
+
+/* Logo container with premium backdrop */
+.navbar-brand:has(.navbar-brand-logo) {
+  padding: 0.5rem;
+  margin: -0.5rem;
+  border-radius: 14px;
+  position: relative;
+}
+
+.navbar-brand:has(.navbar-brand-logo)::before {
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.08) 0%,
+    rgba(118, 75, 162, 0.06) 50%,
+    rgba(240, 147, 251, 0.05) 100%
+  );
+}
+
+/* Hover effects for logo */
+.navbar-brand:hover .navbar-brand-logo {
+  transform: translateY(-4px) scale(1.08) rotate(2deg);
+  filter: 
+    drop-shadow(0 8px 24px rgba(102, 126, 234, 0.35))
+    drop-shadow(0 4px 12px rgba(118, 75, 162, 0.25))
+    drop-shadow(0 0 40px rgba(240, 147, 251, 0.2))
+    brightness(1.1);
+}
+
+.navbar-brand:hover .navbar-brand-logo::before {
+  opacity: 0.4;
+}
+
+/* Active state */
+.navbar-brand:active .navbar-brand-logo {
+  transform: translateY(-2px) scale(1.04) rotate(1deg);
+}
+
+/* Logo with text combination */
+.navbar-brand:has(.navbar-brand-logo + .navbar-brand-text) {
+  gap: 1rem;
+}
+
+.navbar-brand:has(.navbar-brand-logo + .navbar-brand-text) .navbar-brand-logo {
+  width: 44px;
+  height: 44px;
+}
+
+/* Scrolled state - smaller logo */
+.navbar.scrolled .navbar-brand-logo {
+  width: 42px;
+  height: 42px;
+}
+
+.navbar.scrolled .navbar-brand:has(.navbar-brand-logo + .navbar-brand-text) .navbar-brand-logo {
+  width: 38px;
+  height: 38px;
+}
+
+/* Premium pulse animation for logo */
+@keyframes logoPulse {
+  0%, 100% {
+    filter: 
+      drop-shadow(0 4px 12px rgba(102, 126, 234, 0.2))
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+  50% {
+    filter: 
+      drop-shadow(0 6px 18px rgba(102, 126, 234, 0.3))
+      drop-shadow(0 3px 8px rgba(118, 75, 162, 0.2))
+      drop-shadow(0 0 30px rgba(240, 147, 251, 0.15));
+  }
+}
+
+/* Apply pulse animation to logo */
+.navbar-brand-logo {
+  animation: logoPulse 4s ease-in-out infinite;
+}
+
+.navbar-brand:hover .navbar-brand-logo {
+  animation: none; /* Stop animation on hover for smoother interaction */
+}
+
+/* Responsive logo sizing */
+@media screen and (width <= 480px) {
+  .navbar-brand-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar.scrolled .navbar-brand-logo {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 /* ============================================
@@ -368,21 +680,45 @@
 }
 
 /* Glowing effect on hover */
+/* Advanced hover effects - Premium micro-interactions */
+.navbar-links li a {
+  position: relative;
+  overflow: visible;
+}
+
+.navbar-links li a::after {
+  will-change: width, opacity, transform;
+}
+
 .navbar-links li a:hover,
 .navbar-links li a:focus-visible {
   color: var(--accent, #667eea);
-  transform: translateY(-2px);
-  text-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+  transform: translateY(-3px) scale(1.02);
+  text-shadow: 
+    0 2px 8px rgba(102, 126, 234, 0.3),
+    0 4px 16px rgba(118, 75, 162, 0.2);
+  filter: brightness(1.1);
 }
 
 .navbar-links li a:hover::before,
 .navbar-links li a:focus-visible::before {
   opacity: 1;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.15) 0%,
+    rgba(118, 75, 162, 0.12) 50%,
+    rgba(240, 147, 251, 0.1) 100%
+  );
+  transform: scale(1.05);
+  transition: all var(--timing-normal) var(--easing-bounce);
 }
 
 .navbar-links li a:hover::after,
 .navbar-links li a:focus-visible::after {
-  width: 80%;
+  width: 90%;
+  box-shadow: 
+    0 2px 8px rgba(102, 126, 234, 0.4),
+    0 4px 16px rgba(118, 75, 162, 0.3);
 }
 
 /* Active state with enhanced styling */
@@ -427,6 +763,42 @@
 }
 
 /* ============================================
+   Mobile Menu Backdrop - Portal
+   ============================================ */
+.navbar-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.6) 0%,
+    rgba(30, 41, 59, 0.55) 50%,
+    rgba(15, 23, 42, 0.6) 100%
+  );
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  z-index: var(--navbar-backdrop-z);
+  opacity: 1;
+  visibility: visible;
+  transition: all var(--timing-normal) var(--easing-smooth);
+  pointer-events: auto;
+  animation: backdropFadeIn var(--timing-normal) var(--easing-smooth);
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px) saturate(150%);
+  }
+}
+
+/* ============================================
    Responsive Design - Tablet & Mobile
    ============================================ */
 @media screen and (width <= 1080px) {
@@ -445,36 +817,38 @@
   }
 
   .navbar-links {
+    display: none; /* Hide desktop menu in mobile */
+  }
+
+  .navbar-links.mobile {
     position: fixed;
-    top: calc(100% + 1rem);
-    right: clamp(1rem, 4vw, 2rem);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.5rem;
-    min-width: 260px;
+    gap: 0.75rem;
+    padding: 2rem 1.5rem;
+    min-width: 280px;
     max-width: calc(100vw - 2rem);
     background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.98) 0%,
-      rgba(250, 251, 252, 0.96) 100%
+      180deg,
+      rgba(255, 255, 255, 0.99) 0%,
+      rgba(255, 255, 255, 0.98) 50%,
+      rgba(250, 251, 252, 0.97) 100%
     );
-    border: 1px solid rgba(220, 227, 234, 0.6);
-    border-radius: 20px;
-    box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.15),
-      0 0 0 1px rgba(255, 255, 255, 0.5) inset,
-      0 0 80px rgba(102, 126, 234, 0.1);
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(220, 227, 234, 0.5);
+    border-radius: 28px;
+    box-shadow: var(--shadow-menu-premium);
+    backdrop-filter: blur(var(--navbar-blur-strong)) saturate(220%) brightness(1.05);
+    -webkit-backdrop-filter: blur(var(--navbar-blur-strong)) saturate(220%) brightness(1.05);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-15px) scale(0.95) rotateX(5deg);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: translateY(-20px) scale(0.92) rotateX(8deg);
+    transform-origin: top right;
+    transition: all var(--timing-slow) var(--easing-elastic);
     white-space: normal;
-    z-index: var(--z-dropdown, 100);
-    perspective: 1000px;
+    z-index: var(--navbar-menu-z);
+    perspective: 1200px;
+    will-change: transform, opacity, visibility;
   }
 
   .navbar-links::before {
@@ -492,41 +866,56 @@
     pointer-events: none;
   }
 
-  .navbar-links.open {
+  .navbar-links.mobile.open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: translateY(0) scale(1) rotateX(0deg);
+    animation: menuSlideIn var(--timing-slow) var(--easing-elastic) forwards;
   }
 
-  .navbar-links.open::before {
+  @keyframes menuSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.92) rotateX(8deg);
+    }
+    60% {
+      transform: translateY(2px) scale(1.02) rotateX(-1deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotateX(0deg);
+    }
+  }
+
+  .navbar-links.mobile.open::before {
     opacity: 1;
   }
 
-  .navbar-links li {
+  .navbar-links.mobile li {
     width: 100%;
     opacity: 0;
     transform: translateX(20px);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .navbar-links.open li {
+  .navbar-links.mobile.open li {
     opacity: 1;
     transform: translateX(0);
   }
 
-  .navbar-links.open li:nth-child(1) { transition-delay: 0.05s; }
-  .navbar-links.open li:nth-child(2) { transition-delay: 0.1s; }
-  .navbar-links.open li:nth-child(3) { transition-delay: 0.15s; }
-  .navbar-links.open li:nth-child(4) { transition-delay: 0.2s; }
-  .navbar-links.open li:nth-child(5) { transition-delay: 0.25s; }
-  .navbar-links.open li:nth-child(6) { transition-delay: 0.3s; }
-  .navbar-links.open li:nth-child(7) { transition-delay: 0.35s; }
-  .navbar-links.open li:nth-child(8) { transition-delay: 0.4s; }
-  .navbar-links.open li:nth-child(9) { transition-delay: 0.45s; }
-  .navbar-links.open li:nth-child(10) { transition-delay: 0.5s; }
+  .navbar-links.mobile.open li:nth-child(1) { transition-delay: 0.05s; }
+  .navbar-links.mobile.open li:nth-child(2) { transition-delay: 0.1s; }
+  .navbar-links.mobile.open li:nth-child(3) { transition-delay: 0.15s; }
+  .navbar-links.mobile.open li:nth-child(4) { transition-delay: 0.2s; }
+  .navbar-links.mobile.open li:nth-child(5) { transition-delay: 0.25s; }
+  .navbar-links.mobile.open li:nth-child(6) { transition-delay: 0.3s; }
+  .navbar-links.mobile.open li:nth-child(7) { transition-delay: 0.35s; }
+  .navbar-links.mobile.open li:nth-child(8) { transition-delay: 0.4s; }
+  .navbar-links.mobile.open li:nth-child(9) { transition-delay: 0.45s; }
+  .navbar-links.mobile.open li:nth-child(10) { transition-delay: 0.5s; }
 
-  .navbar-links li a {
+  .navbar-links.mobile li a {
     width: 100%;
     padding: 1rem 1.5rem;
     font-size: 0.9375rem;
@@ -535,17 +924,17 @@
     border-radius: 12px;
   }
 
-  .navbar-links li a::after {
+  .navbar-links.mobile li a::after {
     display: none;
   }
 
-  .navbar-links li a::before {
+  .navbar-links.mobile li a::before {
     inset: 0;
     border-radius: 12px;
   }
 
-  .navbar-links li a:hover,
-  .navbar-links li a:focus-visible {
+  .navbar-links.mobile li a:hover,
+  .navbar-links.mobile li a:focus-visible {
     transform: translateX(6px) translateY(-1px);
     box-shadow: 
       0 4px 16px rgba(102, 126, 234, 0.15),
@@ -585,14 +974,17 @@
     gap: 4px;
   }
 
-  .navbar-links {
+  .navbar-links.mobile {
     right: 1rem;
-    min-width: 200px;
+    left: 1rem;
+    min-width: auto;
+    max-width: none;
+    width: calc(100% - 2rem);
     padding: 1.25rem;
     gap: 0.375rem;
   }
 
-  .navbar-links li a {
+  .navbar-links.mobile li a {
     padding: 0.875rem 1.25rem;
     font-size: 0.875rem;
   }
@@ -602,28 +994,93 @@
    Landscape Orientation Tweaks
    ============================================ */
 @media screen and (orientation: landscape) and (width <= 768px) {
-  .navbar-links {
+  .navbar-links.mobile {
     max-height: 65vh;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
 
-  .navbar-links::-webkit-scrollbar {
+  .navbar-links.mobile::-webkit-scrollbar {
     width: 8px;
   }
 
-  .navbar-links::-webkit-scrollbar-track {
+  .navbar-links.mobile::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.02);
     border-radius: 4px;
   }
 
-  .navbar-links::-webkit-scrollbar-thumb {
+  .navbar-links.mobile::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 4px;
   }
 
-  .navbar-links::-webkit-scrollbar-thumb:hover {
+  .navbar-links.mobile::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
+  }
+}
+
+/* ============================================
+   Extra Small Devices (320px and below)
+   ============================================ */
+@media screen and (width <= 320px) {
+  .navbar-inner {
+    padding: 1rem 1.25rem;
+  }
+
+  .navbar-brand-icon {
+    font-size: 1.5rem;
+  }
+
+  .navbar-brand-text {
+    font-size: 1.125rem;
+  }
+
+  .navbar-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar-links.mobile {
+    right: 0.75rem;
+    left: 0.75rem;
+    padding: 1rem;
+  }
+
+  .navbar-links.mobile li a {
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ============================================
+   Tablet Portrait (481px - 768px)
+   ============================================ */
+@media screen and (min-width: 481px) and (width <= 768px) {
+  .navbar-links.mobile {
+    min-width: 300px;
+    max-width: 340px;
+    border-radius: 28px;
+  }
+}
+
+/* ============================================
+   Large Desktop (1400px+)
+   ============================================ */
+@media screen and (min-width: 1400px) {
+  .navbar-inner {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ============================================
+   Ultra-wide Screens (1920px+)
+   ============================================ */
+@media screen and (min-width: 1920px) {
+  .navbar-inner {
+    max-width: 1600px;
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 }
 
@@ -716,7 +1173,7 @@
     display: none;
   }
 
-  .navbar-links {
+  .navbar-links.mobile {
     position: static;
     opacity: 1;
     visibility: visible;
@@ -724,5 +1181,9 @@
     box-shadow: none;
     background: transparent;
     border: none;
+  }
+
+  .navbar-menu-backdrop {
+    display: none;
   }
 }

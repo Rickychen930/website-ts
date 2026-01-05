@@ -21,6 +21,7 @@ export interface NavbarConfig {
   items: NavbarItem[];
   brandIcon?: string;
   brandText?: string;
+  brandLogo?: string; // Logo image path
   scrollThreshold?: number;
   compactBreakpoint?: number;
 }

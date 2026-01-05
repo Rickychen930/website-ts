@@ -1,4 +1,3 @@
-// pages/main-page.tsx
 import React, { ReactNode } from "react";
 import Navbar from "../components/navbar-component";
 import BasePage, { BasePageState } from "./base-page";
@@ -13,9 +12,20 @@ import SoftSkillsSection from "./sections/soft-skills-section";
 import LanguagesSection from "./sections/languages-section";
 import ContactSection from "./sections/contact-section";
 import "../../assets/css/main-page.css";
-import MainController from "../../controllers/main-controller";
+import { MainPageController } from "../../controllers/main-page-controller";
 import { UserProfile } from "../../types/user";
+import { ISectionConfig } from "../../models/section-model";
+import { RETRY_CONFIG, SCROLL_CONFIG } from "../../config/main-page-config";
+import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
+import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
+import LoadingComponent from "../components/loading-component";
+import ErrorComponent from "../components/error-component";
+import SectionRendererComponent from "../components/section-renderer-component";
+import MainPageFooterComponent from "../components/main-page-footer-component";
 
+/**
+ * MainPageState - Extended state interface
+ */
 type MainPageState = BasePageState & {
   profile: UserProfile | null;
   loading: boolean;
@@ -23,30 +33,24 @@ type MainPageState = BasePageState & {
   retryCount: number;
 };
 
-interface SectionConfig {
-  id: string;
-  title: string;
-  component: React.ComponentType<any>;
-  dataKey: keyof UserProfile;
-}
-
+/**
+ * MainPage - View Layer (MVC Pattern)
+ * Refactored to Component-Based Architecture
+ * 
+ * Principles Applied:
+ * - OOP: Class-based component with proper encapsulation
+ * - SOLID:
+ *   - SRP: Delegates responsibilities to specialized components
+ *   - OCP: Extensible via composition
+ *   - DIP: Depends on abstractions (components, utilities)
+ * - DRY: Uses reusable components and centralized configs
+ * - KISS: Simple, clear structure
+ * - Component-Based: Composed of smaller, focused components
+ */
 class MainPage extends BasePage<{}, MainPageState> {
-  private controller: MainController;
-  private readonly MAX_RETRIES = 3;
-  private readonly RETRY_DELAY = 2000;
-
-  private readonly SECTION_CONFIGS: SectionConfig[] = [
-    { id: "about", title: "About Me", component: AboutMeSection, dataKey: "name" },
-    { id: "academic", title: "Academic", component: AcademicSection, dataKey: "academics" },
-    { id: "honors", title: "Honors", component: HonorsSection, dataKey: "honors" },
-    { id: "certifications", title: "Certifications", component: CertificationSection, dataKey: "certifications" },
-    { id: "skills", title: "Technical Skills", component: TechnicalSkillsSection, dataKey: "technicalSkills" },
-    { id: "experience", title: "Work Experience", component: WorkExperienceSection, dataKey: "experiences" },
-    { id: "projects", title: "Projects", component: ProjectsSection, dataKey: "projects" },
-    { id: "soft-skills", title: "Soft Skills", component: SoftSkillsSection, dataKey: "softSkills" },
-    { id: "languages", title: "Languages", component: LanguagesSection, dataKey: "languages" },
-    { id: "contact", title: "Contact", component: ContactSection, dataKey: "contacts" },
-  ];
+  private readonly controller: MainPageController;
+  private readonly smoothScrollManager: SmoothScrollManager;
+  private readonly scrollObserverManager: ScrollObserverManager;
 
   constructor(props: {}) {
     super(props);
@@ -57,24 +61,89 @@ class MainPage extends BasePage<{}, MainPageState> {
       error: null,
       retryCount: 0,
     };
-    this.controller = new MainController();
+    this.controller = new MainPageController();
+    this.smoothScrollManager = new SmoothScrollManager(SCROLL_CONFIG.OFFSET);
+    this.scrollObserverManager = new ScrollObserverManager(
+      SCROLL_CONFIG.OBSERVER_THRESHOLD,
+      SCROLL_CONFIG.OBSERVER_ROOT_MARGIN
+    );
+    this.initializeSections();
   }
 
+  /**
+   * Initialize section configurations
+   * Follows DRY principle - Centralized configuration
+   */
+  private initializeSections(): void {
+    const sections: ISectionConfig[] = [
+      { id: "about", title: "About Me", component: AboutMeSection, dataKey: "name" },
+      { id: "academic", title: "Academic", component: AcademicSection, dataKey: "academics" },
+      { id: "honors", title: "Honors", component: HonorsSection, dataKey: "honors" },
+      { id: "certifications", title: "Certifications", component: CertificationSection, dataKey: "certifications" },
+      { id: "skills", title: "Technical Skills", component: TechnicalSkillsSection, dataKey: "technicalSkills" },
+      { id: "experience", title: "Work Experience", component: WorkExperienceSection, dataKey: "experiences" },
+      { id: "projects", title: "Projects", component: ProjectsSection, dataKey: "projects" },
+      { id: "soft-skills", title: "Soft Skills", component: SoftSkillsSection, dataKey: "softSkills" },
+      { id: "languages", title: "Languages", component: LanguagesSection, dataKey: "languages" },
+      { id: "contact", title: "Contact", component: ContactSection, dataKey: "contacts" },
+    ];
+    this.controller.initializeSections(sections);
+  }
+
+  /**
+   * Component lifecycle - Mount
+   */
   async componentDidMount(): Promise<void> {
+    this.smoothScrollManager.setup();
     await this.loadProfile();
+  }
+
+  /**
+   * Component lifecycle - Update
+   */
+  componentDidUpdate(prevProps: {}, prevState: MainPageState): void {
+    if (prevState.loading && !this.state.loading && this.state.profile) {
+      setTimeout(() => {
+        this.initializeSectionObserver();
+      }, SCROLL_CONFIG.INITIALIZATION_DELAY);
+    }
+  }
+
+  /**
+   * Component lifecycle - Unmount
+   */
+  componentWillUnmount(): void {
+    this.smoothScrollManager.cleanup();
+    this.scrollObserverManager.cleanup();
+  }
+
+  /**
+   * Initialize section observer for scroll animations
+   */
+  private initializeSectionObserver(): void {
+    if (typeof document === "undefined" || !this.state.profile) return;
+
+    const visibleSections = this.controller.getVisibleSections(this.state.profile);
+    const elements = visibleSections
+      .map(config => document.getElementById(config.id))
+      .filter((el): el is HTMLElement => el !== null);
+    
+    this.scrollObserverManager.initialize(elements);
   }
 
   /**
    * Load user profile with retry logic
    */
   private async loadProfile(): Promise<void> {
+    if (this.state.loading) return;
+
     this.setState({ loading: true, error: null });
 
     try {
       const profile = await this.controller.getUserProfile();
 
-      if (!profile) {
-        throw new Error("Failed to load profile data");
+      if (!profile || !profile.name?.trim()) {
+        throw new Error("Invalid profile data");
       }
 
       this.setState({ 
@@ -84,15 +153,17 @@ class MainPage extends BasePage<{}, MainPageState> {
         retryCount: 0,
       });
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
+      const errorMessage = err instanceof Error ? err.message : "Failed to load profile";
       const newRetryCount = this.state.retryCount + 1;
 
-      if (newRetryCount < this.MAX_RETRIES) {
-        // Retry after delay
+      if (newRetryCount < RETRY_CONFIG.MAX_RETRIES) {
+        const retryDelay = RETRY_CONFIG.RETRY_DELAY * newRetryCount;
         setTimeout(() => {
-          this.setState({ retryCount: newRetryCount });
-          this.loadProfile();
-        }, this.RETRY_DELAY);
+          if (this.state !== null) {
+            this.setState({ retryCount: newRetryCount });
+            this.loadProfile();
+          }
+        }, retryDelay);
       } else {
         this.setState({ 
           loading: false, 
@@ -111,124 +182,80 @@ class MainPage extends BasePage<{}, MainPageState> {
     this.loadProfile();
   };
 
-  protected renderHeader(): ReactNode {
-    return <Navbar items={this.controller.getNavbarItems()} />;
-  }
-
   /**
-   * Render loading state
+   * Render header (navbar)
    */
-  protected renderLoading(): ReactNode {
+  protected renderHeader(): ReactNode {
     return (
-      <div className="main-page-loading">
-        <div className="loading-spinner" aria-label="Loading">
-          <div className="spinner-ring"></div>
-          <div className="spinner-ring"></div>
-          <div className="spinner-ring"></div>
-        </div>
-        <p className="loading-text">Loading profile...</p>
-      </div>
+      <Navbar 
+        items={this.controller.getNavbarItems()}
+        brandLogo="/logo.png"
+        brandText=""
+      />
     );
   }
 
   /**
-   * Render error state
+   * Render loading state using LoadingComponent
+   * Component-Based: Delegates to specialized component
+   */
+  protected renderLoading(): ReactNode {
+    return <LoadingComponent message="Loading profile..." />;
+  }
+
+  /**
+   * Render error state using ErrorComponent
+   * Component-Based: Delegates to specialized component
    */
   private renderError(): ReactNode {
     const { error, retryCount } = this.state;
     
     return (
-      <div className="main-page-error">
-        <div className="error-content">
-          <div className="error-icon" aria-hidden="true">⚠️</div>
-          <h2 className="error-title">Unable to Load Profile</h2>
-          <p className="error-message">{error || "An unexpected error occurred"}</p>
-          {retryCount > 0 && retryCount < this.MAX_RETRIES && (
-            <p className="error-retry-info">Retrying... ({retryCount}/{this.MAX_RETRIES})</p>
-          )}
-          <button 
-            className="error-retry-button" 
-            onClick={this.handleRetry}
-            type="button"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
+      <ErrorComponent
+        error={error}
+        retryCount={retryCount}
+        maxRetries={RETRY_CONFIG.MAX_RETRIES}
+        onRetry={this.handleRetry}
+      />
     );
   }
 
   /**
-   * Render a single section
-   */
-  private renderSection(config: SectionConfig, profile: UserProfile, index: number): ReactNode {
-    const { id, title, component: SectionComponent, dataKey } = config;
-    const data = profile[dataKey];
-
-    // Skip section if data is empty or undefined
-    if (!data || (Array.isArray(data) && data.length === 0)) {
-      return null;
-    }
-
-    // Special handling for AboutMeSection which needs the entire profile
-    const sectionData = dataKey === "name" ? profile : data;
-
-    return (
-      <section 
-        key={id} 
-        id={id}
-        className="section-block"
-        aria-label={title || "Content section"}
-      >
-        {title && (
-          <header className="section-header">
-            <h2 className="section-title" id={id ? `${id}-title` : undefined}>
-              {title}
-            </h2>
-            <div className="section-title-underline" aria-hidden="true"></div>
-          </header>
-        )}
-        <div className="section-content" role="region" aria-labelledby={id ? `${id}-title` : undefined}>
-          <SectionComponent data={sectionData} />
-        </div>
-      </section>
-    );
-  }
-
-  /**
-   * Render all sections
-   * Enhanced with index for staggered animations
+   * Render all sections using SectionRendererComponent
+   * Component-Based: Uses reusable component for each section
    */
   private renderSections(): ReactNode {
     const { profile } = this.state;
+    if (!profile) return null;
 
-    if (!profile) {
-      return null;
-    }
+    const visibleSections = this.controller.getVisibleSections(profile);
+    if (visibleSections.length === 0) return null;
 
     return (
       <div className="contents-section">
-        {this.SECTION_CONFIGS.map((config, index) => 
-          this.renderSection(config, profile, index)
-        )}
+        {visibleSections.map((config) => (
+          <SectionRendererComponent
+            key={config.id}
+            config={config}
+            profile={profile}
+          />
+        ))}
       </div>
     );
   }
 
   /**
-   * Render footer
+   * Render footer using MainPageFooterComponent
+   * Component-Based: Delegates to specialized component
    */
   protected renderFooter(): ReactNode {
-    const currentYear = new Date().getFullYear();
-    return (
-      <footer className="footer" role="contentinfo">
-        <div className="footer-content">
-          <p className="footer-text">© {currentYear} Ricky Inc. All rights reserved.</p>
-        </div>
-      </footer>
-    );
+    return <MainPageFooterComponent />;
   }
 
+  /**
+   * Render main content
+   * Component-Based: Composes smaller components
+   */
   protected renderContent(): ReactNode {
     const { loading, error, profile } = this.state;
 

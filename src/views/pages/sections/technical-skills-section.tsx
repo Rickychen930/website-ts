@@ -130,8 +130,22 @@ class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSk
   }
 
   /**
+   * Handle props changes
+   * Re-validate data when props change
+   */
+  componentDidUpdate(prevProps: TechnicalSkillsProps): void {
+    // Edge case: Handle data changes
+    if (prevProps.data !== this.props.data) {
+      // Reset animation state when data changes
+      this.setState({
+        hasAnimated: false,
+      });
+    }
+  }
+
+  /**
    * Validate data structure
-   * Edge case handling
+   * Edge case handling - Enhanced validation
    */
   private isValidData(data: SkillCategory[]): boolean {
     if (!Array.isArray(data) || data.length === 0) {
@@ -166,6 +180,7 @@ class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSk
   /**
    * Render skill blocks
    * Follows DRY principle
+   * Enhanced with filtering for invalid items
    */
   private renderSkillBlocks(): ReactNode {
     const { data } = this.props;
@@ -174,9 +189,27 @@ class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSk
       return this.renderEmptyState();
     }
 
+    // Filter and validate items before rendering
+    const validSkills = data.filter((skill) => {
+      return (
+        skill &&
+        typeof skill === "object" &&
+        typeof skill.category === "string" &&
+        skill.category.trim() !== "" &&
+        Array.isArray(skill.items) &&
+        skill.items.length > 0 &&
+        skill.items.every((item) => typeof item === "string" && item.trim() !== "")
+      );
+    });
+
+    // Edge case: No valid skills after filtering
+    if (validSkills.length === 0) {
+      return this.renderEmptyState();
+    }
+
     return (
       <div className="skills-grid" role="region" aria-label="Technical Skills">
-        {data.map((skill, index) => (
+        {validSkills.map((skill, index) => (
           <SkillBlock 
             key={`skill-block-${skill.category}-${index}`}
             skill={skill} 

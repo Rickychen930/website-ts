@@ -77,9 +77,14 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     super(props);
     
     // Initialize refs for all items
-    props.data.forEach((item) => {
-      this.itemRefs.set(item.key, createRef<HTMLDivElement>());
-    });
+    // Edge case: Validate data before processing
+    if (props.data && Array.isArray(props.data)) {
+      props.data.forEach((item) => {
+        if (item && item.key) {
+          this.itemRefs.set(item.key, createRef<HTMLDivElement>());
+        }
+      });
+    }
 
     this.state = {
       visibleItems: new Set(),
@@ -88,14 +93,61 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
   }
 
   /**
+   * Handle props changes
+   * Reinitialize refs when data changes
+   */
+  componentDidUpdate(prevProps: WorkExperienceProps): void {
+    // Edge case: Handle data changes
+    if (prevProps.data !== this.props.data) {
+      // Cleanup old observer
+      if (this.observer) {
+        this.disconnectObserver();
+      }
+
+      // Reinitialize refs for new data
+      this.itemRefs.clear();
+      if (this.props.data && Array.isArray(this.props.data)) {
+        this.props.data.forEach((item) => {
+          if (item && item.key) {
+            this.itemRefs.set(item.key, createRef<HTMLDivElement>());
+          }
+        });
+      }
+
+      // Reset state
+      this.setState({
+        visibleItems: new Set(),
+        isInitialized: false,
+      });
+
+      // Reinitialize observer if mounted
+      if (this.isMounted) {
+        // Use setTimeout to ensure DOM is updated
+        setTimeout(() => {
+          this.initializeObserver();
+        }, 50);
+      }
+    }
+  }
+
+  /**
    * Initialize Intersection Observer
    * Follows Single Responsibility Principle (SRP)
+   * Enhanced with better error handling and edge cases
    */
   private initializeObserver(): void {
+    // Edge case: Validate data exists
+    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+      this.setState({ isInitialized: true });
+      return;
+    }
+
     // Check if IntersectionObserver is supported
     if (typeof IntersectionObserver === "undefined") {
       // Fallback for browsers without IntersectionObserver support
-      const allKeys = this.props.data.map((item) => item.key);
+      const allKeys = this.props.data
+        .filter((item) => item && item.key)
+        .map((item) => item.key);
       this.setState({ 
         visibleItems: new Set(allKeys),
         isInitialized: true,
@@ -104,6 +156,11 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     }
 
     try {
+      // Cleanup existing observer if any
+      if (this.observer) {
+        this.disconnectObserver();
+      }
+
       this.observer = new IntersectionObserver(
         this.handleIntersection.bind(this),
         OBSERVER_CONFIG
@@ -111,35 +168,71 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
       // Observe all item refs - wait for refs to be attached
       let observedCount = 0;
+      const pendingRefs: Array<{ ref: RefObject<HTMLDivElement>; key: string }> = [];
+
       this.itemRefs.forEach((ref, key) => {
         if (ref.current && this.isMounted) {
-          this.observer?.observe(ref.current);
-          observedCount++;
-        } else {
-          // If ref not ready, try again after a short delay
-          setTimeout(() => {
-            if (ref.current && this.isMounted && this.observer) {
-              this.observer.observe(ref.current);
+          try {
+            this.observer?.observe(ref.current);
+            observedCount++;
+          } catch (err) {
+            // Edge case: Handle observe errors
+            if (process.env.NODE_ENV === 'development') {
+              console.warn(`Failed to observe element for key: ${key}`, err);
             }
-          }, 50);
+          }
+        } else {
+          // Collect pending refs
+          pendingRefs.push({ ref, key });
         }
       });
 
-      // If no refs were ready, show all items as fallback
-      if (observedCount === 0 && this.itemRefs.size > 0) {
-        // Try one more time after a longer delay
-        setTimeout(() => {
-          this.itemRefs.forEach((ref) => {
+      // Handle pending refs with retry logic
+      if (pendingRefs.length > 0) {
+        const retryObserver = () => {
+          pendingRefs.forEach(({ ref, key }) => {
             if (ref.current && this.isMounted && this.observer) {
-              this.observer.observe(ref.current);
+              try {
+                this.observer.observe(ref.current);
+                observedCount++;
+              } catch (err) {
+                if (process.env.NODE_ENV === 'development') {
+                  console.warn(`Failed to observe pending element for key: ${key}`, err);
+                }
+              }
             }
           });
-        }, 100);
+        };
+
+        // Retry after short delay
+        setTimeout(retryObserver, 50);
+        
+        // Final retry after longer delay if still needed
+        if (observedCount === 0) {
+          setTimeout(retryObserver, 150);
+        }
+      }
+
+      // Edge case: If still no refs observed after retries, show all items
+      if (observedCount === 0 && this.itemRefs.size > 0) {
+        const allKeys = Array.from(this.itemRefs.keys());
+        this.setState({ 
+          visibleItems: new Set(allKeys),
+          isInitialized: true,
+        });
+      } else {
+        this.setState({ isInitialized: true });
       }
     } catch (error) {
-      console.error("❌ Error initializing IntersectionObserver:", error);
+      // Enhanced error handling
+      if (process.env.NODE_ENV === 'development') {
+        console.error("❌ Error initializing IntersectionObserver:", error);
+      }
+      
       // Fallback: show all items
-      const allKeys = this.props.data.map((item) => item.key);
+      const allKeys = this.props.data
+        .filter((item) => item && item.key)
+        .map((item) => item.key);
       this.setState({ 
         visibleItems: new Set(allKeys),
         isInitialized: true,
@@ -186,10 +279,18 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
   componentDidMount(): void {
     this.isMounted = true;
+    
+    // Edge case: Validate data exists before initializing
+    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+      this.setState({ isInitialized: true });
+      return;
+    }
+
     // Use setTimeout to ensure refs are ready after render
     setTimeout(() => {
-      this.initializeObserver();
-      this.setState({ isInitialized: true });
+      if (this.isMounted) {
+        this.initializeObserver();
+      }
     }, 0);
   }
 
@@ -220,7 +321,9 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
   private renderContent(item: ExperienceItem): ReactNode {
     // Edge case: Handle missing or empty data
     if (!this.validateItem(item)) {
-      console.warn("⚠️ Invalid experience item:", item);
+      if (process.env.NODE_ENV === 'development') {
+        console.warn("⚠️ Invalid experience item:", item);
+      }
       return null;
     }
 
@@ -287,12 +390,23 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
   /**
    * Main render method
+   * Enhanced with filtering for null items
    */
   public render(): ReactNode {
     const { data } = this.props;
 
     // Edge case: Handle empty or undefined data
     if (!data || !Array.isArray(data) || data.length === 0) {
+      return this.renderEmptyState();
+    }
+
+    // Filter and render items, removing null returns from invalid items
+    const renderedItems = data
+      .map((item, index) => this.renderItem(item, index))
+      .filter((item): item is ReactNode => item !== null);
+
+    // Edge case: No valid items after filtering
+    if (renderedItems.length === 0) {
       return this.renderEmptyState();
     }
 
@@ -304,7 +418,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         aria-label="Work Experience Timeline"
       >
         <div className="work-experience-timeline">
-          {data.map((item, index) => this.renderItem(item, index))}
+          {renderedItems}
         </div>
       </div>
     );

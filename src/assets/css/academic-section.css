@@ -26,13 +26,13 @@
   --academic-spacing-xl: 2.5rem;
   --academic-spacing-xxl: 3rem;
   
-  /* Colors - Luxury Palette */
-  --academic-color-primary: #78a2f0;
-  --academic-color-primary-light: #9bb5f5;
-  --academic-color-primary-dark: #608aed;
-  --academic-color-secondary: #6fb1fc;
-  --academic-color-accent: #8b5cf6;
-  --academic-color-accent-light: #a78bfa;
+  /* Colors - Luxury Palette (Updated to match new design system) */
+  --academic-color-primary: var(--accent, #667eea);
+  --academic-color-primary-light: var(--accent-light, #a78bfa);
+  --academic-color-primary-dark: var(--accent-dark, #5b21b6);
+  --academic-color-secondary: var(--accent-alt, #764ba2);
+  --academic-color-accent: var(--accent-hover, #7c3aed);
+  --academic-color-accent-light: var(--accent-light, #a78bfa);
   
   --academic-color-text-heading: #1a2332;
   --academic-color-text-primary: #2c3e50;
@@ -42,25 +42,25 @@
   
   --academic-color-bg-card: #ffffff;
   --academic-color-bg-card-hover: #fafbfd;
-  --academic-color-bg-timeline: linear-gradient(180deg, #78a2f0 0%, #6fb1fc 50%, #8b5cf6 100%);
-  --academic-color-bg-icon: linear-gradient(135deg, #608aed 0%, #11447d 100%);
-  --academic-color-bg-icon-hover: linear-gradient(135deg, #8b5cf6 0%, #608aed 100%);
+  --academic-color-bg-timeline: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
+  --academic-color-bg-icon: linear-gradient(135deg, #667eea 0%, #5b21b6 100%);
+  --academic-color-bg-icon-hover: linear-gradient(135deg, #7c3aed 0%, #667eea 100%);
   --academic-color-bg-period: #f0f4f8;
   --academic-color-bg-period-hover: #e6edf5;
   
-  --academic-color-border: rgba(220, 227, 234, 0.6);
-  --academic-color-border-hover: rgba(120, 162, 240, 0.3);
-  --academic-color-border-glow: rgba(139, 92, 246, 0.2);
+  --academic-color-border: rgba(220, 227, 234, 0.4);
+  --academic-color-border-hover: rgba(102, 126, 234, 0.5);
+  --academic-color-border-glow: rgba(118, 75, 162, 0.25);
   
-  /* Shadows - Luxury Depth */
-  --academic-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --academic-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
-  --academic-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
-  --academic-shadow-lg: 0 12px 32px rgba(22, 81, 243, 0.15);
-  --academic-shadow-xl: 0 20px 48px rgba(22, 81, 243, 0.2);
-  --academic-shadow-icon: 0 4px 12px rgba(0, 0, 0, 0.12);
-  --academic-shadow-icon-hover: 0 8px 20px rgba(139, 92, 246, 0.3);
-  --academic-shadow-glow: 0 0 24px rgba(139, 92, 246, 0.25);
+  /* Shadows - Luxury Depth (Updated) */
+  --academic-shadow-xs: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.04));
+  --academic-shadow-sm: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06));
+  --academic-shadow-md: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08));
+  --academic-shadow-lg: var(--shadow-lg, 0 10px 24px rgba(0, 0, 0, 0.08), 0 20px 40px rgba(0, 0, 0, 0.06));
+  --academic-shadow-xl: var(--shadow-xl, 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.08));
+  --academic-shadow-icon: var(--shadow-icon, 0 4px 10px rgba(0, 0, 0, 0.06));
+  --academic-shadow-icon-hover: var(--shadow-icon-hover, 0 12px 32px rgba(102, 126, 234, 0.3));
+  --academic-shadow-glow: var(--shadow-glow, 0 0 24px rgba(102, 126, 234, 0.45));
   
   /* Transitions - Smooth & Elegant */
   --academic-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);

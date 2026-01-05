@@ -1,8 +1,13 @@
 /**
- * About Me Section - Luxury & Elegant Design
- * Responsive, Clean, Professional UI/UX
+ * About Me Section - Professional, Clean, Luxury, Responsive Design
+ * Shows Software Engineering Capabilities
  * Follows DRY principle with CSS variables
  */
+
+/* ============================================
+   Import Component Styles
+   ============================================ */
+@import "./about-me-components.css";
 
 /* ============================================
    CSS Variables for Consistency (DRY)
@@ -14,24 +19,26 @@
   --about-me-spacing-md: 1.5rem;
   --about-me-spacing-lg: 2rem;
   --about-me-spacing-xl: 3rem;
+  --about-me-spacing-xxl: 4rem;
   
-  --about-me-color-primary: #78a2f0;
-  --about-me-color-primary-hover: #8b5cf6;
-  --about-me-color-text-heading: #2c3e50;
-  --about-me-color-text-body: #34495e;
-  --about-me-color-text-subtle: #5c6b7a;
-  --about-me-color-text-muted: #7a8b9c;
-  --about-me-color-bg-glow: rgba(120, 162, 240, 0.15);
-  --about-me-color-border: rgba(220, 227, 234, 0.6);
+  --about-me-color-primary: var(--accent, #667eea);
+  --about-me-color-primary-hover: var(--accent-hover, #7c3aed);
+  --about-me-color-text-heading: var(--text-heading, #1f2d3d);
+  --about-me-color-text-body: var(--text-muted, #3b4a59);
+  --about-me-color-text-subtle: var(--text-subtle, #5c6b7a);
+  --about-me-color-text-muted: var(--text-muted-alt, #7a8b9c);
+  --about-me-color-bg-glow: rgba(102, 126, 234, 0.15);
+  --about-me-color-border: rgba(220, 227, 234, 0.4);
   
-  --about-me-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --about-me-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
-  --about-me-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
-  --about-me-shadow-glow: 0 0 40px rgba(120, 162, 240, 0.3);
+  --about-me-shadow-sm: var(--shadow-sm);
+  --about-me-shadow-md: var(--shadow-md);
+  --about-me-shadow-lg: var(--shadow-lg);
+  --about-me-shadow-glow: var(--shadow-glow);
   
-  --about-me-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --about-me-transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --about-me-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --about-me-transition-fast: var(--transition-fast);
+  --about-me-transition-base: var(--transition-base);
+  --about-me-transition-slow: var(--transition-slow);
+  --about-me-transition-smooth: var(--transition-smooth);
 }
 
 /* ============================================
@@ -40,25 +47,104 @@
 .about-me-content {
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-xl);
+  gap: var(--about-me-spacing-xxl);
   width: 100%;
-  animation: about-me-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.about-me-main {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--about-me-spacing-xl);
-  align-items: start;
-  width: 100%;
+.about-me-content.about-me-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ============================================
-   Image Section - Luxury Design
+   Hero Section Layout
+   ============================================ */
+.about-me-main-content {
+  width: 100%;
+  position: relative;
+  padding: var(--about-me-spacing-xl) 0;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+.about-me-hero-background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.03) 0%, 
+    rgba(118, 75, 162, 0.03) 50%, 
+    rgba(102, 126, 234, 0.02) 100%);
+  border-radius: var(--card-radius);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about-me-hero-background::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: hero-background-float 20s ease-in-out infinite;
+}
+
+.about-me-hero-background::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(118, 75, 162, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: hero-background-float 15s ease-in-out infinite reverse;
+}
+
+@keyframes hero-background-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+}
+
+.about-me-hero-section {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--about-me-spacing-xxl);
+  align-items: start;
+  margin-bottom: var(--about-me-spacing-xl);
+  position: relative;
+  z-index: 1;
+}
+
+.about-me-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-me-spacing-lg);
+  min-width: 0;
+}
+
+.about-me-hero-right {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ============================================
+   Profile Image - Luxury Design
    ============================================ */
 .about-me-image-container {
   position: relative;
-  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,15 +157,66 @@
   justify-content: center;
 }
 
+.about-me-image-particles {
+  position: absolute;
+  inset: -60px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.about-me-image-particles .particle {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0;
+  animation: particle-float 6s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.about-me-image-particles .particle:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.about-me-image-particles .particle:nth-child(2) {
+  top: 20%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
+.about-me-image-particles .particle:nth-child(3) {
+  bottom: 15%;
+  left: 20%;
+  animation-delay: 3s;
+}
+
+.about-me-image-particles .particle:nth-child(4) {
+  bottom: 25%;
+  right: 10%;
+  animation-delay: 4.5s;
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-20px) scale(1) rotate(180deg);
+  }
+}
+
 .about-me-image-glow {
   position: absolute;
-  inset: -12px;
-  background: linear-gradient(135deg, var(--about-me-color-bg-glow), transparent);
+  inset: -20px;
+  background: radial-gradient(circle, var(--about-me-color-bg-glow), transparent 70%);
   border-radius: 50%;
   opacity: 0;
-  animation: about-me-glow-pulse 3s ease-in-out infinite;
+  animation: about-me-glow-pulse 4s ease-in-out infinite;
   z-index: 0;
   pointer-events: none;
+  transition: opacity var(--about-me-transition-slow);
 }
 
 .about-me-image-container:hover .about-me-image-glow {
@@ -87,173 +224,116 @@
   animation: about-me-glow-pulse 2s ease-in-out infinite;
 }
 
+.about-me-image-border {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: linear-gradient(135deg, var(--about-me-color-primary), var(--accent-alt)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--about-me-transition-base);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.about-me-image-container:hover .about-me-image-border {
+  opacity: 0.6;
+}
+
 .about-me-image-container .image-component.about-me-image,
 .about-me-image-container img.about-me-image {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 320px;
+  height: 320px;
   object-fit: cover;
   border-radius: 50%;
-  border: 6px solid rgba(255, 255, 255, 0.9);
+  border: 8px solid rgba(255, 255, 255, 0.95);
   box-shadow: 
-    var(--about-me-shadow-md),
-    inset 0 0 0 1px var(--about-me-color-border);
+    var(--about-me-shadow-lg),
+    var(--about-me-shadow-glow),
+    inset 0 0 0 2px var(--about-me-color-border);
   transition: 
-    transform var(--about-me-transition-base),
-    box-shadow var(--about-me-transition-base),
+    transform var(--about-me-transition-smooth),
+    box-shadow var(--about-me-transition-smooth),
     border-color var(--about-me-transition-base);
-  z-index: 1;
+  z-index: 2;
   background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
-  animation: about-me-image-enter 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: about-me-image-enter 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .about-me-image-container:hover .image-component.about-me-image,
 .about-me-image-container:hover img.about-me-image {
-  transform: scale(1.05) translateY(-4px);
+  transform: scale(1.05) translateY(-6px);
   box-shadow: 
-    var(--about-me-shadow-lg),
+    var(--about-me-shadow-xl),
     var(--about-me-shadow-glow),
-    inset 0 0 0 2px var(--about-me-color-primary);
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 0 0 3px var(--about-me-color-primary);
   border-color: var(--about-me-color-primary);
 }
 
 /* ============================================
-   Text Content Section
+   Bio Section
    ============================================ */
-.about-me-text-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--about-me-spacing-md);
-  min-width: 0; /* Prevents grid overflow */
-}
-
-/* ============================================
-   Header - Name Section
-   ============================================ */
-.about-me-header {
-  margin-bottom: var(--about-me-spacing-xs);
-}
-
-.about-me-name {
-  margin: 0;
-  color: var(--about-me-color-text-heading);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--about-me-color-text-heading) 0%, var(--about-me-color-text-heading) 50%, var(--about-me-color-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: about-me-text-slide 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.about-me-name-accent {
-  background: linear-gradient(135deg, var(--about-me-color-primary), var(--about-me-color-primary-hover));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  display: inline-block;
-  position: relative;
-}
-
-.about-me-name-accent::after {
-  content: '';
-  position: absolute;
-  bottom: 0.1em;
-  left: 0;
-  right: 0;
-  height: 0.15em;
-  background: linear-gradient(90deg, transparent, var(--about-me-color-primary), transparent);
-  opacity: 0.3;
-  border-radius: 2px;
-  transform: scaleX(0);
-  transition: transform var(--about-me-transition-base);
-}
-
-.about-me-header:hover .about-me-name-accent::after {
-  transform: scaleX(1);
-}
-
-/* ============================================
-   Information Section
-   ============================================ */
-.about-me-information {
-  display: flex;
-  flex-direction: column;
-  gap: var(--about-me-spacing-sm);
-  animation: about-me-text-fade 0.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-.about-me-title {
-  margin: 0;
-  color: var(--about-me-color-text-subtle);
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-}
-
-.about-me-location {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--about-me-color-text-muted);
-  font-size: clamp(0.95rem, 2vw, 1.05rem);
-  line-height: 1.5;
-}
-
-.about-me-location-icon {
-  font-size: 1.1em;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
-}
-
-.about-me-location-text {
-  font-weight: 400;
+.about-me-bio-section {
+  margin-top: var(--about-me-spacing-xs);
 }
 
 .about-me-bio {
-  margin: var(--about-me-spacing-sm) 0 0 0;
+  margin: 0;
   color: var(--about-me-color-text-body);
-  font-size: clamp(1rem, 2vw, 1.1rem);
-  line-height: 1.75;
-  max-width: 65ch;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  line-height: 1.8;
+  max-width: 70ch;
   letter-spacing: 0.01em;
+  font-weight: 400;
 }
 
 /* ============================================
-   Actions - CTA Buttons
+   Featured Tech Stack Section
+   ============================================ */
+.about-me-featured-tech {
+  margin-top: var(--about-me-spacing-md);
+  padding: var(--about-me-spacing-lg);
+  background: var(--bg-gradient-luxury);
+  border-radius: var(--item-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   Actions Section
    ============================================ */
 .about-me-actions {
   display: flex;
-  gap: var(--about-me-spacing-sm);
+  gap: var(--about-me-spacing-md);
   flex-wrap: wrap;
-  margin-top: var(--about-me-spacing-xs);
-  animation: about-me-text-fade 0.8s 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  margin-top: var(--about-me-spacing-sm);
 }
 
-/* Profile Button Styles - Enhanced */
+/* Enhanced Profile Button Styles */
 #about-me-section.card .profile-btn,
 .card#about-me-section .profile-btn {
   position: relative;
   z-index: 1;
-  padding: 0.95rem 2rem;
+  padding: 1rem 2.5rem;
   border: none;
-  font-size: clamp(0.95rem, 1.5vw, 1rem);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
   font-weight: 600;
   letter-spacing: 0.02em;
   border-radius: 12px;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
-  transition: all var(--about-me-transition-base);
+  transition: all var(--about-me-transition-smooth);
   box-shadow: var(--about-me-shadow-sm);
-  font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+  font-family: var(--font-main);
 }
 
-#about-me-section.card .profile-btn::before,
-.card#about-me-section .profile-btn::before {
+#about-me-section.card .profile-btn::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -263,8 +343,7 @@
   z-index: -1;
 }
 
-#about-me-section.card .profile-btn::after,
-.card#about-me-section .profile-btn::after {
+#about-me-section.card .profile-btn::after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -278,49 +357,116 @@
   content: "";
 }
 
-#about-me-section.card .profile-btn:hover::after,
-.card#about-me-section .profile-btn:hover::after {
+#about-me-section.card .profile-btn:hover::after {
   width: 300px;
   height: 300px;
 }
 
-#about-me-section.card .profile-btn:hover,
-.card#about-me-section .profile-btn:hover {
-  transform: translateY(-2px) scale(1.02);
+#about-me-section.card .profile-btn:hover {
+  transform: translateY(-3px) scale(1.02);
   box-shadow: var(--about-me-shadow-md);
 }
 
-#about-me-section.card .profile-btn:active,
-.card#about-me-section .profile-btn:active {
-  transform: translateY(0) scale(0.98);
+#about-me-section.card .profile-btn:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
-#about-me-section.card .profile-btn.primary,
-.card#about-me-section .profile-btn.primary {
-  background: linear-gradient(135deg, var(--about-me-color-primary), #6b93e8);
-  color: #fff;
+#about-me-section.card .profile-btn.primary {
+  background: var(--accent-gradient);
+  color: var(--text-on-accent);
   border: 2px solid transparent;
 }
 
-#about-me-section.card .profile-btn.primary:hover,
-.card#about-me-section .profile-btn.primary:hover {
-  background: linear-gradient(135deg, var(--about-me-color-primary-hover), #7a6ff0);
-  box-shadow: var(--about-me-shadow-md), 0 0 20px rgba(120, 162, 240, 0.4);
+#about-me-section.card .profile-btn.primary:hover {
+  background: linear-gradient(135deg, var(--about-me-color-primary-hover), var(--accent-alt));
+  box-shadow: var(--about-me-shadow-md), var(--about-me-shadow-glow);
 }
 
-#about-me-section.card .profile-btn.secondary,
-.card#about-me-section .profile-btn.secondary {
+#about-me-section.card .profile-btn.secondary {
   border: 2px solid var(--about-me-color-primary);
   background: transparent;
   color: var(--about-me-color-primary);
   backdrop-filter: blur(10px);
 }
 
-#about-me-section.card .profile-btn.secondary:hover,
-.card#about-me-section .profile-btn.secondary:hover {
+#about-me-section.card .profile-btn.secondary:hover {
   background: var(--about-me-color-primary);
-  color: #fff;
-  box-shadow: var(--about-me-shadow-md), 0 0 20px rgba(120, 162, 240, 0.3);
+  color: var(--text-on-accent);
+  box-shadow: var(--about-me-shadow-md), var(--about-me-shadow-glow);
+}
+
+/* ============================================
+   Additional Content Section
+   ============================================ */
+.about-me-additional-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-me-spacing-xxl);
+  margin-top: var(--about-me-spacing-lg);
+}
+
+/* ============================================
+   Professional Highlights Section
+   ============================================ */
+.about-me-highlights {
+  width: 100%;
+}
+
+.about-me-highlights-title {
+  margin: 0 0 var(--about-me-spacing-lg) 0;
+  color: var(--about-me-color-text-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  position: relative;
+  padding-bottom: var(--about-me-spacing-sm);
+}
+
+.about-me-highlights-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+}
+
+.about-me-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--about-me-spacing-lg);
+}
+
+/* ============================================
+   Tech Stack Code Section
+   ============================================ */
+.about-me-tech-stack-code {
+  width: 100%;
+}
+
+.about-me-tech-stack-title {
+  margin: 0 0 var(--about-me-spacing-lg) 0;
+  color: var(--about-me-color-text-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  position: relative;
+  padding-bottom: var(--about-me-spacing-sm);
+}
+
+.about-me-tech-stack-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--accent-gradient);
+  border-radius: 2px;
 }
 
 /* ============================================
@@ -328,72 +474,66 @@
    ============================================ */
 .about-me-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--about-me-spacing-md);
-  margin-top: var(--about-me-spacing-xs);
-  padding-top: var(--about-me-spacing-lg);
-  border-top: 1px solid var(--about-me-color-border);
-  animation: about-me-text-fade 0.8s 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--about-me-spacing-lg);
+  margin-top: var(--about-me-spacing-xl);
+  padding-top: var(--about-me-spacing-xl);
+  border-top: 2px solid var(--border-light);
 }
 
 #about-me-section.card .profile-stat,
 .card#about-me-section .profile-stat {
-  background: linear-gradient(135deg, rgba(238, 242, 247, 0.8), rgba(255, 255, 255, 0.9));
-  padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
-  border-radius: 16px;
+  background: var(--bg-gradient-luxury);
+  padding: var(--about-me-spacing-lg) var(--about-me-spacing-md);
+  border-radius: var(--item-radius);
   text-align: center;
-  min-width: 120px;
+  min-width: 140px;
   box-shadow: var(--about-me-shadow-sm);
   border: 1px solid var(--about-me-color-border);
-  transition: all var(--about-me-transition-base);
+  transition: all var(--about-me-transition-smooth);
   position: relative;
   overflow: hidden;
 }
 
-#about-me-section.card .profile-stat::before,
-.card#about-me-section .profile-stat::before {
+#about-me-section.card .profile-stat::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--about-me-color-primary), var(--about-me-color-primary-hover));
+  height: 4px;
+  background: var(--accent-gradient);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--about-me-transition-base);
 }
 
-#about-me-section.card .profile-stat:hover,
-.card#about-me-section .profile-stat:hover {
-  transform: translateY(-6px);
+#about-me-section.card .profile-stat:hover {
+  transform: translateY(-8px);
   box-shadow: var(--about-me-shadow-md);
   border-color: var(--about-me-color-primary);
 }
 
-#about-me-section.card .profile-stat:hover::before,
-.card#about-me-section .profile-stat:hover::before {
+#about-me-section.card .profile-stat:hover::before {
   transform: scaleX(1);
 }
 
-#about-me-section.card .profile-stat strong,
-.card#about-me-section .profile-stat strong {
+#about-me-section.card .profile-stat strong {
   display: block;
-  background: linear-gradient(135deg, var(--about-me-color-primary), var(--about-me-color-primary-hover));
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
 
-#about-me-section.card .profile-stat span,
-.card#about-me-section .profile-stat span {
+#about-me-section.card .profile-stat span {
   color: var(--about-me-color-text-subtle);
-  font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  font-size: clamp(0.9rem, 2vw, 1rem);
   font-weight: 500;
   line-height: 1.4;
   display: block;
@@ -405,7 +545,7 @@
 @keyframes about-me-fade-in {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -416,35 +556,13 @@
 @keyframes about-me-image-enter {
   from {
     opacity: 0;
-    transform: scale(0.9) translateY(20px);
-    filter: blur(4px);
+    transform: scale(0.9) translateY(30px);
+    filter: blur(8px);
   }
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
     filter: blur(0);
-  }
-}
-
-@keyframes about-me-text-slide {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes about-me-text-fade {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -455,7 +573,22 @@
   }
   50% {
     opacity: 0.6;
-    transform: scale(1.05);
+    transform: scale(1.08);
+  }
+}
+
+/* ============================================
+   Responsive Design - Desktop Large
+   ============================================ */
+@media screen and (width >= 1400px) {
+  .about-me-hero-section {
+    gap: var(--about-me-spacing-xxl);
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 360px;
+    height: 360px;
   }
 }
 
@@ -463,14 +596,18 @@
    Responsive Design - Tablet
    ============================================ */
 @media screen and (width <= 992px) {
-  .about-me-main {
-    gap: var(--about-me-spacing-lg);
+  .about-me-hero-section {
+    gap: var(--about-me-spacing-xl);
   }
-  
+
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 240px;
-    height: 240px;
+    width: 280px;
+    height: 280px;
+  }
+
+  .about-me-highlights-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -479,31 +616,39 @@
    ============================================ */
 @media screen and (width <= 768px) {
   .about-me-content {
-    gap: var(--about-me-spacing-lg);
+    gap: var(--about-me-spacing-xl);
   }
 
-  .about-me-main {
+  .about-me-hero-section {
     grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-lg);
+    gap: var(--about-me-spacing-xl);
     justify-items: center;
     text-align: center;
   }
 
-  .about-me-image-container {
+  .about-me-hero-left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-me-hero-right {
     order: -1;
     justify-self: center;
   }
 
-  .about-me-image-container .image-component.about-me-image,
-  .about-me-image-container img.about-me-image {
-    width: 200px;
-    height: 200px;
-    border-width: 5px;
+  .about-me-image-particles {
+    display: none;
   }
 
-  .about-me-text-content {
-    align-items: center;
-    text-align: center;
+  .about-me-featured-tech {
+    padding: var(--about-me-spacing-md);
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 240px;
+    height: 240px;
+    border-width: 6px;
   }
 
   .about-me-bio {
@@ -519,19 +664,19 @@
   #about-me-section.card .profile-btn,
   .card#about-me-section .profile-btn {
     flex: 1;
-    min-width: 140px;
-    max-width: 220px;
+    min-width: 160px;
+    max-width: 240px;
   }
 
   .about-me-stats {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: var(--about-me-spacing-sm);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--about-me-spacing-md);
   }
 
   #about-me-section.card .profile-stat,
-.card#about-me-section .profile-stat {
-    min-width: 100px;
-    padding: var(--about-me-spacing-sm);
+  .card#about-me-section .profile-stat {
+    min-width: 120px;
+    padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
   }
 }
 
@@ -540,40 +685,33 @@
    ============================================ */
 @media screen and (width <= 480px) {
   .about-me-content {
-    gap: var(--about-me-spacing-md);
+    gap: var(--about-me-spacing-lg);
   }
 
-  .about-me-main {
-    gap: var(--about-me-spacing-md);
+  .about-me-hero-section {
+    gap: var(--about-me-spacing-lg);
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 180px;
-    height: 180px;
-    border-width: 4px;
-  }
-
-  .about-me-name {
-    font-size: 1.75rem;
-  }
-
-  .about-me-title {
-    font-size: 1.1rem;
-  }
-
-  .about-me-location {
-    font-size: 0.95rem;
-  }
-
-  .about-me-bio {
-    font-size: 0.95rem;
-    line-height: 1.65;
+    width: 200px;
+    height: 200px;
+    border-width: 5px;
   }
 
   .about-me-actions {
     flex-direction: column;
     width: 100%;
+  }
+
+  .about-me-featured-tech {
+    padding: var(--about-me-spacing-sm);
+  }
+
+  .about-me-hero-background::before,
+  .about-me-hero-background::after {
+    width: 300px;
+    height: 300px;
   }
 
   #about-me-section.card .profile-btn,
@@ -585,23 +723,17 @@
   .about-me-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--about-me-spacing-sm);
-    padding-top: var(--about-me-spacing-md);
+    padding-top: var(--about-me-spacing-lg);
   }
 
   #about-me-section.card .profile-stat,
-.card#about-me-section .profile-stat {
+  .card#about-me-section .profile-stat {
     min-width: auto;
-    padding: var(--about-me-spacing-sm) var(--about-me-spacing-xs);
+    padding: var(--about-me-spacing-sm);
   }
 
-  #about-me-section.card .profile-stat strong,
-.card#about-me-section .profile-stat strong {
-    font-size: 1.4rem;
-  }
-
-  #about-me-section.card .profile-stat span,
-.card#about-me-section .profile-stat span {
-    font-size: 0.85rem;
+  .about-me-highlights-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -609,25 +741,25 @@
    Landscape Orientation - Mobile/Tablet
    ============================================ */
 @media screen and (orientation: landscape) and (width <= 768px) {
-  .about-me-main {
-    grid-template-columns: auto 1fr;
-    gap: var(--about-me-spacing-md);
+  .about-me-hero-section {
+    grid-template-columns: 1fr auto;
+    gap: var(--about-me-spacing-lg);
     text-align: left;
   }
 
-  .about-me-image-container {
+  .about-me-hero-left {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .about-me-hero-right {
     order: 0;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 160px;
-    height: 160px;
-  }
-
-  .about-me-text-content {
-    align-items: flex-start;
-    text-align: left;
+    width: 180px;
+    height: 180px;
   }
 
   .about-me-bio {
@@ -640,32 +772,15 @@
 }
 
 /* ============================================
-   Large Screens - Enhanced Spacing
-   ============================================ */
-@media screen and (width >= 1400px) {
-  .about-me-main {
-    gap: var(--about-me-spacing-xl);
-  }
-
-  .about-me-image-container .image-component.about-me-image,
-  .about-me-image-container img.about-me-image {
-    width: 320px;
-    height: 320px;
-  }
-}
-
-/* ============================================
    Reduced Motion - Accessibility
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .about-me-content,
-  .about-me-content,
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image,
-  .about-me-name,
-  .about-me-information,
-  .about-me-actions,
-  .about-me-stats {
+  .about-me-hero-background::before,
+  .about-me-hero-background::after,
+  .about-me-image-particles .particle {
     animation: none;
     transition: none;
   }
@@ -685,19 +800,18 @@
    ============================================ */
 @media print {
   .about-me-image-container,
-  .about-me-actions {
+  .about-me-actions,
+  .about-me-tech-stack {
     display: none;
   }
 
   #about-me-section.card .profile-stat,
-.card#about-me-section .profile-stat {
+  .card#about-me-section .profile-stat {
     break-inside: avoid;
   }
 
-  .about-me-name,
-  .about-me-title {
-    color: #000;
-    -webkit-text-fill-color: #000;
+  .about-me-content {
+    opacity: 1;
+    transform: none;
   }
 }
-

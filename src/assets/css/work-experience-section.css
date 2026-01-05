@@ -26,13 +26,13 @@
   --work-spacing-xl: 2.5rem;
   --work-spacing-xxl: 3rem;
   
-  /* Colors - Luxury Palette */
-  --work-color-primary: #78a2f0;
-  --work-color-primary-light: #9bb5f5;
-  --work-color-primary-dark: #608aed;
-  --work-color-secondary: #6fb1fc;
-  --work-color-accent: #8b5cf6;
-  --work-color-accent-light: #a78bfa;
+  /* Colors - Luxury Palette (Updated to match new design system) */
+  --work-color-primary: var(--accent, #667eea);
+  --work-color-primary-light: var(--accent-light, #a78bfa);
+  --work-color-primary-dark: var(--accent-dark, #5b21b6);
+  --work-color-secondary: var(--accent-alt, #764ba2);
+  --work-color-accent: var(--accent-hover, #7c3aed);
+  --work-color-accent-light: var(--accent-light, #a78bfa);
   
   --work-color-text-heading: #1a2332;
   --work-color-text-primary: #2c3e50;
@@ -42,26 +42,26 @@
   
   --work-color-bg-card: #ffffff;
   --work-color-bg-card-hover: #fafbfd;
-  --work-color-bg-timeline: linear-gradient(180deg, #78a2f0 0%, #6fb1fc 50%, #8b5cf6 100%);
-  --work-color-bg-icon: linear-gradient(135deg, #608aed 0%, #11447d 100%);
-  --work-color-bg-icon-hover: linear-gradient(135deg, #8b5cf6 0%, #608aed 100%);
+  --work-color-bg-timeline: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
+  --work-color-bg-icon: linear-gradient(135deg, #667eea 0%, #5b21b6 100%);
+  --work-color-bg-icon-hover: linear-gradient(135deg, #7c3aed 0%, #667eea 100%);
   --work-color-bg-period: #f0f4f8;
   --work-color-bg-period-hover: #e6edf5;
   
-  --work-color-border: rgba(220, 227, 234, 0.6);
-  --work-color-border-hover: rgba(120, 162, 240, 0.3);
-  --work-color-border-glow: rgba(139, 92, 246, 0.2);
+  --work-color-border: rgba(220, 227, 234, 0.4);
+  --work-color-border-hover: rgba(102, 126, 234, 0.5);
+  --work-color-border-glow: rgba(118, 75, 162, 0.25);
   
-  /* Shadows - Luxury Depth */
-  --work-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --work-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
-  --work-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
-  --work-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1);
-  --work-shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.12);
-  --work-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06);
-  --work-shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 40px 96px rgba(120, 162, 240, 0.15);
-  --work-shadow-icon: 0 4px 12px rgba(120, 162, 240, 0.2);
-  --work-shadow-icon-hover: 0 8px 24px rgba(120, 162, 240, 0.35);
+  /* Shadows - Luxury Depth (Updated) */
+  --work-shadow-xs: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.04));
+  --work-shadow-sm: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06));
+  --work-shadow-md: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08));
+  --work-shadow-lg: var(--shadow-lg, 0 10px 24px rgba(0, 0, 0, 0.08), 0 20px 40px rgba(0, 0, 0, 0.06));
+  --work-shadow-xl: var(--shadow-xl, 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.08));
+  --work-shadow-card: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
+  --work-shadow-card-hover: var(--shadow-card-hover, 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18));
+  --work-shadow-icon: var(--shadow-icon, 0 4px 10px rgba(0, 0, 0, 0.06));
+  --work-shadow-icon-hover: var(--shadow-icon-hover, 0 12px 32px rgba(102, 126, 234, 0.3));
   
   /* Transitions - Smooth & Elegant */
   --work-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -180,7 +180,7 @@
   height: 90px;
   background: radial-gradient(
     circle,
-    rgba(120, 162, 240, 0.25) 0%,
+    rgba(102, 126, 234, 0.3) 0%,
     rgba(139, 92, 246, 0.15) 50%,
     transparent 100%
   );

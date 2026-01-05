@@ -106,9 +106,20 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    */
   componentDidMount(): void {
     this.isMounted = true;
-    this.setupIntersectionObserver();
-    this.setupScrollListener();
-    this.setState({ isInitialized: true });
+    
+    // Edge case: Validate data exists before initializing
+    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+      this.setState({ isInitialized: true });
+      return;
+    }
+
+    // Use setTimeout to ensure refs are ready after render
+    setTimeout(() => {
+      if (this.isMounted) {
+        this.setupIntersectionObserver();
+        this.setupScrollListener();
+      }
+    }, 0);
   }
 
   /**
@@ -122,44 +133,111 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
   /**
    * Component Did Update
-   * Handle data changes
+   * Handle data changes with enhanced cleanup
    */
   componentDidUpdate(prevProps: AcademicProps): void {
+    // Edge case: Handle data changes
     if (prevProps.data !== this.props.data) {
+      // Cleanup existing observers and listeners
       this.cleanup();
+      
+      // Reinitialize refs for new data
       this.initializeRefs();
-      this.setupIntersectionObserver();
+      
+      // Reset state
+      this.setState({
+        visibleItems: new Set(),
+        isInitialized: false,
+      });
+
+      // Reinitialize observer if mounted
+      if (this.isMounted) {
+        // Use setTimeout to ensure DOM is updated
+        setTimeout(() => {
+          if (this.isMounted) {
+            this.setupIntersectionObserver();
+            this.setupScrollListener();
+          }
+        }, 50);
+      }
     }
   }
 
   /**
    * Setup Intersection Observer
-   * Performance optimized observer
+   * Performance optimized observer with enhanced error handling
    */
   private setupIntersectionObserver(): void {
     // Cleanup existing observer
     if (this.observer) {
       this.observer.disconnect();
+      this.observer = null;
     }
 
     // Validate data
     const { data } = this.props;
     if (!Array.isArray(data) || data.length === 0) {
+      this.setState({ isInitialized: true });
       return;
     }
 
-    // Create new observer
-    this.observer = new IntersectionObserver(
-      this.handleIntersection,
-      OBSERVER_CONFIG
-    );
+    // Edge case: Check if IntersectionObserver is supported
+    if (typeof IntersectionObserver === "undefined") {
+      // Fallback: show all items
+      const allKeys = Array.from(this.itemRefs.keys());
+      this.setState({
+        visibleItems: new Set(allKeys),
+        isInitialized: true,
+      });
+      return;
+    }
 
-    // Observe all items
-    this.itemRefs.forEach((ref) => {
-      if (ref.current) {
-        this.observer?.observe(ref.current);
+    try {
+      // Create new observer
+      this.observer = new IntersectionObserver(
+        this.handleIntersection,
+        OBSERVER_CONFIG
+      );
+
+      // Observe all items with error handling
+      let observedCount = 0;
+      this.itemRefs.forEach((ref, key) => {
+        if (ref.current && this.isMounted) {
+          try {
+            this.observer?.observe(ref.current);
+            observedCount++;
+          } catch (err) {
+            // Edge case: Handle individual observe errors
+            if (process.env.NODE_ENV === 'development') {
+              console.warn(`Failed to observe academic item for key: ${key}`, err);
+            }
+          }
+        }
+      });
+
+      // Edge case: If no items observed, show all as fallback
+      if (observedCount === 0 && this.itemRefs.size > 0) {
+        const allKeys = Array.from(this.itemRefs.keys());
+        this.setState({
+          visibleItems: new Set(allKeys),
+          isInitialized: true,
+        });
+      } else {
+        this.setState({ isInitialized: true });
       }
-    });
+    } catch (error) {
+      // Enhanced error handling
+      if (process.env.NODE_ENV === 'development') {
+        console.error("❌ Error initializing IntersectionObserver:", error);
+      }
+      
+      // Fallback: show all items
+      const allKeys = Array.from(this.itemRefs.keys());
+      this.setState({
+        visibleItems: new Set(allKeys),
+        isInitialized: true,
+      });
+    }
   }
 
   /**
@@ -276,18 +354,42 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   }
 
   /**
+   * Validate academic item
+   * Edge case handling
+   */
+  private validateItem(item: AcademicItem): boolean {
+    return !!(
+      item &&
+      item.key &&
+      item.title &&
+      item.institution &&
+      item.period
+    );
+  }
+
+  /**
    * Render Academic Content
-   * Reusable content renderer
+   * Reusable content renderer with validation
    */
   private renderContent(item: AcademicItem): ReactNode {
+    // Edge case: Validate item before rendering
+    if (!this.validateItem(item)) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn("⚠️ Invalid academic item:", item);
+      }
+      return null;
+    }
+
     return (
       <div className="academic-content">
         <div className="academic-header">
           <h4 className="academic-title">{item.title}</h4>
           <div className="academic-meta">
             <span className="academic-institution">{item.institution}</span>
-            <span className="academic-separator">•</span>
-            <span className="academic-period">{item.period}</span>
+            <span className="academic-separator" aria-hidden="true">•</span>
+            <time className="academic-period" dateTime={item.period}>
+              {item.period}
+            </time>
           </div>
         </div>
         {item.description && (
@@ -299,11 +401,23 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
   /**
    * Render Single Academic Item
-   * Component composition
+   * Component composition with validation
    */
   private renderItem(item: AcademicItem, index: number): ReactNode {
+    // Edge case: Skip invalid items
+    if (!this.validateItem(item)) {
+      return null;
+    }
+
     const { visibleItems, scrollDirection } = this.state;
     const refObj = this.itemRefs.get(item.key);
+
+    // Edge case: Handle missing ref
+    if (!refObj) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`Missing ref for academic item: ${item.key}`);
+      }
+    }
 
     return (
       <FlowItem
@@ -322,7 +436,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
   /**
    * Render All Items
-   * Main render logic
+   * Main render logic with filtering for null items
    */
   private renderItems(): ReactNode {
     const { data } = this.props;
@@ -331,9 +445,19 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       return this.renderEmptyState();
     }
 
+    // Filter and render items, removing null returns from invalid items
+    const renderedItems = data
+      .map((item, index) => this.renderItem(item, index))
+      .filter((item): item is ReactNode => item !== null);
+
+    // Edge case: No valid items after filtering
+    if (renderedItems.length === 0) {
+      return this.renderEmptyState();
+    }
+
     return (
       <div className="academic-flow" role="list" aria-label="Academic background timeline">
-        {data.map((item, index) => this.renderItem(item, index))}
+        {renderedItems}
       </div>
     );
   }

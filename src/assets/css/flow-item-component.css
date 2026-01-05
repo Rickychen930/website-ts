@@ -53,8 +53,8 @@
   box-shadow:
     0 8px 20px rgba(0, 0, 0, 0.06),
     0 16px 40px rgba(0, 0, 0, 0.08),
-    0 24px 60px rgba(120, 162, 240, 0.1);
-  border: 1px solid rgba(120, 162, 240, 0.2);
+    0 24px 60px rgba(102, 126, 234, 0.12);
+  border: 1px solid rgba(102, 126, 234, 0.25);
 }
 
 .flow-item.flow-variant-minimal {
@@ -70,8 +70,8 @@
   box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.08),
     0 24px 64px rgba(0, 0, 0, 0.1),
-    0 32px 80px rgba(120, 162, 240, 0.12);
-  border-color: rgba(120, 162, 240, 0.4);
+    0 32px 80px rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.5);
   background: linear-gradient(135deg,
     rgba(255, 255, 255, 1),
     rgba(249, 251, 253, 0.99)
@@ -82,13 +82,13 @@
   box-shadow:
     0 16px 48px rgba(0, 0, 0, 0.1),
     0 32px 80px rgba(0, 0, 0, 0.12),
-    0 48px 120px rgba(120, 162, 240, 0.18);
+    0 48px 120px rgba(102, 126, 234, 0.2);
 }
 
 .flow-item.flow-variant-minimal:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  border-color: rgba(120, 162, 240, 0.3);
+  border-color: rgba(102, 126, 234, 0.4);
 }
 
 /* ============================================
@@ -111,8 +111,8 @@
   width: 80px;
   height: 80px;
   background: radial-gradient(circle,
-    rgba(120, 162, 240, 0.2),
-    rgba(120, 162, 240, 0.05),
+    rgba(102, 126, 234, 0.25),
+    rgba(102, 126, 234, 0.08),
     transparent
   );
   border-radius: 50%;
@@ -134,13 +134,13 @@
   height: 3.5rem;
   font-size: 1.75rem;
   background: linear-gradient(135deg,
-    rgba(120, 162, 240, 0.1),
+    rgba(102, 126, 234, 0.15),
     rgba(111, 177, 252, 0.15)
   );
-  border: 2px solid rgba(120, 162, 240, 0.2);
+  border: 2px solid rgba(102, 126, 234, 0.3);
   border-radius: 16px;
   box-shadow:
-    0 4px 12px rgba(120, 162, 240, 0.15),
+    0 4px 12px rgba(102, 126, 234, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
@@ -148,12 +148,12 @@
 
 .flow-item:hover .flow-icon {
   transform: scale(1.1) rotate(5deg);
-  border-color: rgba(120, 162, 240, 0.4);
+  border-color: rgba(102, 126, 234, 0.5);
   box-shadow:
-    0 8px 24px rgba(120, 162, 240, 0.25),
+    0 8px 24px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
   background: linear-gradient(135deg,
-    rgba(120, 162, 240, 0.15),
+    rgba(102, 126, 234, 0.2),
     rgba(111, 177, 252, 0.2)
   );
 }

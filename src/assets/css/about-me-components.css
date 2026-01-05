@@ -1,0 +1,458 @@
+/**
+ * About Me Components - Reusable Component Styles
+ * Luxury & Professional Design
+ * Follows DRY principle with CSS variables
+ */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+  --about-me-comp-spacing-xs: 0.5rem;
+  --about-me-comp-spacing-sm: 1rem;
+  --about-me-comp-spacing-md: 1.5rem;
+  --about-me-comp-spacing-lg: 2rem;
+  --about-me-comp-spacing-xl: 2.5rem;
+}
+
+/* ============================================
+   Hero Header Component
+   ============================================ */
+.hero-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-me-comp-spacing-sm);
+  margin-bottom: var(--about-me-comp-spacing-md);
+}
+
+.hero-header-name {
+  margin: 0;
+  color: var(--text-heading);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  font-family: var(--font-display);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.hero-header-greeting {
+  color: var(--text-subtle);
+  font-weight: 600;
+}
+
+.hero-header-name-accent {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+  font-weight: 800;
+}
+
+.hero-header-name-accent::after {
+  content: '';
+  position: absolute;
+  bottom: 0.15em;
+  left: 0;
+  right: 0;
+  height: 0.2em;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.4;
+  border-radius: 4px;
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.hero-header:hover .hero-header-name-accent::after {
+  transform: scaleX(1);
+}
+
+.hero-header-title {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.hero-header-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-muted-alt);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  line-height: 1.5;
+  margin-top: var(--about-me-comp-spacing-xs);
+}
+
+.hero-header-location-icon {
+  font-size: 1.2em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.hero-header-location-text {
+  font-weight: 400;
+}
+
+/* ============================================
+   Professional Highlight Component
+   ============================================ */
+.professional-highlight {
+  display: flex;
+  gap: var(--about-me-comp-spacing-md);
+  padding: var(--about-me-comp-spacing-md);
+  background: var(--bg-card);
+  border-radius: var(--item-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.professional-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-gradient);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--transition-smooth);
+}
+
+.professional-highlight:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+
+.professional-highlight:hover::before {
+  transform: scaleY(1);
+}
+
+.professional-highlight-primary {
+  background: var(--bg-gradient-luxury);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-card);
+}
+
+.professional-highlight-primary::before {
+  transform: scaleY(1);
+}
+
+.professional-highlight-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform var(--transition-base);
+}
+
+.professional-highlight:hover .professional-highlight-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.professional-highlight-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-me-comp-spacing-xs);
+}
+
+.professional-highlight-title {
+  margin: 0;
+  color: var(--text-heading);
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.professional-highlight-description {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.6;
+}
+
+/* ============================================
+   Tech Badge Component
+   ============================================ */
+.tech-badge {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all var(--transition-base);
+  border: 1px solid transparent;
+}
+
+.tech-badge-primary {
+  background: var(--bg-gradient-accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-xs);
+}
+
+.tech-badge-secondary {
+  background: var(--bg-card-alt);
+  color: var(--text-heading);
+  border-color: var(--border-light);
+}
+
+.tech-badge-accent {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.tech-badge-sm {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.tech-badge-md {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+}
+
+.tech-badge-lg {
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+}
+
+.tech-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   Animated Code Block Component
+   ============================================ */
+.animated-code-block {
+  background: #1e1e1e;
+  border-radius: var(--item-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--about-me-comp-spacing-sm) var(--about-me-comp-spacing-md);
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-block-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.code-block-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.code-block-dot-red {
+  background: #ff5f56;
+}
+
+.code-block-dot-yellow {
+  background: #ffbd2e;
+}
+
+.code-block-dot-green {
+  background: #27c93f;
+}
+
+.code-block-language {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.code-block-pre {
+  margin: 0;
+  padding: var(--about-me-comp-spacing-md);
+  background: #1e1e1e;
+  overflow-x: auto;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  line-height: 1.6;
+}
+
+.code-block-code {
+  color: #d4d4d4;
+  font-family: var(--font-mono);
+}
+
+.code-block-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.code-block-line {
+  display: flex;
+  align-items: center;
+  min-height: 1.6em;
+}
+
+.code-block-line-indented {
+  padding-left: 2rem;
+}
+
+.code-block-keyword {
+  color: #569cd6;
+}
+
+.code-block-variable {
+  color: #9cdcfe;
+}
+
+.code-block-operator {
+  color: #d4d4d4;
+}
+
+.code-block-bracket {
+  color: #ffd700;
+}
+
+.code-block-string {
+  color: #ce9178;
+}
+
+.code-block-punctuation {
+  color: #d4d4d4;
+}
+
+/* ============================================
+   Tech Badges Grid Component
+   ============================================ */
+.tech-badges-grid-container {
+  width: 100%;
+}
+
+.tech-badges-grid-title {
+  margin: 0 0 var(--about-me-comp-spacing-md) 0;
+  color: var(--text-heading);
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.tech-badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--about-me-comp-spacing-sm);
+  width: 100%;
+}
+
+.tech-badges-grid-compact {
+  gap: 0.5rem;
+}
+
+.tech-badges-grid .tech-badge {
+  animation: tech-badge-fade-in 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.tech-badges-grid .tech-badge:nth-child(1) { animation-delay: 0.05s; }
+.tech-badges-grid .tech-badge:nth-child(2) { animation-delay: 0.1s; }
+.tech-badges-grid .tech-badge:nth-child(3) { animation-delay: 0.15s; }
+.tech-badges-grid .tech-badge:nth-child(4) { animation-delay: 0.2s; }
+.tech-badges-grid .tech-badge:nth-child(5) { animation-delay: 0.25s; }
+.tech-badges-grid .tech-badge:nth-child(6) { animation-delay: 0.3s; }
+.tech-badges-grid .tech-badge:nth-child(7) { animation-delay: 0.35s; }
+.tech-badges-grid .tech-badge:nth-child(8) { animation-delay: 0.4s; }
+.tech-badges-grid .tech-badge:nth-child(9) { animation-delay: 0.45s; }
+.tech-badges-grid .tech-badge:nth-child(10) { animation-delay: 0.5s; }
+.tech-badges-grid .tech-badge:nth-child(11) { animation-delay: 0.55s; }
+.tech-badges-grid .tech-badge:nth-child(12) { animation-delay: 0.6s; }
+
+@keyframes tech-badge-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media screen and (width <= 768px) {
+  .hero-header-name {
+    font-size: 2rem;
+  }
+
+  .hero-header-title {
+    font-size: 1.25rem;
+  }
+
+  .professional-highlight {
+    flex-direction: column;
+    gap: var(--about-me-comp-spacing-sm);
+  }
+
+  .professional-highlight-icon {
+    font-size: 2rem;
+  }
+
+  .code-block-pre {
+    font-size: 0.875rem;
+    padding: var(--about-me-comp-spacing-sm);
+  }
+
+  .code-block-line-indented {
+    padding-left: 1.5rem;
+  }
+
+  .tech-badges-grid {
+    gap: 0.6rem;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .hero-header-name {
+    font-size: 1.75rem;
+  }
+
+  .professional-highlight {
+    padding: var(--about-me-comp-spacing-sm);
+  }
+}
+
+/* ============================================
+   Reduced Motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .professional-highlight,
+  .tech-badge,
+  .hero-header-name-accent::after {
+    transition: none;
+    animation: none;
+  }
+
+  .professional-highlight:hover,
+  .tech-badge:hover {
+    transform: none;
+  }
+}
+

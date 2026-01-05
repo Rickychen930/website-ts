@@ -8,36 +8,48 @@
 }
 
 /* ============================================
-   Card Container
+   Card Container - Enhanced Luxury Design
    ============================================ */
 .card {
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 3.5rem clamp(2rem, 5vw, 4rem);
+  padding: 4rem clamp(2.5rem, 6vw, 5rem);
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.98),
-    rgba(249, 251, 253, 0.95)
+    rgba(255, 255, 255, 1),
+    rgba(250, 251, 252, 0.98)
   );
-  border-radius: 28px;
+  border-radius: 32px;
   overflow: hidden;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.04),
-    0 12px 32px rgba(0, 0, 0, 0.06),
-    0 24px 64px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(220, 227, 234, 0.5);
+  box-shadow: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
+  border: 1px solid rgba(220, 227, 234, 0.4);
   animation: fade-in-card 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transition:
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.4s ease,
     background 0.4s ease;
   outline: none;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
   will-change: transform, box-shadow;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg-gradient-sublime, linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 /* Card Variants */
@@ -60,7 +72,7 @@
 }
 
 .card-variant-outlined:hover {
-  border-color: var(--accent, #78a2f0);
+  border-color: var(--accent, #667eea);
   box-shadow: 0 8px 24px rgba(120, 162, 240, 0.15);
 }
 
@@ -71,18 +83,15 @@
   padding: 2rem clamp(1.5rem, 4vw, 3rem);
 }
 
-/* Hover & Focus States */
+/* Hover & Focus States - Enhanced */
 .card:hover,
 .card:focus-within {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.08),
-    0 24px 64px rgba(0, 0, 0, 0.1),
-    0 40px 96px rgba(120, 162, 240, 0.15);
-  border-color: rgba(120, 162, 240, 0.4);
+  transform: translateY(-8px) scale(1.005);
+  box-shadow: var(--shadow-card-hover, 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18));
+  border-color: rgba(102, 126, 234, 0.5);
   background: linear-gradient(135deg,
     rgba(255, 255, 255, 1),
-    rgba(249, 251, 253, 0.98)
+    rgba(250, 251, 252, 1)
   );
 }
 
@@ -112,21 +121,20 @@
   display: inline-block;
   margin: 0;
   color: var(--text-heading, #1f2d3d);
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.8px;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
-  background: linear-gradient(135deg, 
-    var(--text-heading, #1f2d3d),
-    var(--accent, #78a2f0)
-  );
+  letter-spacing: -0.02em;
+  font-family: var(--font-display, 'Inter', system-ui, sans-serif);
+  background: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   outline: none;
+  z-index: 1;
+  position: relative;
 }
 
 .card:hover .card-title,
@@ -142,9 +150,9 @@
 .card-body {
   position: relative;
   color: var(--text-subtle, #5c6b7a);
-  font-size: clamp(1rem, 1.6vw, 1.1rem);
-  line-height: 1.8;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.75;
+  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
   transition: color 0.3s ease;
   z-index: 1;
 }
@@ -199,15 +207,16 @@
 @media screen and (width >= 1400px) {
   .card {
     max-width: 1400px;
-    padding: 4rem clamp(2.5rem, 5vw, 5rem);
+    padding: 4.5rem clamp(3rem, 7vw, 6rem);
+    border-radius: 36px;
   }
 
   .card-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
 
   .card-title {
-    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-size: clamp(2.25rem, 4.5vw, 3rem);
   }
 }
 
@@ -223,8 +232,8 @@
 
 @media screen and (width <= 992px) {
   .card {
-    padding: 2.5rem clamp(1.75rem, 3.5vw, 2.5rem);
-    border-radius: 24px;
+    padding: 3rem clamp(2rem, 4vw, 3rem);
+    border-radius: 28px;
   }
 
   .card-header {
@@ -249,8 +258,8 @@
 
 @media screen and (width <= 768px) {
   .card {
-    padding: 2rem clamp(1.5rem, 3vw, 2rem);
-    border-radius: 20px;
+    padding: 2.5rem clamp(1.75rem, 3vw, 2.5rem);
+    border-radius: 24px;
   }
 
   .card-header {
@@ -283,8 +292,8 @@
    ============================================ */
 @media screen and (width <= 480px) {
   .card {
-    padding: 1.75rem clamp(1.25rem, 2.5vw, 1.5rem);
-    border-radius: 18px;
+    padding: 2rem clamp(1.5rem, 2.5vw, 2rem);
+    border-radius: 20px;
   }
 
   .card-header {
