@@ -1,305 +1,785 @@
-/* Flow layout */
+/* ============================================
+   Honors Section - Luxury & Elegant Design
+   ============================================
+   
+   Design Principles:
+   - Luxury: Premium materials, refined aesthetics
+   - Elegant: Sophisticated, timeless, graceful
+   - Clean: Minimal, uncluttered, focused
+   - Effective: Purposeful, functional, accessible
+   - Responsive: Mobile-first, adaptive layouts
+   
+   Performance:
+   - GPU-accelerated transforms
+   - Optimized animations
+   - Efficient selectors
+   - Reduced repaints/reflows
+   ============================================ */
 
-* {
+/* ─── CSS Variables ─── */
+:root {
+  --honors-primary: #1a1a2e;
+  --honors-accent: #16213e;
+  --honors-gold: #d4af37;
+  --honors-gold-light: #f4e4bc;
+  --honors-gold-dark: #b8941f;
+  --honors-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --honors-gradient-gold: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --honors-gradient-luxury: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --honors-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --honors-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --honors-shadow-lg: 0 16px 48px rgba(102, 126, 234, 0.25);
+  --honors-shadow-xl: 0 24px 64px rgba(118, 75, 162, 0.3);
+  --honors-shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
+  --honors-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --honors-transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --honors-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Global Reset ─── */
+#honors-section * {
   box-sizing: border-box;
 }
 
-
-#honors-flow {
+/* ─── Honors Flow Container ─── */
+.honors-flow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   gap: 2rem;
   position: relative;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
-/* Individual item */
-#honors .flow-item {
+/* ─── Individual Honor Item ─── */
+#honors-section .flow-item {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 1.6rem 1.4rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgb(0 0 0 / 5%);
-  gap: 0.8rem;
+  padding: 2rem 1.75rem;
+  border: 1.5px solid rgba(220, 227, 234, 0.6);
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fc 100%);
+  border-radius: 20px;
+  box-shadow: var(--honors-shadow-sm);
+  gap: 1rem;
   opacity: 0;
-  transform: translateY(20px) scale(0.95);
-  filter: blur(4px);
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease,
-    filter 0.45s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease,
-    background 0.3s ease;
+  transform: translateY(30px) scale(0.96);
+  filter: blur(6px);
+  transition: 
+    opacity var(--honors-transition-base),
+    transform var(--honors-transition-base),
+    filter var(--honors-transition-base),
+    box-shadow var(--honors-transition-base),
+    border-color var(--honors-transition-base),
+    background var(--honors-transition-base);
   will-change: transform, opacity, filter;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Staggered animation lebih cepat */
-#honors .flow-item.visible {
+/* ─── Luxury Border Effect ─── */
+#honors-section .flow-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--honors-gradient-luxury);
+  opacity: 0;
+  transition: opacity var(--honors-transition-base), height var(--honors-transition-base);
+  z-index: 1;
+  border-radius: 20px 20px 0 0;
+}
+
+/* ─── Subtle Shine Effect ─── */
+#honors-section .flow-item::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+#honors-section .flow-item.visible:hover::after {
+  left: 100%;
+  opacity: 1;
+}
+
+/* ─── Visible State ─── */
+#honors-section .flow-item.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0);
-  animation: zoomInOut 0.45s ease forwards;
-  margin-block-end: 1.2em;
-}
-
-#honors .flow-item.visible:last-child {
+  animation: honorReveal var(--honors-transition-slow) cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   margin-block-end: 0;
 }
 
-#honors .flow-item.visible:nth-child(1) { animation-delay: 0.05s; }
-#honors .flow-item.visible:nth-child(2) { animation-delay: 0.1s; }
-#honors .flow-item.visible:nth-child(3) { animation-delay: 0.15s; }
-#honors .flow-item.visible:nth-child(4) { animation-delay: 0.2s; }
+#honors-section .flow-item.visible::before {
+  opacity: 1;
+}
 
-/* Hover + Focus effect */
-#honors .flow-item.visible:hover,
-#honors .flow-item:focus-within {
-  transform: translateY(-0.4rem) scale(1.03);
-  border-color: #78a2f0;
-  background: linear-gradient(135deg, #fff, #f3f7ff);
-  box-shadow: 0 14px 32px rgb(22 81 243 / 25%);
+/* ─── Staggered Animation Delays ─── */
+#honors-section .flow-item.visible:nth-child(1) { animation-delay: 0.05s; }
+#honors-section .flow-item.visible:nth-child(2) { animation-delay: 0.1s; }
+#honors-section .flow-item.visible:nth-child(3) { animation-delay: 0.15s; }
+#honors-section .flow-item.visible:nth-child(4) { animation-delay: 0.2s; }
+#honors-section .flow-item.visible:nth-child(5) { animation-delay: 0.25s; }
+#honors-section .flow-item.visible:nth-child(6) { animation-delay: 0.3s; }
+#honors-section .flow-item.visible:nth-child(n+7) { animation-delay: 0.35s; }
+
+/* ─── Hover & Focus Effects ─── */
+#honors-section .flow-item.visible:hover,
+#honors-section .flow-item.visible:focus-within {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 50%, #fafbff 100%);
+  box-shadow: 
+    var(--honors-shadow-lg),
+    0 0 0 1px rgba(102, 126, 234, 0.1);
   outline: none;
 }
 
-/* Icon styling */
-#honors .flow-icon {
+#honors-section .flow-item.visible:hover::before {
+  opacity: 1;
+  height: 4px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* ─── Active State ─── */
+#honors-section .flow-item.visible:active {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--honors-shadow-md);
+}
+
+/* ─── Icon Styling ─── */
+#honors-section .flow-icon {
   display: flex;
-  width: 2.6rem;
-  height: 2.6rem;
-  background: linear-gradient(135deg, #608aed, #11447d);
-  color: #fff;
-  font-size: 1.2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--honors-gradient-primary);
+  color: #ffffff;
+  font-size: 1.5rem;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  box-shadow: 0 3px 8px rgb(0 0 0 / 10%);
-  margin-bottom: 0.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 
+    var(--honors-shadow-md),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.75rem;
+  transition: 
+    transform var(--honors-transition-base),
+    box-shadow var(--honors-transition-base),
+    background var(--honors-transition-base);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
-#honors .flow-item.visible:hover .flow-icon,
-#honors .flow-item:focus-within .flow-icon {
-  transform: scale(1.15);
-  box-shadow: 0 6px 16px rgb(166 120 240 / 50%);
-  animation: pulse 1s infinite alternate;
-}
-
-/* Content box */
-#honors .flow-content {
-  flex: 1;
-  padding: 1rem 1.2rem;
-  background-color: #f9fbfd;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#honors-flow::after {
+/* ─── Icon Inner Glow ─── */
+#honors-section .flow-icon::before {
   content: "";
-  flex-grow: 1;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--honors-transition-base);
 }
 
-
-#honors .flow-content:hover {
-  background-color: #f0f5fa;
-  box-shadow: inset 0 0 10px rgb(0 0 0 / 5%);
+#honors-section .flow-item.visible:hover .flow-icon::before {
+  opacity: 1;
 }
 
-/* Typography */
-#honors .flow-title {
-  color: #2c3e50;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-  transition: color 0.3s ease, transform 0.3s ease;
+/* ─── Icon Hover Effect ─── */
+#honors-section .flow-item.visible:hover .flow-icon,
+#honors-section .flow-item.visible:focus-within .flow-icon {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: var(--honors-shadow-glow);
+  background: var(--honors-gradient-luxury);
+  animation: iconPulse 1.5s ease-in-out infinite;
 }
 
-#honors .flow-item:hover .flow-title,
-#honors .flow-item:focus-within .flow-title {
-  color: #78a2f0;
-  transform: translateY(-2px);
-}
-
-#honors .flow-subtitle {
-  color: #5c6b7a;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-}
-
-#honors .flow-period {
+/* ─── Icon Emoji ─── */
+.honors-icon-emoji {
   display: inline-block;
-  padding: 0.25rem 0.6rem;
-  background: #e6edf5;
-  color: #3b4a59;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border-radius: 6px;
+  font-style: normal;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-#honors .flow-description {
-  color: #5c6b7a;
-  font-size: 0.9rem;
-  line-height: 1.6;
+/* ─── Content Container ─── */
+.honors-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
-/* --- Responsive tweaks --- */
-
-/* Tablets */
-@media (width <= 992px) {
-  #honors {
-    padding: 3rem 1.2rem;
-  }
-
-  #honors-flow {
-    gap: 1.5rem;
-  }
-
-  #honors .flow-item {
-    padding: 1.3rem;  
-  }
-
-  #honors .flow-title {
-    font-size: 1.15rem;
-  }
+/* ─── Header Section ─── */
+.honors-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-/* Mobile */
-@media (width <= 768px) {
-  #honors {
-    padding: 2.2rem 1rem;
-  }
-
-  #honors-flow {
-    gap: 1.2rem;
-  }
-
-  #honors .flow-item {
-    padding: 1.1rem;
-    text-align: center;
-    align-items: center;
-  }
-
-  #honors .flow-icon {
-    width: 2.2rem;
-    height: 2.2rem;
-    font-size: 1rem;
-  }
-
-  #honors .flow-title {
-    font-size: 1.05rem;
-  }
-
-  #honors .flow-description {
-    font-size: 0.8rem;
-    line-height: 1.4;
-  }
+/* ─── Title ─── */
+.honors-title {
+  color: #1a1a2e;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  padding: 0;
+  transition: 
+    color var(--honors-transition-fast),
+    transform var(--honors-transition-fast);
+  letter-spacing: -0.3px;
 }
 
-/* Extra small */
-@media (width <= 480px) {
-  #honors {
-    padding: 1.8rem 0.8rem;
-  }
-
-  #honors-flow {
-    gap: 1rem;
-  }
-
-  #honors .flow-item {
-    padding: 0.9rem;
-    border-radius: 10px;
-  }
-
-  #honors .flow-title {
-    font-size: 0.95rem;
-  }
-
-  #honors .flow-description {
-    font-size: 0.75rem;
-  }
-
-  #honors .flow-icon {
-    width: 1.8rem;
-    height: 1.8rem;
-    font-size: 0.9rem;
-  }
+#honors-section .flow-item.visible:hover .honors-title,
+#honors-section .flow-item.visible:focus-within .honors-title {
+  color: #667eea;
+  transform: translateX(2px);
 }
 
-/* --- Animations --- */
-@keyframes fadeUp {
-  from {
+/* ─── Meta Information ─── */
+.honors-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.honors-event {
+  color: #4a5568;
+  font-weight: 600;
+  transition: color var(--honors-transition-fast);
+}
+
+#honors-section .flow-item.visible:hover .honors-event {
+  color: #667eea;
+}
+
+.honors-separator {
+  color: #cbd5e0;
+  font-weight: 300;
+  user-select: none;
+}
+
+.honors-date {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: linear-gradient(135deg, #e6edf5 0%, #f0f4f8 100%);
+  color: #2d3748;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid rgba(203, 213, 224, 0.5);
+  transition: 
+    background var(--honors-transition-fast),
+    color var(--honors-transition-fast),
+    border-color var(--honors-transition-fast),
+    transform var(--honors-transition-fast);
+  white-space: nowrap;
+}
+
+#honors-section .flow-item.visible:hover .honors-date {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+/* ─── Description ─── */
+.honors-description {
+  color: #5a6778;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  transition: color var(--honors-transition-fast);
+}
+
+#honors-section .flow-item.visible:hover .honors-description {
+  color: #4a5568;
+}
+
+/* ─── Empty State ─── */
+.honors-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+.honors-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+  animation: float 3s ease-in-out infinite;
+}
+
+.honors-empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 0.75rem 0;
+}
+
+.honors-empty-text {
+  font-size: 1rem;
+  color: #718096;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* ─── Error State ─── */
+.honors-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+.honors-error-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.honors-error-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e53e3e;
+  margin: 0 0 0.75rem 0;
+}
+
+.honors-error-message {
+  font-size: 1rem;
+  color: #718096;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* ─── Animations ─── */
+@keyframes honorReveal {
+  0% {
     opacity: 0;
-    transform: translateY(15px) scale(0.95);
-    filter: blur(4px);
+    transform: translateY(30px) scale(0.96);
+    filter: blur(6px);
   }
-
-  to {
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
   }
 }
 
-@keyframes pulse {
-  from {
-    transform: scale(1);
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1.15) rotate(5deg);
   }
-
-  to {
-    transform: scale(1.15);
-  }
-}
-
-@keyframes zoomInOut {
-  0% {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-
-  60% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1);
+  50% {
+    transform: scale(1.25) rotate(-5deg);
   }
 }
 
-/* Landscape orientation */
-@media screen and (orientation: landscape) and (width <= 768px) {
-  #honors {
-    padding: 2rem 2.5rem;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ─── Responsive Design: Large Tablets ─── */
+@media screen and (width <= 1200px) and (width > 992px) {
+  .honors-flow {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1.85rem;
   }
 
-  #honors-flow {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  #honors-section .flow-item {
+    padding: 1.85rem 1.6rem;
+  }
+}
+
+/* ─── Responsive Design: Tablets ─── */
+@media screen and (width <= 992px) {
+  .honors-flow {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.75rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.75rem 1.5rem;
+    border-radius: 18px;
+  }
+
+  .honors-title {
+    font-size: 1.25rem;
+  }
+
+  .honors-meta {
+    font-size: 0.9rem;
+  }
+
+  .honors-description {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  #honors-section .flow-icon {
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 1.4rem;
+  }
+}
+
+/* ─── Responsive Design: Small Tablets ─── */
+@media screen and (width <= 900px) and (width > 768px) {
+  .honors-flow {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1.6rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.6rem 1.4rem;
+  }
+}
+
+/* ─── Responsive Design: Mobile ─── */
+@media screen and (width <= 768px) {
+  .honors-flow {
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  #honors .flow-item {
-    padding: 1rem;
-    align-items: center;
-    text-align: center;
+  #honors-section .flow-item {
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+    text-align: left;
+    align-items: flex-start;
   }
 
-  #honors .flow-icon {
-    width: 2rem;
-    height: 2rem;
-    font-size: 0.95rem;
+  #honors-section .flow-item.visible:hover {
+    transform: translateY(-6px) scale(1.01);
   }
 
-  #honors .flow-title {
-    font-size: 1rem;
+  .honors-title {
+    font-size: 1.15rem;
   }
 
-  #honors .flow-description {
-    font-size: 0.8rem;
-    line-height: 1.4;
+  .honors-meta {
+    font-size: 0.85rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .honors-separator {
+    display: none;
+  }
+
+  .honors-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  #honors-section .flow-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .honors-empty-state,
+  .honors-error-state {
+    padding: 3rem 1.5rem;
+    min-height: 250px;
+  }
+
+  .honors-empty-icon,
+  .honors-error-icon {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .honors-empty-title,
+  .honors-error-title {
+    font-size: 1.3rem;
   }
 }
 
+/* ─── Responsive Design: Medium Mobile ─── */
+@media screen and (width <= 640px) and (width > 480px) {
+  .honors-flow {
+    gap: 1.35rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.35rem 1.15rem;
+  }
+
+  .honors-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ─── Responsive Design: Small Mobile ─── */
+@media screen and (width <= 480px) {
+  .honors-flow {
+    gap: 1.25rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+  }
+
+  #honors-section .flow-item.visible:hover {
+    transform: translateY(-4px) scale(1.005);
+  }
+
+  .honors-title {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .honors-meta {
+    font-size: 0.8rem;
+  }
+
+  .honors-date {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+
+  .honors-description {
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  #honors-section .flow-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.2rem;
+  }
+
+  .honors-empty-state,
+  .honors-error-state {
+    padding: 2.5rem 1rem;
+    min-height: 200px;
+  }
+
+  .honors-empty-icon,
+  .honors-error-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .honors-empty-title,
+  .honors-error-title {
+    font-size: 1.15rem;
+  }
+
+  .honors-empty-text,
+  .honors-error-message {
+    font-size: 0.9rem;
+  }
+}
+
+/* ─── Responsive Design: Extra Small Mobile ─── */
+@media screen and (width <= 360px) {
+  .honors-flow {
+    gap: 1rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.1rem 0.9rem;
+    border-radius: 12px;
+  }
+
+  .honors-title {
+    font-size: 1rem;
+  }
+
+  .honors-meta {
+    font-size: 0.75rem;
+  }
+
+  .honors-date {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.75rem;
+  }
+
+  .honors-description {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  #honors-section .flow-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* ─── Responsive Design: Landscape Mobile ─── */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .honors-flow {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1.5rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.4rem 1.2rem;
+  }
+
+  #honors-section .flow-item.visible:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+
+  .honors-title {
+    font-size: 1.1rem;
+  }
+
+  .honors-description {
+    font-size: 0.85rem;
+  }
+
+  #honors-section .flow-icon {
+    width: 2.9rem;
+    height: 2.9rem;
+    font-size: 1.25rem;
+  }
+}
+
+/* ─── Responsive Design: Landscape Small Mobile ─── */
+@media screen and (orientation: landscape) and (width <= 640px) {
+  .honors-flow {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 1.25rem;
+  }
+
+  #honors-section .flow-item {
+    padding: 1.2rem 1rem;
+  }
+}
+
+/* ─── High DPI Displays ─── */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min-resolution: 192dpi) {
+  #honors-section .flow-item {
+    border-width: 1px;
+  }
+
+  #honors-section .flow-item::before {
+    height: 2px;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  #honors-section .flow-item,
+  #honors-section .flow-icon,
+  .honors-title,
+  .honors-date,
+  .honors-event,
+  .honors-description {
+    transition: none;
+    animation: none;
+  }
+
+  #honors-section .flow-item.visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  #honors-section .flow-item.visible:hover .flow-icon {
+    animation: none;
+    transform: scale(1.1);
+  }
+
+  .honors-empty-icon {
+    animation: none;
+  }
+}
+
+/* ─── Dark Mode Support (Future) ─── */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles can be added here if needed */
+}
+
+/* ─── Print Styles ─── */
+@media print {
+  #honors-section .flow-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  #honors-section .flow-item.visible:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ─── Focus Visible (Accessibility) ─── */
+#honors-section .flow-item:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* ─── Selection Styles ─── */
+#honors-section .flow-item::selection,
+.honors-title::selection,
+.honors-description::selection {
+  background: rgba(102, 126, 234, 0.2);
+  color: inherit;
+}
