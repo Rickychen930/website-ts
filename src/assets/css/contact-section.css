@@ -1,167 +1,515 @@
-/* Grid layout */
-#contact-section .contact-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  margin-top: 1.5rem;
-  justify-items: center;
+/* ============================================
+   CONTACT SECTION - LUXURY & ELEGANT DESIGN
+   ============================================ */
+
+/* ─── CSS Variables ─── */
+#contact-section {
+  --contact-primary: #78a2f0;
+  --contact-primary-hover: #6fb1fc;
+  --contact-primary-light: #e8f0fe;
+  --contact-gradient-start: #608aed;
+  --contact-gradient-end: #11447d;
+  --contact-gradient-hover: linear-gradient(135deg, #6fb1fc, #4a90e2);
+  --contact-text-primary: #2c3e50;
+  --contact-text-secondary: #5c6b7a;
+  --contact-text-muted: #7a8b9c;
+  --contact-bg-card: #ffffff;
+  --contact-bg-hover: #f8faff;
+  --contact-border: #e2e8f0;
+  --contact-border-hover: #cbd5e1;
+  --contact-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --contact-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --contact-shadow-lg: 0 8px 32px rgba(22, 81, 243, 0.12);
+  --contact-shadow-xl: 0 16px 48px rgba(22, 81, 243, 0.18);
+  --contact-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --contact-transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Individual contact card */
+/* ─── Contact List Grid ─── */
+#contact-section .contact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.75rem;
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* ─── Contact Item Card ─── */
 #contact-section .contact-item {
+  position: relative;
   display: flex;
-  padding: 2rem 1.5rem;
-  background: #fff;
-  text-align: center;
-  opacity: 0;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 6%);
-  transform: translateY(20px) scale(0.95);
-  animation: zoomInCard 0.6s ease forwards;
+  padding: 2.5rem 2rem;
+  background: var(--contact-bg-card);
+  border: 1.5px solid var(--contact-border);
+  border-radius: 20px;
+  box-shadow: var(--contact-shadow-sm);
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  transition: var(--contact-transition);
+  cursor: pointer;
+  overflow: hidden;
+  will-change: transform, box-shadow, border-color;
+  /* Entrance Animation */
+  animation: contactItemEntrance 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-#contact-section .contact-item:nth-child(1) { animation-delay: 0.05s; }
-#contact-section .contact-item:nth-child(2) { animation-delay: 0.15s; }
-#contact-section .contact-item:nth-child(3) { animation-delay: 0.25s; }
-#contact-section .contact-item:nth-child(4) { animation-delay: 0.35s; }
+@keyframes contactItemEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96) rotateX(10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.02) rotateX(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+  }
+}
 
+/* Hover & Focus States */
 #contact-section .contact-item:hover,
-#contact-section .contact-item:focus {
-  transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 14px 32px rgb(22 81 243 / 25%);
-  border: 2px solid transparent;
-  background-image: linear-gradient(#fff, #fff),
-    linear-gradient(135deg, #608aed, #11447d);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  outline: none;
+#contact-section .contact-item:focus-within {
+  transform: translateY(-8px) scale(1.03);
+  background: var(--contact-bg-hover);
+  border-color: var(--contact-primary);
+  box-shadow: var(--contact-shadow-lg);
+  z-index: 1;
 }
 
-/* Icon styling */
+#contact-section .contact-item:active {
+  transform: translateY(-4px) scale(1.01);
+  transition: var(--contact-transition-fast);
+}
+
+/* ─── Icon Styling ─── */
 #contact-section .contact-icon {
   display: flex;
-  width: 3.2rem;
-  height: 3.2rem;
-  border: 2px solid #dce3ea;
-  background: #fff;
-  color: #78a2f0;
-  font-size: 1.8rem;
-  transition: transform 0.35s ease, color 0.35s ease, border-color 0.35s ease;
   align-items: center;
   justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--contact-primary-light), #ffffff);
+  border: 2px solid var(--contact-border);
   border-radius: 50%;
-  margin-bottom: 1.2rem;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+  font-size: 1.75rem;
+  color: var(--contact-primary);
+  transition: var(--contact-transition);
+  box-shadow: var(--contact-shadow-sm);
+  position: relative;
+  overflow: hidden;
 }
 
+/* Icon Background Glow Effect */
+#contact-section .contact-icon::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(120, 162, 240, 0.3), transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: var(--contact-transition);
+  z-index: 0;
+}
+
+#contact-section .contact-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* Active Icon State */
+#contact-section .contact-icon-active {
+  transform: scale(1.15) rotate(5deg);
+  background: var(--contact-gradient-hover);
+  border-color: var(--contact-primary);
+  color: #ffffff;
+  box-shadow: var(--contact-shadow-md);
+}
+
+#contact-section .contact-icon-active::before {
+  width: 120%;
+  height: 120%;
+}
+
+/* Icon Animation on Hover */
 #contact-section .contact-item:hover .contact-icon,
-#contact-section .contact-item:focus .contact-icon {
-  transform: scale(1.2) rotate(6deg);
-  color: #6fb1fc;
-  border-color: #78a2f0;
-  animation: pulse 1s infinite alternate;
+#contact-section .contact-item:focus-within .contact-icon {
+  transform: scale(1.15) rotate(5deg);
+  background: var(--contact-gradient-hover);
+  border-color: var(--contact-primary);
+  color: #ffffff;
+  box-shadow: var(--contact-shadow-md);
 }
 
-/* Info layout */
-#contact-section .contact-label {
-  color: #34495e;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  letter-spacing: 0.3px;
+#contact-section .contact-item:hover .contact-icon::before,
+#contact-section .contact-item:focus-within .contact-icon::before {
+  width: 120%;
+  height: 120%;
 }
 
+/* ─── Contact Info ─── */
 #contact-section .contact-info {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  gap: 0.5rem;
 }
 
-#contact-section .contact-value {
-  color: #5c6b7a;
+/* ─── Label Styling ─── */
+#contact-section .contact-label {
+  display: block;
+  color: var(--contact-text-primary);
   font-size: 0.95rem;
-  text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  transition: var(--contact-transition-fast);
+  line-height: 1.4;
+}
+
+#contact-section .contact-item:hover .contact-label,
+#contact-section .contact-item:focus-within .contact-label {
+  color: var(--contact-primary);
+  transform: translateY(-2px);
+}
+
+/* ─── Value Styling ─── */
+#contact-section .contact-value {
+  display: block;
+  color: var(--contact-text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
   word-break: break-word;
+  transition: var(--contact-transition-fast);
+  max-width: 100%;
 }
 
-#contact-section .contact-value:hover {
-  color: #0073b1;
-  text-decoration: underline;
+/* Link Styling */
+#contact-section .contact-link {
+  color: var(--contact-text-secondary);
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: var(--contact-transition-fast);
 }
 
-/* Responsive tweaks */
-@media (width <= 992px) {
-  #contact-section .card {
-    padding: 1.8rem;
+#contact-section .contact-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--contact-gradient-hover);
+  transform: translateX(-50%);
+  transition: var(--contact-transition-fast);
+  border-radius: 2px;
+}
+
+#contact-section .contact-link:hover,
+#contact-section .contact-link:focus {
+  color: var(--contact-primary);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+#contact-section .contact-link:hover::after,
+#contact-section .contact-link:focus::after,
+#contact-section .contact-link-active::after {
+  width: 80%;
+}
+
+#contact-section .contact-link:active {
+  transform: translateY(0);
+}
+
+/* ─── Empty State ─── */
+#contact-section .contact-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--contact-text-muted);
+}
+
+#contact-section .contact-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+#contact-section .contact-empty-text {
+  font-size: 1rem;
+  color: var(--contact-text-muted);
+  margin: 0;
+}
+
+/* ─── Responsive Design ─── */
+
+/* Large Tablets & Small Desktops */
+@media screen and (max-width: 1200px) {
+  #contact-section .contact-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
   }
 
   #contact-section .contact-item {
-    padding: 1.5rem;
+    padding: 2.25rem 1.75rem;
   }
 
   #contact-section .contact-icon {
-    width: 2.8rem;
-    height: 2.8rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    font-size: 1.65rem;
+  }
+}
+
+/* Tablets */
+@media screen and (max-width: 992px) {
+  #contact-section .contact-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  #contact-section .contact-item {
+    padding: 2rem 1.5rem;
+    border-radius: 18px;
+  }
+
+  #contact-section .contact-icon {
+    width: 3.5rem;
+    height: 3.5rem;
     font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  #contact-section .contact-label {
+    font-size: 0.9rem;
+  }
+
+  #contact-section .contact-value {
+    font-size: 0.95rem;
   }
 }
 
-@media (width <= 600px) {
-  #contact-section {
-    padding: 2rem 1rem;
+/* Small Tablets */
+@media screen and (max-width: 768px) {
+  #contact-section .contact-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
   }
 
   #contact-section .contact-item {
-    padding: 1.2rem;
+    padding: 1.75rem 1.25rem;
+    border-radius: 16px;
   }
 
   #contact-section .contact-icon {
-    width: 2.4rem;
-    height: 2.4rem;
-    font-size: 1.4rem;
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  #contact-section .contact-label,
+  #contact-section .contact-label {
+    font-size: 0.85rem;
+  }
+
   #contact-section .contact-value {
     font-size: 0.9rem;
   }
 }
 
-@media (width <= 400px) {
+/* Mobile Devices */
+@media screen and (max-width: 600px) {
+  #contact-section .contact-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
   #contact-section .contact-item {
-    padding: 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+    max-width: 100%;
   }
 
   #contact-section .contact-icon {
-    width: 2rem;
-    height: 2rem;
-    font-size: 1.2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
   }
 
-  #contact-section .contact-label,
+  #contact-section .contact-label {
+    font-size: 0.9rem;
+  }
+
+  #contact-section .contact-value {
+    font-size: 0.95rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media screen and (max-width: 480px) {
+  #contact-section .contact-list {
+    gap: 0.875rem;
+    margin-top: 1.25rem;
+  }
+
+  #contact-section .contact-item {
+    padding: 1.5rem 1.25rem;
+    border-radius: 14px;
+  }
+
+  #contact-section .contact-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  #contact-section .contact-label {
+    font-size: 0.85rem;
+  }
+
+  #contact-section .contact-value {
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra Small Mobile Devices */
+@media screen and (max-width: 360px) {
+  #contact-section .contact-item {
+    padding: 1.25rem 1rem;
+  }
+
+  #contact-section .contact-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.3rem;
+  }
+
+  #contact-section .contact-label {
+    font-size: 0.8rem;
+  }
+
   #contact-section .contact-value {
     font-size: 0.85rem;
   }
 }
 
-/* Animations */
-@keyframes fadeInContact {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ─── Landscape Orientation ─── */
+@media screen and (orientation: landscape) and (max-width: 992px) {
+  #contact-section .contact-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+
+  #contact-section .contact-item {
+    padding: 1.75rem 1.5rem;
+  }
 }
 
-@keyframes zoomInCard {
-  0%   { opacity: 0; transform: scale(0.9) translateY(20px); }
-  60%  { opacity: 1; transform: scale(1.05) translateY(0); }
-  100% { transform: scale(1); opacity: 1; }
+/* ─── High DPI Displays ─── */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min-resolution: 192dpi) {
+  #contact-section .contact-item {
+    border-width: 0.5px;
+  }
+
+  #contact-section .contact-icon {
+    border-width: 1.5px;
+  }
 }
 
-@keyframes pulse {
-  0%   { transform: scale(1.1) rotate(0deg); }
-  50%  { transform: scale(1.2) rotate(6deg); }
-  100% { transform: scale(1.1) rotate(-6deg); }
+/* ─── Reduced Motion (Accessibility) ─── */
+@media (prefers-reduced-motion: reduce) {
+  #contact-section .contact-item,
+  #contact-section .contact-icon,
+  #contact-section .contact-link,
+  #contact-section .contact-label,
+  #contact-section .contact-value {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  #contact-section .contact-item {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Dark Mode Support (Future Enhancement) ─── */
+@media (prefers-color-scheme: dark) {
+  #contact-section {
+    --contact-bg-card: #1a1f2e;
+    --contact-bg-hover: #232938;
+    --contact-text-primary: #e2e8f0;
+    --contact-text-secondary: #cbd5e1;
+    --contact-text-muted: #94a3b8;
+    --contact-border: #334155;
+    --contact-border-hover: #475569;
+  }
+}
+
+/* ─── Print Styles ─── */
+@media print {
+  #contact-section .contact-item {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+    transform: none;
+  }
+
+  #contact-section .contact-item:hover {
+    transform: none;
+  }
+
+  #contact-section .contact-link::after {
+    display: none;
+  }
+}
+
+/* ─── Focus Visible (Keyboard Navigation) ─── */
+#contact-section .contact-item:focus-visible {
+  outline: 3px solid var(--contact-primary);
+  outline-offset: 2px;
+}
+
+#contact-section .contact-link:focus-visible {
+  outline: 2px solid var(--contact-primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ─── Performance Optimizations ─── */
+#contact-section .contact-item {
+  contain: layout style paint;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+#contact-section .contact-icon {
+  will-change: transform, background, border-color;
+}
+
+#contact-section .contact-link {
+  will-change: transform, color;
 }
