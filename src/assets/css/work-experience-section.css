@@ -1,184 +1,594 @@
-.work-flow {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin: 0 auto;
-  gap: 2.5rem;
-  padding: 2rem clamp(1rem, 4vw, 3rem);
-  max-width: 960px;
-  box-sizing: border-box;
+/**
+ * Work Experience Section - Luxury & Elegant Design
+ * 
+ * Features:
+ * - Luxury & Elegant UI/UX
+ * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
+ * - Performance Optimized
+ * - Clean & Professional Design
+ * - Smooth Animations with IntersectionObserver
+ * - Accessibility Support
+ * 
+ * Principles:
+ * - DRY (CSS Variables)
+ * - Maintainable & Scalable
+ * - Accessible (ARIA, semantic HTML)
+ */
+
+/* ============================================
+   CSS Variables for Consistency (DRY)
+   ============================================ */
+.work-experience-container {
+  --work-spacing-xs: 0.5rem;
+  --work-spacing-sm: 1rem;
+  --work-spacing-md: 1.5rem;
+  --work-spacing-lg: 2rem;
+  --work-spacing-xl: 2.5rem;
+  --work-spacing-xxl: 3rem;
+  
+  /* Colors - Luxury Palette */
+  --work-color-primary: #78a2f0;
+  --work-color-primary-light: #9bb5f5;
+  --work-color-primary-dark: #608aed;
+  --work-color-secondary: #6fb1fc;
+  --work-color-accent: #8b5cf6;
+  --work-color-accent-light: #a78bfa;
+  
+  --work-color-text-heading: #1a2332;
+  --work-color-text-primary: #2c3e50;
+  --work-color-text-secondary: #5c6b7a;
+  --work-color-text-muted: #7a8b9c;
+  --work-color-text-company: #34495e;
+  
+  --work-color-bg-card: #ffffff;
+  --work-color-bg-card-hover: #fafbfd;
+  --work-color-bg-timeline: linear-gradient(180deg, #78a2f0 0%, #6fb1fc 50%, #8b5cf6 100%);
+  --work-color-bg-icon: linear-gradient(135deg, #608aed 0%, #11447d 100%);
+  --work-color-bg-icon-hover: linear-gradient(135deg, #8b5cf6 0%, #608aed 100%);
+  --work-color-bg-period: #f0f4f8;
+  --work-color-bg-period-hover: #e6edf5;
+  
+  --work-color-border: rgba(220, 227, 234, 0.6);
+  --work-color-border-hover: rgba(120, 162, 240, 0.3);
+  --work-color-border-glow: rgba(139, 92, 246, 0.2);
+  
+  /* Shadows - Luxury Depth */
+  --work-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --work-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --work-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --work-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1);
+  --work-shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.12);
+  --work-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06);
+  --work-shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 24px 64px rgba(0, 0, 0, 0.1), 0 40px 96px rgba(120, 162, 240, 0.15);
+  --work-shadow-icon: 0 4px 12px rgba(120, 162, 240, 0.2);
+  --work-shadow-icon-hover: 0 8px 24px rgba(120, 162, 240, 0.35);
+  
+  /* Transitions - Smooth & Elegant */
+  --work-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --work-transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --work-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Typography */
+  --work-font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  --work-font-size-title: clamp(1.25rem, 2.5vw, 1.5rem);
+  --work-font-size-company: clamp(1rem, 1.8vw, 1.15rem);
+  --work-font-size-period: clamp(0.875rem, 1.4vw, 0.95rem);
+  --work-font-size-description: clamp(0.95rem, 1.6vw, 1.05rem);
+  --work-line-height-tight: 1.3;
+  --work-line-height-normal: 1.6;
+  --work-line-height-relaxed: 1.75;
 }
 
-.work-flow::before {
+/* ============================================
+   Container
+   ============================================ */
+.work-experience-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--work-spacing-lg) var(--work-spacing-md);
+}
+
+/* ============================================
+   Timeline Container
+   ============================================ */
+.work-experience-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--work-spacing-xl);
+  padding: var(--work-spacing-xl) 0;
+}
+
+/* Elegant Vertical Timeline Line */
+.work-experience-timeline::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 1.5rem;
+  left: 2.5rem;
   width: 3px;
   height: 100%;
-  background: linear-gradient(to bottom, #78a2f0, #6fb1fc);
+  background: var(--work-color-bg-timeline);
   border-radius: 2px;
+  opacity: 0.6;
+  z-index: 0;
+  animation: timelineGrow 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Item base */
-#work-experience-section .flow-item {
-  display: flex;
-  flex-direction: column;
+@keyframes timelineGrow {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 100%;
+    opacity: 0.6;
+  }
+}
+
+/* ============================================
+   Experience Item
+   ============================================ */
+.work-experience-item {
   position: relative;
-  padding: 2rem;
-  border: 1px solid rgb(220 227 234 / 60%);
-  background: rgb(255 255 255 / 90%);
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 6%);
-  gap: 0.8rem;
-  opacity: 0;
-  transform: translateY(20px) scale(0.95);
-  filter: blur(6px);
-  animation: zoomInCard 0.6s ease forwards;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
-  will-change: transform, opacity, filter;
+  margin-left: 5rem;
+  z-index: 1;
 }
 
-#work-experience-section .flow-item.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
-
-#work-experience-section .flow-item.visible:hover,
-#work-experience-section .flow-item.visible:focus {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 14px 32px rgb(22 81 243 / 25%);
-  border: 2px solid transparent;
-  background-image: linear-gradient(#fff, #fff),
-    linear-gradient(135deg, #608aed, #11447d);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  outline: none;
-}
-
-/* Icon */
-#work-experience-section .flow-icon {
-  display: flex;
+/* Icon Positioning */
+.work-experience-item .flow-icon-wrapper {
   position: absolute;
-  top: 1rem;
-  left: -3rem;
-  width: 2.8rem;
-  height: 2.8rem;
-  border: 2px solid #fff;
-  background: linear-gradient(135deg, #608aed, #11447d);
-  color: #fff;
-  font-size: 1.4rem;
+  left: -5.5rem;
+  top: 0.5rem;
+  z-index: 2;
+}
+
+.work-experience-icon-content {
+  display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  font-size: 1.5rem;
+  line-height: 1;
 }
 
-#work-experience-section .flow-item.visible:hover .flow-icon,
-#work-experience-section .flow-item.visible:focus .flow-icon {
-  transform: scale(1.2) rotate(6deg);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 15%);
-  animation: pulse 1s infinite alternate;
+/* Enhanced Icon Styling */
+.work-experience-item .flow-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--work-color-bg-icon);
+  border: 3px solid #ffffff;
+  border-radius: 16px;
+  box-shadow: var(--work-shadow-icon);
+  transition: all var(--work-transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
 }
 
-/* Typography */
-#work-experience-section .flow-title {
-  margin: 0;
-  color: #2c3e50;
-  font-size: clamp(1.2rem, 2vw, 1.35rem);
+.work-experience-item:hover .flow-icon {
+  transform: scale(1.15) rotate(5deg);
+  background: var(--work-color-bg-icon-hover);
+  box-shadow: var(--work-shadow-icon-hover);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Icon Glow Effect */
+.work-experience-item .flow-icon-glow {
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(
+    circle,
+    rgba(120, 162, 240, 0.25) 0%,
+    rgba(139, 92, 246, 0.15) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity var(--work-transition-base);
+}
+
+.work-experience-item:hover .flow-icon-glow {
+  opacity: 1;
+}
+
+/* ============================================
+   Content Styling
+   ============================================ */
+.work-experience-content {
+  position: relative;
+  padding: var(--work-spacing-lg);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98),
+    rgba(249, 251, 253, 0.95)
+  );
+  border: 1px solid var(--work-color-border);
+  border-radius: 20px;
+  box-shadow: var(--work-shadow-card);
+  transition: all var(--work-transition-base);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.work-experience-item:hover .work-experience-content {
+  transform: translateX(8px) translateY(-4px);
+  box-shadow: var(--work-shadow-card-hover);
+  border-color: var(--work-color-border-hover);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1),
+    rgba(249, 251, 253, 0.98)
+  );
+}
+
+/* ============================================
+   Header & Title
+   ============================================ */
+.work-experience-header {
+  margin-bottom: var(--work-spacing-md);
+}
+
+.work-experience-title {
+  margin: 0 0 var(--work-spacing-sm) 0;
+  color: var(--work-color-text-heading);
+  font-size: var(--work-font-size-title);
+  font-weight: 700;
+  font-family: var(--work-font-family);
+  line-height: var(--work-line-height-tight);
+  letter-spacing: -0.5px;
+  transition: color var(--work-transition-fast);
+}
+
+.work-experience-item:hover .work-experience-title {
+  color: var(--work-color-primary);
+  transform: translateX(2px);
+}
+
+/* ============================================
+   Meta Information (Company & Period)
+   ============================================ */
+.work-experience-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--work-spacing-sm);
+  flex-wrap: wrap;
+  margin-top: var(--work-spacing-xs);
+}
+
+.work-experience-company {
+  color: var(--work-color-text-company);
+  font-size: var(--work-font-size-company);
   font-weight: 600;
-  transition: color 0.3s ease, transform 0.3s ease;
+  font-family: var(--work-font-family);
+  transition: color var(--work-transition-fast);
 }
 
-#work-experience-section .flow-item:hover .flow-title {
-  color: #78a2f0;
-  transform: translateY(-2px);
+.work-experience-item:hover .work-experience-company {
+  color: var(--work-color-primary-dark);
 }
 
-#work-experience-section .flow-subtitle {
-  color: #5c6b7a;
-  font-size: 1.05rem;
+.work-experience-separator {
+  color: var(--work-color-text-muted);
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.work-experience-period {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  background: var(--work-color-bg-period);
+  color: var(--work-color-text-secondary);
+  font-size: var(--work-font-size-period);
   font-weight: 500;
+  font-family: var(--work-font-family);
+  border-radius: 8px;
+  transition: all var(--work-transition-fast);
+  white-space: nowrap;
 }
 
-#work-experience-section .flow-period {
-  display: inline-block;
-  padding: 0.3rem 0.6rem;
-  background: #eef3fa;
-  color: #3b4a59;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 6px;
+.work-experience-item:hover .work-experience-period {
+  background: var(--work-color-bg-period-hover);
+  color: var(--work-color-primary-dark);
+  transform: scale(1.05);
 }
 
-#work-experience-section .flow-description {
+/* ============================================
+   Description
+   ============================================ */
+.work-experience-description {
   margin: 0;
-  color: #5c6b7a;
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  line-height: 1.6;
+  color: var(--work-color-text-secondary);
+  font-size: var(--work-font-size-description);
+  font-family: var(--work-font-family);
+  line-height: var(--work-line-height-relaxed);
+  transition: color var(--work-transition-fast);
 }
 
-/* Responsive tweaks */
-@media (width <= 768px) {
-  .work-flow {
-    padding: 1.5rem 1rem;
-    gap: 2rem;
+.work-experience-item:hover .work-experience-description {
+  color: var(--work-color-text-primary);
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+.work-experience-empty {
+  text-align: center;
+  padding: var(--work-spacing-xxl);
+  color: var(--work-color-text-muted);
+  font-family: var(--work-font-family);
+}
+
+.work-experience-empty-text {
+  margin: 0;
+  font-size: var(--work-font-size-description);
+  line-height: var(--work-line-height-normal);
+}
+
+/* ============================================
+   Responsive Design - Tablet
+   ============================================ */
+@media screen and (width <= 992px) {
+  .work-experience-container {
+    padding: var(--work-spacing-md) var(--work-spacing-sm);
   }
 
-  .work-flow::before {
-    left: 0.6rem;
+  .work-experience-timeline {
+    gap: var(--work-spacing-lg);
+    padding: var(--work-spacing-lg) 0;
   }
 
-  #work-experience-section .flow-item {
-    padding: 1.4rem 1rem 1.4rem 2.5rem;
+  .work-experience-timeline::before {
+    left: 2rem;
+    width: 2.5px;
+  }
+
+  .work-experience-item {
+    margin-left: 4rem;
+  }
+
+  .work-experience-item .flow-icon-wrapper {
+    left: -4.5rem;
+  }
+
+  .work-experience-item .flow-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.35rem;
     border-radius: 14px;
   }
 
-  #work-experience-section .flow-title {
-    font-size: 1.15rem;
+  .work-experience-content {
+    padding: var(--work-spacing-md);
+    border-radius: 18px;
   }
 
-  #work-experience-section .flow-description {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  #work-experience-section .flow-icon {
-    left: 0;
-    transform: translateX(-50%);
-    width: 2.2rem;
-    height: 2.2rem;
-    font-size: 1rem;
+  .work-experience-item:hover .work-experience-content {
+    transform: translateX(6px) translateY(-3px);
   }
 }
 
-@media (width <= 480px) {
-  .work-flow {
-    padding: 1.2rem 0.8rem;
-    gap: 1.5rem;
+/* ============================================
+   Responsive Design - Mobile
+   ============================================ */
+@media screen and (width <= 768px) {
+  .work-experience-container {
+    padding: var(--work-spacing-sm);
   }
 
-  #work-experience-section .flow-item {
-    padding: 1.2rem 1rem 1.2rem 2.2rem;
+  .work-experience-timeline {
+    gap: var(--work-spacing-md);
+    padding: var(--work-spacing-md) 0;
+  }
+
+  .work-experience-timeline::before {
+    left: 1.5rem;
+    width: 2px;
+  }
+
+  .work-experience-item {
+    margin-left: 3.5rem;
+  }
+
+  .work-experience-item .flow-icon-wrapper {
+    left: -3.75rem;
+    top: 0.25rem;
+  }
+
+  .work-experience-item .flow-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.2rem;
     border-radius: 12px;
+    border-width: 2px;
   }
 
-  #work-experience-section .flow-title {
-    font-size: 1rem;
+  .work-experience-content {
+    padding: var(--work-spacing-md) var(--work-spacing-sm);
+    border-radius: 16px;
   }
 
-  #work-experience-section .flow-description {
-    font-size: 0.85rem;
-    line-height: 1.4;
+  .work-experience-item:hover .work-experience-content {
+    transform: translateX(4px) translateY(-2px);
   }
 
-  #work-experience-section .flow-icon {
-    left: 0;
-    transform: translateX(-50%);
-    width: 1.8rem;
-    height: 1.8rem;
-    font-size: 0.9rem;
+  .work-experience-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--work-spacing-xs);
   }
+
+  .work-experience-separator {
+    display: none;
+  }
+}
+
+/* ============================================
+   Responsive Design - Small Mobile
+   ============================================ */
+@media screen and (width <= 480px) {
+  .work-experience-container {
+    padding: var(--work-spacing-xs);
+  }
+
+  .work-experience-timeline {
+    gap: var(--work-spacing-sm);
+    padding: var(--work-spacing-sm) 0;
+  }
+
+  .work-experience-timeline::before {
+    left: 1.25rem;
+    width: 2px;
+  }
+
+  .work-experience-item {
+    margin-left: 3rem;
+  }
+
+  .work-experience-item .flow-icon-wrapper {
+    left: -3.25rem;
+    top: 0.25rem;
+  }
+
+  .work-experience-item .flow-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+    border-radius: 10px;
+  }
+
+  .work-experience-content {
+    padding: var(--work-spacing-sm);
+    border-radius: 14px;
+  }
+
+  .work-experience-item:hover .work-experience-content {
+    transform: translateX(2px) translateY(-1px);
+  }
+
+  .work-experience-title {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+  }
+
+  .work-experience-company {
+    font-size: clamp(0.95rem, 1.6vw, 1rem);
+  }
+
+  .work-experience-period {
+    padding: 0.3rem 0.6rem;
+    font-size: clamp(0.8rem, 1.3vw, 0.875rem);
+  }
+
+  .work-experience-description {
+    font-size: clamp(0.9rem, 1.5vw, 0.95rem);
+    line-height: var(--work-line-height-normal);
+  }
+}
+
+/* ============================================
+   Landscape Orientation
+   ============================================ */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .work-experience-timeline {
+    gap: var(--work-spacing-md);
+  }
+
+  .work-experience-content {
+    padding: var(--work-spacing-md);
+  }
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .work-experience-timeline::before {
+    animation: none;
+    opacity: 0.6;
+    height: 100%;
+  }
+
+  .work-experience-content,
+  .work-experience-item .flow-icon,
+  .work-experience-title,
+  .work-experience-company,
+  .work-experience-period,
+  .work-experience-description {
+    transition: none;
+  }
+
+  .work-experience-item:hover .work-experience-content {
+    transform: none;
+  }
+
+  .work-experience-item:hover .flow-icon {
+    transform: none;
+  }
+
+  .work-experience-item:hover .work-experience-title {
+    transform: none;
+  }
+
+  .work-experience-item:hover .work-experience-period {
+    transform: none;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .work-experience-container {
+    padding: 0;
+  }
+
+  .work-experience-timeline::before {
+    display: none;
+  }
+
+  .work-experience-item {
+    margin-left: 0;
+    page-break-inside: avoid;
+  }
+
+  .work-experience-item .flow-icon-wrapper {
+    display: none;
+  }
+
+  .work-experience-content {
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
+    padding: var(--work-spacing-md);
+  }
+
+  .work-experience-item:hover .work-experience-content {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ============================================
+   High Contrast Mode (Accessibility)
+   ============================================ */
+@media (prefers-contrast: high) {
+  .work-experience-content {
+    border: 2px solid var(--work-color-text-heading);
+  }
+
+  .work-experience-item .flow-icon {
+    border: 3px solid var(--work-color-text-heading);
+  }
+
+  .work-experience-timeline::before {
+    background: var(--work-color-text-heading);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   Dark Mode Support (Future Enhancement)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles can be added here if needed */
 }

@@ -12,7 +12,6 @@ import ProjectsSection from "./sections/projects-section";
 import SoftSkillsSection from "./sections/soft-skills-section";
 import LanguagesSection from "./sections/languages-section";
 import ContactSection from "./sections/contact-section";
-import SectionBlock from "./sections/section-block";
 import "../../assets/css/main-page.css";
 import MainController from "../../controllers/main-controller";
 import { UserProfile } from "../../types/user";
@@ -161,7 +160,6 @@ class MainPage extends BasePage<{}, MainPageState> {
 
   /**
    * Render a single section
-   * Enhanced with staggered animations and variant support
    */
   private renderSection(config: SectionConfig, profile: UserProfile, index: number): ReactNode {
     const { id, title, component: SectionComponent, dataKey } = config;
@@ -175,20 +173,25 @@ class MainPage extends BasePage<{}, MainPageState> {
     // Special handling for AboutMeSection which needs the entire profile
     const sectionData = dataKey === "name" ? profile : data;
 
-    // Determine variant based on section type for visual hierarchy
-    const variant = index === 0 ? "elevated" : "default";
-    const animationDelay = index * 100; // Staggered animation delay
-
     return (
-      <SectionBlock 
+      <section 
         key={id} 
-        id={id} 
-        title={title}
-        variant={variant}
-        animationDelay={animationDelay}
+        id={id}
+        className="section-block"
+        aria-label={title || "Content section"}
       >
-        <SectionComponent data={sectionData} />
-      </SectionBlock>
+        {title && (
+          <header className="section-header">
+            <h2 className="section-title" id={id ? `${id}-title` : undefined}>
+              {title}
+            </h2>
+            <div className="section-title-underline" aria-hidden="true"></div>
+          </header>
+        )}
+        <div className="section-content" role="region" aria-labelledby={id ? `${id}-title` : undefined}>
+          <SectionComponent data={sectionData} />
+        </div>
+      </section>
     );
   }
 
