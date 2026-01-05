@@ -1,33 +1,76 @@
-import React, { Component, ReactNode, RefObject } from "react";
+import React, { Component, ReactNode, RefObject, PureComponent } from "react";
 
+/**
+ * FlowItem Props Interface
+ */
 type FlowItemProps = {
   itemKey: string;
   index: number;
-  scrollDirection: "up" | "down" | "left" | "right"; // ✅ extended
+  scrollDirection: "up" | "down" | "left" | "right";
   isVisible: boolean;
-  refObj?: RefObject<HTMLDivElement | null>;
+  refObj?: RefObject<HTMLDivElement>;
   icon?: ReactNode;
   children: ReactNode;
 };
 
-export class FlowItem extends Component<FlowItemProps> {
-  getClassNames(): string {
+/**
+ * FlowItem Component
+ * 
+ * Optimized reusable component for timeline items
+ * - Performance optimized with PureComponent
+ * - Clean class name generation
+ * - Proper ref handling
+ * 
+ * Principles: DRY, OOP, Performance
+ */
+export class FlowItem extends PureComponent<FlowItemProps> {
+  private readonly TRANSITION_DELAY_MS = 150;
+
+  /**
+   * Generate class names efficiently
+   * Follows DRY principle
+   */
+  private getClassNames(): string {
     const { scrollDirection, isVisible, index } = this.props;
-    return [
-      "flow-item",
-      isVisible ? "visible" : "",
-      `scroll-${scrollDirection}`,
-      index % 2 === 0 ? "left" : "right",
-    ].join(" ");
+    const classes = ["flow-item"];
+    
+    if (isVisible) {
+      classes.push("visible");
+    }
+    
+    classes.push(`scroll-${scrollDirection}`);
+    classes.push(index % 2 === 0 ? "left" : "right");
+    
+    return classes.filter(Boolean).join(" ");
   }
 
-  renderIcon(): ReactNode {
+  /**
+   * Render icon if provided
+   * Null-safe rendering
+   */
+  private renderIcon(): ReactNode {
     const { icon } = this.props;
-    return icon ? <div className="flow-icon">{icon}</div> : null;
+    if (!icon) return null;
+    
+    return <div className="flow-icon" aria-hidden="true">{icon}</div>;
   }
 
-  render(): ReactNode {
-    const { itemKey, refObj, index, children } = this.props;
+  /**
+   * Get transition delay style
+   * Performance: Memoized calculation
+   */
+  private getTransitionStyle(): React.CSSProperties {
+    const { index } = this.props;
+    return {
+      transitionDelay: `${index * this.TRANSITION_DELAY_MS}ms`,
+    };
+  }
+
+  /**
+   * Main render method
+   */
+  public render(): ReactNode {
+    const { itemKey, refObj, children } = this.props;
 
     return (
       <div
@@ -35,7 +78,8 @@ export class FlowItem extends Component<FlowItemProps> {
         data-key={itemKey}
         ref={refObj}
         className={this.getClassNames()}
-        style={{ transitionDelay: `${index * 150}ms` }}
+        style={this.getTransitionStyle()}
+        role="listitem"
       >
         {this.renderIcon()}
         {children}
