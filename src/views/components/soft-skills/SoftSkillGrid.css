@@ -1,0 +1,127 @@
+/* ============================================
+   Soft Skill Grid Component - Professional Layout
+   ============================================ */
+
+.soft-skills-grid-container {
+  width: 100%;
+  padding: 2rem 0;
+  position: relative;
+}
+
+/* Animated Background Pattern */
+.soft-skills-grid-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.soft-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 3rem;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Empty State */
+.soft-skills-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.soft-skills-empty-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  opacity: 0.5;
+  filter: grayscale(0.3);
+  animation: softSkillsEmptyPulse 2s ease-in-out infinite;
+}
+
+.soft-skills-empty-text {
+  color: var(--text-subtle, #5c6b7a);
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  margin: 0;
+  font-weight: 400;
+}
+
+@keyframes softSkillsEmptyPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+/* Responsive Design */
+@media screen and (min-width: 1400px) {
+  .soft-skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 3.5rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .soft-skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .soft-skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .soft-skills-empty {
+    padding: 4rem 1.5rem;
+  }
+
+  .soft-skills-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .soft-skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .soft-skills-empty {
+    padding: 3rem 1.25rem;
+  }
+
+  .soft-skills-empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Landscape Orientation */
+@media screen and (orientation: landscape) and (max-width: 768px) {
+  .soft-skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+}

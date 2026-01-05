@@ -1,0 +1,200 @@
+/* ============================================
+   Soft Skill Icon Component - Luxury Design
+   ============================================ */
+
+.soft-skill-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Icon Glow Effect */
+.soft-skill-icon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.35),
+    rgba(102, 126, 234, 0.2),
+    transparent 70%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.soft-skill-icon-wrapper:hover .soft-skill-icon-glow,
+.soft-skill-icon-wrapper:focus-within .soft-skill-icon-glow {
+  opacity: 1;
+}
+
+/* Icon Container */
+.soft-skill-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.12),
+    rgba(118, 75, 162, 0.15)
+  );
+  border: 2px solid rgba(102, 126, 234, 0.25);
+  border-radius: 20px;
+  box-shadow:
+    0 6px 20px rgba(102, 126, 234, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Icon Emoji */
+.soft-skill-icon-emoji {
+  display: block;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Size Variants */
+.soft-skill-icon-small .soft-skill-icon-container {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 14px;
+}
+
+.soft-skill-icon-small .soft-skill-icon-emoji {
+  font-size: 1.5rem;
+}
+
+.soft-skill-icon-small .soft-skill-icon-glow {
+  width: 80px;
+  height: 80px;
+}
+
+.soft-skill-icon-medium .soft-skill-icon-container {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 20px;
+}
+
+.soft-skill-icon-medium .soft-skill-icon-emoji {
+  font-size: 2.25rem;
+}
+
+.soft-skill-icon-medium .soft-skill-icon-glow {
+  width: 120px;
+  height: 120px;
+}
+
+.soft-skill-icon-large .soft-skill-icon-container {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 24px;
+}
+
+.soft-skill-icon-large .soft-skill-icon-emoji {
+  font-size: 2.75rem;
+}
+
+.soft-skill-icon-large .soft-skill-icon-glow {
+  width: 140px;
+  height: 140px;
+}
+
+/* Hover Effects */
+.soft-skill-icon-wrapper:hover .soft-skill-icon-container,
+.soft-skill-icon-wrapper:focus-within .soft-skill-icon-container {
+  transform: scale(1.1) rotate(5deg);
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow:
+    0 12px 32px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.18),
+    rgba(118, 75, 162, 0.22)
+  );
+}
+
+.soft-skill-icon-wrapper:hover .soft-skill-icon-emoji,
+.soft-skill-icon-wrapper:focus-within .soft-skill-icon-emoji {
+  transform: scale(1.1);
+}
+
+/* Animation */
+.soft-skill-icon-animated .soft-skill-icon-container {
+  animation: softSkillIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes softSkillIconPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 6px 20px rgba(102, 126, 234, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 8px 24px rgba(102, 126, 234, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .soft-skill-icon-medium .soft-skill-icon-container {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 16px;
+  }
+
+  .soft-skill-icon-medium .soft-skill-icon-emoji {
+    font-size: 1.75rem;
+  }
+
+  .soft-skill-icon-large .soft-skill-icon-container {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 20px;
+  }
+
+  .soft-skill-icon-large .soft-skill-icon-emoji {
+    font-size: 2.25rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .soft-skill-icon-medium .soft-skill-icon-container {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 14px;
+  }
+
+  .soft-skill-icon-medium .soft-skill-icon-emoji {
+    font-size: 1.5rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .soft-skill-icon-animated .soft-skill-icon-container {
+    animation: none;
+  }
+
+  .soft-skill-icon-wrapper:hover .soft-skill-icon-container,
+  .soft-skill-icon-wrapper:focus-within .soft-skill-icon-container {
+    transform: none;
+  }
+}
+
