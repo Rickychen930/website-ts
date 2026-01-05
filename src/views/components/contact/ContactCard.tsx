@@ -95,7 +95,7 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
    * Get card class name
    */
   private getCardClass(): string {
-    const { contact, index, className = "" } = this.props;
+    const { contact, className = "" } = this.props;
     const { isHovered, isFocused } = this.state;
 
     const classes = [
@@ -239,7 +239,6 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
         onClick={this.handleCardClick}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        role="article"
         aria-label={`Contact: ${contact.label}`}
         tabIndex={0}
       >

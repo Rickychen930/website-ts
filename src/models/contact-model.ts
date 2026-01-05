@@ -103,7 +103,7 @@ export class ContactModel {
       lowerLabel.includes("phone") ||
       lowerLabel.includes("mobile") ||
       lowerLabel.includes("whatsapp") ||
-      /^[\d\s\-\+\(\)]+$/.test(value)
+      /^[\d\s\-+()]+$/.test(value)
     ) {
       return ContactType.PHONE;
     }
