@@ -4,7 +4,6 @@ import { ProfileStat, ProfileAction } from "../../components/profile";
 import {
   HeroHeader,
   ProfessionalHighlight,
-  AnimatedCodeBlock,
   TechBadgesGrid,
 } from "../../components/about-me";
 import { AboutMeController } from "../../../controllers/about-me-controller";
@@ -187,6 +186,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    * Shows software engineering capabilities prominently
    * Follows Single Responsibility Principle (SRP)
    * Performance: Uses memoized data from state
+   * UI Optimization: Reduced to 8 items (preview only, full list in Technical Skills section)
    */
   private renderFeaturedTechStack(): ReactNode {
     const { technologies } = this.state;
@@ -195,13 +195,15 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
       return null;
     }
 
+    // Show only top 8 technologies as preview
+    // Full list available in Technical Skills section
     return (
       <div className="about-me-featured-tech">
         <TechBadgesGrid
           technologies={technologies}
-          title="Tech Stack"
+          title="Featured Technologies"
           variant="default"
-          maxItems={12}
+          maxItems={8}
         />
       </div>
     );
@@ -240,25 +242,11 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
 
   /**
    * Render animated code block showing tech stack
-   * Demonstrates software engineering capabilities
-   * Follows Single Responsibility Principle (SRP)
-   * Performance: Uses memoized data from state (first 8 items)
+   * REMOVED: Redundant with TechBadgesGrid above and Technical Skills section
+   * Full technical skills are displayed in dedicated Technical Skills section
+   * This reduces duplication and improves UI efficiency
    */
-  private renderTechStackCode(): ReactNode {
-    const { technologies } = this.state;
-    const codeTechnologies = technologies.slice(0, 8);
-
-    if (!codeTechnologies || codeTechnologies.length === 0) {
-      return null;
-    }
-
-    return (
-      <div className="about-me-tech-stack-code">
-        <h3 className="about-me-tech-stack-title">Code & Technologies</h3>
-        <AnimatedCodeBlock technologies={codeTechnologies} language="typescript" />
-      </div>
-    );
-  }
+  // Removed renderTechStackCode() - redundant display
 
   /**
    * Render call-to-action buttons
@@ -332,14 +320,14 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
   }
 
   /**
-   * Render additional content (highlights, tech stack)
+   * Render additional content (highlights only)
    * Follows Single Responsibility Principle (SRP)
+   * UI Optimization: Removed redundant tech stack code block
    */
   private renderAdditionalContent(): ReactNode {
     return (
       <div className="about-me-additional-content">
         {this.renderProfessionalHighlights()}
-        {this.renderTechStackCode()}
       </div>
     );
   }

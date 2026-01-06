@@ -14,7 +14,7 @@ export interface IContactMessage extends Document {
   updatedAt: Date;
 }
 
-const ContactMessageSchema = new Schema<IContactMessage>(
+const ContactMessageSchema = new Schema(
   {
     name: {
       type: String,
@@ -50,8 +50,8 @@ const ContactMessageSchema = new Schema<IContactMessage>(
 // Index for email queries
 ContactMessageSchema.index({ email: 1, createdAt: -1 });
 
-export const ContactMessageModel = mongoose.model<IContactMessage>(
+export const ContactMessageModel = mongoose.model(
   'ContactMessage',
   ContactMessageSchema
-);
+) as unknown as mongoose.Model<IContactMessage>;
 

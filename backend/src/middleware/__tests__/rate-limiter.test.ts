@@ -17,7 +17,7 @@ describe('Rate Limiter', () => {
       },
       socket: {
         remoteAddress: '127.0.0.1',
-      },
+      } as any,
       ip: '127.0.0.1',
       path: '/test',
     };
@@ -96,7 +96,7 @@ describe('Rate Limiter', () => {
       expect(mockResponse.setHeader).toHaveBeenCalledWith('X-RateLimit-Reset', expect.any(String));
     });
 
-    it('should reset limit after window expires', (done) => {
+    it('should reset limit after window expires', (done: jest.DoneCallback) => {
       const limiter = createRateLimiter({
         windowMs: 100, // Very short window for testing
         max: 2,
@@ -144,8 +144,11 @@ describe('Rate Limiter', () => {
     });
 
     it('should handle requests without IP', () => {
-      mockRequest.socket = undefined;
-      mockRequest.ip = undefined;
+      mockRequest = {
+        ...mockRequest,
+        socket: undefined,
+        ip: undefined,
+      };
 
       const limiter = createRateLimiter({
         windowMs: 60000,

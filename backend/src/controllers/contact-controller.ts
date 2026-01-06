@@ -39,7 +39,7 @@ export async function createContactMessage(
       message: data.message.trim(),
     });
 
-    const saved = await contactMessage.save();
+    const saved = await contactMessage.save() as unknown as IContactMessage;
     logger.info('Contact message created', { id: saved._id, email: saved.email }, 'ContactController');
     
     return saved;
@@ -63,7 +63,7 @@ export async function getContactMessages(
       .skip(skip)
       .exec();
 
-    return messages;
+    return messages as unknown as IContactMessage[];
   } catch (error) {
     logger.error('Failed to get contact messages', error, 'ContactController');
     throw error;
@@ -76,7 +76,7 @@ export async function getContactMessages(
 export async function getContactMessageById(id: string): Promise<IContactMessage | null> {
   try {
     const message = await ContactMessageModel.findById(id).exec();
-    return message;
+    return message as unknown as IContactMessage | null;
   } catch (error) {
     logger.error('Failed to get contact message by ID', error, 'ContactController');
     throw error;

@@ -76,16 +76,27 @@ class MainPage extends BasePage<{}, MainPageState> {
   /**
    * Initialize section configurations
    * Follows DRY principle - Centralized configuration
+   * UI Optimization: Reordered sections for better flow:
+   * 1. About Me (introduction)
+   * 2. Technical Skills (core competencies - most important for portfolio)
+   * 3. Work Experience (professional background)
+   * 4. Projects (portfolio showcase)
+   * 5. Academic (educational background)
+   * 6. Certifications (credentials)
+   * 7. Honors (achievements)
+   * 8. Soft Skills (interpersonal skills)
+   * 9. Languages (language proficiency)
+   * 10. Contact (contact information)
    */
   private initializeSections(): void {
     const sections: ISectionConfig[] = [
       { id: "about", title: "About Me", component: AboutMeSection, dataKey: "name" },
-      { id: "academic", title: "Academic", component: AcademicSection, dataKey: "academics" },
-      { id: "honors", title: "Honors", component: HonorsSection, dataKey: "honors" },
-      { id: "certifications", title: "Certifications", component: CertificationSection, dataKey: "certifications" },
       { id: "skills", title: "Technical Skills", component: TechnicalSkillsSection, dataKey: "technicalSkills" },
       { id: "experience", title: "Work Experience", component: WorkExperienceSection, dataKey: "experiences" },
       { id: "projects", title: "Projects", component: ProjectsSection, dataKey: "projects" },
+      { id: "academic", title: "Academic", component: AcademicSection, dataKey: "academics" },
+      { id: "certifications", title: "Certifications", component: CertificationSection, dataKey: "certifications" },
+      { id: "honors", title: "Honors", component: HonorsSection, dataKey: "honors" },
       { id: "soft-skills", title: "Soft Skills", component: SoftSkillsSection, dataKey: "softSkills" },
       { id: "languages", title: "Languages", component: LanguagesSection, dataKey: "languages" },
       { id: "contact", title: "Contact", component: ContactSection, dataKey: "contacts" },
@@ -258,14 +269,17 @@ class MainPage extends BasePage<{}, MainPageState> {
 
   /**
    * Get section priority untuk lazy loading
-   * High priority sections (About, Contact) load immediately
+   * High priority sections (About, Skills, Contact) load immediately
    * Performance: Memoized priority lookup
+   * UI Optimization: Technical Skills is high priority (core content)
    */
   private readonly sectionPriorityMap = new Map<string, "high" | "normal" | "low">([
     ["about", "high"],
+    ["skills", "high"], // Technical Skills is core content
     ["contact", "high"],
     ["languages", "low"],
     ["soft-skills", "low"],
+    ["honors", "low"], // Honors can load later
   ]);
 
   private getSectionPriority(id: string): "high" | "normal" | "low" {

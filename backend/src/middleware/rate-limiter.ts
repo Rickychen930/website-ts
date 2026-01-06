@@ -109,10 +109,11 @@ class RateLimiter {
           path: req.path,
         }, 'RateLimiter');
 
-        return res.status(429).json({
+        res.status(429).json({
           error: this.options.message,
           retryAfter: Math.ceil((entry.resetTime - now) / 1000),
         });
+        return;
       }
 
       // Continue to next middleware
