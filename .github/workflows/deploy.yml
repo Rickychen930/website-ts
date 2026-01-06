@@ -84,7 +84,19 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          source: "backend/dist,backend/ecosystem.config.js,package.json,package-lock.json"
+          source: "backend/dist,backend/ecosystem.config.js"
+          target: "/root/backend"
+          strip_components: 1
+          rm: false
+
+      - name: Deploy package files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "package.json,package-lock.json"
           target: "/root/backend"
           strip_components: 0
           rm: false
