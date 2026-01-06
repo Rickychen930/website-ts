@@ -113,7 +113,8 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
         isInitialized: true,
       });
     } catch (error) {
-      console.error("❌ Error initializing soft skills:", error);
+      const { logError } = require('../../../utils/logger');
+      logError("Error initializing soft skills", error, "SoftSkillsSection");
       this.setState({
         error: error instanceof Error ? error.message : "Unknown error",
         validatedSkills: [],

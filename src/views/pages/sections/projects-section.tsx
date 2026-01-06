@@ -156,7 +156,11 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       // Validate projects
       const validation = this.controller.validate(projects);
       if (!validation.isValid) {
-        console.warn("Project validation errors:", validation.errors);
+        // Log validation errors (development only)
+        if (process.env.NODE_ENV === 'development') {
+          const { logWarn } = require('../../../utils/logger');
+          logWarn("Project validation errors", { errors: validation.errors }, "ProjectsSection");
+        }
         // Continue with projects anyway, but log errors
       }
 
@@ -169,7 +173,8 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         isInitialized: true 
       });
     } catch (error) {
-      console.error("Error processing project data:", error);
+      const { logError } = require('../../../utils/logger');
+      logError("Error processing project data", error, "ProjectsSection");
       this.setState({
         error: error instanceof Error ? error.message : "Failed to process projects",
         projects: [],
@@ -228,7 +233,8 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       this.setState({ isInitialized: true });
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        console.error("Error initializing IntersectionObserver:", error);
+        const { logError } = require('../../../utils/logger');
+        logError("Error initializing IntersectionObserver", error, "ProjectsSection");
       }
 
       // Fallback: show all items
@@ -345,7 +351,8 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     if (error) {
       // Don't show error state, just render empty state for better UX
       if (process.env.NODE_ENV === "development") {
-        console.error("Projects section error:", error);
+        const { logError } = require('../../../utils/logger');
+        logError("Projects section error", error, "ProjectsSection");
       }
       return (
         <Card id="projects-section">

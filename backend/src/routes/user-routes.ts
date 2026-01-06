@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getUserByName } from "../controllers/user-controller";
+import { logger } from "../utils/logger";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.get("/:name", async (req, res) => {
 
     res.json(user);
   } catch (err) {
-    console.error("Error fetching user by name:", err);
+    logger.error("Error fetching user by name", err, "UserRoutes");
     res.status(500).json({ error: "Failed to fetch user" });
   }
 });

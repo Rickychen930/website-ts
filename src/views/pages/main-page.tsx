@@ -290,10 +290,8 @@ class MainPage extends BasePage<{}, MainPageState> {
               profile={profile}
               priority={this.getSectionPriority(config.id)}
               onVisible={(id) => {
-                // Optional: Track section visibility
-                if (process.env.NODE_ENV === "development") {
-                  console.log(`Section ${id} is now visible`);
-                }
+                // Optional: Track section visibility (development only)
+                // Logging handled by LazySection component if needed
               }}
             />
           );

@@ -1,5 +1,6 @@
 import { UserProfile } from "../types/user";
 import { apiClient, ApiError } from "./api";
+import { logError } from "../utils/logger";
 
 /**
  * UserService - Service Layer (MVC Pattern)
@@ -29,18 +30,18 @@ export class UserService {
       const data = response.data;
       
       if (!this.isValidProfile(data)) {
-        console.error("❌ Invalid user profile data structure");
+        logError("Invalid user profile data structure", undefined, "UserService");
         return null;
       }
 
       return data;
     } catch (error) {
       const apiError = error as ApiError;
-      console.error("❌ Error fetching user profile:", {
+      logError("Error fetching user profile", {
         message: apiError.message,
         status: apiError.status,
         originalError: apiError.originalError,
-      });
+      }, "UserService");
       throw error;
     }
   }

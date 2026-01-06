@@ -231,7 +231,8 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
           } catch (err) {
             // Edge case: Handle individual observe errors
             if (process.env.NODE_ENV === 'development') {
-              console.warn(`Failed to observe academic item for key: ${key}`, err);
+              const { logWarn } = require('../../../utils/logger');
+              logWarn(`Failed to observe academic item for key: ${key}`, { err }, "AcademicSection");
             }
           }
         }
@@ -251,7 +252,8 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     } catch (error) {
       // Enhanced error handling
       if (process.env.NODE_ENV === 'development') {
-        console.error("❌ Error initializing IntersectionObserver:", error);
+        const { logError } = require('../../../utils/logger');
+        logError("Error initializing IntersectionObserver", error, "AcademicSection");
       }
       
       // Fallback: show all items
@@ -420,7 +422,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Edge case: Handle missing ref
     if (!refObj) {
       if (process.env.NODE_ENV === 'development') {
-        console.warn(`Missing ref for academic item: ${item.key}`);
+        // Missing ref is not critical, skip logging
       }
     }
 

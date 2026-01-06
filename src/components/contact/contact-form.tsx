@@ -124,26 +124,36 @@ export class ContactForm extends Component<{}, ContactFormState> {
       toast.success("Message sent successfully! I'll get back to you soon.");
     } catch (error) {
       this.setState({ isSubmitting: false });
-      toast.error("Failed to send message. Please try again later.");
-      console.error("Form submission error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to send message. Please try again later.";
+      toast.error(errorMessage);
+      // Log error for debugging (only in development)
+      if (process.env.NODE_ENV === 'development') {
+        console.error("Form submission error:", error);
+      }
     }
   };
 
   private submitForm = async (data: ContactFormState["formData"]): Promise<void> => {
-    // TODO: Replace with actual API endpoint
-    // Example:
-    // const response = await fetch('/api/contact', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(data),
-    // });
-    // if (!response.ok) throw new Error('Failed to submit');
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+    const endpoint = `${apiUrl}/api/contact`;
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-    // For now, just log the data
-    console.log("Contact form submission:", data);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ error: 'Failed to submit' }));
+      throw new Error(errorData.error || `HTTP ${response.status}: Failed to submit contact form`);
+    }
+
+    const result = await response.json();
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to submit contact form');
+    }
   };
 
   private handleReset = (): void => {

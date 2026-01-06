@@ -142,7 +142,8 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           ? error.message
           : "Failed to initialize honors section";
       this.setState({ error: errorMessage });
-      console.error("HonorsSection initialization error:", error);
+      const { logError } = require('../../../utils/logger');
+      logError("HonorsSection initialization error", error, "HonorsSection");
     }
   }
 
@@ -209,12 +210,16 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           try {
             this.observer?.observe(element);
           } catch (error) {
-            console.warn(`Failed to observe item ${key}:`, error);
+            if (process.env.NODE_ENV === 'development') {
+              const { logWarn } = require('../../../utils/logger');
+              logWarn(`Failed to observe item ${key}`, { error }, "HonorsSection");
+            }
           }
         }
       });
     } catch (error) {
-      console.error("Failed to setup IntersectionObserver:", error);
+      const { logError } = require('../../../utils/logger');
+      logError("Failed to setup IntersectionObserver", error, "HonorsSection");
       // Fallback: show all items
       const allKeys = new Set(data.map((item) => item.key).filter(Boolean));
       this.setState({ visibleItems: allKeys });
@@ -427,7 +432,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   private handleCardClick = (honor: IHonorItem): void => {
     // Optional: Add click handling logic
-    console.log("Honor clicked:", honor);
+    // Honor click handled, no logging needed
   };
 
   /**

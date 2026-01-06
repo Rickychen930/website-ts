@@ -9,6 +9,7 @@
  */
 
 import { ICertification, CertificationModel, ICertificationValidationResult } from "../models/certification-model";
+import { logWarn, logError } from "../utils/logger";
 
 /**
  * Certification Controller
@@ -43,7 +44,7 @@ export class CertificationController {
     // Validate first
     const validation = this.validateData(data);
     if (!validation.isValid) {
-      console.warn("Certification data validation failed:", validation.errors);
+      logWarn("Certification data validation failed", { errors: validation.errors }, "CertificationController");
       return [];
     }
 
@@ -100,7 +101,7 @@ export class CertificationController {
     try {
       window.open(link, "_blank", "noopener,noreferrer");
     } catch (error) {
-      console.error("Failed to open certification link:", error);
+      logError("Failed to open certification link", error, "CertificationController");
     }
   }
 

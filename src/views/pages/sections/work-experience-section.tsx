@@ -208,7 +208,8 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
       });
 
       if (process.env.NODE_ENV === 'development') {
-        console.error("Error processing work experience data:", error);
+        const { logError } = require('../../../utils/logger');
+        logError("Error processing work experience data", error, "WorkExperienceSection");
       }
     }
   }
@@ -279,7 +280,8 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
       }, 50);
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
-        console.error("❌ Error initializing IntersectionObserver:", error);
+        const { logError } = require('../../../utils/logger');
+        logError("Error initializing IntersectionObserver", error, "WorkExperienceSection");
       }
       
       // Fallback: show all items immediately

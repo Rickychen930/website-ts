@@ -7,24 +7,30 @@ import http from "http";
 import path from "path";
 import { connectDB } from "./config/mongoose";
 import userRoutes from "./routes/user-routes";
+import contactRoutes from "./routes/contact-routes";
+import { logger } from "./utils/logger";
+import { validateEnv, getEnvNumber } from "./utils/env-validator";
 
 // ✅ Load .env
 const envPath = path.join(__dirname, "../../.env");
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
-  console.log("✅ .env loaded from", envPath);
+  logger.info(".env loaded", { path: envPath }, "Main");
 } else {
-  console.warn("⚠️ .env file not found at", envPath);
+  logger.warn(".env file not found", { path: envPath }, "Main");
+}
+
+// ✅ Validate environment variables
+const envValidation = validateEnv();
+if (!envValidation.isValid) {
+  logger.error("Environment validation failed", { errors: envValidation.errors }, "Main");
+  process.exit(1);
 }
 
 // ✅ Environment variables
-const PORT = Number(process.env.PORT) || 4000;
-const mongoUri = process.env.MONGODB_URI;
+const PORT = getEnvNumber("PORT", 4000);
+const mongoUri = process.env.MONGODB_URI!; // Validated by env-validator
 const NODE_ENV = process.env.NODE_ENV || "development";
-
-if (!mongoUri) {
-  throw new Error("❌ MONGODB_URI is not defined in .env");
-}
 
 // ✅ CORS origins from environment variable
 const allowedOriginsEnv = process.env.ALLOWED_ORIGINS;
@@ -61,7 +67,7 @@ const corsOptions = {
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.warn(`❌ CORS blocked origin: ${origin}`);
+      logger.warn("CORS blocked origin", { origin }, "Main");
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -75,6 +81,7 @@ app.use(cors(corsOptions));
 
 // ✅ API Routes (must be before static files)
 app.use("/api", userRoutes);
+app.use("/api/contact", contactRoutes);
 
 // ✅ Health check endpoint
 app.get("/health", (_, res) => {
@@ -133,12 +140,12 @@ if (NODE_ENV === "production" && SSL_KEY_PATH && SSL_CERT_PATH) {
         key: fs.readFileSync(SSL_KEY_PATH),
         cert: fs.readFileSync(SSL_CERT_PATH),
       };
-      console.log("✅ SSL certificates loaded");
+      logger.info("SSL certificates loaded", undefined, "Main");
     } catch (error) {
-      console.error("❌ Failed to load SSL certificates:", error);
+      logger.error("Failed to load SSL certificates", error, "Main");
     }
   } else {
-    console.warn("⚠️ SSL certificate paths specified but files not found");
+    logger.warn("SSL certificate paths specified but files not found", undefined, "Main");
   }
 }
 
@@ -150,35 +157,38 @@ const server = sslOptions
 // ✅ Connect to database before starting server
 connectDB(mongoUri)
   .then(() => {
-    console.log("✅ MongoDB connected");
+    logger.info("MongoDB connected", undefined, "Main");
     startServer();
   })
   .catch((err) => {
-    console.error("❌ MongoDB connection failed:", err);
+    logger.error("MongoDB connection failed", err, "Main");
     process.exit(1);
   });
 
 function startServer() {
   server.listen(PORT, "0.0.0.0", () => {
     const protocol = sslOptions ? "https" : "http";
-    console.log(`🚀 Backend running at ${protocol}://0.0.0.0:${PORT}`);
-    console.log(`📦 Environment: ${NODE_ENV}`);
-    console.log(`🌐 CORS allowed origins: ${allowedOrigins.join(", ")}`);
+    logger.info("Backend server started", {
+      protocol,
+      port: PORT,
+      env: NODE_ENV,
+      origins: allowedOrigins,
+    }, "Main");
   });
 
   // ✅ Graceful shutdown
   process.on("SIGTERM", () => {
-    console.log("SIGTERM signal received: closing HTTP server");
+    logger.info("SIGTERM signal received: closing HTTP server", undefined, "Main");
     server.close(() => {
-      console.log("HTTP server closed");
+      logger.info("HTTP server closed", undefined, "Main");
       process.exit(0);
     });
   });
 
   process.on("SIGINT", () => {
-    console.log("SIGINT signal received: closing HTTP server");
+    logger.info("SIGINT signal received: closing HTTP server", undefined, "Main");
     server.close(() => {
-      console.log("HTTP server closed");
+      logger.info("HTTP server closed", undefined, "Main");
       process.exit(0);
     });
   });

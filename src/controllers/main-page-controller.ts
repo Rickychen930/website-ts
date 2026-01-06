@@ -1,6 +1,7 @@
 import { UserService } from "../services/user-service";
 import { SectionManager, ISectionConfig } from "../models/section-model";
 import { UserProfile } from "../types/user";
+import { logError } from "../utils/logger";
 
 /**
  * MainPageController - Controller Layer (MVC Pattern)
@@ -46,7 +47,7 @@ export class MainPageController {
     try {
       return await this.userService.getUserProfile(userName);
     } catch (error) {
-      console.error("Failed to load user profile:", error);
+      logError("Failed to load user profile", error, "MainPageController");
       return null;
     }
   }

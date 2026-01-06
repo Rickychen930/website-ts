@@ -225,7 +225,7 @@ export class ApiClient {
   constructor(baseUrl?: string) {
     this.baseUrl = baseUrl || process.env.REACT_APP_API_URL || '';
     
-    if (!this.baseUrl) {
+    if (!this.baseUrl && process.env.NODE_ENV === 'development') {
       console.warn('⚠️ REACT_APP_API_URL is not defined');
     }
   }

@@ -125,7 +125,8 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
         isInitialized: true,
         sortedLanguages: [],
       });
-      console.error("LanguagesSection initialization error:", error);
+      const { logError } = require('../../../utils/logger');
+      logError("LanguagesSection initialization error", error, "LanguagesSection");
     }
   }
 

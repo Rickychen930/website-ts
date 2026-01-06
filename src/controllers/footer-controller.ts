@@ -18,6 +18,7 @@ import {
   IFooterStat,
 } from "../models/footer-model";
 import { UserProfile } from "../types/user";
+import { logWarn, logError } from "../utils/logger";
 
 /**
  * Footer Controller
@@ -43,7 +44,7 @@ export class FooterController {
     const validation = this.model.validate(data);
 
     if (!validation.isValid) {
-      console.warn("Footer data validation failed:", validation.errors);
+      logWarn("Footer data validation failed", { errors: validation.errors }, "FooterController");
       return null;
     }
 
@@ -119,7 +120,7 @@ export class FooterController {
       // Default - navigate
       window.location.href = link.href;
     } catch (error) {
-      console.error("Failed to handle link click:", error);
+      logError("Failed to handle link click", error, "FooterController");
     }
   }
 

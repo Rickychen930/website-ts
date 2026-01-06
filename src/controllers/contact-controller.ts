@@ -17,6 +17,7 @@ import {
   ContactType,
 } from "../models/contact-model";
 import { UserProfile } from "../types/user";
+import { logWarn, logError } from "../utils/logger";
 
 /**
  * Contact Controller
@@ -65,7 +66,7 @@ export class ContactController {
     // Validate first
     const validation = this.validateData(data);
     if (!validation.isValid) {
-      console.warn("Contact data validation failed:", validation.errors);
+      logWarn("Contact data validation failed", { errors: validation.errors }, "ContactController");
       return [];
     }
 
@@ -107,7 +108,7 @@ export class ContactController {
     const link = contact.link || this.model.generateLink(contact);
 
     if (!link) {
-      console.warn("No link available for contact:", contact.label);
+      logWarn("No link available for contact", { label: contact.label }, "ContactController");
       return;
     }
 
@@ -126,7 +127,7 @@ export class ContactController {
       // For other links, open in new tab
       window.open(link, "_blank", "noopener,noreferrer");
     } catch (error) {
-      console.error("Failed to open contact link:", error);
+      logError("Failed to open contact link", error, "ContactController");
     }
   }
 
@@ -140,7 +141,7 @@ export class ContactController {
       await navigator.clipboard.writeText(contact.value);
       return true;
     } catch (error) {
-      console.error("Failed to copy to clipboard:", error);
+      logError("Failed to copy to clipboard", error, "ContactController");
       // Fallback for older browsers
       try {
         const textArea = document.createElement("textarea");
@@ -153,7 +154,7 @@ export class ContactController {
         document.body.removeChild(textArea);
         return true;
       } catch (fallbackError) {
-        console.error("Fallback copy failed:", fallbackError);
+        logError("Fallback copy failed", fallbackError, "ContactController");
         return false;
       }
     }
