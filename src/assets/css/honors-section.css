@@ -296,9 +296,60 @@
 
 /* ─── Responsive Design: Tablets ─── */
 @media screen and (width <= 992px) {
+  /* Horizontal scroll for grid on tablet */
+  #honors-section {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
   .honors-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    display: flex;
+    flex-direction: row;
     gap: 1.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    margin-left: calc(-1 * 1.5rem);
+    margin-right: calc(-1 * 1.5rem);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: calc(100% + 3rem);
+    grid-template-columns: none;
+  }
+
+  .honors-grid > * {
+    flex: 0 0 calc(min(100%, 380px));
+    min-width: 340px;
+    max-width: 380px;
+    scroll-snap-align: start;
+  }
+
+  /* Custom scrollbar styling */
+  .honors-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .honors-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+
+  .honors-grid::-webkit-scrollbar-thumb {
+    background: var(--honors-gradient-primary);
+    border-radius: 3px;
+  }
+
+  .honors-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--honors-gold);
+  }
+
+  /* Firefox scrollbar */
+  .honors-grid {
+    scrollbar-width: thin;
+    scrollbar-color: var(--honors-gold) rgba(0, 0, 0, 0.05);
   }
 
   .honors-empty-state,
@@ -326,17 +377,36 @@
 
 /* ─── Responsive Design: Small Tablets ─── */
 @media screen and (width <= 900px) and (width > 768px) {
+  /* Keep horizontal scroll from 992px breakpoint */
   .honors-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
     gap: 1.6rem;
+  }
+
+  .honors-grid > * {
+    min-width: 320px;
+    max-width: 360px;
   }
 }
 
 /* ─── Responsive Design: Mobile ─── */
 @media screen and (width <= 768px) {
+  #honors-section {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
   .honors-grid {
-    grid-template-columns: 1fr;
+    margin-left: calc(-1 * 1rem);
+    margin-right: calc(-1 * 1rem);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: calc(100% + 2rem);
     gap: 1.5rem;
+  }
+
+  .honors-grid > * {
+    min-width: 300px;
+    max-width: 340px;
   }
 
   .honors-empty-state,
@@ -369,6 +439,11 @@
     gap: 1.35rem;
   }
 
+  .honors-grid > * {
+    min-width: 280px;
+    max-width: 320px;
+  }
+
   .honors-empty-state,
   .honors-error-state {
     padding: 2.5rem 1.25rem;
@@ -378,13 +453,24 @@
 
 /* ─── Responsive Design: Small Mobile ─── */
 @media screen and (width <= 480px) {
-  .honors-grid {
-    gap: 1.25rem;
-    grid-template-columns: 1fr;
-    width: 100%;
-    max-width: 100%;
+  #honors-section {
     overflow-x: hidden;
+    width: 100%;
+  }
+
+  .honors-grid {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+    gap: 1.25rem;
     padding: 0.5rem 0;
+  }
+
+  .honors-grid > * {
+    min-width: 280px;
+    max-width: 320px;
   }
 
   .honors-grid__item {
@@ -424,12 +510,23 @@
 
 /* ─── Responsive Design: Extra Small Mobile ─── */
 @media screen and (width <= 360px) {
-  .honors-grid {
-    gap: 1rem;
-    grid-template-columns: 1fr;
-    width: 100%;
-    max-width: 100%;
+  #honors-section {
     overflow-x: hidden;
+    width: 100%;
+  }
+
+  .honors-grid {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .honors-grid > * {
+    min-width: 260px;
+    max-width: 300px;
   }
 
   .honors-grid__item {
@@ -467,16 +564,24 @@
 /* ─── Responsive Design: Landscape Mobile ─── */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .honors-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 1.5rem;
+  }
+
+  .honors-grid > * {
+    min-width: 280px;
+    max-width: 320px;
   }
 }
 
 /* ─── Responsive Design: Landscape Small Mobile ─── */
 @media screen and (orientation: landscape) and (width <= 640px) {
   .honors-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
     gap: 1.25rem;
+  }
+
+  .honors-grid > * {
+    min-width: 260px;
+    max-width: 300px;
   }
 }
 

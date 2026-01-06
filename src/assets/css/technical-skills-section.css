@@ -124,6 +124,8 @@
   padding: var(--skills-spacing-md, 1.5rem) 0;
   padding-bottom: var(--skills-spacing-xxl, 3rem);
   z-index: 1;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ─── Statistics Header ─── */
@@ -382,7 +384,7 @@
 }
 
 /* ─── Responsive Design - Tablet (992px - 1199px) ─── */
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1199px) and (min-width: 992px) {
   .technical-skills-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--skills-spacing-md, 1.5rem);
@@ -413,9 +415,54 @@
     padding-bottom: var(--skills-spacing-xl, 2.5rem);
   }
 
+  /* Horizontal scroll for grid on tablet */
   .technical-skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-direction: row;
     gap: var(--skills-spacing-md, 1.5rem);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    margin-left: calc(-1 * var(--skills-spacing-md, 1.5rem));
+    margin-right: calc(-1 * var(--skills-spacing-md, 1.5rem));
+    padding-left: var(--skills-spacing-md, 1.5rem);
+    padding-right: var(--skills-spacing-md, 1.5rem);
+    width: calc(100% + 2 * var(--skills-spacing-md, 1.5rem));
+  }
+
+  .technical-skills-grid > * {
+    flex: 0 0 calc(min(100%, 320px));
+    min-width: 280px;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  /* Custom scrollbar styling */
+  .technical-skills-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .technical-skills-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+
+  .technical-skills-grid::-webkit-scrollbar-thumb {
+    background: var(--skills-color-primary, #667eea);
+    border-radius: 3px;
+  }
+
+  .technical-skills-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--skills-color-secondary, #764ba2);
+  }
+
+  /* Firefox scrollbar */
+  .technical-skills-grid {
+    scrollbar-width: thin;
+    scrollbar-color: var(--skills-color-primary, #667eea) rgba(0, 0, 0, 0.05);
   }
 
   .technical-skills-statistics {
@@ -448,11 +495,54 @@
     overflow-x: hidden;
   }
 
+  /* Horizontal scroll for grid on mobile */
   .technical-skills-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: row;
     gap: var(--skills-spacing-md, 1.5rem);
-    width: 100%;
-    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    margin-left: calc(-1 * var(--skills-spacing-sm, 1rem));
+    margin-right: calc(-1 * var(--skills-spacing-sm, 1rem));
+    padding-left: var(--skills-spacing-sm, 1rem);
+    padding-right: var(--skills-spacing-sm, 1rem);
+    width: calc(100% + 2 * var(--skills-spacing-sm, 1rem));
+  }
+
+  .technical-skills-grid > * {
+    flex: 0 0 calc(min(100%, 300px));
+    min-width: 280px;
+    max-width: 300px;
+    scroll-snap-align: start;
+  }
+
+  /* Custom scrollbar styling */
+  .technical-skills-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .technical-skills-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+
+  .technical-skills-grid::-webkit-scrollbar-thumb {
+    background: var(--skills-color-primary, #667eea);
+    border-radius: 3px;
+  }
+
+  .technical-skills-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--skills-color-secondary, #764ba2);
+  }
+
+  /* Firefox scrollbar */
+  .technical-skills-grid {
+    scrollbar-width: thin;
+    scrollbar-color: var(--skills-color-primary, #667eea) rgba(0, 0, 0, 0.05);
   }
 
   .technical-skills-statistics {
@@ -514,6 +604,11 @@
 
 /* ─── Responsive Design - Small Mobile (480px - 599px) ─── */
 @media screen and (max-width: 599px) {
+  .technical-skills-grid > * {
+    min-width: 260px;
+    max-width: 280px;
+  }
+
   .technical-skills-statistics {
     padding: var(--skills-spacing-sm, 1rem);
     border-radius: 18px;
@@ -550,6 +645,27 @@
 
 /* ─── Responsive Design - Extra Small Mobile (≤ 479px) ─── */
 @media screen and (max-width: 479px) {
+  .technical-skills-container {
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;
+  }
+
+  /* Horizontal scroll for grid on small mobile */
+  .technical-skills-grid {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: var(--skills-spacing-xs, 0.5rem);
+    padding-right: var(--skills-spacing-xs, 0.5rem);
+    width: 100%;
+    gap: var(--skills-spacing-sm, 1rem);
+  }
+
+  .technical-skills-grid > * {
+    min-width: 260px;
+    max-width: 280px;
+  }
+
   .technical-skills-statistics {
     padding: var(--skills-spacing-xs, 0.5rem) var(--skills-spacing-sm, 1rem);
     gap: var(--skills-spacing-xs, 0.5rem);
@@ -579,8 +695,14 @@
     gap: var(--skills-spacing-md, 1.5rem);
   }
 
+  /* Keep horizontal scroll in landscape */
   .technical-skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--skills-spacing-md, 1.5rem);
+  }
+
+  .technical-skills-grid > * {
+    min-width: 250px;
+    max-width: 280px;
   }
 }
 

@@ -81,7 +81,9 @@
 /* ─── Projects Section Container ─── */
 .projects-section-container {
   width: 100%;
+  max-width: 100%;
   position: relative;
+  overflow-x: hidden;
 }
 
 /* ─── Project Grid ─── */
@@ -930,9 +932,66 @@
 
 /* Tablet */
 @media screen and (width <= 992px) {
-  .project-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  /* Horizontal scroll for grid on tablet */
+  .projects-section-container {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Override all layout variants to use horizontal scroll on mobile/tablet */
+  .project-grid,
+  .project-grid-layout-grid,
+  .project-grid-layout-masonry,
+  .project-grid-layout-list {
+    display: flex !important;
+    flex-direction: row !important;
     gap: var(--projects-spacing-lg);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    margin-left: calc(-1 * var(--projects-spacing-md));
+    margin-right: calc(-1 * var(--projects-spacing-md));
+    padding-left: var(--projects-spacing-md);
+    padding-right: var(--projects-spacing-md);
+    width: calc(100% + 2 * var(--projects-spacing-md));
+    grid-template-columns: none !important;
+    column-count: auto !important;
+    column-width: auto !important;
+  }
+
+  .project-grid > * {
+    flex: 0 0 calc(min(100%, 360px));
+    min-width: 320px;
+    max-width: 360px;
+    scroll-snap-align: start;
+  }
+
+  /* Custom scrollbar styling */
+  .project-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .project-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+
+  .project-grid::-webkit-scrollbar-thumb {
+    background: var(--projects-accent);
+    border-radius: 3px;
+  }
+
+  .project-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--projects-accent-dark);
+  }
+
+  /* Firefox scrollbar */
+  .project-grid {
+    scrollbar-width: thin;
+    scrollbar-color: var(--projects-accent) rgba(0, 0, 0, 0.05);
   }
 
   .project-card {
@@ -970,9 +1029,31 @@
 
 /* Mobile Landscape & Small Tablet */
 @media screen and (width <= 768px) {
-  .project-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 100%), 1fr));
-    gap: var(--projects-spacing-lg);
+  .projects-section-container {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Ensure all layout variants use horizontal scroll */
+  .project-grid,
+  .project-grid-layout-grid,
+  .project-grid-layout-masonry,
+  .project-grid-layout-list {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    column-count: auto !important;
+    margin-left: calc(-1 * var(--projects-spacing-sm));
+    margin-right: calc(-1 * var(--projects-spacing-sm));
+    padding-left: var(--projects-spacing-sm);
+    padding-right: var(--projects-spacing-sm);
+    width: calc(100% + 2 * var(--projects-spacing-sm));
+    gap: var(--projects-spacing-md);
+  }
+
+  .project-grid > * {
+    min-width: 300px;
+    max-width: 340px;
   }
 
   .project-card {
@@ -995,8 +1076,26 @@
 
 /* Mobile Portrait */
 @media screen and (width <= 600px) {
-  .project-grid {
+  /* Ensure all layout variants use horizontal scroll */
+  .project-grid,
+  .project-grid-layout-grid,
+  .project-grid-layout-masonry,
+  .project-grid-layout-list {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    column-count: auto !important;
     gap: var(--projects-spacing-md);
+    margin-left: calc(-1 * var(--projects-spacing-xs));
+    margin-right: calc(-1 * var(--projects-spacing-xs));
+    padding-left: var(--projects-spacing-xs);
+    padding-right: var(--projects-spacing-xs);
+    width: calc(100% + 2 * var(--projects-spacing-xs));
+  }
+
+  .project-grid > * {
+    min-width: 280px;
+    max-width: 320px;
   }
 
   .project-card {
@@ -1058,8 +1157,26 @@
 
 /* Small Mobile */
 @media screen and (width <= 480px) {
-  .project-grid {
+  /* Ensure all layout variants use horizontal scroll */
+  .project-grid,
+  .project-grid-layout-grid,
+  .project-grid-layout-masonry,
+  .project-grid-layout-list {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    column-count: auto !important;
     gap: var(--projects-spacing-md);
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: var(--projects-spacing-xs);
+    padding-right: var(--projects-spacing-xs);
+    width: 100%;
+  }
+
+  .project-grid > * {
+    min-width: 260px;
+    max-width: 300px;
   }
 
   .project-card {
@@ -1120,6 +1237,25 @@
 
 /* Extra Small Mobile */
 @media screen and (width <= 360px) {
+  /* Ensure all layout variants use horizontal scroll */
+  .project-grid,
+  .project-grid-layout-grid,
+  .project-grid-layout-masonry,
+  .project-grid-layout-list {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    column-count: auto !important;
+    gap: var(--projects-spacing-sm);
+    padding-left: var(--projects-spacing-xs);
+    padding-right: var(--projects-spacing-xs);
+  }
+
+  .project-grid > * {
+    min-width: 240px;
+    max-width: 280px;
+  }
+
   .project-card {
     min-height: 360px;
   }
@@ -1140,9 +1276,21 @@
 
 /* Landscape Orientation */
 @media screen and (orientation: landscape) and (width <= 768px) {
-  .project-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  /* Ensure all layout variants use horizontal scroll in landscape */
+  .project-grid,
+  .project-grid-layout-grid,
+  .project-grid-layout-masonry,
+  .project-grid-layout-list {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    column-count: auto !important;
     gap: var(--projects-spacing-md);
+  }
+
+  .project-grid > * {
+    min-width: 280px;
+    max-width: 320px;
   }
 
   .project-card {
@@ -1157,7 +1305,7 @@
 /* Portrait Orientation */
 @media screen and (orientation: portrait) and (width <= 768px) {
   .project-grid {
-    grid-template-columns: 1fr;
+    /* Keep horizontal scroll in portrait */
   }
 }
 
