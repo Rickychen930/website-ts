@@ -20,10 +20,12 @@ export class UserService {
    * @param userName - Optional user name
    * @returns Promise<UserProfile | null>
    */
-  async getUserProfile(userName: string = this.DEFAULT_USER_NAME): Promise<UserProfile | null> {
+  async getUserProfile(
+    userName: string = this.DEFAULT_USER_NAME,
+  ): Promise<UserProfile | null> {
     try {
-      const endpoint = `/${encodeURIComponent(userName)}`;
-      
+      const endpoint = `/api/${encodeURIComponent(userName)}`;
+
       const response = await apiClient.get<UserProfile>(endpoint, {
         cacheTime: this.CACHE_TIME,
         retries: ApiConfig.RETRIES,
@@ -31,7 +33,7 @@ export class UserService {
       });
 
       const data = response.data;
-      
+
       if (!this.isValidProfile(data)) {
         logError(ErrorMessages.LOAD_DATA_FAILED, undefined, "UserService");
         return null;
@@ -40,11 +42,15 @@ export class UserService {
       return data;
     } catch (error) {
       const apiError = error as ApiError;
-      logError(ErrorMessages.LOAD_PROFILE_FAILED, {
-        message: apiError.message,
-        status: apiError.status,
-        originalError: apiError.originalError,
-      }, "UserService");
+      logError(
+        ErrorMessages.LOAD_PROFILE_FAILED,
+        {
+          message: apiError.message,
+          status: apiError.status,
+          originalError: apiError.originalError,
+        },
+        "UserService",
+      );
       throw error;
     }
   }
@@ -56,7 +62,7 @@ export class UserService {
    */
   private isValidProfile(data: unknown): data is UserProfile {
     if (!data || typeof data !== "object") return false;
-    
+
     const profile = data as Partial<UserProfile>;
     return (
       typeof profile.name === "string" &&
@@ -76,4 +82,3 @@ export class UserService {
     );
   }
 }
-
