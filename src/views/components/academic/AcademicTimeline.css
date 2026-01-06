@@ -1,6 +1,7 @@
 /**
- * AcademicTimeline Component Styles
- * Luxury timeline visualization
+ * AcademicTimeline Component Styles - LUXURY REDESIGN
+ * Premium timeline visualization for academic achievements
+ * Complete redesign for luxury appearance
  */
 
 .academic-timeline {
@@ -12,6 +13,7 @@
   padding: 2rem 0;
 }
 
+/* ─── Premium Timeline Line ─── */
 .academic-timeline-line {
   position: absolute;
   top: 0;
@@ -21,27 +23,57 @@
   height: 100%;
   background: linear-gradient(
     180deg,
-    var(--accent) 0%,
-    var(--accent-alt) 50%,
-    var(--accent-secondary) 100%
+    rgba(102, 126, 234, 0.3) 0%,
+    rgba(102, 126, 234, 0.5) 20%,
+    rgba(118, 75, 162, 0.6) 50%,
+    rgba(118, 75, 162, 0.5) 80%,
+    rgba(240, 147, 251, 0.3) 100%
   );
   border-radius: 2px;
   opacity: 0;
-  transition: opacity var(--transition-smooth);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  box-shadow: 
+    0 0 20px rgba(102, 126, 234, 0.2),
+    inset 0 0 10px rgba(102, 126, 234, 0.1);
 }
 
+/* Animated gradient overlay */
 .academic-timeline-line::before {
   content: "";
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(102, 126, 234, 0.6);
+  box-shadow: 
+    0 0 20px rgba(102, 126, 234, 0.6),
+    0 0 40px rgba(102, 126, 234, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
+  animation: academic-timeline-start-pulse 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes academic-timeline-start-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    box-shadow: 
+      0 0 20px rgba(102, 126, 234, 0.6),
+      0 0 40px rgba(102, 126, 234, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 
+      0 0 30px rgba(102, 126, 234, 0.8),
+      0 0 60px rgba(102, 126, 234, 0.6),
+      inset 0 0 15px rgba(255, 255, 255, 0.4);
+  }
 }
 
 .academic-timeline-line::after {
@@ -50,85 +82,64 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
-  background: var(--accent-secondary);
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #f093fb 0%, #764ba2 100%);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(240, 147, 251, 0.6);
+  box-shadow: 
+    0 0 20px rgba(240, 147, 251, 0.6),
+    0 0 40px rgba(240, 147, 251, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
+  animation: academic-timeline-end-pulse 2s ease-in-out infinite;
+  z-index: 2;
 }
 
+@keyframes academic-timeline-end-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    box-shadow: 
+      0 0 20px rgba(240, 147, 251, 0.6),
+      0 0 40px rgba(240, 147, 251, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 
+      0 0 30px rgba(240, 147, 251, 0.8),
+      0 0 60px rgba(240, 147, 251, 0.6),
+      inset 0 0 15px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* ─── Progress Indicator ─── */
 .academic-timeline-line-progress {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 0%;
-  background: var(--accent-gradient);
+  background: linear-gradient(
+    180deg,
+    #667eea 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
   border-radius: 2px;
-  transition: height var(--transition-smooth);
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+  transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 0 20px rgba(102, 126, 234, 0.5),
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  z-index: 1;
 }
 
 .academic-timeline-visible {
   opacity: 1;
-  animation: academic-timeline-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: academic-timeline-fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.academic-timeline-dots {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
-  gap: var(--academic-spacing-xl);
-  align-items: center;
-  z-index: 2;
-  padding: var(--academic-spacing-lg) 0;
-}
-
-/* Position each dot at the center of its corresponding card */
-.academic-timeline-dot {
-  position: relative;
-  width: 12px;
-  height: 12px;
-  background: var(--bg-card);
-  border: 3px solid var(--border-light);
-  border-radius: 50%;
-  opacity: 0;
-  transform: scale(0);
-  transition: all var(--transition-smooth);
-  box-shadow: var(--shadow-sm);
-  justify-self: center;
-  align-self: center;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.academic-timeline-dot-active {
-  border-color: var(--accent);
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(102, 126, 234, 0.5);
-}
-
-.academic-timeline-dot-current {
-  transform: scale(1.3);
-  border-color: var(--accent-hover);
-  background: var(--accent-hover);
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
-  animation: academic-timeline-dot-pulse 2s ease-in-out infinite;
-}
-
-.academic-timeline-dot-visible {
-  opacity: 1;
-  transform: scale(1);
-  animation: academic-timeline-dot-enter 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-}
-
-/* Animations */
 @keyframes academic-timeline-fade-in {
   from {
     opacity: 0;
@@ -140,13 +151,103 @@
   }
 }
 
+/* ─── Timeline Dots Container ─── */
+.academic-timeline-dots {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: var(--academic-spacing-xl, 3rem);
+  align-items: center;
+  z-index: 2;
+  padding: var(--academic-spacing-lg, 2rem) 0;
+}
+
+/* ─── Premium Timeline Dots ─── */
+.academic-timeline-dot {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 252, 255, 0.95) 100%);
+  border: 3px solid rgba(220, 227, 234, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  justify-self: center;
+  align-self: center;
+  z-index: 3;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Active dot state */
+.academic-timeline-dot-active {
+  border-color: rgba(102, 126, 234, 0.6);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+  box-shadow: 
+    0 6px 20px rgba(102, 126, 234, 0.4),
+    0 3px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: scale(1.1);
+}
+
+/* Current dot state */
+.academic-timeline-dot-current {
+  transform: scale(1.4);
+  border-color: rgba(102, 126, 234, 0.8);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 
+    0 8px 30px rgba(102, 126, 234, 0.6),
+    0 4px 15px rgba(0, 0, 0, 0.15),
+    0 0 0 3px rgba(102, 126, 234, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  animation: academic-timeline-dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes academic-timeline-dot-pulse {
+  0%, 100% {
+    transform: scale(1.4);
+    box-shadow: 
+      0 8px 30px rgba(102, 126, 234, 0.6),
+      0 4px 15px rgba(0, 0, 0, 0.15),
+      0 0 0 3px rgba(102, 126, 234, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    transform: scale(1.6);
+    box-shadow: 
+      0 12px 40px rgba(102, 126, 234, 0.8),
+      0 6px 20px rgba(0, 0, 0, 0.2),
+      0 0 0 4px rgba(102, 126, 234, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Visible dot state */
+.academic-timeline-dot-visible {
+  opacity: 1;
+  transform: scale(1);
+  animation: academic-timeline-dot-enter 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
 @keyframes academic-timeline-dot-enter {
   0% {
     opacity: 0;
     transform: scale(0) rotate(0deg);
   }
   50% {
-    transform: scale(1.2) rotate(180deg);
+    transform: scale(1.3) rotate(180deg);
   }
   100% {
     opacity: 1;
@@ -154,31 +255,65 @@
   }
 }
 
-@keyframes academic-timeline-dot-pulse {
+/* ─── Inner Glow for Active Dots ─── */
+.academic-timeline-dot-active::before,
+.academic-timeline-dot-current::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.academic-timeline-dot-current::before {
+  opacity: 1;
+  animation: academic-timeline-dot-glow 2s ease-in-out infinite;
+}
+
+@keyframes academic-timeline-dot-glow {
   0%, 100% {
-    transform: scale(1.3);
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    transform: scale(1.5);
-    box-shadow: 0 0 30px rgba(124, 58, 237, 0.8);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.3);
   }
 }
 
-/* Responsive Design - Tablet */
+/* ============================================
+   Responsive Design
+   ============================================ */
 @media screen and (max-width: 992px) {
   .academic-timeline-line {
     width: 3px;
   }
 
+  .academic-timeline-line::before,
+  .academic-timeline-line::after {
+    width: 8px;
+    height: 8px;
+  }
+
   .academic-timeline-dot {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     border-width: 2.5px;
+  }
+
+  .academic-timeline-dot-current {
+    transform: scale(1.3);
   }
 }
 
-/* Responsive Design - Mobile */
 @media screen and (max-width: 768px) {
   .academic-timeline {
     padding: 1.5rem 0;
@@ -188,18 +323,55 @@
     width: 2.5px;
   }
 
+  .academic-timeline-line::before,
+  .academic-timeline-line::after {
+    width: 7px;
+    height: 7px;
+  }
+
   .academic-timeline-dot {
-    width: 9px;
-    height: 9px;
+    width: 12px;
+    height: 12px;
     border-width: 2px;
+  }
+
+  .academic-timeline-dot-current {
+    transform: scale(1.3);
   }
 }
 
-/* Reduced Motion */
+@media screen and (max-width: 480px) {
+  .academic-timeline-line {
+    width: 2px;
+  }
+
+  .academic-timeline-line::before,
+  .academic-timeline-line::after {
+    width: 6px;
+    height: 6px;
+  }
+
+  .academic-timeline-dot {
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+  }
+
+  .academic-timeline-dot-current {
+    transform: scale(1.25);
+  }
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .academic-timeline-line,
   .academic-timeline-line-progress,
-  .academic-timeline-dot {
+  .academic-timeline-dot,
+  .academic-timeline-line::before,
+  .academic-timeline-line::after,
+  .academic-timeline-dot-current::before {
     animation: none;
     transition: none;
   }
@@ -212,5 +384,8 @@
     opacity: 1;
     transform: scale(1);
   }
-}
 
+  .academic-timeline-dot-current {
+    transform: scale(1.2);
+  }
+}

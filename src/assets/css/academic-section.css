@@ -1,5 +1,7 @@
 /**
- * Academic Section - Professional, Code-Based Architecture
+ * Academic Section - LUXURY REDESIGN
+ * Premium, Modern, Professional Section Design
+ * Complete redesign for luxury appearance
  * 
  * Architecture Principles:
  * - DRY: Uses CSS constants and variables from core system
@@ -9,16 +11,12 @@
  * - Reusable: Uses core components and utilities
  * 
  * Features:
- * - Glassmorphism & Advanced Visual Effects
- * - 3D Transforms & Parallax Effects
- * - Advanced Animations & Micro-interactions
- * - Modern Grid Layouts
+ * - Luxury Glassmorphism & Advanced Visual Effects
+ * - Premium Animations & Micro-interactions
+ * - Modern Timeline Layout
  * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
  * - Performance Optimized
  * - Component-Based Architecture
- * 
- * Usage:
- * @import '@/assets/css/academic-section.css';
  */
 
 /* Import core system for constants and variables */
@@ -54,45 +52,26 @@
   --academic-transition-bounce: var(--transition-bounce);
 }
 
+/* ─── Global Reset ─── */
+#academic-section * {
+  box-sizing: border-box;
+}
+
 /* ============================================
-   Main Section Container - Uses Section Component
+   Main Section Container - REMOVED (not needed, Card component handles styling)
    ============================================ */
-.academic-section-container {
-  /* Extends .section component */
-  position: relative;
-  width: 100%;
-  padding: var(--academic-spacing-xxl) 0;
-  font-family: var(--font-main);
-  animation: academic-section-fade-in-advanced var(--duration-base) var(--easing-smooth) forwards;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
-  background-attachment: fixed;
-}
 
-.academic-section-content {
-  /* Extends .section__container component */
-  position: relative;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--academic-spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--academic-spacing-lg);
-  z-index: var(--z-base);
-}
-
-/* Advanced Grid Layout - Uses Grid Component */
+/* ============================================
+   Advanced Grid Layout
+   ============================================ */
 .academic-items-grid {
-  /* Extends .grid component */
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--academic-spacing-lg);
+  gap: var(--academic-spacing-xl, 3rem);
   width: 100%;
   position: relative;
   z-index: calc(var(--z-base) + 1);
-  padding: var(--academic-spacing-md) 0;
+  padding: var(--academic-spacing-lg, 2rem) 0;
   --academic-item-count: 1; /* Will be set dynamically via inline style */
 }
 
@@ -110,9 +89,8 @@
 }
 
 /* Position timeline dots to align with card centers */
-/* The dots grid matches the card grid structure */
 .academic-items-grid .academic-timeline-dots {
-  /* Grid structure matches cards - dots align naturally */
+  display: contents;
 }
 
 .academic-item-wrapper {
@@ -120,8 +98,8 @@
   width: 100%;
   transform-style: preserve-3d;
   perspective: 1000px;
+  z-index: 2;
 }
-
 
 /* Staggered animation delays */
 .academic-item-wrapper:nth-child(1) { animation-delay: 0ms; }
@@ -139,12 +117,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--academic-spacing-xl) var(--academic-spacing-lg);
+  padding: var(--academic-spacing-xl, 3rem) var(--academic-spacing-lg, 2rem);
   text-align: center;
-  color: var(--academic-color-text-muted);
+  color: var(--color-text-subtle);
   min-height: 300px;
   position: relative;
   overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(250, 252, 255, 0.9) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.05),
+    0 4px 12px rgba(102, 126, 234, 0.08);
 }
 
 .academic-empty-state::before {
@@ -154,11 +144,12 @@
   background: 
     radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
   animation: academic-empty-pulse 3s ease-in-out infinite;
+  border-radius: 24px;
 }
 
 .academic-empty-icon {
   font-size: 5rem;
-  margin-bottom: var(--academic-spacing-lg);
+  margin-bottom: var(--academic-spacing-lg, 2rem);
   opacity: 0.7;
   animation: academic-empty-icon-float 3s ease-in-out infinite;
   filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.2));
@@ -169,16 +160,16 @@
 .academic-empty-text {
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   margin: 0;
-  color: var(--text-subtle);
+  color: var(--color-text-subtle);
   position: relative;
   z-index: 1;
   font-weight: 500;
 }
 
 /* ============================================
-   Advanced Animations - Uses Core Animation System
+   Advanced Animations
    ============================================ */
-@keyframes academic-section-fade-in-advanced {
+@keyframes academic-section-fade-in {
   0% {
     opacity: 0;
     transform: translateY(30px);
@@ -215,60 +206,34 @@
 }
 
 /* ============================================
-   Responsive Design - Uses Core Breakpoints
+   Responsive Design
    ============================================ */
 @media screen and (min-width: 1400px) {
-  .academic-section-content {
-    max-width: 1600px;
-    padding: 0 var(--academic-spacing-xl);
-  }
-
   .academic-items-grid {
-    gap: var(--academic-spacing-xl);
-    padding: var(--academic-spacing-lg) 0;
+    gap: var(--academic-spacing-xl, 3rem);
+    padding: var(--academic-spacing-lg, 2rem) 0;
   }
 }
 
 @media screen and (max-width: 1200px) {
-  .academic-section-content {
-    padding: 0 var(--academic-spacing-lg);
-  }
+  /* Container removed - Card component handles styling */
 }
 
 @media screen and (max-width: 992px) {
-  .academic-section-container {
-    padding: var(--academic-spacing-xl) 0;
-  }
-
-  .academic-section-content {
-    padding: 0 var(--academic-spacing-md);
-    gap: var(--academic-spacing-lg);
-  }
-
   .academic-items-grid {
-    gap: var(--academic-spacing-lg);
-    padding: var(--academic-spacing-md) 0;
+    gap: var(--academic-spacing-lg, 2rem);
+    padding: var(--academic-spacing-md, 1.5rem) 0;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .academic-section-container {
-    padding: var(--academic-spacing-lg) 0;
-    background-attachment: scroll;
-  }
-
-  .academic-section-content {
-    padding: 0 var(--academic-spacing-sm);
-    gap: var(--academic-spacing-md);
-  }
-
   .academic-items-grid {
-    gap: var(--academic-spacing-md);
-    padding: var(--academic-spacing-sm) 0;
+    gap: var(--academic-spacing-md, 1.5rem);
+    padding: var(--academic-spacing-sm, 1rem) 0;
   }
 
   .academic-empty-state {
-    padding: var(--academic-spacing-md) var(--academic-spacing-sm);
+    padding: var(--academic-spacing-md, 1.5rem) var(--academic-spacing-sm, 1rem);
     min-height: 200px;
   }
 
@@ -278,30 +243,15 @@
 }
 
 @media screen and (max-width: 480px) {
-  .academic-section-container {
-    padding: var(--academic-spacing-md) 0;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  .academic-section-content {
-    padding: 0 var(--academic-spacing-xs);
-    gap: var(--academic-spacing-sm);
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
   .academic-items-grid {
-    gap: var(--academic-spacing-sm);
-    padding: var(--academic-spacing-xs) 0;
+    gap: var(--academic-spacing-sm, 1rem);
+    padding: var(--academic-spacing-xs, 0.75rem) 0;
     width: 100%;
     max-width: 100%;
   }
 
   .academic-empty-state {
-    padding: var(--academic-spacing-lg) var(--academic-spacing-md);
+    padding: var(--academic-spacing-lg, 2rem) var(--academic-spacing-md, 1.5rem);
     min-height: 250px;
     width: 100%;
     max-width: 100%;
@@ -314,16 +264,8 @@
 }
 
 @media screen and (max-width: 360px) {
-  .academic-section-container {
-    padding: var(--academic-spacing-sm) 0;
-  }
-
-  .academic-section-content {
-    padding: 0 var(--academic-spacing-xs);
-  }
-
   .academic-empty-state {
-    padding: var(--academic-spacing-md) var(--academic-spacing-sm);
+    padding: var(--academic-spacing-md, 1.5rem) var(--academic-spacing-sm, 1rem);
     min-height: 200px;
   }
 
@@ -336,16 +278,8 @@
    Landscape Orientation - Mobile/Tablet
    ============================================ */
 @media screen and (orientation: landscape) and (max-width: 768px) {
-  .academic-section-container {
-    padding: var(--academic-spacing-lg) 0;
-  }
-
-  .academic-section-content {
-    padding: 0 var(--academic-spacing-md);
-  }
-
   .academic-items-grid {
-    gap: var(--academic-spacing-md);
+    gap: var(--academic-spacing-md, 1.5rem);
   }
 }
 
@@ -353,28 +287,18 @@
    High DPI / Retina Displays
    ============================================ */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .academic-section-container {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  /* Container removed - Card component handles styling */
 }
 
 /* ============================================
-   Reduced Motion (Accessibility) - Uses Core System
+   Reduced Motion (Accessibility)
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .academic-section-container,
   .academic-item-wrapper,
   .academic-empty-icon,
   .academic-empty-state::before {
     animation: none !important;
     transition: none !important;
-  }
-
-  .academic-section-container {
-    opacity: 1;
-    transform: none;
-    filter: none;
   }
 }
 
@@ -382,11 +306,6 @@
    Print Styles
    ============================================ */
 @media print {
-  .academic-section-container {
-    padding: 0;
-    background: none;
-  }
-
   .academic-items-grid {
     gap: 1rem;
   }

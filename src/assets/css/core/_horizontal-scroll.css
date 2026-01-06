@@ -1,0 +1,311 @@
+/**
+ * Horizontal Scroll Indicators - Utility CSS
+ * Professional visual indicators for horizontal scrollable containers
+ * 
+ * Features:
+ * - Fade gradients at edges
+ * - Scroll arrows/hints
+ * - Enhanced scrollbar styling
+ * - Scroll indicators with text
+ * - Shadow effects
+ * 
+ * Usage:
+ * Add class "horizontal-scroll-container" to any container with overflow-x: auto
+ */
+
+/* ─── Horizontal Scroll Container Base ─── */
+.horizontal-scroll-container {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-primary, #667eea) rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ─── Enhanced Scrollbar Styling ─── */
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-track {
+  background: var(--color-black-alpha-05);
+  border-radius: 4px;
+  margin: 0 1rem;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-primary, #667eea) 0%,
+    var(--color-accent-alt, #764ba2) 100%
+  );
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px var(--color-accent-alpha-30);
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-alt, #764ba2) 0%,
+    var(--color-accent-secondary, #f093fb) 100%
+  );
+  box-shadow: 0 4px 8px var(--color-accent-glow);
+  transform: scaleY(1.2);
+}
+
+/* ─── Fade Gradients at Edges ─── */
+.horizontal-scroll-container::before,
+.horizontal-scroll-container::after {
+  content: "";
+  position: sticky;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.horizontal-scroll-container::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-card, rgba(255, 255, 255, 0.98)) 0%,
+    transparent 100%
+  );
+  border-radius: 0;
+}
+
+.horizontal-scroll-container::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--color-bg-card, rgba(255, 255, 255, 0.98)) 0%,
+    transparent 100%
+  );
+  border-radius: 0;
+}
+
+/* Hide gradients when scrolled to edges */
+.horizontal-scroll-container.scrolled-to-start::before,
+.horizontal-scroll-container.scrolled-to-end::after {
+  opacity: 0;
+}
+
+/* ─── Scroll Indicator Arrows ─── */
+.horizontal-scroll-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.9) 0%,
+    rgba(118, 75, 162, 0.9) 100%
+  );
+  border-radius: 50%;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-shadow: 
+    0 4px 12px rgba(102, 126, 234, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.horizontal-scroll-indicator-left {
+  left: 1rem;
+}
+
+.horizontal-scroll-indicator-right {
+  right: 1rem;
+}
+
+.horizontal-scroll-container:hover .horizontal-scroll-indicator {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.horizontal-scroll-indicator:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 
+    0 6px 16px rgba(102, 126, 234, 0.5),
+    0 3px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 1) 0%,
+    rgba(118, 75, 162, 1) 100%
+  );
+}
+
+.horizontal-scroll-indicator:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Hide indicators when scrolled to edges */
+.horizontal-scroll-container.scrolled-to-start .horizontal-scroll-indicator-left,
+.horizontal-scroll-container.scrolled-to-end .horizontal-scroll-indicator-right {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── Scroll Hint Text ─── */
+.horizontal-scroll-hint {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-subtle, #5c6b7a);
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.horizontal-scroll-hint::before {
+  content: "←";
+  font-size: 1rem;
+  animation: scrollHintLeft 1.5s ease-in-out infinite;
+}
+
+.horizontal-scroll-hint::after {
+  content: "→";
+  font-size: 1rem;
+  animation: scrollHintRight 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollHintLeft {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(-8px);
+    opacity: 1;
+  }
+}
+
+@keyframes scrollHintRight {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
+}
+
+.horizontal-scroll-container:hover .horizontal-scroll-hint {
+  opacity: 0;
+}
+
+/* ─── Scroll Progress Indicator ─── */
+.horizontal-scroll-progress {
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-primary, #667eea) 0%,
+    var(--color-accent-alt, #764ba2) 100%
+  );
+  border-radius: 2px;
+  transition: width 0.1s ease;
+  z-index: 5;
+  box-shadow: 0 2px 4px var(--color-accent-alpha-30);
+}
+
+/* ─── Responsive Design ─── */
+@media screen and (width <= 768px) {
+  .horizontal-scroll-container::before,
+  .horizontal-scroll-container::after {
+    width: 40px;
+  }
+
+  .horizontal-scroll-indicator {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .horizontal-scroll-indicator-left {
+    left: 0.75rem;
+  }
+
+  .horizontal-scroll-indicator-right {
+    right: 0.75rem;
+  }
+
+  .horizontal-scroll-hint {
+    font-size: 0.7rem;
+    bottom: -1.75rem;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .horizontal-scroll-container::before,
+  .horizontal-scroll-container::after {
+    width: 30px;
+  }
+
+  .horizontal-scroll-indicator {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .horizontal-scroll-indicator-left {
+    left: 0.5rem;
+  }
+
+  .horizontal-scroll-indicator-right {
+    right: 0.5rem;
+  }
+
+  .horizontal-scroll-hint {
+    font-size: 0.65rem;
+    bottom: -1.5rem;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-scroll-indicator,
+  .horizontal-scroll-hint,
+  .horizontal-scroll-progress {
+    transition: none;
+    animation: none;
+  }
+
+  .horizontal-scroll-hint::before,
+  .horizontal-scroll-hint::after {
+    animation: none;
+  }
+}
+

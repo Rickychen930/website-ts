@@ -262,13 +262,11 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
     const itemsToRender = safeSlice(processedData, this.MAX_ITEMS_TO_RENDER);
 
     return (
-      <div className="contact-section-wrapper">
-        <ContactGrid
-          contacts={itemsToRender}
-          onContactClick={this.handleContactClick}
-          onCopyClick={this.handleCopyClick}
-        />
-      </div>
+      <ContactGrid
+        contacts={itemsToRender}
+        onContactClick={this.handleContactClick}
+        onCopyClick={this.handleCopyClick}
+      />
     );
   }
 
@@ -299,12 +297,10 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
 
     return (
       <Card id="contact-section" title="Contact">
-        <div className="contact-section-content">
-          {this.renderContactGrid()}
-          <div className="contact-form-wrapper">
-            <h3 className="contact-form-title">Send me a message</h3>
-            <ContactForm />
-          </div>
+        {this.renderContactGrid()}
+        <div className="contact-form-wrapper">
+          <h3 className="contact-form-title">Send me a message</h3>
+          <ContactForm />
         </div>
       </Card>
     );

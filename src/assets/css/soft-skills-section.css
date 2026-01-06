@@ -77,7 +77,7 @@
   justify-content: center;
   padding: var(--soft-skills-spacing-xxl, 3rem) var(--soft-skills-spacing-lg, 2rem);
   text-align: center;
-  color: var(--soft-skills-color-text-secondary, #5c6b7a);
+  color: var(--color-text-secondary);
   font-family: var(--soft-skills-font-main);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
 }
@@ -92,7 +92,7 @@
 }
 
 .soft-skills-error-text {
-  color: var(--soft-skills-color-text-muted, #3b4a59);
+  color: var(--color-text-muted);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
   font-family: var(--soft-skills-font-main);
   margin: 0;
@@ -117,14 +117,14 @@
 }
 
 #soft-skills-section .soft-skills-empty-text {
-  color: var(--soft-skills-color-text-secondary, #5c6b7a);
+  color: var(--color-text-secondary);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
   font-family: var(--soft-skills-font-main);
   margin: 0;
   font-weight: 400;
 }
 
-/* ─── Responsive Design - Large Screens ─── */
+/* ─── Responsive Design - Large Desktop (1400px+) ─── */
 @media screen and (min-width: 1400px) {
   #soft-skills-section {
     --soft-skills-spacing-xl: 3rem;
@@ -132,23 +132,52 @@
   }
 }
 
-/* ─── Responsive Design - Tablet ─── */
-@media screen and (max-width: 992px) {
+/* ─── Responsive Design - Desktop (1200px - 1399px) ─── */
+@media screen and (max-width: 1399px) and (min-width: 1200px) {
   #soft-skills-section {
-    --soft-skills-spacing-lg: 1.75rem;
-    --soft-skills-spacing-xl: 2rem;
+    --soft-skills-spacing-lg: 2rem;
+    --soft-skills-spacing-xl: 2.5rem;
+    --soft-skills-spacing-xxl: 3.5rem;
   }
 }
 
-/* ─── Responsive Design - Mobile ─── */
-@media screen and (max-width: 768px) {
+/* ─── Responsive Design - Large Tablets (992px - 1199px) ─── */
+@media screen and (max-width: 1199px) and (min-width: 992px) {
   #soft-skills-section {
-    --soft-skills-spacing-md: 1.25rem;
-    --soft-skills-spacing-lg: 1.5rem;
+    --soft-skills-spacing-lg: 1.75rem;
+    --soft-skills-spacing-xl: 2rem;
+    --soft-skills-spacing-xxl: 3rem;
+  }
+}
+
+/* ─── Responsive Design - Tablets (768px - 991px) ─── */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  #soft-skills-section {
+    --soft-skills-spacing-md: 1.5rem;
+    --soft-skills-spacing-lg: 1.75rem;
+    --soft-skills-spacing-xl: 2rem;
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-xl, 2.5rem) var(--soft-skills-spacing-md, 1.25rem);
+    padding: var(--soft-skills-spacing-xl, 2rem) var(--soft-skills-spacing-md, 1.5rem);
+  }
+
+  #soft-skills-section .soft-skills-empty-icon {
+    font-size: 3.75rem;
+    margin-bottom: var(--soft-skills-spacing-md, 1.5rem);
+  }
+}
+
+/* ─── Responsive Design - Small Tablets (600px - 767px) ─── */
+@media screen and (max-width: 767px) and (min-width: 600px) {
+  #soft-skills-section {
+    --soft-skills-spacing-md: 1.25rem;
+    --soft-skills-spacing-lg: 1.5rem;
+    --soft-skills-spacing-xl: 1.75rem;
+  }
+
+  #soft-skills-section .soft-skills-empty {
+    padding: var(--soft-skills-spacing-xl, 1.75rem) var(--soft-skills-spacing-md, 1.25rem);
   }
 
   #soft-skills-section .soft-skills-empty-icon {
@@ -157,13 +186,81 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+/* ─── Responsive Design - Mobile (480px - 599px) ─── */
+@media screen and (max-width: 599px) and (min-width: 480px) {
+  #soft-skills-section {
+    --soft-skills-spacing-md: 1.25rem;
+    --soft-skills-spacing-lg: 1.5rem;
+  }
+
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 2rem) var(--soft-skills-spacing-sm, 1rem);
+    padding: var(--soft-skills-spacing-lg, 1.5rem) var(--soft-skills-spacing-sm, 1rem);
   }
 
   #soft-skills-section .soft-skills-empty-icon {
     font-size: 3rem;
+    margin-bottom: var(--soft-skills-spacing-sm, 1rem);
+  }
+}
+
+/* ─── Responsive Design - Small Mobile (≤ 479px) ─── */
+@media screen and (max-width: 479px) {
+  #soft-skills-section {
+    --soft-skills-spacing-sm: 0.875rem;
+    --soft-skills-spacing-md: 1rem;
+    --soft-skills-spacing-lg: 1.25rem;
+    --soft-skills-spacing-xl: 1.5rem;
+  }
+
+  #soft-skills-section .soft-skills-empty {
+    padding: var(--soft-skills-spacing-lg, 1.25rem) var(--soft-skills-spacing-sm, 0.875rem);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  #soft-skills-section .soft-skills-empty-icon {
+    font-size: 2.75rem;
+    margin-bottom: var(--soft-skills-spacing-xs, 0.5rem);
+  }
+
+  #soft-skills-section .soft-skills-empty-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* ─── Responsive Design - Extra Small Mobile (≤ 360px) ─── */
+@media screen and (max-width: 360px) {
+  #soft-skills-section {
+    --soft-skills-spacing-xs: 0.5rem;
+    --soft-skills-spacing-sm: 0.75rem;
+    --soft-skills-spacing-md: 1rem;
+    --soft-skills-spacing-lg: 1.25rem;
+  }
+
+  #soft-skills-section .soft-skills-empty {
+    padding: var(--soft-skills-spacing-lg, 1.25rem) var(--soft-skills-spacing-xs, 0.5rem);
+  }
+
+  #soft-skills-section .soft-skills-empty-icon {
+    font-size: 2.5rem;
+  }
+
+  #soft-skills-section .soft-skills-empty-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ─── Landscape Orientation - Mobile/Tablet ─── */
+@media screen and (orientation: landscape) and (max-width: 991px) {
+  #soft-skills-section {
+    --soft-skills-spacing-md: 1.25rem;
+    --soft-skills-spacing-lg: 1.5rem;
+  }
+
+  #soft-skills-section .soft-skills-empty {
+    padding: var(--soft-skills-spacing-lg, 1.5rem) var(--soft-skills-spacing-md, 1.25rem);
+    min-height: 200px;
   }
 }
 

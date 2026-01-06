@@ -56,35 +56,64 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
   }
 
   private setupObserver = (): void => {
+    // Edge case: Check if running in browser environment
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      this.setState({ shouldRender: true, isVisible: true, isLoaded: true });
+      return;
+    }
+
     if (typeof IntersectionObserver === "undefined") {
       // Fallback: load immediately if IntersectionObserver not supported
       this.setState({ shouldRender: true, isVisible: true, isLoaded: true });
       return;
     }
 
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: this.getRootMargin(),
-      threshold: 0.1,
-    };
+    try {
+      const options: IntersectionObserverInit = {
+        root: null,
+        rootMargin: this.getRootMargin(),
+        threshold: 0.1,
+      };
 
-    this.observer = new IntersectionObserver(this.handleIntersection, options);
+      this.observer = new IntersectionObserver(this.handleIntersection, options);
 
-    // Observe section element
-    if (this.sectionRef.current) {
-      this.observer.observe(this.sectionRef.current);
-    } else {
-      // If ref not ready, observe after a short delay
-      const timeoutId = setTimeout(() => {
-        if (this.isMounted && this.sectionRef.current && this.observer) {
-          this.observer.observe(this.sectionRef.current);
+      // Observe section element
+      if (this.sectionRef.current) {
+        this.observer.observe(this.sectionRef.current);
+      } else {
+        // If ref not ready, observe after a short delay
+        // Edge case: Use requestAnimationFrame for better performance
+        const setupObserver = () => {
+          if (this.isMounted && this.sectionRef.current && this.observer) {
+            this.observer.observe(this.sectionRef.current);
+          } else if (this.isMounted) {
+            // Retry with timeout as fallback
+            const timeoutId = setTimeout(() => {
+              if (this.isMounted && this.sectionRef.current && this.observer) {
+                this.observer.observe(this.sectionRef.current);
+              }
+            }, 100);
+            
+            if (!this.loadTimeout) {
+              this.loadTimeout = timeoutId;
+            }
+          }
+        };
+
+        if (typeof requestAnimationFrame !== "undefined") {
+          requestAnimationFrame(setupObserver);
+        } else {
+          setTimeout(setupObserver, 16); // ~60fps fallback
         }
-      }, 100);
-      
-      // Store timeout for cleanup if needed
-      if (!this.loadTimeout) {
-        this.loadTimeout = timeoutId;
       }
+    } catch (error) {
+      // Edge case: Handle observer creation errors
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require('../../utils/logger');
+        logError("Error setting up IntersectionObserver", error, "LazySection");
+      }
+      // Fallback: load immediately on error
+      this.setState({ shouldRender: true, isVisible: true, isLoaded: true });
     }
   };
 
@@ -152,9 +181,25 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
   private getSectionData = (): unknown => {
     const { config, profile } = this.props;
     const { dataKey } = config;
+    
+    // Edge case: Handle missing profile or config
+    if (!profile || !config || !dataKey) {
+      return null;
+    }
+    
     const data = profile[dataKey];
     
-    if (!data || (Array.isArray(data) && data.length === 0)) {
+    // Edge case: Handle null, undefined, or empty arrays
+    if (data === null || data === undefined) {
+      return null;
+    }
+    
+    if (Array.isArray(data) && data.length === 0) {
+      return null;
+    }
+    
+    // Edge case: Handle empty objects
+    if (typeof data === 'object' && Object.keys(data).length === 0 && dataKey !== "name") {
       return null;
     }
     
@@ -189,8 +234,33 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
     const { component: SectionComponent } = config;
     const sectionData = this.getSectionData();
 
-    if (!SectionComponent || !sectionData) {
+    // Edge case: Handle missing component
+    if (!SectionComponent) {
+      if (process.env.NODE_ENV === "development") {
+        const { logWarn } = require('../../utils/logger');
+        logWarn(`Section component missing for ${config.id}`, undefined, "LazySection");
+      }
       return null;
+    }
+
+    // Edge case: Handle missing data - show empty state instead of null
+    if (!sectionData) {
+      return (
+        <section
+          ref={this.sectionRef as React.RefObject<HTMLElement>}
+          id={config.id}
+          className={`section-block lazy-section ${this.state.isVisible ? "visible" : ""}`}
+          aria-label={config.title || "Content section"}
+          data-section-id={config.id}
+        >
+          {/* Title removed - Card component already renders title */}
+          <div className="section-content" role="region">
+            <div className="section-empty-state" role="status" aria-live="polite">
+              <p>No data available for this section.</p>
+            </div>
+          </div>
+        </section>
+      );
     }
 
     try {
@@ -202,23 +272,36 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
           aria-label={config.title || "Content section"}
           data-section-id={config.id}
         >
-          <header className="section-header">
-            <h2 className="section-title" id={`${config.id}-title`}>
-              {config.title}
-            </h2>
-            <div className="section-title-underline" aria-hidden="true"></div>
-          </header>
-          <div className="section-content" role="region" aria-labelledby={`${config.id}-title`}>
+          {/* Title removed - Card component already renders title */}
+          <div className="section-content" role="region">
             <SectionComponent data={sectionData} />
           </div>
         </section>
       );
     } catch (error) {
+      // Edge case: Better error handling with user-friendly message
       if (process.env.NODE_ENV === "development") {
         const { logError } = require('../../utils/logger');
         logError(`Error rendering section ${config.id}`, error, "LazySection");
       }
-      return null;
+      
+      // Return error state instead of null for better UX
+      return (
+        <section
+          ref={this.sectionRef as React.RefObject<HTMLElement>}
+          id={config.id}
+          className={`section-block lazy-section error`}
+          aria-label={config.title || "Content section"}
+          data-section-id={config.id}
+        >
+          {/* Title removed - Card component already renders title */}
+          <div className="section-content" role="region">
+            <div className="section-error-state" role="alert">
+              <p>Unable to load this section. Please refresh the page.</p>
+            </div>
+          </div>
+        </section>
+      );
     }
   };
 

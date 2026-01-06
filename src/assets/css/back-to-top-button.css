@@ -48,7 +48,7 @@
     var(--back-to-top-secondary) 50%,
     var(--back-to-top-tertiary) 100%
   );
-  color: #ffffff;
+  color: var(--color-text-on-accent);
   border: none;
   border-radius: 50%;
   cursor: pointer;

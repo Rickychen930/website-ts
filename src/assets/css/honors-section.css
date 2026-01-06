@@ -1,5 +1,7 @@
 /**
- * Honors Section - Professional, Code-Based Architecture
+ * Honors Section - LUXURY REDESIGN
+ * Premium, Modern, Professional Section Design
+ * Complete redesign for luxury appearance with FIXED SCROLL
  * 
  * Architecture Principles:
  * - DRY: Uses CSS constants and variables from core system
@@ -8,30 +10,32 @@
  * - SOLID: Single Responsibility - section-specific styles only
  * - Reusable: Uses core components and utilities
  * 
- * Features: Glassmorphism, 3D Transforms, Advanced Animations, 
- * Modern Grid Layouts, Particle Effects, Interactive Hover States
- * 
- * Usage:
- * @import '@/assets/css/honors-section.css';
+ * Features:
+ * - Luxury Glassmorphism & Advanced Visual Effects
+ * - Premium Animations & Micro-interactions
+ * - Fixed Horizontal Scroll (Bug Fix)
+ * - Modern Grid Layouts
+ * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
+ * - Performance Optimized
+ * - Component-Based Architecture
  */
 
 /* Import core system for constants and variables */
 @import './core/index.css';
 
 /* ─── Component-Specific Variables (DRY) ─── */
-/* Uses core constants as base */
 :root {
   /* Colors - Uses core color system */
   --honors-primary: var(--color-bg-dark);
   --honors-accent: var(--color-bg-dark-light);
-  --honors-gold: #d4af37;
-  --honors-gold-light: #f4e4bc;
-  --honors-gold-dark: #b8941f;
+  --honors-gold: #f59e0b;
+  --honors-gold-light: #fbbf24;
+  --honors-gold-dark: #d97706;
   
   /* Gradients - Uses core gradients */
-  --honors-gradient-primary: var(--gradient-accent);
-  --honors-gradient-secondary: var(--gradient-accent-full);
-  --honors-gradient-luxury: var(--gradient-accent-full);
+  --honors-gradient-primary: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  --honors-gradient-secondary: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --honors-gradient-luxury: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
   
   /* Shadows - Uses core shadow system */
   --honors-shadow-sm: var(--shadow-sm);
@@ -67,9 +71,9 @@
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 30% 40%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(118, 75, 162, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(240, 147, 251, 0.04) 0%, transparent 50%);
+    radial-gradient(circle at 30% 40%, rgba(251, 191, 36, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 50%);
   animation: honors-background-shift 25s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
@@ -97,6 +101,7 @@
   padding: 0.75rem 0;
   margin: 0;
   width: 100%;
+  max-width: 100%;
   z-index: 1;
   perspective: 2000px;
 }
@@ -145,9 +150,9 @@
   height: 200%;
   background: linear-gradient(
     45deg,
-    rgba(102, 126, 234, 0.03) 0%,
-    rgba(118, 75, 162, 0.03) 50%,
-    rgba(240, 147, 251, 0.03) 100%
+    rgba(251, 191, 36, 0.03) 0%,
+    rgba(245, 158, 11, 0.03) 50%,
+    rgba(217, 119, 6, 0.03) 100%
   );
   background-size: 400% 400%;
   animation: honors-gradient-shift 15s ease infinite;
@@ -168,7 +173,7 @@
 .honors-empty-title {
   font-size: 1.75rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  background: linear-gradient(135deg, var(--color-text-heading) 0%, var(--color-text-muted) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -180,7 +185,7 @@
 
 .honors-empty-text {
   font-size: 1.1rem;
-  color: #718096;
+  color: var(--color-text-light);
   margin: 0;
   max-width: 450px;
   line-height: 1.7;
@@ -222,7 +227,7 @@
 .honors-error-title {
   font-size: 1.75rem;
   font-weight: 800;
-  color: #e53e3e;
+  color: var(--color-error);
   margin: 0 0 1rem 0;
   letter-spacing: -0.8px;
   position: relative;
@@ -231,7 +236,7 @@
 
 .honors-error-message {
   font-size: 1.1rem;
-  color: #718096;
+  color: var(--color-text-light);
   margin: 0;
   max-width: 450px;
   line-height: 1.7;
@@ -270,6 +275,11 @@
   }
 }
 
+/* ============================================
+   RESPONSIVE DESIGN - TABLET & MOBILE
+   WITH HORIZONTAL SCROLL FIX
+   ============================================ */
+
 /* ─── Responsive Design: Large Desktop ─── */
 @media screen and (width > 1400px) {
   .honors-grid {
@@ -294,14 +304,19 @@
   }
 }
 
-/* ─── Responsive Design: Tablets ─── */
+/* ─── Responsive Design: Tablets (768px - 991px) - HORIZONTAL SCROLL ─── */
 @media screen and (width <= 992px) {
-  /* Horizontal scroll for grid on tablet */
+  /* FIXED: Allow horizontal scroll */
   #honors-section {
-    overflow-x: hidden;
+    overflow-x: visible;
+    overflow-y: visible;
     width: 100%;
+    max-width: 100%;
+    position: relative;
+    padding-bottom: 2rem;
   }
 
+  /* Horizontal scroll for grid on tablet */
   .honors-grid {
     display: flex;
     flex-direction: row;
@@ -318,6 +333,7 @@
     padding-right: 1.5rem;
     width: calc(100% + 3rem);
     grid-template-columns: none;
+    position: relative;
   }
 
   .honors-grid > * {
@@ -327,29 +343,107 @@
     scroll-snap-align: start;
   }
 
-  /* Custom scrollbar styling */
+  /* Enhanced scrollbar styling */
   .honors-grid::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
+    background: transparent;
   }
 
   .honors-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin: 0 1rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   .honors-grid::-webkit-scrollbar-thumb {
-    background: var(--honors-gradient-primary);
-    border-radius: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--honors-gold-light, #fbbf24) 0%,
+      var(--honors-gold, #f59e0b) 100%
+    );
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 2px 4px rgba(251, 191, 36, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   .honors-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--honors-gold);
+    background: linear-gradient(
+      90deg,
+      var(--honors-gold, #f59e0b) 0%,
+      var(--honors-gold-light, #fbbf24) 100%
+    );
+    box-shadow: 
+      0 4px 8px rgba(251, 191, 36, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: scaleY(1.2);
   }
 
   /* Firefox scrollbar */
   .honors-grid {
     scrollbar-width: thin;
-    scrollbar-color: var(--honors-gold) rgba(0, 0, 0, 0.05);
+    scrollbar-color: var(--honors-gold, #f59e0b) rgba(0, 0, 0, 0.08);
+  }
+
+  /* Fade gradients at edges */
+  .honors-grid::before {
+    content: "";
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      transparent 100%
+    );
+  }
+
+  #honors-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      transparent 100%
+    );
+  }
+
+  /* Scroll hint indicator */
+  #honors-section::before {
+    content: "← Swipe to see more →";
+    position: absolute;
+    bottom: 0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-subtle, #5c6b7a);
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+  }
+
+  #honors-section:hover::before {
+    opacity: 0.4;
   }
 
   .honors-empty-state,
@@ -377,7 +471,6 @@
 
 /* ─── Responsive Design: Small Tablets ─── */
 @media screen and (width <= 900px) and (width > 768px) {
-  /* Keep horizontal scroll from 992px breakpoint */
   .honors-grid {
     gap: 1.6rem;
   }
@@ -388,25 +481,60 @@
   }
 }
 
-/* ─── Responsive Design: Mobile ─── */
+/* ─── Responsive Design: Mobile (480px - 767px) ─── */
 @media screen and (width <= 768px) {
+  /* FIXED: Allow horizontal scroll */
   #honors-section {
-    overflow-x: hidden;
+    overflow-x: visible;
+    overflow-y: visible;
     width: 100%;
+    max-width: 100%;
+    position: relative;
+    padding-bottom: 2rem;
   }
 
   .honors-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     margin-left: calc(-1 * 1rem);
     margin-right: calc(-1 * 1rem);
     padding-left: 1rem;
     padding-right: 1rem;
     width: calc(100% + 2rem);
     gap: 1.5rem;
+    padding-bottom: 1rem;
   }
 
   .honors-grid > * {
+    flex: 0 0 calc(min(100%, 340px));
     min-width: 300px;
     max-width: 340px;
+    scroll-snap-align: start;
+  }
+
+  /* Scrollbar styling */
+  .honors-grid::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .honors-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin: 0 1rem;
+  }
+
+  .honors-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      90deg,
+      var(--honors-gold-light, #fbbf24) 0%,
+      var(--honors-gold, #f59e0b) 100%
+    );
+    border-radius: 4px;
   }
 
   .honors-empty-state,
@@ -435,13 +563,26 @@
 
 /* ─── Responsive Design: Medium Mobile ─── */
 @media screen and (width <= 640px) and (width > 480px) {
+  #honors-section {
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-bottom: 2rem;
+  }
+
   .honors-grid {
     gap: 1.35rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
   }
 
   .honors-grid > * {
+    flex: 0 0 calc(min(100%, 320px));
     min-width: 280px;
     max-width: 320px;
+    scroll-snap-align: start;
   }
 
   .honors-empty-state,
@@ -451,14 +592,27 @@
   }
 }
 
-/* ─── Responsive Design: Small Mobile ─── */
+/* ─── Responsive Design: Small Mobile (320px - 479px) ─── */
 @media screen and (width <= 480px) {
+  /* FIXED: Allow horizontal scroll */
   #honors-section {
-    overflow-x: hidden;
+    overflow-x: visible;
+    overflow-y: visible;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: 2rem;
   }
 
   .honors-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     margin-left: 0;
     margin-right: 0;
     padding-left: 1rem;
@@ -466,11 +620,14 @@
     width: 100%;
     gap: 1.25rem;
     padding: 0.5rem 0;
+    padding-bottom: 1rem;
   }
 
   .honors-grid > * {
+    flex: 0 0 calc(min(100%, 320px));
     min-width: 280px;
     max-width: 320px;
+    scroll-snap-align: start;
   }
 
   .honors-grid__item {
@@ -510,23 +667,39 @@
 
 /* ─── Responsive Design: Extra Small Mobile ─── */
 @media screen and (width <= 360px) {
+  /* FIXED: Allow horizontal scroll */
   #honors-section {
-    overflow-x: hidden;
+    overflow-x: visible;
+    overflow-y: visible;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: 2rem;
   }
 
   .honors-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     width: 100%;
     gap: 1rem;
+    padding-bottom: 1rem;
   }
 
   .honors-grid > * {
+    flex: 0 0 calc(min(100%, 300px));
     min-width: 260px;
     max-width: 300px;
+    scroll-snap-align: start;
   }
 
   .honors-grid__item {
@@ -563,13 +736,29 @@
 
 /* ─── Responsive Design: Landscape Mobile ─── */
 @media screen and (orientation: landscape) and (width <= 768px) {
+  #honors-section {
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-bottom: 2rem;
+  }
+
   .honors-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     gap: 1.5rem;
+    padding-bottom: 1rem;
   }
 
   .honors-grid > * {
+    flex: 0 0 calc(min(100%, 320px));
     min-width: 280px;
     max-width: 320px;
+    scroll-snap-align: start;
   }
 }
 
@@ -636,13 +825,13 @@
   .honors-empty-state,
   .honors-error-state {
     box-shadow: none;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border-default);
   }
 }
 
 /* ─── Focus Visible (Accessibility) ─── */
 #honors-section:focus-visible {
-  outline: 3px solid #667eea;
+  outline: 3px solid var(--color-accent-primary);
   outline-offset: 2px;
 }
 
@@ -650,6 +839,6 @@
 #honors-section::selection,
 .honors-empty-title::selection,
 .honors-error-title::selection {
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--color-accent-alpha-20);
   color: inherit;
 }

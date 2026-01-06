@@ -1,14 +1,18 @@
 /**
- * WorkExperienceIcon Styles
- * Luxury, Professional Icon Design
+ * WorkExperienceIcon Styles - LUXURY REDESIGN
+ * Premium, Modern Icon Design
+ * Complete redesign for luxury appearance
  */
 
 .work-experience-icon {
-  position: relative;
-  width: 4.5rem;
-  height: 4.5rem;
+  position: absolute;
+  left: -2.5rem;
+  top: 2.5rem;
+  width: 5rem;
+  height: 5rem;
   flex-shrink: 0;
-  z-index: 2;
+  z-index: 3;
+  transform: translateX(-50%);
 }
 
 .work-experience-icon-inner {
@@ -18,17 +22,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  border: 3px solid #ffffff;
-  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 30%,
+    #f093fb 60%,
+    #4facfe 100%
+  );
+  background-size: 200% 200%;
+  border: 4px solid #ffffff;
+  border-radius: 20px;
   box-shadow: 
-    0 8px 24px rgba(102, 126, 234, 0.25),
-    0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 32px rgba(102, 126, 234, 0.35),
+    0 6px 16px rgba(0, 0, 0, 0.15),
+    0 0 40px rgba(102, 126, 234, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
     inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 2;
   overflow: hidden;
+  animation: iconGradientShift 4s ease infinite;
+}
+
+@keyframes iconGradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .work-experience-icon-inner::before {
@@ -40,22 +62,37 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.3) 0%,
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: iconShine 3s ease-in-out infinite;
+}
+
+@keyframes iconShine {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
 }
 
 .work-experience-icon:hover .work-experience-icon-inner::before {
   opacity: 1;
+  animation: iconShine 1.5s ease-in-out infinite;
 }
 
 .work-experience-icon-emoji {
-  font-size: 2rem;
+  font-size: 2.25rem;
   line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
 }
 
 .work-experience-icon-glow {
@@ -63,18 +100,19 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 120%;
-  height: 120%;
+  width: 140%;
+  height: 140%;
   background: radial-gradient(
     circle,
-    rgba(102, 126, 234, 0.4) 0%,
-    rgba(118, 75, 162, 0.2) 50%,
-    transparent 100%
+    rgba(102, 126, 234, 0.5) 0%,
+    rgba(118, 75, 162, 0.3) 40%,
+    transparent 70%
   );
   border-radius: 50%;
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  filter: blur(15px);
 }
 
 .work-experience-icon-pulse {
@@ -84,48 +122,65 @@
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(102, 126, 234, 0.3);
-  border-radius: 18px;
+  border: 3px solid rgba(102, 126, 234, 0.4);
+  border-radius: 20px;
   opacity: 0;
-  animation: iconPulse 2s ease-in-out infinite;
+  animation: iconPulse 2.5s ease-in-out infinite;
   z-index: 0;
 }
 
 .work-experience-icon-visible .work-experience-icon-inner {
-  animation: iconEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: iconEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+             iconGradientShift 4s ease infinite;
 }
 
 .work-experience-icon-visible .work-experience-icon-glow {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .work-experience-icon:hover .work-experience-icon-inner {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.15) rotate(8deg);
   box-shadow: 
-    0 12px 32px rgba(102, 126, 234, 0.35),
-    0 8px 16px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  background: linear-gradient(135deg, #7c3aed 0%, #667eea 50%, #764ba2 100%);
+    0 16px 48px rgba(102, 126, 234, 0.45),
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 60px rgba(102, 126, 234, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    135deg,
+    #7c3aed 0%,
+    #667eea 25%,
+    #764ba2 50%,
+    #f093fb 75%,
+    #4facfe 100%
+  );
+  background-size: 200% 200%;
+  border-color: rgba(255, 255, 255, 0.95);
 }
 
 .work-experience-icon:hover .work-experience-icon-emoji {
-  transform: scale(1.1);
+  transform: scale(1.15) rotate(-5deg);
 }
 
 .work-experience-icon:hover .work-experience-icon-glow {
   opacity: 1;
-  width: 140%;
-  height: 140%;
+  width: 160%;
+  height: 160%;
+  filter: blur(20px);
 }
 
 @keyframes iconEntrance {
   from {
     opacity: 0;
-    transform: scale(0.5) rotate(-10deg);
+    transform: scale(0.3) rotate(-20deg);
+    filter: blur(10px);
+  }
+  60% {
+    transform: scale(1.1) rotate(5deg);
   }
   to {
     opacity: 1;
     transform: scale(1) rotate(0deg);
+    filter: blur(0);
   }
 }
 
@@ -135,21 +190,40 @@
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.3);
   }
 }
 
-/* Responsive Design */
+/* ─── Responsive Design ─── */
 @media screen and (width <= 992px) {
   .work-experience-icon {
+    left: -2rem;
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .work-experience-icon-inner {
+    border-radius: 18px;
+    border-width: 3.5px;
+  }
+
+  .work-experience-icon-emoji {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (width <= 768px) {
+  .work-experience-icon {
+    left: -1.75rem;
     width: 4rem;
     height: 4rem;
+    top: 2rem;
   }
 
   .work-experience-icon-inner {
     border-radius: 16px;
-    border-width: 2.5px;
+    border-width: 3px;
   }
 
   .work-experience-icon-emoji {
@@ -157,15 +231,17 @@
   }
 }
 
-@media screen and (width <= 768px) {
+@media screen and (width <= 480px) {
   .work-experience-icon {
+    left: -1.5rem;
     width: 3.5rem;
     height: 3.5rem;
+    top: 1.75rem;
   }
 
   .work-experience-icon-inner {
     border-radius: 14px;
-    border-width: 2px;
+    border-width: 2.5px;
   }
 
   .work-experience-icon-emoji {
@@ -173,14 +249,17 @@
   }
 }
 
-@media screen and (width <= 480px) {
+@media screen and (width <= 360px) {
   .work-experience-icon {
+    left: -1.25rem;
     width: 3rem;
     height: 3rem;
+    top: 1.5rem;
   }
 
   .work-experience-icon-inner {
     border-radius: 12px;
+    border-width: 2px;
   }
 
   .work-experience-icon-emoji {
@@ -188,7 +267,7 @@
   }
 }
 
-/* Reduced Motion */
+/* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .work-experience-icon-inner,
   .work-experience-icon-emoji,
@@ -204,5 +283,10 @@
   .work-experience-icon:hover .work-experience-icon-inner {
     transform: none;
   }
-}
 
+  .work-experience-icon-visible .work-experience-icon-inner {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

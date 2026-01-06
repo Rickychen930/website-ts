@@ -257,7 +257,7 @@ select:disabled {
   
   pre,
   blockquote {
-    border: 1px solid #999;
+    border: 1px solid var(--color-border-dark);
     page-break-inside: avoid;
   }
   

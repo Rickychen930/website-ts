@@ -20,13 +20,13 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import { Card } from "../../components/common";
-import { ProjectGrid } from "../../components/projects";
+import "../../../assets/css/project-filters.css";
+import "../../../assets/css/projects-section.css";
+import ProjectFilters from "../../../components/projects/project-filters";
 import { ProjectController } from "../../../controllers/project-controller";
 import { IProject } from "../../../models/project-model";
-import ProjectFilters from "../../../components/projects/project-filters";
-import "../../../assets/css/projects-section.css";
-import "../../../assets/css/project-filters.css";
+import { Card } from "../../components/common";
+import { ProjectGrid } from "../../components/projects";
 
 /**
  * Legacy Project Item Type (for backward compatibility)
@@ -364,19 +364,17 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
 
     return (
       <Card id="projects-section" title="Projects">
-        <div className="projects-section-container">
-          <ProjectFilters
-            projects={projects}
-            onFilterChange={this.handleFilterChange}
-          />
-          <ProjectGrid
-            projects={this.state.filteredProjects.length > 0 ? this.state.filteredProjects : projects}
-            visibleProjects={this.state.visibleProjects}
-            onVisibilityChange={this.handleVisibilityChange}
-            onLinkClick={this.handleLinkClick}
-            layout="grid"
-          />
-        </div>
+        <ProjectFilters
+          projects={projects}
+          onFilterChange={this.handleFilterChange}
+        />
+        <ProjectGrid
+          projects={this.state.filteredProjects.length > 0 ? this.state.filteredProjects : projects}
+          visibleProjects={this.state.visibleProjects}
+          onVisibilityChange={this.handleVisibilityChange}
+          onLinkClick={this.handleLinkClick}
+          layout="grid"
+        />
       </Card>
     );
   }

@@ -479,22 +479,19 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     }
 
     return (
-      <div className="academic-section-container" ref={this.containerRef}>
-        <div className="academic-section-content">
-          <div 
-            className="academic-items-grid" 
-            role="list" 
-            aria-label="Academic background timeline"
-            style={{ '--academic-item-count': renderedItems.length } as React.CSSProperties}
-          >
-            <AcademicTimeline
-              itemCount={renderedItems.length}
-              currentIndex={this.state.currentVisibleIndex}
-              isVisible={this.state.isInitialized}
-            />
-            {renderedItems}
-          </div>
-        </div>
+      <div 
+        className="academic-items-grid" 
+        ref={this.containerRef}
+        role="list" 
+        aria-label="Academic background timeline"
+        style={{ '--academic-item-count': renderedItems.length } as React.CSSProperties}
+      >
+        <AcademicTimeline
+          itemCount={renderedItems.length}
+          currentIndex={this.state.currentVisibleIndex}
+          isVisible={this.state.isInitialized}
+        />
+        {renderedItems}
       </div>
     );
   }

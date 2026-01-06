@@ -43,7 +43,7 @@
 
 .input-label--required::after {
   content: ' *';
-  color: #ef4444;
+  color: var(--color-error);
   margin-left: 2px;
 }
 
@@ -96,22 +96,22 @@
    Input Modifiers
    ============================================ */
 .input--error {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.05);
+  border-color: var(--color-error);
+  background: var(--color-error-light);
 }
 
 .input--error:focus {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25);
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 4px var(--color-error-light);
 }
 
 .input--success {
-  border-color: #10b981;
+  border-color: var(--color-success);
 }
 
 .input--success:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 4px var(--color-success-light);
 }
 
 .input--large {
@@ -169,12 +169,12 @@
 }
 
 .textarea--error {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.05);
+  border-color: var(--color-error);
+  background: var(--color-error-light);
 }
 
 .textarea--success {
-  border-color: #10b981;
+  border-color: var(--color-success);
 }
 
 /* ============================================
@@ -183,7 +183,7 @@
 .input-error {
   display: block;
   font-size: var(--font-size-small);
-  color: #ef4444;
+  color: var(--color-error);
   margin-top: 0.25rem;
   font-family: var(--font-main);
 }

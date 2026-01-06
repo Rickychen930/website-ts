@@ -34,7 +34,7 @@
 }
 
 .contact-form-label .required {
-  color: #ef4444;
+  color: var(--color-error);
   margin-left: 2px;
 }
 
@@ -61,7 +61,7 @@
 
 .contact-form-input.error,
 .contact-form-textarea.error {
-  border-color: #ef4444;
+  border-color: var(--color-error);
 }
 
 .contact-form-textarea {
@@ -74,7 +74,7 @@
   display: block;
   margin-top: 0.5rem;
   font-size: var(--font-size-small);
-  color: #ef4444;
+  color: var(--color-error);
   font-weight: 500;
 }
 
@@ -148,10 +148,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(34, 197, 94, 0.1);
+  background: var(--color-success-light);
   border-radius: 50%;
   font-size: 32px;
-  color: #22c55e;
+  color: var(--color-success);
   font-weight: bold;
 }
 

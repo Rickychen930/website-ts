@@ -1,5 +1,7 @@
 /**
- * Certification Section - Professional, Code-Based Architecture
+ * Certification Section - LUXURY REDESIGN
+ * Premium, Modern, Professional Section Design
+ * Complete redesign for luxury appearance with FIXED SCROLL
  * 
  * Architecture Principles:
  * - DRY: Uses CSS constants and variables from core system
@@ -8,18 +10,20 @@
  * - SOLID: Single Responsibility - section-specific styles only
  * - Reusable: Uses core components and utilities
  * 
- * Features: Glassmorphism, 3D Transforms, Advanced Animations, 
- * Particle Effects, Interactive Elements, Modern Typography
- * 
- * Usage:
- * @import '@/assets/css/certification-section.css';
+ * Features:
+ * - Luxury Glassmorphism & Advanced Visual Effects
+ * - Premium Animations & Micro-interactions
+ * - Fixed Horizontal Scroll (Bug Fix)
+ * - Modern Grid Layouts
+ * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
+ * - Performance Optimized
+ * - Component-Based Architecture
  */
 
 /* Import core system for constants and variables */
 @import './core/index.css';
 
 /* ─── Component-Specific Variables (DRY) ─── */
-/* Uses core constants as base */
 #certification-section.card,
 .card#certification-section {
   /* Spacing - Uses core spacing system */
@@ -36,7 +40,6 @@
   --cert-color-primary-dark: var(--color-accent-dark);
   --cert-color-secondary: var(--color-accent-alt);
   --cert-color-accent: var(--color-accent-hover);
-  --cert-color-glow: rgba(102, 126, 234, 0.4);
   
   /* Shadows - Uses core shadow system */
   --cert-shadow-card: var(--shadow-card);
@@ -45,20 +48,16 @@
   /* Transitions - Uses core transition system */
   --cert-transition-smooth: var(--transition-smooth);
   --cert-transition-bounce: var(--transition-bounce);
-  --cert-transition-elastic: var(--easing-spring);
 }
 
-/* ─── Section Wrapper ─── */
-#certification-section .certification-section-wrapper {
-  width: 100%;
-  max-width: 100%;
-  margin-top: 2.5rem;
-  animation: fadeInUpAdvanced 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  position: relative;
-  overflow-x: hidden;
+/* ─── Global Reset ─── */
+#certification-section * {
+  box-sizing: border-box;
 }
 
-/* ─── Grid Layout ─── */
+/* ─── Section Wrapper - REMOVED (not needed, Card component handles styling) ─── */
+
+/* ─── Grid Layout - Desktop (Default) ─── */
 #certification-section .certification-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -67,32 +66,39 @@
   margin: 0;
   list-style: none;
   width: 100%;
+  max-width: 100%;
   perspective: 2000px;
+  position: relative;
 }
 
-/* ─── Certification Card - Advanced Design ─── */
+/* ─── Certification Card - Luxury Design ─── */
 #certification-section .certification-card {
   position: relative;
   width: 100%;
   min-height: 420px;
   background: linear-gradient(
-    135deg,
+    145deg,
     rgba(255, 255, 255, 0.98) 0%,
-    rgba(255, 255, 255, 0.95) 50%,
-    rgba(250, 251, 252, 0.98) 100%
+    rgba(250, 252, 255, 0.95) 50%,
+    rgba(248, 250, 255, 0.98) 100%
   );
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: var(--spacing-card-radius);
+  border-radius: 28px;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   opacity: 0;
   transform: translateY(50px) scale(0.92) rotateX(8deg);
   transform-style: preserve-3d;
-  transition: all var(--cert-transition-smooth);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
-  border: 1.5px solid rgba(255, 255, 255, 0.8);
-  box-shadow: var(--cert-shadow-card);
+  border: 1.5px solid rgba(102, 126, 234, 0.15);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.05),
+    0 4px 12px rgba(102, 126, 234, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(102, 126, 234, 0.05);
   will-change: transform, opacity, filter;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
@@ -101,28 +107,36 @@
   perspective: 1000px;
 }
 
-/* Animated Gradient Background */
+/* Premium gradient overlay */
 #certification-section .certification-card::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
   background: linear-gradient(
-    45deg,
-    rgba(102, 126, 234, 0.04) 0%,
-    rgba(118, 75, 162, 0.04) 25%,
-    rgba(240, 147, 251, 0.04) 50%,
-    rgba(79, 172, 254, 0.04) 75%,
-    rgba(102, 126, 234, 0.04) 100%
+    90deg,
+    var(--color-accent-primary) 0%,
+    var(--color-accent-alt) 30%,
+    var(--color-accent-secondary) 60%,
+    var(--color-accent-tertiary) 100%
   );
-  background-size: 400% 400%;
-  animation: cert-gradient-shift 20s ease infinite;
+  background-size: 200% 100%;
+  border-radius: 28px 28px 0 0;
   opacity: 0;
-  transition: opacity 0.6s ease;
-  z-index: 0;
-  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cert-gradient-shift 3s ease infinite;
+  z-index: 2;
+}
+
+@keyframes cert-gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Animated Border Gradient */
@@ -130,7 +144,7 @@
   content: "";
   position: absolute;
   inset: -3px;
-  border-radius: var(--spacing-card-radius);
+  border-radius: 28px;
   padding: 3px;
   background: linear-gradient(
     135deg,
@@ -138,13 +152,22 @@
     rgba(118, 75, 162, 0.4) 50%,
     rgba(240, 147, 251, 0.4) 100%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(var(--color-white) 0 0) content-box, linear-gradient(var(--color-white) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.6s ease;
   z-index: -1;
   animation: cert-border-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cert-border-pulse {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 /* Card Inner Container */
@@ -175,12 +198,35 @@
   opacity: 1;
 }
 
+@keyframes cert-card-enter-advanced {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9) rotateX(10deg);
+    filter: blur(12px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.02) rotateX(-2deg);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+    filter: blur(0);
+  }
+}
+
 /* ─── Advanced Hover Effects ─── */
 #certification-section .certification-card:hover,
 #certification-section .certification-card-hovered {
   transform: translateY(-16px) scale(1.03) rotateX(-3deg) rotateY(2deg);
-  border-color: rgba(102, 126, 234, 0.4);
-  box-shadow: var(--cert-shadow-card-hover);
+  border-color: rgba(102, 126, 234, 0.3);
+  box-shadow: 
+    0 30px 80px rgba(102, 126, 234, 0.15),
+    0 15px 40px rgba(0, 0, 0, 0.08),
+    0 6px 16px rgba(102, 126, 234, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(102, 126, 234, 0.08);
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 1) 0%,
@@ -193,6 +239,17 @@
 #certification-section .certification-card-hovered::after {
   opacity: 1;
   animation: cert-border-glow 2s ease-in-out infinite;
+}
+
+@keyframes cert-border-glow {
+  0%, 100% {
+    opacity: 0.6;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.3);
+  }
 }
 
 #certification-section .certification-card:hover::before,
@@ -215,61 +272,12 @@
   border-color: var(--cert-color-primary);
   box-shadow: 
     0 0 0 4px rgba(102, 126, 234, 0.2),
-    var(--cert-shadow-card-hover);
+    0 30px 80px rgba(102, 126, 234, 0.15);
 }
 
 #certification-section .certification-card:focus-visible {
   outline: 3px solid var(--cert-color-primary);
   outline-offset: 4px;
-}
-
-/* ─── Advanced Shine Effect ─── */
-#certification-section .certification-card-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    110deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.6) 45%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.6) 55%,
-    transparent 100%
-  );
-  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  z-index: 3;
-  transform: skewX(-20deg);
-}
-
-#certification-section .certification-card:hover .certification-card-shine {
-  left: 150%;
-  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ─── Advanced Gradient Overlay ─── */
-#certification-section .certification-card-gradient {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(240, 147, 251, 0.08) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-  z-index: 1;
-  border-radius: inherit;
-  animation: cert-particles 25s ease-in-out infinite;
-}
-
-#certification-section .certification-card:hover .certification-card-gradient {
-  opacity: 1;
 }
 
 /* ─── Advanced Icon Styling ─── */
@@ -281,7 +289,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 0.75rem;
-  transition: all var(--cert-transition-smooth);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   perspective: 1000px;
   z-index: 3;
 }
@@ -307,7 +315,7 @@
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
-  transition: all var(--cert-transition-smooth);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
 }
 
@@ -320,7 +328,7 @@
   height: 140%;
   background: radial-gradient(
     circle,
-    var(--cert-color-glow) 0%,
+    rgba(102, 126, 234, 0.4) 0%,
     rgba(102, 126, 234, 0.2) 30%,
     rgba(118, 75, 162, 0.1) 50%,
     transparent 75%
@@ -332,23 +340,15 @@
   animation: cert-icon-pulse 3s ease-in-out infinite;
 }
 
-#certification-section .certification-icon-shine {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0.4) 40%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  z-index: 3;
-  animation: cert-icon-shine-rotate 4s linear infinite;
+@keyframes cert-icon-pulse {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
 }
 
 #certification-section .certification-card:hover .certification-icon-emoji {
@@ -362,8 +362,15 @@
   animation: cert-icon-pulse-fast 1.5s ease-in-out infinite;
 }
 
-#certification-section .certification-card:hover .certification-icon-shine {
-  opacity: 1;
+@keyframes cert-icon-pulse-fast {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.3);
+  }
 }
 
 /* ─── Advanced Content Styling ─── */
@@ -381,7 +388,7 @@
 #certification-section .certification-card-title {
   margin: 0;
   color: var(--text-heading);
-  font-size: 1.5rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
   font-weight: 800;
   line-height: 1.35;
   letter-spacing: -0.5px;
@@ -390,8 +397,8 @@
   overflow-wrap: break-word;
   background: linear-gradient(
     135deg,
-    var(--text-heading) 0%,
-    var(--text-heading-alt) 100%
+    var(--color-text-primary) 0%,
+    var(--color-accent-primary) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -402,8 +409,9 @@
 #certification-section .certification-card:hover .certification-card-title {
   background: linear-gradient(
     135deg,
-    var(--cert-color-primary) 0%,
-    var(--cert-color-secondary) 100%
+    var(--color-accent-primary) 0%,
+    var(--color-accent-alt) 50%,
+    var(--color-accent-secondary) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -422,7 +430,7 @@
 
 #certification-section .certification-card-provider-label {
   color: var(--text-subtle);
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
   font-weight: 700;
   line-height: 1.5;
   letter-spacing: 0.5px;
@@ -432,15 +440,15 @@
   position: relative;
   padding: 0.5rem 1rem;
   border-radius: 12px;
-  background: rgba(102, 126, 234, 0.05);
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.15);
 }
 
 #certification-section .certification-card:hover .certification-card-provider-label {
   color: var(--cert-color-primary);
   opacity: 1;
-  background: rgba(102, 126, 234, 0.1);
-  border-color: rgba(102, 126, 234, 0.2);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  border-color: rgba(102, 126, 234, 0.3);
   transform: scale(1.05);
 }
 
@@ -469,30 +477,10 @@
   transform-style: preserve-3d;
 }
 
-#certification-section .certification-badge::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-#certification-section .certification-badge:hover::before {
-  left: 100%;
-}
-
 #certification-section .certification-badge-default {
-  background: linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-lightest) 100%);
+  background: linear-gradient(135deg, rgba(245, 247, 250, 0.9) 0%, rgba(240, 244, 248, 0.9) 100%);
   color: var(--text-muted);
-  border: 1.5px solid var(--border-light);
+  border: 1.5px solid rgba(220, 227, 234, 0.6);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -507,12 +495,6 @@
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
 }
 
-#certification-section .certification-badge-muted {
-  background: rgba(0, 0, 0, 0.04);
-  color: var(--text-muted-alt);
-  border: 1.5px solid var(--border-light);
-}
-
 #certification-section .certification-badge:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
@@ -522,39 +504,6 @@
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
 }
 
-#certification-section .certification-badge-icon {
-  font-size: 0.75rem;
-  line-height: 1;
-  transition: transform 0.3s ease;
-}
-
-#certification-section .certification-badge:hover .certification-badge-icon {
-  transform: scale(1.2) rotate(10deg);
-}
-
-#certification-section .certification-badge-label {
-  line-height: 1.2;
-  position: relative;
-  z-index: 1;
-}
-
-/* ─── Advanced Description Styling ─── */
-#certification-section .certification-card-description {
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.7;
-  margin: 0.75rem 0 0 0;
-  text-align: center;
-  opacity: 0.9;
-  transition: all 0.4s ease;
-  font-weight: 400;
-}
-
-#certification-section .certification-card:hover .certification-card-description {
-  opacity: 1;
-  color: var(--text-subtle);
-}
-
 /* ─── Advanced Date Styling ─── */
 #certification-section .certification-card-date {
   display: flex;
@@ -562,11 +511,11 @@
   justify-content: center;
   gap: 0.75rem;
   color: var(--text-muted-alt);
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 1.2vw, 0.95rem);
   font-weight: 600;
   margin-top: 1.25rem;
   padding-top: 1.25rem;
-  border-top: 2px solid var(--border-light);
+  border-top: 2px solid rgba(220, 227, 234, 0.6);
   width: 100%;
   position: relative;
   transition: all 0.4s ease;
@@ -592,33 +541,11 @@
   width: 60%;
 }
 
-#certification-section .certification-card-date-icon {
-  font-size: 1rem;
-  opacity: 0.75;
-  line-height: 1;
-  transition: all 0.3s ease;
-}
-
-#certification-section .certification-card:hover .certification-card-date-icon {
-  opacity: 1;
-  transform: scale(1.15) rotate(10deg);
-}
-
-#certification-section .certification-card-date-text {
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  transition: color 0.3s ease;
-}
-
-#certification-section .certification-card:hover .certification-card-date-text {
-  color: var(--cert-color-primary);
-}
-
 /* ─── Advanced Link Hint ─── */
 #certification-section .certification-card-link-hint {
   margin-top: 1.25rem;
   padding-top: 1.25rem;
-  border-top: 2px solid var(--border-light);
+  border-top: 2px solid rgba(220, 227, 234, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -630,51 +557,9 @@
   position: relative;
 }
 
-#certification-section .certification-card-link-hint::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    var(--cert-color-primary) 0%,
-    var(--cert-color-secondary) 100%
-  );
-  transition: width 0.6s ease 0.2s;
-}
-
-#certification-section .certification-card-link-hint-text {
-  color: var(--cert-color-primary);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-#certification-section .certification-card-link-hint-icon {
-  color: var(--cert-color-primary);
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-block;
-}
-
 #certification-section .certification-card.clickable:hover .certification-card-link-hint {
   opacity: 1;
   transform: translateY(0) scale(1);
-}
-
-#certification-section .certification-card.clickable:hover .certification-card-link-hint::before {
-  width: 60%;
-}
-
-#certification-section .certification-card.clickable:hover .certification-card-link-hint-icon {
-  transform: translateX(8px) scale(1.2);
 }
 
 /* ─── Advanced Empty State ─── */
@@ -695,6 +580,17 @@
   opacity: 0.3;
   filter: grayscale(0.4);
   animation: cert-empty-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cert-empty-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
 }
 
 #certification-section .certification-empty-title {
@@ -722,70 +618,6 @@
   opacity: 0.85;
 }
 
-/* ─── Advanced Error State ─── */
-#certification-section .certification-error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  text-align: center;
-  position: relative;
-  min-height: 300px;
-}
-
-#certification-section .certification-error-icon {
-  font-size: 5rem;
-  margin-bottom: 2rem;
-  animation: cert-error-shake 0.5s ease-in-out;
-}
-
-#certification-section .certification-error-title {
-  color: var(--text-heading);
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin: 0 0 1rem 0;
-  letter-spacing: -0.4px;
-}
-
-#certification-section .certification-error-message {
-  color: #e74c3c;
-  font-size: 1.05rem;
-  margin: 0;
-  font-weight: 600;
-  line-height: 1.7;
-  max-width: 550px;
-}
-
-/* ─── Loading State ─── */
-#certification-section .certification-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 6rem 2rem;
-  text-align: center;
-  position: relative;
-}
-
-#certification-section .certification-loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid var(--border-light);
-  border-top-color: var(--cert-color-primary);
-  border-radius: 50%;
-  animation: cert-spin 1s linear infinite;
-  margin-bottom: 2rem;
-}
-
-#certification-section .certification-loading-message {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin: 0;
-  letter-spacing: 0.3px;
-}
-
 /* ─── Advanced Animations ─── */
 @keyframes fadeInUpAdvanced {
   from {
@@ -800,262 +632,16 @@
   }
 }
 
-@keyframes cert-card-enter-advanced {
-  0% {
-    opacity: 0;
-    transform: translateY(50px) scale(0.9) rotateX(10deg);
-    filter: blur(12px);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-8px) scale(1.02) rotateX(-2deg);
-    filter: blur(3px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-    filter: blur(0);
-  }
-}
+/* ============================================
+   RESPONSIVE DESIGN - TABLET & MOBILE
+   WITH HORIZONTAL SCROLL FIX
+   ============================================ */
 
-@keyframes cert-gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes cert-border-glow {
-  0%, 100% {
-    opacity: 0.6;
-    filter: brightness(1);
-  }
-  50% {
-    opacity: 1;
-    filter: brightness(1.3);
-  }
-}
-
-@keyframes cert-border-pulse {
-  0%, 100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-
-@keyframes cert-particles {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0;
-  }
-  50% {
-    transform: translate(5px, -5px) scale(1.05);
-    opacity: 1;
-  }
-}
-
-@keyframes cert-icon-pulse {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1.4);
-  }
-}
-
-@keyframes cert-icon-pulse-fast {
-  0%, 100% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
-}
-
-@keyframes cert-icon-shine-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes cert-empty-pulse {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes cert-error-shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-10px);
-  }
-  75% {
-    transform: translateX(10px);
-  }
-}
-
-@keyframes cert-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* ─── Responsive Design - Professional Breakpoints ─── */
-
-/* Ultra Wide Desktop (1920px+) */
-@media screen and (min-width: 1920px) {
-  #certification-section .certification-grid {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 3.5rem;
-    max-width: 1800px;
-    margin: 0 auto;
-  }
-
-  #certification-section .certification-card {
-    min-height: 480px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 4.5rem 4rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 140px;
-    height: 140px;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 5rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.75rem;
-  }
-}
-
-/* Large Desktop (1600px - 1919px) */
-@media screen and (min-width: 1600px) and (max-width: 1919px) {
-  #certification-section .certification-grid {
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 2.5rem;
-  }
-
-  #certification-section .certification-card {
-    min-height: 460px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 4rem 3.5rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 130px;
-    height: 130px;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 4.5rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.65rem;
-  }
-}
-
-/* Desktop (1400px - 1599px) */
-@media screen and (min-width: 1400px) and (max-width: 1599px) {
-  #certification-section .certification-grid {
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 2.25rem;
-  }
-
-  #certification-section .certification-card {
-    min-height: 440px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 3.75rem 3.25rem;
-  }
-}
-
-/* Desktop (1200px - 1399px) */
-@media screen and (min-width: 1200px) and (max-width: 1399px) {
-  #certification-section .certification-grid {
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
-  }
-
-  #certification-section .certification-card {
-    min-height: 400px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 3.25rem 2.75rem;
-  }
-}
-
-/* Desktop (992px - 1199px) */
-@media screen and (max-width: 1199px) and (min-width: 992px) {
-  /* Keep grid layout for larger tablets/small desktops */
-  #certification-section .certification-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-  }
-
-  #certification-section .certification-card {
-    min-height: 400px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 3rem 2.5rem;
-    gap: 1.5rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 110px;
-    height: 110px;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 3.5rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.4rem;
-  }
-}
-
-/* Tablet (768px - 991px) */
+/* Tablet (768px - 991px) - HORIZONTAL SCROLL */
 @media screen and (max-width: 991px) and (min-width: 768px) {
-  #certification-section .certification-section-wrapper {
-    margin-top: 2rem;
-    overflow-x: hidden;
-    width: 100%;
-  }
+  /* Container removed - Card component handles styling */
 
   /* Horizontal scroll for grid on tablet */
-  /* Important to override inline styles from CertificationGrid component */
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
@@ -1072,6 +658,7 @@
     padding-right: 2rem;
     width: calc(100% + 4rem);
     grid-template-columns: none !important;
+    position: relative;
   }
 
   #certification-section .certification-grid > * {
@@ -1081,29 +668,113 @@
     scroll-snap-align: start;
   }
 
-  /* Custom scrollbar styling */
+  /* Enhanced scrollbar styling */
   #certification-section .certification-grid::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
+    background: transparent;
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin: 0 1rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb {
-    background: var(--cert-color-primary);
-    border-radius: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--cert-color-primary, var(--color-accent-primary)) 0%,
+      var(--cert-color-secondary, var(--color-accent-alt)) 100%
+    );
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 2px 4px rgba(102, 126, 234, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--cert-color-secondary);
+    background: linear-gradient(
+      90deg,
+      var(--cert-color-secondary, #764ba2) 0%,
+      var(--cert-color-primary, #667eea) 100%
+    );
+    box-shadow: 
+      0 4px 8px rgba(102, 126, 234, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: scaleY(1.2);
   }
 
   /* Firefox scrollbar */
   #certification-section .certification-grid {
     scrollbar-width: thin;
-    scrollbar-color: var(--cert-color-primary) rgba(0, 0, 0, 0.05);
+    scrollbar-color: var(--cert-color-primary, var(--color-accent-primary)) var(--color-black-alpha-08);
+  }
+
+  /* Fade gradients at edges */
+  #certification-section .certification-grid::before {
+    content: "";
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      transparent 100%
+    );
+  }
+
+  /* Right fade gradient */
+  #certification-section .certification-grid::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      transparent 100%
+    );
+  }
+
+  /* Scroll hint indicator - using Card body */
+  #certification-section .card-body {
+    position: relative;
+    padding-bottom: 2rem;
+  }
+
+  #certification-section .card-body::before {
+    content: "← Swipe to see more →";
+    position: absolute;
+    bottom: 0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-subtle);
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+  }
+
+  #certification-section .card-body:hover::before {
+    opacity: 0.4;
   }
 
   #certification-section .certification-card {
@@ -1137,32 +808,55 @@
 
 /* Mobile Landscape / Small Tablet (600px - 767px) */
 @media screen and (max-width: 767px) and (min-width: 600px) {
-  #certification-section .certification-section-wrapper {
-    overflow-x: hidden;
-    width: 100%;
-  }
+  /* Container removed - Card component handles styling */
 
-  /* Important to override inline styles */
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     margin-left: calc(-1 * 1.5rem);
     margin-right: calc(-1 * 1.5rem);
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     width: calc(100% + 3rem);
     gap: 1.5rem;
+    padding-bottom: 1rem;
   }
 
   #certification-section .certification-grid > * {
+    flex: 0 0 calc(min(100%, 320px));
     min-width: 280px;
     max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  /* Scrollbar styling */
+  #certification-section .certification-grid::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  #certification-section .certification-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin: 0 1rem;
+  }
+
+  #certification-section .certification-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      90deg,
+      var(--cert-color-primary, var(--color-accent-primary)) 0%,
+      var(--cert-color-secondary, var(--color-accent-alt)) 100%
+    );
+    border-radius: 4px;
   }
 
   #certification-section .certification-card {
     min-height: 360px;
-    border-radius: var(--card-radius);
   }
 
   #certification-section .certification-card-inner {
@@ -1186,33 +880,35 @@
 
 /* Mobile Portrait (480px - 599px) */
 @media screen and (max-width: 599px) and (min-width: 480px) {
-  #certification-section .certification-section-wrapper {
-    margin-top: 2rem;
-    overflow-x: hidden;
-    width: 100%;
-  }
+  /* Container removed - Card component handles styling */
 
-  /* Important to override inline styles */
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     margin-left: calc(-1 * 1rem);
     margin-right: calc(-1 * 1rem);
     padding-left: 1rem;
     padding-right: 1rem;
     width: calc(100% + 2rem);
     gap: 1.5rem;
+    padding-bottom: 1rem;
   }
 
   #certification-section .certification-grid > * {
+    flex: 0 0 calc(min(100%, 300px));
     min-width: 260px;
     max-width: 300px;
+    scroll-snap-align: start;
   }
 
   #certification-section .certification-card {
     min-height: 340px;
-    border-radius: var(--card-radius);
   }
 
   #certification-section .certification-card-inner {
@@ -1232,56 +928,42 @@
   #certification-section .certification-card-title {
     font-size: 1.25rem;
   }
-
-  #certification-section .certification-card-provider-label {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  #certification-section .certification-card-date {
-    font-size: 0.9rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-  }
 }
 
 /* Small Mobile (320px - 479px) */
 @media screen and (max-width: 479px) {
-  #certification-section .certification-section-wrapper {
-    margin-top: 1.75rem;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-  }
+  /* Container removed - Card component handles styling */
 
-  /* Important to override inline styles */
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     margin-left: 0;
     margin-right: 0;
     padding-left: 1rem;
     padding-right: 1rem;
     width: 100%;
     gap: 1.25rem;
+    padding-bottom: 1rem;
   }
 
   #certification-section .certification-grid > * {
+    flex: 0 0 calc(min(100%, 280px));
     min-width: 240px;
     max-width: 280px;
+    scroll-snap-align: start;
   }
 
   #certification-section .certification-card {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-  }
-
-  #certification-section .certification-card {
     min-height: 320px;
-    border-radius: var(--card-radius-alt);
   }
 
   #certification-section .certification-card-inner {
@@ -1303,93 +985,39 @@
     font-size: 1.15rem;
     line-height: 1.4;
   }
-
-  #certification-section .certification-card-provider-label {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.7rem;
-  }
-
-  #certification-section .certification-card-date {
-    font-size: 0.85rem;
-    margin-top: 0.875rem;
-    padding-top: 0.875rem;
-    gap: 0.6rem;
-  }
-
-  #certification-section .certification-card-link-hint {
-    font-size: 0.85rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-  }
-
-  #certification-section .certification-badge {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  #certification-section .certification-empty {
-    padding: 3.5rem 1.5rem;
-    min-height: 250px;
-  }
-
-  #certification-section .certification-empty-icon {
-    font-size: 4rem;
-  }
-
-  #certification-section .certification-empty-title {
-    font-size: 1.5rem;
-  }
-
-  #certification-section .certification-empty-message {
-    font-size: 1rem;
-  }
-
-  #certification-section .certification-loading {
-    padding: 4rem 1.5rem;
-  }
-
-  #certification-section .certification-loading-spinner {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 1.5rem;
-  }
-
-  #certification-section .certification-loading-message {
-    font-size: 1rem;
-  }
 }
 
 /* Extra Small Mobile (240px - 319px) */
 @media screen and (max-width: 319px) {
-  #certification-section .certification-section-wrapper {
-    margin-top: 1.5rem;
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
+  /* Container removed - Card component handles styling */
 
-  /* Important to override inline styles */
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     gap: 1rem;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     width: 100%;
+    padding-bottom: 1rem;
   }
 
   #certification-section .certification-grid > * {
+    flex: 0 0 calc(min(100%, 260px));
     min-width: 220px;
     max-width: 260px;
+    scroll-snap-align: start;
   }
 
   #certification-section .certification-card {
     min-height: 300px;
-    border-radius: var(--card-radius-mobile);
   }
 
   #certification-section .certification-card-inner {
@@ -1409,52 +1037,30 @@
   #certification-section .certification-card-title {
     font-size: 1.05rem;
   }
-
-  #certification-section .certification-card-provider-label {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
-  }
-
-  #certification-section .certification-badge {
-    font-size: 0.7rem;
-    padding: 0.35rem 0.7rem;
-  }
 }
 
 /* ─── Landscape Orientation (Mobile) ─── */
 @media screen and (orientation: landscape) and (max-width: 767px) {
-  /* Keep horizontal scroll in landscape */
-  /* Important to override inline styles */
+  /* Container removed - Card component handles styling */
+
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     gap: 1.25rem;
+    padding-bottom: 1rem;
   }
 
   #certification-section .certification-grid > * {
+    flex: 0 0 calc(min(100%, 300px));
     min-width: 260px;
     max-width: 300px;
-  }
-
-  #certification-section .certification-card {
-    min-height: 320px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 2rem 1.75rem;
-  }
-}
-
-/* ─── High DPI / Retina Displays ─── */
-@media screen and (-webkit-min-device-pixel-ratio: 2),
-       screen and (min-resolution: 192dpi) {
-  #certification-section .certification-card {
-    border-width: 0.75px;
-  }
-
-  #certification-section .certification-card-date {
-    border-top-width: 1.5px;
+    scroll-snap-align: start;
   }
 }
 
@@ -1465,11 +1071,8 @@
   #certification-section .certification-icon-wrapper,
   #certification-section .certification-icon-emoji,
   #certification-section .certification-icon-glow,
-  #certification-section .certification-icon-shine,
   #certification-section .certification-card-title,
   #certification-section .certification-card-link-hint,
-  #certification-section .certification-card-shine,
-  #certification-section .certification-card-gradient,
   #certification-section .certification-badge {
     animation: none !important;
     transition: none !important;
@@ -1489,53 +1092,4 @@
   #certification-section .certification-card::after {
     animation: none !important;
   }
-}
-
-/* ─── Dark Mode Support (Future Enhancement) ─── */
-@media (prefers-color-scheme: dark) {
-  /* Can be implemented later if needed */
-}
-
-/* ─── Print Styles ─── */
-@media print {
-  #certification-section .certification-card {
-    break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid #ddd;
-    min-height: auto;
-    background: white;
-  }
-
-  #certification-section .certification-card:hover {
-    transform: none;
-  }
-
-  #certification-section .certification-card-shine,
-  #certification-section .certification-card-gradient,
-  #certification-section .certification-card::before,
-  #certification-section .certification-card::after {
-    display: none;
-  }
-
-  #certification-section .certification-card-link-hint {
-    display: none;
-  }
-}
-
-/* ─── Performance Optimizations ─── */
-#certification-section .certification-card,
-#certification-section .certification-card-inner {
-  contain: layout style paint;
-}
-
-#certification-section .certification-grid {
-  contain: layout;
-}
-
-/* ─── Selection Styling ─── */
-#certification-section .certification-card::selection,
-#certification-section .certification-card-title::selection,
-#certification-section .certification-card-provider-label::selection {
-  background: var(--accent-gradient-subtle);
-  color: inherit;
 }

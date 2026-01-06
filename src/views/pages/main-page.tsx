@@ -61,6 +61,7 @@ class MainPage extends BasePage<{}, MainPageState> {
   private readonly controller: MainPageController;
   private readonly smoothScrollManager: SmoothScrollManager;
   private readonly scrollObserverManager: ScrollObserverManager;
+  private isMounted: boolean = false;
 
   constructor(props: {}) {
     super(props);
@@ -165,6 +166,7 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Component lifecycle - Mount
    */
   async componentDidMount(): Promise<void> {
+    this.isMounted = true;
     this.smoothScrollManager.setup();
     await this.loadProfile();
   }
@@ -184,39 +186,93 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Component lifecycle - Unmount
    */
   componentWillUnmount(): void {
+    this.isMounted = false;
     this.smoothScrollManager.cleanup();
     this.scrollObserverManager.cleanup();
   }
 
   /**
    * Initialize section observer for scroll animations
+   * Enhanced with better error handling and edge cases
    */
   private initializeSectionObserver(): void {
+    // Edge case: Check if component is still mounted
+    if (!this.isMounted) return;
+    
+    // Edge case: Check browser environment
     if (typeof document === "undefined" || !this.state.profile) return;
 
-    const visibleSections = this.controller.getVisibleSections(this.state.profile);
-    const elements = visibleSections
-      .map(config => document.getElementById(config.id))
-      .filter((el): el is HTMLElement => el !== null);
-    
-    this.scrollObserverManager.initialize(elements);
+    try {
+      const visibleSections = this.controller.getVisibleSections(this.state.profile);
+      
+      // Edge case: Handle empty sections
+      if (!visibleSections || visibleSections.length === 0) {
+        return;
+      }
+
+      const elements = visibleSections
+        .map(config => {
+          try {
+            return document.getElementById(config.id);
+          } catch (error) {
+            if (process.env.NODE_ENV === "development") {
+              const { logWarn } = require('../../utils/logger');
+              logWarn(`Failed to get element for section ${config.id}`, error, "MainPage");
+            }
+            return null;
+          }
+        })
+        .filter((el): el is HTMLElement => el !== null);
+      
+      // Edge case: Only initialize if elements found
+      if (elements.length > 0) {
+        this.scrollObserverManager.initialize(elements);
+      }
+    } catch (error) {
+      // Edge case: Handle observer initialization errors
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require('../../utils/logger');
+        logError("Error initializing section observer", error, "MainPage");
+      }
+    }
   }
 
   /**
    * Load user profile with retry logic
+   * Enhanced with better error handling and edge cases
    */
   private async loadProfile(): Promise<void> {
+    // Edge case: Prevent multiple simultaneous loads
+    if (this.state.loading) {
+      return;
+    }
+
     this.setState({ loading: true, error: null });
 
     try {
-      const profile = await this.controller.getUserProfile();
+      // Edge case: Add timeout to prevent hanging requests
+      const profilePromise = this.controller.getUserProfile();
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error("Request timeout")), 30000); // 30 second timeout
+      });
 
+      const profile = await Promise.race([profilePromise, timeoutPromise]);
+
+      // Edge case: Validate profile structure
       if (!profile) {
         throw new Error(ErrorMessages.LOAD_PROFILE_FAILED);
       }
 
-      if (!profile.name?.trim()) {
+      if (!profile.name || typeof profile.name !== 'string' || !profile.name.trim()) {
         throw new Error(ErrorMessages.INVALID_INPUT);
+      }
+
+      // Edge case: Validate required fields
+      if (!profile.title || !profile.location || !profile.bio) {
+        if (process.env.NODE_ENV === "development") {
+          const { logWarn } = require('../../utils/logger');
+          logWarn("Profile missing some fields", profile, "MainPage");
+        }
       }
 
       // Update SEO metadata
@@ -229,16 +285,33 @@ class MainPage extends BasePage<{}, MainPageState> {
         retryCount: 0,
       });
 
-      // Show success notification
-      toast.success("Profile loaded successfully", 3000);
+      // Show success notification (only on first load, not retries)
+      if (this.state.retryCount === 0) {
+        toast.success("Profile loaded successfully", 3000);
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : ErrorMessages.LOAD_PROFILE_FAILED;
       const newRetryCount = this.state.retryCount + 1;
 
-      if (newRetryCount < RetryConfig.MAX_RETRIES) {
+      // Edge case: Handle timeout and network errors differently
+      const isNetworkError = errorMessage.includes("timeout") || 
+                            errorMessage.includes("network") || 
+                            errorMessage.includes("fetch");
+
+      if (newRetryCount < RetryConfig.MAX_RETRIES && isNetworkError) {
+        // Exponential backoff for network errors
+        const retryDelay = RetryConfig.RETRY_DELAY * Math.pow(2, newRetryCount - 1);
+        setTimeout(() => {
+          if (this.state !== null && this.isMounted) {
+            this.setState({ retryCount: newRetryCount });
+            this.loadProfile();
+          }
+        }, retryDelay);
+      } else if (newRetryCount < RetryConfig.MAX_RETRIES) {
+        // Linear backoff for other errors
         const retryDelay = RetryConfig.RETRY_DELAY * newRetryCount;
         setTimeout(() => {
-          if (this.state !== null) {
+          if (this.state !== null && this.isMounted) {
             this.setState({ retryCount: newRetryCount });
             this.loadProfile();
           }

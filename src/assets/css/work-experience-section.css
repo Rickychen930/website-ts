@@ -88,15 +88,18 @@
 }
 
 /* ============================================
-   Container - Uses Container Component
+   Container - REMOVED (not needed, Card component handles styling)
    ============================================ */
-.work-experience-container {
-  /* Extends .container component */
-  position: relative;
-  width: 100%;
-  max-width: var(--spacing-card-max-width);
-  margin: 0 auto;
-  padding: var(--work-spacing-lg) var(--work-spacing-md);
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
 }
 
 /* ============================================
@@ -162,22 +165,51 @@
   margin: 0;
   font-size: var(--work-font-size-description);
   line-height: var(--work-line-height-normal);
-  color: #e74c3c;
+  color: var(--color-error);
 }
 
 /* ============================================
    Responsive Design - Uses Core Breakpoints
    ============================================ */
-@media screen and (max-width: 992px) {
-  .work-experience-container {
-    padding: var(--work-spacing-md) var(--work-spacing-sm);
+
+/* ─── Large Desktop (1400px+) ─── */
+@media screen and (min-width: 1400px) {
+  /* Container removed - Card component handles styling */
+}
+
+/* ─── Desktop (1200px - 1399px) ─── */
+@media screen and (max-width: 1399px) and (min-width: 1200px) {
+  /* Container removed - Card component handles styling */
+}
+
+/* ─── Large Tablets (992px - 1199px) ─── */
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+  /* Container removed - Card component handles styling */
+}
+
+/* ─── Tablets (768px - 991px) ─── */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  /* Container removed - Card component handles styling */
+
+  .work-experience-empty-icon,
+  .work-experience-error-icon {
+    font-size: 3.5rem;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .work-experience-container {
-    padding: var(--work-spacing-sm);
+/* ─── Small Tablets (600px - 767px) ─── */
+@media screen and (max-width: 767px) and (min-width: 600px) {
+  /* Container removed - Card component handles styling */
+
+  .work-experience-empty-icon,
+  .work-experience-error-icon {
+    font-size: 3.25rem;
   }
+}
+
+/* ─── Mobile (480px - 599px) ─── */
+@media screen and (max-width: 599px) and (min-width: 480px) {
+  /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
   .work-experience-error-icon {
@@ -185,35 +217,44 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  .work-experience-container {
-    padding: var(--work-spacing-xs);
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
+/* ─── Small Mobile (≤ 479px) ─── */
+@media screen and (max-width: 479px) {
+  /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
   .work-experience-error-icon {
     font-size: 2.5rem;
   }
+
+  .work-experience-empty-text,
+  .work-experience-error-text {
+    font-size: 0.9rem;
+  }
 }
 
+/* ─── Extra Small Mobile (≤ 360px) ─── */
 @media screen and (max-width: 360px) {
-  .work-experience-container {
-    padding: var(--work-spacing-xs);
-  }
+  /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
   .work-experience-error-icon {
     font-size: 2rem;
   }
+
+  .work-experience-empty-text,
+  .work-experience-error-text {
+    font-size: 0.85rem;
+  }
 }
 
-@media screen and (orientation: landscape) and (max-width: 768px) {
-  .work-experience-container {
-    padding: var(--work-spacing-md);
-  }
+/* ─── Landscape Orientation - Mobile/Tablet ─── */
+@media screen and (orientation: landscape) and (max-width: 991px) {
+  /* Container removed - Card component handles styling */
+}
+
+/* ─── Landscape Orientation - Small Mobile ─── */
+@media screen and (orientation: landscape) and (max-width: 600px) {
+  /* Container removed - Card component handles styling */
 }
 
 /* ============================================
@@ -229,9 +270,7 @@
    Print Styles
    ============================================ */
 @media print {
-  .work-experience-container {
-    padding: 0;
-  }
+  /* Container removed - Card component handles styling */
 }
 
 /* ============================================

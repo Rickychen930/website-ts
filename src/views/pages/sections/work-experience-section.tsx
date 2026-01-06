@@ -400,12 +400,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
     return (
       <Card id="work-experience-section" title="Work Experience">
-        <div 
-          className="work-experience-container" 
-          ref={this.containerRef}
-          role="region"
-          aria-label="Work Experience Timeline"
-        >
+        <div ref={this.containerRef}>
           <WorkExperienceTimeline
             items={experiences}
             visibleItems={visibleItems}

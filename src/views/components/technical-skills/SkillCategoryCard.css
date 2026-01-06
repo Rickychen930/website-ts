@@ -22,13 +22,17 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -1px 0 rgba(102, 126, 234, 0.05);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
+  overflow: visible;
   opacity: 0;
   transform: translateY(30px) scale(0.95) perspective(1000px) rotateX(5deg);
   animation: skillCategoryCardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   will-change: transform, box-shadow, filter;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .skill-category-card::after {
@@ -303,6 +307,10 @@
   gap: 0.75rem;
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 .skill-category-card__empty {

@@ -41,40 +41,59 @@ export class ContactForm extends Component<{}, ContactFormState> {
   }
 
   private validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    // Edge case: Trim whitespace before validation
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return false;
+    
+    // More comprehensive email validation
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return emailRegex.test(trimmedEmail);
   };
 
   private validate = (): boolean => {
     const { formData } = this.state;
     const errors: ContactFormState["errors"] = {};
 
-    // Name validation
-    if (!formData.name.trim()) {
+    // Name validation with edge cases
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
       errors.name = "Name is required";
-    } else if (formData.name.trim().length < 2) {
+    } else if (trimmedName.length < 2) {
       errors.name = "Name must be at least 2 characters";
+    } else if (trimmedName.length > 100) {
+      errors.name = "Name must be less than 100 characters";
+    } else if (!/^[a-zA-Z\s'-]+$/.test(trimmedName)) {
+      errors.name = "Name can only contain letters, spaces, hyphens, and apostrophes";
     }
 
-    // Email validation
-    if (!formData.email.trim()) {
+    // Email validation with edge cases
+    const trimmedEmail = formData.email.trim();
+    if (!trimmedEmail) {
       errors.email = "Email is required";
-    } else if (!this.validateEmail(formData.email)) {
+    } else if (trimmedEmail.length > 254) {
+      errors.email = "Email address is too long";
+    } else if (!this.validateEmail(trimmedEmail)) {
       errors.email = "Please enter a valid email address";
     }
 
-    // Subject validation
-    if (!formData.subject.trim()) {
+    // Subject validation with edge cases
+    const trimmedSubject = formData.subject.trim();
+    if (!trimmedSubject) {
       errors.subject = "Subject is required";
-    } else if (formData.subject.trim().length < 3) {
+    } else if (trimmedSubject.length < 3) {
       errors.subject = "Subject must be at least 3 characters";
+    } else if (trimmedSubject.length > 200) {
+      errors.subject = "Subject must be less than 200 characters";
     }
 
-    // Message validation
-    if (!formData.message.trim()) {
+    // Message validation with edge cases
+    const trimmedMessage = formData.message.trim();
+    if (!trimmedMessage) {
       errors.message = "Message is required";
-    } else if (formData.message.trim().length < 10) {
+    } else if (trimmedMessage.length < 10) {
       errors.message = "Message must be at least 10 characters";
+    } else if (trimmedMessage.length > 5000) {
+      errors.message = "Message must be less than 5000 characters";
     }
 
     this.setState({ errors });
@@ -83,10 +102,14 @@ export class ContactForm extends Component<{}, ContactFormState> {
 
   private handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value } = e.target;
+    
+    // Edge case: Prevent XSS by sanitizing input (basic)
+    const sanitizedValue = value.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+    
     this.setState((prevState) => ({
       formData: {
         ...prevState.formData,
-        [name]: value,
+        [name]: sanitizedValue,
       },
       // Clear error when user starts typing
       errors: {
@@ -99,8 +122,21 @@ export class ContactForm extends Component<{}, ContactFormState> {
   private handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
+    // Edge case: Prevent double submission
+    if (this.state.isSubmitting) {
+      return;
+    }
+
     if (!this.validate()) {
       toast.error("Please fix the errors in the form");
+      // Focus first error field for better UX
+      const firstErrorField = Object.keys(this.state.errors)[0];
+      if (firstErrorField) {
+        const errorElement = document.getElementById(`contact-${firstErrorField}`);
+        if (errorElement) {
+          errorElement.focus();
+        }
+      }
       return;
     }
 
@@ -119,6 +155,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
           subject: "",
           message: "",
         },
+        errors: {},
       });
 
       toast.success("Message sent successfully! I'll get back to you soon.");
@@ -138,22 +175,47 @@ export class ContactForm extends Component<{}, ContactFormState> {
     const apiUrl = process.env.REACT_APP_API_URL || '';
     const endpoint = `${apiUrl}/api/contact`;
 
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    // Edge case: Add timeout to prevent hanging requests
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: 'Failed to submit' }));
-      throw new Error(errorData.error || `HTTP ${response.status}: Failed to submit contact form`);
-    }
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        signal: controller.signal,
+      });
 
-    const result = await response.json();
-    if (!result.success) {
-      throw new Error(result.error || 'Failed to submit contact form');
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ 
+          error: `Server error: ${response.status}` 
+        }));
+        throw new Error(errorData.error || `HTTP ${response.status}: Failed to submit contact form`);
+      }
+
+      const result = await response.json().catch(() => ({ success: true }));
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to submit contact form');
+      }
+    } catch (error) {
+      clearTimeout(timeoutId);
+      
+      // Edge case: Handle network errors and timeouts
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Request timeout. Please check your connection and try again.');
+        }
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          throw new Error('Network error. Please check your connection and try again.');
+        }
+        throw error;
+      }
+      throw new Error('An unexpected error occurred. Please try again.');
     }
   };
 

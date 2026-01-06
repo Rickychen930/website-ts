@@ -33,6 +33,101 @@
   --color-white: #ffffff;
   --color-black: #000000;
   --color-transparent: transparent;
+  
+  /* White Alpha Variants */
+  --color-white-alpha-10: rgba(255, 255, 255, 0.1);
+  --color-white-alpha-20: rgba(255, 255, 255, 0.2);
+  --color-white-alpha-30: rgba(255, 255, 255, 0.3);
+  --color-white-alpha-40: rgba(255, 255, 255, 0.4);
+  --color-white-alpha-60: rgba(255, 255, 255, 0.6);
+  --color-white-alpha-70: rgba(255, 255, 255, 0.7);
+  --color-white-alpha-75: rgba(255, 255, 255, 0.75);
+  --color-white-alpha-80: rgba(255, 255, 255, 0.8);
+  --color-white-alpha-85: rgba(255, 255, 255, 0.85);
+  --color-white-alpha-90: rgba(255, 255, 255, 0.9);
+  --color-white-alpha-92: rgba(255, 255, 255, 0.92);
+  --color-white-alpha-95: rgba(255, 255, 255, 0.95);
+  --color-white-alpha-98: rgba(255, 255, 255, 0.98);
+  
+  /* Black Alpha Variants */
+  --color-black-alpha-05: rgba(0, 0, 0, 0.05);
+  --color-black-alpha-06: rgba(0, 0, 0, 0.06);
+  --color-black-alpha-08: rgba(0, 0, 0, 0.08);
+  --color-black-alpha-10: rgba(0, 0, 0, 0.1);
+  --color-black-alpha-12: rgba(0, 0, 0, 0.12);
+  --color-black-alpha-20: rgba(0, 0, 0, 0.2);
+  --color-black-alpha-30: rgba(0, 0, 0, 0.3);
+  --color-black-alpha-40: rgba(0, 0, 0, 0.4);
+  --color-black-alpha-50: rgba(0, 0, 0, 0.5);
+  --color-black-alpha-60: rgba(0, 0, 0, 0.6);
+  --color-black-alpha-80: rgba(0, 0, 0, 0.8);
+  
+  /* Dark Background Alpha Variants */
+  --color-bg-dark-alpha-70: rgba(26, 32, 44, 0.7);
+  --color-bg-dark-light-alpha-75: rgba(30, 37, 50, 0.75);
+  --color-bg-dark-overlay: rgba(15, 20, 40, 0.8);
+  
+  /* Accent Alpha Variants */
+  --color-accent-alpha-015: rgba(102, 126, 234, 0.015);
+  --color-accent-alpha-03: rgba(102, 126, 234, 0.03);
+  --color-accent-alpha-04: rgba(102, 126, 234, 0.04);
+  --color-accent-alpha-05: rgba(102, 126, 234, 0.05);
+  --color-accent-alpha-06: rgba(102, 126, 234, 0.06);
+  --color-accent-alpha-08: rgba(102, 126, 234, 0.08);
+  --color-accent-alpha-10: rgba(102, 126, 234, 0.1);
+  --color-accent-alpha-12: rgba(102, 126, 234, 0.12);
+  --color-accent-alpha-15: rgba(102, 126, 234, 0.15);
+  --color-accent-alpha-18: rgba(102, 126, 234, 0.18);
+  --color-accent-alpha-20: rgba(102, 126, 234, 0.2);
+  --color-accent-alpha-25: rgba(102, 126, 234, 0.25);
+  --color-accent-alpha-30: rgba(102, 126, 234, 0.3);
+  --color-accent-alpha-35: rgba(102, 126, 234, 0.35);
+  --color-accent-alpha-40: rgba(102, 126, 234, 0.4);
+  --color-accent-alpha-50: rgba(102, 126, 234, 0.5);
+  --color-accent-alpha-60: rgba(102, 126, 234, 0.6);
+  --color-accent-alpha-80: rgba(102, 126, 234, 0.8);
+  --color-accent-alpha-100: rgba(102, 126, 234, 1);
+  
+  /* Accent Alt Alpha Variants */
+  --color-accent-alt-alpha-03: rgba(118, 75, 162, 0.03);
+  --color-accent-alt-alpha-06: rgba(118, 75, 162, 0.06);
+  --color-accent-alt-alpha-08: rgba(118, 75, 162, 0.08);
+  --color-accent-alt-alpha-10: rgba(118, 75, 162, 0.1);
+  --color-accent-alt-alpha-15: rgba(118, 75, 162, 0.15);
+  --color-accent-alt-alpha-20: rgba(118, 75, 162, 0.2);
+  --color-accent-alt-alpha-30: rgba(118, 75, 162, 0.3);
+  --color-accent-alt-alpha-50: rgba(118, 75, 162, 0.5);
+  --color-accent-alt-alpha-60: rgba(118, 75, 162, 0.6);
+  --color-accent-alt-alpha-80: rgba(118, 75, 162, 0.8);
+  --color-accent-alt-alpha-90: rgba(118, 75, 162, 0.9);
+  
+  /* Accent Secondary Alpha Variants */
+  --color-accent-secondary-alpha-30: rgba(240, 147, 251, 0.3);
+  --color-accent-secondary-alpha-50: rgba(240, 147, 251, 0.5);
+  --color-accent-secondary-alpha-90: rgba(240, 147, 251, 0.9);
+  
+  /* Info Alpha Variants */
+  --color-info-alpha-20: rgba(59, 130, 246, 0.2);
+  --color-info-alpha-50: rgba(59, 130, 246, 0.5);
+  
+  /* Border Alpha Variants */
+  --color-border-alpha-30: rgba(220, 227, 234, 0.3);
+  --color-border-alpha-40: rgba(220, 227, 234, 0.4);
+  --color-border-alpha-50: rgba(220, 227, 234, 0.5);
+  --color-border-alpha-60: rgba(220, 227, 234, 0.6);
+  
+  /* Border Medium Alpha Variants */
+  --color-border-medium-alpha-50: rgba(203, 213, 224, 0.5);
+  
+  /* Border Link Alpha Variants */
+  --color-border-link-alpha-10: rgba(120, 162, 240, 0.1);
+  --color-border-link-alpha-15: rgba(120, 162, 240, 0.15);
+  --color-border-link-alpha-20: rgba(120, 162, 240, 0.2);
+  --color-border-alpha-50: rgba(220, 227, 234, 0.5);
+  --color-border-alpha-60: rgba(220, 227, 234, 0.6);
+  
+  /* Border Medium Alpha Variants */
+  --color-border-medium-alpha-50: rgba(203, 213, 224, 0.5);
 
   /* ============================================
      Accent Colors - Primary Brand Colors
@@ -142,6 +237,55 @@
   --color-info-light: rgba(59, 130, 246, 0.1);
   --color-info-dark: #2563eb;
   --color-info-text: #1d4ed8;
+
+  /* ============================================
+     Code Syntax Colors - Light Theme
+     ============================================ */
+  --color-code-keyword: #569cd6;
+  --color-code-variable: #9cdcfe;
+  --color-code-operator: #d4d4d4;
+  --color-code-bracket: #ffd700;
+  --color-code-string: #ce9178;
+  --color-code-punctuation: #d4d4d4;
+  --color-code-comment: #6a9955;
+  --color-code-background: #1e1e1e;
+
+  /* ============================================
+     Component-Specific Colors - Light Theme
+     ============================================ */
+  /* Tech Showcase */
+  --tech-showcase-bg-card: rgba(15, 20, 40, 0.9);
+  
+  /* Languages Section */
+  --language-success: var(--color-success);
+  --language-warning: var(--color-warning);
+  --language-error: var(--color-error);
+  
+  /* Honors Section */
+  --honors-gold: #d4af37;
+  --honors-gold-light: #f4e4bc;
+  --honors-gold-dark: #b8941f;
+  
+  /* About Me Section */
+  --about-me-color-bg-glow: var(--color-accent-glow);
+  
+  /* Certification Section */
+  --cert-color-glow: var(--color-accent-glow-strong);
+  
+  /* Footer Section */
+  --footer-gradient-start: var(--color-accent-glow);
+  --footer-gradient-end: rgba(118, 75, 162, 0.1);
+  --footer-text-primary: rgba(255, 255, 255, 0.95);
+  --footer-text-secondary: rgba(255, 255, 255, 0.7);
+  --footer-text-muted: rgba(255, 255, 255, 0.5);
+  --footer-border-color: rgba(255, 255, 255, 0.1);
+  
+  /* Contact Section */
+  --contact-primary-light: var(--color-accent-glow);
+  --contact-primary-lighter: rgba(102, 126, 234, 0.05);
+  
+  /* Contact Section Dark Mode Colors - Light Theme (for reference) */
+  /* These are only used in dark mode media query, defined in dark theme section */
 
   /* ============================================
      Gradients - Light Theme
@@ -388,6 +532,18 @@
   --color-bg-lighter: #1a1f2e;
   --color-bg-lightest: #151b26;
   
+  /* Background Light Alpha Variants - Dark Theme */
+  --color-bg-light-alpha-95: rgba(30, 37, 50, 0.95);
+  --color-bg-light-alpha-98: rgba(30, 37, 50, 0.98);
+  --color-bg-lighter-alpha-90: rgba(26, 32, 44, 0.9);
+  --color-bg-lighter-alpha-95: rgba(26, 32, 44, 0.95);
+  --color-bg-lightest-alpha-98: rgba(15, 20, 40, 0.98);
+  --color-bg-lightest-alpha-95: rgba(15, 20, 40, 0.98);
+  
+  /* Background Red/Pink Alpha Variants - Dark Theme */
+  --color-bg-red-alpha-95: rgba(30, 37, 50, 0.95);
+  --color-bg-pink-alpha-95: rgba(30, 37, 50, 0.95);
+  
   --color-bg-card: #1e2532;
   --color-bg-card-alt: #1a2230;
   --color-bg-card-hover: #252d3d;
@@ -459,11 +615,19 @@
   
   --color-error: #f87171;
   --color-error-light: rgba(248, 113, 113, 0.15);
+  --color-error-alpha-10: rgba(248, 113, 113, 0.1);
+  --color-error-alpha-20: rgba(248, 113, 113, 0.2);
+  --color-error-alpha-30: rgba(248, 113, 113, 0.3);
   --color-error-dark: #ef4444;
   --color-error-text: #fca5a5;
   
   --color-warning: #fbbf24;
   --color-warning-light: rgba(251, 191, 36, 0.15);
+  --color-warning-alpha-03: rgba(251, 191, 36, 0.03);
+  --color-warning-alpha-04: rgba(245, 158, 11, 0.04);
+  --color-warning-alpha-06: rgba(245, 158, 11, 0.06);
+  --color-warning-alpha-40: rgba(251, 191, 36, 0.4);
+  --color-warning-alpha-50: rgba(251, 191, 36, 0.5);
   --color-warning-dark: #f59e0b;
   --color-warning-text: #fcd34d;
   
@@ -471,6 +635,64 @@
   --color-info-light: rgba(96, 165, 250, 0.15);
   --color-info-dark: #3b82f6;
   --color-info-text: #93c5fd;
+
+  /* ============================================
+     Code Syntax Colors - Dark Theme
+     ============================================ */
+  --color-code-keyword: #569cd6;
+  --color-code-variable: #9cdcfe;
+  --color-code-operator: #d4d4d4;
+  --color-code-bracket: #ffd700;
+  --color-code-string: #ce9178;
+  --color-code-punctuation: #d4d4d4;
+  --color-code-comment: #6a9955;
+  --color-code-background: #1e1e1e;
+
+  /* ============================================
+     Component-Specific Colors - Dark Theme
+     ============================================ */
+  /* Tech Showcase */
+  --tech-showcase-bg-card: rgba(15, 20, 40, 0.95);
+  
+  /* Languages Section */
+  --language-success: var(--color-success);
+  --language-warning: var(--color-warning);
+  --language-error: var(--color-error);
+  
+  /* Honors Section */
+  --honors-gold: #d4af37;
+  --honors-gold-light: #f4e4bc;
+  --honors-gold-dark: #b8941f;
+  
+  /* About Me Section */
+  --about-me-color-bg-glow: var(--color-accent-glow);
+  
+  /* Certification Section */
+  --cert-color-glow: var(--color-accent-glow-strong);
+  
+  /* Footer Section */
+  --footer-gradient-start: var(--color-accent-glow);
+  --footer-gradient-end: rgba(118, 75, 162, 0.15);
+  --footer-text-primary: rgba(255, 255, 255, 0.95);
+  --footer-text-secondary: rgba(255, 255, 255, 0.7);
+  --footer-text-muted: rgba(255, 255, 255, 0.5);
+  --footer-border-color: rgba(255, 255, 255, 0.15);
+  
+  /* Contact Section */
+  --contact-primary-light: var(--color-accent-glow);
+  --contact-primary-lighter: rgba(102, 126, 234, 0.08);
+  
+  /* Contact Section Dark Mode Colors */
+  --contact-bg-card: #1a202c;
+  --contact-bg-hover: #2d3748;
+  --contact-bg-subtle: #252b37;
+  --contact-text-primary: #f7fafc;
+  --contact-text-secondary: #e2e8f0;
+  --contact-text-muted: #cbd5e1;
+  --contact-text-light: #a0aec0;
+  --contact-border: #4a5568;
+  --contact-border-hover: #718096;
+  --contact-border-light: #2d3748;
 
   /* ============================================
      Gradients - Dark Theme

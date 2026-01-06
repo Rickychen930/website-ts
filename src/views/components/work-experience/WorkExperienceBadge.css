@@ -1,31 +1,38 @@
 /**
- * WorkExperienceBadge Styles
- * Luxury, Professional Badge Design
+ * WorkExperienceBadge Styles - LUXURY REDESIGN
+ * Premium, Modern Badge Design
+ * Complete redesign for luxury appearance
  */
 
 .work-experience-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.4rem 0.9rem;
+  padding: 0.5rem 1rem;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Technology Badge */
+/* ─── Premium Technology Badge ─── */
 .work-experience-badge-technology {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.15) 0%,
+    rgba(118, 75, 162, 0.12) 100%
+  );
   color: #667eea;
-  border: 1px solid rgba(102, 126, 234, 0.25);
+  border: 1.5px solid rgba(102, 126, 234, 0.3);
   box-shadow: 
-    0 2px 8px rgba(102, 126, 234, 0.15),
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    0 4px 12px rgba(102, 126, 234, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
   overflow: hidden;
 }
@@ -40,77 +47,181 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.4) 50%,
     transparent 100%
   );
-  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-badge-technology::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .work-experience-badge-technology:hover::before {
   left: 100%;
 }
 
-.work-experience-badge-technology:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.18) 0%, rgba(118, 75, 162, 0.18) 100%);
-  color: #5b21b6;
-  border-color: rgba(102, 126, 234, 0.4);
-  box-shadow: 
-    0 4px 16px rgba(102, 126, 234, 0.25),
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px) scale(1.02);
+.work-experience-badge-technology:hover::after {
+  opacity: 1;
 }
 
-/* Achievement Badge */
+.work-experience-badge-technology:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.22) 0%,
+    rgba(118, 75, 162, 0.18) 100%
+  );
+  color: #5b21b6;
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 
+    0 6px 20px rgba(102, 126, 234, 0.3),
+    0 3px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* ─── Premium Achievement Badge ─── */
 .work-experience-badge-achievement {
-  background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(240, 147, 251, 0.12) 0%,
+    rgba(102, 126, 234, 0.1) 100%
+  );
   color: #764ba2;
-  border: 1px solid rgba(118, 75, 162, 0.2);
-  box-shadow: 0 2px 6px rgba(118, 75, 162, 0.1);
+  border: 1.5px solid rgba(118, 75, 162, 0.25);
+  box-shadow: 
+    0 4px 12px rgba(118, 75, 162, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.work-experience-badge-achievement::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-badge-achievement:hover::before {
+  left: 100%;
 }
 
 .work-experience-badge-achievement:hover {
-  background: linear-gradient(135deg, rgba(240, 147, 251, 0.15) 0%, rgba(102, 126, 234, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(240, 147, 251, 0.18) 0%,
+    rgba(102, 126, 234, 0.15) 100%
+  );
   color: #5b21b6;
-  border-color: rgba(118, 75, 162, 0.3);
-  box-shadow: 0 4px 12px rgba(118, 75, 162, 0.2);
-  transform: translateY(-2px);
+  border-color: rgba(118, 75, 162, 0.4);
+  box-shadow: 
+    0 6px 20px rgba(118, 75, 162, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px) scale(1.05);
 }
 
-/* Default Badge */
+/* ─── Premium Default Badge ─── */
 .work-experience-badge-default {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.12) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
   color: #667eea;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.1);
+  border: 1.5px solid rgba(102, 126, 234, 0.25);
+  box-shadow: 
+    0 4px 12px rgba(102, 126, 234, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.work-experience-badge-default::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-badge-default:hover::before {
+  left: 100%;
 }
 
 .work-experience-badge-default:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.18) 0%,
+    rgba(118, 75, 162, 0.15) 100%
+  );
   color: #5b21b6;
-  border-color: rgba(102, 126, 234, 0.3);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-  transform: translateY(-2px);
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 
+    0 6px 20px rgba(102, 126, 234, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px) scale(1.05);
 }
 
-/* Responsive Design */
+/* ─── Responsive Design ─── */
 @media screen and (width <= 768px) {
   .work-experience-badge {
-    padding: 0.35rem 0.75rem;
+    padding: 0.45rem 0.875rem;
     font-size: 0.8125rem;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 }
 
 @media screen and (width <= 480px) {
   .work-experience-badge {
-    padding: 0.3rem 0.65rem;
+    padding: 0.4rem 0.75rem;
     font-size: 0.75rem;
+    border-radius: 8px;
+  }
+}
+
+@media screen and (width <= 360px) {
+  .work-experience-badge {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.7rem;
     border-radius: 6px;
   }
 }
 
-/* Reduced Motion */
+/* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .work-experience-badge {
     transition: none;
@@ -119,5 +230,10 @@
   .work-experience-badge:hover {
     transform: none;
   }
-}
 
+  .work-experience-badge-technology::before,
+  .work-experience-badge-achievement::before,
+  .work-experience-badge-default::before {
+    display: none;
+  }
+}

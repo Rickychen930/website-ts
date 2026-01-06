@@ -244,14 +244,12 @@ class CertificationSection extends Component<
     const itemsToRender = processedData.slice(0, this.MAX_ITEMS_TO_RENDER);
 
     return (
-      <div className="certification-section-wrapper">
-        <CertificationGrid
-          certifications={itemsToRender}
-          visibleItems={visibleItems}
-          onVisibilityChange={this.handleVisibilityChange}
-          onLinkClick={this.handleLinkClick}
-        />
-      </div>
+      <CertificationGrid
+        certifications={itemsToRender}
+        visibleItems={visibleItems}
+        onVisibilityChange={this.handleVisibilityChange}
+        onLinkClick={this.handleLinkClick}
+      />
     );
   }
 
