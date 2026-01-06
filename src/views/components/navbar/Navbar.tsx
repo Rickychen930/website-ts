@@ -10,11 +10,14 @@ import React from "react";
 import NavbarContainer from "./NavbarContainer";
 import "../../../assets/css/navbar.css";
 
+import { NavbarItemType } from "../../../types/navbar";
+
 interface NavbarComponentProps {
-  items: string[];
+  items: string[] | NavbarItemType[];
   brandIcon?: string;
   brandText?: string;
   brandLogo?: string; // Logo image path
+  useDropdowns?: boolean; // Enable dropdown mode
 }
 
 /**

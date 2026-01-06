@@ -12,11 +12,11 @@
  * - Composition: Uses NavbarLink component (Component-Based)
  */
 import React, { ReactNode, createRef, RefObject, CSSProperties } from "react";
-import { NavbarItem } from "../../../types/navbar";
+import { NavbarItem, NavbarItemType } from "../../../types/navbar";
 import NavbarLink from "./NavbarLink";
 
 export interface NavbarLinksProps {
-  items: NavbarItem[];
+  items: NavbarItemType[];
   activeItemId: string | null;
   isOpen: boolean;
   isCompact: boolean;
@@ -27,6 +27,31 @@ export interface NavbarLinksProps {
 
 class NavbarLinks extends React.Component<NavbarLinksProps> {
   private defaultRef = createRef<HTMLUListElement>();
+
+  /**
+   * Flatten dropdown items for mobile view
+   * In mobile, dropdowns are expanded as regular links
+   */
+  private flattenItemsForMobile(items: NavbarItemType[]): NavbarItem[] {
+    const flattened: NavbarItem[] = [];
+
+    items.forEach((item) => {
+      if ('children' in item && item.children && item.children.length > 0) {
+        // Add parent as a link (optional, or skip it)
+        // flattened.push({ ...item, id: item.id, label: item.label, href: item.href });
+        
+        // Add all children
+        item.children.forEach((child) => {
+          flattened.push(child);
+        });
+      } else {
+        // Regular item
+        flattened.push(item as NavbarItem);
+      }
+    });
+
+    return flattened;
+  }
 
   render(): ReactNode {
     const {
@@ -41,6 +66,11 @@ class NavbarLinks extends React.Component<NavbarLinksProps> {
 
     const className = `navbar-links ${isOpen ? "open" : ""} ${isCompact ? "mobile" : ""}`;
 
+    // For mobile, flatten dropdown items
+    const displayItems = isCompact 
+      ? this.flattenItemsForMobile(items)
+      : items.filter(item => !('children' in item && item.children && item.children.length > 0)) as NavbarItem[];
+
     return (
       <ul
         ref={linksRef}
@@ -48,7 +78,7 @@ class NavbarLinks extends React.Component<NavbarLinksProps> {
         role="menubar"
         style={style}
       >
-        {items.map((item: NavbarItem, index: number) => (
+        {displayItems.map((item: NavbarItem, index: number) => (
           <NavbarLink
             key={item.id}
             item={item}

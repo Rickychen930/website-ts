@@ -2,6 +2,7 @@ import { UserService } from "../services/user-service";
 import { SectionManager, ISectionConfig } from "../models/section-model";
 import { UserProfile } from "../types/user";
 import { logError } from "../utils/logger";
+import { NavbarItemType, NavbarDropdownItem } from "../types/navbar";
 
 /**
  * MainPageController - Controller Layer (MVC Pattern)
@@ -53,11 +54,45 @@ export class MainPageController {
   }
 
   /**
-   * Get navbar items
+   * Get navbar items (legacy method for backward compatibility)
    * @returns Array of navbar item labels
    */
   getNavbarItems(): string[] {
     return [...this.navbarItems];
+  }
+
+  /**
+   * Get navbar items with dropdown structure
+   * Groups items logically for professional, clean header
+   * @returns Array of navbar items with dropdowns
+   */
+  getNavbarItemsWithDropdowns(): NavbarItemType[] {
+    return [
+      { id: "nav-item-about", label: "About", href: "#about" },
+      {
+        id: "nav-item-education",
+        label: "Education",
+        href: "#education",
+        children: [
+          { id: "nav-item-academic", label: "Academic", href: "#academic" },
+          { id: "nav-item-honors", label: "Honors", href: "#honors" },
+          { id: "nav-item-certifications", label: "Certifications", href: "#certifications" },
+        ],
+      } as NavbarDropdownItem,
+      {
+        id: "nav-item-skills",
+        label: "Skills",
+        href: "#skills",
+        children: [
+          { id: "nav-item-technical-skills", label: "Technical Skills", href: "#skills" },
+          { id: "nav-item-soft-skills", label: "Soft Skills", href: "#soft-skills" },
+          { id: "nav-item-languages", label: "Languages", href: "#languages" },
+        ],
+      } as NavbarDropdownItem,
+      { id: "nav-item-experience", label: "Experience", href: "#experience" },
+      { id: "nav-item-projects", label: "Projects", href: "#projects" },
+      { id: "nav-item-contact", label: "Contact", href: "#contact" },
+    ];
   }
 
   /**

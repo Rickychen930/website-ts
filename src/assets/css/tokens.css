@@ -133,17 +133,17 @@
   --line-height-loose: 2;
 
   /* ============================================
-     Layout & Sizing - Consistent Spacing
+     Layout & Sizing - Consistent Spacing (Optimized)
      ============================================ */
-  --section-padding: 3.5rem 2.5rem;
-  --section-padding-alt: 3rem;
-  --section-padding-mobile: 2rem 1.5rem;
-  --section-margin: 3rem;
-  --section-margin-mobile: 2rem;
-  --footer-padding: 2.5rem 2rem;
-  --card-padding: 3.5rem clamp(2rem, 5vw, 4rem);
-  --card-padding-alt: 3rem 2.5rem;
-  --card-padding-mobile: 2rem 1.5rem;
+  --section-padding: 2.5rem 2rem;
+  --section-padding-alt: 2.25rem;
+  --section-padding-mobile: 1.75rem 1.25rem;
+  --section-margin: 2.5rem;
+  --section-margin-mobile: 1.75rem;
+  --footer-padding: 2rem 1.75rem;
+  --card-padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+  --card-padding-alt: 2.25rem 2rem;
+  --card-padding-mobile: 1.75rem 1.25rem;
   --card-max-width: 1200px;
   --card-radius: 24px;
   --card-radius-alt: 20px;
@@ -155,7 +155,7 @@
   --btn-radius: 12px;
   --btn-radius-mobile: 10px;
   --stat-radius: 16px;
-  --timeline-padding: 3rem;
+  --timeline-padding: 2.5rem;
   --icon-size: 3rem;
   --icon-size-lg: 3.5rem;
   --icon-size-mobile: 2.5rem;

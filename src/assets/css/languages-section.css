@@ -81,7 +81,7 @@
 .language-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: var(--language-spacing-lg);
+  gap: var(--language-spacing-md);
   position: relative;
   padding: 0;
   margin: 0;
@@ -788,7 +788,7 @@
 @media screen and (min-width: 1920px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: var(--language-spacing-xl);
+    gap: var(--language-spacing-lg);
   }
 
   .language-card {

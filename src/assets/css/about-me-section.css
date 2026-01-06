@@ -47,7 +47,7 @@
 .about-me-content {
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-xxl);
+  gap: var(--about-me-spacing-xl);
   width: 100%;
   opacity: 0;
   transform: translateY(30px);
@@ -119,9 +119,9 @@
 .about-me-hero-section {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: var(--about-me-spacing-xxl);
+  gap: var(--about-me-spacing-xl);
   align-items: start;
-  margin-bottom: var(--about-me-spacing-xl);
+  margin-bottom: var(--about-me-spacing-lg);
   position: relative;
   z-index: 1;
 }

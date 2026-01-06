@@ -25,6 +25,7 @@ class NavbarController {
       isScrolled: false,
       isCompact: false,
       activeItemId: null,
+      openDropdownId: null,
     };
   }
 
@@ -104,6 +105,29 @@ class NavbarController {
    */
   setActiveItem(itemId: string): NavbarState {
     this.state.activeItemId = itemId;
+    return this.getState();
+  }
+
+  /**
+   * Toggle dropdown menu
+   * @param dropdownId - ID of the dropdown to toggle
+   * @returns Updated state
+   */
+  toggleDropdown(dropdownId: string): NavbarState {
+    if (this.state.openDropdownId === dropdownId) {
+      this.state.openDropdownId = null;
+    } else {
+      this.state.openDropdownId = dropdownId;
+    }
+    return this.getState();
+  }
+
+  /**
+   * Close dropdown menu
+   * @returns Updated state
+   */
+  closeDropdown(): NavbarState {
+    this.state.openDropdownId = null;
     return this.getState();
   }
 

@@ -80,7 +80,7 @@
 #contact-section .contact-section-wrapper {
   position: relative;
   width: 100%;
-  margin-top: var(--contact-spacing-lg);
+  margin-top: var(--contact-spacing-md);
   padding: 0;
   isolation: isolate;
 }

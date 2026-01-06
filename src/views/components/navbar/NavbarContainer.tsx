@@ -15,11 +15,12 @@
  */
 import React, { Component, ReactNode, createRef } from "react";
 import NavbarController from "../../../controllers/navbar-controller";
-import { NavbarConfig } from "../../../types/navbar";
+import { NavbarConfig, NavbarItemType, NavbarDropdownItem } from "../../../types/navbar";
 import NavbarBrand from "./NavbarBrand";
 import NavbarToggle from "./NavbarToggle";
 import NavbarLinks from "./NavbarLinks";
 import NavbarMobileMenu from "./NavbarMobileMenu";
+import NavbarDropdown from "./NavbarDropdown";
 import { NavbarEventManager } from "./utils/NavbarEventManager";
 import { NavbarPositionCalculator } from "./utils/NavbarPositionCalculator";
 import { NavbarPortalManager } from "./utils/NavbarPortalManager";
@@ -29,10 +30,11 @@ import ShareButton from "../../../components/share/share-button";
 import "../../../assets/css/navbar-search.css";
 
 export interface NavbarContainerProps {
-  items: string[];
+  items: string[] | NavbarItemType[];
   brandIcon?: string;
   brandText?: string;
   brandLogo?: string; // Logo image path
+  useDropdowns?: boolean; // Enable dropdown mode
 }
 
 interface NavbarContainerState {
@@ -56,8 +58,13 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
     super(props);
     
     // Initialize controller
+    const useDropdowns = props.useDropdowns ?? false;
+    const items = useDropdowns && Array.isArray(props.items) && props.items.length > 0 && typeof props.items[0] !== 'string'
+      ? props.items as NavbarItemType[]
+      : NavbarController.createNavbarItems(props.items as string[]);
+    
     const config: NavbarConfig = {
-      items: NavbarController.createNavbarItems(props.items),
+      items,
       brandIcon: props.brandIcon,
       brandText: props.brandText,
       brandLogo: props.brandLogo,
@@ -146,9 +153,13 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       this.handleCloseMenu();
     }
 
-    // Set active item
-    const updatedState = this.state.controller.setActiveItem(itemId);
+    // Close any open dropdowns
+    const updatedState = this.state.controller.closeDropdown();
     this.setState({ state: updatedState });
+
+    // Set active item
+    const finalState = this.state.controller.setActiveItem(itemId);
+    this.setState({ state: finalState });
 
     // Smooth scroll to section
     try {
@@ -162,6 +173,22 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
         logWarn("Error scrolling to section", error, "NavbarContainer");
       }
     }
+  };
+
+  /**
+   * Handle dropdown toggle
+   */
+  private handleDropdownToggle = (dropdownId: string): void => {
+    const updatedState = this.state.controller.toggleDropdown(dropdownId);
+    this.setState({ state: updatedState });
+  };
+
+  /**
+   * Handle dropdown close
+   */
+  private handleDropdownClose = (): void => {
+    const updatedState = this.state.controller.closeDropdown();
+    this.setState({ state: updatedState });
   };
 
   /**
@@ -253,12 +280,21 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
   }
 
   /**
+   * Check if items have dropdowns
+   */
+  private hasDropdowns(): boolean {
+    const config = this.state.controller.getConfig();
+    return config.items.some(item => 'children' in item && item.children && item.children.length > 0);
+  }
+
+  /**
    * Render navigation links (desktop or mobile via portal)
    */
   private renderNavLinks(): ReactNode {
     const config = this.state.controller.getConfig();
     const { items } = config;
-    const { isOpen, activeItemId, isCompact } = this.state.state;
+    const { isOpen, activeItemId, isCompact, openDropdownId } = this.state.state;
+    const useDropdowns = this.hasDropdowns();
 
     // Mobile menu - render via portal
     if (isCompact) {
@@ -279,7 +315,65 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       }
     }
 
-    // Desktop menu - render normally
+    // Desktop menu - render with dropdowns if available
+    if (useDropdowns) {
+      return (
+        <ul
+          ref={this.linksRef}
+          className="navbar-links"
+          role="menubar"
+        >
+          {items.map((item) => {
+            const isDropdown = 'children' in item && item.children && item.children.length > 0;
+            
+            if (isDropdown) {
+              const dropdownItem = item as NavbarDropdownItem;
+              const isDropdownOpen = openDropdownId === item.id;
+              const isActive = activeItemId === item.id || 
+                (dropdownItem.children?.some(child => child.id === activeItemId) ?? false);
+              
+              return (
+                <NavbarDropdown
+                  key={item.id}
+                  item={dropdownItem}
+                  isOpen={isDropdownOpen}
+                  isActive={isActive}
+                  activeItemId={activeItemId}
+                  onClick={this.handleItemClick}
+                  onToggle={this.handleDropdownToggle}
+                  onClose={this.handleDropdownClose}
+                />
+              );
+            } else {
+              // Regular link
+              return (
+                <li key={item.id} role="none">
+                  <a
+                    href={item.href}
+                    className={`navbar-link ${activeItemId === item.id ? "active" : ""}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.handleItemClick(item.id, item.href);
+                    }}
+                    role="menuitem"
+                    aria-current={activeItemId === item.id ? "page" : undefined}
+                  >
+                    {item.icon && (
+                      <span className="navbar-link-icon" aria-hidden="true">
+                        {item.icon}
+                      </span>
+                    )}
+                    <span className="navbar-link-text">{item.label}</span>
+                  </a>
+                </li>
+              );
+            }
+          })}
+        </ul>
+      );
+    }
+
+    // Desktop menu - render normally (backward compatibility)
     return (
       <NavbarLinks
         items={items}

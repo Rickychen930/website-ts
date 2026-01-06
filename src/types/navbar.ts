@@ -10,15 +10,22 @@ export interface NavbarItem {
   icon?: string;
 }
 
+export interface NavbarDropdownItem extends NavbarItem {
+  children?: NavbarItem[];
+}
+
+export type NavbarItemType = NavbarItem | NavbarDropdownItem;
+
 export interface NavbarState {
   isOpen: boolean;
   isScrolled: boolean;
   isCompact: boolean;
   activeItemId: string | null;
+  openDropdownId: string | null;
 }
 
 export interface NavbarConfig {
-  items: NavbarItem[];
+  items: NavbarItemType[];
   brandIcon?: string;
   brandText?: string;
   brandLogo?: string; // Logo image path

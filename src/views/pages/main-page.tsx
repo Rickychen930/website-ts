@@ -213,9 +213,10 @@ class MainPage extends BasePage<{}, MainPageState> {
   protected renderHeader(): ReactNode {
     return (
       <Navbar 
-        items={this.controller.getNavbarItems()}
+        items={this.controller.getNavbarItemsWithDropdowns()}
         brandLogo="/logo.png"
         brandText=""
+        useDropdowns={true}
       />
     );
   }
