@@ -5,10 +5,10 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ContactForm from '../contact-form';
-import { toast } from '../../ui';
+import { toast } from '../../../views/components/ui';
 
 // Mock toast
-jest.mock('../../ui', () => ({
+jest.mock('../../../views/components/ui', () => ({
   toast: {
     success: jest.fn(),
     error: jest.fn(),

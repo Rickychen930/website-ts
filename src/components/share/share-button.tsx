@@ -140,7 +140,10 @@ export class ShareButton extends Component<ShareButtonProps, ShareButtonState> {
         (window as any).toast.success("Link copied to clipboard!");
       }
     } catch (error) {
-      console.error("Failed to copy:", error);
+      if (process.env.NODE_ENV === 'development') {
+        const { logError } = require('../../utils/logger');
+        logError("Failed to copy to clipboard", error, "ShareButton");
+      }
     }
   };
 

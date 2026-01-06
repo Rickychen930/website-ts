@@ -225,7 +225,8 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
           this.observer?.observe(card);
         } catch (err) {
           if (process.env.NODE_ENV === "development") {
-            console.warn("Failed to observe project card:", err);
+            const { logWarn } = require('../../../utils/logger');
+            logWarn("Failed to observe project card", err, "ProjectsSection");
           }
         }
       });

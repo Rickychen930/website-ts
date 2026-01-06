@@ -111,7 +111,8 @@ export function measurePerformance(name: string, fn: () => void): void {
 
     const measure = performance.getEntriesByName(measureName)[0];
     if (process.env.NODE_ENV === "development") {
-      console.log(`Performance [${name}]:`, measure.duration, "ms");
+      const { logDebug } = require('./logger');
+      logDebug(`Performance [${name}]: ${measure.duration}ms`, undefined, "Performance");
     }
   } else {
     fn();

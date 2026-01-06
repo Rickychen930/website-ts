@@ -129,7 +129,8 @@ class Image extends Component<ImageProps, ImageState> {
     this.setState({ error: true, loaded: false });
     
     if (process.env.NODE_ENV === 'development') {
-      console.warn(`Failed to load image: ${this.props.src}`);
+      const { logWarn } = require('../../../utils/logger');
+      logWarn(`Failed to load image: ${this.props.src}`, undefined, "Image");
     }
   };
 

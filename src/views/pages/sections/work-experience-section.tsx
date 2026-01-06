@@ -263,7 +263,8 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
               observedCount++;
             } catch (err) {
               if (process.env.NODE_ENV === 'development') {
-                console.warn("Failed to observe work experience card:", err);
+                const { logWarn } = require('../../../utils/logger');
+                logWarn("Failed to observe work experience card", err, "WorkExperienceSection");
               }
             }
           });

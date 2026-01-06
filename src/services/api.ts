@@ -29,7 +29,12 @@ export interface RequestConfig extends RequestInit {
 /**
  * API Client Configuration
  */
-const DEFAULT_CONFIG: Required<Omit<RequestConfig, 'cache' | 'cacheTime'>> = {
+const DEFAULT_CONFIG: {
+  timeout: number;
+  retries: number;
+  retryDelay: number;
+  headers: HeadersInit;
+} = {
   timeout: 15000,
   retries: 3,
   retryDelay: 1000,
@@ -226,7 +231,8 @@ export class ApiClient {
     this.baseUrl = baseUrl || process.env.REACT_APP_API_URL || '';
     
     if (!this.baseUrl && process.env.NODE_ENV === 'development') {
-      console.warn('⚠️ REACT_APP_API_URL is not defined');
+      const { logWarn } = require('../utils/logger');
+      logWarn('REACT_APP_API_URL is not defined', undefined, 'ApiClient');
     }
   }
 

@@ -127,7 +127,10 @@ class Card extends PureComponent<CardProps> {
 
     // Edge case: Ensure we always have content
     if (!this.props.children && !this.props.title) {
-      console.warn("⚠️ Card component rendered without content");
+      if (process.env.NODE_ENV === 'development') {
+        const { logWarn } = require('../../../utils/logger');
+        logWarn("Card component rendered without content", undefined, "Card");
+      }
       return null;
     }
 

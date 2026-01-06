@@ -197,7 +197,8 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
       );
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        console.error(`Error rendering section ${config.id}:`, error);
+        const { logError } = require('../../utils/logger');
+        logError(`Error rendering section ${config.id}`, error, "LazySection");
       }
       return null;
     }

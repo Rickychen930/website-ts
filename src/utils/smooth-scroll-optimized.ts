@@ -35,7 +35,10 @@ export class SmoothScrollOptimized {
 
     const element = document.getElementById(elementId);
     if (!element) {
-      console.warn(`Element with id "${elementId}" not found`);
+      if (process.env.NODE_ENV === 'development') {
+        const { logWarn } = require('./logger');
+        logWarn(`Element with id "${elementId}" not found`, undefined, "SmoothScrollOptimized");
+      }
       return;
     }
 

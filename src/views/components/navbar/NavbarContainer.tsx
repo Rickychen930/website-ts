@@ -24,7 +24,7 @@ import { NavbarEventManager } from "./utils/NavbarEventManager";
 import { NavbarPositionCalculator } from "./utils/NavbarPositionCalculator";
 import { NavbarPortalManager } from "./utils/NavbarPortalManager";
 import { NavbarBodyScrollLock } from "./utils/NavbarBodyScrollLock";
-import { ThemeToggle } from "../../ui";
+import { ThemeToggle } from "../ui";
 import ShareButton from "../../../components/share/share-button";
 
 export interface NavbarContainerProps {
@@ -86,7 +86,8 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       }
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        console.warn("Error in scroll handler:", error);
+        const { logWarn } = require('../../../utils/logger');
+        logWarn("Error in scroll handler", error, "NavbarContainer");
       }
     }
   };
@@ -102,7 +103,8 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       }
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        console.warn("Error in resize handler:", error);
+        const { logWarn } = require('../../../utils/logger');
+        logWarn("Error in resize handler", error, "NavbarContainer");
       }
     }
   };
@@ -155,7 +157,8 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       }
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        console.warn("Error scrolling to section:", error);
+        const { logWarn } = require('../../../utils/logger');
+        logWarn("Error scrolling to section", error, "NavbarContainer");
       }
     }
   };

@@ -4,7 +4,7 @@
  */
 
 import React, { Component, ReactNode, FormEvent, ChangeEvent } from "react";
-import { toast } from "../ui";
+import { toast } from "../../views/components/ui";
 import "../../assets/css/contact-form.css";
 
 interface ContactFormState {
@@ -128,7 +128,8 @@ export class ContactForm extends Component<{}, ContactFormState> {
       toast.error(errorMessage);
       // Log error for debugging (only in development)
       if (process.env.NODE_ENV === 'development') {
-        console.error("Form submission error:", error);
+        const { logError } = require('../../utils/logger');
+        logError("Form submission error", error, "ContactForm");
       }
     }
   };
