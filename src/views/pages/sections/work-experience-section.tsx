@@ -67,8 +67,8 @@ type WorkExperienceState = {
  * Centralized for maintainability (DRY)
  */
 const OBSERVER_CONFIG: IntersectionObserverInit = {
-  threshold: 0.1,
-  rootMargin: "50px",
+  threshold: 0.01,
+  rootMargin: "100px",
 };
 
 /**
@@ -224,14 +224,15 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
       return;
     }
 
+    // Show all items immediately for better UX
+    const allKeys = this.state.experiences.map((item) => item.key);
+    this.setState({ 
+      visibleItems: new Set(allKeys),
+      isInitialized: true,
+    });
+
     // Check if IntersectionObserver is supported
     if (typeof IntersectionObserver === "undefined") {
-      // Fallback for browsers without IntersectionObserver support
-      const allKeys = this.state.experiences.map((item) => item.key);
-      this.setState({ 
-        visibleItems: new Set(allKeys),
-        isInitialized: true,
-      });
       return;
     }
 
@@ -270,43 +271,18 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         return observedCount;
       };
 
-      // Try to observe elements with retries
+      // Try to observe elements with retries (for potential future animations)
       // Use setTimeout to ensure DOM is fully rendered after setState
       setTimeout(() => {
         if (!this.isMounted) return;
-        
-        let observedCount = observeElements();
-        
-        if (observedCount === 0) {
-          // Retry after a longer delay to ensure DOM is ready
-          setTimeout(() => {
-            if (!this.isMounted) return;
-            observedCount = observeElements();
-            
-            // If still no elements found, show all items as fallback
-            if (observedCount === 0 && this.state.experiences.length > 0) {
-              const allKeys = this.state.experiences.map((item) => item.key);
-              this.setState({ 
-                visibleItems: new Set(allKeys),
-                isInitialized: true,
-              });
-            } else if (observedCount > 0) {
-              this.setState({ isInitialized: true });
-            } else {
-              // Final fallback: initialize even if no elements found
-              this.setState({ isInitialized: true });
-            }
-          }, 200);
-        } else {
-          this.setState({ isInitialized: true });
-        }
+        observeElements();
       }, 50);
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error("❌ Error initializing IntersectionObserver:", error);
       }
       
-      // Fallback: show all items
+      // Fallback: show all items immediately
       const allKeys = this.state.experiences.map((item) => item.key);
       this.setState({ 
         visibleItems: new Set(allKeys),

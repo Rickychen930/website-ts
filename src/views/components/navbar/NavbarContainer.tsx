@@ -24,6 +24,7 @@ import { NavbarEventManager } from "./utils/NavbarEventManager";
 import { NavbarPositionCalculator } from "./utils/NavbarPositionCalculator";
 import { NavbarPortalManager } from "./utils/NavbarPortalManager";
 import { NavbarBodyScrollLock } from "./utils/NavbarBodyScrollLock";
+import { ThemeToggle } from "../../ui";
 
 export interface NavbarContainerProps {
   items: string[];
@@ -306,6 +307,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
           {this.renderBrand()}
           {this.renderToggle()}
           {this.renderNavLinks()}
+          <ThemeToggle />
         </div>
       </nav>
     );

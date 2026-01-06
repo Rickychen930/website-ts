@@ -1,13 +1,15 @@
 import { UserProfile } from "../types/user";
+import { apiClient, ApiError } from "./api";
 
 /**
  * UserService - Service Layer (MVC Pattern)
  * Handles all user-related API operations
  * Follows Single Responsibility Principle (SRP)
+ * Enhanced with professional error handling and caching
  */
 export class UserService {
-  private readonly API_TIMEOUT = 10000;
   private readonly DEFAULT_USER_NAME = "Ricky Chen";
+  private readonly CACHE_TIME = 5 * 60 * 1000; // 5 minutes cache
 
   /**
    * Fetch user profile from API
@@ -16,51 +18,29 @@ export class UserService {
    */
   async getUserProfile(userName: string = this.DEFAULT_USER_NAME): Promise<UserProfile | null> {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
+      const endpoint = `/${encodeURIComponent(userName)}`;
       
-      if (!apiUrl) {
-        console.error("❌ REACT_APP_API_URL is not defined");
+      const response = await apiClient.get<UserProfile>(endpoint, {
+        cacheTime: this.CACHE_TIME,
+        retries: 3,
+        timeout: 15000,
+      });
+
+      const data = response.data;
+      
+      if (!this.isValidProfile(data)) {
+        console.error("❌ Invalid user profile data structure");
         return null;
       }
 
-      const endpoint = `${apiUrl}/${encodeURIComponent(userName)}`;
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), this.API_TIMEOUT);
-
-      try {
-        const response = await fetch(endpoint, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = (await response.json()) as UserProfile;
-        
-        if (!this.isValidProfile(data)) {
-          console.error("❌ Invalid user profile data structure");
-          return null;
-        }
-
-        return data;
-      } catch (fetchError) {
-        clearTimeout(timeoutId);
-        
-        if (fetchError instanceof Error && fetchError.name === "AbortError") {
-          throw new Error("Request timeout");
-        }
-        throw fetchError;
-      }
+      return data;
     } catch (error) {
-      console.error("❌ Error fetching user profile:", error);
+      const apiError = error as ApiError;
+      console.error("❌ Error fetching user profile:", {
+        message: apiError.message,
+        status: apiError.status,
+        originalError: apiError.originalError,
+      });
       throw error;
     }
   }

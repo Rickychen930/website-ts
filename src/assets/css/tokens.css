@@ -186,3 +186,65 @@
   --z-tooltip: 500;
   --z-max: 9999;
 }
+
+/* ============================================
+   Dark Mode Theme Variables
+   ============================================ */
+[data-theme="dark"] {
+  /* Backgrounds - Dark Theme */
+  --bg-light: #0f1419;
+  --bg-lighter: #1a1f2e;
+  --bg-lightest: #151b26;
+  --bg-card: #1e2532;
+  --bg-card-alt: #1a2230;
+  --bg-card-hover: #252d3d;
+  --bg-footer: #151b26;
+  --bg-footer-alt: #0f1419;
+  --bg-timeline: #1a1f2e;
+  --bg-content-hover: #252d3d;
+  --bg-navbar: rgba(30, 37, 50, 0.9);
+  --bg-navbar-scrolled: rgba(30, 37, 50, 0.98);
+  --bg-stat: #1a1f2e;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
+  --bg-gradient-primary: linear-gradient(135deg, #1e2532 0%, #151b26 100%);
+  --bg-gradient-luxury: linear-gradient(135deg, #1e2532 0%, #1a2230 40%, #151b26 100%);
+  --bg-gradient-sublime: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+
+  /* Text Colors - Dark Theme */
+  --text-main: #e2e8f0;
+  --text-heading: #f1f5f9;
+  --text-heading-alt: #e2e8f0;
+  --text-subtle: #94a3b8;
+  --text-muted: #cbd5e1;
+  --text-muted-alt: #64748b;
+  --text-light: #475569;
+  --text-accent: #cbd5e1;
+  --text-hover: #60a5fa;
+  --text-on-accent: #ffffff;
+  --text-link: #60a5fa;
+  --text-link-hover: #93c5fd;
+
+  /* Borders - Dark Theme */
+  --border-light: rgba(51, 65, 85, 0.6);
+  --border-default: #334155;
+  --border-medium: #475569;
+  --border-dark: #64748b;
+  --border-navbar: rgba(51, 65, 85, 0.5);
+  --border-navbar-dropdown: rgba(51, 65, 85, 0.6);
+  --border-glow: rgba(96, 165, 250, 0.3);
+  --border-image: #334155;
+  --border-period: #475569;
+  --border-accent: rgba(96, 165, 250, 0.4);
+  --border-accent-hover: rgba(96, 165, 250, 0.6);
+
+  /* Shadows - Dark Theme (more subtle) */
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.6), 0 20px 40px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.7), 0 32px 64px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.4), 0 32px 80px rgba(102, 126, 234, 0.2);
+  --shadow-card-hover: 0 16px 40px rgba(0, 0, 0, 0.6), 0 32px 80px rgba(0, 0, 0, 0.5), 0 48px 120px rgba(102, 126, 234, 0.3);
+  --shadow-navbar: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-navbar-scrolled: 0 12px 32px rgba(0, 0, 0, 0.6);
+}

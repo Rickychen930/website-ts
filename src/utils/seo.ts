@@ -1,0 +1,163 @@
+/**
+ * SEO Utilities
+ * Professional SEO management for the portfolio
+ */
+
+import { UserProfile } from "../types/user";
+
+/**
+ * Update document title
+ */
+export function updateTitle(title: string): void {
+  document.title = title;
+}
+
+/**
+ * Update meta tag
+ */
+export function updateMetaTag(name: string, content: string): void {
+  let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+  
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.name = name;
+    document.head.appendChild(meta);
+  }
+  
+  meta.content = content;
+}
+
+/**
+ * Update Open Graph tag
+ */
+export function updateOGTag(property: string, content: string): void {
+  let meta = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement;
+  
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("property", property);
+    document.head.appendChild(meta);
+  }
+  
+  meta.content = content;
+}
+
+/**
+ * Update Twitter Card tag
+ */
+export function updateTwitterTag(name: string, content: string): void {
+  let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+  
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.name = name;
+    document.head.appendChild(meta);
+  }
+  
+  meta.content = content;
+}
+
+/**
+ * Generate structured data (JSON-LD)
+ */
+export function generateStructuredData(profile: UserProfile): object {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.name,
+    jobTitle: profile.title,
+    description: profile.bio,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: profile.location,
+    },
+    url: window.location.href,
+    sameAs: profile.contacts
+      .filter((contact) => contact.type === "LinkedIn" || contact.type === "GitHub")
+      .map((contact) => contact.url),
+  };
+
+  // Add professional skills
+  if (profile.technicalSkills && profile.technicalSkills.length > 0) {
+    structuredData.skills = profile.technicalSkills.map((skill) => ({
+      "@type": "Thing",
+      name: skill.name,
+    }));
+  }
+
+  // Add work experience
+  if (profile.experiences && profile.experiences.length > 0) {
+    structuredData.worksFor = profile.experiences.map((exp) => ({
+      "@type": "Organization",
+      name: exp.company,
+      jobTitle: exp.position,
+      startDate: exp.startDate,
+      endDate: exp.endDate || undefined,
+    }));
+  }
+
+  return structuredData;
+}
+
+/**
+ * Inject structured data into page
+ */
+export function injectStructuredData(data: object): void {
+  // Remove existing structured data
+  const existing = document.querySelector('script[type="application/ld+json"]');
+  if (existing) {
+    existing.remove();
+  }
+
+  // Add new structured data
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(data);
+  document.head.appendChild(script);
+}
+
+/**
+ * Update SEO metadata from profile
+ */
+export function updateSEOFromProfile(profile: UserProfile): void {
+  const title = `${profile.name} - ${profile.title} | Portfolio`;
+  const description = profile.bio || `Professional portfolio of ${profile.name}, ${profile.title}`;
+  const image = `${window.location.origin}/logo512.png`;
+  const url = window.location.href;
+
+  // Update title
+  updateTitle(title);
+
+  // Update meta tags
+  updateMetaTag("description", description);
+  updateMetaTag("keywords", `${profile.name}, ${profile.title}, Portfolio, Software Engineer, Developer`);
+
+  // Update Open Graph
+  updateOGTag("og:title", title);
+  updateOGTag("og:description", description);
+  updateOGTag("og:image", image);
+  updateOGTag("og:url", url);
+  updateOGTag("og:type", "profile");
+
+  // Update Twitter Card
+  updateTwitterTag("twitter:card", "summary_large_image");
+  updateTwitterTag("twitter:title", title);
+  updateTwitterTag("twitter:description", description);
+  updateTwitterTag("twitter:image", image);
+
+  // Inject structured data
+  const structuredData = generateStructuredData(profile);
+  injectStructuredData(structuredData);
+}
+
+/**
+ * Initialize SEO with default values
+ */
+export function initializeSEO(): void {
+  updateTitle("Ricky Chen - Software Engineer Portfolio");
+  updateMetaTag(
+    "description",
+    "Professional portfolio showcasing software engineering skills, projects, and experience."
+  );
+}
+

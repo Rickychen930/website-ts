@@ -15,7 +15,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem clamp(2.5rem, 6vw, 5rem);
+  padding: 3rem clamp(2rem, 5vw, 4rem);
   background: linear-gradient(135deg, 
     rgba(255, 255, 255, 0.98) 0%,
     rgba(250, 251, 252, 0.96) 50%,
@@ -31,15 +31,14 @@
   border: 1px solid rgba(220, 227, 234, 0.5);
   animation: fade-in-card 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards, cardFloat 8s ease-in-out infinite;
   transition:
-    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.4s ease,
-    background 0.4s ease;
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
   outline: none;
   font-family: var(--font-main, 'Inter', system-ui, sans-serif);
-  will-change: transform, box-shadow;
-  backdrop-filter: blur(30px) saturate(200%) brightness(1.02);
-  -webkit-backdrop-filter: blur(30px) saturate(200%) brightness(1.02);
+  /* will-change: transform, box-shadow; - disabled for performance */
+  /* backdrop-filter: blur(30px) saturate(200%) brightness(1.02); - disabled for performance */
+  /* -webkit-backdrop-filter: blur(30px) saturate(200%) brightness(1.02); */
   isolation: isolate;
 }
 

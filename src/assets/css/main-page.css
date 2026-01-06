@@ -23,9 +23,9 @@
   position: relative;
   overflow-x: hidden;
   isolation: isolate;
-  /* Advanced backdrop effects */
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
+  /* Advanced backdrop effects - disabled for performance */
+  /* backdrop-filter: blur(0px); */
+  /* -webkit-backdrop-filter: blur(0px); */
 }
 
 /* Ultra Premium Animated Gradient Background - Advanced Effects */
@@ -118,8 +118,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8rem;
-  padding: 10rem clamp(2rem, 6vw, 6rem) 8rem;
+  gap: 4rem;
+  padding: 6rem clamp(2rem, 6vw, 6rem) 4rem;
   margin: 0 auto;
   width: 100%;
   max-width: 1400px;
@@ -135,25 +135,24 @@
   scroll-margin-top: 8rem;
   position: relative;
   opacity: 0;
-  transform: translateY(80px) scale(0.95) perspective(1000px) rotateX(5deg);
+  transform: translateY(40px);
   transition: 
-    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: sectionReveal 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: transform, opacity;
-  transform-style: preserve-3d;
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  animation: sectionReveal 0.6s ease forwards;
+  /* will-change: transform, opacity; - disabled for performance */
+  /* transform-style: preserve-3d; - disabled for performance */
 }
 
 .section-block.revealed {
   opacity: 1;
-  transform: translateY(0) scale(1) perspective(1000px) rotateX(0deg);
+  transform: translateY(0);
 }
 
-/* 3D Hover Effect - Showcase Technical Skills */
+/* 3D Hover Effect - Showcase Technical Skills - simplified for performance */
 .section-block:hover {
-  transform: translateY(-8px) scale(1.01) perspective(1000px) rotateX(-2deg);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateY(-4px);
+  transition: transform 0.3s ease;
 }
 
 .section-block:nth-child(1) { animation-delay: 0.1s; }
@@ -197,8 +196,8 @@
       transparent 50%
     );
   border-radius: 36px;
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  /* backdrop-filter: blur(30px) saturate(180%); - disabled for performance */
+  /* -webkit-backdrop-filter: blur(30px) saturate(180%); */
   opacity: 0;
   transition: 
     opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
@@ -252,10 +251,10 @@
    Section Header - Advanced Typography with Gradient Text
    ============================================ */
 .section-header {
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   text-align: center;
   position: relative;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
 .section-title {
@@ -409,9 +408,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  padding: 4rem 2rem;
-  gap: 3rem;
+  min-height: 60vh;
+  padding: 3rem 2rem;
+  gap: 2rem;
   position: relative;
   z-index: 1;
 }
@@ -536,8 +535,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  padding: 4rem 2rem;
+  min-height: 60vh;
+  padding: 3rem 2rem;
   position: relative;
   z-index: 1;
 }

@@ -18,8 +18,9 @@ import { ISectionConfig } from "../../models/section-model";
 import { RETRY_CONFIG, SCROLL_CONFIG } from "../../config/main-page-config";
 import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
 import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
-import { LoadingComponent, ErrorComponent, BackToTopButton } from "../components/ui";
+import { LoadingComponent, ErrorComponent, BackToTopButton, toast } from "../components/ui";
 import { MainPageFooterComponent } from "../components/footer";
+import { updateSEOFromProfile } from "../../utils/seo";
 
 /**
  * MainPageState - Extended state interface
@@ -146,12 +147,18 @@ class MainPage extends BasePage<{}, MainPageState> {
         throw new Error("Invalid profile data: profile name is missing");
       }
 
+      // Update SEO metadata
+      updateSEOFromProfile(profile);
+
       this.setState({ 
         profile, 
         loading: false, 
         error: null,
         retryCount: 0,
       });
+
+      // Show success notification
+      toast.success("Profile loaded successfully", 3000);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Failed to load profile";
       const newRetryCount = this.state.retryCount + 1;
@@ -170,6 +177,9 @@ class MainPage extends BasePage<{}, MainPageState> {
           error: errorMessage,
           retryCount: 0,
         });
+        
+        // Show error notification
+        toast.error(errorMessage, 5000);
       }
     }
   }
