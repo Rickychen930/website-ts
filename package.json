@@ -26,7 +26,15 @@
     "seed": "ts-node -P tsconfig.backend.json backend/src/seed/seed.ts",
     "backend:build": "tsc -p backend/tsconfig.backend.json",
     "backend:start": "node backend/dist/main.js",
-    "dev": "concurrently \"npm run server:watch\" \"npm start\""
+    "backend:pm2": "pm2 start backend/ecosystem.config.js --env production",
+    "backend:pm2:dev": "pm2 start backend/ecosystem.config.js --env development",
+    "dev": "concurrently \"npm run server:watch\" \"npm start\"",
+    "build:all": "npm run build && npm run backend:build",
+    "deploy:build": "npm ci --legacy-peer-deps && npm run build:all",
+    "docker:build": "docker build -t website-backend .",
+    "docker:run": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
   },
   "eslintConfig": {
     "extends": [

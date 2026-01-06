@@ -19,6 +19,11 @@
   transform: translateY(0);
 }
 
+.work-experience-card-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
 .work-experience-card-content {
   flex: 1;
   position: relative;

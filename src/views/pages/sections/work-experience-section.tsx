@@ -246,59 +246,61 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         OBSERVER_CONFIG
       );
 
-      // Observe all item refs
-      let observedCount = 0;
-      const pendingRefs: Array<{ ref: RefObject<HTMLDivElement>; key: string }> = [];
+      // Use querySelector to find actual DOM elements (like ProjectsSection does)
+      // This is more reliable than using refs that might not be connected
+      const observeElements = (): number => {
+        if (!this.isMounted || !this.observer) return 0;
 
-      this.itemRefs.forEach((ref, key) => {
-        if (ref.current && this.isMounted) {
-          try {
-            this.observer?.observe(ref.current);
-            observedCount++;
-          } catch (err) {
-            if (process.env.NODE_ENV === 'development') {
-              console.warn(`Failed to observe element for key: ${key}`, err);
-            }
-          }
-        } else {
-          pendingRefs.push({ ref, key });
-        }
-      });
+        const cards = this.containerRef.current?.querySelectorAll(".work-experience-card[data-key]");
+        let observedCount = 0;
 
-      // Handle pending refs with retry logic
-      if (pendingRefs.length > 0) {
-        const retryObserver = () => {
-          pendingRefs.forEach(({ ref, key }) => {
-            if (ref.current && this.isMounted && this.observer) {
-              try {
-                this.observer.observe(ref.current);
-                observedCount++;
-              } catch (err) {
-                if (process.env.NODE_ENV === 'development') {
-                  console.warn(`Failed to observe pending element for key: ${key}`, err);
-                }
+        if (cards && cards.length > 0) {
+          cards.forEach((card) => {
+            try {
+              this.observer?.observe(card);
+              observedCount++;
+            } catch (err) {
+              if (process.env.NODE_ENV === 'development') {
+                console.warn("Failed to observe work experience card:", err);
               }
             }
           });
-        };
+        }
 
-        setTimeout(retryObserver, 50);
+        return observedCount;
+      };
+
+      // Try to observe elements with retries
+      // Use setTimeout to ensure DOM is fully rendered after setState
+      setTimeout(() => {
+        if (!this.isMounted) return;
+        
+        let observedCount = observeElements();
         
         if (observedCount === 0) {
-          setTimeout(retryObserver, 150);
+          // Retry after a longer delay to ensure DOM is ready
+          setTimeout(() => {
+            if (!this.isMounted) return;
+            observedCount = observeElements();
+            
+            // If still no elements found, show all items as fallback
+            if (observedCount === 0 && this.state.experiences.length > 0) {
+              const allKeys = this.state.experiences.map((item) => item.key);
+              this.setState({ 
+                visibleItems: new Set(allKeys),
+                isInitialized: true,
+              });
+            } else if (observedCount > 0) {
+              this.setState({ isInitialized: true });
+            } else {
+              // Final fallback: initialize even if no elements found
+              this.setState({ isInitialized: true });
+            }
+          }, 200);
+        } else {
+          this.setState({ isInitialized: true });
         }
-      }
-
-      // Edge case: If still no refs observed after retries, show all items
-      if (observedCount === 0 && this.itemRefs.size > 0) {
-        const allKeys = Array.from(this.itemRefs.keys());
-        this.setState({ 
-          visibleItems: new Set(allKeys),
-          isInitialized: true,
-        });
-      } else {
-        this.setState({ isInitialized: true });
-      }
+      }, 50);
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error("❌ Error initializing IntersectionObserver:", error);
