@@ -1,0 +1,194 @@
+/**
+ * WorkExperienceCodeSnippet Styles
+ * Professional Code Snippet Design
+ */
+
+.work-experience-code-snippet {
+  position: relative;
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-code-snippet:hover {
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 6px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.work-experience-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.work-experience-code-dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.work-experience-code-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-code-dot-red {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.work-experience-code-dot-yellow {
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.work-experience-code-dot-green {
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+.work-experience-code-snippet:hover .work-experience-code-dot {
+  transform: scale(1.1);
+}
+
+.work-experience-code-language {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.work-experience-code-pre {
+  margin: 0;
+  padding: 1.25rem;
+  background: transparent;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.work-experience-code-code {
+  display: block;
+  color: #e2e8f0;
+  font-family: inherit;
+}
+
+.work-experience-code-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.work-experience-code-line {
+  display: flex;
+  align-items: center;
+  min-height: 1.5rem;
+}
+
+.work-experience-code-line-indented {
+  padding-left: 1.5rem;
+}
+
+.work-experience-code-keyword {
+  color: #c792ea;
+  font-weight: 600;
+}
+
+.work-experience-code-variable {
+  color: #82aaff;
+  font-weight: 500;
+}
+
+.work-experience-code-operator {
+  color: #89ddff;
+  margin: 0 0.25rem;
+}
+
+.work-experience-code-bracket {
+  color: #ffcb6b;
+  font-weight: 600;
+}
+
+.work-experience-code-string {
+  color: #c3e88d;
+}
+
+.work-experience-code-punctuation {
+  color: #89ddff;
+  margin-left: 0.25rem;
+}
+
+/* Responsive Design */
+@media screen and (width <= 768px) {
+  .work-experience-code-snippet {
+    margin-top: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .work-experience-code-header {
+    padding: 0.65rem 0.875rem;
+  }
+
+  .work-experience-code-pre {
+    padding: 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .work-experience-code-line-indented {
+    padding-left: 1.25rem;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .work-experience-code-snippet {
+    margin-top: 1rem;
+    border-radius: 8px;
+  }
+
+  .work-experience-code-header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .work-experience-code-pre {
+    padding: 0.875rem;
+    font-size: 0.75rem;
+  }
+
+  .work-experience-code-line-indented {
+    padding-left: 1rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .work-experience-code-snippet,
+  .work-experience-code-dot {
+    transition: none;
+  }
+
+  .work-experience-code-snippet:hover {
+    transform: none;
+  }
+}
+

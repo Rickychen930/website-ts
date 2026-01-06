@@ -1,0 +1,513 @@
+/**
+ * WorkExperienceCard Styles
+ * Luxury, Professional Card Design
+ */
+
+.work-experience-card {
+  position: relative;
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-left: 6rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.work-experience-card-content {
+  flex: 1;
+  position: relative;
+  padding: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(249, 251, 253, 0.95) 100%
+  );
+  border: 1px solid rgba(220, 227, 234, 0.5);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.04),
+    0 2px 8px rgba(102, 126, 234, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  overflow: hidden;
+}
+
+.work-experience-card-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #667eea 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-card-content::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.03) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.work-experience-card:hover .work-experience-card-content {
+  transform: translateX(8px) translateY(-4px);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    0 6px 20px rgba(102, 126, 234, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(102, 126, 234, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(249, 251, 253, 0.98) 100%
+  );
+}
+
+.work-experience-card:hover .work-experience-card-content::before {
+  opacity: 1;
+}
+
+.work-experience-card:hover .work-experience-card-content::after {
+  opacity: 1;
+}
+
+.work-experience-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(102, 126, 234, 0.08) 0%,
+    transparent 70%
+  );
+  border-radius: 24px;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.work-experience-card:hover .work-experience-card-glow {
+  opacity: 1;
+}
+
+.work-experience-card-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Decorative Elements */
+.work-experience-card-content::before {
+  z-index: 0;
+}
+
+.work-experience-card-content::after {
+  z-index: 0;
+}
+
+/* Animated Background Pattern */
+.work-experience-card-content {
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 251, 253, 0.95) 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: 0% 0%, 100% 100%, 0% 0%;
+  background-repeat: no-repeat;
+}
+
+/* Header */
+.work-experience-card-header {
+  margin-bottom: 1.25rem;
+}
+
+.work-experience-card-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.work-experience-card-title {
+  margin: 0;
+  color: #1a2332;
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #1a2332 0%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.work-experience-card:hover .work-experience-card-title {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateX(2px);
+}
+
+.work-experience-card-duration {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  border-radius: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-card:hover .work-experience-card-duration {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: scale(1.05);
+}
+
+.work-experience-card-company-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.work-experience-card-company {
+  color: #34495e;
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-card:hover .work-experience-card-company {
+  color: #5b21b6;
+}
+
+.work-experience-card-separator {
+  color: #7a8b9c;
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.work-experience-card-location {
+  color: #5c6b7a;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  font-weight: 500;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+}
+
+/* Period */
+.work-experience-card-period {
+  margin-bottom: 1.25rem;
+}
+
+.work-experience-card-period-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e6edf5 100%);
+  color: #2c3e50;
+  font-size: clamp(0.875rem, 1.4vw, 0.95rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  border-radius: 10px;
+  border: 1px solid rgba(220, 227, 234, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.work-experience-card:hover .work-experience-card-period-text {
+  background: linear-gradient(135deg, #e6edf5 0%, #d6e2f0 100%);
+  color: #5b21b6;
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: scale(1.05);
+}
+
+/* Description */
+.work-experience-card-description {
+  margin-bottom: 1.5rem;
+}
+
+.work-experience-card-description-text {
+  margin: 0;
+  color: #5c6b7a;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  line-height: 1.75;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.work-experience-card-description-text::first-letter {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #667eea;
+  line-height: 1;
+  margin-right: 0.1em;
+}
+
+.work-experience-card:hover .work-experience-card-description-text {
+  color: #2c3e50;
+}
+
+/* Technologies */
+.work-experience-card-technologies {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.work-experience-card-technologies-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #34495e;
+  font-size: clamp(0.875rem, 1.4vw, 0.95rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.work-experience-card-technologies-label::before {
+  content: "⚡";
+  font-size: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.3));
+  animation: techIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes techIconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.work-experience-card-technologies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Achievements */
+.work-experience-card-achievements {
+  margin-top: 1.25rem;
+}
+
+.work-experience-card-achievements-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #34495e;
+  font-size: clamp(0.875rem, 1.4vw, 0.95rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.work-experience-card-achievements-label::before {
+  content: "🏆";
+  font-size: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(118, 75, 162, 0.3));
+  animation: achievementIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes achievementIconPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+    opacity: 0.8;
+  }
+}
+
+.work-experience-card-achievements-list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.work-experience-card-achievements-list::before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 1px;
+  opacity: 0.6;
+}
+
+.work-experience-card-achievement-item {
+  position: relative;
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  color: #5c6b7a;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  line-height: 1.6;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-card-achievement-item::before {
+  content: "▸";
+  position: absolute;
+  left: -0.5rem;
+  color: #667eea;
+  font-weight: bold;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-card:hover .work-experience-card-achievement-item {
+  color: #2c3e50;
+}
+
+.work-experience-card:hover .work-experience-card-achievement-item::before {
+  transform: translateX(4px);
+  color: #764ba2;
+}
+
+.work-experience-card-achievement-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media screen and (width <= 992px) {
+  .work-experience-card {
+    padding-left: 5rem;
+    gap: 1.25rem;
+  }
+
+  .work-experience-card-content {
+    padding: 1.75rem;
+    border-radius: 20px;
+  }
+}
+
+@media screen and (width <= 768px) {
+  .work-experience-card {
+    padding-left: 4.5rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .work-experience-card-content {
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+
+  .work-experience-card-title-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .work-experience-card {
+    padding-left: 0;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .work-experience-card-content {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .work-experience-card-company-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .work-experience-card-separator {
+    display: none;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .work-experience-card,
+  .work-experience-card-content,
+  .work-experience-card-title,
+  .work-experience-card-company,
+  .work-experience-card-period-text,
+  .work-experience-card-description-text,
+  .work-experience-card-achievement-item,
+  .work-experience-card-technologies-label,
+  .work-experience-card-achievements-label {
+    transition: none;
+    animation: none;
+  }
+
+  .work-experience-card:hover .work-experience-card-content {
+    transform: none;
+  }
+
+  .work-experience-card:hover .work-experience-card-duration,
+  .work-experience-card:hover .work-experience-card-period-text,
+  .work-experience-card:hover .work-experience-card-title {
+    transform: none;
+  }
+
+  .work-experience-card-technologies-label::before,
+  .work-experience-card-achievements-label::before {
+    animation: none;
+  }
+}
+

@@ -1,33 +1,42 @@
 /**
  * Work Experience Section Component
+ * View Layer (MVC Pattern)
  * 
  * Features:
- * - Luxury & Elegant Design with smooth animations
- * - Performance Optimized (PureComponent, IntersectionObserver)
+ * - Professional, Luxury, Clean Design
+ * - Performance Optimized (IntersectionObserver, memoization)
  * - Fully Responsive (mobile, tablet, desktop, landscape)
  * - Comprehensive Edge Case Handling
- * - Clean UI/UX with staggered timeline animations
- * - Accessibility Support (ARIA labels, semantic HTML)
+ * - Clean UI/UX with smooth animations
+ * - Accessibility Support
+ * - Showcases Software Engineering Skills
  * 
  * Principles Applied:
- * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
- * - DRY (Don't Repeat Yourself)
- * - OOP (Object-Oriented Programming)
- * - MVP (Minimum Viable Product)
- * - Keep It Simple
+ * - MVC: Separated Controller, Model, and View
+ * - OOP: Class-based component with encapsulation
+ * - SOLID:
+ *   - SRP: Each method has single responsibility
+ *   - OCP: Extensible through composition
+ *   - LSP: Proper inheritance/implementation
+ *   - ISP: Interfaces are segregated
+ *   - DIP: Depends on abstractions (controller, components)
+ * - DRY: Reuses components and utilities
+ * - KISS: Simple, clear structure
+ * - Component-Based: Uses reusable sub-components
  */
 
 import React, { Component, ReactNode, createRef, RefObject } from "react";
-import { FlowItem } from "../../components/flow-item-component";
+import { WorkExperienceController } from "../../../controllers/work-experience-controller";
+import { WorkExperienceModel, IWorkExperienceItem } from "../../../models/work-experience-model";
+import { WorkExperienceTimeline } from "../../components/work-experience";
 import "../../../assets/css/work-experience-section.css";
 
 /**
- * Experience Item Interface
- * Follows Interface Segregation Principle (ISP)
+ * Legacy Experience Item Type (for backward compatibility)
  */
-export type ExperienceItem = {
+type LegacyExperienceItem = {
   key: string;
-  icon: string; // Can be emoji or JSX
+  icon: string;
   title: string;
   company: string;
   period: string;
@@ -35,27 +44,31 @@ export type ExperienceItem = {
 };
 
 /**
- * Work Experience Props Interface
+ * Work Experience Section Props Interface
+ * Follows Interface Segregation Principle (ISP)
  */
 type WorkExperienceProps = {
-  data: ExperienceItem[];
+  data: LegacyExperienceItem[] | IWorkExperienceItem[];
 };
 
 /**
- * Work Experience State Interface
+ * Work Experience Section State Interface
  */
 type WorkExperienceState = {
   visibleItems: Set<string>;
   isInitialized: boolean;
+  error: string | null;
+  experiences: IWorkExperienceItem[];
+  durations: Map<string, string>;
 };
 
 /**
  * Intersection Observer Configuration
- * Optimized for performance and smooth animations
+ * Centralized for maintainability (DRY)
  */
 const OBSERVER_CONFIG: IntersectionObserverInit = {
-  threshold: 0.2,
-  rootMargin: "0px 0px -100px 0px",
+  threshold: 0.1,
+  rootMargin: "50px",
 };
 
 /**
@@ -66,53 +79,50 @@ const OBSERVER_CONFIG: IntersectionObserverInit = {
  * - Implements staggered animations for elegant visual flow
  * - Handles edge cases (empty data, missing fields, etc.)
  * - Fully responsive with mobile-first approach
+ * - MVC Pattern: Separates concerns between Controller, Model, and View
  */
 class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienceState> {
-  private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
+  private readonly controller: WorkExperienceController;
   private observer: IntersectionObserver | null = null;
   private isMounted: boolean = false;
   private containerRef: RefObject<HTMLDivElement> = createRef<HTMLDivElement>();
+  private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
 
   constructor(props: WorkExperienceProps) {
     super(props);
-    
-    // Initialize refs for all items
-    // Edge case: Validate data before processing
-    if (props.data && Array.isArray(props.data)) {
-      props.data.forEach((item) => {
-        if (item && item.key) {
-          this.itemRefs.set(item.key, createRef<HTMLDivElement>());
-        }
-      });
-    }
-
+    this.controller = new WorkExperienceController();
     this.state = {
       visibleItems: new Set(),
       isInitialized: false,
+      error: null,
+      experiences: [],
+      durations: new Map(),
     };
   }
 
   /**
-   * Handle props changes
-   * Reinitialize refs when data changes
+   * Component Did Mount
+   * Initialize intersection observer and process data
+   */
+  componentDidMount(): void {
+    this.isMounted = true;
+    this.processData();
+    this.initializeObserver();
+  }
+
+  /**
+   * Component Did Update
+   * Handle data changes
    */
   componentDidUpdate(prevProps: WorkExperienceProps): void {
-    // Edge case: Handle data changes
     if (prevProps.data !== this.props.data) {
       // Cleanup old observer
       if (this.observer) {
         this.disconnectObserver();
       }
 
-      // Reinitialize refs for new data
-      this.itemRefs.clear();
-      if (this.props.data && Array.isArray(this.props.data)) {
-        this.props.data.forEach((item) => {
-          if (item && item.key) {
-            this.itemRefs.set(item.key, createRef<HTMLDivElement>());
-          }
-        });
-      }
+      // Process new data
+      this.processData();
 
       // Reset state
       this.setState({
@@ -122,7 +132,6 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
       // Reinitialize observer if mounted
       if (this.isMounted) {
-        // Use setTimeout to ensure DOM is updated
         setTimeout(() => {
           this.initializeObserver();
         }, 50);
@@ -131,13 +140,86 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
   }
 
   /**
+   * Component Will Unmount
+   * Cleanup observers
+   */
+  componentWillUnmount(): void {
+    this.isMounted = false;
+    this.disconnectObserver();
+  }
+
+  /**
+   * Process data from props
+   * Transforms legacy format to new format and validates
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private processData(): void {
+    try {
+      const { data } = this.props;
+
+      if (!data || !Array.isArray(data) || data.length === 0) {
+        this.setState({
+          experiences: [],
+          durations: new Map(),
+          error: null,
+        });
+        return;
+      }
+
+      // Transform and validate items
+      const experiences: IWorkExperienceItem[] = [];
+      const durations = new Map<string, string>();
+
+      data.forEach((item) => {
+        // Normalize item
+        const normalized = WorkExperienceModel.normalizeItem(item);
+        
+        if (WorkExperienceModel.isValidItem(normalized)) {
+          experiences.push(normalized);
+          
+          // Calculate duration
+          const duration = this.controller.getFormattedDuration(normalized.period);
+          if (duration) {
+            durations.set(normalized.key, duration);
+          }
+        }
+      });
+
+      // Sort by period (newest first)
+      const sorted = WorkExperienceModel.sortByPeriod(experiences);
+
+      // Initialize refs
+      this.itemRefs.clear();
+      sorted.forEach((item) => {
+        this.itemRefs.set(item.key, createRef<HTMLDivElement>());
+      });
+
+      this.setState({
+        experiences: sorted,
+        durations,
+        error: null,
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to process work experience data";
+      this.setState({
+        error: errorMessage,
+        experiences: [],
+        durations: new Map(),
+      });
+
+      if (process.env.NODE_ENV === 'development') {
+        console.error("Error processing work experience data:", error);
+      }
+    }
+  }
+
+  /**
    * Initialize Intersection Observer
    * Follows Single Responsibility Principle (SRP)
-   * Enhanced with better error handling and edge cases
    */
   private initializeObserver(): void {
     // Edge case: Validate data exists
-    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+    if (this.state.experiences.length === 0) {
       this.setState({ isInitialized: true });
       return;
     }
@@ -145,9 +227,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     // Check if IntersectionObserver is supported
     if (typeof IntersectionObserver === "undefined") {
       // Fallback for browsers without IntersectionObserver support
-      const allKeys = this.props.data
-        .filter((item) => item && item.key)
-        .map((item) => item.key);
+      const allKeys = this.state.experiences.map((item) => item.key);
       this.setState({ 
         visibleItems: new Set(allKeys),
         isInitialized: true,
@@ -166,7 +246,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         OBSERVER_CONFIG
       );
 
-      // Observe all item refs - wait for refs to be attached
+      // Observe all item refs
       let observedCount = 0;
       const pendingRefs: Array<{ ref: RefObject<HTMLDivElement>; key: string }> = [];
 
@@ -176,13 +256,11 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
             this.observer?.observe(ref.current);
             observedCount++;
           } catch (err) {
-            // Edge case: Handle observe errors
             if (process.env.NODE_ENV === 'development') {
               console.warn(`Failed to observe element for key: ${key}`, err);
             }
           }
         } else {
-          // Collect pending refs
           pendingRefs.push({ ref, key });
         }
       });
@@ -204,10 +282,8 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
           });
         };
 
-        // Retry after short delay
         setTimeout(retryObserver, 50);
         
-        // Final retry after longer delay if still needed
         if (observedCount === 0) {
           setTimeout(retryObserver, 150);
         }
@@ -224,15 +300,12 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         this.setState({ isInitialized: true });
       }
     } catch (error) {
-      // Enhanced error handling
       if (process.env.NODE_ENV === 'development') {
         console.error("❌ Error initializing IntersectionObserver:", error);
       }
       
       // Fallback: show all items
-      const allKeys = this.props.data
-        .filter((item) => item && item.key)
-        .map((item) => item.key);
+      const allKeys = this.state.experiences.map((item) => item.key);
       this.setState({ 
         visibleItems: new Set(allKeys),
         isInitialized: true,
@@ -277,103 +350,6 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     }
   }
 
-  componentDidMount(): void {
-    this.isMounted = true;
-    
-    // Edge case: Validate data exists before initializing
-    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
-      this.setState({ isInitialized: true });
-      return;
-    }
-
-    // Use setTimeout to ensure refs are ready after render
-    setTimeout(() => {
-      if (this.isMounted) {
-        this.initializeObserver();
-      }
-    }, 0);
-  }
-
-  componentWillUnmount(): void {
-    this.isMounted = false;
-    this.disconnectObserver();
-  }
-
-  /**
-   * Validate and sanitize experience item data
-   * Handles edge cases (missing fields, empty strings, etc.)
-   */
-  private validateItem(item: ExperienceItem): boolean {
-    return !!(
-      item &&
-      item.key &&
-      item.title &&
-      item.company &&
-      item.period &&
-      item.description
-    );
-  }
-
-  /**
-   * Render experience item content
-   * Follows Single Responsibility Principle (SRP)
-   */
-  private renderContent(item: ExperienceItem): ReactNode {
-    // Edge case: Handle missing or empty data
-    if (!this.validateItem(item)) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn("⚠️ Invalid experience item:", item);
-      }
-      return null;
-    }
-
-    return (
-      <div className="work-experience-content">
-        <header className="work-experience-header">
-          <h3 className="work-experience-title">{item.title}</h3>
-          <div className="work-experience-meta">
-            <span className="work-experience-company">{item.company}</span>
-            <span className="work-experience-separator" aria-hidden="true">•</span>
-            <time className="work-experience-period" dateTime={item.period}>
-              {item.period}
-            </time>
-          </div>
-        </header>
-        <p className="work-experience-description">{item.description}</p>
-      </div>
-    );
-  }
-
-  /**
-   * Render a single experience item
-   * Implements staggered animations for elegant visual flow
-   */
-  private renderItem(item: ExperienceItem, index: number): ReactNode {
-    // Edge case: Skip invalid items
-    if (!this.validateItem(item)) {
-      return null;
-    }
-
-    const refObj = this.itemRefs.get(item.key);
-    const isVisible = this.state.visibleItems.has(item.key);
-
-    return (
-      <FlowItem
-        key={item.key}
-        itemKey={item.key}
-        index={index}
-        scrollDirection="left"
-        isVisible={isVisible}
-        refObj={refObj}
-        icon={<span className="work-experience-icon-content" aria-hidden="true">{item.icon}</span>}
-        variant="elevated"
-        className="work-experience-item"
-      >
-        {this.renderContent(item)}
-      </FlowItem>
-    );
-  }
-
   /**
    * Render empty state
    * Handles edge case when no data is available
@@ -381,8 +357,25 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
   private renderEmptyState(): ReactNode {
     return (
       <div className="work-experience-empty" role="status" aria-live="polite">
+        <div className="work-experience-empty-icon" aria-hidden="true">💼</div>
         <p className="work-experience-empty-text">
           No work experience data available at the moment.
+        </p>
+      </div>
+    );
+  }
+
+  /**
+   * Render error state
+   * Handles edge case when data processing fails
+   */
+  private renderErrorState(): ReactNode {
+    const { error } = this.state;
+    return (
+      <div className="work-experience-error" role="alert">
+        <div className="work-experience-error-icon" aria-hidden="true">⚠️</div>
+        <p className="work-experience-error-text">
+          {error || "Failed to load work experience data"}
         </p>
       </div>
     );
@@ -393,21 +386,25 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
    * Enhanced with filtering for null items
    */
   public render(): ReactNode {
-    const { data } = this.props;
+    const { experiences, visibleItems, durations, error, isInitialized } = this.state;
+
+    // Edge case: Handle error state
+    if (error) {
+      return this.renderErrorState();
+    }
 
     // Edge case: Handle empty or undefined data
-    if (!data || !Array.isArray(data) || data.length === 0) {
+    if (!experiences || experiences.length === 0) {
       return this.renderEmptyState();
     }
 
-    // Filter and render items, removing null returns from invalid items
-    const renderedItems = data
-      .map((item, index) => this.renderItem(item, index))
-      .filter((item): item is ReactNode => item !== null);
-
-    // Edge case: No valid items after filtering
-    if (renderedItems.length === 0) {
-      return this.renderEmptyState();
+    // Wait for observer initialization
+    if (!isInitialized) {
+      return (
+        <div className="work-experience-container" ref={this.containerRef}>
+          <div className="work-experience-loading">Loading...</div>
+        </div>
+      );
     }
 
     return (
@@ -417,9 +414,11 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         role="region"
         aria-label="Work Experience Timeline"
       >
-        <div className="work-experience-timeline">
-          {renderedItems}
-        </div>
+        <WorkExperienceTimeline
+          items={experiences}
+          visibleItems={visibleItems}
+          durations={durations}
+        />
       </div>
     );
   }

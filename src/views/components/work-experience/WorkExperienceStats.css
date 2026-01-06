@@ -1,0 +1,144 @@
+/**
+ * WorkExperienceStats Styles
+ * Professional Statistics Display
+ */
+
+.work-experience-stats {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.05) 0%,
+    rgba(118, 75, 162, 0.05) 100%
+  );
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-stats:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.08) 0%,
+    rgba(118, 75, 162, 0.08) 100%
+  );
+  border-color: rgba(102, 126, 234, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.work-experience-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.work-experience-stat-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-stats:hover .work-experience-stat-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.work-experience-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.work-experience-stat-value {
+  color: #1a2332;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  line-height: 1.2;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-stats:hover .work-experience-stat-value {
+  color: #667eea;
+}
+
+.work-experience-stat-label {
+  color: #5c6b7a;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-experience-stats:hover .work-experience-stat-label {
+  color: #34495e;
+}
+
+/* Responsive Design */
+@media screen and (width <= 768px) {
+  .work-experience-stats {
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .work-experience-stat-item {
+    gap: 0.625rem;
+  }
+
+  .work-experience-stat-icon {
+    font-size: 1.35rem;
+  }
+
+  .work-experience-stat-value {
+    font-size: 1.15rem;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .work-experience-stats {
+    padding: 0.875rem;
+    border-radius: 8px;
+  }
+
+  .work-experience-stat-icon {
+    font-size: 1.25rem;
+  }
+
+  .work-experience-stat-value {
+    font-size: 1.05rem;
+  }
+
+  .work-experience-stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .work-experience-stats,
+  .work-experience-stat-icon {
+    transition: none;
+  }
+
+  .work-experience-stats:hover {
+    transform: none;
+  }
+
+  .work-experience-stats:hover .work-experience-stat-icon {
+    transform: none;
+  }
+}
+

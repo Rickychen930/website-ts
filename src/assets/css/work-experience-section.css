@@ -1,11 +1,11 @@
 /**
- * Work Experience Section - Luxury & Elegant Design
+ * Work Experience Section - Professional Luxury Design
  * 
  * Features:
- * - Luxury & Elegant UI/UX
+ * - Professional, Clean, Luxury UI/UX
  * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
  * - Performance Optimized
- * - Clean & Professional Design
+ * - Showcases Software Engineering Skills
  * - Smooth Animations with IntersectionObserver
  * - Accessibility Support
  * 
@@ -26,7 +26,7 @@
   --work-spacing-xl: 2.5rem;
   --work-spacing-xxl: 3rem;
   
-  /* Colors - Luxury Palette (Updated to match new design system) */
+  /* Colors - Professional Luxury Palette */
   --work-color-primary: var(--accent, #667eea);
   --work-color-primary-light: var(--accent-light, #a78bfa);
   --work-color-primary-dark: var(--accent-dark, #5b21b6);
@@ -52,7 +52,7 @@
   --work-color-border-hover: rgba(102, 126, 234, 0.5);
   --work-color-border-glow: rgba(118, 75, 162, 0.25);
   
-  /* Shadows - Luxury Depth (Updated) */
+  /* Shadows - Professional Depth */
   --work-shadow-xs: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.04));
   --work-shadow-sm: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06));
   --work-shadow-md: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08));
@@ -60,8 +60,6 @@
   --work-shadow-xl: var(--shadow-xl, 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.08));
   --work-shadow-card: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
   --work-shadow-card-hover: var(--shadow-card-hover, 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18));
-  --work-shadow-icon: var(--shadow-icon, 0 4px 10px rgba(0, 0, 0, 0.06));
-  --work-shadow-icon-hover: var(--shadow-icon-hover, 0 12px 32px rgba(102, 126, 234, 0.3));
   
   /* Transitions - Smooth & Elegant */
   --work-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,229 +83,20 @@
 .work-experience-container {
   position: relative;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: var(--work-spacing-lg) var(--work-spacing-md);
 }
 
 /* ============================================
-   Timeline Container
+   Loading State
    ============================================ */
-.work-experience-timeline {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--work-spacing-xl);
-  padding: var(--work-spacing-xl) 0;
-}
-
-/* Elegant Vertical Timeline Line */
-.work-experience-timeline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 2.5rem;
-  width: 3px;
-  height: 100%;
-  background: var(--work-color-bg-timeline);
-  border-radius: 2px;
-  opacity: 0.6;
-  z-index: 0;
-  animation: timelineGrow 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes timelineGrow {
-  from {
-    height: 0;
-    opacity: 0;
-  }
-  to {
-    height: 100%;
-    opacity: 0.6;
-  }
-}
-
-/* ============================================
-   Experience Item
-   ============================================ */
-.work-experience-item {
-  position: relative;
-  margin-left: 5rem;
-  z-index: 1;
-}
-
-/* Icon Positioning */
-.work-experience-item .flow-icon-wrapper {
-  position: absolute;
-  left: -5.5rem;
-  top: 0.5rem;
-  z-index: 2;
-}
-
-.work-experience-icon-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-/* Enhanced Icon Styling */
-.work-experience-item .flow-icon {
-  width: 3.5rem;
-  height: 3.5rem;
-  background: var(--work-color-bg-icon);
-  border: 3px solid #ffffff;
-  border-radius: 16px;
-  box-shadow: var(--work-shadow-icon);
-  transition: all var(--work-transition-base);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-}
-
-.work-experience-item:hover .flow-icon {
-  transform: scale(1.15) rotate(5deg);
-  background: var(--work-color-bg-icon-hover);
-  box-shadow: var(--work-shadow-icon-hover);
-  border-color: rgba(255, 255, 255, 0.9);
-}
-
-/* Icon Glow Effect */
-.work-experience-item .flow-icon-glow {
-  width: 90px;
-  height: 90px;
-  background: radial-gradient(
-    circle,
-    rgba(102, 126, 234, 0.3) 0%,
-    rgba(139, 92, 246, 0.15) 50%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity var(--work-transition-base);
-}
-
-.work-experience-item:hover .flow-icon-glow {
-  opacity: 1;
-}
-
-/* ============================================
-   Content Styling
-   ============================================ */
-.work-experience-content {
-  position: relative;
-  padding: var(--work-spacing-lg);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.98),
-    rgba(249, 251, 253, 0.95)
-  );
-  border: 1px solid var(--work-color-border);
-  border-radius: 20px;
-  box-shadow: var(--work-shadow-card);
-  transition: all var(--work-transition-base);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.work-experience-item:hover .work-experience-content {
-  transform: translateX(8px) translateY(-4px);
-  box-shadow: var(--work-shadow-card-hover);
-  border-color: var(--work-color-border-hover);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 1),
-    rgba(249, 251, 253, 0.98)
-  );
-}
-
-/* ============================================
-   Header & Title
-   ============================================ */
-.work-experience-header {
-  margin-bottom: var(--work-spacing-md);
-}
-
-.work-experience-title {
-  margin: 0 0 var(--work-spacing-sm) 0;
-  color: var(--work-color-text-heading);
-  font-size: var(--work-font-size-title);
-  font-weight: 700;
-  font-family: var(--work-font-family);
-  line-height: var(--work-line-height-tight);
-  letter-spacing: -0.5px;
-  transition: color var(--work-transition-fast);
-}
-
-.work-experience-item:hover .work-experience-title {
-  color: var(--work-color-primary);
-  transform: translateX(2px);
-}
-
-/* ============================================
-   Meta Information (Company & Period)
-   ============================================ */
-.work-experience-meta {
-  display: flex;
-  align-items: center;
-  gap: var(--work-spacing-sm);
-  flex-wrap: wrap;
-  margin-top: var(--work-spacing-xs);
-}
-
-.work-experience-company {
-  color: var(--work-color-text-company);
-  font-size: var(--work-font-size-company);
-  font-weight: 600;
-  font-family: var(--work-font-family);
-  transition: color var(--work-transition-fast);
-}
-
-.work-experience-item:hover .work-experience-company {
-  color: var(--work-color-primary-dark);
-}
-
-.work-experience-separator {
+.work-experience-loading {
+  text-align: center;
+  padding: var(--work-spacing-xxl);
   color: var(--work-color-text-muted);
-  font-weight: 300;
-  opacity: 0.6;
-}
-
-.work-experience-period {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.35rem 0.75rem;
-  background: var(--work-color-bg-period);
-  color: var(--work-color-text-secondary);
-  font-size: var(--work-font-size-period);
-  font-weight: 500;
   font-family: var(--work-font-family);
-  border-radius: 8px;
-  transition: all var(--work-transition-fast);
-  white-space: nowrap;
-}
-
-.work-experience-item:hover .work-experience-period {
-  background: var(--work-color-bg-period-hover);
-  color: var(--work-color-primary-dark);
-  transform: scale(1.05);
-}
-
-/* ============================================
-   Description
-   ============================================ */
-.work-experience-description {
-  margin: 0;
-  color: var(--work-color-text-secondary);
   font-size: var(--work-font-size-description);
-  font-family: var(--work-font-family);
-  line-height: var(--work-line-height-relaxed);
-  transition: color var(--work-transition-fast);
-}
-
-.work-experience-item:hover .work-experience-description {
-  color: var(--work-color-text-primary);
 }
 
 /* ============================================
@@ -320,10 +109,49 @@
   font-family: var(--work-font-family);
 }
 
+.work-experience-empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--work-spacing-md);
+  opacity: 0.6;
+  animation: emptyIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes emptyIconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .work-experience-empty-text {
   margin: 0;
   font-size: var(--work-font-size-description);
   line-height: var(--work-line-height-normal);
+}
+
+/* ============================================
+   Error State
+   ============================================ */
+.work-experience-error {
+  text-align: center;
+  padding: var(--work-spacing-xxl);
+  color: var(--work-color-text-muted);
+  font-family: var(--work-font-family);
+}
+
+.work-experience-error-icon {
+  font-size: 3rem;
+  margin-bottom: var(--work-spacing-md);
+  opacity: 0.6;
+}
+
+.work-experience-error-text {
+  margin: 0;
+  font-size: var(--work-font-size-description);
+  line-height: var(--work-line-height-normal);
+  color: #e74c3c;
 }
 
 /* ============================================
@@ -332,40 +160,6 @@
 @media screen and (width <= 992px) {
   .work-experience-container {
     padding: var(--work-spacing-md) var(--work-spacing-sm);
-  }
-
-  .work-experience-timeline {
-    gap: var(--work-spacing-lg);
-    padding: var(--work-spacing-lg) 0;
-  }
-
-  .work-experience-timeline::before {
-    left: 2rem;
-    width: 2.5px;
-  }
-
-  .work-experience-item {
-    margin-left: 4rem;
-  }
-
-  .work-experience-item .flow-icon-wrapper {
-    left: -4.5rem;
-  }
-
-  .work-experience-item .flow-icon {
-    width: 3rem;
-    height: 3rem;
-    font-size: 1.35rem;
-    border-radius: 14px;
-  }
-
-  .work-experience-content {
-    padding: var(--work-spacing-md);
-    border-radius: 18px;
-  }
-
-  .work-experience-item:hover .work-experience-content {
-    transform: translateX(6px) translateY(-3px);
   }
 }
 
@@ -377,50 +171,9 @@
     padding: var(--work-spacing-sm);
   }
 
-  .work-experience-timeline {
-    gap: var(--work-spacing-md);
-    padding: var(--work-spacing-md) 0;
-  }
-
-  .work-experience-timeline::before {
-    left: 1.5rem;
-    width: 2px;
-  }
-
-  .work-experience-item {
-    margin-left: 3.5rem;
-  }
-
-  .work-experience-item .flow-icon-wrapper {
-    left: -3.75rem;
-    top: 0.25rem;
-  }
-
-  .work-experience-item .flow-icon {
-    width: 2.75rem;
-    height: 2.75rem;
-    font-size: 1.2rem;
-    border-radius: 12px;
-    border-width: 2px;
-  }
-
-  .work-experience-content {
-    padding: var(--work-spacing-md) var(--work-spacing-sm);
-    border-radius: 16px;
-  }
-
-  .work-experience-item:hover .work-experience-content {
-    transform: translateX(4px) translateY(-2px);
-  }
-
-  .work-experience-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--work-spacing-xs);
-  }
-
-  .work-experience-separator {
-    display: none;
+  .work-experience-empty-icon,
+  .work-experience-error-icon {
+    font-size: 3rem;
   }
 }
 
@@ -432,57 +185,9 @@
     padding: var(--work-spacing-xs);
   }
 
-  .work-experience-timeline {
-    gap: var(--work-spacing-sm);
-    padding: var(--work-spacing-sm) 0;
-  }
-
-  .work-experience-timeline::before {
-    left: 1.25rem;
-    width: 2px;
-  }
-
-  .work-experience-item {
-    margin-left: 3rem;
-  }
-
-  .work-experience-item .flow-icon-wrapper {
-    left: -3.25rem;
-    top: 0.25rem;
-  }
-
-  .work-experience-item .flow-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 1.1rem;
-    border-radius: 10px;
-  }
-
-  .work-experience-content {
-    padding: var(--work-spacing-sm);
-    border-radius: 14px;
-  }
-
-  .work-experience-item:hover .work-experience-content {
-    transform: translateX(2px) translateY(-1px);
-  }
-
-  .work-experience-title {
-    font-size: clamp(1.1rem, 2vw, 1.25rem);
-  }
-
-  .work-experience-company {
-    font-size: clamp(0.95rem, 1.6vw, 1rem);
-  }
-
-  .work-experience-period {
-    padding: 0.3rem 0.6rem;
-    font-size: clamp(0.8rem, 1.3vw, 0.875rem);
-  }
-
-  .work-experience-description {
-    font-size: clamp(0.9rem, 1.5vw, 0.95rem);
-    line-height: var(--work-line-height-normal);
+  .work-experience-empty-icon,
+  .work-experience-error-icon {
+    font-size: 2.5rem;
   }
 }
 
@@ -490,11 +195,7 @@
    Landscape Orientation
    ============================================ */
 @media screen and (orientation: landscape) and (width <= 768px) {
-  .work-experience-timeline {
-    gap: var(--work-spacing-md);
-  }
-
-  .work-experience-content {
+  .work-experience-container {
     padding: var(--work-spacing-md);
   }
 }
@@ -503,35 +204,8 @@
    Reduced Motion (Accessibility)
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .work-experience-timeline::before {
+  .work-experience-empty-icon {
     animation: none;
-    opacity: 0.6;
-    height: 100%;
-  }
-
-  .work-experience-content,
-  .work-experience-item .flow-icon,
-  .work-experience-title,
-  .work-experience-company,
-  .work-experience-period,
-  .work-experience-description {
-    transition: none;
-  }
-
-  .work-experience-item:hover .work-experience-content {
-    transform: none;
-  }
-
-  .work-experience-item:hover .flow-icon {
-    transform: none;
-  }
-
-  .work-experience-item:hover .work-experience-title {
-    transform: none;
-  }
-
-  .work-experience-item:hover .work-experience-period {
-    transform: none;
   }
 }
 
@@ -542,53 +216,14 @@
   .work-experience-container {
     padding: 0;
   }
-
-  .work-experience-timeline::before {
-    display: none;
-  }
-
-  .work-experience-item {
-    margin-left: 0;
-    page-break-inside: avoid;
-  }
-
-  .work-experience-item .flow-icon-wrapper {
-    display: none;
-  }
-
-  .work-experience-content {
-    box-shadow: none;
-    border: 1px solid #e0e0e0;
-    padding: var(--work-spacing-md);
-  }
-
-  .work-experience-item:hover .work-experience-content {
-    transform: none;
-    box-shadow: none;
-  }
 }
 
 /* ============================================
    High Contrast Mode (Accessibility)
    ============================================ */
 @media (prefers-contrast: high) {
-  .work-experience-content {
-    border: 2px solid var(--work-color-text-heading);
+  .work-experience-empty-text,
+  .work-experience-error-text {
+    color: var(--work-color-text-heading);
   }
-
-  .work-experience-item .flow-icon {
-    border: 3px solid var(--work-color-text-heading);
-  }
-
-  .work-experience-timeline::before {
-    background: var(--work-color-text-heading);
-    opacity: 1;
-  }
-}
-
-/* ============================================
-   Dark Mode Support (Future Enhancement)
-   ============================================ */
-@media (prefers-color-scheme: dark) {
-  /* Dark mode styles can be added here if needed */
 }

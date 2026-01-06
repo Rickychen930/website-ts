@@ -1,0 +1,101 @@
+/**
+ * WorkExperienceTimeline Styles
+ * Luxury, Professional Timeline Design
+ */
+
+.work-experience-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 2rem 0;
+}
+
+/* Timeline Line */
+.work-experience-timeline-line {
+  position: absolute;
+  top: 0;
+  left: 2.25rem;
+  width: 4px;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.work-experience-timeline-line-gradient {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    #667eea 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
+  border-radius: 2px;
+  opacity: 0.6;
+  animation: timelineGrow 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  box-shadow: 
+    0 0 8px rgba(102, 126, 234, 0.3),
+    0 0 16px rgba(118, 75, 162, 0.2);
+}
+
+@keyframes timelineGrow {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 100%;
+    opacity: 0.6;
+  }
+}
+
+/* Timeline Item */
+.work-experience-timeline-item {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive Design */
+@media screen and (width <= 992px) {
+  .work-experience-timeline {
+    padding: 1.75rem 0;
+  }
+
+  .work-experience-timeline-line {
+    left: 2rem;
+    width: 3.5px;
+  }
+}
+
+@media screen and (width <= 768px) {
+  .work-experience-timeline {
+    padding: 1.5rem 0;
+  }
+
+  .work-experience-timeline-line {
+    left: 1.75rem;
+    width: 3px;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .work-experience-timeline {
+    padding: 1.25rem 0;
+  }
+
+  .work-experience-timeline-line {
+    left: 1.5rem;
+    width: 2.5px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .work-experience-timeline-line-gradient {
+    animation: none;
+    opacity: 0.6;
+    height: 100%;
+  }
+}
+
