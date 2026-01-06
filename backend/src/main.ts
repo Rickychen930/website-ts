@@ -116,7 +116,7 @@ if (NODE_ENV === "production" && fs.existsSync(buildPath)) {
 }
 
 // ✅ Fallback route - catch all unmatched API routes
-app.use("/api/*", (req, res) => {
+app.use("/api/:path(*)", (req, res) => {
   res.status(404).json({
     message: "API route not found",
     path: req.path,
