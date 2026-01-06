@@ -201,6 +201,42 @@ export const FooterLabels = {
 } as const;
 
 /**
+ * Action Labels
+ */
+export const ActionLabels = {
+  DOWNLOAD_CV: 'Download CV',
+  HIRE_ME: 'Hire Me',
+  VIEW_PROJECT: 'View Project',
+  VIEW_CODE: 'View Code',
+  LEARN_MORE: 'Learn More',
+  CONTACT_ME: 'Contact Me',
+} as const;
+
+/**
+ * Section Titles
+ */
+export const SectionTitles = {
+  FEATURED_TECHNOLOGIES: 'Featured Technologies',
+  KEY_ACHIEVEMENTS: 'Key Achievements',
+  KEY_ACHIEVEMENTS_LABEL: 'Key Achievements:',
+  TECHNICAL_SKILLS: 'Technical Skills',
+  WORK_EXPERIENCE: 'Work Experience',
+  PROJECTS: 'Projects',
+  EDUCATION: 'Education',
+} as const;
+
+/**
+ * SEO Labels
+ */
+export const SEOLabels = {
+  PORTFOLIO: 'Portfolio',
+  SOFTWARE_ENGINEER: 'Software Engineer',
+  DEVELOPER: 'Developer',
+  PROFESSIONAL_PORTFOLIO: 'Professional portfolio',
+  SHOWCASING: 'showcasing software engineering skills, projects, and experience.',
+} as const;
+
+/**
  * Language Proficiency Levels
  */
 export const LanguageProficiency = {
@@ -227,6 +263,9 @@ export const Strings = {
   ARIA: AriaLabels,
   FOOTER: FooterLabels,
   LANGUAGE_PROFICIENCY: LanguageProficiency,
+  ACTIONS: ActionLabels,
+  SECTION_TITLES: SectionTitles,
+  SEO: SEOLabels,
 } as const;
 
 /**

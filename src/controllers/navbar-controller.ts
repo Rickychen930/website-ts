@@ -1,14 +1,16 @@
 /**
  * NavbarController - Business logic for navbar component
  * Follows Single Responsibility Principle (SRP) and Open/Closed Principle (OCP)
+ * Follows DRY principle - Uses centralized config constants
  */
 import { NavbarItem, NavbarState, NavbarConfig } from "../types/navbar";
+import { NavbarConfig as ConfigNavbar } from "../constants";
 
 class NavbarController {
-  private readonly DEFAULT_SCROLL_THRESHOLD = 8;
-  private readonly DEFAULT_COMPACT_BREAKPOINT = 1080;
-  private readonly DEFAULT_BRAND_ICON = "🌐";
-  private readonly DEFAULT_BRAND_TEXT = "";
+  private readonly DEFAULT_SCROLL_THRESHOLD = ConfigNavbar.SCROLL_THRESHOLD;
+  private readonly DEFAULT_COMPACT_BREAKPOINT = ConfigNavbar.COMPACT_BREAKPOINT;
+  private readonly DEFAULT_BRAND_ICON = ConfigNavbar.DEFAULT_BRAND_ICON;
+  private readonly DEFAULT_BRAND_TEXT = ConfigNavbar.DEFAULT_BRAND_TEXT;
 
   private state: NavbarState;
   private config: NavbarConfig;

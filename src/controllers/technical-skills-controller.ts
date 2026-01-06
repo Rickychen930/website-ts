@@ -3,6 +3,7 @@
  * Handles business logic for Technical Skills section
  * Follows Single Responsibility Principle (SRP)
  * Follows Dependency Inversion Principle (DIP)
+ * Extends BaseController for common functionality (DRY, OOP)
  */
 
 import { UserProfile } from "../types/user";
@@ -11,13 +12,15 @@ import {
   ITechnicalSkillsData,
   SkillIconMapper,
 } from "../models/technical-skills-model";
+import { BaseController } from "./base-controller";
 
 /**
  * Technical Skills Controller
  * Orchestrates business logic for Technical Skills section
  * Follows Single Responsibility Principle (SRP)
+ * Follows OOP principles - extends BaseController
  */
-export class TechnicalSkillsController {
+export class TechnicalSkillsController extends BaseController {
   /**
    * Get Technical Skills data from profile
    * Follows Single Responsibility Principle (SRP)
@@ -33,13 +36,28 @@ export class TechnicalSkillsController {
   }
 
   /**
-   * Check if Technical Skills section should be displayed
-   * Follows Single Responsibility Principle (SRP)
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
    */
-  shouldDisplay(profile: UserProfile): boolean {
-    const data = this.getTechnicalSkillsData(profile);
-    return data !== null && TechnicalSkillsModel.isValid(data);
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getTechnicalSkillsData(profile);
   }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return TechnicalSkillsModel.isValid(data as ITechnicalSkillsData);
+  }
+
+  /**
+   * Check if Technical Skills section should be displayed
+   * Inherited from BaseController - follows DRY principle
+   */
+  // shouldDisplay is inherited from BaseController
 
   /**
    * Get enriched categories with icons

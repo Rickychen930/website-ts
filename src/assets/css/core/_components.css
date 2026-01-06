@@ -1,0 +1,419 @@
+/**
+ * Reusable Component Classes - BEM Methodology
+ * Professional, Code-Based, DRY, KISS, OOP Architecture
+ * 
+ * Architecture Principles:
+ * - BEM: Block Element Modifier methodology
+ * - DRY: Reusable component classes
+ * - KISS: Simple, clear class names
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - each component does one thing
+ * - Reusable: Can be used across the application
+ * 
+ * Usage:
+ * @import '@/assets/css/core/components.css';
+ * 
+ * Example: <div class="card card--elevated card--hover">
+ */
+
+/* ============================================
+   Card Component - Reusable Card Pattern
+   ============================================ */
+.card {
+  /* Base styles */
+  position: relative;
+  width: 100%;
+  padding: var(--spacing-card-padding);
+  background: var(--color-bg-card);
+  border-radius: var(--spacing-card-radius);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-all);
+}
+
+/* Card Modifiers */
+.card--elevated {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-accent);
+}
+
+.card--hover {
+  cursor: pointer;
+}
+
+.card--hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-accent-hover);
+}
+
+.card--minimal {
+  background: transparent;
+  box-shadow: var(--shadow-xs);
+  border-color: var(--color-border-light);
+}
+
+.card--bordered {
+  border-width: 2px;
+  border-color: var(--color-border-default);
+}
+
+/* Card Elements */
+.card__header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.card__title {
+  font-size: var(--font-size-title-component);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-heading);
+  margin: 0;
+}
+
+.card__subtitle {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-text-subtle);
+  margin: var(--spacing-xs) 0 0 0;
+}
+
+.card__body {
+  color: var(--color-text-main);
+  line-height: var(--work-line-height-normal, 1.6);
+}
+
+.card__footer {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* ============================================
+   Button Component - Reusable Button Pattern
+   ============================================ */
+.btn {
+  /* Base styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--component-radius-button);
+  cursor: pointer;
+  transition: var(--transition-all);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Variants */
+.btn--primary {
+  background: var(--gradient-accent);
+  color: var(--color-text-on-accent);
+  border-color: transparent;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--gradient-accent-full);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+  background: var(--color-bg-card);
+  color: var(--color-accent-primary);
+  border-color: var(--color-border-accent);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-bg-card-hover);
+  border-color: var(--color-border-accent-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-main);
+  border-color: var(--color-border-default);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--color-bg-content-hover);
+  border-color: var(--color-border-accent);
+}
+
+/* Button Sizes */
+.btn--sm {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-small);
+}
+
+.btn--lg {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-subtitle);
+}
+
+/* ============================================
+   Input Component - Reusable Input Pattern
+   ============================================ */
+.input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--color-text-main);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--component-radius-input);
+  transition: var(--transition-all);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.input:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  background: var(--color-bg-lighter);
+}
+
+.input--error {
+  border-color: #e74c3c;
+}
+
+.input--error:focus {
+  box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.25);
+}
+
+/* ============================================
+   Section Component - Reusable Section Pattern
+   ============================================ */
+.section {
+  position: relative;
+  width: 100%;
+  padding: var(--spacing-section-padding);
+  margin: var(--spacing-section-margin) 0;
+}
+
+.section__container {
+  width: 100%;
+  max-width: var(--spacing-card-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.section__header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.section__title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-heading);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.section__subtitle {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-text-subtle);
+  margin: 0;
+}
+
+.section__content {
+  width: 100%;
+}
+
+/* Section Modifiers */
+.section--padded {
+  padding: var(--spacing-3xl) var(--spacing-lg);
+}
+
+.section--spacious {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+}
+
+.section--minimal {
+  padding: var(--spacing-lg) 0;
+}
+
+/* ============================================
+   Container Component - Reusable Container Pattern
+   ============================================ */
+.container {
+  width: 100%;
+  max-width: var(--spacing-card-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.container--fluid {
+  max-width: 100%;
+}
+
+.container--narrow {
+  max-width: 800px;
+}
+
+.container--wide {
+  max-width: 1400px;
+}
+
+/* ============================================
+   Grid Component - Reusable Grid Pattern
+   ============================================ */
+.grid {
+  display: grid;
+  gap: var(--component-gap-md);
+}
+
+.grid--cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.grid--cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--gap-sm {
+  gap: var(--component-gap-sm);
+}
+
+.grid--gap-md {
+  gap: var(--component-gap-md);
+}
+
+.grid--gap-lg {
+  gap: var(--component-gap-lg);
+}
+
+.grid--gap-xl {
+  gap: var(--component-gap-xl);
+}
+
+/* ============================================
+   Flex Component - Reusable Flex Pattern
+   ============================================ */
+.flex {
+  display: flex;
+}
+
+.flex--column {
+  flex-direction: column;
+}
+
+.flex--row {
+  flex-direction: row;
+}
+
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+.flex--nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex--center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex--between {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex--start {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex--end {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex--gap-xs {
+  gap: var(--component-gap-xs);
+}
+
+.flex--gap-sm {
+  gap: var(--component-gap-sm);
+}
+
+.flex--gap-md {
+  gap: var(--component-gap-md);
+}
+
+.flex--gap-lg {
+  gap: var(--component-gap-lg);
+}
+
+.flex--gap-xl {
+  gap: var(--component-gap-xl);
+}
+
+/* ============================================
+   Responsive Utilities
+   ============================================ */
+@media screen and (max-width: 768px) {
+  .section {
+    padding: var(--spacing-section-padding-mobile);
+    margin: var(--spacing-section-margin-mobile) 0;
+  }
+  
+  .section__container,
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .card {
+    padding: var(--spacing-card-padding-mobile);
+    border-radius: var(--spacing-card-radius-mobile);
+  }
+  
+  .grid--cols-2,
+  .grid--cols-3,
+  .grid--cols-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .card--hover:hover,
+  .btn:hover {
+    transform: none;
+  }
+}
+

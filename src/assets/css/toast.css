@@ -1,16 +1,28 @@
 /**
- * Toast Notification Styles
- * Professional toast notification system
+ * Toast Notification - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - toast-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/toast.css';
  */
+
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 .toast-container {
   position: fixed;
   top: 80px;
-  right: 20px;
+  right: var(--spacing-lg);
   z-index: var(--z-tooltip);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--spacing-sm);
   max-width: 400px;
   width: 100%;
   pointer-events: none;
@@ -19,24 +31,24 @@
 .toast {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: var(--bg-card);
-  border-radius: var(--card-radius);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-bg-card);
+  border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--color-border-light);
   pointer-events: auto;
-  animation: toastSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: toastSlideIn var(--duration-fast) var(--easing-smooth);
   transform: translateX(100%);
   opacity: 0;
 }
 
 .toast-enter {
-  animation: toastSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: toastSlideIn var(--duration-fast) var(--easing-smooth) forwards;
 }
 
 .toast-exit {
-  animation: toastSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: toastSlideOut var(--duration-fast) var(--easing-smooth) forwards;
 }
 
 @keyframes toastSlideIn {
@@ -71,7 +83,7 @@
   font-size: 16px;
   font-weight: 600;
   border-radius: 50%;
-  background: var(--bg-light);
+  background: var(--color-bg-lighter);
 }
 
 .toast-success .toast-icon {
@@ -121,7 +133,7 @@
 }
 
 .toast-close:hover {
-  background: var(--bg-light);
+  background: var(--color-bg-lighter);
   color: var(--text-main);
 }
 

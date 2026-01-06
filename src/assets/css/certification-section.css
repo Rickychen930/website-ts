@@ -1,44 +1,51 @@
-/* ============================================
-   CERTIFICATION SECTION - ULTRA LUXURY & PROFESSIONAL DESIGN
-   ============================================
-   Advanced Software Engineering Showcase
-   Features: Glassmorphism, 3D Transforms, Advanced Animations, 
-   Particle Effects, Interactive Elements, Modern Typography
-   ============================================ */
+/**
+ * Certification Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Features: Glassmorphism, 3D Transforms, Advanced Animations, 
+ * Particle Effects, Interactive Elements, Modern Typography
+ * 
+ * Usage:
+ * @import '@/assets/css/certification-section.css';
+ */
 
-/* ─── CSS Variables for Advanced Effects ─── */
+/* Import core system for constants and variables */
+@import './core/index.css';
+
+/* ─── Component-Specific Variables (DRY) ─── */
+/* Uses core constants as base */
 #certification-section.card,
 .card#certification-section {
-  --cert-spacing-xs: 0.5rem;
-  --cert-spacing-sm: 1rem;
-  --cert-spacing-md: 1.5rem;
-  --cert-spacing-lg: 2rem;
-  --cert-spacing-xl: 2.5rem;
-  --cert-spacing-xxl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --cert-spacing-xs: var(--spacing-xs);
+  --cert-spacing-sm: var(--spacing-sm);
+  --cert-spacing-md: var(--spacing-md);
+  --cert-spacing-lg: var(--spacing-lg);
+  --cert-spacing-xl: var(--spacing-xl);
+  --cert-spacing-xxl: var(--spacing-3xl);
   
-  /* Advanced Color Palette */
-  --cert-color-primary: var(--accent, #667eea);
-  --cert-color-primary-light: var(--accent-light, #a78bfa);
-  --cert-color-primary-dark: var(--accent-dark, #5b21b6);
-  --cert-color-secondary: var(--accent-alt, #764ba2);
-  --cert-color-accent: var(--accent-hover, #7c3aed);
+  /* Colors - Uses core color system */
+  --cert-color-primary: var(--color-accent-primary);
+  --cert-color-primary-light: var(--color-accent-light);
+  --cert-color-primary-dark: var(--color-accent-dark);
+  --cert-color-secondary: var(--color-accent-alt);
+  --cert-color-accent: var(--color-accent-hover);
   --cert-color-glow: rgba(102, 126, 234, 0.4);
   
-  /* Advanced Shadows */
-  --cert-shadow-card: 
-    0 10px 40px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --cert-shadow-card-hover: 
-    0 24px 80px rgba(102, 126, 234, 0.2),
-    0 12px 32px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(102, 126, 234, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  /* Shadows - Uses core shadow system */
+  --cert-shadow-card: var(--shadow-card);
+  --cert-shadow-card-hover: var(--shadow-card-hover);
   
-  /* Advanced Transitions */
-  --cert-transition-smooth: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  --cert-transition-bounce: 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  --cert-transition-elastic: 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* Transitions - Uses core transition system */
+  --cert-transition-smooth: var(--transition-smooth);
+  --cert-transition-bounce: var(--transition-bounce);
+  --cert-transition-elastic: var(--easing-spring);
 }
 
 /* ─── Section Wrapper ─── */
@@ -74,7 +81,7 @@
   );
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: var(--card-radius-lg);
+  border-radius: var(--spacing-card-radius);
   padding: 0;
   overflow: hidden;
   opacity: 0;
@@ -121,7 +128,7 @@
   content: "";
   position: absolute;
   inset: -3px;
-  border-radius: var(--card-radius-lg);
+  border-radius: var(--spacing-card-radius);
   padding: 3px;
   background: linear-gradient(
     135deg,

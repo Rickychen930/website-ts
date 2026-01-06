@@ -6,7 +6,8 @@
  * - Single Responsibility Principle (SRP): Handles contact business logic
  * - Dependency Inversion Principle (DIP): Depends on abstractions (Model)
  * - Open/Closed Principle (OCP): Extensible without modification
- * - DRY: Centralized business logic
+ * - DRY: Centralized business logic, extends BaseController
+ * - OOP: Extends BaseController for common functionality
  */
 
 import {
@@ -18,15 +19,19 @@ import {
 } from "../models/contact-model";
 import { UserProfile } from "../types/user";
 import { logWarn, logError } from "../utils/logger";
+import { BaseController } from "./base-controller";
+import { ErrorMessages } from "../constants";
 
 /**
  * Contact Controller
  * Orchestrates contact-related business logic
+ * Follows OOP principles - extends BaseController
  */
-export class ContactController {
+export class ContactController extends BaseController {
   private readonly model: typeof ContactModel;
 
   constructor(model: typeof ContactModel = ContactModel) {
+    super();
     this.model = model;
   }
 
@@ -42,6 +47,27 @@ export class ContactController {
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getContactData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    const contactData = data as IContactData;
+    return contactData !== null && 
+           contactData.contacts !== undefined && 
+           contactData.contacts.length > 0;
   }
 
   /**
@@ -66,7 +92,7 @@ export class ContactController {
     // Validate first
     const validation = this.validateData(data);
     if (!validation.isValid) {
-      logWarn("Contact data validation failed", { errors: validation.errors }, "ContactController");
+      logWarn(ErrorMessages.INVALID_INPUT, { errors: validation.errors }, "ContactController");
       return [];
     }
 
@@ -108,7 +134,7 @@ export class ContactController {
     const link = contact.link || this.model.generateLink(contact);
 
     if (!link) {
-      logWarn("No link available for contact", { label: contact.label }, "ContactController");
+      logWarn(ErrorMessages.INVALID_INPUT, { label: contact.label }, "ContactController");
       return;
     }
 
@@ -127,7 +153,7 @@ export class ContactController {
       // For other links, open in new tab
       window.open(link, "_blank", "noopener,noreferrer");
     } catch (error) {
-      logError("Failed to open contact link", error, "ContactController");
+      logError(ErrorMessages.GENERIC, error, "ContactController");
     }
   }
 
@@ -141,7 +167,7 @@ export class ContactController {
       await navigator.clipboard.writeText(contact.value);
       return true;
     } catch (error) {
-      logError("Failed to copy to clipboard", error, "ContactController");
+      logError(ErrorMessages.GENERIC, error, "ContactController");
       // Fallback for older browsers
       try {
         const textArea = document.createElement("textarea");
@@ -154,7 +180,7 @@ export class ContactController {
         document.body.removeChild(textArea);
         return true;
       } catch (fallbackError) {
-        logError("Fallback copy failed", fallbackError, "ContactController");
+        logError(ErrorMessages.GENERIC, fallbackError, "ContactController");
         return false;
       }
     }
@@ -172,12 +198,13 @@ export class ContactController {
 
   /**
    * Check if contact section should be displayed
+   * Override BaseController to check for contacts array length
    * @param profile - User profile
    * @returns Whether to display contact section
    */
   public shouldDisplay(profile: UserProfile): boolean {
     const data = this.getContactData(profile);
-    return data !== null && data.contacts.length > 0;
+    return data !== null && data.contacts !== undefined && data.contacts.length > 0;
   }
 
   /**

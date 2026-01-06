@@ -1,90 +1,56 @@
 /**
- * Navbar Styles - Ultra Luxury, Elegant & Professional
- * Showcasing Advanced Software Engineering Skills
- * Premium Design with Sophisticated Animations & Effects
+ * Navbar Styles - Professional, Code-Based Architecture
  * 
  * Architecture Principles:
- * - Component-Based: Modular, reusable CSS classes
- * - Responsive Design: Mobile-first approach
- * - Performance: Hardware-accelerated animations
- * - Accessibility: WCAG 2.1 AA compliant
- * - Modern CSS: Uses CSS custom properties, grid, flexbox
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - navbar-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/navbar.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Custom Properties (Design Tokens)
-   Advanced Software Engineering Design System
+   Navbar-Specific Variables (DRY)
+   Uses core constants as base, extends with navbar-specific values
    ============================================ */
 :root {
-  --navbar-height: 88px;
-  --navbar-height-scrolled: 72px;
-  --navbar-blur: 48px;
-  --navbar-blur-strong: 64px;
-  --navbar-z-index: var(--z-max, 9999);
-  --navbar-backdrop-z: calc(var(--z-max) - 1);
-  --navbar-menu-z: var(--z-max);
+  /* Navbar dimensions - Uses NavbarConfig constant */
+  --navbar-height: var(--navbar-height);
+  --navbar-height-scrolled: var(--navbar-height-scrolled);
+  --navbar-blur: var(--navbar-blur);
+  --navbar-blur-strong: var(--navbar-blur-strong);
+  --navbar-z-index: var(--navbar-z-index);
+  --navbar-backdrop-z: calc(var(--navbar-z-index) - 1);
+  --navbar-menu-z: var(--navbar-z-index);
   
-  /* Advanced Gradient System - Multi-layer Premium */
-  --gradient-primary: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
-  --gradient-primary-reverse: linear-gradient(135deg, #f093fb 0%, #764ba2 50%, #667eea 100%);
-  --gradient-primary-radial: radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15), transparent 70%);
-  --gradient-surface: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(255, 255, 255, 0.94) 50%,
-    rgba(250, 251, 252, 0.92) 100%
-  );
-  --gradient-surface-scrolled: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.99) 0%,
-    rgba(255, 255, 255, 0.98) 50%,
-    rgba(255, 255, 255, 0.97) 100%
-  );
-  --gradient-text-premium: linear-gradient(
-    135deg,
-    #1f2d3d 0%,
-    #2c3e50 25%,
-    #667eea 50%,
-    #764ba2 75%,
-    #f093fb 100%
-  );
+  /* Advanced Gradient System - Extends core gradients */
+  --gradient-primary: var(--gradient-accent-full);
+  --gradient-primary-reverse: var(--gradient-primary-reverse);
+  --gradient-primary-radial: var(--gradient-primary-radial);
+  --gradient-surface: var(--gradient-primary);
+  --gradient-surface-scrolled: var(--gradient-luxury);
+  --gradient-text-premium: var(--gradient-accent-full);
   
-  /* Advanced Shadow System - Multi-layer Depth */
-  --shadow-navbar-default: 
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.02) inset,
-    0 4px 16px rgba(0, 0, 0, 0.04),
-    0 8px 32px rgba(0, 0, 0, 0.06);
-  --shadow-navbar-scrolled: 
-    0 2px 0 rgba(255, 255, 255, 0.98) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.03) inset,
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    0 16px 64px rgba(0, 0, 0, 0.06),
-    0 0 80px rgba(102, 126, 234, 0.12);
-  --shadow-menu-premium:
-    0 8px 32px rgba(0, 0, 0, 0.12),
-    0 16px 64px rgba(0, 0, 0, 0.08),
-    0 32px 128px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(255, 255, 255, 0.7) inset,
-    0 0 120px rgba(102, 126, 234, 0.18);
+  /* Advanced Shadow System - Extends core shadows */
+  --shadow-navbar-default: var(--shadow-sm);
+  --shadow-navbar-scrolled: var(--shadow-card-hover);
+  --shadow-menu-premium: var(--shadow-xl);
   
-  /* Spacing System - 8px Grid */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-xxl: 3rem;
-  
-  /* Animation Timing - Advanced Easing */
-  --timing-instant: 0.1s;
-  --timing-fast: 0.2s;
-  --timing-normal: 0.3s;
-  --timing-slow: 0.5s;
+  /* Animation Timing - Uses core animation system */
+  --timing-instant: var(--duration-instant);
+  --timing-fast: var(--duration-fast);
+  --timing-normal: var(--duration-base);
+  --timing-slow: var(--duration-slow);
   --timing-slower: 0.8s;
-  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --easing-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-smooth: var(--easing-smooth);
+  --easing-bounce: var(--easing-bounce);
+  --easing-elastic: var(--easing-spring);
   --easing-premium: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -100,15 +66,12 @@
   z-index: var(--navbar-z-index);
   width: 100%;
   min-height: var(--navbar-height);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 4px 16px rgba(0, 0, 0, 0.02);
-  transition: all var(--timing-normal) var(--easing-smooth);
+  background: var(--color-bg-navbar);
+  backdrop-filter: blur(var(--navbar-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--navbar-blur)) saturate(180%);
+  border-bottom: 1px solid var(--color-border-navbar);
+  box-shadow: var(--shadow-navbar-default);
+  transition: var(--transition-all);
   position: relative;
   overflow: visible;
   -webkit-font-smoothing: antialiased;

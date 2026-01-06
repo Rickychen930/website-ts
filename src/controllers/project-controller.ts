@@ -6,7 +6,8 @@
  * - Single Responsibility Principle (SRP): Handles project business logic
  * - Dependency Inversion Principle (DIP): Depends on abstractions (Model)
  * - Open/Closed Principle (OCP): Extensible without modification
- * - DRY: Reusable business logic methods
+ * - DRY: Reusable business logic methods, extends BaseController
+ * - OOP: Extends BaseController for common functionality
  */
 
 import {
@@ -16,16 +17,58 @@ import {
   ProjectStatus,
   ProjectCategory,
 } from "../models/project-model";
+import { UserProfile } from "../types/user";
+import { BaseController } from "./base-controller";
 
 /**
  * Project Controller
  * Orchestrates project-related business logic
+ * Follows OOP principles - extends BaseController
  */
-export class ProjectController {
+export class ProjectController extends BaseController {
   private readonly model: typeof ProjectModel;
 
   constructor(model: typeof ProjectModel = ProjectModel) {
+    super();
     this.model = model;
+  }
+
+  /**
+   * Get project data from profile
+   * @param profile - User profile
+   * @returns Project array or null
+   */
+  getProjectData(profile: UserProfile): IProject[] | null {
+    if (!profile || !profile.projects) {
+      return null;
+    }
+
+    const data = profile.projects as IProject[];
+    const validation = this.model.validate(data);
+    
+    if (!validation.isValid) {
+      return null;
+    }
+
+    return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getProjectData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return Array.isArray(data) && this.model.validate(data as IProject[]).isValid;
   }
 
   /**

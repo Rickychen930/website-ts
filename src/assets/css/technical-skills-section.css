@@ -1,18 +1,21 @@
 /**
- * Technical Skills Section - Professional, Luxury, Responsive Design
+ * Technical Skills Section - Professional, Code-Based Architecture
  * 
- * Design Principles:
- * - Professional: Shows software engineering capabilities
- * - Luxury: Premium materials, refined aesthetics
- * - Clean: Minimal, uncluttered, focused
- * - Responsive: Mobile-first, adaptive layouts
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
  * 
- * Performance:
- * - GPU-accelerated transforms
- * - Optimized animations
- * - Efficient selectors
- * - Reduced repaints/reflows
+ * Performance: GPU-accelerated transforms, Optimized animations
+ * 
+ * Usage:
+ * @import '@/assets/css/technical-skills-section.css';
  */
+
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 /* ─── Animated Background Pattern ─── */
 #technical-skills-section::before {
@@ -27,8 +30,8 @@
     radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.08) 0%, transparent 50%),
     radial-gradient(circle at 40% 20%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
   pointer-events: none;
-  z-index: 0;
-  animation: backgroundPulse 8s ease-in-out infinite;
+  z-index: var(--z-base);
+  animation: backgroundPulse 8s var(--easing-ease-in-out) infinite;
 }
 
 @keyframes backgroundPulse {
@@ -37,7 +40,7 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
+    opacity: var(--opacity-hover);
     transform: scale(1.05);
   }
 }
@@ -45,75 +48,66 @@
 #technical-skills-section {
   position: relative;
   overflow: hidden;
-  --skills-spacing-xs: 0.5rem;
-  --skills-spacing-sm: 1rem;
-  --skills-spacing-md: 1.5rem;
-  --skills-spacing-lg: 2rem;
-  --skills-spacing-xl: 2.5rem;
-  --skills-spacing-xxl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --skills-spacing-xs: var(--spacing-xs);
+  --skills-spacing-sm: var(--spacing-sm);
+  --skills-spacing-md: var(--spacing-md);
+  --skills-spacing-lg: var(--spacing-lg);
+  --skills-spacing-xl: var(--spacing-xl);
+  --skills-spacing-xxl: var(--spacing-3xl);
 
-  /* Colors - Professional Luxury Palette */
-  --skills-color-primary: var(--accent, #667eea);
-  --skills-color-primary-light: var(--accent-light, #a78bfa);
-  --skills-color-primary-dark: var(--accent-dark, #5b21b6);
-  --skills-color-secondary: var(--accent-alt, #764ba2);
-  --skills-color-accent: var(--accent-hover, #7c3aed);
-  --skills-color-tertiary: var(--accent-tertiary, #4facfe);
+  /* Colors - Uses core color system */
+  --skills-color-primary: var(--color-accent-primary);
+  --skills-color-primary-light: var(--color-accent-light);
+  --skills-color-primary-dark: var(--color-accent-dark);
+  --skills-color-secondary: var(--color-accent-alt);
+  --skills-color-accent: var(--color-accent-hover);
+  --skills-color-tertiary: var(--color-accent-tertiary);
 
-  --skills-color-text-heading: var(--text-heading, #1f2d3d);
-  --skills-color-text-primary: var(--text-heading-alt, #2c3e50);
-  --skills-color-text-secondary: var(--text-subtle, #5c6b7a);
-  --skills-color-text-muted: var(--text-muted, #3b4a59);
-  --skills-color-text-light: var(--text-light, #9ca3af);
+  --skills-color-text-heading: var(--color-text-heading);
+  --skills-color-text-primary: var(--color-text-heading-alt);
+  --skills-color-text-secondary: var(--color-text-subtle);
+  --skills-color-text-muted: var(--color-text-muted);
+  --skills-color-text-light: var(--color-text-light);
 
-  --skills-color-bg-card: var(--bg-card, #ffffff);
-  --skills-color-bg-card-hover: var(--bg-card-hover, #fafbfd);
-  --skills-color-bg-gradient: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #f8fafc 50%,
-    #f3f6fa 100%
-  );
-  --skills-color-bg-icon: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --skills-color-bg-card: var(--color-bg-card);
+  --skills-color-bg-card-hover: var(--color-bg-card-hover);
+  --skills-color-bg-gradient: var(--gradient-primary);
+  --skills-color-bg-icon: var(--gradient-accent);
 
-  --skills-color-border: var(--border-light, rgba(220, 227, 234, 0.6));
-  --skills-color-border-glow: var(--border-glow, rgba(102, 126, 234, 0.25));
-  --skills-color-border-hover: var(--border-accent-hover, rgba(102, 126, 234, 0.5));
+  --skills-color-border: var(--color-border-light);
+  --skills-color-border-glow: var(--color-border-glow);
+  --skills-color-border-hover: var(--color-border-accent-hover);
 
-  /* Shadows - Professional Depth */
-  --skills-shadow-xs: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.04));
-  --skills-shadow-sm: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05),
-    0 4px 10px rgba(0, 0, 0, 0.06));
-  --skills-shadow-md: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.07),
-    0 8px 20px rgba(0, 0, 0, 0.08));
-  --skills-shadow-lg: var(--shadow-lg, 0 10px 24px rgba(0, 0, 0, 0.08),
-    0 20px 40px rgba(0, 0, 0, 0.06));
-  --skills-shadow-card: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05),
-    0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
-  --skills-shadow-card-hover: var(--shadow-card-hover,
-      0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12),
-      0 48px 120px rgba(102, 126, 234, 0.18));
-  --skills-shadow-glow: var(--shadow-glow, 0 0 24px rgba(102, 126, 234, 0.45));
-  --skills-shadow-accent: var(--shadow-accent, 0 0 16px rgba(102, 126, 234, 0.35));
+  /* Shadows - Uses core shadow system */
+  --skills-shadow-xs: var(--shadow-xs);
+  --skills-shadow-sm: var(--shadow-sm);
+  --skills-shadow-md: var(--shadow-md);
+  --skills-shadow-lg: var(--shadow-lg);
+  --skills-shadow-card: var(--shadow-card);
+  --skills-shadow-card-hover: var(--shadow-card-hover);
+  --skills-shadow-glow: var(--shadow-glow);
+  --skills-shadow-accent: var(--shadow-glow);
 
-  /* Transitions - Smooth & Professional */
-  --skills-transition-fast: var(--transition-fast, 0.15s ease);
+  /* Transitions - Uses core transition system */
+  --skills-transition-fast: var(--transition-fast);
   --skills-transition-base: var(--transition-base, 0.3s ease);
   --skills-transition-slow: var(--transition-slow, 0.5s ease);
   --skills-transition-smooth: var(--transition-smooth,
       0.4s cubic-bezier(0.4, 0, 0.2, 1));
 
   /* Typography */
-  --skills-font-main: var(--font-main, "Inter", "Segoe UI", sans-serif);
-  --skills-font-size-base: var(--font-size-base, 1rem);
-  --skills-font-size-title: var(--font-size-title, 1.5rem);
-  --skills-font-size-subtitle: var(--font-size-subtitle, 1.1rem);
-  --skills-line-height-normal: var(--line-height-normal, 1.5);
-  --skills-line-height-relaxed: var(--line-height-relaxed, 1.75);
+  /* Typography - Uses core typography system */
+  --skills-font-main: var(--font-main);
+  --skills-font-size-base: var(--font-size-base);
+  --skills-font-size-title: var(--font-size-title-component);
+  --skills-font-size-subtitle: var(--font-size-subtitle);
+  --skills-line-height-normal: 1.5;
+  --skills-line-height-relaxed: 1.75;
 
-  /* Layout */
-  --skills-card-radius: var(--card-radius, 24px);
-  --skills-item-radius: var(--item-radius, 18px);
+  /* Layout - Uses core radius system */
+  --skills-card-radius: var(--spacing-card-radius);
+  --skills-item-radius: var(--radius-lg);
 }
 
 /* ─── Global Reset ─── */

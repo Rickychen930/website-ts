@@ -10,6 +10,7 @@ import { AboutMeController } from "../../../controllers/about-me-controller";
 import { UserProfile } from "../../../types/user";
 import { ButtonVariant } from "../../../types/ui";
 import { generateStableKey } from "../../../utils/view-helpers";
+import { ActionLabels, SectionTitles } from "../../../constants";
 import "../../../assets/css/about-me-section.css";
 
 /**
@@ -201,7 +202,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
       <div className="about-me-featured-tech">
         <TechBadgesGrid
           technologies={technologies}
-          title="Featured Technologies"
+          title={SectionTitles.FEATURED_TECHNOLOGIES}
           variant="default"
           maxItems={8}
         />
@@ -224,7 +225,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
 
     return (
       <div className="about-me-highlights">
-        <h3 className="about-me-highlights-title">Key Achievements</h3>
+        <h3 className="about-me-highlights-title">{SectionTitles.KEY_ACHIEVEMENTS}</h3>
         <div className="about-me-highlights-grid">
           {highlights.map((highlight, index) => (
             <ProfessionalHighlight
@@ -256,13 +257,13 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
     return (
       <div className="about-me-actions" role="group" aria-label="Profile actions">
         <ProfileAction
-          label="Download CV"
+          label={ActionLabels.DOWNLOAD_CV}
           href="/assets/document/RICKY_CV_8_AUG.pdf"
           download
           variant={ButtonVariant.PRIMARY}
         />
         <ProfileAction
-          label="Hire Me"
+          label={ActionLabels.HIRE_ME}
           href="#contact"
           variant={ButtonVariant.SECONDARY}
         />

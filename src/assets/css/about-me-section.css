@@ -1,40 +1,54 @@
 /**
- * About Me Section - Professional, Clean, Luxury, Responsive Design
- * Shows Software Engineering Capabilities
- * Follows DRY principle with CSS variables
+ * About Me Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/about-me-section.css';
  */
 
-/* ============================================
-   Import Component Styles
-   ============================================ */
+/* Import core system for constants and variables */
+@import './core/index.css';
+
+/* Import component styles */
 @import "./about-me-components.css";
 
 /* ============================================
-   CSS Variables for Consistency (DRY)
+   Component-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 #about-me-section.card,
 .card#about-me-section {
-  --about-me-spacing-xs: 0.5rem;
-  --about-me-spacing-sm: 1rem;
-  --about-me-spacing-md: 1.5rem;
-  --about-me-spacing-lg: 2rem;
-  --about-me-spacing-xl: 3rem;
-  --about-me-spacing-xxl: 4rem;
+  /* Spacing - Uses core spacing system */
+  --about-me-spacing-xs: var(--spacing-xs);
+  --about-me-spacing-sm: var(--spacing-sm);
+  --about-me-spacing-md: var(--spacing-md);
+  --about-me-spacing-lg: var(--spacing-lg);
+  --about-me-spacing-xl: var(--spacing-xl);
+  --about-me-spacing-xxl: var(--spacing-4xl);
   
-  --about-me-color-primary: var(--accent, #667eea);
-  --about-me-color-primary-hover: var(--accent-hover, #7c3aed);
-  --about-me-color-text-heading: var(--text-heading, #1f2d3d);
-  --about-me-color-text-body: var(--text-muted, #3b4a59);
-  --about-me-color-text-subtle: var(--text-subtle, #5c6b7a);
-  --about-me-color-text-muted: var(--text-muted-alt, #7a8b9c);
+  /* Colors - Uses core color system */
+  --about-me-color-primary: var(--color-accent-primary);
+  --about-me-color-primary-hover: var(--color-accent-hover);
+  --about-me-color-text-heading: var(--color-text-heading);
+  --about-me-color-text-body: var(--color-text-muted);
+  --about-me-color-text-subtle: var(--color-text-subtle);
+  --about-me-color-text-muted: var(--color-text-muted-alt);
   --about-me-color-bg-glow: rgba(102, 126, 234, 0.15);
-  --about-me-color-border: rgba(220, 227, 234, 0.4);
+  --about-me-color-border: var(--color-border-light);
   
+  /* Shadows - Uses core shadow system */
   --about-me-shadow-sm: var(--shadow-sm);
   --about-me-shadow-md: var(--shadow-md);
   --about-me-shadow-lg: var(--shadow-lg);
   --about-me-shadow-glow: var(--shadow-glow);
   
+  /* Transitions - Uses core transition system */
   --about-me-transition-fast: var(--transition-fast);
   --about-me-transition-base: var(--transition-base);
   --about-me-transition-slow: var(--transition-slow);
@@ -45,14 +59,15 @@
    Main Container & Layout
    ============================================ */
 .about-me-content {
+  /* Extends .flex component */
   display: flex;
   flex-direction: column;
   gap: var(--about-me-spacing-xl);
   width: 100%;
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--duration-base) var(--easing-smooth),
+              transform var(--duration-base) var(--easing-smooth);
 }
 
 .about-me-content.about-me-visible {
@@ -67,19 +82,16 @@
   width: 100%;
   position: relative;
   padding: var(--about-me-spacing-xl) 0;
-  border-radius: var(--card-radius);
+  border-radius: var(--spacing-card-radius);
   overflow: hidden;
 }
 
 .about-me-hero-background {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.03) 0%, 
-    rgba(118, 75, 162, 0.03) 50%, 
-    rgba(102, 126, 234, 0.02) 100%);
-  border-radius: var(--card-radius);
-  z-index: 0;
+  background: var(--gradient-sublime);
+  border-radius: var(--spacing-card-radius);
+  z-index: var(--z-base);
   pointer-events: none;
 }
 

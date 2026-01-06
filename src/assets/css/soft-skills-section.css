@@ -1,66 +1,68 @@
-/* ============================================
-   Soft Skills Section - Professional Luxury Design
-   ============================================
-   
-   Design Principles:
-   - Professional: Enterprise-grade, sophisticated
-   - Luxury: Premium materials, refined aesthetics
-   - Clean: Minimal, uncluttered, focused
-   - Responsive: Mobile-first, adaptive layouts
-   
-   Architecture:
-   - Component-based styling
-   - CSS Variables for theming
-   - Performance optimized
-   - Accessibility focused
-   ============================================ */
+/**
+ * Soft Skills Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/soft-skills-section.css';
+ */
 
-/* ─── CSS Variables ─── */
+/* Import core system for constants and variables */
+@import './core/index.css';
+
+/* ─── Component-Specific Variables (DRY) ─── */
+/* Uses core constants as base */
 #soft-skills-section {
-  --soft-skills-spacing-xs: 0.5rem;
-  --soft-skills-spacing-sm: 1rem;
-  --soft-skills-spacing-md: 1.5rem;
-  --soft-skills-spacing-lg: 2rem;
-  --soft-skills-spacing-xl: 2.5rem;
-  --soft-skills-spacing-xxl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --soft-skills-spacing-xs: var(--spacing-xs);
+  --soft-skills-spacing-sm: var(--spacing-sm);
+  --soft-skills-spacing-md: var(--spacing-md);
+  --soft-skills-spacing-lg: var(--spacing-lg);
+  --soft-skills-spacing-xl: var(--spacing-xl);
+  --soft-skills-spacing-xxl: var(--spacing-3xl);
   
-  /* Colors - Professional Luxury Palette */
-  --soft-skills-color-primary: var(--accent, #667eea);
-  --soft-skills-color-primary-light: var(--accent-light, #a78bfa);
-  --soft-skills-color-primary-dark: var(--accent-dark, #5b21b6);
-  --soft-skills-color-secondary: var(--accent-alt, #764ba2);
-  --soft-skills-color-accent: var(--accent-hover, #7c3aed);
+  /* Colors - Uses core color system */
+  --soft-skills-color-primary: var(--color-accent-primary);
+  --soft-skills-color-primary-light: var(--color-accent-light);
+  --soft-skills-color-primary-dark: var(--color-accent-dark);
+  --soft-skills-color-secondary: var(--color-accent-alt);
+  --soft-skills-color-accent: var(--color-accent-hover);
   
-  --soft-skills-color-text-heading: var(--text-heading, #1f2d3d);
-  --soft-skills-color-text-primary: var(--text-heading-alt, #2c3e50);
-  --soft-skills-color-text-secondary: var(--text-subtle, #5c6b7a);
-  --soft-skills-color-text-muted: var(--text-muted, #3b4a59);
-  --soft-skills-color-text-light: var(--text-light, #9ca3af);
+  --soft-skills-color-text-heading: var(--color-text-heading);
+  --soft-skills-color-text-primary: var(--color-text-heading-alt);
+  --soft-skills-color-text-secondary: var(--color-text-subtle);
+  --soft-skills-color-text-muted: var(--color-text-muted);
+  --soft-skills-color-text-light: var(--color-text-light);
   
-  --soft-skills-color-bg-card: var(--bg-card, #ffffff);
-  --soft-skills-color-bg-card-hover: var(--bg-card-hover, #fefefe);
-  --soft-skills-color-bg-gradient: var(--bg-gradient-luxury, linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f3f6fa 100%));
+  --soft-skills-color-bg-card: var(--color-bg-card);
+  --soft-skills-color-bg-card-hover: var(--color-bg-card-hover);
+  --soft-skills-color-bg-gradient: var(--gradient-luxury);
   
-  --soft-skills-color-border: var(--border-light, rgba(220, 227, 234, 0.6));
-  --soft-skills-color-border-hover: var(--border-accent-hover, rgba(102, 126, 234, 0.5));
+  --soft-skills-color-border: var(--color-border-light);
+  --soft-skills-color-border-hover: var(--color-border-accent-hover);
   
-  /* Shadows - Professional Depth */
-  --soft-skills-shadow-card: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
-  --soft-skills-shadow-card-hover: var(--shadow-card-hover, 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18));
+  /* Shadows - Uses core shadow system */
+  --soft-skills-shadow-card: var(--shadow-card);
+  --soft-skills-shadow-card-hover: var(--shadow-card-hover);
   
-  /* Transitions */
-  --soft-skills-transition-fast: var(--transition-fast, 0.15s ease);
-  --soft-skills-transition-base: var(--transition-base, 0.3s ease);
-  --soft-skills-transition-slow: var(--transition-slow, 0.5s ease);
-  --soft-skills-transition-smooth: var(--transition-smooth, 0.4s cubic-bezier(0.4, 0, 0.2, 1));
+  /* Transitions - Uses core transition system */
+  --soft-skills-transition-fast: var(--transition-fast);
+  --soft-skills-transition-base: var(--transition-base);
+  --soft-skills-transition-slow: var(--transition-slow);
+  --soft-skills-transition-smooth: var(--transition-smooth);
   
-  /* Typography */
-  --soft-skills-font-main: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
-  --soft-skills-font-size-base: var(--font-size-base, 1rem);
-  --soft-skills-font-size-title: var(--font-size-title, 1.5rem);
-  --soft-skills-font-size-subtitle: var(--font-size-subtitle, 1.1rem);
-  --soft-skills-line-height-normal: var(--line-height-normal, 1.5);
-  --soft-skills-line-height-relaxed: var(--line-height-relaxed, 1.75);
+  /* Typography - Uses core typography system */
+  --soft-skills-font-main: var(--font-main);
+  --soft-skills-font-size-base: var(--font-size-base);
+  --soft-skills-font-size-title: var(--font-size-title-component);
+  --soft-skills-font-size-subtitle: var(--font-size-subtitle);
+  --soft-skills-line-height-normal: 1.5;
+  --soft-skills-line-height-relaxed: 1.75;
 }
 
 /* ─── Global Reset ─── */
@@ -76,7 +78,7 @@
   padding: var(--soft-skills-spacing-xxl, 3rem) var(--soft-skills-spacing-lg, 2rem);
   text-align: center;
   color: var(--soft-skills-color-text-secondary, #5c6b7a);
-  font-family: var(--soft-skills-font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-family: var(--soft-skills-font-main);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
 }
 
@@ -92,7 +94,7 @@
 .soft-skills-error-text {
   color: var(--soft-skills-color-text-muted, #3b4a59);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  font-family: var(--soft-skills-font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-family: var(--soft-skills-font-main);
   margin: 0;
   font-weight: 500;
 }
@@ -117,7 +119,7 @@
 #soft-skills-section .soft-skills-empty-text {
   color: var(--soft-skills-color-text-secondary, #5c6b7a);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  font-family: var(--soft-skills-font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-family: var(--soft-skills-font-main);
   margin: 0;
   font-weight: 400;
 }

@@ -10,8 +10,12 @@
  * - Single Responsibility Principle (SRP)
  * - Dependency Inversion Principle (DIP)
  * - Open/Closed Principle (OCP)
+ * - DRY: Extends BaseController for common functionality
+ * - OOP: Extends BaseController
  */
 import { SoftSkillItem } from "../models/soft-skills-model";
+import { UserProfile } from "../types/user";
+import { BaseController } from "./base-controller";
 
 export interface ISoftSkillsController {
   validateData(data: unknown): data is SoftSkillItem[];
@@ -20,7 +24,39 @@ export interface ISoftSkillsController {
   groupSkillsByCategory(skills: SoftSkillItem[]): Map<string, SoftSkillItem[]>;
 }
 
-export class SoftSkillsController implements ISoftSkillsController {
+export class SoftSkillsController extends BaseController implements ISoftSkillsController {
+  /**
+   * Get soft skills data from profile
+   * @param profile - User profile
+   * @returns Soft skills array or null
+   */
+  getSoftSkillsData(profile: UserProfile): SoftSkillItem[] | null {
+    if (!profile || !profile.softSkills) {
+      return null;
+    }
+
+    const data = this.getValidatedSkills(profile.softSkills);
+    return data.length > 0 ? data : null;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getSoftSkillsData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return this.validateData(data);
+  }
+
   /**
    * Validate if data is a valid array of soft skills
    * @param data - Data to validate

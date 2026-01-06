@@ -1,39 +1,43 @@
-/* ============================================
-   Card Component - Luxury & Elegant Design
-   ============================================ */
+/**
+ * Card Component - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - card-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Note: This file extends the core card component from core/_components.css
+ * 
+ * Usage:
+ * @import '@/assets/css/card.css';
+ */
 
-/* Global Reset */
-* {
-  box-sizing: border-box;
-}
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 /* ============================================
-   Card Container - Modern & Clean Design
+   Card Container - Extends Core Card Component
    ============================================ */
 .card {
+  /* Extends .card from core/_components.css */
   position: relative;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+  padding: var(--spacing-card-padding);
   background: rgba(26, 32, 44, 0.7);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-radius: 28px;
+  border-radius: var(--spacing-card-radius);
   overflow: hidden;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.25),
-    0 0 0 1px rgba(255, 255, 255, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-card);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: fade-in-card 0.6s ease forwards;
-  transition:
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fade-in-card var(--duration-base) var(--easing-ease) forwards;
+  transition: var(--transition-all);
   outline: none;
-  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
+  font-family: var(--font-main);
   isolation: isolate;
 }
 
@@ -45,10 +49,10 @@
     radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-opacity);
   pointer-events: none;
-  z-index: 0;
-  border-radius: 28px;
+  z-index: var(--z-base);
+  border-radius: var(--spacing-card-radius);
 }
 
 .card:hover::before {
@@ -75,7 +79,7 @@
 }
 
 .card-variant-outlined:hover {
-  border-color: var(--accent, #667eea);
+  border-color: var(--color-accent-primary);
   box-shadow: 0 8px 24px rgba(120, 162, 240, 0.15);
 }
 
@@ -221,10 +225,10 @@
   }
 }
 
-@media screen and (width <= 992px) {
+@media screen and (max-width: 992px) {
   .card {
     padding: 2.25rem clamp(1.5rem, 3vw, 2.5rem);
-    border-radius: 28px;
+    border-radius: var(--spacing-card-radius);
   }
 
   .card-header {
@@ -247,10 +251,10 @@
   }
 }
 
-@media screen and (width <= 768px) {
+@media screen and (max-width: 768px) {
   .card {
-    padding: 2rem clamp(1.5rem, 2.5vw, 2rem);
-    border-radius: 24px;
+    padding: var(--spacing-card-padding-mobile);
+    border-radius: var(--spacing-card-radius-mobile);
   }
 
   .card-header {
@@ -281,10 +285,10 @@
 /* ============================================
    Responsive Design - Mobile
    ============================================ */
-@media screen and (width <= 480px) {
+@media screen and (max-width: 480px) {
   .card {
-    padding: 2rem clamp(1.5rem, 2.5vw, 2rem);
-    border-radius: 20px;
+    padding: var(--spacing-card-padding-mobile);
+    border-radius: var(--spacing-card-radius-mobile);
   }
 
   .card-header {
@@ -315,10 +319,10 @@
 /* ============================================
    Landscape Orientation
    ============================================ */
-@media screen and (orientation: landscape) and (width <= 768px) {
+@media screen and (orientation: landscape) and (max-width: 768px) {
   .card {
-    padding: 2rem clamp(1.75rem, 3vw, 2.5rem);
-    border-radius: 20px;
+    padding: var(--spacing-card-padding-mobile);
+    border-radius: var(--spacing-card-radius-mobile);
   }
 
   .card-title {
@@ -381,15 +385,15 @@
    ============================================ */
 @media (prefers-contrast: high) {
   .card {
-    border: 2px solid var(--text-heading, #1f2d3d);
+    border: 2px solid var(--color-text-heading);
   }
 
   .card-title {
-    -webkit-text-fill-color: var(--text-heading, #1f2d3d);
-    color: var(--text-heading, #1f2d3d);
+    -webkit-text-fill-color: var(--color-text-heading);
+    color: var(--color-text-heading);
   }
 
   .card-footer {
-    border-top-color: var(--text-heading, #1f2d3d);
+    border-top-color: var(--color-text-heading);
   }
 }

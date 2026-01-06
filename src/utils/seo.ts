@@ -1,9 +1,11 @@
 /**
  * SEO Utilities
  * Professional SEO management for the portfolio
+ * Follows DRY principle - Uses centralized constants
  */
 
 import { UserProfile } from "../types/user";
+import { SEOLabels } from "../constants";
 
 /**
  * Update document title
@@ -135,8 +137,8 @@ export function injectStructuredData(data: object): void {
  * Update SEO metadata from profile
  */
 export function updateSEOFromProfile(profile: UserProfile): void {
-  const title = `${profile.name} - ${profile.title} | Portfolio`;
-  const description = profile.bio || `Professional portfolio of ${profile.name}, ${profile.title}`;
+  const title = `${profile.name} - ${profile.title} | ${SEOLabels.PORTFOLIO}`;
+  const description = profile.bio || `${SEOLabels.PROFESSIONAL_PORTFOLIO} of ${profile.name}, ${profile.title}`;
   const image = `${window.location.origin}/logo512.png`;
   const url = window.location.href;
 
@@ -145,7 +147,7 @@ export function updateSEOFromProfile(profile: UserProfile): void {
 
   // Update meta tags
   updateMetaTag("description", description);
-  updateMetaTag("keywords", `${profile.name}, ${profile.title}, Portfolio, Software Engineer, Developer`);
+  updateMetaTag("keywords", `${profile.name}, ${profile.title}, ${SEOLabels.PORTFOLIO}, ${SEOLabels.SOFTWARE_ENGINEER}, ${SEOLabels.DEVELOPER}`);
 
   // Update Open Graph
   updateOGTag("og:title", title);
@@ -169,10 +171,10 @@ export function updateSEOFromProfile(profile: UserProfile): void {
  * Initialize SEO with default values
  */
 export function initializeSEO(): void {
-  updateTitle("Ricky Chen - Software Engineer Portfolio");
+  updateTitle(`Ricky Chen - ${SEOLabels.SOFTWARE_ENGINEER} ${SEOLabels.PORTFOLIO}`);
   updateMetaTag(
     "description",
-    "Professional portfolio showcasing software engineering skills, projects, and experience."
+    `${SEOLabels.PROFESSIONAL_PORTFOLIO} ${SEOLabels.SHOWCASING}`
   );
 }
 

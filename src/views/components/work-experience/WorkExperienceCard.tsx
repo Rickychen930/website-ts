@@ -11,6 +11,7 @@
 
 import React, { PureComponent, ReactNode } from "react";
 import { IWorkExperienceItem } from "../../../models/work-experience-model";
+import { SectionTitles } from "../../../constants";
 import { WorkExperienceIcon } from "./WorkExperienceIcon";
 import { WorkExperienceBadge } from "./WorkExperienceBadge";
 import { WorkExperienceCodeSnippet } from "./WorkExperienceCodeSnippet";
@@ -126,7 +127,7 @@ export class WorkExperienceCard extends PureComponent<IWorkExperienceCardProps> 
 
     return (
       <div className="work-experience-card-achievements">
-        <div className="work-experience-card-achievements-label">Key Achievements:</div>
+        <div className="work-experience-card-achievements-label">{SectionTitles.KEY_ACHIEVEMENTS_LABEL}</div>
         <ul className="work-experience-card-achievements-list">
           {item.achievements.map((achievement, index) => (
             <li key={`${item.key}-ach-${index}`} className="work-experience-card-achievement-item">

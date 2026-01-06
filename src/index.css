@@ -1,41 +1,13 @@
-* {
-  box-sizing: border-box;
-}
+/**
+ * Main CSS Entry Point
+ * Professional, Code-Based Architecture
+ * 
+ * Imports core CSS system (variables, base, utilities, mixins)
+ * and component styles in the correct order.
+ */
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* Core CSS System - Must be imported first */
+@import './assets/css/core/index.css';
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-  background: var(--bg-light, #fafbfc);
-}
-
-code {
-  font-family: 'SF Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* Legacy tokens.css - Will be deprecated in favor of core/variables.css */
+@import './assets/css/tokens.css';

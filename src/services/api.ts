@@ -3,6 +3,8 @@
  * Professional API client with error handling, retry logic, caching, and TypeScript types
  */
 
+import { ApiConfig } from "../constants";
+
 export interface ApiResponse<T> {
   data: T;
   status: number;
@@ -28,19 +30,19 @@ export interface RequestConfig extends RequestInit {
 
 /**
  * API Client Configuration
+ * Uses centralized config constants following DRY principle
  */
+
 const DEFAULT_CONFIG: {
   timeout: number;
   retries: number;
   retryDelay: number;
   headers: HeadersInit;
 } = {
-  timeout: 15000,
-  retries: 3,
-  retryDelay: 1000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  timeout: ApiConfig.TIMEOUT,
+  retries: ApiConfig.RETRIES,
+  retryDelay: ApiConfig.RETRY_DELAY,
+  headers: ApiConfig.DEFAULT_HEADERS,
 };
 
 /**

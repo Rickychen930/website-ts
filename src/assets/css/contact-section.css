@@ -1,79 +1,81 @@
-/* ============================================
-   CONTACT SECTION - PROFESSIONAL LUXURY DESIGN
-   ============================================
-   
-   Architecture:
-   - Professional, clean, luxury aesthetic
-   - Fully responsive across all devices
-   - Modern animations and interactions
-   - Accessibility-first approach
-   - Performance optimized
-   
-   Principles Applied:
-   - DRY: Reusable CSS variables
-   - KISS: Simple, maintainable styles
-   - Component-Based: Modular CSS structure
-   ============================================ */
+/**
+ * Contact Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/contact-section.css';
+ */
 
-/* ─── CSS Variables ─── */
+/* Import core system for constants and variables */
+@import './core/index.css';
+
+/* ─── Component-Specific Variables (DRY) ─── */
+/* Uses core constants as base */
 #contact-section {
-  --contact-primary: var(--accent, #667eea);
-  --contact-primary-hover: var(--accent-hover, #7c3aed);
+  /* Colors - Uses core color system */
+  --contact-primary: var(--color-accent-primary);
+  --contact-primary-hover: var(--color-accent-hover);
   --contact-primary-light: rgba(102, 126, 234, 0.1);
   --contact-primary-lighter: rgba(102, 126, 234, 0.05);
   
-  /* Gradient Colors */
-  --contact-gradient-start: #667eea;
-  --contact-gradient-mid: #764ba2;
-  --contact-gradient-end: #f093fb;
-  --contact-gradient-hover: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  --contact-gradient-subtle: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  /* Gradient Colors - Uses core gradients */
+  --contact-gradient-start: var(--color-accent-primary);
+  --contact-gradient-mid: var(--color-accent-alt);
+  --contact-gradient-end: var(--color-accent-secondary);
+  --contact-gradient-hover: var(--gradient-accent-full);
+  --contact-gradient-subtle: var(--gradient-sublime);
   
-  /* Text Colors */
-  --contact-text-primary: #1a202c;
-  --contact-text-secondary: #4a5568;
-  --contact-text-muted: #718096;
-  --contact-text-light: #a0aec0;
+  /* Text Colors - Uses core text colors */
+  --contact-text-primary: var(--color-text-heading);
+  --contact-text-secondary: var(--color-text-muted);
+  --contact-text-muted: var(--color-text-subtle);
+  --contact-text-light: var(--color-text-light);
   
-  /* Background Colors */
-  --contact-bg-card: #ffffff;
-  --contact-bg-hover: #f7fafc;
-  --contact-bg-subtle: #edf2f7;
-  --contact-bg-gradient: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  /* Background Colors - Uses core background colors */
+  --contact-bg-card: var(--color-bg-card);
+  --contact-bg-hover: var(--color-bg-card-hover);
+  --contact-bg-subtle: var(--color-bg-lighter);
+  --contact-bg-gradient: var(--gradient-primary);
   
-  /* Border Colors */
-  --contact-border: #e2e8f0;
-  --contact-border-hover: #cbd5e1;
-  --contact-border-light: #f1f5f9;
+  /* Border Colors - Uses core border colors */
+  --contact-border: var(--color-border-default);
+  --contact-border-hover: var(--color-border-accent);
+  --contact-border-light: var(--color-border-light);
   
-  /* Shadow System */
-  --contact-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
-  --contact-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --contact-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
-  --contact-shadow-lg: 0 8px 32px rgba(22, 81, 243, 0.12);
-  --contact-shadow-xl: 0 16px 48px rgba(22, 81, 243, 0.18);
-  --contact-shadow-2xl: 0 24px 64px rgba(22, 81, 243, 0.24);
-  --contact-shadow-glow: 0 0 24px rgba(102, 126, 234, 0.2);
+  /* Shadow System - Uses core shadow system */
+  --contact-shadow-xs: var(--shadow-xs);
+  --contact-shadow-sm: var(--shadow-sm);
+  --contact-shadow-md: var(--shadow-md);
+  --contact-shadow-lg: var(--shadow-lg);
+  --contact-shadow-xl: var(--shadow-xl);
+  --contact-shadow-2xl: var(--shadow-xl);
+  --contact-shadow-glow: var(--shadow-glow);
   
-  /* Transitions */
-  --contact-transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --contact-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --contact-transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  --contact-transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Transitions - Uses core transition system */
+  --contact-transition-fast: var(--transition-fast);
+  --contact-transition: var(--transition-base);
+  --contact-transition-slow: var(--transition-slow);
+  --contact-transition-bounce: var(--transition-bounce);
   
-  /* Spacing */
-  --contact-spacing-xs: 0.5rem;
-  --contact-spacing-sm: 1rem;
-  --contact-spacing-md: 1.5rem;
-  --contact-spacing-lg: 2rem;
-  --contact-spacing-xl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --contact-spacing-xs: var(--spacing-xs);
+  --contact-spacing-sm: var(--spacing-sm);
+  --contact-spacing-md: var(--spacing-md);
+  --contact-spacing-lg: var(--spacing-lg);
+  --contact-spacing-xl: var(--spacing-xl);
   
-  /* Border Radius */
-  --contact-radius-sm: 12px;
-  --contact-radius-md: 16px;
-  --contact-radius-lg: 24px;
-  --contact-radius-xl: 32px;
-  --contact-radius-full: 9999px;
+  /* Border Radius - Uses core radius system */
+  --contact-radius-sm: var(--radius-md);
+  --contact-radius-md: var(--radius-lg);
+  --contact-radius-lg: var(--radius-xl);
+  --contact-radius-xl: var(--radius-2xl);
+  --contact-radius-full: var(--radius-full);
 }
 
 /* ─── Section Wrapper with Animated Background ─── */

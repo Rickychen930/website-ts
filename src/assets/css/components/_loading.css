@@ -1,0 +1,110 @@
+/**
+ * Loading Component - Professional BEM Architecture
+ * Code-Based, DRY, KISS, Reusable, OOP, SOLID
+ * 
+ * Architecture:
+ * - DRY: Uses CSS variables and utilities from core system
+ * 
+ * Usage:
+ * @import '@/assets/css/components/loading';
+ * 
+ * <div class="loading">
+ *   <div class="loading__spinner"></div>
+ *   <p class="loading__text">Loading...</p>
+ * </div>
+ */
+
+/* Import core system for constants and variables */
+@import '../core/index.css';
+
+/* ============================================
+   Block: Loading
+   ============================================ */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  min-height: 200px;
+}
+
+/* ============================================
+   Element: Loading Spinner
+   ============================================ */
+.loading__spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid var(--color-border-light);
+  border-top-color: var(--color-accent-primary);
+  border-radius: 50%;
+  animation: loading-spin 0.8s linear infinite;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   Element: Loading Text
+   ============================================ */
+.loading__text {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-subtle);
+  font-family: var(--font-main);
+}
+
+/* ============================================
+   Modifiers
+   ============================================ */
+.loading--small .loading__spinner {
+  width: 2rem;
+  height: 2rem;
+  border-width: 2px;
+}
+
+.loading--small .loading__text {
+  font-size: var(--font-size-small);
+}
+
+.loading--large .loading__spinner {
+  width: 4rem;
+  height: 4rem;
+  border-width: 4px;
+}
+
+.loading--large .loading__text {
+  font-size: var(--font-size-subtitle);
+}
+
+.loading--inline {
+  flex-direction: row;
+  padding: 0.5rem;
+  min-height: auto;
+  gap: 0.75rem;
+}
+
+.loading--inline .loading__spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 2px;
+}
+
+.loading--inline .loading__text {
+  font-size: var(--font-size-small);
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .loading__spinner {
+    animation: none !important;
+    border-top-color: var(--color-accent-primary);
+  }
+}
+

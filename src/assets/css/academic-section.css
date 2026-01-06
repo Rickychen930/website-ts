@@ -1,61 +1,69 @@
 /**
- * Academic Section - Advanced Luxury & Professional Design
- * Shows Software Engineering Capabilities
+ * Academic Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
  * 
  * Features:
  * - Glassmorphism & Advanced Visual Effects
  * - 3D Transforms & Parallax Effects
  * - Advanced Animations & Micro-interactions
  * - Modern Grid Layouts
- * - Particle Effects & Gradient Meshes
  * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
  * - Performance Optimized
  * - Component-Based Architecture
+ * 
+ * Usage:
+ * @import '@/assets/css/academic-section.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Variables for Consistency (DRY)
+   Component-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 #academic-section.card,
 .card#academic-section {
-  --academic-spacing-xs: 0.5rem;
-  --academic-spacing-sm: 1rem;
-  --academic-spacing-md: 1.5rem;
-  --academic-spacing-lg: 2rem;
-  --academic-spacing-xl: 2.5rem;
-  --academic-spacing-xxl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --academic-spacing-xs: var(--spacing-xs);
+  --academic-spacing-sm: var(--spacing-sm);
+  --academic-spacing-md: var(--spacing-md);
+  --academic-spacing-lg: var(--spacing-lg);
+  --academic-spacing-xl: var(--spacing-xl);
+  --academic-spacing-xxl: var(--spacing-3xl);
   
-  /* Colors - Advanced Luxury Palette */
-  --academic-color-primary: var(--accent, #667eea);
-  --academic-color-primary-light: var(--accent-light, #a78bfa);
-  --academic-color-primary-dark: var(--accent-dark, #5b21b6);
-  --academic-color-secondary: var(--accent-alt, #764ba2);
-  --academic-color-accent: var(--accent-hover, #7c3aed);
+  /* Colors - Uses core color system */
+  --academic-color-primary: var(--color-accent-primary);
+  --academic-color-primary-light: var(--color-accent-light);
+  --academic-color-primary-dark: var(--color-accent-dark);
+  --academic-color-secondary: var(--color-accent-alt);
+  --academic-color-accent: var(--color-accent-hover);
   
-  /* Shadows - Advanced Depth */
-  --academic-shadow-card: 
-    0 10px 40px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --academic-shadow-card-hover: 
-    0 20px 60px rgba(102, 126, 234, 0.15),
-    0 8px 24px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(102, 126, 234, 0.1);
+  /* Shadows - Uses core shadow system */
+  --academic-shadow-card: var(--shadow-card);
+  --academic-shadow-card-hover: var(--shadow-card-hover);
   
-  /* Transitions - Advanced Easing */
-  --academic-transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --academic-transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Transitions - Uses core transition system */
+  --academic-transition-smooth: var(--transition-smooth);
+  --academic-transition-bounce: var(--transition-bounce);
 }
 
 /* ============================================
-   Main Section Container - Advanced Layout
+   Main Section Container - Uses Section Component
    ============================================ */
 .academic-section-container {
+  /* Extends .section component */
   position: relative;
   width: 100%;
   padding: var(--academic-spacing-xxl) 0;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif);
-  animation: academic-section-fade-in-advanced 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  font-family: var(--font-main);
+  animation: academic-section-fade-in-advanced var(--duration-base) var(--easing-smooth) forwards;
   background: 
     radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
@@ -63,6 +71,7 @@
 }
 
 .academic-section-content {
+  /* Extends .section__container component */
   position: relative;
   width: 100%;
   max-width: 1400px;
@@ -71,17 +80,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--academic-spacing-lg);
-  z-index: 1;
+  z-index: var(--z-base);
 }
 
-/* Advanced Grid Layout */
+/* Advanced Grid Layout - Uses Grid Component */
 .academic-items-grid {
+  /* Extends .grid component */
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--academic-spacing-lg);
   width: 100%;
   position: relative;
-  z-index: 2;
+  z-index: calc(var(--z-base) + 1);
   padding: var(--academic-spacing-md) 0;
   --academic-item-count: 1; /* Will be set dynamically via inline style */
 }
@@ -166,7 +176,7 @@
 }
 
 /* ============================================
-   Advanced Animations
+   Advanced Animations - Uses Core Animation System
    ============================================ */
 @keyframes academic-section-fade-in-advanced {
   0% {
@@ -205,7 +215,7 @@
 }
 
 /* ============================================
-   Responsive Design - Large Desktop
+   Responsive Design - Uses Core Breakpoints
    ============================================ */
 @media screen and (min-width: 1400px) {
   .academic-section-content {
@@ -219,18 +229,12 @@
   }
 }
 
-/* ============================================
-   Responsive Design - Desktop
-   ============================================ */
 @media screen and (max-width: 1200px) {
   .academic-section-content {
     padding: 0 var(--academic-spacing-lg);
   }
 }
 
-/* ============================================
-   Responsive Design - Tablet
-   ============================================ */
 @media screen and (max-width: 992px) {
   .academic-section-container {
     padding: var(--academic-spacing-xl) 0;
@@ -247,9 +251,6 @@
   }
 }
 
-/* ============================================
-   Responsive Design - Mobile Tablet
-   ============================================ */
 @media screen and (max-width: 768px) {
   .academic-section-container {
     padding: var(--academic-spacing-lg) 0;
@@ -276,9 +277,6 @@
   }
 }
 
-/* ============================================
-   Responsive Design - Mobile
-   ============================================ */
 @media screen and (max-width: 480px) {
   .academic-section-container {
     padding: var(--academic-spacing-md) 0;
@@ -315,9 +313,6 @@
   }
 }
 
-/* ============================================
-   Responsive Design - Extra Small Mobile
-   ============================================ */
 @media screen and (max-width: 360px) {
   .academic-section-container {
     padding: var(--academic-spacing-sm) 0;
@@ -365,15 +360,15 @@
 }
 
 /* ============================================
-   Reduced Motion (Accessibility)
+   Reduced Motion (Accessibility) - Uses Core System
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .academic-section-container,
   .academic-item-wrapper,
   .academic-empty-icon,
   .academic-empty-state::before {
-    animation: none;
-    transition: none;
+    animation: none !important;
+    transition: none !important;
   }
 
   .academic-section-container {

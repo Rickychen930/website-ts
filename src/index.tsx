@@ -1,8 +1,24 @@
+/**
+ * Application Entry Point
+ * Professional Import Structure
+ * 
+ * Import order:
+ * 1. React dependencies
+ * 2. CSS (core system first, then app styles)
+ * 3. App component
+ * 4. Utilities (theme, SEO)
+ */
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./assets/css/tokens.css";
+
+// CSS - Core system first (variables, base, utilities)
 import "./index.css";
+
+// App
 import App from "./App";
+
+// Utilities
 import { initializeTheme } from "./utils/theme";
 import { initializeSEO } from "./utils/seo";
 

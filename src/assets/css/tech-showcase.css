@@ -1,17 +1,29 @@
 /**
- * Tech Showcase - Ultra Premium Interactive Component
- * Showcases Advanced Software Engineering Skills
- * Professional, Luxury, Beautiful, Responsive
+ * Tech Showcase - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - showcase styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/tech-showcase.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Variables
+   Component-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 :root {
-  --tech-showcase-primary: #667eea;
-  --tech-showcase-secondary: #764ba2;
-  --tech-showcase-tertiary: #f093fb;
-  --tech-showcase-bg-dark: #1a1f3a;
+  --tech-showcase-primary: var(--color-accent-primary);
+  --tech-showcase-secondary: var(--color-accent-alt);
+  --tech-showcase-tertiary: var(--color-accent-secondary);
+  --tech-showcase-bg-dark: var(--color-bg-dark);
   --tech-showcase-bg-card: rgba(15, 20, 40, 0.9);
   --tech-showcase-text: #e0e0e0;
   --tech-showcase-text-muted: #a0a0a0;
@@ -24,7 +36,7 @@
   width: 100%;
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity var(--duration-base) var(--easing-ease), transform var(--duration-base) var(--easing-ease);
 }
 
 .tech-showcase-wrapper.tech-showcase-visible {

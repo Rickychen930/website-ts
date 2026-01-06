@@ -1,32 +1,36 @@
-/* ============================================
-   Flow Item Component - Luxury & Elegant Design
-   ============================================ */
+/**
+ * Flow Item Component - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - component-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/flow-item.css';
+ */
+
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 /* ============================================
-   Flow Item Container
+   Flow Item Container - Extends Card Component
    ============================================ */
 .flow-item {
+  /* Extends .card component */
   position: relative;
   width: 100%;
-  margin-bottom: 2rem;
-  padding: 2rem clamp(1.5rem, 3vw, 2.5rem);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(249, 251, 253, 0.98)
-  );
-  border-radius: 20px;
-  border: 1px solid rgba(220, 227, 234, 0.5);
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.04),
-    0 8px 24px rgba(0, 0, 0, 0.06);
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-xl) clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--gradient-primary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-md);
   opacity: 0;
   transform: translateY(30px);
-  transition:
-    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.4s ease,
-    border-color 0.4s ease,
-    background 0.4s ease;
+  transition: var(--transition-all);
   will-change: opacity, transform;
   overflow: hidden;
   backdrop-filter: blur(8px);
@@ -64,31 +68,22 @@
   padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
 }
 
-/* Hover States */
+/* Hover States - Uses Core Transition System */
 .flow-item:hover {
   transform: translateY(-4px);
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.08),
-    0 24px 64px rgba(0, 0, 0, 0.1),
-    0 32px 80px rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.5);
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 1),
-    rgba(249, 251, 253, 0.99)
-  );
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-accent);
+  background: var(--gradient-luxury);
 }
 
 .flow-item.flow-variant-elevated:hover {
-  box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.1),
-    0 32px 80px rgba(0, 0, 0, 0.12),
-    0 48px 120px rgba(102, 126, 234, 0.2);
+  box-shadow: var(--shadow-xl);
 }
 
 .flow-item.flow-variant-minimal:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-border-accent);
 }
 
 /* ============================================
@@ -163,16 +158,16 @@
    ============================================ */
 .flow-content {
   position: relative;
-  color: var(--text-subtle, #5c6b7a);
+  color: var(--color-text-subtle);
   font-size: clamp(0.95rem, 1.5vw, 1.05rem);
   line-height: 1.75;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
-  transition: color 0.3s ease;
-  z-index: 1;
+  font-family: var(--font-main);
+  transition: var(--transition-color);
+  z-index: var(--z-base);
 }
 
 .flow-item:hover .flow-content {
-  color: var(--text-muted, #3b4a59);
+  color: var(--color-text-muted);
 }
 
 /* ============================================
@@ -195,12 +190,12 @@
 }
 
 /* ============================================
-   Responsive Design - Tablet
+   Responsive Design - Uses Core Breakpoints
    ============================================ */
-@media screen and (width <= 992px) {
+@media screen and (max-width: 992px) {
   .flow-item {
     padding: 1.75rem clamp(1.25rem, 2.5vw, 2rem);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     margin-bottom: 1.75rem;
   }
 
@@ -208,7 +203,7 @@
     width: 3rem;
     height: 3rem;
     font-size: 1.5rem;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
   }
 
   .flow-icon-glow {
@@ -222,22 +217,22 @@
   }
 }
 
-@media screen and (width <= 768px) {
+@media screen and (max-width: 768px) {
   .flow-item {
     padding: 1.5rem clamp(1.25rem, 2vw, 1.75rem);
-    border-radius: 16px;
-    margin-bottom: 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
   }
 
   .flow-icon-wrapper {
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--spacing-md);
   }
 
   .flow-icon {
     width: 2.75rem;
     height: 2.75rem;
     font-size: 1.35rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
   }
 
   .flow-icon-glow {
@@ -246,34 +241,31 @@
   }
 
   .flow-content {
-    font-size: clamp(0.875rem, 1.3vw, 0.95rem);
+    font-size: clamp(var(--font-size-small), 1.3vw, 0.95rem);
     line-height: 1.65;
   }
 
   .flow-item.flow-variant-minimal {
-    padding: 1.25rem clamp(1rem, 2vw, 1.5rem);
+    padding: var(--spacing-md) clamp(1rem, 2vw, 1.5rem);
   }
 }
 
-/* ============================================
-   Responsive Design - Mobile
-   ============================================ */
-@media screen and (width <= 480px) {
+@media screen and (max-width: 480px) {
   .flow-item {
-    padding: 1.25rem clamp(1rem, 2vw, 1.5rem);
-    border-radius: 14px;
-    margin-bottom: 1.25rem;
+    padding: var(--spacing-md) clamp(1rem, 2vw, 1.5rem);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
   }
 
   .flow-icon-wrapper {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
   }
 
   .flow-icon {
     width: 2.5rem;
     height: 2.5rem;
     font-size: 1.2rem;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
   }
 
   .flow-icon-glow {
@@ -287,14 +279,11 @@
   }
 
   .flow-item.flow-variant-minimal {
-    padding: 1rem clamp(0.875rem, 1.5vw, 1.25rem);
+    padding: var(--spacing-sm) clamp(0.875rem, 1.5vw, 1.25rem);
   }
 }
 
-/* ============================================
-   Landscape Orientation
-   ============================================ */
-@media screen and (orientation: landscape) and (width <= 768px) {
+@media screen and (orientation: landscape) and (max-width: 768px) {
   .flow-item {
     padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
   }
@@ -307,31 +296,31 @@
 }
 
 /* ============================================
-   Reduced Motion (Accessibility)
+   Reduced Motion (Accessibility) - Uses Core System
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .flow-item {
-    transition: opacity 0.3s ease;
-    transform: none;
+    transition: var(--transition-opacity) !important;
+    transform: none !important;
   }
 
   .flow-item.flow-visible {
-    transform: none;
+    transform: none !important;
   }
 
   .flow-item:hover {
-    transform: none;
+    transform: none !important;
   }
 
   .flow-item:hover .flow-icon {
-    transform: none;
+    transform: none !important;
   }
 
   .flow-item.flow-scroll-up.flow-hidden,
   .flow-item.flow-scroll-down.flow-hidden,
   .flow-item.flow-scroll-left.flow-hidden,
   .flow-item.flow-scroll-right.flow-hidden {
-    transform: none;
+    transform: none !important;
   }
 }
 
@@ -363,11 +352,11 @@
    ============================================ */
 @media (prefers-contrast: high) {
   .flow-item {
-    border: 2px solid var(--text-heading, #1f2d3d);
+    border: 2px solid var(--color-text-heading);
   }
 
   .flow-icon {
-    border: 2px solid var(--text-heading, #1f2d3d);
+    border: 2px solid var(--color-text-heading);
   }
 }
 

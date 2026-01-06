@@ -1,16 +1,19 @@
 import { UserProfile } from "../types/user";
 import { apiClient, ApiError } from "./api";
 import { logError } from "../utils/logger";
+import { ApiConfig } from "../constants";
+import { ErrorMessages } from "../constants/strings";
 
 /**
  * UserService - Service Layer (MVC Pattern)
  * Handles all user-related API operations
  * Follows Single Responsibility Principle (SRP)
  * Enhanced with professional error handling and caching
+ * Follows DRY principle - Uses centralized config constants
  */
 export class UserService {
   private readonly DEFAULT_USER_NAME = "Ricky Chen";
-  private readonly CACHE_TIME = 5 * 60 * 1000; // 5 minutes cache
+  private readonly CACHE_TIME = ApiConfig.CACHE_TIME;
 
   /**
    * Fetch user profile from API
@@ -23,21 +26,21 @@ export class UserService {
       
       const response = await apiClient.get<UserProfile>(endpoint, {
         cacheTime: this.CACHE_TIME,
-        retries: 3,
-        timeout: 15000,
+        retries: ApiConfig.RETRIES,
+        timeout: ApiConfig.TIMEOUT,
       });
 
       const data = response.data;
       
       if (!this.isValidProfile(data)) {
-        logError("Invalid user profile data structure", undefined, "UserService");
+        logError(ErrorMessages.LOAD_DATA_FAILED, undefined, "UserService");
         return null;
       }
 
       return data;
     } catch (error) {
       const apiError = error as ApiError;
-      logError("Error fetching user profile", {
+      logError(ErrorMessages.LOAD_PROFILE_FAILED, {
         message: apiError.message,
         status: apiError.status,
         originalError: apiError.originalError,

@@ -3,27 +3,35 @@ import { SectionManager, ISectionConfig } from "../models/section-model";
 import { UserProfile } from "../types/user";
 import { logError } from "../utils/logger";
 import { NavbarItemType, NavbarDropdownItem } from "../types/navbar";
+import { 
+  SectionNames, 
+  NavLabels, 
+  NavIds, 
+  SectionHrefs,
+  ErrorMessages 
+} from "../constants";
 
 /**
  * MainPageController - Controller Layer (MVC Pattern)
  * Orchestrates business logic for main page
  * Follows Single Responsibility Principle (SRP)
  * Follows Dependency Inversion Principle (DIP) - Depends on abstractions
+ * Follows DRY principle - Uses centralized constants
  */
 export class MainPageController {
   private readonly userService: UserService;
   private readonly sectionManager: SectionManager;
   private readonly navbarItems: readonly string[] = [
-    "About",
-    "Academic",
-    "Honors",
-    "Certifications",
-    "Skills",
-    "Experience",
-    "Projects",
-    "Soft Skills",
-    "Languages",
-    "Contact",
+    SectionNames.ABOUT,
+    SectionNames.ACADEMIC,
+    SectionNames.HONORS,
+    SectionNames.CERTIFICATIONS,
+    SectionNames.SKILLS,
+    SectionNames.EXPERIENCE,
+    SectionNames.PROJECTS,
+    SectionNames.SOFT_SKILLS,
+    SectionNames.LANGUAGES,
+    SectionNames.CONTACT,
   ] as const;
 
   constructor(userService?: UserService, sectionManager?: SectionManager) {
@@ -48,7 +56,7 @@ export class MainPageController {
     try {
       return await this.userService.getUserProfile(userName);
     } catch (error) {
-      logError("Failed to load user profile", error, "MainPageController");
+      logError(ErrorMessages.LOAD_PROFILE_FAILED, error, "MainPageController");
       return null;
     }
   }
@@ -68,30 +76,70 @@ export class MainPageController {
    */
   getNavbarItemsWithDropdowns(): NavbarItemType[] {
     return [
-      { id: "nav-item-about", label: "About", href: "#about" },
+      { 
+        id: NavIds.ABOUT, 
+        label: NavLabels.ABOUT, 
+        href: SectionHrefs.ABOUT 
+      },
       {
-        id: "nav-item-education",
-        label: "Education",
-        href: "#education",
+        id: NavIds.EDUCATION,
+        label: NavLabels.EDUCATION,
+        href: SectionHrefs.EDUCATION,
         children: [
-          { id: "nav-item-academic", label: "Academic", href: "#academic" },
-          { id: "nav-item-honors", label: "Honors", href: "#honors" },
-          { id: "nav-item-certifications", label: "Certifications", href: "#certifications" },
+          { 
+            id: NavIds.ACADEMIC, 
+            label: NavLabels.ACADEMIC, 
+            href: SectionHrefs.ACADEMIC 
+          },
+          { 
+            id: NavIds.HONORS, 
+            label: NavLabels.HONORS, 
+            href: SectionHrefs.HONORS 
+          },
+          { 
+            id: NavIds.CERTIFICATIONS, 
+            label: NavLabels.CERTIFICATIONS, 
+            href: SectionHrefs.CERTIFICATIONS 
+          },
         ],
       } as NavbarDropdownItem,
       {
-        id: "nav-item-skills",
-        label: "Skills",
-        href: "#skills",
+        id: NavIds.SKILLS,
+        label: NavLabels.SKILLS,
+        href: SectionHrefs.SKILLS,
         children: [
-          { id: "nav-item-technical-skills", label: "Technical Skills", href: "#skills" },
-          { id: "nav-item-soft-skills", label: "Soft Skills", href: "#soft-skills" },
-          { id: "nav-item-languages", label: "Languages", href: "#languages" },
+          { 
+            id: NavIds.TECHNICAL_SKILLS, 
+            label: NavLabels.TECHNICAL_SKILLS, 
+            href: SectionHrefs.TECHNICAL_SKILLS 
+          },
+          { 
+            id: NavIds.SOFT_SKILLS, 
+            label: NavLabels.SOFT_SKILLS, 
+            href: SectionHrefs.SOFT_SKILLS 
+          },
+          { 
+            id: NavIds.LANGUAGES, 
+            label: NavLabels.LANGUAGES, 
+            href: SectionHrefs.LANGUAGES 
+          },
         ],
       } as NavbarDropdownItem,
-      { id: "nav-item-experience", label: "Experience", href: "#experience" },
-      { id: "nav-item-projects", label: "Projects", href: "#projects" },
-      { id: "nav-item-contact", label: "Contact", href: "#contact" },
+      { 
+        id: NavIds.EXPERIENCE, 
+        label: NavLabels.EXPERIENCE, 
+        href: SectionHrefs.EXPERIENCE 
+      },
+      { 
+        id: NavIds.PROJECTS, 
+        label: NavLabels.PROJECTS, 
+        href: SectionHrefs.PROJECTS 
+      },
+      { 
+        id: NavIds.CONTACT, 
+        label: NavLabels.CONTACT, 
+        href: SectionHrefs.CONTACT 
+      },
     ];
   }
 

@@ -1,5 +1,6 @@
 import React, { PureComponent, ReactNode } from "react";
 import LoadingSkeleton from "./loading-skeleton";
+import { Messages, AriaLabels } from "../../../constants";
 import "../../../assets/css/main-page.css";
 
 /**
@@ -21,7 +22,7 @@ interface LoadingComponentProps {
  */
 export class LoadingComponent extends PureComponent<LoadingComponentProps> {
   static defaultProps: Partial<LoadingComponentProps> = {
-    message: "Loading profile...",
+    message: Messages.LOADING,
     className: "",
     useSkeleton: false,
     skeletonVariant: "card",
@@ -32,7 +33,7 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
    */
   private renderSpinner(): ReactNode {
     return (
-      <div className="loading-spinner" aria-label="Loading">
+      <div className="loading-spinner" aria-label={AriaLabels.LOADING}>
         <div className="spinner-ring"></div>
         <div className="spinner-ring"></div>
         <div className="spinner-ring"></div>
@@ -54,7 +55,7 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
   private renderSkeleton(): ReactNode {
     const { skeletonVariant } = this.props;
     return (
-      <div className="main-page-loading-skeleton" role="status" aria-label="Loading content">
+      <div className="main-page-loading-skeleton" role="status" aria-label={AriaLabels.LOADING}>
         <LoadingSkeleton variant={skeletonVariant} width="100%" height="400px" />
       </div>
     );
@@ -73,7 +74,7 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
     const containerClass = `main-page-loading ${className || ""}`.trim();
 
     return (
-      <div className={containerClass} role="status" aria-label="Loading">
+      <div className={containerClass} role="status" aria-label={AriaLabels.LOADING}>
         {this.renderSpinner()}
         {this.renderMessage()}
       </div>

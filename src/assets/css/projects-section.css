@@ -1,68 +1,76 @@
-/* ============================================
-   Projects Section - Professional Luxury Design
-   ============================================
-   
-   Design Principles:
-   - Professional: Clean, modern, sophisticated
-   - Luxury: Premium materials, refined aesthetics
-   - Clean: Minimal, uncluttered, focused
-   - Responsive: Mobile-first, adaptive layouts
-   - Performance: GPU-accelerated transforms
-   
-   Architecture:
-   - Component-Based: Modular CSS
-   - BEM-like naming: Clear hierarchy
-   - CSS Variables: Easy theming
-   ============================================ */
+/**
+ * Projects Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Design Principles:
+ * - Professional: Clean, modern, sophisticated
+ * - Luxury: Premium materials, refined aesthetics
+ * - Clean: Minimal, uncluttered, focused
+ * - Responsive: Mobile-first, adaptive layouts
+ * - Performance: GPU-accelerated transforms
+ * 
+ * Usage:
+ * @import '@/assets/css/projects-section.css';
+ */
 
-/* ─── CSS Variables ─── */
+/* Import core system for constants and variables */
+@import './core/index.css';
+
+/* ─── Component-Specific Variables (DRY) ─── */
+/* Uses core constants as base */
 :root {
-  /* Colors - Professional Palette */
-  --projects-primary: #1a1a2e;
-  --projects-secondary: #16213e;
-  --projects-accent: #667eea;
-  --projects-accent-light: #8b9aff;
-  --projects-accent-dark: #5568d3;
+  /* Colors - Uses core color system */
+  --projects-primary: var(--color-bg-dark);
+  --projects-secondary: var(--color-bg-dark-light);
+  --projects-accent: var(--color-accent-primary);
+  --projects-accent-light: var(--color-accent-light);
+  --projects-accent-dark: var(--color-accent-dark);
   --projects-success: #10b981;
   --projects-warning: #f59e0b;
   --projects-danger: #ef4444;
   --projects-info: #3b82f6;
   
-  /* Gradients - Luxury Effects */
-  --projects-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --projects-gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --projects-gradient-luxury: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  --projects-gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9fc 100%);
+  /* Gradients - Uses core gradients */
+  --projects-gradient-primary: var(--gradient-accent);
+  --projects-gradient-secondary: var(--gradient-accent-full);
+  --projects-gradient-luxury: var(--gradient-accent-full);
+  --projects-gradient-card: var(--gradient-primary);
   --projects-gradient-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
   
-  /* Shadows - Depth & Elevation */
-  --projects-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --projects-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --projects-shadow-lg: 0 16px 48px rgba(102, 126, 234, 0.25);
-  --projects-shadow-xl: 0 24px 64px rgba(118, 75, 162, 0.3);
-  --projects-shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
-  --projects-shadow-hover: 0 20px 60px rgba(102, 126, 234, 0.35);
+  /* Shadows - Uses core shadow system */
+  --projects-shadow-sm: var(--shadow-sm);
+  --projects-shadow-md: var(--shadow-md);
+  --projects-shadow-lg: var(--shadow-lg);
+  --projects-shadow-xl: var(--shadow-xl);
+  --projects-shadow-glow: var(--shadow-glow);
+  --projects-shadow-hover: var(--shadow-card-hover);
   
-  /* Transitions - Smooth Animations */
-  --projects-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --projects-transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --projects-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --projects-transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* Transitions - Uses core transition system */
+  --projects-transition-fast: var(--transition-fast);
+  --projects-transition-base: var(--transition-base);
+  --projects-transition-slow: var(--transition-slow);
+  --projects-transition-bounce: var(--transition-bounce);
   
-  /* Spacing */
-  --projects-spacing-xs: 0.5rem;
-  --projects-spacing-sm: 0.75rem;
-  --projects-spacing-md: 1rem;
-  --projects-spacing-lg: 1.5rem;
-  --projects-spacing-xl: 2rem;
-  --projects-spacing-2xl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --projects-spacing-xs: var(--spacing-xs);
+  --projects-spacing-sm: var(--spacing-sm);
+  --projects-spacing-md: var(--spacing-md);
+  --projects-spacing-lg: var(--spacing-lg);
+  --projects-spacing-xl: var(--spacing-xl);
+  --projects-spacing-2xl: var(--spacing-3xl);
   
-  /* Border Radius */
-  --projects-radius-sm: 8px;
-  --projects-radius-md: 12px;
-  --projects-radius-lg: 16px;
-  --projects-radius-xl: 20px;
-  --projects-radius-2xl: 24px;
+  /* Border Radius - Uses core radius system */
+  --projects-radius-sm: var(--radius-sm);
+  --projects-radius-md: var(--radius-md);
+  --projects-radius-lg: var(--radius-lg);
+  --projects-radius-xl: var(--radius-xl);
+  --projects-radius-2xl: var(--radius-2xl);
 }
 
 /* ─── Global Reset ─── */

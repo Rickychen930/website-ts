@@ -1,23 +1,35 @@
 /**
- * Navbar Search Button Styles
- * Professional search button integrated in navbar
+ * Navbar Search Button - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - navbar search styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/navbar-search.css';
  */
+
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 .navbar-search-button {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: var(--bg-card, #ffffff);
-  border: 1px solid var(--border-light, rgba(220, 227, 234, 0.5));
-  border-radius: var(--btn-radius, 12px);
-  color: var(--text-muted, #718096);
-  font-size: var(--font-size-small, 0.875rem);
-  font-weight: 500;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--component-radius-button);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all var(--transition-base, 0.3s cubic-bezier(0.4, 0, 0.2, 1));
-  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.04));
-  font-family: var(--font-main, 'Inter', sans-serif);
+  transition: var(--transition-all);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-main);
   position: relative;
   overflow: hidden;
 }
@@ -36,10 +48,10 @@
 }
 
 .navbar-search-button:hover {
-  background: var(--bg-card-hover, #f7fafc);
-  border-color: var(--border-medium, rgba(102, 126, 234, 0.3));
-  color: var(--text-main, #2d3748);
-  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.06));
+  background: var(--color-bg-card-hover);
+  border-color: var(--color-border-medium);
+  color: var(--color-text-main);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
@@ -66,12 +78,12 @@
 
 .navbar-search-shortcut {
   padding: 0.125rem 0.5rem;
-  background: var(--bg-light, #f7fafc);
-  border-radius: 4px;
-  font-size: var(--font-size-xs, 0.75rem);
-  font-family: var(--font-mono, 'Monaco', 'Courier New', monospace);
-  color: var(--text-muted, #718096);
-  border: 1px solid var(--border-light, rgba(220, 227, 234, 0.3));
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-light);
   font-weight: 600;
   letter-spacing: 0.5px;
 }

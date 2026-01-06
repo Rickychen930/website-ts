@@ -1,14 +1,26 @@
 /**
- * Project Filters Styles
- * Professional filter and sort interface
+ * Project Filters - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - filter styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/project-filters.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 .project-filters {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: var(--bg-light);
-  border-radius: var(--card-radius);
-  border: 1px solid var(--border-light);
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-light);
+  border-radius: var(--spacing-card-radius);
+  border: 1px solid var(--color-border-light);
 }
 
 .project-filters-row {
@@ -26,7 +38,7 @@
 .project-filter-label {
   font-size: var(--font-size-small);
   font-weight: 600;
-  color: var(--text-heading);
+  color: var(--color-text-heading);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -39,46 +51,46 @@
 
 .project-filter-button {
   padding: 8px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--btn-radius);
-  color: var(--text-main);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--component-radius-button);
+  color: var(--color-text-main);
   font-size: var(--font-size-small);
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: var(--transition-all);
   font-family: var(--font-main);
 }
 
 .project-filter-button:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-medium);
+  background: var(--color-bg-card-hover);
+  border-color: var(--color-border-medium);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
 
 .project-filter-button.active {
-  background: var(--accent);
-  color: var(--text-on-accent);
-  border-color: var(--accent);
+  background: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  border-color: var(--color-accent-primary);
   box-shadow: var(--shadow-sm);
 }
 
 .project-filter-button:focus {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
 }
 
 .project-filter-select {
   padding: 10px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--btn-radius);
-  color: var(--text-main);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--component-radius-button);
+  color: var(--color-text-main);
   font-size: var(--font-size-base);
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: var(--transition-all);
   font-family: var(--font-main);
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
@@ -88,14 +100,14 @@
 }
 
 .project-filter-select:hover {
-  background-color: var(--bg-card-hover);
-  border-color: var(--border-medium);
+  background-color: var(--color-bg-card-hover);
+  border-color: var(--color-border-medium);
 }
 
 .project-filter-select:focus {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
-  border-color: var(--accent);
+  border-color: var(--color-accent-primary);
 }
 
 /* Desktop layout */
@@ -136,12 +148,12 @@
   }
 
   .project-filter-buttons::-webkit-scrollbar-track {
-    background: var(--bg-light);
+    background: var(--color-bg-light);
     border-radius: 2px;
   }
 
   .project-filter-buttons::-webkit-scrollbar-thumb {
-    background: var(--accent);
+    background: var(--color-accent-primary);
     border-radius: 2px;
   }
 
@@ -158,7 +170,7 @@
 
 /* Dark mode */
 [data-theme="dark"] .project-filters {
-  background: var(--bg-lighter);
+  background: var(--color-bg-lighter);
 }
 
 /* Reduced motion */

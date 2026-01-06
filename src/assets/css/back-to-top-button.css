@@ -1,18 +1,31 @@
 /**
- * Back to Top Button - Professional, Luxury Design
- * Responsive, Accessible, Performance Optimized
+ * Back to Top Button - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - button-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/back-to-top-button.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Variables
+   Component-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 :root {
-  --back-to-top-size: 56px;
-  --back-to-top-size-mobile: 48px;
-  --back-to-top-z-index: 9998;
-  --back-to-top-primary: var(--accent, #667eea);
-  --back-to-top-secondary: var(--accent-alt, #764ba2);
-  --back-to-top-tertiary: var(--accent-tertiary, #f093fb);
+  --back-to-top-size: var(--icon-size-large);
+  --back-to-top-size-mobile: var(--icon-size-default);
+  --back-to-top-z-index: calc(var(--z-fixed) - 1);
+  --back-to-top-primary: var(--color-accent-primary);
+  --back-to-top-secondary: var(--color-accent-alt);
+  --back-to-top-tertiary: var(--color-accent-secondary);
 }
 
 /* ============================================
@@ -43,9 +56,9 @@
     0 4px 16px rgba(102, 126, 234, 0.4),
     0 8px 32px rgba(118, 75, 162, 0.3),
     0 0 0 0 rgba(102, 126, 234, 0.5);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-all);
   z-index: var(--back-to-top-z-index);
-  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
+  font-family: var(--font-main);
   outline: none;
   will-change: transform, opacity, box-shadow;
   -webkit-font-smoothing: antialiased;
@@ -56,7 +69,7 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
-  animation: backToTopFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: backToTopFadeIn var(--duration-base) var(--easing-smooth) forwards;
 }
 
 .back-to-top-button:not(.visible) {

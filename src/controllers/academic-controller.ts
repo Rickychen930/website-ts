@@ -3,16 +3,19 @@
  * Handles business logic for Academic section
  * Follows Single Responsibility Principle (SRP)
  * Follows Dependency Inversion Principle (DIP)
+ * Extends BaseController for common functionality (DRY, OOP)
  */
 
-import { UserProfile } from "../types/user";
 import { AcademicModel, IAcademicData, IAcademicItem } from "../models/academic-model";
+import { UserProfile } from "../types/user";
+import { BaseController } from "./base-controller";
 
 /**
  * AcademicController
  * Orchestrates business logic for Academic section
+ * Follows OOP principles - extends BaseController
  */
-export class AcademicController {
+export class AcademicController extends BaseController {
   /**
    * Get academic data from profile
    * Follows Single Responsibility Principle (SRP)
@@ -25,6 +28,24 @@ export class AcademicController {
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getAcademicData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return AcademicModel.isValid(data as IAcademicData);
   }
 
   /**
@@ -67,12 +88,9 @@ export class AcademicController {
 
   /**
    * Check if Academic section should be displayed
-   * Follows Single Responsibility Principle (SRP)
+   * Inherited from BaseController - follows DRY principle
    */
-  shouldDisplay(profile: UserProfile): boolean {
-    const data = this.getAcademicData(profile);
-    return data !== null && AcademicModel.isValid(data);
-  }
+  // shouldDisplay is inherited from BaseController
 
   /**
    * Get total academic achievements count

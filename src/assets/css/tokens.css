@@ -1,250 +1,30 @@
-:root {
-  /* ============================================
-     Base Colors - Luxury Palette
-     ============================================ */
-  --white: #ffffff;
-  --black: #000000;
-  --transparent: transparent;
+/**
+ * Legacy Tokens CSS - DEPRECATED
+ * 
+ * This file is kept for backward compatibility only.
+ * All variables now point to _variables.css in core/
+ * 
+ * IMPORTANT: Do not add new variables here.
+ * Use src/assets/css/core/_variables.css instead.
+ * 
+ * This file will be removed in a future version.
+ */
 
-  /* ============================================
-     Backgrounds - Elegant & Clean (Enhanced Luxury)
-     ============================================ */
-  --bg-light: #fafbfc;
-  --bg-lighter: #f5f7fa;
-  --bg-lightest: #f0f4f8;
-  --bg-card: #ffffff;
-  --bg-card-alt: #fafbfd;
-  --bg-card-hover: #fefefe;
-  --bg-footer: #f1f5f9;
-  --bg-footer-alt: #e8edf3;
-  --bg-timeline: #f0f4f8;
-  --bg-content-hover: #f5f8fc;
-  --bg-navbar: rgba(255, 255, 255, 0.9);
-  --bg-navbar-scrolled: rgba(255, 255, 255, 0.98);
-  --bg-stat: #f5f7fa;
-  --bg-overlay: rgba(0, 0, 0, 0.45);
-  --bg-gradient-primary: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
-  --bg-gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --bg-gradient-luxury: linear-gradient(135deg, #ffffff 0%, #fafbfd 40%, #f5f7fa 100%);
-  --bg-gradient-sublime: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+/* 
+ * All variables are now aliased from core/_variables.css
+ * which is imported via core/index.css before this file.
+ * 
+ * The aliases are defined in _variables.css under "Legacy Variable Aliases"
+ * section for backward compatibility.
+ * 
+ * Migration guide:
+ * - Old: var(--bg-card) → New: var(--color-bg-card) or keep using var(--bg-card) (still works)
+ * - Old: var(--text-main) → New: var(--color-text-main) or keep using var(--text-main) (still works)
+ * - Old: var(--accent) → New: var(--color-accent-primary) or keep using var(--accent) (still works)
+ */
 
-  /* ============================================
-     Text Colors - Professional & Readable
-     ============================================ */
-  --text-main: #1a2332;
-  --text-heading: #1f2d3d;
-  --text-heading-alt: #2c3e50;
-  --text-subtle: #5c6b7a;
-  --text-muted: #3b4a59;
-  --text-muted-alt: #7a8b9c;
-  --text-light: #9ca3af;
-  --text-accent: #34495e;
-  --text-hover: #0073b1;
-  --text-on-accent: #ffffff;
-  --text-link: #78a2f0;
-  --text-link-hover: #6fb1fc;
-
-  /* ============================================
-     Accent Colors - Luxury Premium Palette (Enhanced)
-     ============================================ */
-  --accent: #667eea;
-  --accent-alt: #764ba2;
-  --accent-hover: #7c3aed;
-  --accent-light: #a78bfa;
-  --accent-dark: #5b21b6;
-  --accent-secondary: #f093fb;
-  --accent-tertiary: #4facfe;
-  --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-  --accent-glow: rgba(102, 126, 234, 0.35);
-  --accent-glow-strong: rgba(118, 75, 162, 0.4);
-
-  /* ============================================
-     Borders - Subtle & Elegant
-     ============================================ */
-  --border-light: rgba(220, 227, 234, 0.6);
-  --border-default: #dce3ea;
-  --border-medium: #cbd5e1;
-  --border-dark: #94a3b8;
-  --border-navbar: rgba(220, 227, 234, 0.5);
-  --border-navbar-dropdown: rgba(220, 227, 234, 0.6);
-  --border-glow: rgba(120, 162, 240, 0.2);
-  --border-image: #dbe5f1;
-  --border-period: #e2e8f0;
-  --border-accent: rgba(120, 162, 240, 0.3);
-  --border-accent-hover: rgba(120, 162, 240, 0.5);
-
-  /* ============================================
-     Shadows - Depth & Luxury (Enhanced Premium)
-     ============================================ */
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.08), 0 20px 40px rgba(0, 0, 0, 0.06);
-  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06);
-  --shadow-card-hover: 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18);
-  --shadow-card-alt: 0 10px 32px rgba(0, 0, 0, 0.09);
-  --shadow-item: 0 6px 16px rgba(0, 0, 0, 0.05), 0 12px 32px rgba(0, 0, 0, 0.07);
-  --shadow-item-hover: 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 40px 100px rgba(102, 126, 234, 0.15);
-  --shadow-icon: 0 4px 10px rgba(0, 0, 0, 0.06);
-  --shadow-icon-alt: 0 6px 16px rgba(0, 0, 0, 0.06);
-  --shadow-icon-hover: 0 12px 32px rgba(102, 126, 234, 0.3);
-  --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
-  --shadow-glow: 0 0 24px rgba(102, 126, 234, 0.45);
-  --shadow-glow-strong: 0 0 40px rgba(118, 75, 162, 0.5);
-  --shadow-accent: 0 0 16px rgba(102, 126, 234, 0.35);
-  --shadow-footer: 0 -6px 20px rgba(0, 0, 0, 0.05);
-  --shadow-navbar: 0 8px 24px rgba(0, 0, 0, 0.07);
-  --shadow-navbar-scrolled: 0 12px 32px rgba(0, 0, 0, 0.1);
-  --shadow-dropdown: 0 10px 32px rgba(0, 0, 0, 0.1);
-  --shadow-composite:
-    0 2px 4px rgba(0, 0, 0, 0.04),
-    0 6px 12px rgba(0, 0, 0, 0.07),
-    0 16px 32px rgba(0, 0, 0, 0.09),
-    0 32px 64px rgba(0, 0, 0, 0.06);
-  --shadow-composite-hover:
-    0 4px 8px rgba(0, 0, 0, 0.06),
-    0 12px 24px rgba(0, 0, 0, 0.1),
-    0 32px 64px rgba(0, 0, 0, 0.14),
-    0 48px 120px rgba(102, 126, 234, 0.18);
-
-  /* ============================================
-     Typography - Professional & Elegant (Enhanced)
-     ============================================ */
-  --font-main: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
-  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Consolas', monospace;
-  --font-display: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
-  --font-title-size: 2rem;
-  --font-title-weight: 700;
-  --font-title-spacing: -0.8px;
-  --font-subtitle-weight: 600;
-  --font-subtitle-spacing: -0.5px;
-  --font-size-base: 1rem;
-  --font-size-title: 1.5rem;
-  --font-size-subtitle: 1.1rem;
-  --font-size-period: 0.9rem;
-  --font-size-footer: 0.95rem;
-  --font-size-small: 0.875rem;
-  --font-size-xs: 0.75rem;
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
-  --line-height-loose: 2;
-
-  /* ============================================
-     Layout & Sizing - Consistent Spacing (Optimized)
-     ============================================ */
-  --section-padding: 2.5rem 2rem;
-  --section-padding-alt: 2.25rem;
-  --section-padding-mobile: 1.75rem 1.25rem;
-  --section-margin: 2.5rem;
-  --section-margin-mobile: 1.75rem;
-  --footer-padding: 2rem 1.75rem;
-  --card-padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
-  --card-padding-alt: 2.25rem 2rem;
-  --card-padding-mobile: 1.75rem 1.25rem;
-  --card-max-width: 1200px;
-  --card-radius: 24px;
-  --card-radius-alt: 20px;
-  --card-radius-lg: 28px;
-  --card-radius-mobile: 18px;
-  --item-radius: 18px;
-  --item-radius-mobile: 14px;
-  --content-radius: 14px;
-  --btn-radius: 12px;
-  --btn-radius-mobile: 10px;
-  --stat-radius: 16px;
-  --timeline-padding: 2.5rem;
-  --icon-size: 3rem;
-  --icon-size-lg: 3.5rem;
-  --icon-size-mobile: 2.5rem;
-  --icon-font: 1.5rem;
-  --icon-font-lg: 1.75rem;
-  --icon-font-mobile: 1.25rem;
-
-  /* ============================================
-     Transitions & Animations
-     ============================================ */
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --animation-duration-fast: 0.3s;
-  --animation-duration-base: 0.6s;
-  --animation-duration-slow: 0.9s;
-
-  /* ============================================
-     Z-Index Layers
-     ============================================ */
-  --z-base: 1;
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-fixed: 300;
-  --z-modal: 400;
-  --z-tooltip: 500;
-  --z-max: 9999;
-}
-
-/* ============================================
-   Dark Mode Theme Variables
-   ============================================ */
-[data-theme="dark"] {
-  /* Backgrounds - Dark Theme */
-  --bg-light: #0f1419;
-  --bg-lighter: #1a1f2e;
-  --bg-lightest: #151b26;
-  --bg-card: #1e2532;
-  --bg-card-alt: #1a2230;
-  --bg-card-hover: #252d3d;
-  --bg-footer: #151b26;
-  --bg-footer-alt: #0f1419;
-  --bg-timeline: #1a1f2e;
-  --bg-content-hover: #252d3d;
-  --bg-navbar: rgba(30, 37, 50, 0.9);
-  --bg-navbar-scrolled: rgba(30, 37, 50, 0.98);
-  --bg-stat: #1a1f2e;
-  --bg-overlay: rgba(0, 0, 0, 0.75);
-  --bg-gradient-primary: linear-gradient(135deg, #1e2532 0%, #151b26 100%);
-  --bg-gradient-luxury: linear-gradient(135deg, #1e2532 0%, #1a2230 40%, #151b26 100%);
-  --bg-gradient-sublime: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-
-  /* Text Colors - Dark Theme */
-  --text-main: #e2e8f0;
-  --text-heading: #f1f5f9;
-  --text-heading-alt: #e2e8f0;
-  --text-subtle: #94a3b8;
-  --text-muted: #cbd5e1;
-  --text-muted-alt: #64748b;
-  --text-light: #475569;
-  --text-accent: #cbd5e1;
-  --text-hover: #60a5fa;
-  --text-on-accent: #ffffff;
-  --text-link: #60a5fa;
-  --text-link-hover: #93c5fd;
-
-  /* Borders - Dark Theme */
-  --border-light: rgba(51, 65, 85, 0.6);
-  --border-default: #334155;
-  --border-medium: #475569;
-  --border-dark: #64748b;
-  --border-navbar: rgba(51, 65, 85, 0.5);
-  --border-navbar-dropdown: rgba(51, 65, 85, 0.6);
-  --border-glow: rgba(96, 165, 250, 0.3);
-  --border-image: #334155;
-  --border-period: #475569;
-  --border-accent: rgba(96, 165, 250, 0.4);
-  --border-accent-hover: rgba(96, 165, 250, 0.6);
-
-  /* Shadows - Dark Theme (more subtle) */
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.6), 0 20px 40px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.7), 0 32px 64px rgba(0, 0, 0, 0.6);
-  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.4), 0 32px 80px rgba(102, 126, 234, 0.2);
-  --shadow-card-hover: 0 16px 40px rgba(0, 0, 0, 0.6), 0 32px 80px rgba(0, 0, 0, 0.5), 0 48px 120px rgba(102, 126, 234, 0.3);
-  --shadow-navbar: 0 8px 24px rgba(0, 0, 0, 0.5);
-  --shadow-navbar-scrolled: 0 12px 32px rgba(0, 0, 0, 0.6);
-}
+/* 
+ * This file now only serves as documentation and placeholder.
+ * All actual variables are imported from core/_variables.css via core/index.css
+ * which is loaded before this file in index.css
+ */

@@ -1,17 +1,30 @@
 /**
- * UI Components Styles
- * Reusable UI component styles for consistent design
+ * UI Components - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - UI component styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/ui-components.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   Empty State Component
+   Empty State Component - Extends Core Component
    ============================================ */
 .empty-state {
+  /* Extends .empty-state from components/_empty-state.css */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
+  padding: var(--spacing-3xl) var(--spacing-xl);
   text-align: center;
   min-height: 200px;
 }
@@ -20,7 +33,7 @@
   font-size: 4rem;
   margin-bottom: 1.5rem;
   opacity: 0.7;
-  animation: emptyStatePulse 2s ease-in-out infinite;
+  animation: emptyStatePulse var(--duration-base) var(--easing-ease-in-out) infinite;
 }
 
 @keyframes emptyStatePulse {
@@ -38,17 +51,17 @@
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text-heading, #1a202c);
-  font-family: var(--font-main, 'Inter', sans-serif);
+  color: var(--color-text-heading);
+  font-family: var(--font-main);
 }
 
 .empty-state-message {
   margin: 0;
   font-size: 1rem;
-  color: var(--text-secondary, #4a5568);
+  color: var(--color-text-subtle);
   line-height: 1.6;
   max-width: 500px;
-  font-family: var(--font-main, 'Inter', sans-serif);
+  font-family: var(--font-main);
 }
 
 .empty-state-action {
@@ -162,11 +175,11 @@
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .empty-state-title {
-    color: var(--text-heading, #f7fafc);
+    color: var(--color-text-heading);
   }
 
   .empty-state-message {
-    color: var(--text-secondary, #cbd5e1);
+    color: var(--color-text-subtle);
   }
 }
 

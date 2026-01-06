@@ -1,4 +1,5 @@
 import React, { PureComponent, ReactNode } from "react";
+import { Messages, ErrorMessages, AriaLabels } from "../../../constants";
 import "../../../assets/css/main-page.css";
 
 /**
@@ -60,7 +61,7 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
   private renderTitle(): ReactNode {
     return (
       <h2 className="error-title" id="error-title">
-        Unable to Load Profile
+        {ErrorMessages.LOAD_PROFILE_FAILED}
       </h2>
     );
   }
@@ -72,7 +73,7 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
     const { error } = this.props;
     return (
       <p className="error-message" id="error-message" role="alert">
-        {error || "An unexpected error occurred"}
+        {error || ErrorMessages.GENERIC}
       </p>
     );
   }
@@ -107,10 +108,10 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
         className="error-retry-button"
         onClick={this.handleRetry}
         type="button"
-        aria-label="Retry loading profile"
+        aria-label={AriaLabels.LOADING}
         aria-describedby="error-message"
       >
-        Try Again
+        {Messages.RETRY}
       </button>
     );
   }

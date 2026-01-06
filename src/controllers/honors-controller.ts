@@ -3,16 +3,19 @@
  * Handles business logic for Honors section
  * Follows Single Responsibility Principle (SRP)
  * Follows Dependency Inversion Principle (DIP)
+ * Extends BaseController for common functionality (DRY, OOP)
  */
 
 import { UserProfile } from "../types/user";
 import { HonorsModel, IHonorsData, IHonorItem, HonorCategory } from "../models/honors-model";
+import { BaseController } from "./base-controller";
 
 /**
  * HonorsController
  * Orchestrates business logic for Honors section
+ * Follows OOP principles - extends BaseController
  */
-export class HonorsController {
+export class HonorsController extends BaseController {
   /**
    * Get honors data from profile
    * Follows Single Responsibility Principle (SRP)
@@ -25,6 +28,24 @@ export class HonorsController {
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getHonorsData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return HonorsModel.isValid(data as IHonorsData);
   }
 
   /**
@@ -84,12 +105,9 @@ export class HonorsController {
 
   /**
    * Check if Honors section should be displayed
-   * Follows Single Responsibility Principle (SRP)
+   * Inherited from BaseController - follows DRY principle
    */
-  shouldDisplay(profile: UserProfile): boolean {
-    const data = this.getHonorsData(profile);
-    return data !== null && HonorsModel.isValid(data);
-  }
+  // shouldDisplay is inherited from BaseController
 
   /**
    * Get total honors count

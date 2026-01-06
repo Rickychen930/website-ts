@@ -7,13 +7,19 @@
  * import { SectionNames, AccentColors } from '@/constants';
  */
 
+// Import first (all imports must be at the top)
+import { Colors } from './colors';
+import { Strings } from './strings';
+import { Config } from './config';
+import { ImportPaths } from './import-paths';
+
 // Colors
 export * from './colors';
 export { Colors, AccentColors, BackgroundColors, TextColors, BorderColors, Gradients, ColorEnum } from './colors';
 
 // Strings
 export * from './strings';
-export { Strings, SectionNames, NavLabels, NavIds, SectionIds, SectionHrefs, Messages, ErrorMessages, SuccessMessages, SectionEnum, MessageEnum } from './strings';
+export { Strings, SectionNames, NavLabels, NavIds, SectionIds, SectionHrefs, Messages, ErrorMessages, SuccessMessages, ActionLabels, SectionTitles, SEOLabels, SectionEnum, MessageEnum, AriaLabels } from './strings';
 
 // Config
 export * from './config';

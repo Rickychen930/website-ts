@@ -6,6 +6,8 @@
  * - Single Responsibility Principle (SRP): Handles language business logic
  * - Dependency Inversion Principle (DIP): Depends on abstractions (Model)
  * - Open/Closed Principle (OCP): Extensible without modification
+ * - DRY: Uses centralized constants, extends BaseController
+ * - OOP: Extends BaseController for common functionality
  */
 
 import { UserProfile } from "../types/user";
@@ -15,15 +17,18 @@ import {
   ILanguageValidationResult,
   ProficiencyLevel,
 } from "../models/language-model";
+import { BaseController } from "./base-controller";
 
 /**
  * Language Controller
  * Orchestrates language-related business logic
+ * Follows OOP principles - extends BaseController
  */
-export class LanguageController {
+export class LanguageController extends BaseController {
   private readonly model: typeof LanguageModel;
 
   constructor(model: typeof LanguageModel = LanguageModel) {
+    super();
     this.model = model;
   }
 
@@ -33,6 +38,10 @@ export class LanguageController {
    * @returns Language data or null
    */
   getLanguageData(profile: UserProfile | null): ILanguage[] | null {
+    if (!profile) {
+      return null;
+    }
+
     const data = this.model.extractFromProfile(profile);
 
     if (!this.model.isValid(data)) {
@@ -40,6 +49,24 @@ export class LanguageController {
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getLanguageData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return Array.isArray(data) && this.model.isValid(data as ILanguage[]);
   }
 
   /**

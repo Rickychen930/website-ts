@@ -1,0 +1,162 @@
+/**
+ * CSS Mixins - Reusable Patterns (DRY Principle)
+ * Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Reusable mixins for common patterns
+ * - KISS: Simple, clear mixin names
+ * - OOP: Organized by functionality
+ * - SOLID: Single Responsibility - each mixin does one thing
+ * 
+ * Usage:
+ * @import '@/assets/css/core/mixins.css';
+ * 
+ * Note: CSS doesn't support true mixins, so we use custom properties
+ * and utility classes instead. This file documents common patterns.
+ */
+
+/* ============================================
+   Glassmorphism Effect - Reusable Pattern
+   ============================================ */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-effect-strong {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================
+   Card Hover Effect - Reusable Pattern
+   ============================================ */
+.card-hover-effect {
+  transition: 
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-smooth);
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-accent);
+}
+
+/* ============================================
+   Gradient Text - Reusable Pattern
+   ============================================ */
+.gradient-text {
+  background: var(--gradient-accent-full);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-primary {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Focus State - Accessibility Pattern
+   ============================================ */
+.focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* ============================================
+   Smooth Transition - Reusable Pattern
+   ============================================ */
+.transition-smooth {
+  transition: all var(--transition-smooth);
+}
+
+.transition-base {
+  transition: all var(--transition-base);
+}
+
+.transition-fast {
+  transition: all var(--transition-fast);
+}
+
+/* ============================================
+   Container - Reusable Layout Pattern
+   ============================================ */
+.container {
+  width: 100%;
+  max-width: var(--spacing-card-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-section-padding);
+}
+
+.container-mobile {
+  padding: var(--spacing-section-padding-mobile);
+}
+
+/* ============================================
+   Card Base - Reusable Component Pattern
+   ============================================ */
+.card-base {
+  position: relative;
+  width: 100%;
+  padding: var(--spacing-card-padding);
+  background: var(--color-bg-card);
+  border-radius: var(--spacing-card-radius);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-smooth);
+}
+
+/* ============================================
+   Section Base - Reusable Section Pattern
+   ============================================ */
+.section-base {
+  padding: var(--spacing-section-padding);
+  margin: var(--spacing-section-margin) 0;
+}
+
+/* ============================================
+   Responsive Utilities - Mobile First
+   ============================================ */
+@media screen and (max-width: 768px) {
+  .container-mobile {
+    padding: var(--spacing-section-padding-mobile);
+  }
+  
+  .card-base {
+    padding: var(--spacing-card-padding-mobile);
+    border-radius: var(--spacing-card-radius-mobile);
+  }
+  
+  .section-base {
+    padding: var(--spacing-section-padding-mobile);
+    margin: var(--spacing-section-margin-mobile) 0;
+  }
+}
+
+/* ============================================
+   Reduced Motion - Accessibility Pattern
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .transition-smooth,
+  .transition-base,
+  .transition-fast,
+  .card-hover-effect {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .card-hover-effect:hover {
+    transform: none;
+  }
+}
+

@@ -1,0 +1,235 @@
+/**
+ * Contact Form Component - Refactored with New Architecture
+ * Professional BEM Architecture, Code-Based, DRY, KISS
+ * 
+ * This is an example of how to refactor existing CSS to use the new architecture
+ * 
+ * Usage:
+ * @import '@/assets/css/core';
+ * @import '@/assets/css/components';
+ * @import '@/assets/css/components/contact-form-refactored';
+ * 
+ * <form class="contact-form">
+ *   <div class="contact-form__group">
+ *     <label class="contact-form__label contact-form__label--required">Email</label>
+ *     <input class="input" type="email" />
+ *   </div>
+ * </form>
+ */
+
+/* ============================================
+   Block: Contact Form
+   ============================================ */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-card-padding);
+}
+
+/* ============================================
+   Element: Contact Form Group
+   ============================================ */
+.contact-form__group {
+  margin-bottom: 1.5rem;
+}
+
+.contact-form__group:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Element: Contact Form Label
+   ============================================ */
+.contact-form__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-heading);
+  font-family: var(--font-main);
+}
+
+.contact-form__label--required::after {
+  content: ' *';
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+/* ============================================
+   Element: Contact Form Input (uses input component)
+   ============================================ */
+.contact-form__input {
+  /* Uses input component, can add specific overrides if needed */
+}
+
+.contact-form__input--error {
+  /* Error state handled by input component */
+}
+
+/* ============================================
+   Element: Contact Form Textarea (uses textarea component)
+   ============================================ */
+.contact-form__textarea {
+  /* Uses textarea component */
+}
+
+/* ============================================
+   Element: Contact Form Error
+   ============================================ */
+.contact-form__error {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: var(--font-size-small);
+  color: var(--color-error);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-main);
+}
+
+.contact-form__error--hidden {
+  display: none;
+}
+
+/* ============================================
+   Element: Contact Form Actions
+   ============================================ */
+.contact-form__actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* ============================================
+   Element: Contact Form Submit (uses button component)
+   ============================================ */
+.contact-form__submit {
+  /* Uses btn component with primary variant */
+}
+
+.contact-form__submit--loading {
+  /* Uses btn--loading modifier */
+}
+
+/* ============================================
+   Element: Contact Form Spinner (uses loading component)
+   ============================================ */
+.contact-form__spinner {
+  /* Uses loading component */
+}
+
+/* ============================================
+   Element: Contact Form Success
+   ============================================ */
+.contact-form__success {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.contact-form__success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-success-light);
+  border-radius: 50%;
+  font-size: 32px;
+  color: var(--color-success);
+  font-weight: var(--font-weight-bold);
+}
+
+.contact-form__success-title {
+  font-size: var(--font-size-title-component);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-heading);
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+
+.contact-form__success-message {
+  font-size: var(--font-size-base);
+  color: var(--color-text-subtle);
+  margin-bottom: 2rem;
+  line-height: 1.75;
+  font-family: var(--font-main);
+}
+
+.contact-form__reset-button {
+  /* Uses btn component with outline variant */
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media screen and (max-width: 992px) {
+  .contact-form {
+    padding: var(--spacing-card-padding-mobile);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  .contact-form__actions {
+    justify-content: stretch;
+    flex-direction: column;
+  }
+
+  .contact-form__actions .btn {
+    width: 100%;
+  }
+
+  .contact-form__success {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-form__success-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .contact-form {
+    padding: 1rem;
+  }
+
+  .contact-form__group {
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-form__success {
+    padding: 1.5rem 1rem;
+  }
+
+  .contact-form__success-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .contact-form__success-title {
+    font-size: var(--font-size-subtitle);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-form__success-message {
+    font-size: var(--font-size-small);
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .contact-form__spinner {
+    animation: none !important;
+  }
+}
+

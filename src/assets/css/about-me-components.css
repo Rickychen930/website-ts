@@ -1,18 +1,30 @@
 /**
- * About Me Components - Reusable Component Styles
- * Luxury & Professional Design
- * Follows DRY principle with CSS variables
+ * About Me Components - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - component styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/about-me-components.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Variables
+   Component-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 :root {
-  --about-me-comp-spacing-xs: 0.5rem;
-  --about-me-comp-spacing-sm: 1rem;
-  --about-me-comp-spacing-md: 1.5rem;
-  --about-me-comp-spacing-lg: 2rem;
-  --about-me-comp-spacing-xl: 2.5rem;
+  --about-me-comp-spacing-xs: var(--spacing-xs);
+  --about-me-comp-spacing-sm: var(--spacing-sm);
+  --about-me-comp-spacing-md: var(--spacing-md);
+  --about-me-comp-spacing-lg: var(--spacing-lg);
+  --about-me-comp-spacing-xl: var(--spacing-xl);
 }
 
 /* ============================================
@@ -27,7 +39,7 @@
 
 .hero-header-name {
   margin: 0;
-  color: var(--text-heading);
+  color: var(--color-text-heading);
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 900;
   font-family: var(--font-display);
@@ -47,7 +59,7 @@
 }
 
 .hero-header-greeting {
-  color: var(--text-subtle);
+  color: var(--color-text-subtle);
   font-weight: 600;
 }
 
@@ -114,7 +126,7 @@
 
 .hero-header-title {
   margin: 0;
-  color: var(--text-subtle);
+  color: var(--color-text-subtle);
   font-size: clamp(1.25rem, 3vw, 1.85rem);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -226,7 +238,7 @@
 
 .professional-highlight-title {
   margin: 0;
-  color: var(--text-heading);
+  color: var(--color-text-heading);
   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
   font-weight: 600;
   line-height: 1.3;
@@ -235,7 +247,7 @@
 
 .professional-highlight-description {
   margin: 0;
-  color: var(--text-subtle);
+  color: var(--color-text-subtle);
   font-size: clamp(0.9rem, 2vw, 1rem);
   line-height: 1.6;
 }
@@ -262,7 +274,7 @@
 
 .tech-badge-secondary {
   background: var(--bg-card-alt);
-  color: var(--text-heading);
+  color: var(--color-text-heading);
   border-color: var(--border-light);
 }
 
@@ -613,7 +625,7 @@
 
 .tech-badges-grid-title {
   margin: 0 0 var(--about-me-comp-spacing-md) 0;
-  color: var(--text-heading);
+  color: var(--color-text-heading);
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   font-weight: 600;
   letter-spacing: -0.01em;

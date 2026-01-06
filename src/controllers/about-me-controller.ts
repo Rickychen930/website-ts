@@ -3,16 +3,19 @@
  * Handles business logic for About Me section
  * Follows Single Responsibility Principle (SRP)
  * Follows Dependency Inversion Principle (DIP)
+ * Extends BaseController for common functionality (DRY, OOP)
  */
 
 import { UserProfile } from "../types/user";
 import { AboutMeModel, IAboutMeData } from "../models/about-me-model";
+import { BaseController } from "./base-controller";
 
 /**
  * AboutMeController
  * Orchestrates business logic for About Me section
+ * Follows OOP principles - extends BaseController
  */
-export class AboutMeController {
+export class AboutMeController extends BaseController {
   /**
    * Get About Me data from profile
    * Follows Single Responsibility Principle (SRP)
@@ -25,6 +28,24 @@ export class AboutMeController {
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getAboutMeData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return AboutMeModel.isValid(data as IAboutMeData);
   }
 
   /**
@@ -57,11 +78,9 @@ export class AboutMeController {
 
   /**
    * Check if About Me section should be displayed
-   * Follows Single Responsibility Principle (SRP)
+   * Inherited from BaseController - follows DRY principle
+   * Can be overridden if custom logic is needed
    */
-  shouldDisplay(profile: UserProfile): boolean {
-    const data = this.getAboutMeData(profile);
-    return data !== null && AboutMeModel.isValid(data);
-  }
+  // shouldDisplay is inherited from BaseController
 }
 

@@ -1,30 +1,37 @@
 import React, { ReactNode } from "react";
+import "../../assets/css/main-page.css";
+import TableOfContents from "../../components/navigation/table-of-contents";
+import GlobalSearch from "../../components/search/global-search";
+import LazySection from "../../components/sections/lazy-section";
+import {
+  ErrorMessages,
+  Messages,
+  RetryConfig,
+  ScrollConfig,
+  SectionIds,
+  SectionNames
+} from "../../constants";
+import { MainPageController } from "../../controllers/main-page-controller";
+import { ISectionConfig } from "../../models/section-model";
+import { UserProfile } from "../../types/user";
+import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
+import { updateSEOFromProfile } from "../../utils/seo";
+import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
+import { shouldDisplayData } from "../../utils/view-helpers";
+import { MainPageFooterComponent } from "../components/footer";
 import Navbar from "../components/navbar";
+import { BackToTopButton, ErrorComponent, LoadingComponent, toast } from "../components/ui";
 import BasePage, { BasePageState } from "./base-page";
 import AboutMeSection from "./sections/about-me-section";
 import AcademicSection from "./sections/academic-section";
-import HonorsSection from "./sections/honors-section";
 import CertificationSection from "./sections/certifications-section";
-import TechnicalSkillsSection from "./sections/technical-skills-section";
-import WorkExperienceSection from "./sections/work-experience-section";
+import ContactSection from "./sections/contact-section";
+import HonorsSection from "./sections/honors-section";
+import LanguagesSection from "./sections/languages-section";
 import ProjectsSection from "./sections/projects-section";
 import SoftSkillsSection from "./sections/soft-skills-section";
-import LanguagesSection from "./sections/languages-section";
-import ContactSection from "./sections/contact-section";
-import "../../assets/css/main-page.css";
-import { MainPageController } from "../../controllers/main-page-controller";
-import { UserProfile } from "../../types/user";
-import { ISectionConfig } from "../../models/section-model";
-import { RETRY_CONFIG, SCROLL_CONFIG } from "../../config/main-page-config";
-import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
-import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
-import { LoadingComponent, ErrorComponent, BackToTopButton, toast } from "../components/ui";
-import { MainPageFooterComponent } from "../components/footer";
-import { updateSEOFromProfile } from "../../utils/seo";
-import GlobalSearch from "../../components/search/global-search";
-import LazySection from "../../components/sections/lazy-section";
-import TableOfContents from "../../components/navigation/table-of-contents";
-import { shouldDisplayData } from "../../utils/view-helpers";
+import TechnicalSkillsSection from "./sections/technical-skills-section";
+import WorkExperienceSection from "./sections/work-experience-section";
 
 /**
  * MainPageState - Extended state interface
@@ -65,10 +72,10 @@ class MainPage extends BasePage<{}, MainPageState> {
       retryCount: 0,
     };
     this.controller = new MainPageController();
-    this.smoothScrollManager = new SmoothScrollManager(SCROLL_CONFIG.OFFSET);
+    this.smoothScrollManager = new SmoothScrollManager(ScrollConfig.OFFSET);
     this.scrollObserverManager = new ScrollObserverManager(
-      SCROLL_CONFIG.OBSERVER_THRESHOLD,
-      SCROLL_CONFIG.OBSERVER_ROOT_MARGIN
+      ScrollConfig.OBSERVER_THRESHOLD,
+      ScrollConfig.OBSERVER_ROOT_MARGIN
     );
     this.initializeSections();
   }
@@ -90,16 +97,66 @@ class MainPage extends BasePage<{}, MainPageState> {
    */
   private initializeSections(): void {
     const sections: ISectionConfig[] = [
-      { id: "about", title: "About Me", component: AboutMeSection, dataKey: "name" },
-      { id: "skills", title: "Technical Skills", component: TechnicalSkillsSection, dataKey: "technicalSkills" },
-      { id: "experience", title: "Work Experience", component: WorkExperienceSection, dataKey: "experiences" },
-      { id: "projects", title: "Projects", component: ProjectsSection, dataKey: "projects" },
-      { id: "academic", title: "Academic", component: AcademicSection, dataKey: "academics" },
-      { id: "certifications", title: "Certifications", component: CertificationSection, dataKey: "certifications" },
-      { id: "honors", title: "Honors", component: HonorsSection, dataKey: "honors" },
-      { id: "soft-skills", title: "Soft Skills", component: SoftSkillsSection, dataKey: "softSkills" },
-      { id: "languages", title: "Languages", component: LanguagesSection, dataKey: "languages" },
-      { id: "contact", title: "Contact", component: ContactSection, dataKey: "contacts" },
+      { 
+        id: SectionIds.ABOUT, 
+        title: SectionNames.ABOUT, 
+        component: AboutMeSection, 
+        dataKey: "name" 
+      },
+      { 
+        id: SectionIds.SKILLS, 
+        title: SectionNames.TECHNICAL_SKILLS, 
+        component: TechnicalSkillsSection, 
+        dataKey: "technicalSkills" 
+      },
+      { 
+        id: SectionIds.EXPERIENCE, 
+        title: SectionNames.WORK_EXPERIENCE, 
+        component: WorkExperienceSection, 
+        dataKey: "experiences" 
+      },
+      { 
+        id: SectionIds.PROJECTS, 
+        title: SectionNames.PROJECTS, 
+        component: ProjectsSection, 
+        dataKey: "projects" 
+      },
+      { 
+        id: SectionIds.ACADEMIC, 
+        title: SectionNames.ACADEMIC, 
+        component: AcademicSection, 
+        dataKey: "academics" 
+      },
+      { 
+        id: SectionIds.CERTIFICATIONS, 
+        title: SectionNames.CERTIFICATIONS, 
+        component: CertificationSection, 
+        dataKey: "certifications" 
+      },
+      { 
+        id: SectionIds.HONORS, 
+        title: SectionNames.HONORS, 
+        component: HonorsSection, 
+        dataKey: "honors" 
+      },
+      { 
+        id: SectionIds.SOFT_SKILLS, 
+        title: SectionNames.SOFT_SKILLS, 
+        component: SoftSkillsSection, 
+        dataKey: "softSkills" 
+      },
+      { 
+        id: SectionIds.LANGUAGES, 
+        title: SectionNames.LANGUAGES, 
+        component: LanguagesSection, 
+        dataKey: "languages" 
+      },
+      { 
+        id: SectionIds.CONTACT, 
+        title: SectionNames.CONTACT, 
+        component: ContactSection, 
+        dataKey: "contacts" 
+      },
     ];
     this.controller.initializeSections(sections);
   }
@@ -119,7 +176,7 @@ class MainPage extends BasePage<{}, MainPageState> {
     if (prevState.loading && !this.state.loading && this.state.profile) {
       setTimeout(() => {
         this.initializeSectionObserver();
-      }, SCROLL_CONFIG.INITIALIZATION_DELAY);
+      }, ScrollConfig.INITIALIZATION_DELAY);
     }
   }
 
@@ -155,11 +212,11 @@ class MainPage extends BasePage<{}, MainPageState> {
       const profile = await this.controller.getUserProfile();
 
       if (!profile) {
-        throw new Error("Failed to fetch profile. Please check if REACT_APP_API_URL is configured and the backend server is running.");
+        throw new Error(ErrorMessages.LOAD_PROFILE_FAILED);
       }
 
       if (!profile.name?.trim()) {
-        throw new Error("Invalid profile data: profile name is missing");
+        throw new Error(ErrorMessages.INVALID_INPUT);
       }
 
       // Update SEO metadata
@@ -175,11 +232,11 @@ class MainPage extends BasePage<{}, MainPageState> {
       // Show success notification
       toast.success("Profile loaded successfully", 3000);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to load profile";
+      const errorMessage = err instanceof Error ? err.message : ErrorMessages.LOAD_PROFILE_FAILED;
       const newRetryCount = this.state.retryCount + 1;
 
-      if (newRetryCount < RETRY_CONFIG.MAX_RETRIES) {
-        const retryDelay = RETRY_CONFIG.RETRY_DELAY * newRetryCount;
+      if (newRetryCount < RetryConfig.MAX_RETRIES) {
+        const retryDelay = RetryConfig.RETRY_DELAY * newRetryCount;
         setTimeout(() => {
           if (this.state !== null) {
             this.setState({ retryCount: newRetryCount });
@@ -228,7 +285,7 @@ class MainPage extends BasePage<{}, MainPageState> {
   protected renderLoading(): ReactNode {
     return (
       <LoadingComponent 
-        message="Loading profile..." 
+        message={Messages.LOADING} 
         useSkeleton={true}
         skeletonVariant="card"
       />
@@ -246,7 +303,7 @@ class MainPage extends BasePage<{}, MainPageState> {
       <ErrorComponent
         error={error}
         retryCount={retryCount}
-        maxRetries={RETRY_CONFIG.MAX_RETRIES}
+        maxRetries={RetryConfig.MAX_RETRIES}
         onRetry={this.handleRetry}
       />
     );

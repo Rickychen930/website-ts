@@ -1,28 +1,40 @@
 /**
- * Global Search Styles
- * Professional search interface
+ * Global Search - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - search styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/global-search.css';
  */
+
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 .global-search-trigger {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--btn-radius);
-  color: var(--text-muted);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--component-radius-button);
+  color: var(--color-text-muted);
   font-size: var(--font-size-small);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: var(--transition-all);
   box-shadow: var(--shadow-sm);
   position: relative;
 }
 
 .global-search-trigger:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-medium);
-  color: var(--text-main);
+  background: var(--color-bg-card-hover);
+  border-color: var(--color-border-medium);
+  color: var(--color-text-main);
   box-shadow: var(--shadow-md);
 }
 
@@ -37,12 +49,12 @@
 
 .global-search-trigger .search-shortcut {
   padding: 2px 6px;
-  background: var(--bg-light);
-  border-radius: 4px;
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-xs);
   font-size: var(--font-size-xs);
   font-family: var(--font-mono);
-  color: var(--text-muted);
-  border: 1px solid var(--border-light);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-light);
 }
 
 /* Search Overlay */
@@ -72,8 +84,8 @@
 .global-search-modal {
   width: 100%;
   max-width: 600px;
-  background: var(--bg-card);
-  border-radius: var(--card-radius);
+  background: var(--color-bg-card);
+  border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-xl);
   margin-top: 10vh;
   max-height: 80vh;

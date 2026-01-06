@@ -1,42 +1,56 @@
 /**
- * Footer Section - Professional, Luxury & Sophisticated Design
- * Advanced CSS showcasing Software Engineering Skills
- * Features: Glassmorphism, Advanced Animations, Micro-interactions, Responsive Design
+ * Footer Section - Professional, Code-Based Architecture
  * 
- * Principles Applied:
- * - DRY: Reusable CSS variables and utilities
- * - KISS: Simple, maintainable styles
- * - Responsive: Mobile-first approach
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - footer-specific styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/footer-section.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Variables - Design Tokens
+   Footer-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 :root {
-  --footer-bg-primary: rgba(10, 14, 39, 0.98);
-  --footer-bg-secondary: rgba(15, 20, 40, 0.95);
+  /* Colors - Uses core color system */
+  --footer-bg-primary: var(--color-bg-dark);
+  --footer-bg-secondary: var(--color-bg-dark-light);
   --footer-gradient-start: rgba(102, 126, 234, 0.1);
   --footer-gradient-end: rgba(118, 75, 162, 0.1);
   --footer-text-primary: rgba(255, 255, 255, 0.95);
   --footer-text-secondary: rgba(255, 255, 255, 0.7);
   --footer-text-muted: rgba(255, 255, 255, 0.5);
   --footer-border-color: rgba(255, 255, 255, 0.1);
-  --footer-accent-primary: #667eea;
-  --footer-accent-secondary: #764ba2;
-  --footer-accent-tertiary: #f093fb;
-  --footer-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --footer-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --footer-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --footer-shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
-  --footer-spacing-xs: 0.5rem;
-  --footer-spacing-sm: 1rem;
-  --footer-spacing-md: 1.5rem;
-  --footer-spacing-lg: 2rem;
-  --footer-spacing-xl: 3rem;
-  --footer-spacing-xxl: 4rem;
-  --footer-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --footer-transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --footer-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --footer-accent-primary: var(--color-accent-primary);
+  --footer-accent-secondary: var(--color-accent-alt);
+  --footer-accent-tertiary: var(--color-accent-secondary);
+  
+  /* Shadows - Uses core shadow system */
+  --footer-shadow-sm: var(--shadow-sm);
+  --footer-shadow-md: var(--shadow-md);
+  --footer-shadow-lg: var(--shadow-lg);
+  --footer-shadow-glow: var(--shadow-glow);
+  
+  /* Spacing - Uses core spacing system */
+  --footer-spacing-xs: var(--spacing-xs);
+  --footer-spacing-sm: var(--spacing-sm);
+  --footer-spacing-md: var(--spacing-md);
+  --footer-spacing-lg: var(--spacing-lg);
+  --footer-spacing-xl: var(--spacing-xl);
+  --footer-spacing-xxl: var(--spacing-4xl);
+  
+  /* Transitions - Uses core transition system */
+  --footer-transition-fast: var(--transition-fast);
+  --footer-transition-base: var(--transition-base);
+  --footer-transition-slow: var(--transition-slow);
 }
 
 /* ============================================
@@ -58,7 +72,7 @@
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
   color: var(--footer-text-primary);
-  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
+  font-family: var(--font-main);
   margin-top: auto;
   overflow: hidden;
   isolation: isolate;

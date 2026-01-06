@@ -6,20 +6,62 @@
  * - Single Responsibility Principle (SRP): Handles certification business logic
  * - Dependency Inversion Principle (DIP): Depends on abstractions (Model)
  * - Open/Closed Principle (OCP): Extensible without modification
+ * - DRY: Uses centralized constants for error messages
  */
 
 import { ICertification, CertificationModel, ICertificationValidationResult } from "../models/certification-model";
+import { UserProfile } from "../types/user";
 import { logWarn, logError } from "../utils/logger";
+import { BaseController } from "./base-controller";
+import { ErrorMessages } from "../constants";
 
 /**
  * Certification Controller
  * Orchestrates certification-related business logic
+ * Follows OOP principles - extends BaseController
  */
-export class CertificationController {
+export class CertificationController extends BaseController {
   private readonly model: typeof CertificationModel;
 
   constructor(model: typeof CertificationModel = CertificationModel) {
+    super();
     this.model = model;
+  }
+
+  /**
+   * Get certification data from profile
+   * @param profile - User profile
+   * @returns Certification array or null
+   */
+  getCertificationData(profile: UserProfile): ICertification[] | null {
+    if (!profile || !profile.certifications) {
+      return null;
+    }
+
+    const data = profile.certifications as ICertification[];
+    if (!this.model.validate(data).isValid) {
+      return null;
+    }
+
+    return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getCertificationData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return Array.isArray(data) && this.model.validate(data as ICertification[]).isValid;
   }
 
   /**
@@ -44,7 +86,7 @@ export class CertificationController {
     // Validate first
     const validation = this.validateData(data);
     if (!validation.isValid) {
-      logWarn("Certification data validation failed", { errors: validation.errors }, "CertificationController");
+      logWarn(ErrorMessages.INVALID_INPUT, { errors: validation.errors }, "CertificationController");
       return [];
     }
 
@@ -101,7 +143,7 @@ export class CertificationController {
     try {
       window.open(link, "_blank", "noopener,noreferrer");
     } catch (error) {
-      logError("Failed to open certification link", error, "CertificationController");
+      logError(ErrorMessages.GENERIC, error, "CertificationController");
     }
   }
 

@@ -1,5 +1,12 @@
 /**
- * Work Experience Section - Professional Luxury Design
+ * Work Experience Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - section-specific styles only
+ * - Reusable: Uses core components and utilities
  * 
  * Features:
  * - Professional, Clean, Luxury UI/UX
@@ -9,68 +16,71 @@
  * - Smooth Animations with IntersectionObserver
  * - Accessibility Support
  * 
- * Principles:
- * - DRY (CSS Variables)
- * - Maintainable & Scalable
- * - Accessible (ARIA, semantic HTML)
+ * Usage:
+ * @import '@/assets/css/work-experience-section.css';
  */
 
+/* Import core system for constants and variables */
+@import './core/index.css';
+
 /* ============================================
-   CSS Variables for Consistency (DRY)
+   Component-Specific Variables (DRY)
+   Uses core constants as base
    ============================================ */
 .work-experience-container {
-  --work-spacing-xs: 0.5rem;
-  --work-spacing-sm: 1rem;
-  --work-spacing-md: 1.5rem;
-  --work-spacing-lg: 2rem;
-  --work-spacing-xl: 2.5rem;
-  --work-spacing-xxl: 3rem;
+  /* Spacing - Uses core spacing system */
+  --work-spacing-xs: var(--spacing-xs);
+  --work-spacing-sm: var(--spacing-sm);
+  --work-spacing-md: var(--spacing-md);
+  --work-spacing-lg: var(--spacing-lg);
+  --work-spacing-xl: var(--spacing-xl);
+  --work-spacing-xxl: var(--spacing-3xl);
   
-  /* Colors - Professional Luxury Palette */
-  --work-color-primary: var(--accent, #667eea);
-  --work-color-primary-light: var(--accent-light, #a78bfa);
-  --work-color-primary-dark: var(--accent-dark, #5b21b6);
-  --work-color-secondary: var(--accent-alt, #764ba2);
-  --work-color-accent: var(--accent-hover, #7c3aed);
-  --work-color-accent-light: var(--accent-light, #a78bfa);
+  /* Colors - Uses core color system */
+  --work-color-primary: var(--color-accent-primary);
+  --work-color-primary-light: var(--color-accent-light);
+  --work-color-primary-dark: var(--color-accent-dark);
+  --work-color-secondary: var(--color-accent-alt);
+  --work-color-accent: var(--color-accent-hover);
+  --work-color-accent-light: var(--color-accent-light);
   
-  --work-color-text-heading: #1a2332;
-  --work-color-text-primary: #2c3e50;
-  --work-color-text-secondary: #5c6b7a;
-  --work-color-text-muted: #7a8b9c;
-  --work-color-text-company: #34495e;
+  --work-color-text-heading: var(--color-text-heading);
+  --work-color-text-primary: var(--color-text-heading-alt);
+  --work-color-text-secondary: var(--color-text-subtle);
+  --work-color-text-muted: var(--color-text-muted-alt);
+  --work-color-text-company: var(--color-text-accent);
   
-  --work-color-bg-card: #ffffff;
-  --work-color-bg-card-hover: #fafbfd;
-  --work-color-bg-timeline: var(--accent-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
-  --work-color-bg-icon: linear-gradient(135deg, #667eea 0%, #5b21b6 100%);
-  --work-color-bg-icon-hover: linear-gradient(135deg, #7c3aed 0%, #667eea 100%);
-  --work-color-bg-period: #f0f4f8;
-  --work-color-bg-period-hover: #e6edf5;
+  --work-color-bg-card: var(--color-bg-card);
+  --work-color-bg-card-hover: var(--color-bg-card-hover);
+  --work-color-bg-timeline: var(--gradient-accent-full);
+  --work-color-bg-icon: var(--gradient-accent);
+  --work-color-bg-icon-hover: var(--gradient-accent-full);
+  --work-color-bg-period: var(--color-bg-timeline);
+  --work-color-bg-period-hover: var(--color-bg-content-hover);
   
-  --work-color-border: rgba(220, 227, 234, 0.4);
-  --work-color-border-hover: rgba(102, 126, 234, 0.5);
-  --work-color-border-glow: rgba(118, 75, 162, 0.25);
+  --work-color-border: var(--color-border-light);
+  --work-color-border-hover: var(--color-border-accent);
+  --work-color-border-glow: var(--color-border-glow);
   
-  /* Shadows - Professional Depth */
-  --work-shadow-xs: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.04));
-  --work-shadow-sm: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06));
-  --work-shadow-md: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.08));
-  --work-shadow-lg: var(--shadow-lg, 0 10px 24px rgba(0, 0, 0, 0.08), 0 20px 40px rgba(0, 0, 0, 0.06));
-  --work-shadow-xl: var(--shadow-xl, 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.08));
-  --work-shadow-card: var(--shadow-card, 0 6px 20px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 32px 80px rgba(102, 126, 234, 0.06));
-  --work-shadow-card-hover: var(--shadow-card-hover, 0 16px 40px rgba(0, 0, 0, 0.1), 0 32px 80px rgba(0, 0, 0, 0.12), 0 48px 120px rgba(102, 126, 234, 0.18));
+  /* Shadows - Uses core shadow system */
+  --work-shadow-xs: var(--shadow-xs);
+  --work-shadow-sm: var(--shadow-sm);
+  --work-shadow-md: var(--shadow-md);
+  --work-shadow-lg: var(--shadow-lg);
+  --work-shadow-xl: var(--shadow-xl);
+  --work-shadow-card: var(--shadow-card);
+  --work-shadow-card-hover: var(--shadow-card-hover);
   
-  /* Transitions - Smooth & Elegant */
-  --work-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --work-transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --work-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitions - Uses core transition system */
+  --work-transition-fast: var(--transition-fast);
+  --work-transition-base: var(--transition-base);
+  --work-transition-slow: var(--transition-slow);
   
-  /* Typography */
-  --work-font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
-  --work-font-size-title: clamp(1.25rem, 2.5vw, 1.5rem);
+  /* Typography - Uses core typography system */
+  --work-font-family: var(--font-main);
+  --work-font-size-title: clamp(1.25rem, 2.5vw, var(--font-size-title-component));
   --work-font-size-company: clamp(1rem, 1.8vw, 1.15rem);
-  --work-font-size-period: clamp(0.875rem, 1.4vw, 0.95rem);
+  --work-font-size-period: clamp(var(--font-size-small), 1.4vw, 0.95rem);
   --work-font-size-description: clamp(0.95rem, 1.6vw, 1.05rem);
   --work-line-height-tight: 1.3;
   --work-line-height-normal: 1.6;
@@ -78,12 +88,13 @@
 }
 
 /* ============================================
-   Container
+   Container - Uses Container Component
    ============================================ */
 .work-experience-container {
+  /* Extends .container component */
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--spacing-card-max-width);
   margin: 0 auto;
   padding: var(--work-spacing-lg) var(--work-spacing-md);
 }
@@ -155,18 +166,15 @@
 }
 
 /* ============================================
-   Responsive Design - Tablet
+   Responsive Design - Uses Core Breakpoints
    ============================================ */
-@media screen and (width <= 992px) {
+@media screen and (max-width: 992px) {
   .work-experience-container {
     padding: var(--work-spacing-md) var(--work-spacing-sm);
   }
 }
 
-/* ============================================
-   Responsive Design - Mobile
-   ============================================ */
-@media screen and (width <= 768px) {
+@media screen and (max-width: 768px) {
   .work-experience-container {
     padding: var(--work-spacing-sm);
   }
@@ -177,10 +185,7 @@
   }
 }
 
-/* ============================================
-   Responsive Design - Small Mobile
-   ============================================ */
-@media screen and (width <= 480px) {
+@media screen and (max-width: 480px) {
   .work-experience-container {
     padding: var(--work-spacing-xs);
     width: 100%;
@@ -194,10 +199,7 @@
   }
 }
 
-/* ============================================
-   Responsive Design - Extra Small Mobile
-   ============================================ */
-@media screen and (width <= 360px) {
+@media screen and (max-width: 360px) {
   .work-experience-container {
     padding: var(--work-spacing-xs);
   }
@@ -208,21 +210,18 @@
   }
 }
 
-/* ============================================
-   Landscape Orientation
-   ============================================ */
-@media screen and (orientation: landscape) and (width <= 768px) {
+@media screen and (orientation: landscape) and (max-width: 768px) {
   .work-experience-container {
     padding: var(--work-spacing-md);
   }
 }
 
 /* ============================================
-   Reduced Motion (Accessibility)
+   Reduced Motion (Accessibility) - Uses Core System
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .work-experience-empty-icon {
-    animation: none;
+    animation: none !important;
   }
 }
 

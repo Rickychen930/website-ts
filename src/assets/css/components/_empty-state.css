@@ -1,0 +1,160 @@
+/**
+ * Empty State Component - Professional BEM Architecture
+ * Code-Based, DRY, KISS, Reusable, OOP, SOLID
+ * 
+ * Architecture:
+ * - DRY: Uses CSS variables and utilities from core system
+ * 
+ * Usage:
+ * @import '@/assets/css/components/empty-state';
+ * 
+ * <div class="empty-state">
+ *   <div class="empty-state__icon">📭</div>
+ *   <h3 class="empty-state__title">No Data</h3>
+ *   <p class="empty-state__message">There is no data to display</p>
+ * </div>
+ */
+
+/* Import core system for constants and variables */
+@import '../core/index.css';
+
+/* ============================================
+   Block: Empty State
+   ============================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  min-height: 200px;
+}
+
+/* ============================================
+   Element: Empty State Icon
+   ============================================ */
+.empty-state__icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+  transition: 
+    transform var(--transition-smooth),
+    opacity var(--transition-base);
+}
+
+.empty-state:hover .empty-state__icon {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* ============================================
+   Element: Empty State Title
+   ============================================ */
+.empty-state__title {
+  margin: 0 0 1rem 0;
+  font-size: var(--font-size-title-component);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  line-height: 1.3;
+}
+
+/* ============================================
+   Element: Empty State Message
+   ============================================ */
+.empty-state__message {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-subtle);
+  line-height: 1.6;
+  max-width: 500px;
+  font-family: var(--font-main);
+}
+
+/* ============================================
+   Element: Empty State Action
+   ============================================ */
+.empty-state__action {
+  margin-top: 1.5rem;
+}
+
+/* ============================================
+   Modifiers
+   ============================================ */
+.empty-state--small {
+  padding: 2rem 1.5rem;
+  min-height: 150px;
+}
+
+.empty-state--small .empty-state__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state--small .empty-state__title {
+  font-size: var(--font-size-subtitle);
+  margin-bottom: 0.75rem;
+}
+
+.empty-state--small .empty-state__message {
+  font-size: var(--font-size-small);
+}
+
+.empty-state--large {
+  padding: 4rem 2.5rem;
+  min-height: 300px;
+}
+
+.empty-state--large .empty-state__icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+}
+
+.empty-state--large .empty-state__title {
+  font-size: var(--font-size-title);
+  margin-bottom: 1.25rem;
+}
+
+.empty-state--large .empty-state__message {
+  font-size: var(--font-size-subtitle);
+  max-width: 600px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media screen and (max-width: 768px) {
+  .empty-state {
+    padding: 2rem 1.5rem;
+    min-height: 150px;
+  }
+
+  .empty-state__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .empty-state__title {
+    font-size: var(--font-size-subtitle);
+  }
+
+  .empty-state__message {
+    font-size: var(--font-size-small);
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .empty-state__icon {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .empty-state:hover .empty-state__icon {
+    transform: none;
+  }
+}
+

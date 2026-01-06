@@ -1,0 +1,165 @@
+/**
+ * Form Component - Professional BEM Architecture
+ * Code-Based, DRY, KISS, Reusable, OOP, SOLID
+ * 
+ * Architecture:
+ * - DRY: Uses CSS variables and utilities from core system
+ * 
+ * Usage:
+ * @import '@/assets/css/components/form';
+ * 
+ * <form class="form">
+ *   <div class="form__group">
+ *     <label class="form__label">Label</label>
+ *     <input class="input" />
+ *   </div>
+ *   <div class="form__actions">
+ *     <button class="btn btn--primary">Submit</button>
+ *   </div>
+ * </form>
+ */
+
+/* Import core system for constants and variables */
+@import '../core/index.css';
+
+/* ============================================
+   Block: Form
+   ============================================ */
+.form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-card-padding);
+}
+
+/* ============================================
+   Element: Form Group
+   ============================================ */
+.form__group {
+  margin-bottom: 1.5rem;
+}
+
+.form__group:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Element: Form Label
+   ============================================ */
+.form__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-heading);
+  font-family: var(--font-main);
+}
+
+.form__label--required::after {
+  content: ' *';
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+/* ============================================
+   Element: Form Actions
+   ============================================ */
+.form__actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.form__actions--center {
+  justify-content: center;
+}
+
+.form__actions--end {
+  justify-content: flex-end;
+}
+
+.form__actions--space-between {
+  justify-content: space-between;
+}
+
+/* ============================================
+   Element: Form Row
+   ============================================ */
+.form__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   Element: Form Help Text
+   ============================================ */
+.form__help {
+  display: block;
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Element: Form Error
+   ============================================ */
+.form__error {
+  display: block;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-small);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  font-family: var(--font-main);
+}
+
+.form__error--hidden {
+  display: none;
+}
+
+/* ============================================
+   Element: Form Success
+   ============================================ */
+.form__success {
+  display: block;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-small);
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  font-family: var(--font-main);
+}
+
+.form__success--hidden {
+  display: none;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media screen and (max-width: 768px) {
+  .form {
+    padding: var(--spacing-card-padding-mobile);
+  }
+
+  .form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .form__actions {
+    flex-direction: column;
+  }
+
+  .form__actions .btn {
+    width: 100%;
+  }
+}
+

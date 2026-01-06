@@ -1,43 +1,55 @@
 /**
- * Lazy Section Styles
- * Performance optimized lazy loading
+ * Lazy Section - Professional, Code-Based Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - lazy loading styles only
+ * - Reusable: Uses core components and utilities
+ * 
+ * Usage:
+ * @import '@/assets/css/lazy-section.css';
  */
+
+/* Import core system for constants and variables */
+@import './core/index.css';
 
 .lazy-section-placeholder {
   min-height: 300px;
-  padding: var(--section-padding);
-  margin-bottom: var(--section-margin);
-  opacity: 0.3;
-  transition: opacity var(--transition-base);
+  padding: var(--spacing-section-padding);
+  margin-bottom: var(--spacing-section-margin);
+  opacity: var(--opacity-muted);
+  transition: var(--transition-opacity);
 }
 
 .lazy-section-skeleton {
   width: 100%;
-  max-width: var(--card-max-width);
+  max-width: var(--spacing-card-max-width);
   margin: 0 auto;
 }
 
 .lazy-section-skeleton-header {
   height: 40px;
   width: 200px;
-  background: var(--bg-light);
-  border-radius: var(--content-radius);
-  margin-bottom: 2rem;
-  animation: skeletonPulse 1.5s ease-in-out infinite;
+  background: var(--color-bg-lighter);
+  border-radius: var(--component-radius-md);
+  margin-bottom: var(--spacing-xl);
+  animation: skeletonPulse var(--duration-base) var(--easing-ease-in-out) infinite;
 }
 
 .lazy-section-skeleton-content {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .lazy-section-skeleton-line {
   height: 20px;
   width: 100%;
-  background: var(--bg-light);
-  border-radius: var(--content-radius);
-  animation: skeletonPulse 1.5s ease-in-out infinite;
+  background: var(--color-bg-lighter);
+  border-radius: var(--component-radius-md);
+  animation: skeletonPulse var(--duration-base) var(--easing-ease-in-out) infinite;
 }
 
 .lazy-section-skeleton-line.short {
@@ -49,12 +61,12 @@
     opacity: 0.6;
   }
   50% {
-    opacity: 0.3;
+    opacity: var(--opacity-subtle);
   }
 }
 
 .lazy-section {
-  transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+  transition: var(--transition-all);
   opacity: 0;
   transform: translateY(20px);
 }
@@ -64,13 +76,13 @@
   transform: translateY(0);
 }
 
-/* Reduced motion */
+/* Reduced motion - Uses core system */
 @media (prefers-reduced-motion: reduce) {
   .lazy-section,
   .lazy-section-skeleton-header,
   .lazy-section-skeleton-line {
-    animation: none;
-    transition: none;
+    animation: none !important;
+    transition: none !important;
   }
 
   .lazy-section {

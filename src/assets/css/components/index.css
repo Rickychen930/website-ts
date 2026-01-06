@@ -1,0 +1,29 @@
+/**
+ * Components Index - Reusable Component Styles
+ * Professional, Code-Based, BEM Architecture
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - each component has one purpose
+ * - Reusable: Components can be used across the application
+ * 
+ * Usage:
+ * @import '@/assets/css/components';
+ * 
+ * Import order matters - base components first, then specific ones
+ * Note: Core system is already imported in each component file
+ */
+
+/* Base Components - All use core system */
+@import './_card.css';
+@import './_button.css';
+@import './_input.css';
+@import './_form.css';
+@import './_empty-state.css';
+@import './_loading.css';
+
+/* Refactored Examples (for reference) */
+/* @import './_contact-form-refactored.css'; */
+

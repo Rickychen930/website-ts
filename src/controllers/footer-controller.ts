@@ -6,28 +6,33 @@
  * - Single Responsibility Principle (SRP): Handles footer business logic
  * - Dependency Inversion Principle (DIP): Depends on abstractions (Model)
  * - Open/Closed Principle (OCP): Extensible without modification
- * - DRY: Centralized business logic
+ * - DRY: Centralized business logic, extends BaseController
+ * - OOP: Extends BaseController for common functionality
  */
 
+import { ErrorMessages } from "../constants";
 import {
-  IFooterData,
   FooterModel,
+  IFooterData,
   IFooterLink,
   IFooterSocialLink,
-  IFooterTechBadge,
   IFooterStat,
+  IFooterTechBadge,
 } from "../models/footer-model";
 import { UserProfile } from "../types/user";
-import { logWarn, logError } from "../utils/logger";
+import { logError, logWarn } from "../utils/logger";
+import { BaseController } from "./base-controller";
 
 /**
  * Footer Controller
  * Orchestrates footer-related business logic
+ * Follows OOP principles - extends BaseController
  */
-export class FooterController {
+export class FooterController extends BaseController {
   private readonly model: typeof FooterModel;
 
   constructor(model: typeof FooterModel = FooterModel) {
+    super();
     this.model = model;
   }
 
@@ -44,11 +49,29 @@ export class FooterController {
     const validation = this.model.validate(data);
 
     if (!validation.isValid) {
-      logWarn("Footer data validation failed", { errors: validation.errors }, "FooterController");
+      logWarn(ErrorMessages.INVALID_INPUT, { errors: validation.errors }, "FooterController");
       return null;
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getFooterData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return this.model.validate(data as IFooterData).isValid;
   }
 
   /**
@@ -120,7 +143,7 @@ export class FooterController {
       // Default - navigate
       window.location.href = link.href;
     } catch (error) {
-      logError("Failed to handle link click", error, "FooterController");
+      logError(ErrorMessages.GENERIC, error, "FooterController");
     }
   }
 

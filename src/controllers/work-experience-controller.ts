@@ -3,16 +3,19 @@
  * Handles business logic for Work Experience section
  * Follows Single Responsibility Principle (SRP)
  * Follows Dependency Inversion Principle (DIP)
+ * Extends BaseController for common functionality (DRY, OOP)
  */
 
 import { UserProfile } from "../types/user";
 import { WorkExperienceModel, IWorkExperienceData, IWorkExperienceItem } from "../models/work-experience-model";
+import { BaseController } from "./base-controller";
 
 /**
  * WorkExperienceController
  * Orchestrates business logic for Work Experience section
+ * Follows OOP principles - extends BaseController
  */
-export class WorkExperienceController {
+export class WorkExperienceController extends BaseController {
   /**
    * Get work experience data from profile
    * Follows Single Responsibility Principle (SRP)
@@ -25,6 +28,24 @@ export class WorkExperienceController {
     }
 
     return data;
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param profile - User profile
+   * @returns Extracted data or null
+   */
+  protected getData(profile: UserProfile): unknown | null {
+    return this.getWorkExperienceData(profile);
+  }
+
+  /**
+   * Implementation of abstract method from BaseController
+   * @param data - Data to validate
+   * @returns Whether data is valid
+   */
+  protected isValid(data: unknown): boolean {
+    return WorkExperienceModel.isValid(data as IWorkExperienceData);
   }
 
   /**
@@ -75,12 +96,9 @@ export class WorkExperienceController {
 
   /**
    * Check if Work Experience section should be displayed
-   * Follows Single Responsibility Principle (SRP)
+   * Inherited from BaseController - follows DRY principle
    */
-  shouldDisplay(profile: UserProfile): boolean {
-    const data = this.getWorkExperienceData(profile);
-    return data !== null && WorkExperienceModel.isValid(data);
-  }
+  // shouldDisplay is inherited from BaseController
 
   /**
    * Get total work experience count
