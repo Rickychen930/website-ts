@@ -627,8 +627,8 @@
    ============================================ */
 @media screen and (max-width: 768px) {
   .contents-section {
-    gap: 5rem;
-    padding: 7rem clamp(1.5rem, 3vw, 2.5rem) 5rem;
+    gap: 4rem;
+    padding: 6rem clamp(1.25rem, 3vw, 2rem) 4rem;
   }
 
   .section-block {
@@ -636,94 +636,19 @@
   }
 
   .section-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
     padding: 1rem 0;
   }
 
   .section-title {
-    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-size: clamp(1.875rem, 6vw, 2.5rem);
     margin-bottom: 1.25rem;
+    line-height: 1.2;
   }
 
   .section-title-underline {
-    width: 90px;
+    width: 80px;
     height: 4px;
-  }
-
-  .section-header:hover .section-title-underline {
-    width: 110px;
-  }
-
-  .main-page-loading,
-  .main-page-error {
-    min-height: 65vh;
-    padding: 2.5rem 1.5rem;
-    gap: 2.5rem;
-  }
-
-  .loading-spinner {
-    width: 80px;
-    height: 80px;
-  }
-
-  .loading-text {
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-  }
-
-  .error-content {
-    padding: 3.5rem 2.5rem;
-  }
-
-  .error-icon {
-    font-size: 4rem;
-    margin-bottom: 2rem;
-  }
-
-  .error-title {
-    font-size: 1.875rem;
-  }
-
-  .error-message {
-    font-size: 1rem;
-  }
-
-  .error-retry-button {
-    padding: 1rem 2.5rem;
-    font-size: 0.8125rem;
-    width: 100%;
-    max-width: 320px;
-  }
-
-  /* Footer styles moved to footer-section.css */
-}
-
-/* ============================================
-   Responsive Design - Small Mobile (≤ 480px)
-   ============================================ */
-@media screen and (max-width: 480px) {
-  .contents-section {
-    gap: 4.5rem;
-    padding: 6rem 1.5rem 4rem;
-  }
-
-  .section-block {
-    scroll-margin-top: 4.5rem;
-  }
-
-  .section-header {
-    margin-bottom: 3rem;
-    padding: 0.75rem 0;
-  }
-
-  .section-title {
-    font-size: clamp(1.75rem, 7vw, 2.25rem);
-    margin-bottom: 1rem;
-  }
-
-  .section-title-underline {
-    width: 80px;
-    height: 3px;
   }
 
   .section-header:hover .section-title-underline {
@@ -743,12 +668,13 @@
   }
 
   .loading-text {
-    font-size: 0.6875rem;
-    letter-spacing: 1.5px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
   }
 
   .error-content {
     padding: 3rem 2rem;
+    border-radius: 24px;
   }
 
   .error-icon {
@@ -757,24 +683,109 @@
   }
 
   .error-title {
-    font-size: 1.625rem;
+    font-size: 1.75rem;
+    line-height: 1.3;
   }
 
   .error-message {
     font-size: 0.9375rem;
-    margin-bottom: 2rem;
-  }
-
-  .error-retry-info {
-    font-size: 0.9375rem;
-    margin-bottom: 2rem;
+    line-height: 1.6;
   }
 
   .error-retry-button {
-    padding: 0.9375rem 2rem;
+    padding: 1rem 2rem;
+    font-size: 0.8125rem;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px; /* Touch target size */
+  }
+
+  /* Footer styles moved to footer-section.css */
+}
+
+/* ============================================
+   Responsive Design - Small Mobile (≤ 480px)
+   ============================================ */
+@media screen and (max-width: 480px) {
+  .contents-section {
+    gap: 3.5rem;
+    padding: 5rem 1.25rem 3.5rem;
+  }
+
+  .section-block {
+    scroll-margin-top: 4rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+    padding: 0.75rem 0;
+  }
+
+  .section-title {
+    font-size: clamp(1.625rem, 7vw, 2rem);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  .section-title-underline {
+    width: 70px;
+    height: 3px;
+  }
+
+  .section-header:hover .section-title-underline {
+    width: 90px;
+  }
+
+  .main-page-loading,
+  .main-page-error {
+    min-height: 55vh;
+    padding: 1.75rem 1rem;
+    gap: 1.75rem;
+  }
+
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+  }
+
+  .loading-text {
+    font-size: 0.6875rem;
+    letter-spacing: 1.5px;
+  }
+
+  .error-content {
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .error-title {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+
+  .error-message {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-retry-info {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-retry-button {
+    padding: 0.9375rem 1.75rem;
     font-size: 0.75rem;
     width: 100%;
-    max-width: 300px;
+    max-width: 100%;
+    min-height: 44px; /* Touch target size */
   }
 
   /* Footer styles moved to footer-section.css */

@@ -11,6 +11,9 @@ type ImageProps = {
   lazy?: boolean; // Lazy loading support
   loading?: "lazy" | "eager"; // Native lazy loading
   decoding?: "async" | "auto" | "sync"; // Image decoding
+  srcSet?: string; // Responsive images
+  sizes?: string; // Sizes attribute for responsive images
+  fetchPriority?: "high" | "low" | "auto"; // Priority hint
 };
 
 type ImageState = {
@@ -42,6 +45,7 @@ class Image extends Component<ImageProps, ImageState> {
     lazy: true,
     loading: "lazy",
     decoding: "async",
+    fetchPriority: "auto",
   };
 
   private imageRef: HTMLImageElement | null = null;
@@ -191,6 +195,9 @@ class Image extends Component<ImageProps, ImageState> {
         style={combinedStyle}
         loading={loading}
         decoding={decoding}
+        srcSet={this.props.srcSet}
+        sizes={this.props.sizes}
+        fetchPriority={this.props.fetchPriority}
         onLoad={this.handleLoad}
         onError={this.handleError}
         aria-label={alt}

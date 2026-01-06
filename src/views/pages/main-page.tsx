@@ -21,6 +21,7 @@ import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
 import LoadingComponent from "../components/loading-component";
 import ErrorComponent from "../components/error-component";
 import MainPageFooterComponent from "../components/main-page-footer-component";
+import BackToTopButton from "../components/back-to-top-button";
 
 /**
  * MainPageState - Extended state interface
@@ -197,11 +198,17 @@ class MainPage extends BasePage<{}, MainPageState> {
   }
 
   /**
-   * Render loading state using LoadingComponent
+   * Render loading state using LoadingComponent with skeleton
    * Component-Based: Delegates to specialized component
    */
   protected renderLoading(): ReactNode {
-    return <LoadingComponent message="Loading profile..." />;
+    return (
+      <LoadingComponent 
+        message="Loading profile..." 
+        useSkeleton={true}
+        skeletonVariant="card"
+      />
+    );
   }
 
   /**
@@ -329,6 +336,7 @@ class MainPage extends BasePage<{}, MainPageState> {
     return (
       <div className="main-page">
         {this.renderSections()}
+        <BackToTopButton />
       </div>
     );
   }

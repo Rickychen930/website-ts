@@ -1,0 +1,237 @@
+/**
+ * Back to Top Button - Professional, Luxury Design
+ * Responsive, Accessible, Performance Optimized
+ */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+  --back-to-top-size: 56px;
+  --back-to-top-size-mobile: 48px;
+  --back-to-top-z-index: 9998;
+  --back-to-top-primary: var(--accent, #667eea);
+  --back-to-top-secondary: var(--accent-alt, #764ba2);
+  --back-to-top-tertiary: var(--accent-tertiary, #f093fb);
+}
+
+/* ============================================
+   Button Container
+   ============================================ */
+.back-to-top-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: var(--back-to-top-size);
+  height: var(--back-to-top-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background: linear-gradient(
+    135deg,
+    var(--back-to-top-primary) 0%,
+    var(--back-to-top-secondary) 50%,
+    var(--back-to-top-tertiary) 100%
+  );
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 16px rgba(102, 126, 234, 0.4),
+    0 8px 32px rgba(118, 75, 162, 0.3),
+    0 0 0 0 rgba(102, 126, 234, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: var(--back-to-top-z-index);
+  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
+  outline: none;
+  will-change: transform, opacity, box-shadow;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.back-to-top-button.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  animation: backToTopFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.back-to-top-button:not(.visible) {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+}
+
+@keyframes backToTopFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   Button Hover Effects
+   ============================================ */
+.back-to-top-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 
+    0 8px 24px rgba(102, 126, 234, 0.5),
+    0 16px 48px rgba(118, 75, 162, 0.4),
+    0 0 0 4px rgba(102, 126, 234, 0.3);
+  background: linear-gradient(
+    135deg,
+    var(--back-to-top-secondary) 0%,
+    var(--back-to-top-tertiary) 50%,
+    var(--back-to-top-primary) 100%
+  );
+}
+
+.back-to-top-button:active {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 4px 12px rgba(102, 126, 234, 0.4),
+    0 8px 24px rgba(118, 75, 162, 0.3);
+}
+
+/* ============================================
+   Focus States (Accessibility)
+   ============================================ */
+.back-to-top-button:focus-visible {
+  outline: 3px solid var(--back-to-top-primary);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+/* ============================================
+   Icon & Text
+   ============================================ */
+.back-to-top-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.back-to-top-button:hover .back-to-top-icon {
+  transform: translateY(-2px);
+}
+
+.back-to-top-text {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.back-to-top-button:hover .back-to-top-text {
+  opacity: 1;
+}
+
+/* ============================================
+   Responsive Design - Tablet
+   ============================================ */
+@media screen and (max-width: 992px) {
+  .back-to-top-button {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: var(--back-to-top-size-mobile);
+    height: var(--back-to-top-size-mobile);
+  }
+
+  .back-to-top-icon {
+    font-size: 1.25rem;
+  }
+
+  .back-to-top-text {
+    font-size: 0.5625rem;
+  }
+}
+
+/* ============================================
+   Responsive Design - Mobile
+   ============================================ */
+@media screen and (max-width: 768px) {
+  .back-to-top-button {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: var(--back-to-top-size-mobile);
+    height: var(--back-to-top-size-mobile);
+  }
+
+  .back-to-top-icon {
+    font-size: 1.125rem;
+  }
+
+  .back-to-top-text {
+    font-size: 0.5rem;
+  }
+}
+
+/* ============================================
+   Responsive Design - Small Mobile
+   ============================================ */
+@media screen and (max-width: 480px) {
+  .back-to-top-button {
+    bottom: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  .back-to-top-icon {
+    font-size: 1rem;
+  }
+
+  .back-to-top-text {
+    font-size: 0.4375rem;
+  }
+}
+
+/* ============================================
+   Landscape Orientation
+   ============================================ */
+@media screen and (orientation: landscape) and (max-width: 768px) {
+  .back-to-top-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top-button {
+    transition: opacity 0.2s ease;
+    animation: none;
+  }
+
+  .back-to-top-button:hover {
+    transform: none;
+  }
+
+  .back-to-top-icon {
+    transition: none;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .back-to-top-button {
+    display: none !important;
+  }
+}
+

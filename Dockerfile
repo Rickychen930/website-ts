@@ -37,6 +37,9 @@ COPY --from=builder /app/backend/dist ./backend/dist
 # Copy PM2 config
 COPY backend/ecosystem.config.js ./backend/
 
+# Copy React build (if exists, for serving static files)
+COPY build ./build
+
 # Create logs directory
 RUN mkdir -p /app/backend/logs
 

@@ -42,14 +42,27 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
    * Render error icon
    */
   private renderIcon(): ReactNode {
-    return <div className="error-icon" aria-hidden="true">⚠️</div>;
+    return (
+      <div 
+        className="error-icon" 
+        aria-hidden="true"
+        role="img"
+        aria-label="Error icon"
+      >
+        ⚠️
+      </div>
+    );
   }
 
   /**
    * Render error title
    */
   private renderTitle(): ReactNode {
-    return <h2 className="error-title">Unable to Load Profile</h2>;
+    return (
+      <h2 className="error-title" id="error-title">
+        Unable to Load Profile
+      </h2>
+    );
   }
 
   /**
@@ -58,7 +71,7 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
   private renderMessage(): ReactNode {
     const { error } = this.props;
     return (
-      <p className="error-message">
+      <p className="error-message" id="error-message" role="alert">
         {error || "An unexpected error occurred"}
       </p>
     );
@@ -94,6 +107,8 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
         className="error-retry-button"
         onClick={this.handleRetry}
         type="button"
+        aria-label="Retry loading profile"
+        aria-describedby="error-message"
       >
         Try Again
       </button>
@@ -108,7 +123,7 @@ export class ErrorComponent extends PureComponent<ErrorComponentProps> {
     const containerClass = `main-page-error ${className || ""}`.trim();
 
     return (
-      <div className={containerClass}>
+      <div className={containerClass} role="alert" aria-live="polite">
         <div className="error-content">
           {this.renderIcon()}
           {this.renderTitle()}

@@ -124,6 +124,31 @@
   color: var(--white);
 }
 
+.error-boundary-button-tertiary {
+  background: var(--bg-lighter);
+  color: var(--text-heading);
+  border: 2px solid var(--border-default);
+  box-shadow: none;
+}
+
+.error-boundary-button-tertiary:hover {
+  background: var(--bg-light);
+  border-color: var(--border-medium);
+}
+
+.error-boundary-help-text {
+  color: var(--text-subtle);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.error-boundary-stack-trace {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+
 /* Responsive Error Boundary */
 @media screen and (width <= 768px) {
   .error-boundary-content {
