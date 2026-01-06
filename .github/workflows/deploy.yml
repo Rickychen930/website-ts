@@ -151,7 +151,7 @@ jobs:
           port: 22
           script: |
             cd /root/backend
-            npm ci --only=production --legacy-peer-deps || npm install --only=production --legacy-peer-deps
+            npm ci --omit=dev --ignore-scripts --legacy-peer-deps || npm install --omit=dev --ignore-scripts --legacy-peer-deps
 
       - name: Verify PM2 ecosystem config
         uses: appleboy/ssh-action@v1.0.3
