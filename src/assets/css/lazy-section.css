@@ -1,0 +1,81 @@
+/**
+ * Lazy Section Styles
+ * Performance optimized lazy loading
+ */
+
+.lazy-section-placeholder {
+  min-height: 300px;
+  padding: var(--section-padding);
+  margin-bottom: var(--section-margin);
+  opacity: 0.3;
+  transition: opacity var(--transition-base);
+}
+
+.lazy-section-skeleton {
+  width: 100%;
+  max-width: var(--card-max-width);
+  margin: 0 auto;
+}
+
+.lazy-section-skeleton-header {
+  height: 40px;
+  width: 200px;
+  background: var(--bg-light);
+  border-radius: var(--content-radius);
+  margin-bottom: 2rem;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.lazy-section-skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lazy-section-skeleton-line {
+  height: 20px;
+  width: 100%;
+  background: var(--bg-light);
+  border-radius: var(--content-radius);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.lazy-section-skeleton-line.short {
+  width: 60%;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.lazy-section {
+  transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.lazy-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .lazy-section,
+  .lazy-section-skeleton-header,
+  .lazy-section-skeleton-line {
+    animation: none;
+    transition: none;
+  }
+
+  .lazy-section {
+    opacity: 1;
+    transform: none;
+  }
+}
+

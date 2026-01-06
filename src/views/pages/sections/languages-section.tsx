@@ -227,7 +227,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Handle initialization errors
     if (error) {
       return (
-        <Card id="languages-section" title="Languages">
+        <Card id="languages-section">
           {this.renderErrorState(error)}
         </Card>
       );
@@ -236,7 +236,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Handle empty data
     if (!data || data.length === 0) {
       return (
-        <Card id="languages-section" title="Languages">
+        <Card id="languages-section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -245,7 +245,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Wait for initialization
     if (!isInitialized) {
       return (
-        <Card id="languages-section" title="Languages">
+        <Card id="languages-section">
           <div className="language-loading-state" role="status" aria-live="polite">
             <div className="language-loading-spinner" aria-hidden="true"></div>
             <p className="language-loading-text">Loading languages...</p>
@@ -256,7 +256,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
 
     // Render main content
     return (
-      <Card id="languages-section" title="Languages">
+      <Card id="languages-section">
         {this.renderLanguagesGrid()}
       </Card>
     );

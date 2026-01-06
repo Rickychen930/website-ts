@@ -495,14 +495,14 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Edge case: No data
     if (!this.validateData()) {
       return (
-        <Card id="academic-section" title="Academic Background" variant="default">
+        <Card id="academic-section" variant="default">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="academic-section" title="Academic Background" variant="default">
+      <Card id="academic-section" variant="default">
         {this.renderItems()}
       </Card>
     );

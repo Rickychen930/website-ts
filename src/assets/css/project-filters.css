@@ -1,0 +1,133 @@
+/**
+ * Project Filters Styles
+ * Professional filter and sort interface
+ */
+
+.project-filters {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-light);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+}
+
+.project-filters-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.project-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.project-filter-label {
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--text-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-filter-button {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--btn-radius);
+  color: var(--text-main);
+  font-size: var(--font-size-small);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: var(--font-main);
+}
+
+.project-filter-button:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-filter-button.active {
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-filter-button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.project-filter-select {
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--btn-radius);
+  color: var(--text-main);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: var(--font-main);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+.project-filter-select:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-medium);
+}
+
+.project-filter-select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .project-filters-row {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .project-filter-group {
+    flex: 1;
+  }
+
+  .project-filter-group:last-child {
+    flex: 0 0 200px;
+  }
+}
+
+/* Dark mode */
+[data-theme="dark"] .project-filters {
+  background: var(--bg-lighter);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .project-filter-button {
+    transition: none;
+  }
+
+  .project-filter-button:hover {
+    transform: none;
+  }
+}
+

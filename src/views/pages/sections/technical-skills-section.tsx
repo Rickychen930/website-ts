@@ -231,7 +231,7 @@ class TechnicalSkillsSection extends Component<
     // Edge case: Handle empty or invalid data
     if (!data || !Array.isArray(data) || data.length === 0) {
       return (
-        <Card id="technical-skills-section" title="Technical Skills">
+        <Card id="technical-skills-section" ariaLabel="Technical Skills Section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -240,7 +240,7 @@ class TechnicalSkillsSection extends Component<
     // Edge case: No enriched categories after processing
     if (!enrichedCategories || enrichedCategories.length === 0) {
       return (
-        <Card id="technical-skills-section" title="Technical Skills">
+        <Card id="technical-skills-section" ariaLabel="Technical Skills Section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -249,7 +249,6 @@ class TechnicalSkillsSection extends Component<
     return (
       <Card
         id="technical-skills-section"
-        title="Technical Skills"
         ariaLabel="Technical Skills Section"
       >
         <div className="technical-skills-container">

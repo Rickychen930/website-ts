@@ -24,7 +24,9 @@ import { Card } from "../../components/common";
 import { ProjectGrid } from "../../components/projects";
 import { ProjectController } from "../../../controllers/project-controller";
 import { IProject } from "../../../models/project-model";
+import ProjectFilters from "../../../components/projects/project-filters";
 import "../../../assets/css/projects-section.css";
+import "../../../assets/css/project-filters.css";
 
 /**
  * Legacy Project Item Type (for backward compatibility)
@@ -52,6 +54,7 @@ type ProjectsState = {
   isInitialized: boolean;
   error: string | null;
   projects: IProject[];
+  filteredProjects: IProject[];
 };
 
 /**
@@ -79,6 +82,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       isInitialized: false,
       error: null,
       projects: [],
+      filteredProjects: [],
     };
   }
 
@@ -113,6 +117,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         visibleProjects: new Set(),
         isInitialized: false,
         error: null,
+        filteredProjects: [],
       });
 
       if (this.isMounted) {
@@ -158,12 +163,17 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       // Sort projects (featured first, then by date)
       projects = this.controller.getAllProjects(projects);
 
-      this.setState({ projects, isInitialized: true });
+      this.setState({ 
+        projects, 
+        filteredProjects: projects,
+        isInitialized: true 
+      });
     } catch (error) {
       console.error("Error processing project data:", error);
       this.setState({
         error: error instanceof Error ? error.message : "Failed to process projects",
         projects: [],
+        filteredProjects: [],
         isInitialized: true,
       });
     }
@@ -293,6 +303,13 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
   };
 
   /**
+   * Handle filter change
+   */
+  private handleFilterChange = (filteredProjects: IProject[]): void => {
+    this.setState({ filteredProjects });
+  };
+
+  /**
    * Render Empty State
    * User-friendly empty state
    */
@@ -318,7 +335,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     // Edge case: Empty data
     if (!projects || projects.length === 0) {
       return (
-        <Card id="projects-section" title="Projects">
+        <Card id="projects-section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -331,7 +348,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         console.error("Projects section error:", error);
       }
       return (
-        <Card id="projects-section" title="Projects">
+        <Card id="projects-section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -340,8 +357,12 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     return (
       <Card id="projects-section" title="Projects">
         <div className="projects-section-container">
-          <ProjectGrid
+          <ProjectFilters
             projects={projects}
+            onFilterChange={this.handleFilterChange}
+          />
+          <ProjectGrid
+            projects={this.state.filteredProjects.length > 0 ? this.state.filteredProjects : projects}
             visibleProjects={this.state.visibleProjects}
             onVisibilityChange={this.handleVisibilityChange}
             onLinkClick={this.handleLinkClick}

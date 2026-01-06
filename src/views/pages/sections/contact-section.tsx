@@ -30,6 +30,7 @@ import { Card } from "../../components/common";
 import { ContactController } from "../../../controllers/contact-controller";
 import { IContact } from "../../../models/contact-model";
 import { ContactGrid } from "../../components/contact";
+import ContactForm from "../../../components/contact/contact-form";
 import "../../../assets/css/contact-section.css";
 
 /**
@@ -265,7 +266,7 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
     // Handle validation errors
     if (!validation.isValid && validation.error) {
       return (
-        <Card id="contact-section" title="Contact">
+        <Card id="contact-section">
           {this.renderErrorState(validation.error)}
         </Card>
       );
@@ -274,7 +275,7 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
     // Handle empty data
     if (!data || data.length === 0) {
       return (
-        <Card id="contact-section" title="Contact">
+        <Card id="contact-section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -282,7 +283,13 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
 
     return (
       <Card id="contact-section" title="Contact">
-        {this.renderContactGrid()}
+        <div className="contact-section-content">
+          {this.renderContactGrid()}
+          <div className="contact-form-wrapper">
+            <h3 className="contact-form-title">Send me a message</h3>
+            <ContactForm />
+          </div>
+        </div>
       </Card>
     );
   }

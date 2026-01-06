@@ -275,7 +275,7 @@ class CertificationSection extends Component<
     // Handle validation errors
     if (!validation.isValid && validation.error) {
       return (
-        <Card id="certification-section" title="Certifications">
+        <Card id="certification-section">
           {this.renderErrorState(validation.error)}
         </Card>
       );
@@ -284,14 +284,14 @@ class CertificationSection extends Component<
     // Handle empty data
     if (!data || data.length === 0) {
       return (
-        <Card id="certification-section" title="Certifications">
+        <Card id="certification-section">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="certification-section" title="Certifications">
+      <Card id="certification-section">
         {this.renderCertificationGrid()}
       </Card>
     );

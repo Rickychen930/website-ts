@@ -510,7 +510,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Handle initialization errors
     if (error) {
       return (
-        <Card id="honors-section" title="Honors & Achievements">
+        <Card id="honors-section">
           {this.renderErrorState(error)}
         </Card>
       );
@@ -519,7 +519,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Handle validation errors
     if (!validation.isValid) {
       return (
-        <Card id="honors-section" title="Honors & Achievements">
+        <Card id="honors-section">
           {validation.error
             ? this.renderErrorState(validation.error)
             : this.renderEmptyState()}
@@ -531,14 +531,14 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     const { data } = this.props;
     if (!data || data.length === 0) {
       return (
-        <Card id="honors-section" title="Honors & Achievements">
+        <Card id="honors-section">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="honors-section" title="Honors & Achievements">
+      <Card id="honors-section">
         {this.renderItems()}
       </Card>
     );

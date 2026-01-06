@@ -28,7 +28,7 @@
   /* -webkit-backdrop-filter: blur(0px); */
 }
 
-/* Ultra Premium Animated Gradient Background - Advanced Effects */
+/* Optimized Background - Reduced animations untuk performance */
 .main-page::before {
   content: "";
   position: fixed;
@@ -37,44 +37,26 @@
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 25% 35%, rgba(102, 126, 234, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 75% 65%, rgba(118, 75, 162, 0.1) 0%, transparent 45%),
-    radial-gradient(circle at 50% 20%, rgba(240, 147, 251, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 20% 80%, rgba(79, 172, 254, 0.06) 0%, transparent 35%);
-  animation: backgroundShift 25s ease-in-out infinite, backgroundPulse 15s ease-in-out infinite;
+    radial-gradient(circle at 25% 35%, rgba(102, 126, 234, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 75% 65%, rgba(118, 75, 162, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 50% 20%, rgba(240, 147, 251, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(79, 172, 254, 0.04) 0%, transparent 35%);
+  /* Reduced animation untuk better performance */
+  animation: backgroundShift 40s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
-  filter: blur(60px);
-  will-change: transform, opacity;
+  filter: blur(80px);
+  /* Remove will-change untuk better performance */
 }
 
 @keyframes backgroundShift {
   0%, 100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+    transform: translate(0, 0) scale(1);
     opacity: 1;
   }
-  25% {
-    transform: translate(8%, 6%) rotate(3deg) scale(1.05);
-    opacity: 0.95;
-  }
   50% {
-    transform: translate(-6%, -8%) rotate(-3deg) scale(0.98);
-    opacity: 0.9;
-  }
-  75% {
-    transform: translate(4%, -4%) rotate(2deg) scale(1.02);
+    transform: translate(5%, 5%) scale(1.02);
     opacity: 0.95;
-  }
-}
-
-@keyframes backgroundPulse {
-  0%, 100% {
-    opacity: 1;
-    filter: blur(60px) brightness(1);
-  }
-  50% {
-    opacity: 0.85;
-    filter: blur(80px) brightness(1.1);
   }
 }
 
@@ -94,22 +76,13 @@
   background-size: 50px 50px, 50px 50px, 100px 100px, 100px 100px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.5;
-  animation: gridPulse 20s ease-in-out infinite;
+  opacity: 0.3;
+  /* Removed animation untuk better performance */
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
 }
 
-@keyframes gridPulse {
-  0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.02);
-  }
-}
+/* Removed gridPulse animation untuk better performance */
 
 /* ============================================
    Contents Section - Advanced Layout
@@ -144,35 +117,15 @@
   /* transform-style: preserve-3d; - disabled for performance */
 }
 
-.section-block.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Removed revealed animation - handled by lazy-section */
 
 /* 3D Hover Effect - Showcase Technical Skills - simplified for performance */
 .section-block:hover {
-  transform: translateY(-4px);
-  transition: transform 0.3s ease;
+  /* Simplified hover effect untuk better performance */
+  box-shadow: var(--shadow-card-hover);
 }
 
-.section-block:nth-child(1) { animation-delay: 0.1s; }
-.section-block:nth-child(2) { animation-delay: 0.2s; }
-.section-block:nth-child(3) { animation-delay: 0.3s; }
-.section-block:nth-child(4) { animation-delay: 0.4s; }
-.section-block:nth-child(5) { animation-delay: 0.5s; }
-.section-block:nth-child(6) { animation-delay: 0.6s; }
-.section-block:nth-child(7) { animation-delay: 0.7s; }
-.section-block:nth-child(8) { animation-delay: 0.8s; }
-.section-block:nth-child(9) { animation-delay: 0.9s; }
-.section-block:nth-child(10) { animation-delay: 1s; }
-.section-block:nth-child(n+11) { animation-delay: 1.1s; }
-
-@keyframes sectionReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* Removed animation delays - handled by lazy-section component */
 
 /* Ultra Premium Glassmorphism Effect - Advanced Visual Engineering */
 .section-block::before {
@@ -199,9 +152,7 @@
   /* backdrop-filter: blur(30px) saturate(180%); - disabled for performance */
   /* -webkit-backdrop-filter: blur(30px) saturate(180%); */
   opacity: 0;
-  transition: 
-    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--transition-base);
   z-index: -1;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 
@@ -211,41 +162,11 @@
 }
 
 .section-block:hover::before {
-  opacity: 1;
-  transform: scale(1);
-  box-shadow: 
-    0 0 0 1px rgba(102, 126, 234, 0.2),
-    0 0 40px rgba(102, 126, 234, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  opacity: 0.5;
+  /* Simplified hover effect */
 }
 
-/* Additional glow effect on hover */
-.section-block::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(102, 126, 234, 0.3) 0%,
-    rgba(118, 75, 162, 0.2) 50%,
-    transparent 70%
-  );
-  transform: translate(-50%, -50%);
-  transition: width 0.8s ease, height 0.8s ease, opacity 0.8s ease;
-  opacity: 0;
-  z-index: -2;
-  pointer-events: none;
-}
-
-.section-block:hover::after {
-  width: 120%;
-  height: 120%;
-  opacity: 0.6;
-}
+/* Removed ::after glow effect untuk better performance */
 
 /* ============================================
    Section Header - Advanced Typography with Gradient Text

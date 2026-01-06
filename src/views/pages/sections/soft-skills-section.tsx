@@ -166,7 +166,6 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
       return (
         <Card
           id="soft-skills-section"
-          title="Soft Skills"
           variant="default"
           ariaLabel="Soft skills section"
         >
@@ -182,7 +181,6 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
       return (
         <Card
           id="soft-skills-section"
-          title="Soft Skills"
           variant="default"
           ariaLabel="Soft skills section"
         >
@@ -196,7 +194,6 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
       return (
         <Card
           id="soft-skills-section"
-          title="Soft Skills"
           variant="default"
           ariaLabel="Soft skills section"
         >
@@ -215,7 +212,6 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
     return (
       <Card
         id="soft-skills-section"
-        title="Soft Skills"
         variant="default"
         ariaLabel="Soft skills section"
       >

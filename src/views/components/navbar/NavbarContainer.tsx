@@ -25,6 +25,7 @@ import { NavbarPositionCalculator } from "./utils/NavbarPositionCalculator";
 import { NavbarPortalManager } from "./utils/NavbarPortalManager";
 import { NavbarBodyScrollLock } from "./utils/NavbarBodyScrollLock";
 import { ThemeToggle } from "../../ui";
+import ShareButton from "../../../components/share/share-button";
 
 export interface NavbarContainerProps {
   items: string[];
@@ -307,6 +308,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
           {this.renderBrand()}
           {this.renderToggle()}
           {this.renderNavLinks()}
+          <ShareButton variant="icon" />
           <ThemeToggle />
         </div>
       </nav>

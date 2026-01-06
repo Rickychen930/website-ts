@@ -21,6 +21,9 @@ import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
 import { LoadingComponent, ErrorComponent, BackToTopButton, toast } from "../components/ui";
 import { MainPageFooterComponent } from "../components/footer";
 import { updateSEOFromProfile } from "../../utils/seo";
+import GlobalSearch from "../../components/search/global-search";
+import LazySection from "../../components/sections/lazy-section";
+import TableOfContents from "../../components/navigation/table-of-contents";
 
 /**
  * MainPageState - Extended state interface
@@ -248,26 +251,23 @@ class MainPage extends BasePage<{}, MainPageState> {
     return dataKey === "name" ? profile : data;
   }
 
-  /**
-   * Render section header
-   */
-  private renderSectionHeader(config: ISectionConfig): ReactNode {
-    const { id, title } = config;
-    if (!title) return null;
 
-    return (
-      <header className="section-header">
-        <h2 className="section-title" id={`${id}-title`}>
-          {title}
-        </h2>
-        <div className="section-title-underline" aria-hidden="true"></div>
-      </header>
-    );
+  /**
+   * Get section priority untuk lazy loading
+   * High priority sections (About, Contact) load immediately
+   */
+  private getSectionPriority(id: string): "high" | "normal" | "low" {
+    const highPriority = ["about", "contact"];
+    const lowPriority = ["languages", "soft-skills"];
+    
+    if (highPriority.includes(id)) return "high";
+    if (lowPriority.includes(id)) return "low";
+    return "normal";
   }
 
   /**
-   * Render all sections directly
-   * Component-Based: Renders sections without wrapper component
+   * Render all sections dengan lazy loading
+   * Performance optimized dengan progressive rendering
    */
   private renderSections(): ReactNode {
     const { profile } = this.state;
@@ -279,31 +279,24 @@ class MainPage extends BasePage<{}, MainPageState> {
     return (
       <div className="contents-section">
         {visibleSections.map((config) => {
-          const { component: SectionComponent, id } = config;
           const sectionData = this.getSectionData(config, profile);
+          
+          if (!sectionData) return null;
 
-          if (!SectionComponent || !sectionData) return null;
-
-          try {
-            return (
-              <section
-                key={id}
-                id={id}
-                className="section-block"
-                aria-label={config.title || "Content section"}
-              >
-                {this.renderSectionHeader(config)}
-                <div className="section-content" role="region" aria-labelledby={`${id}-title`}>
-                  <SectionComponent data={sectionData} />
-                </div>
-              </section>
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV === 'development') {
-              console.error(`Error rendering section ${id}:`, error);
-            }
-            return null;
-          }
+          return (
+            <LazySection
+              key={config.id}
+              config={config}
+              profile={profile}
+              priority={this.getSectionPriority(config.id)}
+              onVisible={(id) => {
+                // Optional: Track section visibility
+                if (process.env.NODE_ENV === "development") {
+                  console.log(`Section ${id} is now visible`);
+                }
+              }}
+            />
+          );
         })}
       </div>
     );
@@ -341,10 +334,25 @@ class MainPage extends BasePage<{}, MainPageState> {
       );
     }
 
+    const visibleSections = this.controller.getVisibleSections(profile);
+
     return (
       <div className="main-page">
         {this.renderSections()}
         <BackToTopButton />
+        <GlobalSearch 
+          profile={profile}
+          onResultClick={(result) => {
+            // Scroll handled in GlobalSearch component
+            toast.info(`Navigating to ${result.section}`, 2000);
+          }}
+        />
+        <TableOfContents
+          sections={visibleSections}
+          onSectionClick={(sectionId) => {
+            // Scroll handled in TableOfContents component
+          }}
+        />
       </div>
     );
   }
