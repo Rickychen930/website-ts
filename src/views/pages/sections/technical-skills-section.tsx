@@ -1,112 +1,8 @@
-import React, { Component, ReactNode, PureComponent } from "react";
-import Card from "../../components/card-component";
-import "../../../assets/css/technical-skills-section.css";
-
 /**
- * Skill Category Interface
- * Follows Interface Segregation Principle (ISP)
- */
-export type SkillCategory = {
-  category: string;
-  items: string[];
-};
-
-/**
- * Technical Skills Props Interface
- */
-type TechnicalSkillsProps = {
-  data: SkillCategory[];
-};
-
-/**
- * Technical Skills Section State Interface
- */
-type TechnicalSkillsState = {
-  isVisible: boolean;
-  hasAnimated: boolean;
-};
-
-/**
- * Skill Item Component
- * PureComponent for performance optimization (memoization)
- * Follows Single Responsibility Principle (SRP)
- */
-class SkillItem extends PureComponent<{ item: string; index: number }> {
-  public render(): ReactNode {
-    const { item, index } = this.props;
-    
-    return (
-      <li 
-        className="skill-item" 
-        style={{ animationDelay: `${index * 50}ms` }}
-        aria-label={`Skill: ${item}`}
-      >
-        <span className="skill-icon" aria-hidden="true">
-          <svg 
-            width="16" 
-            height="16" 
-            viewBox="0 0 16 16" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path 
-              d="M13.5 4.5L6 12L2.5 8.5" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-        <span className="skill-name">{item}</span>
-      </li>
-    );
-  }
-}
-
-/**
- * Skill Block Component
- * PureComponent for performance optimization
- * Follows Single Responsibility Principle (SRP)
- */
-class SkillBlock extends PureComponent<{ skill: SkillCategory; index: number }> {
-  public render(): ReactNode {
-    const { skill, index } = this.props;
-    
-    return (
-      <article 
-        className="skill-block" 
-        style={{ animationDelay: `${index * 100}ms` }}
-        aria-labelledby={`skill-category-${index}`}
-      >
-        <header className="skill-header">
-          <h3 
-            className="skill-category" 
-            id={`skill-category-${index}`}
-          >
-            {skill.category}
-          </h3>
-          <div className="skill-category-underline" aria-hidden="true"></div>
-        </header>
-        <ul className="skill-list">
-          {skill.items.map((item, itemIndex) => (
-            <SkillItem 
-              key={`${skill.category}-${item}-${itemIndex}`}
-              item={item} 
-              index={itemIndex}
-            />
-          ))}
-        </ul>
-      </article>
-    );
-  }
-}
-
-/**
- * Technical Skills Section Component
+ * Technical Skills Section - View Layer (MVC Pattern)
  * 
  * Features:
- * - Luxury & Elegant Design with smooth animations
+ * - Professional, Luxury, Clean Design
  * - Performance Optimized (PureComponent, memoization)
  * - Fully Responsive (mobile, tablet, desktop, landscape)
  * - Comprehensive Edge Case Handling
@@ -114,54 +10,127 @@ class SkillBlock extends PureComponent<{ skill: SkillCategory; index: number }> 
  * - Accessibility Support (ARIA labels, semantic HTML)
  * 
  * Principles Applied:
- * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
+ * - MVC: Separates View from Controller and Model
+ * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)
  * - DRY (Don't Repeat Yourself)
  * - OOP (Object-Oriented Programming)
- * - MVP (Minimum Viable Product)
- * - Keep It Simple
+ * - KISS (Keep It Simple)
+ * - Component-Based: Uses reusable components
  */
-class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSkillsState> {
+
+import React, { Component, ReactNode } from "react";
+import Card from "../../components/card-component";
+import { SkillCategoryCard } from "../../components/technical-skills";
+import { TechnicalSkillsController } from "../../../controllers/technical-skills-controller";
+import { UserProfile } from "../../../types/user";
+import "../../../assets/css/technical-skills-section.css";
+
+/**
+ * Technical Skills Props Interface
+ * Follows Interface Segregation Principle (ISP)
+ */
+type TechnicalSkillsProps = {
+  data: Array<{
+    category: string;
+    items: string[];
+  }>;
+};
+
+/**
+ * Technical Skills Section State Interface
+ */
+type TechnicalSkillsState = {
+  enrichedCategories: Array<{
+    category: string;
+    categoryIcon: string;
+    items: Array<{ name: string; icon: string }>;
+  }> | null;
+  statistics: {
+    totalSkills: number;
+    categoryCount: number;
+    averageSkillsPerCategory: number;
+  } | null;
+};
+
+/**
+ * Technical Skills Section Component
+ * 
+ * Architecture:
+ * - View Layer: This component (renders UI)
+ * - Controller Layer: TechnicalSkillsController (handles business logic)
+ * - Model Layer: TechnicalSkillsModel (handles data)
+ * 
+ * Follows MVC Pattern:
+ * - Separates concerns between View, Controller, and Model
+ * - View depends on Controller abstraction (Dependency Inversion)
+ * - Controller orchestrates business logic
+ * - Model handles data transformation and validation
+ */
+class TechnicalSkillsSection extends Component<
+  TechnicalSkillsProps,
+  TechnicalSkillsState
+> {
+  private readonly controller: TechnicalSkillsController;
+
   constructor(props: TechnicalSkillsProps) {
     super(props);
     this.state = {
-      isVisible: false,
-      hasAnimated: false,
+      enrichedCategories: null,
+      statistics: null,
     };
+    this.controller = new TechnicalSkillsController();
   }
 
   /**
-   * Handle props changes
-   * Re-validate data when props change
+   * Component lifecycle - Mount
+   * Initialize data when component mounts
+   */
+  componentDidMount(): void {
+    this.initializeData();
+  }
+
+  /**
+   * Component lifecycle - Update
+   * Re-initialize data when props change
    */
   componentDidUpdate(prevProps: TechnicalSkillsProps): void {
-    // Edge case: Handle data changes
     if (prevProps.data !== this.props.data) {
-      // Reset animation state when data changes
-      this.setState({
-        hasAnimated: false,
-      });
+      this.initializeData();
     }
   }
 
   /**
-   * Validate data structure
-   * Edge case handling - Enhanced validation
+   * Initialize data using controller
+   * Follows Single Responsibility Principle (SRP)
+   * Follows Dependency Inversion Principle (DIP)
    */
-  private isValidData(data: SkillCategory[]): boolean {
-    if (!Array.isArray(data) || data.length === 0) {
-      return false;
-    }
+  private initializeData(): void {
+    // Create a mock profile object for the controller
+    // The controller expects a UserProfile, so we create a minimal one
+    const mockProfile: UserProfile = {
+      name: "",
+      title: "",
+      location: "",
+      bio: "",
+      stats: [],
+      academics: [],
+      certifications: [],
+      contacts: [],
+      honors: [],
+      languages: [],
+      projects: [],
+      softSkills: [],
+      technicalSkills: Array.isArray(this.props.data) ? this.props.data : [],
+      experiences: [],
+    };
 
-    return data.every(
-      (skill) =>
-        skill &&
-        typeof skill === "object" &&
-        typeof skill.category === "string" &&
-        skill.category.trim() !== "" &&
-        Array.isArray(skill.items) &&
-        skill.items.length > 0 &&
-        skill.items.every((item) => typeof item === "string" && item.trim() !== "")
-    );
+    const enrichedCategories = this.controller.getEnrichedCategories(mockProfile);
+    const statistics = this.controller.getSkillStatistics(mockProfile);
+
+    this.setState({
+      enrichedCategories,
+      statistics,
+    });
   }
 
   /**
@@ -170,49 +139,81 @@ class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSk
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="skills-empty" role="status" aria-live="polite">
-        <div className="skills-empty-icon" aria-hidden="true">📋</div>
-        <p className="skills-empty-text">No technical skills available at the moment.</p>
+      <div className="technical-skills-empty" role="status" aria-live="polite">
+        <div className="technical-skills-empty__icon" aria-hidden="true">
+          💻
+        </div>
+        <h3 className="technical-skills-empty__title">
+          Technical Skills
+        </h3>
+        <p className="technical-skills-empty__text">
+          No technical skills available at the moment.
+        </p>
       </div>
     );
   }
 
   /**
-   * Render skill blocks
-   * Follows DRY principle
-   * Enhanced with filtering for invalid items
+   * Render statistics header
+   * Shows summary of skills
    */
-  private renderSkillBlocks(): ReactNode {
-    const { data } = this.props;
+  private renderStatistics(): ReactNode {
+    const { statistics } = this.state;
 
-    if (!this.isValidData(data)) {
-      return this.renderEmptyState();
+    if (!statistics) {
+      return null;
     }
 
-    // Filter and validate items before rendering
-    const validSkills = data.filter((skill) => {
-      return (
-        skill &&
-        typeof skill === "object" &&
-        typeof skill.category === "string" &&
-        skill.category.trim() !== "" &&
-        Array.isArray(skill.items) &&
-        skill.items.length > 0 &&
-        skill.items.every((item) => typeof item === "string" && item.trim() !== "")
-      );
-    });
+    return (
+      <div className="technical-skills-statistics" role="region" aria-label="Skills Statistics">
+        <div className="technical-skills-statistics__item">
+          <span className="technical-skills-statistics__value">
+            {statistics.totalSkills}
+          </span>
+          <span className="technical-skills-statistics__label">Total Skills</span>
+        </div>
+        <div className="technical-skills-statistics__divider" aria-hidden="true"></div>
+        <div className="technical-skills-statistics__item">
+          <span className="technical-skills-statistics__value">
+            {statistics.categoryCount}
+          </span>
+          <span className="technical-skills-statistics__label">Categories</span>
+        </div>
+        <div className="technical-skills-statistics__divider" aria-hidden="true"></div>
+        <div className="technical-skills-statistics__item">
+          <span className="technical-skills-statistics__value">
+            {statistics.averageSkillsPerCategory}
+          </span>
+          <span className="technical-skills-statistics__label">Avg per Category</span>
+        </div>
+      </div>
+    );
+  }
 
-    // Edge case: No valid skills after filtering
-    if (validSkills.length === 0) {
+  /**
+   * Render skill category cards
+   * Uses reusable SkillCategoryCard component
+   * Follows DRY principle
+   */
+  private renderCategoryCards(): ReactNode {
+    const { enrichedCategories } = this.state;
+
+    if (!enrichedCategories || enrichedCategories.length === 0) {
       return this.renderEmptyState();
     }
 
     return (
-      <div className="skills-grid" role="region" aria-label="Technical Skills">
-        {validSkills.map((skill, index) => (
-          <SkillBlock 
-            key={`skill-block-${skill.category}-${index}`}
-            skill={skill} 
+      <div
+        className="technical-skills-grid"
+        role="region"
+        aria-label="Technical Skills Categories"
+      >
+        {enrichedCategories.map((category, index) => (
+          <SkillCategoryCard
+            key={`skill-category-${category.category}-${index}`}
+            category={category.category}
+            categoryIcon={category.categoryIcon}
+            items={category.items}
             index={index}
           />
         ))}
@@ -225,6 +226,7 @@ class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSk
    */
   public render(): ReactNode {
     const { data } = this.props;
+    const { enrichedCategories } = this.state;
 
     // Edge case: Handle empty or invalid data
     if (!data || !Array.isArray(data) || data.length === 0) {
@@ -235,13 +237,25 @@ class TechnicalSkillsSection extends Component<TechnicalSkillsProps, TechnicalSk
       );
     }
 
+    // Edge case: No enriched categories after processing
+    if (!enrichedCategories || enrichedCategories.length === 0) {
+      return (
+        <Card id="technical-skills-section" title="Technical Skills">
+          {this.renderEmptyState()}
+        </Card>
+      );
+    }
+
     return (
-      <Card 
-        id="technical-skills-section" 
+      <Card
+        id="technical-skills-section"
         title="Technical Skills"
         ariaLabel="Technical Skills Section"
       >
-        {this.renderSkillBlocks()}
+        <div className="technical-skills-container">
+          {this.renderStatistics()}
+          {this.renderCategoryCards()}
+        </div>
       </Card>
     );
   }
