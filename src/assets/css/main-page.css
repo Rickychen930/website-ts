@@ -536,136 +536,9 @@
 }
 
 /* ============================================
-   Footer - Luxury Glassmorphism Design
+   Footer - Moved to footer-section.css
+   Footer styles are now in a separate file for better organization
    ============================================ */
-.footer {
-  width: 100%;
-  padding: 5rem clamp(2rem, 6vw, 6rem) 4rem;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(10, 14, 39, 0.8) 50%,
-    rgba(10, 14, 39, 0.95) 100%
-  );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: var(--font-size-footer, 0.95rem);
-  line-height: 1.7;
-  text-align: center;
-  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
-  box-shadow: 
-    0 -20px 60px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-  scroll-margin-top: 8rem;
-  margin-top: auto;
-  position: relative;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 1;
-}
-
-.footer::before {
-  content: "";
-  display: block;
-  width: 160px;
-  height: 6px;
-  margin: 0 auto 3rem;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(102, 126, 234, 0.8),
-    rgba(118, 75, 162, 0.8),
-    rgba(240, 147, 251, 0.8),
-    transparent
-  );
-  border-radius: 3px;
-  box-shadow: 
-    0 0 30px rgba(102, 126, 234, 0.6),
-    0 0 60px rgba(118, 75, 162, 0.4);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.footer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  animation: footerShimmer 4s ease-in-out infinite;
-}
-
-@keyframes footerShimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-.footer:hover::before {
-  width: 200px;
-  box-shadow: 
-    0 0 40px rgba(102, 126, 234, 0.8),
-    0 0 80px rgba(118, 75, 162, 0.6);
-}
-
-.footer-content {
-  position: relative;
-  z-index: 1;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.footer-text {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.footer a {
-  color: rgba(102, 126, 234, 0.9);
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 600;
-  position: relative;
-  display: inline-block;
-  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
-}
-
-.footer a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 10px rgba(102, 126, 234, 0.6);
-}
-
-.footer a:hover {
-  color: rgba(118, 75, 162, 1);
-  transform: translateY(-2px);
-  text-shadow: 0 0 20px rgba(118, 75, 162, 0.8);
-}
-
-.footer a:hover::after {
-  width: 100%;
-}
 
 /* ============================================
    Responsive Design - Large Screens (1400px+)
@@ -746,14 +619,7 @@
     padding: 4rem 3rem;
   }
 
-  .footer {
-    padding: 4rem 2.5rem 3rem;
-  }
-
-  .footer::before {
-    width: 120px;
-    margin-bottom: 2.5rem;
-  }
+  /* Footer styles moved to footer-section.css */
 }
 
 /* ============================================
@@ -829,20 +695,7 @@
     max-width: 320px;
   }
 
-  .footer {
-    padding: 3.5rem 2rem 2.5rem;
-    font-size: 0.9rem;
-  }
-
-  .footer::before {
-    width: 100px;
-    height: 5px;
-    margin-bottom: 2.5rem;
-  }
-
-  .footer:hover::before {
-    width: 120px;
-  }
+  /* Footer styles moved to footer-section.css */
 }
 
 /* ============================================
@@ -924,20 +777,7 @@
     max-width: 300px;
   }
 
-  .footer {
-    padding: 3rem 1.5rem 2rem;
-    font-size: 0.875rem;
-  }
-
-  .footer::before {
-    width: 90px;
-    height: 4px;
-    margin-bottom: 2rem;
-  }
-
-  .footer:hover::before {
-    width: 110px;
-  }
+  /* Footer styles moved to footer-section.css */
 }
 
 /* ============================================
@@ -949,9 +789,7 @@
     min-height: 70vh;
   }
 
-  .footer {
-    padding: 3rem 2rem 2.5rem;
-  }
+  /* Footer styles moved to footer-section.css */
 }
 
 @media screen and (orientation: landscape) and (max-width: 480px) {
@@ -960,9 +798,7 @@
     min-height: 65vh;
   }
 
-  .footer {
-    padding: 2.5rem 1.5rem 2rem;
-  }
+  /* Footer styles moved to footer-section.css */
 }
 
 /* ============================================

@@ -299,7 +299,8 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Component-Based: Delegates to specialized component
    */
   protected renderFooter(): ReactNode {
-    return <MainPageFooterComponent />;
+    const { profile } = this.state;
+    return <MainPageFooterComponent profile={profile} />;
   }
 
   /**
