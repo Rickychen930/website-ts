@@ -32,7 +32,7 @@
     "eject": "react-scripts eject",
     "server": "ts-node backend/src/main.ts",
     "server:watch": "nodemon --exec ts-node backend/src/main.ts",
-    "seed": "ts-node -P tsconfig.backend.json backend/src/seed/seed.ts",
+    "seed": "ts-node -P backend/tsconfig.backend.json backend/src/seed/seed.ts",
     "backend:build": "tsc -p backend/tsconfig.backend.json",
     "backend:start": "node backend/dist/main.js",
     "backend:pm2": "pm2 start backend/ecosystem.config.js --env production",
