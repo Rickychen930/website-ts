@@ -25,7 +25,7 @@ class BasePage<
   }
 
   // 🔹 Utility
-  protected setLoading(isLoading: boolean) {
+  protected setLoading(isLoading: boolean): void {
     this.setState({ isLoading } as Pick<S, "isLoading">);
   }
 
@@ -35,7 +35,11 @@ class BasePage<
   }
 
   protected renderLoading(): ReactNode {
-    return <p>Loading...</p>;
+    return (
+      <div className="page-loading" role="status" aria-live="polite" aria-label="Loading">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   protected renderContent(): ReactNode {
@@ -44,6 +48,15 @@ class BasePage<
 
   protected renderFooter(): ReactNode {
     return null; // Override in subclass if needed
+  }
+
+  protected renderError(error: Error | string): ReactNode {
+    const errorMessage = error instanceof Error ? error.message : error;
+    return (
+      <div className="page-error" role="alert" aria-label="Error">
+        <p>{errorMessage}</p>
+      </div>
+    );
   }
 
   private renderBody(): ReactNode {

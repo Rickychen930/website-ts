@@ -10,6 +10,7 @@ import {
 import { AboutMeController } from "../../../controllers/about-me-controller";
 import { UserProfile } from "../../../types/user";
 import { ButtonVariant } from "../../../types/ui";
+import { generateStableKey } from "../../../utils/view-helpers";
 import "../../../assets/css/about-me-section.css";
 
 /**
@@ -25,6 +26,9 @@ type AboutMeProps = {
  */
 type AboutMeState = {
   isVisible: boolean;
+  aboutMeData: ReturnType<AboutMeController['getAboutMeData']> | null;
+  technologies: ReturnType<AboutMeController['getFeaturedTechnologies']>;
+  highlights: ReturnType<AboutMeController['getProfessionalHighlights']>;
 };
 
 /**
@@ -35,6 +39,7 @@ type AboutMeState = {
  * - Shows Software Engineering Capabilities Prominently
  * - Component-Based Architecture (Reusable Components)
  * - MVC Pattern (Controller, Model, View separation)
+ * - Performance Optimized: Memoized data processing
  * 
  * Principles Applied:
  * - MVC: Separated Controller, Model, and View
@@ -55,24 +60,56 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
     super(props);
     this.state = {
       isVisible: false,
+      aboutMeData: null,
+      technologies: [],
+      highlights: [],
     };
     this.controller = new AboutMeController();
   }
 
   /**
    * Component lifecycle - Mount
-   * Initialize visibility state
+   * Initialize visibility state and process data once
    */
   componentDidMount(): void {
+    this.processData();
     this.setState({ isVisible: true });
+  }
+
+  /**
+   * Component lifecycle - Update
+   * Re-process data only when props change
+   */
+  componentDidUpdate(prevProps: AboutMeProps): void {
+    if (prevProps.data !== this.props.data) {
+      this.processData();
+    }
+  }
+
+  /**
+   * Process and memoize data from controller
+   * Performance optimization: Process data once instead of multiple times
+   */
+  private processData(): void {
+    const { data } = this.props;
+    const aboutMeData = this.controller.getAboutMeData(data);
+    const technologies = this.controller.getFeaturedTechnologies(data, 12);
+    const highlights = this.controller.getProfessionalHighlights(data);
+
+    this.setState({
+      aboutMeData,
+      technologies,
+      highlights,
+    });
   }
 
   /**
    * Render hero header with name and title
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state
    */
   private renderHeroHeader(): ReactNode {
-    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+    const { aboutMeData } = this.state;
 
     if (!aboutMeData) {
       return null;
@@ -90,9 +127,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
   /**
    * Render profile image with luxury styling
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state
    */
   private renderProfileImage(): ReactNode {
-    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+    const { aboutMeData } = this.state;
 
     if (!aboutMeData) {
       return null;
@@ -116,6 +154,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
             height={320}
             className="about-me-image"
             style={{ borderRadius: '50%' }}
+            loading="eager"
           />
         </div>
       </div>
@@ -125,9 +164,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
   /**
    * Render bio/description section
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state
    */
   private renderBio(): ReactNode {
-    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+    const { aboutMeData } = this.state;
 
     if (!aboutMeData || !aboutMeData.bio) {
       return null;
@@ -146,9 +186,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    * Render featured tech badges grid
    * Shows software engineering capabilities prominently
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state
    */
   private renderFeaturedTechStack(): ReactNode {
-    const technologies = this.controller.getFeaturedTechnologies(this.props.data, 12);
+    const { technologies } = this.state;
 
     if (!technologies || technologies.length === 0) {
       return null;
@@ -170,9 +211,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    * Render professional highlights
    * Shows key achievements and capabilities
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state
    */
   private renderProfessionalHighlights(): ReactNode {
-    const highlights = this.controller.getProfessionalHighlights(this.props.data);
+    const { highlights } = this.state;
 
     if (!highlights || highlights.length === 0) {
       return null;
@@ -184,7 +226,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
         <div className="about-me-highlights-grid">
           {highlights.map((highlight, index) => (
             <ProfessionalHighlight
-              key={`highlight-${index}`}
+              key={generateStableKey("highlight", highlight.title || index, index)}
               icon={highlight.icon}
               title={highlight.title}
               description={highlight.description}
@@ -200,18 +242,20 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    * Render animated code block showing tech stack
    * Demonstrates software engineering capabilities
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state (first 8 items)
    */
   private renderTechStackCode(): ReactNode {
-    const technologies = this.controller.getFeaturedTechnologies(this.props.data, 8);
+    const { technologies } = this.state;
+    const codeTechnologies = technologies.slice(0, 8);
 
-    if (!technologies || technologies.length === 0) {
+    if (!codeTechnologies || codeTechnologies.length === 0) {
       return null;
     }
 
     return (
       <div className="about-me-tech-stack-code">
         <h3 className="about-me-tech-stack-title">Code & Technologies</h3>
-        <AnimatedCodeBlock technologies={technologies} language="typescript" />
+        <AnimatedCodeBlock technologies={codeTechnologies} language="typescript" />
       </div>
     );
   }
@@ -241,9 +285,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
   /**
    * Render statistics cards
    * Follows Single Responsibility Principle (SRP)
+   * Performance: Uses memoized data from state
    */
   private renderStats(): ReactNode {
-    const aboutMeData = this.controller.getAboutMeData(this.props.data);
+    const { aboutMeData } = this.state;
     const { stats } = aboutMeData || { stats: [] };
 
     if (!stats || stats.length === 0) {
@@ -254,7 +299,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
       <div className="about-me-stats" role="group" aria-label="Profile statistics">
         {stats.map((stat, index) => (
           <ProfileStat
-            key={`stat-${index}`}
+            key={generateStableKey("stat", stat.label || index, index)}
             value={stat.value}
             label={stat.label}
           />

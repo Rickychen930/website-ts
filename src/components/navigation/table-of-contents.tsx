@@ -3,7 +3,7 @@
  * Section navigation sidebar untuk easy navigation
  */
 
-import React, { Component, ReactNode, createRef } from "react";
+import React, { Component, ReactNode } from "react";
 import { ISectionConfig } from "../../models/section-model";
 import "../../assets/css/table-of-contents.css";
 
@@ -151,7 +151,7 @@ export class TableOfContents extends Component<TableOfContentsProps, TableOfCont
           <div className="toc-header">
             <h3 className="toc-title">Contents</h3>
           </div>
-          <ul className="toc-list" role="list">
+          <ul className="toc-list">
             {sections.map((section) => (
               <li key={section.id} className="toc-item">
                 <button

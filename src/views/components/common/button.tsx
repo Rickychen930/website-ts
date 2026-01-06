@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React, { PureComponent, ReactNode } from "react";
 import { ButtonType, ButtonVariant, ComponentState } from "../../../types/ui";
 
 type ButtonProps = {
@@ -7,24 +7,25 @@ type ButtonProps = {
   type?: ButtonType;
   variant?: ButtonVariant;
   disabled?: ComponentState;
+  className?: string;
+  ariaLabel?: string;
 };
 
-class Button extends Component<ButtonProps> {
+/**
+ * Button Component - Optimized with PureComponent
+ * Performance: Uses PureComponent to prevent unnecessary re-renders
+ */
+class Button extends PureComponent<ButtonProps> {
   static defaultProps = {
     type: ButtonType.BUTTON,
     variant: ButtonVariant.PRIMARY,
     disabled: ComponentState.ACTIVE,
+    className: "",
+    ariaLabel: undefined,
   };
 
-  private _component: ReactNode;
-
-  constructor(props: ButtonProps) {
-    super(props);
-    this._component = this._createComponent();
-  }
-
   protected _createComponent(): ReactNode {
-    const { children, onClick, type, variant, disabled } = this.props;
+    const { children, onClick, type, variant, disabled, className = "", ariaLabel } = this.props;
 
     const isDisabled =
       disabled === ComponentState.DISABLED ||
@@ -35,26 +36,16 @@ class Button extends Component<ButtonProps> {
         type={type}
         onClick={onClick}
         disabled={isDisabled}
-        className={`btn btn-${variant}`}
+        className={`btn btn-${variant} ${className}`.trim()}
+        aria-label={ariaLabel}
       >
         {children}
       </button>
     );
   }
 
-  public componentDidUpdate(prevProps: ButtonProps) {
-    if (
-      prevProps.children !== this.props.children ||
-      prevProps.variant !== this.props.variant ||
-      prevProps.disabled !== this.props.disabled ||
-      prevProps.type !== this.props.type
-    ) {
-      this._component = this._createComponent();
-    }
-  }
-
-  public render() {
-    return this._component;
+  public render(): ReactNode {
+    return this._createComponent();
   }
 }
 

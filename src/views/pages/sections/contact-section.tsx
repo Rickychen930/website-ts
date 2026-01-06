@@ -31,6 +31,7 @@ import { ContactController } from "../../../controllers/contact-controller";
 import { IContact } from "../../../models/contact-model";
 import { ContactGrid } from "../../components/contact";
 import ContactForm from "../../../components/contact/contact-form";
+import { safeSlice } from "../../../utils/view-helpers";
 import "../../../assets/css/contact-section.css";
 
 /**
@@ -73,17 +74,21 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
     // This allows for easy testing and mocking
     this.controller = new ContactController();
 
-    // Normalize and process data through controller
-    // View layer delegates all business logic to controller
-    const normalizedData = this.normalizeData(props.data);
-    const processedData = this.controller.processData(normalizedData);
-
+    // Initialize state - data will be processed in componentDidMount
     this.state = {
       error: null,
-      processedData,
+      processedData: [],
       isLoading: false,
       copiedContact: null,
     };
+  }
+
+  /**
+   * Component lifecycle - Mount
+   * Process data on mount
+   */
+  componentDidMount(): void {
+    this.processData();
   }
 
   /**
@@ -109,25 +114,34 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
   /**
    * Handle props update
    * Re-processes data when props change
+   * Performance: Only processes when data actually changes
    */
   componentDidUpdate(prevProps: ContactSectionProps): void {
     if (prevProps.data !== this.props.data) {
-      this.setState({ isLoading: true });
-
-      // Normalize and process through controller
-      const normalizedData = this.normalizeData(this.props.data);
-      const processedData = this.controller.processData(normalizedData);
-
-      // Validate through controller
-      const validation = this.controller.validateData(normalizedData);
-
-      this.setState({
-        processedData,
-        error: validation.isValid ? null : validation.error,
-        isLoading: false,
-        copiedContact: null,
-      });
+      this.processData();
     }
+  }
+
+  /**
+   * Process data through controller
+   * Centralized data processing for better maintainability
+   */
+  private processData(): void {
+    this.setState({ isLoading: true });
+
+    // Normalize and process through controller
+    const normalizedData = this.normalizeData(this.props.data);
+    const processedData = this.controller.processData(normalizedData);
+
+    // Validate through controller
+    const validation = this.controller.validateData(normalizedData);
+
+    this.setState({
+      processedData,
+      error: validation.isValid ? null : validation.error,
+      isLoading: false,
+      copiedContact: null,
+    });
   }
 
   /**
@@ -139,6 +153,7 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
 
   /**
    * Handle copy click
+   * Performance: Uses arrow function to maintain context
    */
   private handleCopyClick = async (contact: IContact): Promise<boolean> => {
     const success = await this.controller.copyToClipboard(contact);
@@ -146,7 +161,8 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
     if (success) {
       this.setState({ copiedContact: contact.key });
       // Reset copied state after 2 seconds
-      setTimeout(() => {
+      // Use window.setTimeout for better type safety
+      window.setTimeout(() => {
         this.setState({ copiedContact: null });
       }, 2000);
     }
@@ -241,9 +257,9 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
       return this.renderEmptyState();
     }
 
-    // Limit items for performance
+    // Limit items for performance using utility helper
     // Controller could handle this, but view controls rendering limits
-    const itemsToRender = processedData.slice(0, this.MAX_ITEMS_TO_RENDER);
+    const itemsToRender = safeSlice(processedData, this.MAX_ITEMS_TO_RENDER);
 
     return (
       <div className="contact-section-wrapper">

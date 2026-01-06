@@ -56,15 +56,6 @@ function getCacheKey(url: string, config?: RequestConfig): string {
 }
 
 /**
- * Check if cached response is still valid
- */
-function isCacheValid(key: string, cacheTime: number): boolean {
-  const cached = responseCache.get(key);
-  if (!cached) return false;
-  return Date.now() - cached.timestamp < cacheTime;
-}
-
-/**
  * Get cached response if valid
  */
 function getCachedResponse<T>(key: string): T | null {

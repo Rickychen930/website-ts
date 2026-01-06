@@ -24,6 +24,7 @@ import { updateSEOFromProfile } from "../../utils/seo";
 import GlobalSearch from "../../components/search/global-search";
 import LazySection from "../../components/sections/lazy-section";
 import TableOfContents from "../../components/navigation/table-of-contents";
+import { shouldDisplayData } from "../../utils/view-helpers";
 
 /**
  * MainPageState - Extended state interface
@@ -226,7 +227,7 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Render error state using ErrorComponent
    * Component-Based: Delegates to specialized component
    */
-  private renderError(): ReactNode {
+  protected renderError(): ReactNode {
     const { error, retryCount } = this.state;
     
     return (
@@ -241,13 +242,16 @@ class MainPage extends BasePage<{}, MainPageState> {
 
   /**
    * Get section data from profile
+   * Performance: Uses utility helper for validation
    */
   private getSectionData(config: ISectionConfig, profile: UserProfile): unknown {
     const { dataKey } = config;
     const data = profile[dataKey];
-    if (!data || (Array.isArray(data) && data.length === 0)) {
+    
+    if (!shouldDisplayData(data)) {
       return null;
     }
+    
     return dataKey === "name" ? profile : data;
   }
 
@@ -255,14 +259,17 @@ class MainPage extends BasePage<{}, MainPageState> {
   /**
    * Get section priority untuk lazy loading
    * High priority sections (About, Contact) load immediately
+   * Performance: Memoized priority lookup
    */
+  private readonly sectionPriorityMap = new Map<string, "high" | "normal" | "low">([
+    ["about", "high"],
+    ["contact", "high"],
+    ["languages", "low"],
+    ["soft-skills", "low"],
+  ]);
+
   private getSectionPriority(id: string): "high" | "normal" | "low" {
-    const highPriority = ["about", "contact"];
-    const lowPriority = ["languages", "soft-skills"];
-    
-    if (highPriority.includes(id)) return "high";
-    if (lowPriority.includes(id)) return "low";
-    return "normal";
+    return this.sectionPriorityMap.get(id) || "normal";
   }
 
   /**

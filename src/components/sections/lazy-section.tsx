@@ -25,7 +25,8 @@ interface LazySectionState {
 export class LazySection extends Component<LazySectionProps, LazySectionState> {
   private sectionRef = createRef<HTMLElement>();
   private observer: IntersectionObserver | null = null;
-  private loadTimeout: NodeJS.Timeout | null = null;
+  private loadTimeout: ReturnType<typeof setTimeout> | null = null;
+  private isMounted: boolean = false;
 
   constructor(props: LazySectionProps) {
     super(props);
@@ -37,6 +38,8 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
   }
 
   componentDidMount(): void {
+    this.isMounted = true;
+    
     // High priority sections (About, Contact) render immediately
     if (this.props.priority === "high") {
       this.setState({ isVisible: true, isLoaded: true, shouldRender: true });
@@ -48,6 +51,7 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
   }
 
   componentWillUnmount(): void {
+    this.isMounted = false;
     this.cleanup();
   }
 
@@ -71,11 +75,16 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
       this.observer.observe(this.sectionRef.current);
     } else {
       // If ref not ready, observe after a short delay
-      setTimeout(() => {
-        if (this.sectionRef.current && this.observer) {
+      const timeoutId = setTimeout(() => {
+        if (this.isMounted && this.sectionRef.current && this.observer) {
           this.observer.observe(this.sectionRef.current);
         }
       }, 100);
+      
+      // Store timeout for cleanup if needed
+      if (!this.loadTimeout) {
+        this.loadTimeout = timeoutId;
+      }
     }
   };
 
@@ -96,6 +105,8 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
   };
 
   private handleIntersection = (entries: IntersectionObserverEntry[]): void => {
+    if (!this.isMounted) return;
+    
     const entry = entries[0];
     
     if (entry.isIntersecting) {
@@ -105,11 +116,18 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
       // Delay loading untuk smooth experience
       const delay = this.props.priority === "high" ? 0 : 100;
       
+      // Clear existing timeout if any
+      if (this.loadTimeout) {
+        clearTimeout(this.loadTimeout);
+      }
+      
       this.loadTimeout = setTimeout(() => {
-        this.setState({ shouldRender: true, isLoaded: true });
-        
-        if (this.props.onVisible) {
-          this.props.onVisible(this.props.config.id);
+        if (this.isMounted) {
+          this.setState({ shouldRender: true, isLoaded: true });
+          
+          if (this.props.onVisible) {
+            this.props.onVisible(this.props.config.id);
+          }
         }
       }, delay);
     } else {
@@ -205,7 +223,7 @@ export class LazySection extends Component<LazySectionProps, LazySectionState> {
   };
 
   render(): ReactNode {
-    const { shouldRender, isLoaded } = this.state;
+    const { shouldRender } = this.state;
 
     // Render placeholder jika belum loaded
     if (!shouldRender) {
