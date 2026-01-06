@@ -1,5 +1,5 @@
 import React, { ReactNode, RefObject, PureComponent } from "react";
-import "../../assets/css/flow-item-component.css";
+import "../../../assets/css/flow-item.css";
 
 /**
  * FlowItem Props Interface
@@ -115,3 +115,5 @@ export class FlowItem extends PureComponent<FlowItemProps> {
     );
   }
 }
+
+export default FlowItem;

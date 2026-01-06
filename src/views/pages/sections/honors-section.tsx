@@ -20,7 +20,7 @@
 
 import React, { Component, ReactNode, createRef, RefObject } from "react";
 import "../../../assets/css/honors-section.css";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { HonorsController } from "../../../controllers/honors-controller";
 import { HonorsModel, IHonorItem } from "../../../models/honors-model";
 import { HonorCard } from "../../components/honors/HonorCard";

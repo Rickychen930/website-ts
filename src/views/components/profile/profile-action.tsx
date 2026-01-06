@@ -1,5 +1,5 @@
 import { Component, ReactNode } from "react";
-import { ButtonVariant } from "../../types/ui";
+import { ButtonVariant } from "../../../types/ui";
 
 type ProfileActionProps = {
   label: string;

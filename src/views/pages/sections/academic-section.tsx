@@ -20,7 +20,7 @@
 
 import React, { Component, ReactNode, createRef, RefObject } from "react";
 import "../../../assets/css/academic-section.css";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { AcademicController } from "../../../controllers/academic-controller";
 import { AcademicModel, IAcademicItem } from "../../../models/academic-model";
 import { AcademicCard } from "../../components/academic/AcademicCard";

@@ -7,6 +7,8 @@
  * - DRY: Single import point for all navbar components
  * - KISS: Simple export structure
  */
+export { default } from "./Navbar";
+export { default as Navbar } from "./Navbar";
 export { default as NavbarContainer } from "./NavbarContainer";
 export { default as NavbarBrand } from "./NavbarBrand";
 export { default as NavbarToggle } from "./NavbarToggle";

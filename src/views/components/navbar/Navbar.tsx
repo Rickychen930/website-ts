@@ -7,8 +7,8 @@
  * Maintains backward compatibility while using new architecture
  */
 import React from "react";
-import NavbarContainer from "./navbar/NavbarContainer";
-import "../../assets/css/navbar.css";
+import NavbarContainer from "./NavbarContainer";
+import "../../../assets/css/navbar.css";
 
 interface NavbarComponentProps {
   items: string[];

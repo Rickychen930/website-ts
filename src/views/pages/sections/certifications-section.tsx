@@ -25,7 +25,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { CertificationController } from "../../../controllers/certification-controller";
 import { ICertification } from "../../../models/certification-model";
 import { CertificationGrid } from "../../components/certification";

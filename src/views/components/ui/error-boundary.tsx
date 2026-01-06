@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
-import "../../assets/css/error-boundary.css";
+import "../../../assets/css/error-boundary.css";
 
 interface ErrorBoundaryProps {
   children: ReactNode;

@@ -10,7 +10,7 @@
  */
 
 import React, { ReactNode } from "react";
-import "../../assets/css/loading-skeleton.css";
+import "../../../assets/css/loading-skeleton.css";
 
 export interface LoadingSkeletonProps {
   variant?: "text" | "card" | "image" | "circle" | "custom";

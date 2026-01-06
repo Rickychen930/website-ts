@@ -1,6 +1,6 @@
 import React, { PureComponent, ReactNode } from "react";
 import LoadingSkeleton from "./loading-skeleton";
-import "../../assets/css/main-page.css";
+import "../../../assets/css/main-page.css";
 
 /**
  * LoadingComponent Props

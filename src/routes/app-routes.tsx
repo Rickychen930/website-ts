@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import LoadingComponent from "../views/components/loading-component";
-import ErrorBoundary from "../views/components/error-boundary";
+import { LoadingComponent } from "../views/components/ui";
+import { ErrorBoundary } from "../views/components/ui";
 
 /**
  * Code Splitting - Lazy load routes for better performance

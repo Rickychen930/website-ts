@@ -26,7 +26,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { ContactController } from "../../../controllers/contact-controller";
 import { IContact } from "../../../models/contact-model";
 import { ContactGrid } from "../../components/contact";

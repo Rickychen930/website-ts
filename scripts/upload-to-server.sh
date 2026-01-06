@@ -44,6 +44,7 @@ check_files() {
     [ ! -f "config/nginx.conf" ] && missing_files+=("config/nginx.conf")
     [ ! -f "scripts/pm2-setup.sh" ] && missing_files+=("scripts/pm2-setup.sh")
     [ ! -f "scripts/nginx-setup.sh" ] && missing_files+=("scripts/nginx-setup.sh")
+    [ ! -f "scripts/nginx-check-and-fix.sh" ] && missing_files+=("scripts/nginx-check-and-fix.sh")
     
     if [ ${#missing_files[@]} -gt 0 ]; then
         print_error "Missing files:"
@@ -76,6 +77,7 @@ confirm() {
     echo "  - config/nginx.conf"
     echo "  - scripts/pm2-setup.sh"
     echo "  - scripts/nginx-setup.sh"
+    echo "  - scripts/nginx-check-and-fix.sh"
     echo ""
     read -p "Continue? (y/n) " -n 1 -r
     echo
@@ -128,6 +130,10 @@ upload() {
     scp scripts/nginx-setup.sh ${SERVER_USER}@${SERVER_HOST}:${SERVER_PATH}/scripts/
     ssh ${SERVER_USER}@${SERVER_HOST} "chmod +x ${SERVER_PATH}/scripts/nginx-setup.sh"
     
+    print_info "Uploading scripts/nginx-check-and-fix.sh..."
+    scp scripts/nginx-check-and-fix.sh ${SERVER_USER}@${SERVER_HOST}:${SERVER_PATH}/scripts/
+    ssh ${SERVER_USER}@${SERVER_HOST} "chmod +x ${SERVER_PATH}/scripts/nginx-check-and-fix.sh"
+    
     echo ""
     print_info "✅ Upload complete!"
     echo ""
@@ -140,7 +146,8 @@ upload() {
         echo "  3. npm install --omit=dev --legacy-peer-deps"
     fi
     echo "  4. bash scripts/pm2-setup.sh start"
-    echo "  5. sudo bash scripts/nginx-setup.sh"
+    echo "  5. sudo bash scripts/nginx-check-and-fix.sh  # Check & fix nginx config"
+    echo "  6. sudo bash scripts/nginx-setup.sh  # Or setup nginx if needed"
 }
 
 # Main

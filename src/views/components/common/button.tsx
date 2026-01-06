@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from "react";
-import { ButtonType, ButtonVariant, ComponentState } from "../../types/ui";
+import { ButtonType, ButtonVariant, ComponentState } from "../../../types/ui";
 
 type ButtonProps = {
   children: ReactNode;

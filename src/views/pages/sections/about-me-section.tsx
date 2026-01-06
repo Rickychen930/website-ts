@@ -1,8 +1,6 @@
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
-import Image from "../../components/image-component";
-import ProfileStat from "../../components/profile-stat-component";
-import ProfileAction from "../../components/profile-action-component";
+import { Card, Image } from "../../components/common";
+import { ProfileStat, ProfileAction } from "../../components/profile";
 import {
   HeroHeader,
   ProfessionalHighlight,

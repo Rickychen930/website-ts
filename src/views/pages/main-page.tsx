@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
-import Navbar from "../components/navbar-component";
+import Navbar from "../components/navbar";
 import BasePage, { BasePageState } from "./base-page";
 import AboutMeSection from "./sections/about-me-section";
 import AcademicSection from "./sections/academic-section";
-import HonorsSection from "./sections/honour-section";
+import HonorsSection from "./sections/honors-section";
 import CertificationSection from "./sections/certifications-section";
 import TechnicalSkillsSection from "./sections/technical-skills-section";
 import WorkExperienceSection from "./sections/work-experience-section";
@@ -18,10 +18,8 @@ import { ISectionConfig } from "../../models/section-model";
 import { RETRY_CONFIG, SCROLL_CONFIG } from "../../config/main-page-config";
 import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
 import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
-import LoadingComponent from "../components/loading-component";
-import ErrorComponent from "../components/error-component";
-import MainPageFooterComponent from "../components/main-page-footer-component";
-import BackToTopButton from "../components/back-to-top-button";
+import { LoadingComponent, ErrorComponent, BackToTopButton } from "../components/ui";
+import { MainPageFooterComponent } from "../components/footer";
 
 /**
  * MainPageState - Extended state interface

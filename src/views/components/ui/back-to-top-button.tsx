@@ -11,7 +11,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import "../../assets/css/back-to-top-button.css";
+import "../../../assets/css/back-to-top-button.css";
 
 interface BackToTopButtonState {
   isVisible: boolean;

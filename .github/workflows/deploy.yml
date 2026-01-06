@@ -75,7 +75,9 @@ jobs:
           port: 22
           script: |
             mkdir -p /root/backend/{logs,dist}
-            mkdir -p /var/www/website-ts
+            mkdir -p /var/www/website-ts/build
+            sudo chown -R www-data:www-data /var/www/website-ts || true
+            sudo chmod -R 755 /var/www/website-ts || true
 
       - name: Deploy backend files
         uses: appleboy/scp-action@v0.1.7
@@ -101,7 +103,7 @@ jobs:
           strip_components: 0
           rm: false
 
-      - name: Deploy frontend build to backend directory
+      - name: Deploy frontend build to /var/www/website-ts
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -109,9 +111,20 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           source: "build"
-          target: "/root/backend"
+          target: "/var/www/website-ts"
           strip_components: 0
           rm: false
+
+      - name: Set correct permissions for frontend build
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            sudo chown -R www-data:www-data /var/www/website-ts
+            sudo chmod -R 755 /var/www/website-ts
 
       - name: Deploy environment file
         uses: appleboy/scp-action@v0.1.7

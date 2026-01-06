@@ -22,7 +22,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { LanguageController } from "../../../controllers/language-controller";
 import { ILanguage } from "../../../models/language-model";
 import { LanguageGrid } from "../../components/languages";

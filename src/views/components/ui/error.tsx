@@ -1,5 +1,5 @@
 import React, { PureComponent, ReactNode } from "react";
-import "../../assets/css/main-page.css";
+import "../../../assets/css/main-page.css";
 
 /**
  * ErrorComponent Props

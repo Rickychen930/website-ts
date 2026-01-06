@@ -1,5 +1,5 @@
 import React, { ReactNode, PureComponent } from "react";
-import "../../assets/css/card-component.css";
+import "../../../assets/css/card.css";
 
 /**
  * Card Props Interface

@@ -7,6 +7,8 @@
  * - KISS: Simple barrel export
  */
 
+export { default as MainPageFooter } from "./MainPageFooter";
+export { default as MainPageFooterComponent } from "./MainPageFooter";
 export { default as FooterQuickLinks } from "./FooterQuickLinks";
 export { default as FooterSocialLinks } from "./FooterSocialLinks";
 export { default as FooterTechStack } from "./FooterTechStack";

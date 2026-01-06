@@ -24,7 +24,7 @@
  * - Component-based architecture
  */
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { SoftSkillGrid } from "../../components/soft-skills";
 import { SoftSkillsController } from "../../../controllers/soft-skills-controller";
 import { SoftSkillsModel, SoftSkillItem } from "../../../models/soft-skills-model";

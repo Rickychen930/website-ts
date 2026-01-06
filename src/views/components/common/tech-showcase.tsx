@@ -11,7 +11,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import "../../assets/css/tech-showcase.css";
+import "../../../assets/css/tech-showcase.css";
 
 export interface TechShowcaseProps {
   technologies: string[];

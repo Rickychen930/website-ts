@@ -1,15 +1,26 @@
+# 🚀 Setup Nginx Langsung di Server
+
+Panduan untuk setup nginx ketika source code tidak ada di server (hanya build folder).
+
+## Situasi
+
+Anda berada di `/var/www/website-ts` yang hanya berisi folder build, tanpa file konfigurasi.
+
+## Solusi: Buat Konfigurasi Nginx Langsung di Server
+
+### Step 1: Buat File Konfigurasi Nginx
+
+**Jalankan di server:**
+
+```bash
+sudo nano /etc/nginx/sites-available/rickychen930.cloud
+```
+
+**Copy-paste konfigurasi berikut (sesuaikan domain jika berbeda):**
+
+```nginx
 # Nginx Configuration for website-ts
-# 
-# INSTRUKSI SETUP:
-# 1. Pastikan folder build ada di: /var/www/website-ts/build
-# 2. Copy file ini: sudo cp config/nginx.conf /etc/nginx/sites-available/rickychen930.cloud
-# 3. Buat symlink: sudo ln -s /etc/nginx/sites-available/rickychen930.cloud /etc/nginx/sites-enabled/
-# 4. Test: sudo nginx -t
-# 5. Reload: sudo systemctl reload nginx
-#
-# CATATAN PENTING:
-# - Build folder berada di: /var/www/website-ts/build
-# - Pastikan folder sudah dibuat dan memiliki permission yang benar: sudo chown -R www-data:www-data /var/www/website-ts
+# Build folder: /var/www/website-ts/build
 
 # HTTP to HTTPS redirect
 server {
@@ -65,7 +76,6 @@ server {
     client_max_body_size 10M;
 
     # Root directory untuk static files
-    # Build folder berada di: /var/www/website-ts/build
     root /var/www/website-ts/build;
     index index.html;
 
@@ -143,4 +153,147 @@ server {
     access_log /var/log/nginx/rickychen930.cloud.access.log;
     error_log /var/log/nginx/rickychen930.cloud.error.log;
 }
+```
+
+**Simpan file:**
+- Tekan `Ctrl+X`
+- Tekan `Y` untuk confirm
+- Tekan `Enter`
+
+### Step 2: Buat Symlink
+
+```bash
+# Hapus symlink lama jika ada
+sudo rm -f /etc/nginx/sites-enabled/rickychen930.cloud
+
+# Buat symlink baru
+sudo ln -s /etc/nginx/sites-available/rickychen930.cloud /etc/nginx/sites-enabled/
+
+# Verifikasi
+ls -la /etc/nginx/sites-enabled/ | grep rickychen930
+```
+
+### Step 3: Set Permission Folder Build
+
+```bash
+# Set ownership ke www-data (user nginx)
+sudo chown -R www-data:www-data /var/www/website-ts
+
+# Set permission yang benar
+sudo chmod -R 755 /var/www/website-ts
+
+# Verifikasi
+ls -la /var/www/website-ts
+```
+
+### Step 4: Test Konfigurasi
+
+```bash
+# Test konfigurasi nginx
+sudo nginx -t
+```
+
+**Jika berhasil**, akan muncul:
+```
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+**Jika ada error**, perbaiki sesuai error yang muncul.
+
+### Step 5: Reload Nginx
+
+```bash
+# Reload nginx
+sudo systemctl reload nginx
+
+# Cek status
+sudo systemctl status nginx
+```
+
+### Step 6: Verifikasi
+
+```bash
+# Test website
+curl -I https://rickychen930.cloud
+
+# Atau test dari browser
+# https://rickychen930.cloud
+```
+
+## Troubleshooting
+
+### Error: "No such file or directory" untuk build folder
+
+```bash
+# Cek apakah folder build ada
+ls -la /var/www/website-ts/build
+
+# Jika belum ada, buat folder
+sudo mkdir -p /var/www/website-ts/build
+sudo chown -R www-data:www-data /var/www/website-ts
+sudo chmod -R 755 /var/www/website-ts
+```
+
+### Error: "Permission denied"
+
+```bash
+# Fix permission
+sudo chown -R www-data:www-data /var/www/website-ts
+sudo chmod -R 755 /var/www/website-ts
+```
+
+### Error: SSL certificate tidak ditemukan
+
+Jika belum setup SSL, Anda bisa setup dulu:
+
+```bash
+# Install certbot
+sudo apt-get update
+sudo apt-get install certbot python3-certbot-nginx -y
+
+# Generate SSL certificate
+sudo certbot --nginx -d rickychen930.cloud -d www.rickychen930.cloud
+```
+
+**ATAU** jika belum ada SSL, Anda bisa temporary menggunakan HTTP saja dengan mengedit konfigurasi:
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name rickychen930.cloud www.rickychen930.cloud;
+    
+    root /var/www/website-ts/build;
+    index index.html;
+    
+    # ... (copy semua location blocks dari HTTPS server, tanpa SSL config)
+}
+```
+
+## Quick Command Reference
+
+```bash
+# Edit konfigurasi
+sudo nano /etc/nginx/sites-available/rickychen930.cloud
+
+# Test konfigurasi
+sudo nginx -t
+
+# Reload nginx
+sudo systemctl reload nginx
+
+# Status nginx
+sudo systemctl status nginx
+
+# View error log
+sudo tail -f /var/log/nginx/rickychen930.cloud.error.log
+
+# View access log
+sudo tail -f /var/log/nginx/rickychen930.cloud.access.log
+```
+
+---
+
+**Selamat! Setup nginx selesai! 🎉**
 

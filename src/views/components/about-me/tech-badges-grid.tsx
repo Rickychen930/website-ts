@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from "react";
-import TechBadge from "./tech-badge-component";
+import TechBadge from "./tech-badge";
 import "../../../assets/css/about-me-components.css";
 
 /**

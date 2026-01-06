@@ -19,7 +19,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { SkillCategoryCard } from "../../components/technical-skills";
 import { TechnicalSkillsController } from "../../../controllers/technical-skills-controller";
 import { UserProfile } from "../../../types/user";

@@ -20,7 +20,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import Card from "../../components/card-component";
+import { Card } from "../../components/common";
 import { ProjectGrid } from "../../components/projects";
 import { ProjectController } from "../../../controllers/project-controller";
 import { IProject } from "../../../models/project-model";

@@ -25,9 +25,9 @@
  */
 
 import React, { PureComponent, ReactNode } from "react";
-import { FooterController } from "../../controllers/footer-controller";
-import { IFooterData } from "../../models/footer-model";
-import { UserProfile } from "../../types/user";
+import { FooterController } from "../../../controllers/footer-controller";
+import { IFooterData } from "../../../models/footer-model";
+import { UserProfile } from "../../../types/user";
 import {
   FooterQuickLinks,
   FooterSocialLinks,
@@ -35,8 +35,8 @@ import {
   FooterCopyright,
   FooterStats,
   FooterCodeSnippet,
-} from "./footer";
-import "../../assets/css/footer-section.css";
+} from "./index";
+import "../../../assets/css/footer-section.css";
 
 /**
  * MainPageFooterComponent Props

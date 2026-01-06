@@ -1,15 +1,29 @@
+#!/bin/bash
+
+# Script untuk setup nginx langsung di server
+# Usage: curl -s https://raw.githubusercontent.com/your-repo/website-ts/main/scripts/setup-nginx-on-server.sh | sudo bash
+# ATAU copy-paste script ini ke server dan jalankan: sudo bash setup-nginx-on-server.sh
+
+set -e
+
+echo "🔧 Setting up Nginx configuration for /var/www/website-ts/build"
+echo ""
+
+# Check if running as root
+if [ "$EUID" -ne 0 ]; then 
+    echo "❌ Please run as root (use sudo)"
+    exit 1
+fi
+
+NGINX_CONFIG="/etc/nginx/sites-available/rickychen930.cloud"
+NGINX_ENABLED="/etc/nginx/sites-enabled/rickychen930.cloud"
+
+# Create nginx config file
+echo "📝 Creating nginx configuration..."
+
+cat > "$NGINX_CONFIG" << 'EOF'
 # Nginx Configuration for website-ts
-# 
-# INSTRUKSI SETUP:
-# 1. Pastikan folder build ada di: /var/www/website-ts/build
-# 2. Copy file ini: sudo cp config/nginx.conf /etc/nginx/sites-available/rickychen930.cloud
-# 3. Buat symlink: sudo ln -s /etc/nginx/sites-available/rickychen930.cloud /etc/nginx/sites-enabled/
-# 4. Test: sudo nginx -t
-# 5. Reload: sudo systemctl reload nginx
-#
-# CATATAN PENTING:
-# - Build folder berada di: /var/www/website-ts/build
-# - Pastikan folder sudah dibuat dan memiliki permission yang benar: sudo chown -R www-data:www-data /var/www/website-ts
+# Build folder: /var/www/website-ts/build
 
 # HTTP to HTTPS redirect
 server {
@@ -65,7 +79,6 @@ server {
     client_max_body_size 10M;
 
     # Root directory untuk static files
-    # Build folder berada di: /var/www/website-ts/build
     root /var/www/website-ts/build;
     index index.html;
 
@@ -143,4 +156,62 @@ server {
     access_log /var/log/nginx/rickychen930.cloud.access.log;
     error_log /var/log/nginx/rickychen930.cloud.error.log;
 }
+EOF
+
+echo "✅ Nginx configuration created at $NGINX_CONFIG"
+
+# Set permission for build folder
+echo ""
+echo "📁 Setting permissions for build folder..."
+mkdir -p /var/www/website-ts/build
+chown -R www-data:www-data /var/www/website-ts
+chmod -R 755 /var/www/website-ts
+echo "✅ Permissions set"
+
+# Create symlink
+echo ""
+echo "🔗 Creating symlink..."
+rm -f "$NGINX_ENABLED"
+ln -s "$NGINX_CONFIG" "$NGINX_ENABLED"
+echo "✅ Symlink created: $NGINX_ENABLED"
+
+# Test nginx configuration
+echo ""
+echo "🧪 Testing nginx configuration..."
+if nginx -t; then
+    echo "✅ Nginx configuration is valid"
+    echo ""
+    
+    # Ask for reload
+    read -p "🔄 Reload nginx sekarang? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        systemctl reload nginx
+        echo "✅ Nginx reloaded successfully"
+        echo ""
+        echo "🌐 Website seharusnya sudah bisa diakses!"
+    else
+        echo "⚠️  Nginx belum di-reload. Jalankan manual:"
+        echo "   sudo systemctl reload nginx"
+    fi
+else
+    echo "❌ Nginx configuration test failed"
+    echo ""
+    echo "💡 Periksa error di atas dan perbaiki konfigurasi."
+    echo "   Edit file: $NGINX_CONFIG"
+    exit 1
+fi
+
+echo ""
+echo "✅ Setup complete!"
+echo ""
+echo "📝 Next steps:"
+echo "1. Pastikan SSL certificates sudah terinstall:"
+echo "   sudo certbot certonly --nginx -d rickychen930.cloud -d www.rickychen930.cloud"
+echo ""
+echo "2. Cek status nginx:"
+echo "   sudo systemctl status nginx"
+echo ""
+echo "3. Test website:"
+echo "   curl -I https://rickychen930.cloud"
 
