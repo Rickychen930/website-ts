@@ -108,10 +108,51 @@
 
   .project-filter-group {
     flex: 1;
+    min-width: 0;
   }
 
   .project-filter-group:last-child {
     flex: 0 0 200px;
+    min-width: 200px;
+  }
+}
+
+/* Mobile layout improvements */
+@media (max-width: 767px) {
+  .project-filters {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-filter-buttons {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 0.5rem;
+  }
+
+  .project-filter-buttons::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .project-filter-buttons::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 2px;
+  }
+
+  .project-filter-buttons::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .project-filter-button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .project-filter-select {
+    width: 100%;
+    max-width: 100%;
   }
 }
 

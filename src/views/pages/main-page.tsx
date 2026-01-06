@@ -361,6 +361,7 @@ class MainPage extends BasePage<{}, MainPageState> {
         <BackToTopButton />
         <GlobalSearch 
           profile={profile}
+          showTrigger={false}
           onResultClick={(result) => {
             // Scroll handled in GlobalSearch component
             toast.info(`Navigating to ${result.section}`, 2000);

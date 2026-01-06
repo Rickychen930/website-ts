@@ -89,8 +89,7 @@
 }
 
 /* ============================================
-   Base Navbar Container - Ultra Premium Glassmorphism
-   Multi-layer Visual Effects & Advanced Animations
+   Base Navbar Container - Modern & Clean Design
    ============================================ */
 .navbar {
   position: fixed;
@@ -100,64 +99,39 @@
   z-index: var(--navbar-z-index);
   width: 100%;
   min-height: var(--navbar-height);
-  background: var(--gradient-surface);
-  backdrop-filter: blur(var(--navbar-blur)) saturate(220%) brightness(1.02);
-  -webkit-backdrop-filter: blur(var(--navbar-blur)) saturate(220%) brightness(1.02);
-  border-bottom: 1px solid rgba(220, 227, 234, 0.25);
-  box-shadow: var(--shadow-navbar-default);
-  transition: all var(--timing-slow) var(--easing-premium);
+  background: rgba(15, 20, 25, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  transition: all var(--timing-normal) var(--easing-smooth);
   position: relative;
   overflow: hidden;
-  will-change: transform, background, box-shadow, opacity;
-  transform: translateZ(0); /* GPU acceleration */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Multi-layer animated gradient overlay - Premium shimmer effect */
+/* Subtle gradient overlay */
 .navbar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(102, 126, 234, 0.06) 20%,
-    rgba(118, 75, 162, 0.08) 40%,
-    rgba(240, 147, 251, 0.06) 60%,
-    rgba(102, 126, 234, 0.04) 80%,
-    transparent 100%
-  );
-  animation: navbarShimmer 15s infinite linear;
-  pointer-events: none;
-  z-index: 0;
-  transform: translateZ(0);
-}
-
-/* Radial gradient overlay for depth */
-.navbar::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--gradient-primary-radial);
-  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(102, 126, 234, 0.05) 50%,
+    transparent 100%
+  );
   pointer-events: none;
   z-index: 0;
-  animation: gradientPulse 8s ease-in-out infinite;
+  opacity: 0.5;
 }
 
-/* Premium top border with gradient glow */
-.navbar {
-  position: relative;
-}
-
-.navbar::before {
+/* Top border accent */
+.navbar::after {
   content: "";
   position: absolute;
   top: 0;
@@ -167,39 +141,11 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(102, 126, 234, 0.4) 20%,
-    rgba(118, 75, 162, 0.5) 50%,
-    rgba(240, 147, 251, 0.4) 80%,
+    rgba(102, 126, 234, 0.6) 50%,
     transparent
   );
-  opacity: 0.6;
+  opacity: 0.8;
   z-index: 2;
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-}
-
-@keyframes navbarShimmer {
-  0% { 
-    left: -100%; 
-    opacity: 0;
-  }
-  10%, 90% {
-    opacity: 1;
-  }
-  100% { 
-    left: 0%; 
-    opacity: 0;
-  }
-}
-
-@keyframes gradientPulse {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.05);
-  }
 }
 
 .navbar.scrolled {
@@ -241,15 +187,10 @@
   padding-bottom: 1.25rem;
 }
 
-/* Premium hover effect on navbar - Advanced interaction */
+/* Subtle hover effect */
 .navbar:hover {
-  backdrop-filter: blur(calc(var(--navbar-blur) * 1.1)) saturate(230%) brightness(1.03);
-  -webkit-backdrop-filter: blur(calc(var(--navbar-blur) * 1.1)) saturate(230%) brightness(1.03);
-}
-
-.navbar:hover::before {
-  animation-duration: 10s;
-  opacity: 1;
+  background: rgba(15, 20, 25, 0.9);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
 .navbar.scrolled:hover {

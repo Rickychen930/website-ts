@@ -29,6 +29,7 @@ import { Card } from "../../components/common";
 import { CertificationController } from "../../../controllers/certification-controller";
 import { ICertification } from "../../../models/certification-model";
 import { CertificationGrid } from "../../components/certification";
+import { EmptyState } from "../../components/ui";
 import "../../../assets/css/certification-section.css";
 
 /**
@@ -76,17 +77,44 @@ class CertificationSection extends Component<
     // This allows for easy testing and mocking
     this.controller = new CertificationController();
 
-    // Normalize and process data through controller
-    // View layer delegates all business logic to controller
-    const normalizedData = this.normalizeData(props.data);
-    const processedData = this.controller.processData(normalizedData);
-
+    // Initialize state - data will be processed in componentDidMount
+    // Better practice: Avoid processing in constructor
     this.state = {
       visibleItems: new Set(),
       error: null,
-      processedData,
+      processedData: [],
       isLoading: false,
     };
+  }
+
+  /**
+   * Component lifecycle - Mount
+   * Process data on mount (better than constructor)
+   */
+  componentDidMount(): void {
+    this.processData();
+  }
+
+  /**
+   * Process data through controller
+   * Centralized data processing for better maintainability
+   */
+  private processData(): void {
+    this.setState({ isLoading: true });
+
+    // Normalize and process data through controller
+    // View layer delegates all business logic to controller
+    const normalizedData = this.normalizeData(this.props.data);
+    const processedData = this.controller.processData(normalizedData);
+
+    // Validate through controller
+    const validation = this.controller.validateData(normalizedData);
+
+    this.setState({
+      processedData,
+      error: validation.isValid ? null : validation.error,
+      isLoading: false,
+    });
   }
 
   /**
@@ -122,21 +150,7 @@ class CertificationSection extends Component<
    */
   componentDidUpdate(prevProps: CertificationSectionProps): void {
     if (prevProps.data !== this.props.data) {
-      this.setState({ isLoading: true });
-
-      // Normalize and process through controller
-      const normalizedData = this.normalizeData(this.props.data);
-      const processedData = this.controller.processData(normalizedData);
-
-      // Validate through controller
-      const validation = this.controller.validateData(normalizedData);
-
-      this.setState({
-        processedData,
-        visibleItems: new Set(),
-        error: validation.isValid ? null : validation.error,
-        isLoading: false,
-      });
+      this.processData();
     }
   }
 
@@ -178,23 +192,16 @@ class CertificationSection extends Component<
 
   /**
    * Render empty state
+   * Uses reusable EmptyState component for consistency
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div
-        className="certification-empty"
-        role="status"
-        aria-live="polite"
-        aria-label="No certifications available"
-      >
-        <div className="certification-empty-icon" aria-hidden="true">
-          📜
-        </div>
-        <h3 className="certification-empty-title">No Certifications Yet</h3>
-        <p className="certification-empty-message">
-          Certifications will appear here once available.
-        </p>
-      </div>
+      <EmptyState
+        icon="📜"
+        title="No Certifications Yet"
+        message="Certifications will appear here once available."
+        variant="default"
+      />
     );
   }
 
@@ -275,7 +282,7 @@ class CertificationSection extends Component<
     // Handle validation errors
     if (!validation.isValid && validation.error) {
       return (
-        <Card id="certification-section">
+        <Card id="certification-section" title="Certifications">
           {this.renderErrorState(validation.error)}
         </Card>
       );
@@ -284,14 +291,14 @@ class CertificationSection extends Component<
     // Handle empty data
     if (!data || data.length === 0) {
       return (
-        <Card id="certification-section">
+        <Card id="certification-section" title="Certifications">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="certification-section">
+      <Card id="certification-section" title="Certifications">
         {this.renderCertificationGrid()}
       </Card>
     );

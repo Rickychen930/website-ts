@@ -659,12 +659,22 @@
   .contact-card {
     padding: 2rem 1.5rem;
     border-radius: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .contact-card-copy {
     width: 2.5rem;
     height: 2.5rem;
     font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .contact-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 18px;
   }
 }
 

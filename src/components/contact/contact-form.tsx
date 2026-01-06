@@ -299,7 +299,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
                 Sending...
               </>
             ) : (
-              "Send Message"
+              "Submit Inquiry"
             )}
           </button>
         </div>

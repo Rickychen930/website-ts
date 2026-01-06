@@ -7,6 +7,7 @@ export { default as LoadingComponent } from "./loading";
 export { default as LoadingSkeleton } from "./loading-skeleton";
 export { default as ErrorBoundary } from "./error-boundary";
 export { default as ErrorComponent } from "./error";
+export { default as EmptyState } from "./empty-state";
 export { default as BackToTopButton } from "./back-to-top-button";
 export { ToastContainer, toast, toastManager } from "./toast";
 export type { Toast, ToastType } from "./toast";

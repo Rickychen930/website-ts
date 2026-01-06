@@ -1155,11 +1155,24 @@
 @media screen and (max-width: 479px) {
   #certification-section .certification-section-wrapper {
     margin-top: 1.75rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   #certification-section .certification-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  #certification-section .certification-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   #certification-section .certification-card {

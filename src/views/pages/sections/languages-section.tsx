@@ -26,6 +26,7 @@ import { Card } from "../../components/common";
 import { LanguageController } from "../../../controllers/language-controller";
 import { ILanguage } from "../../../models/language-model";
 import { LanguageGrid } from "../../components/languages";
+import { EmptyState } from "../../components/ui";
 import "../../../assets/css/languages-section.css";
 
 /**
@@ -182,17 +183,16 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
 
   /**
    * Render empty state
-   * Elegant empty state with proper messaging
+   * Elegant empty state with proper messaging - Uses reusable EmptyState component
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="language-empty-state" role="status" aria-live="polite">
-        <div className="language-empty-icon" aria-hidden="true">🌐</div>
-        <h3 className="language-empty-title">No Languages Available</h3>
-        <p className="language-empty-text">
-          Language information will appear here when available.
-        </p>
-      </div>
+      <EmptyState
+        icon="🌐"
+        title="No Languages Available"
+        message="Language information will appear here when available."
+        variant="default"
+      />
     );
   }
 
@@ -228,7 +228,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Handle initialization errors
     if (error) {
       return (
-        <Card id="languages-section">
+        <Card id="languages-section" title="Languages">
           {this.renderErrorState(error)}
         </Card>
       );
@@ -237,7 +237,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Handle empty data
     if (!data || data.length === 0) {
       return (
-        <Card id="languages-section">
+        <Card id="languages-section" title="Languages">
           {this.renderEmptyState()}
         </Card>
       );
@@ -246,7 +246,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Wait for initialization
     if (!isInitialized) {
       return (
-        <Card id="languages-section">
+        <Card id="languages-section" title="Languages">
           <div className="language-loading-state" role="status" aria-live="polite">
             <div className="language-loading-spinner" aria-hidden="true"></div>
             <p className="language-loading-text">Loading languages...</p>
@@ -257,7 +257,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
 
     // Render main content
     return (
-      <Card id="languages-section">
+      <Card id="languages-section" title="Languages">
         {this.renderLanguagesGrid()}
       </Card>
     );

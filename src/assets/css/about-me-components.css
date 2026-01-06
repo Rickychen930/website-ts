@@ -695,6 +695,44 @@
   }
 }
 
+/* ============================================
+   Horizontal Scroll Optimization for Tech Badges
+   ============================================ */
+@media screen and (width <= 640px) {
+  .tech-badges-grid-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    padding-bottom: 0.5rem;
+  }
+
+  .tech-badges-grid-container::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .tech-badges-grid-container::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 2px;
+  }
+
+  .tech-badges-grid-container::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .tech-badges-grid {
+    flex-wrap: nowrap;
+    min-width: max-content;
+    padding-right: 1rem;
+  }
+
+  .tech-badge {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
 @media screen and (width <= 480px) {
   .hero-header-name {
     font-size: 1.75rem;

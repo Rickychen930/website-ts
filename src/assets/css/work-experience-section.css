@@ -183,11 +183,28 @@
 @media screen and (width <= 480px) {
   .work-experience-container {
     padding: var(--work-spacing-xs);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .work-experience-empty-icon,
   .work-experience-error-icon {
     font-size: 2.5rem;
+  }
+}
+
+/* ============================================
+   Responsive Design - Extra Small Mobile
+   ============================================ */
+@media screen and (width <= 360px) {
+  .work-experience-container {
+    padding: var(--work-spacing-xs);
+  }
+
+  .work-experience-empty-icon,
+  .work-experience-error-icon {
+    font-size: 2rem;
   }
 }
 

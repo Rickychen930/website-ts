@@ -364,11 +364,20 @@
 
 /* Extra Small Mobile Devices (360px - 479px) */
 @media screen and (max-width: 479px) {
+  #contact-section .contact-section-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   #contact-section .contact-section-empty,
   #contact-section .contact-section-error,
   #contact-section .contact-section-loading {
     min-height: 180px;
     padding: var(--contact-spacing-md) var(--contact-spacing-xs);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   #contact-section .contact-section-empty-icon,
@@ -384,6 +393,8 @@
   #contact-section .contact-section-empty-message,
   #contact-section .contact-section-error-message {
     font-size: 0.85rem;
+    max-width: 100%;
+    padding: 0 var(--contact-spacing-xs);
   }
 }
 

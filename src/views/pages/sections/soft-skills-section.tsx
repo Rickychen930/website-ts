@@ -28,6 +28,7 @@ import { Card } from "../../components/common";
 import { SoftSkillGrid } from "../../components/soft-skills";
 import { SoftSkillsController } from "../../../controllers/soft-skills-controller";
 import { SoftSkillsModel, SoftSkillItem } from "../../../models/soft-skills-model";
+import { EmptyState } from "../../components/ui";
 import "../../../assets/css/soft-skills-section.css";
 
 /**
@@ -195,17 +196,16 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
       return (
         <Card
           id="soft-skills-section"
+          title="Soft Skills"
           variant="default"
           ariaLabel="Soft skills section"
         >
-          <div className="soft-skills-empty" role="status" aria-live="polite">
-            <div className="soft-skills-empty-icon" aria-hidden="true">
-              💼
-            </div>
-            <p className="soft-skills-empty-text">
-              No soft skills available at the moment.
-            </p>
-          </div>
+          <EmptyState
+            icon="💼"
+            title="No Soft Skills Available"
+            message="Soft skills information will appear here once available."
+            variant="default"
+          />
         </Card>
       );
     }
@@ -213,6 +213,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
     return (
       <Card
         id="soft-skills-section"
+        title="Soft Skills"
         variant="default"
         ariaLabel="Soft skills section"
       >

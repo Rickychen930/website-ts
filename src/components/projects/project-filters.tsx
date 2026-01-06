@@ -82,10 +82,26 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
         });
 
       case "date-desc":
-        return sorted.sort((a, b) => this.compareDates(a.date, b.date));
+        return sorted.sort((a, b) => {
+          const dateCompare = this.compareDates(a.date, b.date);
+          // If dates are equal, maintain featured priority
+          if (dateCompare === 0) {
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+          }
+          return dateCompare;
+        });
 
       case "date-asc":
-        return sorted.sort((a, b) => this.compareDates(b.date, a.date));
+        return sorted.sort((a, b) => {
+          const dateCompare = this.compareDates(b.date, a.date);
+          // If dates are equal, maintain featured priority
+          if (dateCompare === 0) {
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+          }
+          return dateCompare;
+        });
 
       case "name-asc":
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -100,9 +116,21 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
 
   private compareDates = (dateA: string, dateB: string): number => {
     const getDateValue = (dateStr: string): number => {
-      // Try to extract year from date string
+      if (!dateStr) return 0;
+      
+      // Try to parse full date first (e.g., "2024-01-15", "Jan 2024", "2024")
+      const fullDate = new Date(dateStr);
+      if (!isNaN(fullDate.getTime())) {
+        return fullDate.getTime();
+      }
+      
+      // Try to extract year from date string (e.g., "2020-2024" or "2024")
       const yearMatch = dateStr.match(/\d{4}/);
-      return yearMatch ? parseInt(yearMatch[0], 10) : 0;
+      if (yearMatch) {
+        return parseInt(yearMatch[0], 10) * 10000; // Multiply to make year-based sorting work
+      }
+      
+      return 0;
     };
 
     return getDateValue(dateB) - getDateValue(dateA); // Descending (newest first)

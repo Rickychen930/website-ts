@@ -377,6 +377,17 @@
 @media screen and (width <= 480px) {
   .honors-grid {
     gap: 1.25rem;
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 0.5rem 0;
+  }
+
+  .honors-grid__item {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .honors-empty-state,
@@ -384,6 +395,9 @@
     padding: 2.5rem 1rem;
     min-height: 250px;
     border-radius: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .honors-empty-icon,
@@ -401,6 +415,7 @@
   .honors-error-message {
     font-size: 0.9rem;
     max-width: 100%;
+    padding: 0 0.5rem;
   }
 }
 
@@ -408,12 +423,25 @@
 @media screen and (width <= 360px) {
   .honors-grid {
     gap: 1rem;
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .honors-grid__item {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .honors-empty-state,
   .honors-error-state {
     padding: 2rem 0.9rem;
     border-radius: 18px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .honors-empty-icon,
@@ -429,6 +457,7 @@
   .honors-empty-text,
   .honors-error-message {
     font-size: 0.85rem;
+    max-width: 100%;
   }
 }
 

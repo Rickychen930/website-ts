@@ -29,6 +29,8 @@ import React, { Component, ReactNode, createRef, RefObject } from "react";
 import { WorkExperienceController } from "../../../controllers/work-experience-controller";
 import { WorkExperienceModel, IWorkExperienceItem } from "../../../models/work-experience-model";
 import { WorkExperienceTimeline } from "../../components/work-experience";
+import { EmptyState } from "../../components/ui";
+import { Card } from "../../components/common";
 import "../../../assets/css/work-experience-section.css";
 
 /**
@@ -333,16 +335,16 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
   /**
    * Render empty state
-   * Handles edge case when no data is available
+   * Handles edge case when no data is available - Uses reusable EmptyState component
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="work-experience-empty" role="status" aria-live="polite">
-        <div className="work-experience-empty-icon" aria-hidden="true">💼</div>
-        <p className="work-experience-empty-text">
-          No work experience data available at the moment.
-        </p>
-      </div>
+      <EmptyState
+        icon="💼"
+        title="No Work Experience"
+        message="Work experience information will appear here once available."
+        variant="default"
+      />
     );
   }
 
@@ -364,43 +366,53 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
   /**
    * Main render method
-   * Enhanced with filtering for null items
+   * Enhanced with filtering for null items and consistent Card wrapper
    */
   public render(): ReactNode {
     const { experiences, visibleItems, durations, error, isInitialized } = this.state;
 
     // Edge case: Handle error state
     if (error) {
-      return this.renderErrorState();
+      return (
+        <Card id="work-experience-section" title="Work Experience">
+          {this.renderErrorState()}
+        </Card>
+      );
     }
 
     // Edge case: Handle empty or undefined data
     if (!experiences || experiences.length === 0) {
-      return this.renderEmptyState();
+      return (
+        <Card id="work-experience-section" title="Work Experience">
+          {this.renderEmptyState()}
+        </Card>
+      );
     }
 
     // Wait for observer initialization
     if (!isInitialized) {
       return (
-        <div className="work-experience-container" ref={this.containerRef}>
+        <Card id="work-experience-section" title="Work Experience">
           <div className="work-experience-loading">Loading...</div>
-        </div>
+        </Card>
       );
     }
 
     return (
-      <div 
-        className="work-experience-container" 
-        ref={this.containerRef}
-        role="region"
-        aria-label="Work Experience Timeline"
-      >
-        <WorkExperienceTimeline
-          items={experiences}
-          visibleItems={visibleItems}
-          durations={durations}
-        />
-      </div>
+      <Card id="work-experience-section" title="Work Experience">
+        <div 
+          className="work-experience-container" 
+          ref={this.containerRef}
+          role="region"
+          aria-label="Work Experience Timeline"
+        >
+          <WorkExperienceTimeline
+            items={experiences}
+            visibleItems={visibleItems}
+            durations={durations}
+          />
+        </div>
+      </Card>
     );
   }
 }

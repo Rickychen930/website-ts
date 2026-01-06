@@ -284,12 +284,13 @@
 
 .about-me-bio {
   margin: 0;
-  color: var(--about-me-color-text-body);
+  color: rgba(255, 255, 255, 0.85);
   font-size: clamp(1rem, 2.2vw, 1.15rem);
-  line-height: 1.8;
+  line-height: 1.85;
   max-width: 70ch;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
   font-weight: 400;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================
@@ -414,13 +415,14 @@
 
 .about-me-highlights-title {
   margin: 0 0 var(--about-me-spacing-lg) 0;
-  color: var(--about-me-color-text-heading);
+  color: #ffffff;
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1.2;
   position: relative;
   padding-bottom: var(--about-me-spacing-sm);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
 }
 
 .about-me-highlights-title::after {
@@ -528,15 +530,17 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
 }
 
 #about-me-section.card .profile-stat span {
-  color: var(--about-me-color-text-subtle);
+  color: rgba(255, 255, 255, 0.7);
   font-size: clamp(0.9rem, 2vw, 1rem);
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.5;
   display: block;
+  letter-spacing: 0.01em;
 }
 
 /* ============================================
@@ -686,54 +690,104 @@
 @media screen and (width <= 480px) {
   .about-me-content {
     gap: var(--about-me-spacing-lg);
+    padding: 0 var(--about-me-spacing-sm);
+  }
+
+  .about-me-main-content {
+    padding: var(--about-me-spacing-md) 0;
   }
 
   .about-me-hero-section {
     gap: var(--about-me-spacing-lg);
+    padding: 0;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 200px;
-    height: 200px;
-    border-width: 5px;
+    width: 180px;
+    height: 180px;
+    border-width: 4px;
+    max-width: 100%;
   }
 
   .about-me-actions {
     flex-direction: column;
     width: 100%;
+    gap: var(--about-me-spacing-sm);
   }
 
   .about-me-featured-tech {
     padding: var(--about-me-spacing-sm);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .about-me-hero-background::before,
   .about-me-hero-background::after {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
   }
 
   #about-me-section.card .profile-btn,
   .card#about-me-section .profile-btn {
     width: 100%;
     max-width: 100%;
+    min-width: auto;
   }
 
   .about-me-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--about-me-spacing-sm);
     padding-top: var(--about-me-spacing-lg);
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   #about-me-section.card .profile-stat,
   .card#about-me-section .profile-stat {
     min-width: auto;
     padding: var(--about-me-spacing-sm);
+    width: 100%;
   }
 
   .about-me-highlights-grid {
     grid-template-columns: 1fr;
+    gap: var(--about-me-spacing-sm);
+  }
+
+  .about-me-bio {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    line-height: 1.7;
+    padding: 0 var(--about-me-spacing-xs);
+  }
+}
+
+/* ============================================
+   Responsive Design - Extra Small Mobile
+   ============================================ */
+@media screen and (width <= 360px) {
+  .about-me-content {
+    gap: var(--about-me-spacing-md);
+    padding: 0 var(--about-me-spacing-xs);
+  }
+
+  .about-me-image-container .image-component.about-me-image,
+  .about-me-image-container img.about-me-image {
+    width: 150px;
+    height: 150px;
+    border-width: 3px;
+  }
+
+  .about-me-stats {
+    grid-template-columns: 1fr;
+    gap: var(--about-me-spacing-xs);
+  }
+
+  .about-me-hero-background::before,
+  .about-me-hero-background::after {
+    width: 200px;
+    height: 200px;
   }
 }
 

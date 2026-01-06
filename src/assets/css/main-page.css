@@ -5,62 +5,41 @@
  */
 
 /* ============================================
-   Main Page Container - Ultra Premium Background Effects
-   Advanced Software Engineering Showcase
+   Main Page Container - Professional & Modern Design
+   Clean, Sophisticated Background
    ============================================ */
 .main-page {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #0a0e27;
+  background: #0a0e14;
   background-image: 
-    radial-gradient(circle at 15% 25%, rgba(102, 126, 234, 0.2) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(118, 75, 162, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 25% 80%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
-    linear-gradient(135deg, #0a0e27 0%, #1a1f3a 30%, #0f1428 60%, #0a0e27 100%);
+    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #0a0e14 0%, #0f1419 50%, #0a0e14 100%);
   position: relative;
   overflow-x: hidden;
   isolation: isolate;
-  /* Advanced backdrop effects - disabled for performance */
-  /* backdrop-filter: blur(0px); */
-  /* -webkit-backdrop-filter: blur(0px); */
 }
 
-/* Optimized Background - Reduced animations untuk performance */
+/* Subtle Background Overlay - Performance Optimized */
 .main-page::before {
   content: "";
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: 
-    radial-gradient(circle at 25% 35%, rgba(102, 126, 234, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 75% 65%, rgba(118, 75, 162, 0.06) 0%, transparent 45%),
-    radial-gradient(circle at 50% 20%, rgba(240, 147, 251, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 20% 80%, rgba(79, 172, 254, 0.04) 0%, transparent 35%);
-  /* Reduced animation untuk better performance */
-  animation: backgroundShift 40s ease-in-out infinite;
+    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(80px);
-  /* Remove will-change untuk better performance */
+  opacity: 0.6;
 }
 
-@keyframes backgroundShift {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate(5%, 5%) scale(1.02);
-    opacity: 0.95;
-  }
-}
-
-/* Advanced Grid Pattern Overlay - Technical Showcase */
+/* Subtle Grid Pattern - Minimal & Professional */
 .main-page::after {
   content: "";
   position: fixed;
@@ -69,30 +48,27 @@
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(rgba(102, 126, 234, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102, 126, 234, 0.04) 1px, transparent 1px),
-    linear-gradient(rgba(118, 75, 162, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(118, 75, 162, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px, 50px 50px, 100px 100px, 100px 100px;
+    linear-gradient(rgba(102, 126, 234, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 126, 234, 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.3;
-  /* Removed animation untuk better performance */
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+  opacity: 0.15;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
 }
 
 /* Removed gridPulse animation untuk better performance */
 
 /* ============================================
-   Contents Section - Advanced Layout
+   Contents Section - Clean & Spacious Layout
    ============================================ */
 .contents-section {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  padding: 6rem clamp(2rem, 6vw, 6rem) 4rem;
+  gap: 4.5rem;
+  padding: 7rem clamp(2rem, 6vw, 6rem) 5rem;
   margin: 0 auto;
   width: 100%;
   max-width: 1400px;
@@ -101,218 +77,73 @@
 }
 
 /* ============================================
-   Section Block - Ultra Premium Design with 3D Effects
-   Advanced Software Engineering Showcase
+   Section Block - Clean & Modern Design
    ============================================ */
 .section-block {
   scroll-margin-top: 8rem;
   position: relative;
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(30px);
   transition: 
-    opacity 0.4s ease,
-    transform 0.4s ease;
-  animation: sectionReveal 0.6s ease forwards;
-  /* will-change: transform, opacity; - disabled for performance */
-  /* transform-style: preserve-3d; - disabled for performance */
-}
-
-/* Removed revealed animation - handled by lazy-section */
-
-/* 3D Hover Effect - Showcase Technical Skills - simplified for performance */
-.section-block:hover {
-  /* Simplified hover effect untuk better performance */
-  box-shadow: var(--shadow-card-hover);
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
 /* Removed animation delays - handled by lazy-section component */
 
-/* Ultra Premium Glassmorphism Effect - Advanced Visual Engineering */
-.section-block::before {
-  content: "";
-  position: absolute;
-  top: -2.5rem;
-  left: -2.5rem;
-  right: -2.5rem;
-  bottom: -2.5rem;
-  background: 
-    linear-gradient(
-      135deg,
-      rgba(102, 126, 234, 0.08) 0%,
-      rgba(118, 75, 162, 0.06) 30%,
-      rgba(240, 147, 251, 0.05) 60%,
-      rgba(79, 172, 254, 0.04) 100%
-    ),
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(102, 126, 234, 0.1) 0%,
-      transparent 50%
-    );
-  border-radius: 36px;
-  /* backdrop-filter: blur(30px) saturate(180%); - disabled for performance */
-  /* -webkit-backdrop-filter: blur(30px) saturate(180%); */
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  z-index: -1;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 0 0 1px rgba(102, 126, 234, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: scale(0.98);
-}
-
-.section-block:hover::before {
-  opacity: 0.5;
-  /* Simplified hover effect */
-}
-
-/* Removed ::after glow effect untuk better performance */
+/* Removed excessive effects for cleaner design */
 
 /* ============================================
-   Section Header - Advanced Typography with Gradient Text
+   Section Header - Clean & Professional Typography
    ============================================ */
 .section-header {
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
   text-align: center;
   position: relative;
   padding: 1.5rem 0;
 }
 
 .section-title {
-  margin: 0 0 2rem 0;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.05em;
+  margin: 0 0 1.5rem 0;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
   font-family: var(--font-display, 'Inter', system-ui, sans-serif);
-  background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #f0f4ff 15%,
-    #e0e9ff 30%,
-    #d1deff 45%,
-    #c2d3ff 60%,
-    #d1deff 75%,
-    #e0e9ff 90%,
-    #ffffff 100%
-  );
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
   position: relative;
   display: inline-block;
-  animation: gradientShift 10s ease infinite, titleGlow 3s ease-in-out infinite;
-  text-shadow: 
-    0 0 80px rgba(102, 126, 234, 0.4),
-    0 0 120px rgba(118, 75, 162, 0.3);
-  filter: drop-shadow(0 6px 30px rgba(102, 126, 234, 0.3));
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
-.section-title:hover {
-  transform: scale(1.02);
-  filter: drop-shadow(0 8px 40px rgba(102, 126, 234, 0.4));
-  animation-duration: 5s, 2s;
-}
-
-@keyframes titleGlow {
-  0%, 100% {
-    filter: drop-shadow(0 6px 30px rgba(102, 126, 234, 0.3));
-  }
-  50% {
-    filter: drop-shadow(0 8px 50px rgba(102, 126, 234, 0.5));
-  }
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Animated Underline with Glow Effect */
+/* Clean Underline - Minimal & Elegant */
 .section-title-underline {
-  width: 120px;
-  height: 6px;
+  width: 100px;
+  height: 4px;
   margin: 0 auto;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(102, 126, 234, 0.8),
+    rgba(102, 126, 234, 1),
     rgba(118, 75, 162, 0.8),
-    rgba(240, 147, 251, 0.8),
     transparent
   );
-  border-radius: 3px;
+  border-radius: 2px;
   position: relative;
-  box-shadow: 
-    0 0 30px rgba(102, 126, 234, 0.6),
-    0 0 60px rgba(118, 75, 162, 0.4),
-    inset 0 0 20px rgba(255, 255, 255, 0.1);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.section-title-underline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(102, 126, 234, 0.4);
 }
 
 .section-header:hover .section-title-underline {
-  width: 160px;
-  box-shadow: 
-    0 0 40px rgba(102, 126, 234, 0.8),
-    0 0 80px rgba(118, 75, 162, 0.6),
-    inset 0 0 30px rgba(255, 255, 255, 0.2);
+  width: 140px;
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
 }
 
 .section-content {
   position: relative;
   z-index: 2;
-  /* Advanced content styling */
-  padding: 2rem 0;
-}
-
-/* Parallax effect for section content */
-.section-content > * {
-  transition: transform 0.3s ease-out;
-}
-
-/* Enhanced visual depth */
-.section-block {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.02) 0%,
-    rgba(255, 255, 255, 0.01) 50%,
-    transparent 100%
-  );
-  border-radius: 24px;
-  padding: 3rem;
-  margin-bottom: 2rem;
+  padding: 1rem 0;
 }
 
 @media screen and (min-width: 1400px) {
@@ -612,16 +443,16 @@
    ============================================ */
 @media screen and (min-width: 1400px) {
   .contents-section {
-    gap: 10rem;
-    padding: 12rem clamp(3rem, 8vw, 8rem) 10rem;
+    gap: 5rem;
+    padding: 9rem clamp(3rem, 8vw, 8rem) 7rem;
   }
 
   .section-header {
-    margin-bottom: 6rem;
+    margin-bottom: 4rem;
   }
 
   .section-title {
-    font-size: 5rem;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
   }
 }
 
@@ -630,12 +461,12 @@
    ============================================ */
 @media screen and (max-width: 1399px) and (min-width: 993px) {
   .contents-section {
-    gap: 7rem;
-    padding: 9rem clamp(2.5rem, 5vw, 5rem) 7rem;
+    gap: 4.5rem;
+    padding: 7.5rem clamp(2.5rem, 5vw, 5rem) 5.5rem;
   }
 
   .section-header {
-    margin-bottom: 4.5rem;
+    margin-bottom: 3.5rem;
   }
 }
 
@@ -644,8 +475,8 @@
    ============================================ */
 @media screen and (max-width: 992px) {
   .contents-section {
-    gap: 6rem;
-    padding: 8rem clamp(2rem, 4vw, 3.5rem) 6rem;
+    gap: 4rem;
+    padding: 6.5rem clamp(2rem, 4vw, 3.5rem) 4.5rem;
   }
 
   .section-block {
@@ -653,22 +484,22 @@
   }
 
   .section-header {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     padding: 1.5rem 0;
   }
 
   .section-title {
-    font-size: clamp(2.25rem, 5vw, 3.25rem);
-    margin-bottom: 1.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1.25rem;
   }
 
   .section-title-underline {
-    width: 100px;
-    height: 5px;
+    width: 80px;
+    height: 3px;
   }
 
   .section-header:hover .section-title-underline {
-    width: 130px;
+    width: 100px;
   }
 
   .main-page-loading,
@@ -694,8 +525,8 @@
    ============================================ */
 @media screen and (max-width: 768px) {
   .contents-section {
-    gap: 4rem;
-    padding: 6rem clamp(1.25rem, 3vw, 2rem) 4rem;
+    gap: 3.5rem;
+    padding: 5.5rem clamp(1.5rem, 3vw, 2rem) 3.5rem;
   }
 
   .section-block {
@@ -703,23 +534,23 @@
   }
 
   .section-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     padding: 1rem 0;
   }
 
   .section-title {
-    font-size: clamp(1.875rem, 6vw, 2.5rem);
-    margin-bottom: 1.25rem;
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+    margin-bottom: 1rem;
     line-height: 1.2;
   }
 
   .section-title-underline {
-    width: 80px;
-    height: 4px;
+    width: 60px;
+    height: 2px;
   }
 
   .section-header:hover .section-title-underline {
-    width: 100px;
+    width: 80px;
   }
 
   .main-page-loading,
@@ -775,8 +606,8 @@
    ============================================ */
 @media screen and (max-width: 480px) {
   .contents-section {
-    gap: 3.5rem;
-    padding: 5rem 1.25rem 3.5rem;
+    gap: 3rem;
+    padding: 5rem 1.5rem 3rem;
   }
 
   .section-block {
@@ -784,23 +615,23 @@
   }
 
   .section-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     padding: 0.75rem 0;
   }
 
   .section-title {
-    font-size: clamp(1.625rem, 7vw, 2rem);
-    margin-bottom: 1rem;
+    font-size: clamp(1.5rem, 7vw, 1.875rem);
+    margin-bottom: 0.875rem;
     line-height: 1.25;
   }
 
   .section-title-underline {
-    width: 70px;
-    height: 3px;
+    width: 50px;
+    height: 2px;
   }
 
   .section-header:hover .section-title-underline {
-    width: 90px;
+    width: 70px;
   }
 
   .main-page-loading,

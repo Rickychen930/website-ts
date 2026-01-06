@@ -926,8 +926,11 @@
   .language-grid {
     grid-template-columns: 1fr;
     gap: var(--language-spacing-sm);
-    max-width: 320px;
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   .language-card {
@@ -935,6 +938,8 @@
     min-height: 200px;
     border-radius: var(--language-radius-md);
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .language-card-visible:hover {
@@ -944,11 +949,15 @@
   .language-card-title {
     font-size: 1.1rem;
     line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .language-badge {
     font-size: 0.8rem;
     padding: 0.4rem 1rem;
+    white-space: normal;
+    word-wrap: break-word;
   }
 
   .language-icon-large {
@@ -962,6 +971,9 @@
   .language-loading-state {
     padding: var(--language-spacing-lg) var(--language-spacing-sm);
     min-height: 250px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .language-empty-icon,
@@ -978,6 +990,8 @@
   .language-empty-text,
   .language-error-message {
     font-size: 0.9rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
   }
 }
 
@@ -985,22 +999,32 @@
 @media screen and (max-width: 360px) {
   .language-grid {
     gap: var(--language-spacing-xs);
-    max-width: 280px;
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   .language-card {
     padding: var(--language-spacing-sm) var(--language-spacing-xs);
     min-height: 180px;
     border-radius: var(--language-radius-sm);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .language-card-title {
     font-size: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .language-badge {
     font-size: 0.75rem;
     padding: 0.35rem 0.9rem;
+    white-space: normal;
+    word-wrap: break-word;
   }
 
   .language-icon-large {

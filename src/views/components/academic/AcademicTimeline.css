@@ -81,14 +81,18 @@
   transform: translateX(-50%);
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: var(--academic-spacing-xl);
   align-items: center;
   z-index: 2;
+  padding: var(--academic-spacing-lg) 0;
 }
 
+/* Position each dot at the center of its corresponding card */
 .academic-timeline-dot {
+  position: relative;
   width: 12px;
   height: 12px;
   background: var(--bg-card);
@@ -98,6 +102,10 @@
   transform: scale(0);
   transition: all var(--transition-smooth);
   box-shadow: var(--shadow-sm);
+  justify-self: center;
+  align-self: center;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .academic-timeline-dot-active {

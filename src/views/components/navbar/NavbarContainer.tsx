@@ -26,6 +26,7 @@ import { NavbarPortalManager } from "./utils/NavbarPortalManager";
 import { NavbarBodyScrollLock } from "./utils/NavbarBodyScrollLock";
 import { ThemeToggle } from "../ui";
 import ShareButton from "../../../components/share/share-button";
+import "../../../assets/css/navbar-search.css";
 
 export interface NavbarContainerProps {
   items: string[];
@@ -292,6 +293,32 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
   }
 
   /**
+   * Handle search button click
+   */
+  private handleSearchClick = (): void => {
+    // Dispatch custom event to open GlobalSearch
+    const event = new CustomEvent("openGlobalSearch");
+    document.dispatchEvent(event);
+  };
+
+  /**
+   * Render search button
+   */
+  private renderSearchButton(): ReactNode {
+    return (
+      <button
+        className="navbar-search-button"
+        onClick={this.handleSearchClick}
+        aria-label="Open search (Ctrl+K)"
+        title="Search (Ctrl+K or Cmd+K)"
+      >
+        <span className="navbar-search-icon" aria-hidden="true">🔍</span>
+        <span className="navbar-search-shortcut">Ctrl+K</span>
+      </button>
+    );
+  }
+
+  /**
    * Render main navbar structure
    */
   render(): ReactNode {
@@ -311,6 +338,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
           {this.renderBrand()}
           {this.renderToggle()}
           {this.renderNavLinks()}
+          {this.renderSearchButton()}
           <ShareButton variant="icon" />
           <ThemeToggle />
         </div>

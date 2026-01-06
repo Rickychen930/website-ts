@@ -3,7 +3,8 @@
  * Professional search functionality across all sections
  */
 
-import React, { Component, ReactNode, createRef, KeyboardEvent } from "react";
+import React, { Component, ReactNode, createRef } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { UserProfile } from "../../types/user";
 import "../../assets/css/global-search.css";
 
@@ -20,6 +21,8 @@ interface GlobalSearchProps {
   profile: UserProfile | null;
   onResultClick?: (result: SearchResult) => void;
   onClose?: () => void;
+  showTrigger?: boolean;
+  triggerButton?: ReactNode;
 }
 
 interface GlobalSearchState {
@@ -48,16 +51,19 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
   componentDidMount(): void {
     // Listen for keyboard shortcut (Ctrl+K or Cmd+K)
     document.addEventListener("keydown", this.handleKeyboardShortcut);
+    // Listen for custom search trigger event
+    document.addEventListener("openGlobalSearch", this.openSearch);
   }
 
   componentWillUnmount(): void {
     document.removeEventListener("keydown", this.handleKeyboardShortcut);
+    document.removeEventListener("openGlobalSearch", this.openSearch);
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
   }
 
-  private handleKeyboardShortcut = (e: KeyboardEvent<Document>): void => {
+  private handleKeyboardShortcut = (e: KeyboardEvent): void => {
     // Ctrl+K or Cmd+K to open search
     if ((e.ctrlKey || e.metaKey) && e.key === "k") {
       e.preventDefault();
@@ -235,7 +241,7 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
     this.setState({ results, isSearching: false });
   };
 
-  private handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
+  private handleKeyDown = (e: ReactKeyboardEvent<HTMLInputElement>): void => {
     const { results, selectedIndex } = this.state;
 
     if (e.key === "ArrowDown") {
@@ -316,8 +322,21 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
 
   render(): ReactNode {
     const { isOpen, query, results, isSearching } = this.state;
+    const { showTrigger = true, triggerButton } = this.props;
 
     if (!isOpen) {
+      if (triggerButton) {
+        return (
+          <div onClick={this.openSearch} style={{ display: 'inline-block' }}>
+            {triggerButton}
+          </div>
+        );
+      }
+      
+      if (!showTrigger) {
+        return null;
+      }
+
       return (
         <button
           className="global-search-trigger"

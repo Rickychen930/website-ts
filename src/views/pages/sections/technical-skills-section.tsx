@@ -23,6 +23,7 @@ import { Card } from "../../components/common";
 import { SkillCategoryCard } from "../../components/technical-skills";
 import { TechnicalSkillsController } from "../../../controllers/technical-skills-controller";
 import { UserProfile } from "../../../types/user";
+import { EmptyState } from "../../components/ui";
 import "../../../assets/css/technical-skills-section.css";
 
 /**
@@ -135,21 +136,16 @@ class TechnicalSkillsSection extends Component<
 
   /**
    * Render empty state
-   * Edge case handling
+   * Edge case handling - Uses reusable EmptyState component
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="technical-skills-empty" role="status" aria-live="polite">
-        <div className="technical-skills-empty__icon" aria-hidden="true">
-          💻
-        </div>
-        <h3 className="technical-skills-empty__title">
-          Technical Skills
-        </h3>
-        <p className="technical-skills-empty__text">
-          No technical skills available at the moment.
-        </p>
-      </div>
+      <EmptyState
+        icon="💻"
+        title="No Technical Skills"
+        message="Technical skills information will appear here once available."
+        variant="default"
+      />
     );
   }
 
@@ -231,7 +227,7 @@ class TechnicalSkillsSection extends Component<
     // Edge case: Handle empty or invalid data
     if (!data || !Array.isArray(data) || data.length === 0) {
       return (
-        <Card id="technical-skills-section" ariaLabel="Technical Skills Section">
+        <Card id="technical-skills-section" title="Technical Skills" ariaLabel="Technical Skills Section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -240,7 +236,7 @@ class TechnicalSkillsSection extends Component<
     // Edge case: No enriched categories after processing
     if (!enrichedCategories || enrichedCategories.length === 0) {
       return (
-        <Card id="technical-skills-section" ariaLabel="Technical Skills Section">
+        <Card id="technical-skills-section" title="Technical Skills" ariaLabel="Technical Skills Section">
           {this.renderEmptyState()}
         </Card>
       );
@@ -249,6 +245,7 @@ class TechnicalSkillsSection extends Component<
     return (
       <Card
         id="technical-skills-section"
+        title="Technical Skills"
         ariaLabel="Technical Skills Section"
       >
         <div className="technical-skills-container">

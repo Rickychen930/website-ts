@@ -83,6 +83,26 @@
   position: relative;
   z-index: 2;
   padding: var(--academic-spacing-lg) 0;
+  --academic-item-count: 1; /* Will be set dynamically via inline style */
+}
+
+/* Timeline positioned absolutely within grid to align with cards */
+.academic-items-grid > .academic-timeline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  padding: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Position timeline dots to align with card centers */
+/* The dots grid matches the card grid structure */
+.academic-items-grid .academic-timeline-dots {
+  /* Grid structure matches cards - dots align naturally */
 }
 
 .academic-item-wrapper {
@@ -91,6 +111,7 @@
   transform-style: preserve-3d;
   perspective: 1000px;
 }
+
 
 /* Staggered animation delays */
 .academic-item-wrapper:nth-child(1) { animation-delay: 0ms; }
@@ -261,25 +282,58 @@
 @media screen and (max-width: 480px) {
   .academic-section-container {
     padding: var(--academic-spacing-md) 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .academic-section-content {
     padding: 0 var(--academic-spacing-xs);
     gap: var(--academic-spacing-sm);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .academic-items-grid {
     gap: var(--academic-spacing-sm);
     padding: var(--academic-spacing-xs) 0;
+    width: 100%;
+    max-width: 100%;
   }
 
   .academic-empty-state {
     padding: var(--academic-spacing-lg) var(--academic-spacing-md);
     min-height: 250px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .academic-empty-icon {
     font-size: 3rem;
+  }
+}
+
+/* ============================================
+   Responsive Design - Extra Small Mobile
+   ============================================ */
+@media screen and (max-width: 360px) {
+  .academic-section-container {
+    padding: var(--academic-spacing-sm) 0;
+  }
+
+  .academic-section-content {
+    padding: 0 var(--academic-spacing-xs);
+  }
+
+  .academic-empty-state {
+    padding: var(--academic-spacing-md) var(--academic-spacing-sm);
+    min-height: 200px;
+  }
+
+  .academic-empty-icon {
+    font-size: 2.5rem;
   }
 }
 

@@ -24,6 +24,7 @@ import { Card } from "../../components/common";
 import { HonorsController } from "../../../controllers/honors-controller";
 import { HonorsModel, IHonorItem } from "../../../models/honors-model";
 import { HonorCard } from "../../components/honors/HonorCard";
+import { EmptyState } from "../../components/ui";
 
 /**
  * Honors Section Props Interface
@@ -411,19 +412,16 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
   /**
    * Render Empty State
-   * Elegant empty state with proper messaging
+   * Elegant empty state with proper messaging - Uses reusable EmptyState component
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="honors-empty-state" role="status" aria-live="polite">
-        <div className="honors-empty-icon" aria-hidden="true">
-          🏆
-        </div>
-        <h3 className="honors-empty-title">No Honors Available</h3>
-        <p className="honors-empty-text">
-          Honor and achievement information will appear here when available.
-        </p>
-      </div>
+      <EmptyState
+        icon="🏆"
+        title="No Honors Available"
+        message="Honor and achievement information will appear here when available."
+        variant="default"
+      />
     );
   }
 
@@ -515,7 +513,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Handle initialization errors
     if (error) {
       return (
-        <Card id="honors-section">
+        <Card id="honors-section" title="Honors & Achievements">
           {this.renderErrorState(error)}
         </Card>
       );
@@ -524,7 +522,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Handle validation errors
     if (!validation.isValid) {
       return (
-        <Card id="honors-section">
+        <Card id="honors-section" title="Honors & Achievements">
           {validation.error
             ? this.renderErrorState(validation.error)
             : this.renderEmptyState()}
@@ -536,14 +534,14 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     const { data } = this.props;
     if (!data || data.length === 0) {
       return (
-        <Card id="honors-section">
+        <Card id="honors-section" title="Honors & Achievements">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="honors-section">
+      <Card id="honors-section" title="Honors & Achievements">
         {this.renderItems()}
       </Card>
     );

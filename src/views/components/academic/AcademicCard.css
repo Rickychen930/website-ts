@@ -541,6 +541,9 @@
 @media screen and (max-width: 480px) {
   .academic-card {
     padding: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .academic-card-icon {
@@ -550,6 +553,22 @@
 
   .academic-card-icon-emoji {
     font-size: 1.35rem;
+  }
+}
+
+/* Responsive Design - Extra Small Mobile */
+@media screen and (max-width: 360px) {
+  .academic-card {
+    padding: 1.25rem;
+  }
+
+  .academic-card-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .academic-card-icon-emoji {
+    font-size: 1.2rem;
   }
 }
 

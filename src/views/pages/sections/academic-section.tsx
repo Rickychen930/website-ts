@@ -25,6 +25,7 @@ import { AcademicController } from "../../../controllers/academic-controller";
 import { AcademicModel, IAcademicItem } from "../../../models/academic-model";
 import { AcademicCard } from "../../components/academic/AcademicCard";
 import { AcademicTimeline } from "../../components/academic/AcademicTimeline";
+import { EmptyState } from "../../components/ui";
 
 /**
  * Academic Section Props Interface
@@ -379,14 +380,16 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
   /**
    * Render Empty State
-   * Edge case handling
+   * Edge case handling - Uses reusable EmptyState component
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="academic-empty-state">
-        <div className="academic-empty-icon">🎓</div>
-        <p className="academic-empty-text">No academic information available</p>
-      </div>
+      <EmptyState
+        icon="🎓"
+        title="No Academic Information"
+        message="Academic background will appear here once available."
+        variant="default"
+      />
     );
   }
 
@@ -430,6 +433,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       <div
         key={item.key}
         data-key={item.key}
+        data-visible={isVisible ? "true" : "false"}
         ref={refObj}
         className="academic-item-wrapper"
       >
@@ -477,12 +481,17 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     return (
       <div className="academic-section-container" ref={this.containerRef}>
         <div className="academic-section-content">
-          <AcademicTimeline
-            itemCount={renderedItems.length}
-            currentIndex={this.state.currentVisibleIndex}
-            isVisible={this.state.isInitialized}
-          />
-          <div className="academic-items-grid" role="list" aria-label="Academic background timeline">
+          <div 
+            className="academic-items-grid" 
+            role="list" 
+            aria-label="Academic background timeline"
+            style={{ '--academic-item-count': renderedItems.length } as React.CSSProperties}
+          >
+            <AcademicTimeline
+              itemCount={renderedItems.length}
+              currentIndex={this.state.currentVisibleIndex}
+              isVisible={this.state.isInitialized}
+            />
             {renderedItems}
           </div>
         </div>
@@ -497,14 +506,14 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Edge case: No data
     if (!this.validateData()) {
       return (
-        <Card id="academic-section" variant="default">
+        <Card id="academic-section" title="Academic Background" variant="default">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="academic-section" variant="default">
+      <Card id="academic-section" title="Academic Background" variant="default">
         {this.renderItems()}
       </Card>
     );
