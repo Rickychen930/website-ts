@@ -3,20 +3,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const helmet_1 = __importDefault(require("helmet"));
 const fs_1 = __importDefault(require("fs"));
-const https_1 = __importDefault(require("https"));
+const helmet_1 = __importDefault(require("helmet"));
 const http_1 = __importDefault(require("http"));
+const https_1 = __importDefault(require("https"));
 const path_1 = __importDefault(require("path"));
 const mongoose_1 = require("./config/mongoose");
-const user_routes_1 = __importDefault(require("./routes/user-routes"));
-const contact_routes_1 = __importDefault(require("./routes/contact-routes"));
-const logger_1 = require("./utils/logger");
-const env_validator_1 = require("./utils/env-validator");
 const rate_limiter_1 = require("./middleware/rate-limiter");
+const contact_routes_1 = __importDefault(require("./routes/contact-routes"));
+const user_routes_1 = __importDefault(require("./routes/user-routes"));
+const env_validator_1 = require("./utils/env-validator");
+const logger_1 = require("./utils/logger");
 // ✅ Load .env
 const envPath = path_1.default.join(__dirname, "../../.env");
 if (fs_1.default.existsSync(envPath)) {
@@ -66,7 +66,7 @@ app.use((0, helmet_1.default)({
             upgradeInsecureRequests: NODE_ENV === "production" ? [] : null,
         },
     },
-    crossOriginEmbedderPolicy: false, // Allow external resources
+    crossOriginEmbedderPolicy: false,
     crossOriginResourcePolicy: { policy: "cross-origin" },
 }));
 // ✅ Security middleware
@@ -107,12 +107,26 @@ app.get("/health", (_, res) => {
         uptime: process.uptime(),
     });
 });
+// ✅ Fallback route - catch all unmatched API routes (must be before static files)
+app.use((req, res, next) => {
+    // Only handle unmatched API routes
+    if (req.path.startsWith("/api") && !res.headersSent) {
+        res.status(404).json({
+            message: "API route not found",
+            path: req.path,
+            method: req.method,
+        });
+    }
+    else {
+        next();
+    }
+});
 // ✅ Serve static files from React build (production only)
 const buildPath = path_1.default.join(__dirname, "../../build");
 if (NODE_ENV === "production" && fs_1.default.existsSync(buildPath)) {
     // Serve static files
     app.use(express_1.default.static(buildPath, {
-        maxAge: "1y", // Cache static assets for 1 year
+        maxAge: "1y",
         etag: true,
     }));
     // Handle React Router - serve index.html for all non-API routes
@@ -135,14 +149,6 @@ else {
         });
     });
 }
-// ✅ Fallback route - catch all unmatched API routes
-app.use("/api/:path(*)", (req, res) => {
-    res.status(404).json({
-        message: "API route not found",
-        path: req.path,
-        method: req.method,
-    });
-});
 // ✅ SSL configuration
 let sslOptions;
 if (NODE_ENV === "production" && SSL_KEY_PATH && SSL_CERT_PATH) {

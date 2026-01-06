@@ -171,19 +171,19 @@ jobs:
       # ============================
       # 🔁 RESTART SERVICES
       # ============================
-      - name: Stop existing PM2 process
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Deploy fix-backend script
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
-          script: |
-            cd /root/backend
-            pm2 delete website-backend || true
-            pm2 save || true
+          source: "scripts/fix-backend-on-server.sh"
+          target: "/root/backend"
+          strip_components: 1
+          rm: false
 
-      - name: Start backend with PM2
+      - name: Fix and restart backend
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -192,8 +192,14 @@ jobs:
           port: 22
           script: |
             cd /root/backend
-            pm2 start ecosystem.config.js --env production
-            pm2 save
+            chmod +x fix-backend-on-server.sh
+            ./fix-backend-on-server.sh || {
+              echo "❌ Fix script failed, trying manual restart..."
+              pm2 stop website-backend || true
+              pm2 delete website-backend || true
+              pm2 start ecosystem.config.js --env production
+              pm2 save
+            }
 
       - name: Deploy Nginx config
         uses: appleboy/scp-action@v0.1.7
@@ -241,15 +247,28 @@ jobs:
             attempt=1
             while [ $attempt -le $max_attempts ]; do
               echo "Health check attempt $attempt/$max_attempts"
-              if curl -f -s http://localhost:4000/health > /dev/null; then
-                echo "✅ Backend health check passed"
-                exit 0
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/health 2>/dev/null || echo "000")
+              if [ "$HTTP_CODE" = "200" ]; then
+                HEALTH_BODY=$(curl -s http://localhost:4000/health 2>/dev/null)
+                if echo "$HEALTH_BODY" | grep -q '"status".*"ok"'; then
+                  echo "✅ Backend health check passed (HTTP 200)"
+                  echo "$HEALTH_BODY" | head -3
+                  exit 0
+                else
+                  echo "⚠️ HTTP 200 but response is not valid health check JSON"
+                  echo "Response: $HEALTH_BODY" | head -1
+                fi
+              else
+                echo "HTTP Code: $HTTP_CODE"
               fi
               attempt=$((attempt + 1))
               sleep 3
             done
             echo "❌ Health check failed after $max_attempts attempts"
-            pm2 logs website-backend --lines 50
+            echo "Checking PM2 status..."
+            pm2 list
+            echo "Checking PM2 logs..."
+            pm2 logs website-backend --lines 50 --nostream
             exit 1
 
       - name: Verify PM2 status

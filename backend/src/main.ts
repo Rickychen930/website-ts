@@ -1,17 +1,17 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
-import helmet from "helmet";
 import fs from "fs";
-import https from "https";
+import helmet from "helmet";
 import http from "http";
+import https from "https";
 import path from "path";
 import { connectDB } from "./config/mongoose";
-import userRoutes from "./routes/user-routes";
-import contactRoutes from "./routes/contact-routes";
-import { logger } from "./utils/logger";
-import { validateEnv, getEnvNumber } from "./utils/env-validator";
 import { apiRateLimiter } from "./middleware/rate-limiter";
+import contactRoutes from "./routes/contact-routes";
+import userRoutes from "./routes/user-routes";
+import { getEnvNumber, validateEnv } from "./utils/env-validator";
+import { logger } from "./utils/logger";
 
 // ✅ Load .env
 const envPath = path.join(__dirname, "../../.env");
@@ -123,6 +123,20 @@ app.get("/health", (_, res) => {
   });
 });
 
+// ✅ Fallback route - catch all unmatched API routes (must be before static files)
+app.use((req, res, next) => {
+  // Only handle unmatched API routes
+  if (req.path.startsWith("/api") && !res.headersSent) {
+    res.status(404).json({
+      message: "API route not found",
+      path: req.path,
+      method: req.method,
+    });
+  } else {
+    next();
+  }
+});
+
 // ✅ Serve static files from React build (production only)
 const buildPath = path.join(__dirname, "../../build");
 if (NODE_ENV === "production" && fs.existsSync(buildPath)) {
@@ -153,15 +167,6 @@ if (NODE_ENV === "production" && fs.existsSync(buildPath)) {
     });
   });
 }
-
-// ✅ Fallback route - catch all unmatched API routes
-app.use("/api/:path*", (req, res) => {
-  res.status(404).json({
-    message: "API route not found",
-    path: req.path,
-    method: req.method,
-  });
-});
 
 // ✅ SSL configuration
 let sslOptions: { key: Buffer; cert: Buffer } | undefined;
