@@ -1,9 +1,9 @@
 /**
  * NavbarBrand Component
- * 
+ *
  * Component-Based Architecture - Single Responsibility Principle (SRP)
  * Handles brand/logo display and click interaction
- * 
+ *
  * Principles:
  * - OOP: Encapsulated component with clear interface
  * - SOLID: Single responsibility - only handles brand rendering
@@ -17,7 +17,7 @@ export interface NavbarBrandProps {
   text?: string;
   logo?: string; // Logo image path
   onClick: () => void;
-  brandRef?: RefObject<HTMLDivElement>;
+  brandRef?: RefObject<HTMLDivElement | null>;
 }
 
 class NavbarBrand extends React.Component<NavbarBrandProps> {
@@ -31,7 +31,13 @@ class NavbarBrand extends React.Component<NavbarBrandProps> {
   };
 
   render(): ReactNode {
-    const { icon, text, logo, onClick, brandRef = this.defaultRef } = this.props;
+    const {
+      icon,
+      text,
+      logo,
+      onClick,
+      brandRef = this.defaultRef,
+    } = this.props;
 
     return (
       <div
@@ -45,15 +51,13 @@ class NavbarBrand extends React.Component<NavbarBrandProps> {
       >
         {logo ? (
           <>
-            <img 
-              src={logo} 
-              alt="Logo" 
+            <img
+              src={logo}
+              alt="Logo"
               className="navbar-brand-logo"
               loading="eager"
             />
-            {text && (
-              <span className="navbar-brand-text">{text}</span>
-            )}
+            {text && <span className="navbar-brand-text">{text}</span>}
           </>
         ) : (
           <>
@@ -62,9 +66,7 @@ class NavbarBrand extends React.Component<NavbarBrandProps> {
                 {icon}
               </span>
             )}
-            {text && (
-              <span className="navbar-brand-text">{text}</span>
-            )}
+            {text && <span className="navbar-brand-text">{text}</span>}
           </>
         )}
       </div>
@@ -73,4 +75,3 @@ class NavbarBrand extends React.Component<NavbarBrandProps> {
 }
 
 export default NavbarBrand;
-

@@ -3,6 +3,7 @@
 ## Status Saat Ini
 
 Dari log terminal:
+
 - ✅ Folder `/var/www/website-ts/build` sudah dibuat
 - ✅ Permission sudah di-set
 - ✅ Konfigurasi nginx sudah dibuat (line 128)
@@ -162,6 +163,7 @@ sudo nginx -t
 ```
 
 **Jika berhasil**, akan muncul:
+
 ```
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
@@ -232,6 +234,7 @@ sudo systemctl reload nginx
 ```
 
 Atau setup SSL certificate dulu:
+
 ```bash
 sudo certbot --nginx -d rickychen930.cloud -d www.rickychen930.cloud
 ```
@@ -252,4 +255,3 @@ pm2 start /root/backend/ecosystem.config.js --env production
 ---
 
 **Setup selesai! Website seharusnya sudah bisa diakses! 🎉**
-

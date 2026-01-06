@@ -1,7 +1,7 @@
 /**
  * Language Card Component
  * Reusable card component for displaying individual languages
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP)
  * - Open/Closed Principle (OCP)
@@ -42,7 +42,7 @@ export class LanguageCard extends PureComponent<
   LanguageCardProps,
   LanguageCardState
 > {
-  private readonly cardRef: RefObject<HTMLDivElement>;
+  private readonly cardRef: RefObject<HTMLDivElement | null>;
   private readonly ANIMATION_DELAY_BASE = 100;
   private readonly INTERSECTION_THRESHOLD = 0.1;
   private observer: IntersectionObserver | null = null;
@@ -84,14 +84,14 @@ export class LanguageCard extends PureComponent<
         entries.forEach((entry) => {
           this.props.onVisibilityChange(
             this.props.language.key,
-            entry.isIntersecting
+            entry.isIntersecting,
           );
         });
       },
       {
         threshold: this.INTERSECTION_THRESHOLD,
         rootMargin: "50px",
-      }
+      },
     );
 
     if (this.cardRef.current) {
@@ -172,9 +172,7 @@ export class LanguageCard extends PureComponent<
    */
   private renderTitle(): ReactNode {
     const { language } = this.props;
-    return (
-      <h3 className="language-card-title">{language.name}</h3>
-    );
+    return <h3 className="language-card-title">{language.name}</h3>;
   }
 
   /**
@@ -220,9 +218,7 @@ export class LanguageCard extends PureComponent<
         data-language-key={language.key}
       >
         <div className="language-card-inner">
-          <div className="language-card-icon-wrapper">
-            {this.renderIcon()}
-          </div>
+          <div className="language-card-icon-wrapper">{this.renderIcon()}</div>
           <div className="language-card-content">
             {this.renderTitle()}
             {this.renderProficiency()}
@@ -242,4 +238,3 @@ export class LanguageCard extends PureComponent<
     );
   }
 }
-

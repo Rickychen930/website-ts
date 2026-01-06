@@ -1,12 +1,12 @@
 /**
  * HonorsSection - View Layer (MVC Pattern)
  * Professional, Clean, Luxury, Responsive Honors Section
- * 
+ *
  * Architecture:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
  * - Component-Based: Uses reusable sub-components
- * 
+ *
  * Principles Applied:
  * - SOLID:
  *   - SRP: Each method has single responsibility
@@ -62,7 +62,7 @@ const SCROLL_THROTTLE_MS = 150;
 
 /**
  * HonorsSection Component
- * 
+ *
  * Features:
  * - Professional, Clean, Luxury Design
  * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
@@ -70,7 +70,7 @@ const SCROLL_THROTTLE_MS = 150;
  * - Component-Based Architecture (Reusable Components)
  * - MVC Pattern (Controller, Model, View separation)
  * - Shows Software Engineering Capabilities
- * 
+ *
  * Principles Applied:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
@@ -143,7 +143,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           ? error.message
           : "Failed to initialize honors section";
       this.setState({ error: errorMessage });
-      const { logError } = require('../../../utils/logger');
+      const { logError } = require("../../../utils/logger");
       logError("HonorsSection initialization error", error, "HonorsSection");
     }
   }
@@ -201,7 +201,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
       // Create new observer
       this.observer = new IntersectionObserver(
         this.handleIntersection,
-        OBSERVER_CONFIG
+        OBSERVER_CONFIG,
       );
 
       // Observe all items with error handling
@@ -211,15 +211,19 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           try {
             this.observer?.observe(element);
           } catch (error) {
-            if (process.env.NODE_ENV === 'development') {
-              const { logWarn } = require('../../../utils/logger');
-              logWarn(`Failed to observe item ${key}`, { error }, "HonorsSection");
+            if (process.env.NODE_ENV === "development") {
+              const { logWarn } = require("../../../utils/logger");
+              logWarn(
+                `Failed to observe item ${key}`,
+                { error },
+                "HonorsSection",
+              );
             }
           }
         }
       });
     } catch (error) {
-      const { logError } = require('../../../utils/logger');
+      const { logError } = require("../../../utils/logger");
       logError("Failed to setup IntersectionObserver", error, "HonorsSection");
       // Fallback: show all items
       const allKeys = new Set(data.map((item) => item.key).filter(Boolean));
@@ -259,7 +263,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           // Only update if changed
           if (
             updated.size === prevState.visibleItems.size &&
-            [...updated].every((k) => prevState.visibleItems.has(k))
+            Array.from(updated).every((k) => prevState.visibleItems.has(k))
           ) {
             return prevState;
           }
@@ -381,7 +385,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
     // Validate each item has required fields
     const invalidItems = data.filter(
-      (item) => !item.key || !item.title || !item.event || !item.date
+      (item) => !item.key || !item.title || !item.event || !item.date,
     );
 
     if (invalidItems.length > 0) {
@@ -513,7 +517,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Handle initialization errors
     if (error) {
       return (
-        <Card id="honors-section" title="Honors & Achievements">
+        <Card id="honors" title="Honors & Achievements">
           {this.renderErrorState(error)}
         </Card>
       );
@@ -522,7 +526,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Handle validation errors
     if (!validation.isValid) {
       return (
-        <Card id="honors-section" title="Honors & Achievements">
+        <Card id="honors" title="Honors & Achievements">
           {validation.error
             ? this.renderErrorState(validation.error)
             : this.renderEmptyState()}
@@ -534,14 +538,14 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     const { data } = this.props;
     if (!data || data.length === 0) {
       return (
-        <Card id="honors-section" title="Honors & Achievements">
+        <Card id="honors" title="Honors & Achievements">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="honors-section" title="Honors & Achievements">
+      <Card id="honors" title="Honors & Achievements">
         {this.renderItems()}
       </Card>
     );

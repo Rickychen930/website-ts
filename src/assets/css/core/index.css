@@ -23,11 +23,10 @@
  */
 
 /* Import order matters - must follow this sequence */
-@import './_variables.css';
-@import './_constants.css';
-@import './_base.css';
-@import './_mixins.css';
-@import './_components.css';
-@import './_utilities.css';
-@import './_horizontal-scroll.css';
-
+@import url("./_variables.css");
+@import url("./_constants.css");
+@import url("./_base.css");
+@import url("./_mixins.css");
+@import url("./_components.css");
+@import url("./_utilities.css");
+@import url("./_horizontal-scroll.css");

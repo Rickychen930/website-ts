@@ -1,7 +1,7 @@
 /**
  * Project Card Component
  * Main card component for displaying individual projects
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP)
  * - Open/Closed Principle (OCP)
@@ -12,7 +12,11 @@
 import React, { PureComponent, ReactNode, RefObject, createRef } from "react";
 import { IProject } from "../../../models/project-model";
 import { ProjectImage } from "./ProjectImage";
-import { ProjectBadge, ProjectStatusBadge, ProjectCategoryBadge } from "./ProjectBadge";
+import {
+  ProjectBadge,
+  ProjectStatusBadge,
+  ProjectCategoryBadge,
+} from "./ProjectBadge";
 import { ProjectLinks } from "./ProjectLinks";
 import { ProjectCodeSnippet } from "./ProjectCodeSnippet";
 import { ProjectStats } from "./ProjectStats";
@@ -42,8 +46,11 @@ interface ProjectCardState {
  * Project Card Component
  * PureComponent for performance optimization
  */
-export class ProjectCard extends PureComponent<ProjectCardProps, ProjectCardState> {
-  private readonly cardRef: RefObject<HTMLDivElement>;
+export class ProjectCard extends PureComponent<
+  ProjectCardProps,
+  ProjectCardState
+> {
+  private readonly cardRef: RefObject<HTMLDivElement | null>;
   private readonly controller: ProjectController;
   private readonly ANIMATION_DELAY_BASE = 100;
   private readonly INTERSECTION_THRESHOLD = 0.1;
@@ -87,14 +94,14 @@ export class ProjectCard extends PureComponent<ProjectCardProps, ProjectCardStat
         entries.forEach((entry) => {
           this.props.onVisibilityChange(
             this.props.project.key,
-            entry.isIntersecting
+            entry.isIntersecting,
           );
         });
       },
       {
         threshold: this.INTERSECTION_THRESHOLD,
         rootMargin: "50px",
-      }
+      },
     );
 
     if (this.cardRef.current) {
@@ -217,9 +224,7 @@ export class ProjectCard extends PureComponent<ProjectCardProps, ProjectCardStat
    */
   private renderDescription(): ReactNode {
     const { project } = this.props;
-    return (
-      <p className="project-card-description">{project.description}</p>
-    );
+    return <p className="project-card-description">{project.description}</p>;
   }
 
   /**
@@ -289,7 +294,7 @@ export class ProjectCard extends PureComponent<ProjectCardProps, ProjectCardStat
   private renderCodeSnippet(): ReactNode {
     const { project } = this.props;
     const technologies = project.technologies?.map((t) => t.name) || [];
-    
+
     if (technologies.length === 0) {
       return null;
     }
@@ -356,4 +361,3 @@ export class ProjectCard extends PureComponent<ProjectCardProps, ProjectCardStat
     );
   }
 }
-

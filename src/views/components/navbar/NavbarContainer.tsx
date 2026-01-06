@@ -1,8 +1,8 @@
 /**
  * NavbarContainer Component
- * 
+ *
  * Main Container Component - Orchestrates all navbar sub-components
- * 
+ *
  * Component-Based Architecture following:
  * - OOP: Class-based component with proper encapsulation
  * - SOLID:
@@ -15,7 +15,11 @@
  */
 import React, { Component, ReactNode, createRef } from "react";
 import NavbarController from "../../../controllers/navbar-controller";
-import { NavbarConfig, NavbarItemType, NavbarDropdownItem } from "../../../types/navbar";
+import {
+  NavbarConfig,
+  NavbarItemType,
+  NavbarDropdownItem,
+} from "../../../types/navbar";
 import NavbarBrand from "./NavbarBrand";
 import NavbarToggle from "./NavbarToggle";
 import NavbarLinks from "./NavbarLinks";
@@ -42,7 +46,10 @@ interface NavbarContainerState {
   state: ReturnType<NavbarController["getState"]>;
 }
 
-class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerState> {
+class NavbarContainer extends Component<
+  NavbarContainerProps,
+  NavbarContainerState
+> {
   // Refs
   private innerRef = createRef<HTMLDivElement>();
   private brandRef = createRef<HTMLDivElement>();
@@ -56,22 +63,26 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
 
   constructor(props: NavbarContainerProps) {
     super(props);
-    
+
     // Initialize controller
     const useDropdowns = props.useDropdowns ?? false;
-    const items = useDropdowns && Array.isArray(props.items) && props.items.length > 0 && typeof props.items[0] !== 'string'
-      ? props.items as NavbarItemType[]
-      : NavbarController.createNavbarItems(props.items as string[]);
-    
+    const items =
+      useDropdowns &&
+      Array.isArray(props.items) &&
+      props.items.length > 0 &&
+      typeof props.items[0] !== "string"
+        ? (props.items as NavbarItemType[])
+        : NavbarController.createNavbarItems(props.items as string[]);
+
     const config: NavbarConfig = {
       items,
       brandIcon: props.brandIcon,
       brandText: props.brandText,
       brandLogo: props.brandLogo,
     };
-    
+
     const controller = new NavbarController(config);
-    
+
     this.state = {
       controller,
       state: controller.getState(),
@@ -94,7 +105,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       }
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        const { logWarn } = require('../../../utils/logger');
+        const { logWarn } = require("../../../utils/logger");
         logWarn("Error in scroll handler", error, "NavbarContainer");
       }
     }
@@ -111,7 +122,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
       }
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        const { logWarn } = require('../../../utils/logger');
+        const { logWarn } = require("../../../utils/logger");
         logWarn("Error in resize handler", error, "NavbarContainer");
       }
     }
@@ -161,15 +172,23 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
     const finalState = this.state.controller.setActiveItem(itemId);
     this.setState({ state: finalState });
 
-    // Smooth scroll to section
+    // Smooth scroll to section with consistent offset
     try {
-      const element = document.querySelector(href);
+      const element = document.querySelector(href) as HTMLElement;
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        const offset = 80; // Consistent with SmoothScrollManager
+        const elementPosition =
+          element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
       }
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        const { logWarn } = require('../../../utils/logger');
+        const { logWarn } = require("../../../utils/logger");
         logWarn("Error scrolling to section", error, "NavbarContainer");
       }
     }
@@ -205,7 +224,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
   private getMobileMenuPosition() {
     return NavbarPositionCalculator.calculate(
       this.innerRef.current?.closest(".navbar") as HTMLElement | null,
-      this.toggleRef.current
+      this.toggleRef.current,
     );
   }
 
@@ -218,7 +237,10 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
     // Initialize event listeners
     if (this.innerRef.current) {
       this.eventManager.initializeScroll(this.handleScroll);
-      this.eventManager.initializeResize(this.innerRef.current, this.handleResize);
+      this.eventManager.initializeResize(
+        this.innerRef.current,
+        this.handleResize,
+      );
     }
     this.eventManager.initializeKeyboard(this.handleKeyDown);
 
@@ -231,7 +253,10 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
   /**
    * Component lifecycle - Update
    */
-  componentDidUpdate(prevProps: NavbarContainerProps, prevState: NavbarContainerState): void {
+  componentDidUpdate(
+    prevProps: NavbarContainerProps,
+    prevState: NavbarContainerState,
+  ): void {
     // Handle scroll lock based on menu state
     if (this.state.state.isOpen && !prevState.state.isOpen) {
       this.scrollLock.lock();
@@ -284,7 +309,9 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
    */
   private hasDropdowns(): boolean {
     const config = this.state.controller.getConfig();
-    return config.items.some(item => 'children' in item && item.children && item.children.length > 0);
+    return config.items.some(
+      (item) => "children" in item && item.children && item.children.length > 0,
+    );
   }
 
   /**
@@ -293,7 +320,8 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
   private renderNavLinks(): ReactNode {
     const config = this.state.controller.getConfig();
     const { items } = config;
-    const { isOpen, activeItemId, isCompact, openDropdownId } = this.state.state;
+    const { isOpen, activeItemId, isCompact, openDropdownId } =
+      this.state.state;
     const useDropdowns = this.hasDropdowns();
 
     // Mobile menu - render via portal
@@ -309,7 +337,7 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
             linksRef={this.linksRef}
             portalRoot={portalRoot}
             onBackdropClick={this.handleCloseMenu}
-            menuPosition={this.getMobileMenuPosition()}
+            menuPosition={this.getMobileMenuPosition() || undefined}
           />
         );
       }
@@ -318,20 +346,21 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
     // Desktop menu - render with dropdowns if available
     if (useDropdowns) {
       return (
-        <ul
-          ref={this.linksRef}
-          className="navbar-links"
-          role="menubar"
-        >
+        <ul ref={this.linksRef} className="navbar-links" role="menubar">
           {items.map((item) => {
-            const isDropdown = 'children' in item && item.children && item.children.length > 0;
-            
+            const isDropdown =
+              "children" in item && item.children && item.children.length > 0;
+
             if (isDropdown) {
               const dropdownItem = item as NavbarDropdownItem;
               const isDropdownOpen = openDropdownId === item.id;
-              const isActive = activeItemId === item.id || 
-                (dropdownItem.children?.some(child => child.id === activeItemId) ?? false);
-              
+              const isActive =
+                activeItemId === item.id ||
+                (dropdownItem.children?.some(
+                  (child) => child.id === activeItemId,
+                ) ??
+                  false);
+
               return (
                 <NavbarDropdown
                   key={item.id}
@@ -406,7 +435,9 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
         aria-label="Open search (Ctrl+K)"
         title="Search (Ctrl+K or Cmd+K)"
       >
-        <span className="navbar-search-icon" aria-hidden="true">🔍</span>
+        <span className="navbar-search-icon" aria-hidden="true">
+          🔍
+        </span>
         <span className="navbar-search-shortcut">Ctrl+K</span>
       </button>
     );
@@ -442,4 +473,3 @@ class NavbarContainer extends Component<NavbarContainerProps, NavbarContainerSta
 }
 
 export default NavbarContainer;
-

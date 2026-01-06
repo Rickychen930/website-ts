@@ -6,6 +6,7 @@ import {
   ProfessionalHighlight,
   TechBadgesGrid,
 } from "../../components/about-me";
+import GitHubContributions from "../../../components/github/github-contributions";
 import { AboutMeController } from "../../../controllers/about-me-controller";
 import { UserProfile } from "../../../types/user";
 import { ButtonVariant } from "../../../types/ui";
@@ -26,21 +27,21 @@ type AboutMeProps = {
  */
 type AboutMeState = {
   isVisible: boolean;
-  aboutMeData: ReturnType<AboutMeController['getAboutMeData']> | null;
-  technologies: ReturnType<AboutMeController['getFeaturedTechnologies']>;
-  highlights: ReturnType<AboutMeController['getProfessionalHighlights']>;
+  aboutMeData: ReturnType<AboutMeController["getAboutMeData"]> | null;
+  technologies: ReturnType<AboutMeController["getFeaturedTechnologies"]>;
+  highlights: ReturnType<AboutMeController["getProfessionalHighlights"]>;
 };
 
 /**
  * AboutMeSection Component
- * 
+ *
  * Features:
  * - Professional, Clean, Luxury, Responsive Design
  * - Shows Software Engineering Capabilities Prominently
  * - Component-Based Architecture (Reusable Components)
  * - MVC Pattern (Controller, Model, View separation)
  * - Performance Optimized: Memoized data processing
- * 
+ *
  * Principles Applied:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
@@ -153,7 +154,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
             width={320}
             height={320}
             className="about-me-image"
-            style={{ borderRadius: '50%' }}
+            style={{ borderRadius: "50%" }}
             loading="eager"
           />
         </div>
@@ -225,11 +226,17 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
 
     return (
       <div className="about-me-highlights">
-        <h3 className="about-me-highlights-title">{SectionTitles.KEY_ACHIEVEMENTS}</h3>
+        <h3 className="about-me-highlights-title">
+          {SectionTitles.KEY_ACHIEVEMENTS}
+        </h3>
         <div className="about-me-highlights-grid">
           {highlights.map((highlight, index) => (
             <ProfessionalHighlight
-              key={generateStableKey("highlight", highlight.title || index, index)}
+              key={generateStableKey(
+                "highlight",
+                highlight.title || index,
+                index,
+              )}
               icon={highlight.icon}
               title={highlight.title}
               description={highlight.description}
@@ -255,7 +262,11 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    */
   private renderActions(): ReactNode {
     return (
-      <div className="about-me-actions" role="group" aria-label="Profile actions">
+      <div
+        className="about-me-actions"
+        role="group"
+        aria-label="Profile actions"
+      >
         <ProfileAction
           label={ActionLabels.DOWNLOAD_CV}
           href="/assets/document/RICKY_CV_8_AUG.pdf"
@@ -285,7 +296,11 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
     }
 
     return (
-      <div className="about-me-stats" role="group" aria-label="Profile statistics">
+      <div
+        className="about-me-stats"
+        role="group"
+        aria-label="Profile statistics"
+      >
         {stats.map((stat, index) => (
           <ProfileStat
             key={generateStableKey("stat", stat.label || index, index)}
@@ -312,16 +327,30 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
             {this.renderFeaturedTechStack()}
             {this.renderActions()}
           </div>
-          <div className="about-me-hero-right">
-            {this.renderProfileImage()}
-          </div>
+          <div className="about-me-hero-right">{this.renderProfileImage()}</div>
         </div>
       </div>
     );
   }
 
   /**
-   * Render additional content (highlights only)
+   * Render GitHub contributions
+   * Follows Single Responsibility Principle (SRP)
+   */
+  private renderGitHubContributions(): ReactNode {
+    return (
+      <div className="about-me-github-contributions">
+        <GitHubContributions
+          username="rickychen930"
+          showStats={true}
+          theme="auto"
+        />
+      </div>
+    );
+  }
+
+  /**
+   * Render additional content (highlights and GitHub contributions)
    * Follows Single Responsibility Principle (SRP)
    * UI Optimization: Removed redundant tech stack code block
    */
@@ -329,6 +358,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
     return (
       <div className="about-me-additional-content">
         {this.renderProfessionalHighlights()}
+        {this.renderGitHubContributions()}
       </div>
     );
   }
@@ -339,7 +369,9 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    */
   private renderContent(): ReactNode {
     return (
-      <div className={`about-me-content ${this.state.isVisible ? "about-me-visible" : ""}`}>
+      <div
+        className={`about-me-content ${this.state.isVisible ? "about-me-visible" : ""}`}
+      >
         {this.renderMainContent()}
         {this.renderAdditionalContent()}
         {this.renderStats()}
@@ -359,7 +391,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
     }
 
     return (
-      <Card id="about-me-section" ariaLabel="About Me Section">
+      <Card id="about" ariaLabel="About Me Section">
         {this.renderContent()}
       </Card>
     );

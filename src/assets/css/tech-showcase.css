@@ -13,7 +13,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Component-Specific Variables (DRY)
@@ -36,7 +36,9 @@
   width: 100%;
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity var(--duration-base) var(--easing-ease), transform var(--duration-base) var(--easing-ease);
+  transition:
+    opacity var(--duration-base) var(--easing-ease),
+    transform var(--duration-base) var(--easing-ease);
 }
 
 .tech-showcase-wrapper.tech-showcase-visible {
@@ -45,18 +47,17 @@
 }
 
 .tech-showcase {
-  width: 100%;
   position: relative;
+  width: 100%;
 }
 
 .tech-showcase-title {
+  background: var(--gradient-primary);
+  color: var(--tech-showcase-text);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--tech-showcase-text);
-  margin-bottom: 2rem;
   text-align: center;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
+  margin-bottom: 2rem;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -65,24 +66,25 @@
    Code Variant - Premium Code Editor Style
    ============================================ */
 .tech-showcase-code-container {
+  position: relative;
+  border: 1px solid var(--color-accent-alpha-30);
   background: var(--tech-showcase-bg-card);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 20px 60px var(--color-black-alpha-40),
     0 0 0 1px var(--color-accent-alpha-20),
     inset 0 1px 0 var(--color-white-alpha-10);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-accent-alpha-30);
-  position: relative;
-  animation: codeContainerFloat 6s ease-in-out infinite;
+  animation: code-container-float 6s ease-in-out infinite;
 }
 
-@keyframes codeContainerFloat {
-  0%, 100% {
+@keyframes code-container-float {
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-5px);
   }
@@ -106,7 +108,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  box-shadow: 0 0 10px currentColor;
+  box-shadow: 0 0 10px currentcolor;
 }
 
 .tech-showcase-dot-red {
@@ -125,31 +127,31 @@
 }
 
 .tech-showcase-code-label {
+  color: var(--tech-showcase-text-muted);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--tech-showcase-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: Monaco, Menlo, monospace;
 }
 
 .tech-showcase-code-content {
   padding: 1.5rem;
-  font-family: 'Monaco', 'Menlo', 'Fira Code', monospace;
+  background: var(--color-black-alpha-20);
   font-size: 0.95rem;
   line-height: 1.8;
-  background: var(--color-black-alpha-20);
+  font-family: Monaco, Menlo, "Fira Code", monospace;
 }
 
 .tech-showcase-code-line {
   display: flex;
+  position: relative;
+  padding: 0.2rem 0;
+  transition: all 0.3s ease;
   align-items: center;
   min-height: 1.6em;
-  transition: all 0.3s ease;
-  padding: 0.2rem 0;
   cursor: pointer;
   border-radius: 4px;
-  position: relative;
 }
 
 .tech-showcase-code-line:hover {
@@ -159,7 +161,7 @@
 
 .tech-showcase-code-line.tech-showcase-active {
   background: var(--color-accent-alpha-15);
-  box-shadow: 
+  box-shadow:
     0 0 20px var(--color-accent-alpha-30),
     inset 0 0 0 1px var(--color-accent-alpha-30);
   transform: translateX(8px);
@@ -197,16 +199,19 @@
 
 .tech-showcase-cursor {
   color: var(--color-text-on-accent);
-  animation: cursorBlink 1s step-end infinite;
+  animation: cursor-blink 1s step-end infinite;
   margin-left: 0.25rem;
   font-weight: 700;
 }
 
-@keyframes cursorBlink {
-  0%, 50% {
+@keyframes cursor-blink {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -224,19 +229,18 @@
 .tech-showcase-item {
   position: relative;
   padding: 1.5rem 1rem;
+  border: 1px solid var(--color-accent-alpha-20);
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-10) 0%,
     var(--color-accent-alt-alpha-08) 100%
   );
-  border: 1px solid var(--color-accent-alpha-20);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  text-align: center;
 }
 
 .tech-showcase-item::before {
@@ -262,7 +266,7 @@
 .tech-showcase-item:hover {
   transform: translateY(-8px) scale(1.05);
   border-color: var(--color-accent-alpha-50);
-  box-shadow: 
+  box-shadow:
     0 12px 40px var(--color-accent-alpha-30),
     0 0 0 1px var(--color-accent-alpha-30);
 }
@@ -274,7 +278,7 @@
     var(--color-accent-alt-alpha-15) 100%
   );
   border-color: var(--color-accent-alpha-60);
-  box-shadow: 
+  box-shadow:
     0 8px 30px var(--color-accent-glow),
     0 0 0 2px var(--color-accent-alpha-30),
     inset 0 0 20px var(--color-accent-alpha-10);
@@ -287,20 +291,28 @@
   left: 50%;
   width: 0;
   height: 0;
-  border-radius: 50%;
   background: radial-gradient(
     circle,
     var(--color-accent-alpha-40) 0%,
     transparent 70%
   );
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
   opacity: 0;
+  transition:
+    width 0.6s ease,
+    height 0.6s ease,
+    opacity 0.6s ease;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-.tech-showcase-item:hover .tech-showcase-item-glow,
 .tech-showcase-item-active .tech-showcase-item-glow {
+  width: 200%;
+  height: 200%;
+  opacity: 1;
+}
+
+.tech-showcase-item:hover .tech-showcase-item-glow {
   width: 200%;
   height: 200%;
   opacity: 1;
@@ -310,14 +322,18 @@
   position: relative;
   z-index: 1;
   color: var(--tech-showcase-text);
-  font-weight: 600;
   font-size: 0.95rem;
-  letter-spacing: 0.5px;
+  font-weight: 600;
   transition: color 0.3s ease;
+  letter-spacing: 0.5px;
 }
 
-.tech-showcase-item:hover .tech-showcase-item-text,
 .tech-showcase-item-active .tech-showcase-item-text {
+  color: var(--color-text-on-accent);
+  text-shadow: 0 0 10px var(--color-accent-alpha-50);
+}
+
+.tech-showcase-item:hover .tech-showcase-item-text {
   color: var(--color-text-on-accent);
   text-shadow: 0 0 10px var(--color-accent-alpha-50);
 }
@@ -325,7 +341,7 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .tech-showcase-grid-container {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1rem;
@@ -345,7 +361,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .tech-showcase-grid-container {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
@@ -372,4 +388,3 @@
     transition: none;
   }
 }
-

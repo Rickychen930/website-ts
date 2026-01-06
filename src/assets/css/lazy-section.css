@@ -13,7 +13,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 .lazy-section-placeholder {
   min-height: 300px;
@@ -30,12 +30,13 @@
 }
 
 .lazy-section-skeleton-header {
-  height: 40px;
   width: 200px;
+  height: 40px;
   background: var(--color-bg-lighter);
   border-radius: var(--component-radius-md);
   margin-bottom: var(--spacing-xl);
-  animation: skeletonPulse var(--duration-base) var(--easing-ease-in-out) infinite;
+  animation: skeleton-pulse var(--duration-base) var(--easing-ease-in-out)
+    infinite;
 }
 
 .lazy-section-skeleton-content {
@@ -45,29 +46,32 @@
 }
 
 .lazy-section-skeleton-line {
-  height: 20px;
   width: 100%;
+  height: 20px;
   background: var(--color-bg-lighter);
   border-radius: var(--component-radius-md);
-  animation: skeletonPulse var(--duration-base) var(--easing-ease-in-out) infinite;
+  animation: skeleton-pulse var(--duration-base) var(--easing-ease-in-out)
+    infinite;
 }
 
 .lazy-section-skeleton-line.short {
   width: 60%;
 }
 
-@keyframes skeletonPulse {
-  0%, 100% {
+@keyframes skeleton-pulse {
+  0%,
+  100% {
     opacity: 0.6;
   }
+
   50% {
     opacity: var(--opacity-subtle);
   }
 }
 
 .lazy-section {
-  transition: var(--transition-all);
   opacity: 0;
+  transition: var(--transition-all);
   transform: translateY(20px);
 }
 
@@ -90,4 +94,3 @@
     transform: none;
   }
 }
-

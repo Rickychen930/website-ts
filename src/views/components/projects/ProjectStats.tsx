@@ -1,7 +1,7 @@
 /**
  * Project Stats Component
  * Shows technical metrics and statistics
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP)
  * - DRY (Don't Repeat Yourself)
@@ -33,10 +33,10 @@ export class ProjectStats extends PureComponent<ProjectStatsProps> {
    */
   private estimateLinesOfCode(): string {
     const hasBackend = this.props.project.technologies?.some(
-      (t) => t.category === "backend" || t.category === "database"
+      (t) => t.category === "database" || t.category === "cloud",
     );
     const hasFrontend = this.props.project.technologies?.some(
-      (t) => t.category === "frontend" || t.category === "framework"
+      (t) => t.category === "framework" || t.category === "library",
     );
 
     if (hasBackend && hasFrontend) {
@@ -83,13 +83,17 @@ export class ProjectStats extends PureComponent<ProjectStatsProps> {
     const loc = this.estimateLinesOfCode();
 
     return (
-      <div className={this.getClassNames()} role="group" aria-label="Project statistics">
+      <div
+        className={this.getClassNames()}
+        role="group"
+        aria-label="Project statistics"
+      >
         {this.renderStat("Technologies", `${techCount}`, "⚙️")}
         {this.renderStat("Lines of Code", loc, "📝")}
         {linkCount > 0 && this.renderStat("Repositories", `${linkCount}`, "🔗")}
-        {project.teamSize && this.renderStat("Team Size", `${project.teamSize}`, "👥")}
+        {project.teamSize &&
+          this.renderStat("Team Size", `${project.teamSize}`, "👥")}
       </div>
     );
   }
 }
-

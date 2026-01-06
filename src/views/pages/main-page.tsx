@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import "../../assets/css/main-page.css";
 import TableOfContents from "../../components/navigation/table-of-contents";
+import FloatingCTA from "../../components/navigation/floating-cta";
+import SkipLinks from "../../components/navigation/skip-links";
 import GlobalSearch from "../../components/search/global-search";
 import LazySection from "../../components/sections/lazy-section";
 import {
@@ -9,7 +11,7 @@ import {
   RetryConfig,
   ScrollConfig,
   SectionIds,
-  SectionNames
+  SectionNames,
 } from "../../constants";
 import { MainPageController } from "../../controllers/main-page-controller";
 import { ISectionConfig } from "../../models/section-model";
@@ -18,9 +20,15 @@ import { ScrollObserverManager } from "../../utils/scroll-observer-manager";
 import { updateSEOFromProfile } from "../../utils/seo";
 import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
 import { shouldDisplayData } from "../../utils/view-helpers";
+import { trackSectionView } from "../../utils/analytics";
 import { MainPageFooterComponent } from "../components/footer";
 import Navbar from "../components/navbar";
-import { BackToTopButton, ErrorComponent, LoadingComponent, toast } from "../components/ui";
+import {
+  BackToTopButton,
+  ErrorComponent,
+  LoadingComponent,
+  toast,
+} from "../components/ui";
 import BasePage, { BasePageState } from "./base-page";
 import AboutMeSection from "./sections/about-me-section";
 import AcademicSection from "./sections/academic-section";
@@ -31,6 +39,7 @@ import LanguagesSection from "./sections/languages-section";
 import ProjectsSection from "./sections/projects-section";
 import SoftSkillsSection from "./sections/soft-skills-section";
 import TechnicalSkillsSection from "./sections/technical-skills-section";
+import TestimonialsSection from "./sections/testimonials-section";
 import WorkExperienceSection from "./sections/work-experience-section";
 
 /**
@@ -46,7 +55,7 @@ type MainPageState = BasePageState & {
 /**
  * MainPage - View Layer (MVC Pattern)
  * Refactored to Component-Based Architecture
- * 
+ *
  * Principles Applied:
  * - OOP: Class-based component with proper encapsulation
  * - SOLID:
@@ -62,6 +71,7 @@ class MainPage extends BasePage<{}, MainPageState> {
   private readonly smoothScrollManager: SmoothScrollManager;
   private readonly scrollObserverManager: ScrollObserverManager;
   private isMounted: boolean = false;
+  private retryTimeouts: NodeJS.Timeout[] = [];
 
   constructor(props: {}) {
     super(props);
@@ -76,8 +86,16 @@ class MainPage extends BasePage<{}, MainPageState> {
     this.smoothScrollManager = new SmoothScrollManager(ScrollConfig.OFFSET);
     this.scrollObserverManager = new ScrollObserverManager(
       ScrollConfig.OBSERVER_THRESHOLD,
-      ScrollConfig.OBSERVER_ROOT_MARGIN
+      ScrollConfig.OBSERVER_ROOT_MARGIN,
     );
+
+    // Set up section view tracking
+    this.scrollObserverManager.setSectionViewCallback(
+      (sectionId, sectionName) => {
+        trackSectionView(sectionId, sectionName);
+      },
+    );
+
     this.initializeSections();
   }
 
@@ -98,65 +116,72 @@ class MainPage extends BasePage<{}, MainPageState> {
    */
   private initializeSections(): void {
     const sections: ISectionConfig[] = [
-      { 
-        id: SectionIds.ABOUT, 
-        title: SectionNames.ABOUT, 
-        component: AboutMeSection, 
-        dataKey: "name" 
+      {
+        id: SectionIds.ABOUT,
+        title: SectionNames.ABOUT,
+        component: AboutMeSection,
+        dataKey: "name",
       },
-      { 
-        id: SectionIds.SKILLS, 
-        title: SectionNames.TECHNICAL_SKILLS, 
-        component: TechnicalSkillsSection, 
-        dataKey: "technicalSkills" 
+      {
+        id: SectionIds.SKILLS,
+        title: SectionNames.TECHNICAL_SKILLS,
+        component: TechnicalSkillsSection,
+        dataKey: "technicalSkills",
       },
-      { 
-        id: SectionIds.EXPERIENCE, 
-        title: SectionNames.WORK_EXPERIENCE, 
-        component: WorkExperienceSection, 
-        dataKey: "experiences" 
+      {
+        id: SectionIds.EXPERIENCE,
+        title: SectionNames.WORK_EXPERIENCE,
+        component: WorkExperienceSection,
+        dataKey: "experiences",
       },
-      { 
-        id: SectionIds.PROJECTS, 
-        title: SectionNames.PROJECTS, 
-        component: ProjectsSection, 
-        dataKey: "projects" 
+      {
+        id: SectionIds.PROJECTS,
+        title: SectionNames.PROJECTS,
+        component: ProjectsSection,
+        dataKey: "projects",
       },
-      { 
-        id: SectionIds.ACADEMIC, 
-        title: SectionNames.ACADEMIC, 
-        component: AcademicSection, 
-        dataKey: "academics" 
+      {
+        id: SectionIds.ACADEMIC,
+        title: SectionNames.ACADEMIC,
+        component: AcademicSection,
+        dataKey: "academics",
       },
-      { 
-        id: SectionIds.CERTIFICATIONS, 
-        title: SectionNames.CERTIFICATIONS, 
-        component: CertificationSection, 
-        dataKey: "certifications" 
+      {
+        id: SectionIds.CERTIFICATIONS,
+        title: SectionNames.CERTIFICATIONS,
+        component: CertificationSection,
+        dataKey: "certifications",
       },
-      { 
-        id: SectionIds.HONORS, 
-        title: SectionNames.HONORS, 
-        component: HonorsSection, 
-        dataKey: "honors" 
+      {
+        id: SectionIds.HONORS,
+        title: SectionNames.HONORS,
+        component: HonorsSection,
+        dataKey: "honors",
       },
-      { 
-        id: SectionIds.SOFT_SKILLS, 
-        title: SectionNames.SOFT_SKILLS, 
-        component: SoftSkillsSection, 
-        dataKey: "softSkills" 
+      {
+        id: SectionIds.SOFT_SKILLS,
+        title: SectionNames.SOFT_SKILLS,
+        component: SoftSkillsSection,
+        dataKey: "softSkills",
       },
-      { 
-        id: SectionIds.LANGUAGES, 
-        title: SectionNames.LANGUAGES, 
-        component: LanguagesSection, 
-        dataKey: "languages" 
+      {
+        id: SectionIds.LANGUAGES,
+        title: SectionNames.LANGUAGES,
+        component: LanguagesSection,
+        dataKey: "languages",
       },
-      { 
-        id: SectionIds.CONTACT, 
-        title: SectionNames.CONTACT, 
-        component: ContactSection, 
-        dataKey: "contacts" 
+      {
+        id: "testimonials",
+        title: SectionNames.TESTIMONIALS,
+        component: TestimonialsSection,
+        dataKey: "name", // Use name as dataKey, but always visible
+        isVisible: () => true, // Always show testimonials section
+      },
+      {
+        id: SectionIds.CONTACT,
+        title: SectionNames.CONTACT,
+        component: ContactSection,
+        dataKey: "contacts",
       },
     ];
     this.controller.initializeSections(sections);
@@ -189,6 +214,9 @@ class MainPage extends BasePage<{}, MainPageState> {
     this.isMounted = false;
     this.smoothScrollManager.cleanup();
     this.scrollObserverManager.cleanup();
+    // Cleanup all pending retry timeouts
+    this.retryTimeouts.forEach((timeout) => clearTimeout(timeout));
+    this.retryTimeouts = [];
   }
 
   /**
@@ -198,32 +226,38 @@ class MainPage extends BasePage<{}, MainPageState> {
   private initializeSectionObserver(): void {
     // Edge case: Check if component is still mounted
     if (!this.isMounted) return;
-    
+
     // Edge case: Check browser environment
     if (typeof document === "undefined" || !this.state.profile) return;
 
     try {
-      const visibleSections = this.controller.getVisibleSections(this.state.profile);
-      
+      const visibleSections = this.controller.getVisibleSections(
+        this.state.profile,
+      );
+
       // Edge case: Handle empty sections
       if (!visibleSections || visibleSections.length === 0) {
         return;
       }
 
       const elements = visibleSections
-        .map(config => {
+        .map((config) => {
           try {
             return document.getElementById(config.id);
           } catch (error) {
             if (process.env.NODE_ENV === "development") {
-              const { logWarn } = require('../../utils/logger');
-              logWarn(`Failed to get element for section ${config.id}`, error, "MainPage");
+              const { logWarn } = require("../../utils/logger");
+              logWarn(
+                `Failed to get element for section ${config.id}`,
+                error,
+                "MainPage",
+              );
             }
             return null;
           }
         })
         .filter((el): el is HTMLElement => el !== null);
-      
+
       // Edge case: Only initialize if elements found
       if (elements.length > 0) {
         this.scrollObserverManager.initialize(elements);
@@ -231,7 +265,7 @@ class MainPage extends BasePage<{}, MainPageState> {
     } catch (error) {
       // Edge case: Handle observer initialization errors
       if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../utils/logger');
+        const { logError } = require("../../utils/logger");
         logError("Error initializing section observer", error, "MainPage");
       }
     }
@@ -263,14 +297,18 @@ class MainPage extends BasePage<{}, MainPageState> {
         throw new Error(ErrorMessages.LOAD_PROFILE_FAILED);
       }
 
-      if (!profile.name || typeof profile.name !== 'string' || !profile.name.trim()) {
+      if (
+        !profile.name ||
+        typeof profile.name !== "string" ||
+        !profile.name.trim()
+      ) {
         throw new Error(ErrorMessages.INVALID_INPUT);
       }
 
       // Edge case: Validate required fields
       if (!profile.title || !profile.location || !profile.bio) {
         if (process.env.NODE_ENV === "development") {
-          const { logWarn } = require('../../utils/logger');
+          const { logWarn } = require("../../utils/logger");
           logWarn("Profile missing some fields", profile, "MainPage");
         }
       }
@@ -278,9 +316,9 @@ class MainPage extends BasePage<{}, MainPageState> {
       // Update SEO metadata
       updateSEOFromProfile(profile);
 
-      this.setState({ 
-        profile, 
-        loading: false, 
+      this.setState({
+        profile,
+        loading: false,
         error: null,
         retryCount: 0,
       });
@@ -290,39 +328,44 @@ class MainPage extends BasePage<{}, MainPageState> {
         toast.success("Profile loaded successfully", 3000);
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : ErrorMessages.LOAD_PROFILE_FAILED;
+      const errorMessage =
+        err instanceof Error ? err.message : ErrorMessages.LOAD_PROFILE_FAILED;
       const newRetryCount = this.state.retryCount + 1;
 
       // Edge case: Handle timeout and network errors differently
-      const isNetworkError = errorMessage.includes("timeout") || 
-                            errorMessage.includes("network") || 
-                            errorMessage.includes("fetch");
+      const isNetworkError =
+        errorMessage.includes("timeout") ||
+        errorMessage.includes("network") ||
+        errorMessage.includes("fetch");
 
       if (newRetryCount < RetryConfig.MAX_RETRIES && isNetworkError) {
         // Exponential backoff for network errors
-        const retryDelay = RetryConfig.RETRY_DELAY * Math.pow(2, newRetryCount - 1);
-        setTimeout(() => {
+        const retryDelay =
+          RetryConfig.RETRY_DELAY * Math.pow(2, newRetryCount - 1);
+        const timeoutId = setTimeout(() => {
           if (this.state !== null && this.isMounted) {
             this.setState({ retryCount: newRetryCount });
             this.loadProfile();
           }
         }, retryDelay);
+        this.retryTimeouts.push(timeoutId);
       } else if (newRetryCount < RetryConfig.MAX_RETRIES) {
         // Linear backoff for other errors
         const retryDelay = RetryConfig.RETRY_DELAY * newRetryCount;
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
           if (this.state !== null && this.isMounted) {
             this.setState({ retryCount: newRetryCount });
             this.loadProfile();
           }
         }, retryDelay);
+        this.retryTimeouts.push(timeoutId);
       } else {
-        this.setState({ 
-          loading: false, 
+        this.setState({
+          loading: false,
           error: errorMessage,
           retryCount: 0,
         });
-        
+
         // Show error notification
         toast.error(errorMessage, 5000);
       }
@@ -342,7 +385,7 @@ class MainPage extends BasePage<{}, MainPageState> {
    */
   protected renderHeader(): ReactNode {
     return (
-      <Navbar 
+      <Navbar
         items={this.controller.getNavbarItemsWithDropdowns()}
         brandLogo="/logo.png"
         brandText=""
@@ -352,13 +395,21 @@ class MainPage extends BasePage<{}, MainPageState> {
   }
 
   /**
+   * Override renderBody to use MainPageState.loading instead of BasePageState.isLoading
+   * This ensures the content appears after loading completes
+   */
+  protected renderBody(): ReactNode {
+    return <div className="page-content">{this.renderContent()}</div>;
+  }
+
+  /**
    * Render loading state using LoadingComponent with skeleton
    * Component-Based: Delegates to specialized component
    */
   protected renderLoading(): ReactNode {
     return (
-      <LoadingComponent 
-        message={Messages.LOADING} 
+      <LoadingComponent
+        message={Messages.LOADING}
         useSkeleton={true}
         skeletonVariant="card"
       />
@@ -371,7 +422,7 @@ class MainPage extends BasePage<{}, MainPageState> {
    */
   protected renderError(): ReactNode {
     const { error, retryCount } = this.state;
-    
+
     return (
       <ErrorComponent
         error={error}
@@ -386,17 +437,25 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Get section data from profile
    * Performance: Uses utility helper for validation
    */
-  private getSectionData(config: ISectionConfig, profile: UserProfile): unknown {
-    const { dataKey } = config;
+  private getSectionData(
+    config: ISectionConfig,
+    profile: UserProfile,
+  ): unknown {
+    const { dataKey, id } = config;
+
+    // Testimonials section doesn't need data from profile
+    if (id === "testimonials") {
+      return profile; // Pass profile for consistency, but component will use default data
+    }
+
     const data = profile[dataKey];
-    
+
     if (!shouldDisplayData(data)) {
       return null;
     }
-    
+
     return dataKey === "name" ? profile : data;
   }
-
 
   /**
    * Get section priority untuk lazy loading
@@ -404,7 +463,10 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Performance: Memoized priority lookup
    * UI Optimization: Technical Skills is high priority (core content)
    */
-  private readonly sectionPriorityMap = new Map<string, "high" | "normal" | "low">([
+  private readonly sectionPriorityMap = new Map<
+    string,
+    "high" | "normal" | "low"
+  >([
     ["about", "high"],
     ["skills", "high"], // Technical Skills is core content
     ["contact", "high"],
@@ -432,7 +494,7 @@ class MainPage extends BasePage<{}, MainPageState> {
       <div className="contents-section">
         {visibleSections.map((config) => {
           const sectionData = this.getSectionData(config, profile);
-          
+
           if (!sectionData) return null;
 
           return (
@@ -469,28 +531,24 @@ class MainPage extends BasePage<{}, MainPageState> {
     const { loading, error, profile } = this.state;
 
     if (loading) {
-      return (
-        <div className="main-page">
-          {this.renderLoading()}
-        </div>
-      );
+      return <div className="main-page">{this.renderLoading()}</div>;
     }
 
     if (error || !profile) {
-      return (
-        <div className="main-page">
-          {this.renderError()}
-        </div>
-      );
+      return <div className="main-page">{this.renderError()}</div>;
     }
 
     const visibleSections = this.controller.getVisibleSections(profile);
 
     return (
       <div className="main-page">
-        {this.renderSections()}
+        <SkipLinks />
+        <main id="main-content" role="main">
+          {this.renderSections()}
+        </main>
         <BackToTopButton />
-        <GlobalSearch 
+        <FloatingCTA resumeUrl="/assets/document/RICKY_CV_8_AUG.pdf" />
+        <GlobalSearch
           profile={profile}
           showTrigger={false}
           onResultClick={(result) => {
@@ -504,6 +562,20 @@ class MainPage extends BasePage<{}, MainPageState> {
             // Scroll handled in TableOfContents component
           }}
         />
+      </div>
+    );
+  }
+
+  /**
+   * Override render to use MainPageState.loading instead of BasePageState.isLoading
+   * This ensures the content appears after loading completes
+   */
+  public render(): ReactNode {
+    return (
+      <div className="page-container">
+        {this.renderHeader()}
+        {this.renderBody()}
+        {this.renderFooter()}
       </div>
     );
   }

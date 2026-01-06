@@ -1,18 +1,18 @@
 /**
  * Card Component - Refactored with New CSS Architecture
  * Professional, Code-Based, OOP, SOLID, DRY, KISS
- * 
+ *
  * This is an example of how to refactor existing Card component to use the new CSS architecture
- * 
+ *
  * Architecture:
  * - Uses new CSS component classes (card, card--elevated, etc.)
  * - Uses CSS helpers for class name building
  * - Follows BEM naming convention
  * - Type-safe with TypeScript
- * 
+ *
  * Usage:
  * import Card from '@/views/components/common/card-refactored';
- * 
+ *
  * <Card variant="elevated" title="Title">Content</Card>
  */
 
@@ -36,7 +36,7 @@ type CardProps = {
 /**
  * Card Component - Refactored
  * Uses new CSS architecture with utility classes and helpers
- * 
+ *
  * Features:
  * - Uses CSS helpers for class names
  * - Uses CSS variables for styling
@@ -45,7 +45,7 @@ type CardProps = {
  * - Performance Optimized (PureComponent)
  * - Fully Responsive
  * - Accessibility Support
- * 
+ *
  * Principles Applied:
  * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
  * - DRY (Don't Repeat Yourself)
@@ -68,12 +68,9 @@ class Card extends PureComponent<CardProps> {
    */
   private getClassNames(): string {
     const { className = "", variant = "default" } = this.props;
-    
+
     // Use CSS helper for card classes
-    return cn(
-      cardClass(variant),
-      className
-    );
+    return cn(cardClass(variant), className);
   }
 
   /**
@@ -90,8 +87,8 @@ class Card extends PureComponent<CardProps> {
     const titleId = id ? `${id}-title` : undefined;
 
     return (
-      <header className={bemClass('card', 'header')}>
-        <h1 className={bemClass('card', 'title')} id={titleId}>
+      <header className={bemClass("card", "header")}>
+        <h1 className={bemClass("card", "title")} id={titleId}>
           {title}
         </h1>
       </header>
@@ -111,8 +108,8 @@ class Card extends PureComponent<CardProps> {
     }
 
     return (
-      <div 
-        className={bemClass('card', 'body')}
+      <div
+        className={bemClass("card", "body")}
         role="region"
         aria-labelledby={id && title ? `${id}-title` : undefined}
       >
@@ -133,7 +130,7 @@ class Card extends PureComponent<CardProps> {
     }
 
     return (
-      <footer className={bemClass('card', 'footer')} role="contentinfo">
+      <footer className={bemClass("card", "footer")} role="contentinfo">
         {footer}
       </footer>
     );
@@ -147,7 +144,7 @@ class Card extends PureComponent<CardProps> {
 
     // Edge case: Ensure we always have content
     if (!this.props.children && !this.props.title) {
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === "development") {
         console.warn("Card component rendered without content");
       }
       return null;
@@ -168,4 +165,3 @@ class Card extends PureComponent<CardProps> {
 }
 
 export default Card;
-

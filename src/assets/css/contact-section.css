@@ -13,9 +13,10 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ─── Component-Specific Variables (DRY) ─── */
+
 /* Uses core constants as base */
 #contact-section {
   /* Colors - Uses core color system */
@@ -23,31 +24,31 @@
   --contact-primary-hover: var(--color-accent-hover);
   --contact-primary-light: var(--contact-primary-light);
   --contact-primary-lighter: var(--contact-primary-lighter);
-  
+
   /* Gradient Colors - Uses core gradients */
   --contact-gradient-start: var(--color-accent-primary);
   --contact-gradient-mid: var(--color-accent-alt);
   --contact-gradient-end: var(--color-accent-secondary);
   --contact-gradient-hover: var(--gradient-accent-full);
   --contact-gradient-subtle: var(--gradient-sublime);
-  
+
   /* Text Colors - Uses core text colors */
   --contact-text-primary: var(--color-text-heading);
   --contact-text-secondary: var(--color-text-muted);
   --contact-text-muted: var(--color-text-subtle);
   --contact-text-light: var(--color-text-light);
-  
+
   /* Background Colors - Uses core background colors */
   --contact-bg-card: var(--color-bg-card);
   --contact-bg-hover: var(--color-bg-card-hover);
   --contact-bg-subtle: var(--color-bg-lighter);
   --contact-bg-gradient: var(--gradient-primary);
-  
+
   /* Border Colors - Uses core border colors */
   --contact-border: var(--color-border-default);
   --contact-border-hover: var(--color-border-accent);
   --contact-border-light: var(--color-border-light);
-  
+
   /* Shadow System - Uses core shadow system */
   --contact-shadow-xs: var(--shadow-xs);
   --contact-shadow-sm: var(--shadow-sm);
@@ -56,20 +57,20 @@
   --contact-shadow-xl: var(--shadow-xl);
   --contact-shadow-2xl: var(--shadow-xl);
   --contact-shadow-glow: var(--shadow-glow);
-  
+
   /* Transitions - Uses core transition system */
   --contact-transition-fast: var(--transition-fast);
   --contact-transition: var(--transition-base);
   --contact-transition-slow: var(--transition-slow);
   --contact-transition-bounce: var(--transition-bounce);
-  
+
   /* Spacing - Uses core spacing system */
   --contact-spacing-xs: var(--spacing-xs);
   --contact-spacing-sm: var(--spacing-sm);
   --contact-spacing-md: var(--spacing-md);
   --contact-spacing-lg: var(--spacing-lg);
   --contact-spacing-xl: var(--spacing-xl);
-  
+
   /* Border Radius - Uses core radius system */
   --contact-radius-sm: var(--radius-md);
   --contact-radius-md: var(--radius-lg);
@@ -83,12 +84,12 @@
 /* ─── Empty State ─── */
 #contact-section .contact-section-empty {
   display: flex;
+  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
+  color: var(--contact-text-muted);
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
-  text-align: center;
-  color: var(--contact-text-muted);
   min-height: 300px;
 }
 
@@ -96,14 +97,16 @@
   font-size: 4rem;
   margin-bottom: var(--contact-spacing-md);
   opacity: 0.6;
-  animation: contactPulse 2s ease-in-out infinite;
+  animation: contact-pulse 2s ease-in-out infinite;
 }
 
-@keyframes contactPulse {
-  0%, 100% {
+@keyframes contact-pulse {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.6;
   }
+
   50% {
     transform: scale(1.1);
     opacity: 0.8;
@@ -129,12 +132,12 @@
 /* ─── Error State ─── */
 #contact-section .contact-section-error {
   display: flex;
+  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
+  color: var(--contact-text-muted);
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
-  text-align: center;
-  color: var(--contact-text-muted);
   min-height: 300px;
 }
 
@@ -175,11 +178,11 @@
   border: 4px solid var(--contact-border-light);
   border-top-color: var(--contact-primary);
   border-radius: 50%;
-  animation: contactSpin 1s linear infinite;
+  animation: contact-spin 1s linear infinite;
   margin-bottom: var(--contact-spacing-md);
 }
 
-@keyframes contactSpin {
+@keyframes contact-spin {
   to {
     transform: rotate(360deg);
   }
@@ -195,12 +198,12 @@
 /* ─── Responsive Design ─── */
 
 /* Large Desktops (1400px+) */
-@media screen and (min-width: 1400px) {
+@media screen and (width >= 1400px) {
   /* Container removed - Card component handles styling */
 }
 
 /* Large Tablets & Small Desktops (1200px - 1399px) */
-@media screen and (max-width: 1399px) {
+@media screen and (width <= 1399px) {
   #contact-section {
     --contact-spacing-lg: 1.75rem;
     --contact-spacing-xl: 2.5rem;
@@ -208,7 +211,7 @@
 }
 
 /* Tablets (992px - 1199px) */
-@media screen and (max-width: 1199px) {
+@media screen and (width <= 1199px) {
   #contact-section {
     --contact-spacing-md: 1.25rem;
     --contact-spacing-lg: 1.5rem;
@@ -227,7 +230,7 @@
 }
 
 /* Small Tablets (768px - 991px) */
-@media screen and (max-width: 991px) {
+@media screen and (width <= 991px) {
   #contact-section {
     --contact-spacing-md: 1rem;
     --contact-spacing-lg: 1.25rem;
@@ -253,7 +256,7 @@
 }
 
 /* Mobile Devices (600px - 767px) */
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
   #contact-section {
     --contact-spacing-sm: 0.875rem;
     --contact-spacing-md: 1rem;
@@ -293,7 +296,7 @@
 }
 
 /* Small Mobile Devices (480px - 599px) */
-@media screen and (max-width: 599px) {
+@media screen and (width <= 599px) {
   #contact-section .contact-section-empty,
   #contact-section .contact-section-error,
   #contact-section .contact-section-loading {
@@ -317,15 +320,15 @@
 }
 
 /* Extra Small Mobile Devices (360px - 479px) */
-@media screen and (max-width: 479px) {
+@media screen and (width <= 479px) {
   /* Container removed - Card component handles styling */
 
   #contact-section .contact-section-empty,
   #contact-section .contact-section-error,
   #contact-section .contact-section-loading {
-    min-height: 180px;
-    padding: var(--contact-spacing-md) var(--contact-spacing-xs);
     width: 100%;
+    padding: var(--contact-spacing-md) var(--contact-spacing-xs);
+    min-height: 180px;
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -342,14 +345,14 @@
 
   #contact-section .contact-section-empty-message,
   #contact-section .contact-section-error-message {
+    padding: 0 var(--contact-spacing-xs);
     font-size: 0.85rem;
     max-width: 100%;
-    padding: 0 var(--contact-spacing-xs);
   }
 }
 
 /* ─── Landscape Orientation ─── */
-@media screen and (orientation: landscape) and (max-width: 991px) {
+@media screen and (orientation: landscape) and (width <= 991px) {
   #contact-section .contact-section-empty,
   #contact-section .contact-section-error,
   #contact-section .contact-section-loading {
@@ -359,11 +362,11 @@
 }
 
 /* ─── High DPI Displays ─── */
-@media screen and (-webkit-min-device-pixel-ratio: 2),
-       screen and (min-resolution: 192dpi) {
+@media screen and (min-device-pixel-ratio: 2),
+  screen and (resolution >= 192dpi) {
   #contact-section {
-    --contact-shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.03);
-    --contact-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --contact-shadow-sm: 0 1px 4px var(--color-black-alpha-03);
+    --contact-shadow-md: 0 2px 8px var(--color-black-alpha-05);
   }
 }
 
@@ -386,21 +389,22 @@
     --contact-bg-card: var(--contact-bg-card);
     --contact-bg-hover: var(--contact-bg-hover);
     --contact-bg-subtle: var(--contact-bg-subtle);
-    --contact-bg-gradient: linear-gradient(135deg, var(--contact-bg-card) 0%, var(--contact-bg-subtle) 100%);
-    
+    --contact-bg-gradient: linear-gradient(
+      135deg,
+      var(--contact-bg-card) 0%,
+      var(--contact-bg-subtle) 100%
+    );
     --contact-text-primary: var(--contact-text-primary);
     --contact-text-secondary: var(--contact-text-secondary);
     --contact-text-muted: var(--contact-text-muted);
     --contact-text-light: var(--contact-text-light);
-    
     --contact-border: var(--contact-border);
     --contact-border-hover: var(--contact-border-hover);
     --contact-border-light: var(--contact-border-light);
-    
-    --contact-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --contact-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --contact-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-    --contact-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+    --contact-shadow-sm: 0 2px 8px var(--color-black-alpha-30);
+    --contact-shadow-md: 0 4px 16px var(--color-black-alpha-40);
+    --contact-shadow-lg: 0 8px 32px var(--color-black-alpha-50);
+    --contact-shadow-xl: 0 16px 48px var(--color-black-alpha-60);
   }
 }
 
@@ -427,20 +431,14 @@
 }
 
 /* ─── Focus Visible (Keyboard Navigation) ─── */
-#contact-section *:focus-visible {
-  outline: 3px solid var(--contact-primary);
-  outline-offset: 2px;
-  border-radius: var(--contact-radius-sm);
-}
-
-/* ─── Performance Optimizations ─── */
-#contact-section {
-  contain: layout style paint;
-  will-change: contents;
-}
-
 #contact-section * {
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#contact-section *:focus-visible {
+  outline: 3px solid var(--contact-primary);
+  outline-offset: 2px;
+  border-radius: var(--contact-radius-sm);
 }

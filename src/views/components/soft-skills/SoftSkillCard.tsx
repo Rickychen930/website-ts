@@ -1,9 +1,9 @@
 /**
  * SoftSkillCard Component
- * 
+ *
  * Advanced professional card component showcasing software engineering capabilities
  * Follows Single Responsibility Principle (SRP)
- * 
+ *
  * Features:
  * - 3D transform effects with parallax
  * - Animated particles and grid background
@@ -30,7 +30,7 @@ export interface ISoftSkillCardProps {
  * PureComponent for performance optimization
  */
 export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
-  private cardRef: RefObject<HTMLElement> = createRef<HTMLElement>();
+  private cardRef: RefObject<HTMLElement | null> = createRef<HTMLElement>();
   private mouseX: number = 0;
   private mouseY: number = 0;
 
@@ -51,29 +51,29 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
     if (!this.cardRef.current) return;
 
     const card = this.cardRef.current;
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       const rect = card.getBoundingClientRect();
       this.mouseX = e.clientX - rect.left;
       this.mouseY = e.clientY - rect.top;
-      
+
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      
+
       const rotateX = (this.mouseY - centerY) / 20;
       const rotateY = (centerX - this.mouseX) / 20;
-      
-      card.style.setProperty('--mouse-x', `${rotateY}deg`);
-      card.style.setProperty('--mouse-y', `${rotateX}deg`);
+
+      card.style.setProperty("--mouse-x", `${rotateY}deg`);
+      card.style.setProperty("--mouse-y", `${rotateX}deg`);
     };
 
     const handleMouseLeave = () => {
-      card.style.setProperty('--mouse-x', '0deg');
-      card.style.setProperty('--mouse-y', '0deg');
+      card.style.setProperty("--mouse-x", "0deg");
+      card.style.setProperty("--mouse-y", "0deg");
     };
 
-    card.addEventListener('mousemove', handleMouseMove);
-    card.addEventListener('mouseleave', handleMouseLeave);
+    card.addEventListener("mousemove", handleMouseMove);
+    card.addEventListener("mouseleave", handleMouseLeave);
 
     (card as any).__mouseHandlers = { handleMouseMove, handleMouseLeave };
   }
@@ -85,10 +85,10 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
     if (!this.cardRef.current) return;
     const card = this.cardRef.current;
     const handlers = (card as any).__mouseHandlers;
-    
+
     if (handlers) {
-      card.removeEventListener('mousemove', handlers.handleMouseMove);
-      card.removeEventListener('mouseleave', handlers.handleMouseLeave);
+      card.removeEventListener("mousemove", handlers.handleMouseMove);
+      card.removeEventListener("mouseleave", handlers.handleMouseLeave);
     }
   }
 
@@ -131,7 +131,7 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
       {
         threshold: 0.2,
         rootMargin: "0px 0px -50px 0px",
-      }
+      },
     );
 
     if (this.cardRef.current) {
@@ -213,7 +213,10 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
                 animated={true}
               />
             </div>
-            <div className="soft-skill-card-icon-pulse" aria-hidden="true"></div>
+            <div
+              className="soft-skill-card-icon-pulse"
+              aria-hidden="true"
+            ></div>
           </div>
 
           {/* Content */}
@@ -243,10 +246,12 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
             <div className="soft-skill-card-level">
               <div className="soft-skill-card-level-header">
                 <span className="soft-skill-card-level-label">Proficiency</span>
-                <span className="soft-skill-card-level-value">{skillLevel}%</span>
+                <span className="soft-skill-card-level-value">
+                  {skillLevel}%
+                </span>
               </div>
               <div className="soft-skill-card-level-bar">
-                <div 
+                <div
                   className="soft-skill-card-level-fill"
                   style={{ width: `${skillLevel}%` }}
                   aria-hidden="true"

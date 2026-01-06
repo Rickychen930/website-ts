@@ -21,7 +21,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Component-Specific Variables (DRY)
@@ -35,7 +35,7 @@
   --work-spacing-lg: var(--spacing-lg);
   --work-spacing-xl: var(--spacing-xl);
   --work-spacing-xxl: var(--spacing-3xl);
-  
+
   /* Colors - Uses core color system */
   --work-color-primary: var(--color-accent-primary);
   --work-color-primary-light: var(--color-accent-light);
@@ -43,13 +43,11 @@
   --work-color-secondary: var(--color-accent-alt);
   --work-color-accent: var(--color-accent-hover);
   --work-color-accent-light: var(--color-accent-light);
-  
   --work-color-text-heading: var(--color-text-heading);
   --work-color-text-primary: var(--color-text-heading-alt);
   --work-color-text-secondary: var(--color-text-subtle);
   --work-color-text-muted: var(--color-text-muted-alt);
   --work-color-text-company: var(--color-text-accent);
-  
   --work-color-bg-card: var(--color-bg-card);
   --work-color-bg-card-hover: var(--color-bg-card-hover);
   --work-color-bg-timeline: var(--gradient-accent-full);
@@ -57,11 +55,10 @@
   --work-color-bg-icon-hover: var(--gradient-accent-full);
   --work-color-bg-period: var(--color-bg-timeline);
   --work-color-bg-period-hover: var(--color-bg-content-hover);
-  
   --work-color-border: var(--color-border-light);
   --work-color-border-hover: var(--color-border-accent);
   --work-color-border-glow: var(--color-border-glow);
-  
+
   /* Shadows - Uses core shadow system */
   --work-shadow-xs: var(--shadow-xs);
   --work-shadow-sm: var(--shadow-sm);
@@ -70,15 +67,19 @@
   --work-shadow-xl: var(--shadow-xl);
   --work-shadow-card: var(--shadow-card);
   --work-shadow-card-hover: var(--shadow-card-hover);
-  
+
   /* Transitions - Uses core transition system */
   --work-transition-fast: var(--transition-fast);
   --work-transition-base: var(--transition-base);
   --work-transition-slow: var(--transition-slow);
-  
+
   /* Typography - Uses core typography system */
   --work-font-family: var(--font-main);
-  --work-font-size-title: clamp(1.25rem, 2.5vw, var(--font-size-title-component));
+  --work-font-size-title: clamp(
+    1.25rem,
+    2.5vw,
+    var(--font-size-title-component)
+  );
   --work-font-size-company: clamp(1rem, 1.8vw, 1.15rem);
   --work-font-size-period: clamp(var(--font-size-small), 1.4vw, 0.95rem);
   --work-font-size-description: clamp(0.95rem, 1.6vw, 1.05rem);
@@ -91,11 +92,13 @@
    Container - REMOVED (not needed, Card component handles styling)
    ============================================ */
 
-@keyframes backgroundPulse {
-  0%, 100% {
+@keyframes background-pulse {
+  0%,
+  100% {
     opacity: 0.8;
     transform: scale(1);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.02);
@@ -106,20 +109,20 @@
    Loading State
    ============================================ */
 .work-experience-loading {
-  text-align: center;
   padding: var(--work-spacing-xxl);
   color: var(--work-color-text-muted);
-  font-family: var(--work-font-family);
   font-size: var(--work-font-size-description);
+  text-align: center;
+  font-family: var(--work-font-family);
 }
 
 /* ============================================
    Empty State
    ============================================ */
 .work-experience-empty {
-  text-align: center;
   padding: var(--work-spacing-xxl);
   color: var(--work-color-text-muted);
+  text-align: center;
   font-family: var(--work-font-family);
 }
 
@@ -127,13 +130,15 @@
   font-size: 4rem;
   margin-bottom: var(--work-spacing-md);
   opacity: 0.6;
-  animation: emptyIconFloat 3s ease-in-out infinite;
+  animation: empty-icon-float 3s ease-in-out infinite;
 }
 
-@keyframes emptyIconFloat {
-  0%, 100% {
+@keyframes empty-icon-float {
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -149,9 +154,9 @@
    Error State
    ============================================ */
 .work-experience-error {
-  text-align: center;
   padding: var(--work-spacing-xxl);
   color: var(--work-color-text-muted);
+  text-align: center;
   font-family: var(--work-font-family);
 }
 
@@ -163,9 +168,9 @@
 
 .work-experience-error-text {
   margin: 0;
+  color: var(--color-error);
   font-size: var(--work-font-size-description);
   line-height: var(--work-line-height-normal);
-  color: var(--color-error);
 }
 
 /* ============================================
@@ -173,22 +178,22 @@
    ============================================ */
 
 /* ─── Large Desktop (1400px+) ─── */
-@media screen and (min-width: 1400px) {
+@media screen and (width >= 1400px) {
   /* Container removed - Card component handles styling */
 }
 
 /* ─── Desktop (1200px - 1399px) ─── */
-@media screen and (max-width: 1399px) and (min-width: 1200px) {
+@media screen and (width <= 1399px) and (width >= 1200px) {
   /* Container removed - Card component handles styling */
 }
 
 /* ─── Large Tablets (992px - 1199px) ─── */
-@media screen and (max-width: 1199px) and (min-width: 992px) {
+@media screen and (width <= 1199px) and (width >= 992px) {
   /* Container removed - Card component handles styling */
 }
 
 /* ─── Tablets (768px - 991px) ─── */
-@media screen and (max-width: 991px) and (min-width: 768px) {
+@media screen and (width <= 991px) and (width >= 768px) {
   /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
@@ -198,7 +203,7 @@
 }
 
 /* ─── Small Tablets (600px - 767px) ─── */
-@media screen and (max-width: 767px) and (min-width: 600px) {
+@media screen and (width <= 767px) and (width >= 600px) {
   /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
@@ -208,7 +213,7 @@
 }
 
 /* ─── Mobile (480px - 599px) ─── */
-@media screen and (max-width: 599px) and (min-width: 480px) {
+@media screen and (width <= 599px) and (width >= 480px) {
   /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
@@ -218,7 +223,7 @@
 }
 
 /* ─── Small Mobile (≤ 479px) ─── */
-@media screen and (max-width: 479px) {
+@media screen and (width <= 479px) {
   /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
@@ -233,7 +238,7 @@
 }
 
 /* ─── Extra Small Mobile (≤ 360px) ─── */
-@media screen and (max-width: 360px) {
+@media screen and (width <= 360px) {
   /* Container removed - Card component handles styling */
 
   .work-experience-empty-icon,
@@ -248,12 +253,12 @@
 }
 
 /* ─── Landscape Orientation - Mobile/Tablet ─── */
-@media screen and (orientation: landscape) and (max-width: 991px) {
+@media screen and (orientation: landscape) and (width <= 991px) {
   /* Container removed - Card component handles styling */
 }
 
 /* ─── Landscape Orientation - Small Mobile ─── */
-@media screen and (orientation: landscape) and (max-width: 600px) {
+@media screen and (orientation: landscape) and (width <= 600px) {
   /* Container removed - Card component handles styling */
 }
 
@@ -276,7 +281,7 @@
 /* ============================================
    High Contrast Mode (Accessibility)
    ============================================ */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .work-experience-empty-text,
   .work-experience-error-text {
     color: var(--work-color-text-heading);

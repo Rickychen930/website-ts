@@ -36,7 +36,12 @@ class BasePage<
 
   protected renderLoading(): ReactNode {
     return (
-      <div className="page-loading" role="status" aria-live="polite" aria-label="Loading">
+      <div
+        className="page-loading"
+        role="status"
+        aria-live="polite"
+        aria-label="Loading"
+      >
         <p>Loading...</p>
       </div>
     );
@@ -59,7 +64,7 @@ class BasePage<
     );
   }
 
-  private renderBody(): ReactNode {
+  protected renderBody(): ReactNode {
     return (
       <div className="page-content">
         {this.state.isLoading ? this.renderLoading() : this.renderContent()}

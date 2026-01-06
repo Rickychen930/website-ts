@@ -1,9 +1,9 @@
 /**
  * NavbarBackdrop Component
- * 
+ *
  * Component-Based Architecture - Single Responsibility Principle (SRP)
  * Handles backdrop/overlay for mobile menu
- * 
+ *
  * Principles:
  * - OOP: Encapsulated component with clear interface
  * - SOLID: Single responsibility - only handles backdrop rendering
@@ -14,7 +14,7 @@ import React, { ReactNode, createRef, RefObject } from "react";
 
 export interface NavbarBackdropProps {
   onClick: () => void;
-  backdropRef?: RefObject<HTMLDivElement>;
+  backdropRef?: RefObject<HTMLDivElement | null>;
 }
 
 class NavbarBackdrop extends React.Component<NavbarBackdropProps> {
@@ -35,4 +35,3 @@ class NavbarBackdrop extends React.Component<NavbarBackdropProps> {
 }
 
 export default NavbarBackdrop;
-

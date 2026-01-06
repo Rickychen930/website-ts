@@ -19,24 +19,22 @@
    Glassmorphism Effect - Reusable Pattern
    ============================================ */
 .glass-effect {
-  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--color-white-alpha-30);
+  background: var(--color-white-alpha-70);
   backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .glass-effect-strong {
-  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--color-white-alpha-40);
+  background: var(--color-white-alpha-85);
   backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* ============================================
    Card Hover Effect - Reusable Pattern
    ============================================ */
 .card-hover-effect {
-  transition: 
+  transition:
     transform var(--transition-smooth),
     box-shadow var(--transition-smooth),
     border-color var(--transition-smooth);
@@ -53,14 +51,12 @@
    ============================================ */
 .gradient-text {
   background: var(--gradient-accent-full);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-primary {
   background: var(--gradient-accent);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -120,26 +116,26 @@
    Section Base - Reusable Section Pattern
    ============================================ */
 .section-base {
-  padding: var(--spacing-section-padding);
   margin: var(--spacing-section-margin) 0;
+  padding: var(--spacing-section-padding);
 }
 
 /* ============================================
    Responsive Utilities - Mobile First
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .container-mobile {
     padding: var(--spacing-section-padding-mobile);
   }
-  
+
   .card-base {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
   }
-  
+
   .section-base {
-    padding: var(--spacing-section-padding-mobile);
     margin: var(--spacing-section-margin-mobile) 0;
+    padding: var(--spacing-section-padding-mobile);
   }
 }
 
@@ -154,9 +150,8 @@
     transition: none !important;
     animation: none !important;
   }
-  
+
   .card-hover-effect:hover {
     transform: none;
   }
 }
-

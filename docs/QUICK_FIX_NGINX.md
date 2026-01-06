@@ -1,6 +1,7 @@
 # 🔧 Quick Fix Nginx Configuration Error
 
 ## Error yang ditemukan:
+
 ```
 nginx: [emerg] directive "root" is not terminated by ";" in /etc/nginx/sites-enabled/rickychen930.cloud:15
 ```
@@ -154,4 +155,3 @@ sudo sed -i 's|root /var/www/html}|root /var/www/html;|' /etc/nginx/sites-availa
 ```
 
 Tapi lebih baik buat ulang file lengkap dengan command di atas untuk memastikan tidak ada error lain.
-

@@ -2,26 +2,26 @@
  * CSS Generator Utility
  * Generates CSS variables from TypeScript constants
  * Professional, Code-Based, DRY Architecture
- * 
+ *
  * Architecture Principles:
  * - Single Source of Truth: CSS variables from TypeScript
  * - DRY: No duplication between TS and CSS
  * - KISS: Simple generation logic
  * - OOP: Organized utility functions
- * 
+ *
  * Usage:
  * This utility can be used to generate CSS variables from constants
  * Run this during build time to ensure CSS stays in sync with TypeScript
  */
 
-import { Colors, Config } from '@/constants';
+// Colors and Config are imported dynamically via require() in functions
 
 /**
  * Convert camelCase to kebab-case
  * Example: accentPrimary -> accent-primary
  */
 export function camelToKebab(str: string): string {
-  return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+  return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 }
 
 /**
@@ -30,7 +30,7 @@ export function camelToKebab(str: string): string {
  */
 export function objectToCSSVariables(
   obj: Record<string, string | number>,
-  prefix: string = ''
+  prefix: string = "",
 ): string {
   return Object.entries(obj)
     .map(([key, value]) => {
@@ -38,21 +38,21 @@ export function objectToCSSVariables(
       const cssVar = prefix ? `--${prefix}-${kebabKey}` : `--${kebabKey}`;
       return `  ${cssVar}: ${value};`;
     })
-    .join('\n');
+    .join("\n");
 }
 
 /**
  * Generate CSS variables from Colors constant
  */
 export function generateColorVariables(): string {
-  const { Colors } = require('@/constants');
-  
+  const { Colors } = require("@/constants");
+
   const baseColors = {
     white: Colors.WHITE,
     black: Colors.BLACK,
     transparent: Colors.TRANSPARENT,
   };
-  
+
   const accentColors = {
     primary: Colors.ACCENT_PRIMARY,
     alt: Colors.ACCENT_ALT,
@@ -62,7 +62,7 @@ export function generateColorVariables(): string {
     secondary: Colors.ACCENT_SECONDARY,
     tertiary: Colors.ACCENT_TERTIARY,
   };
-  
+
   const backgroundColors = {
     light: Colors.BG_LIGHT,
     lighter: Colors.BG_LIGHTER,
@@ -81,7 +81,7 @@ export function generateColorVariables(): string {
     dark: Colors.BG_DARK,
     darkLight: Colors.BG_DARK_LIGHT,
   };
-  
+
   const textColors = {
     main: Colors.TEXT_MAIN,
     heading: Colors.TEXT_HEADING,
@@ -96,7 +96,7 @@ export function generateColorVariables(): string {
     link: Colors.TEXT_LINK,
     linkHover: Colors.TEXT_LINK_HOVER,
   };
-  
+
   const borderColors = {
     light: Colors.BORDER_LIGHT,
     default: Colors.BORDER_DEFAULT,
@@ -110,22 +110,22 @@ export function generateColorVariables(): string {
     accent: Colors.BORDER_ACCENT,
     accentHover: Colors.BORDER_ACCENT_HOVER,
   };
-  
+
   return `
   /* Base Colors */
-${objectToCSSVariables(baseColors, 'color')}
+${objectToCSSVariables(baseColors, "color")}
 
   /* Accent Colors */
-${objectToCSSVariables(accentColors, 'color-accent')}
+${objectToCSSVariables(accentColors, "color-accent")}
 
   /* Background Colors */
-${objectToCSSVariables(backgroundColors, 'color-bg')}
+${objectToCSSVariables(backgroundColors, "color-bg")}
 
   /* Text Colors */
-${objectToCSSVariables(textColors, 'color-text')}
+${objectToCSSVariables(textColors, "color-text")}
 
   /* Border Colors */
-${objectToCSSVariables(borderColors, 'color-border')}
+${objectToCSSVariables(borderColors, "color-border")}
 `;
 }
 
@@ -133,8 +133,8 @@ ${objectToCSSVariables(borderColors, 'color-border')}
  * Generate CSS variables from Config constant
  */
 export function generateConfigVariables(): string {
-  const { Config } = require('@/constants');
-  
+  const { Config } = require("@/constants");
+
   const spacing = {
     sectionPadding: Config.LAYOUT.SECTION_PADDING,
     sectionPaddingMobile: Config.LAYOUT.SECTION_PADDING_MOBILE,
@@ -147,7 +147,7 @@ export function generateConfigVariables(): string {
     cardRadiusMobile: `${Config.LAYOUT.CARD_RADIUS_MOBILE}px`,
     footerPadding: Config.LAYOUT.FOOTER_PADDING,
   };
-  
+
   const typography = {
     main: Config.TYPOGRAPHY.FONT_MAIN,
     mono: Config.TYPOGRAPHY.FONT_MONO,
@@ -161,7 +161,7 @@ export function generateConfigVariables(): string {
     sizeSmall: Config.TYPOGRAPHY.SMALL_FONT_SIZE,
     sizeXs: Config.TYPOGRAPHY.XS_FONT_SIZE,
   };
-  
+
   const animation = {
     durationFast: `${Config.ANIMATION.DURATION_FAST}s`,
     durationBase: `${Config.ANIMATION.DURATION_BASE}s`,
@@ -172,7 +172,7 @@ export function generateConfigVariables(): string {
     transitionSmooth: Config.ANIMATION.TRANSITION_SMOOTH,
     transitionBounce: Config.ANIMATION.TRANSITION_BOUNCE,
   };
-  
+
   const zIndex = {
     base: Config.Z_INDEX.BASE,
     dropdown: Config.Z_INDEX.DROPDOWN,
@@ -182,19 +182,19 @@ export function generateConfigVariables(): string {
     tooltip: Config.Z_INDEX.TOOLTIP,
     max: Config.Z_INDEX.MAX,
   };
-  
+
   return `
   /* Spacing */
-${objectToCSSVariables(spacing, 'spacing')}
+${objectToCSSVariables(spacing, "spacing")}
 
   /* Typography */
-${objectToCSSVariables(typography, 'font')}
+${objectToCSSVariables(typography, "font")}
 
   /* Animation */
-${objectToCSSVariables(animation, 'animation')}
+${objectToCSSVariables(animation, "animation")}
 
   /* Z-Index */
-${objectToCSSVariables(zIndex, 'z-index')}
+${objectToCSSVariables(zIndex, "z-index")}
 `;
 }
 
@@ -229,4 +229,3 @@ export const CSSGenerator = {
   generateConfigVariables,
   generateCSSVariablesFile,
 };
-

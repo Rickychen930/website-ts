@@ -1,13 +1,13 @@
 /**
  * Contact Section Component
  * View Layer (MVC Pattern)
- * 
+ *
  * Architecture:
  * - MVC: Strict separation of View, Controller, and Model
  * - View: Only handles UI rendering and user interactions
  * - Controller: Handles all business logic (injected via DI)
  * - Model: Handles data structure and validation
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): View only renders UI
  * - Dependency Inversion Principle (DIP): Depends on Controller abstraction
@@ -15,7 +15,7 @@
  * - DRY: Uses reusable components and centralized logic
  * - KISS: Simple, clear structure
  * - Component-Based: Composed of smaller, focused components
- * 
+ *
  * Features:
  * - Clean separation of concerns
  * - Proper error handling
@@ -39,13 +39,15 @@ import "../../../assets/css/contact-section.css";
  * Supports both old format (from UserProfile) and new format (IContact)
  */
 type ContactSectionProps = {
-  data: IContact[] | Array<{
-    key: string;
-    icon: string;
-    label: string;
-    value: string;
-    link?: string;
-  }>;
+  data:
+    | IContact[]
+    | Array<{
+        key: string;
+        icon: string;
+        label: string;
+        value: string;
+        link?: string;
+      }>;
 };
 
 /**
@@ -63,7 +65,10 @@ type ContactSectionState = {
  * Contact Section Component
  * Main view component following MVC pattern
  */
-class ContactSection extends Component<ContactSectionProps, ContactSectionState> {
+class ContactSection extends Component<
+  ContactSectionProps,
+  ContactSectionState
+> {
   private readonly controller: ContactController;
   private readonly MAX_ITEMS_TO_RENDER = 50;
 
@@ -95,9 +100,7 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
    * Normalize data to IContact format
    * Handles both old and new data formats
    */
-  private normalizeData(
-    data: ContactSectionProps["data"]
-  ): IContact[] {
+  private normalizeData(data: ContactSectionProps["data"]): IContact[] {
     if (!data || !Array.isArray(data)) {
       return [];
     }
@@ -157,7 +160,7 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
    */
   private handleCopyClick = async (contact: IContact): Promise<boolean> => {
     const success = await this.controller.copyToClipboard(contact);
-    
+
     if (success) {
       this.setState({ copiedContact: contact.key });
       // Reset copied state after 2 seconds
@@ -236,7 +239,10 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
         aria-live="polite"
         aria-label="Loading contact information"
       >
-        <div className="contact-section-loading-spinner" aria-hidden="true"></div>
+        <div
+          className="contact-section-loading-spinner"
+          aria-hidden="true"
+        ></div>
         <p className="contact-section-loading-message">Loading contacts...</p>
       </div>
     );
@@ -280,23 +286,17 @@ class ContactSection extends Component<ContactSectionProps, ContactSectionState>
     // Handle validation errors
     if (!validation.isValid && validation.error) {
       return (
-        <Card id="contact-section">
-          {this.renderErrorState(validation.error)}
-        </Card>
+        <Card id="contact">{this.renderErrorState(validation.error)}</Card>
       );
     }
 
     // Handle empty data
     if (!data || data.length === 0) {
-      return (
-        <Card id="contact-section">
-          {this.renderEmptyState()}
-        </Card>
-      );
+      return <Card id="contact">{this.renderEmptyState()}</Card>;
     }
 
     return (
-      <Card id="contact-section" title="Contact">
+      <Card id="contact" title="Contact">
         {this.renderContactGrid()}
         <div className="contact-form-wrapper">
           <h3 className="contact-form-title">Send me a message</h3>

@@ -20,7 +20,7 @@
  */
 
 /* Import core system for constants and variables */
-@import '../core/index.css';
+@import url("../core/index.css");
 
 /* ============================================
    Block: Form
@@ -48,15 +48,15 @@
    ============================================ */
 .form__label {
   display: block;
-  margin-bottom: 0.5rem;
+  color: var(--color-text-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-heading);
+  margin-bottom: 0.5rem;
   font-family: var(--font-main);
 }
 
 .form__label--required::after {
-  content: ' *';
+  content: " *";
   color: var(--color-error);
   margin-left: 2px;
 }
@@ -98,10 +98,10 @@
    ============================================ */
 .form__help {
   display: block;
-  font-size: var(--font-size-small);
   color: var(--color-text-muted);
-  margin-top: 0.5rem;
+  font-size: var(--font-size-small);
   line-height: 1.5;
+  margin-top: 0.5rem;
 }
 
 /* ============================================
@@ -110,11 +110,11 @@
 .form__error {
   display: block;
   padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
-  font-size: var(--font-size-small);
-  color: var(--color-error);
-  background: var(--color-error-light);
   border: 1px solid var(--color-error);
+  background: var(--color-error-light);
+  color: var(--color-error);
+  font-size: var(--font-size-small);
+  margin-bottom: 1.5rem;
   border-radius: 8px;
   font-family: var(--font-main);
 }
@@ -129,11 +129,11 @@
 .form__success {
   display: block;
   padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
-  font-size: var(--font-size-small);
-  color: var(--color-success);
-  background: var(--color-success-light);
   border: 1px solid var(--color-success);
+  background: var(--color-success-light);
+  color: var(--color-success);
+  font-size: var(--font-size-small);
+  margin-bottom: 1.5rem;
   border-radius: 8px;
   font-family: var(--font-main);
 }
@@ -145,7 +145,7 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .form {
     padding: var(--spacing-card-padding-mobile);
   }
@@ -162,4 +162,3 @@
     width: 100%;
   }
 }
-

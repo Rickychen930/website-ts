@@ -1,12 +1,12 @@
 /**
  * EmptyState Component - Reusable Empty State Component
- * 
+ *
  * Features:
  * - Consistent empty state across all sections
  * - Customizable icon, title, and message
  * - Accessibility support (ARIA labels)
  * - Professional, clean design
- * 
+ *
  * Principles Applied:
  * - DRY: Reusable component to avoid duplication
  * - Single Responsibility: Only handles empty state display
@@ -47,13 +47,13 @@ export class EmptyState extends PureComponent<EmptyStateProps> {
    */
   private renderIcon(): ReactNode {
     const { icon } = this.props;
-    
+
     if (!icon) return null;
 
     if (typeof icon === "string") {
       return (
-        <div 
-          className="empty-state-icon" 
+        <div
+          className="empty-state-icon"
           aria-hidden="true"
           role="img"
           aria-label="Empty state icon"
@@ -71,7 +71,7 @@ export class EmptyState extends PureComponent<EmptyStateProps> {
    */
   private renderTitle(): ReactNode {
     const { title } = this.props;
-    
+
     if (!title) return null;
 
     return (
@@ -86,7 +86,7 @@ export class EmptyState extends PureComponent<EmptyStateProps> {
    */
   private renderMessage(): ReactNode {
     const { message } = this.props;
-    
+
     if (!message) return null;
 
     return (
@@ -109,11 +109,7 @@ export class EmptyState extends PureComponent<EmptyStateProps> {
    */
   private getClassNames(): string {
     const { className = "", variant = "default" } = this.props;
-    const classes = [
-      "empty-state",
-      `empty-state-${variant}`,
-      className,
-    ];
+    const classes = ["empty-state", `empty-state-${variant}`, className];
 
     return classes.filter(Boolean).join(" ");
   }
@@ -125,7 +121,7 @@ export class EmptyState extends PureComponent<EmptyStateProps> {
     const containerClass = this.getClassNames();
 
     return (
-      <div 
+      <div
         className={containerClass}
         role="status"
         aria-live="polite"
@@ -142,4 +138,3 @@ export class EmptyState extends PureComponent<EmptyStateProps> {
 }
 
 export default EmptyState;
-

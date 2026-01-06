@@ -9,12 +9,15 @@ Jika setelah deployment berhasil, tapi tampilan website masih menggunakan versi 
 Browser biasanya cache file HTML dan CSS. Lakukan hard refresh:
 
 **Windows/Linux:**
+
 - `Ctrl + Shift + R` atau `Ctrl + F5`
 
 **Mac:**
+
 - `Cmd + Shift + R` atau `Cmd + Option + R`
 
 **Chrome DevTools:**
+
 - Buka DevTools (F12)
 - Klik kanan pada tombol refresh
 - Pilih "Empty Cache and Hard Reload"
@@ -22,17 +25,20 @@ Browser biasanya cache file HTML dan CSS. Lakukan hard refresh:
 ### 2. Clear Browser Cache
 
 **Chrome:**
+
 1. Buka Settings → Privacy and Security → Clear browsing data
 2. Pilih "Cached images and files"
 3. Klik "Clear data"
 
 **Firefox:**
+
 1. Buka Settings → Privacy & Security
 2. Klik "Clear Data" di bagian Cookies and Site Data
 3. Centang "Cached Web Content"
 4. Klik "Clear"
 
 **Safari:**
+
 1. Safari → Preferences → Advanced
 2. Enable "Show Develop menu"
 3. Develop → Empty Caches
@@ -40,6 +46,7 @@ Browser biasanya cache file HTML dan CSS. Lakukan hard refresh:
 ### 3. Test di Incognito/Private Mode
 
 Buka website di mode incognito/private untuk memastikan tidak ada cache:
+
 - Chrome: `Ctrl + Shift + N` (Windows) atau `Cmd + Shift + N` (Mac)
 - Firefox: `Ctrl + Shift + P` (Windows) atau `Cmd + Shift + P` (Mac)
 - Safari: `Cmd + Shift + N`
@@ -191,12 +198,13 @@ Jika semua langkah di atas sudah dilakukan tapi masih tidak berhasil:
    - Cek apakah file ter-upload dengan benar
 
 2. **Force rebuild dan redeploy**
+
    ```bash
    # Di local
    rm -rf build backend/dist node_modules
    npm install
    npm run build:all
-   
+
    # Push ke GitHub untuk trigger deployment
    git add .
    git commit -m "Force rebuild"
@@ -225,4 +233,3 @@ Jika semua langkah di atas sudah dilakukan tapi masih tidak berhasil:
 - [DEPLOYMENT.md](./DEPLOYMENT.md) - Panduan deployment lengkap
 - [DEPLOYMENT_WORKFLOW.md](./DEPLOYMENT_WORKFLOW.md) - Workflow deployment
 - [PM2_NGINX_SETUP.md](./PM2_NGINX_SETUP.md) - Setup PM2 dan Nginx
-

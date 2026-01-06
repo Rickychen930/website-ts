@@ -20,26 +20,27 @@ export class SmoothScrollManager {
     this.handler = (e: MouseEvent): void => {
       const target = e.target as HTMLElement;
       const link = target.closest('a[href^="#"]');
-      
+
       if (!link) return;
-      
-      const href = link.getAttribute('href');
-      if (!href || href === '#') return;
-      
+
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+
       const targetElement = document.querySelector(href);
       if (targetElement) {
         e.preventDefault();
-        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        const elementPosition =
+          targetElement.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - this.offset;
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     };
 
-    document.addEventListener('click', this.handler);
+    document.addEventListener("click", this.handler);
   }
 
   /**
@@ -47,9 +48,8 @@ export class SmoothScrollManager {
    */
   cleanup(): void {
     if (typeof document !== "undefined" && this.handler) {
-      document.removeEventListener('click', this.handler);
+      document.removeEventListener("click", this.handler);
       this.handler = null;
     }
   }
 }
-

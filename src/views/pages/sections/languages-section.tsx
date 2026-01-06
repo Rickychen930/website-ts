@@ -1,13 +1,13 @@
 /**
  * Languages Section Component
  * View Layer (MVC Pattern)
- * 
+ *
  * Features:
  * - Professional, Clean, Luxury, Responsive Design
  * - Shows Software Engineering Capabilities Prominently
  * - Component-Based Architecture (Reusable Components)
  * - MVC Pattern (Controller, Model, View separation)
- * 
+ *
  * Principles Applied:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
@@ -126,8 +126,12 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
         isInitialized: true,
         sortedLanguages: [],
       });
-      const { logError } = require('../../../utils/logger');
-      logError("LanguagesSection initialization error", error, "LanguagesSection");
+      const { logError } = require("../../../utils/logger");
+      logError(
+        "LanguagesSection initialization error",
+        error,
+        "LanguagesSection",
+      );
     }
   }
 
@@ -148,7 +152,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
       // Only update if changed
       if (
         updated.size === prevState.visibleItems.size &&
-        [...updated].every((k) => prevState.visibleItems.has(k))
+        Array.from(updated).every((k) => prevState.visibleItems.has(k))
       ) {
         return prevState;
       }
@@ -174,7 +178,9 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
   private renderErrorState(error: string): ReactNode {
     return (
       <div className="language-error-state" role="alert" aria-live="polite">
-        <div className="language-error-icon" aria-hidden="true">⚠️</div>
+        <div className="language-error-icon" aria-hidden="true">
+          ⚠️
+        </div>
         <h3 className="language-error-title">Unable to Display Languages</h3>
         <p className="language-error-message">{error}</p>
       </div>
@@ -228,7 +234,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Handle initialization errors
     if (error) {
       return (
-        <Card id="languages-section" title="Languages">
+        <Card id="languages" title="Languages">
           {this.renderErrorState(error)}
         </Card>
       );
@@ -237,7 +243,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Handle empty data
     if (!data || data.length === 0) {
       return (
-        <Card id="languages-section" title="Languages">
+        <Card id="languages" title="Languages">
           {this.renderEmptyState()}
         </Card>
       );
@@ -246,8 +252,12 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     // Wait for initialization
     if (!isInitialized) {
       return (
-        <Card id="languages-section" title="Languages">
-          <div className="language-loading-state" role="status" aria-live="polite">
+        <Card id="languages" title="Languages">
+          <div
+            className="language-loading-state"
+            role="status"
+            aria-live="polite"
+          >
             <div className="language-loading-spinner" aria-hidden="true"></div>
             <p className="language-loading-text">Loading languages...</p>
           </div>
@@ -257,7 +267,7 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
 
     // Render main content
     return (
-      <Card id="languages-section" title="Languages">
+      <Card id="languages" title="Languages">
         {this.renderLanguagesGrid()}
       </Card>
     );

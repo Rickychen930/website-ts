@@ -13,9 +13,10 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ─── Component-Specific Variables (DRY) ─── */
+
 /* Uses core constants as base */
 #soft-skills-section {
   /* Spacing - Uses core spacing system */
@@ -25,37 +26,34 @@
   --soft-skills-spacing-lg: var(--spacing-lg);
   --soft-skills-spacing-xl: var(--spacing-xl);
   --soft-skills-spacing-xxl: var(--spacing-3xl);
-  
+
   /* Colors - Uses core color system */
   --soft-skills-color-primary: var(--color-accent-primary);
   --soft-skills-color-primary-light: var(--color-accent-light);
   --soft-skills-color-primary-dark: var(--color-accent-dark);
   --soft-skills-color-secondary: var(--color-accent-alt);
   --soft-skills-color-accent: var(--color-accent-hover);
-  
   --soft-skills-color-text-heading: var(--color-text-heading);
   --soft-skills-color-text-primary: var(--color-text-heading-alt);
   --soft-skills-color-text-secondary: var(--color-text-subtle);
   --soft-skills-color-text-muted: var(--color-text-muted);
   --soft-skills-color-text-light: var(--color-text-light);
-  
   --soft-skills-color-bg-card: var(--color-bg-card);
   --soft-skills-color-bg-card-hover: var(--color-bg-card-hover);
   --soft-skills-color-bg-gradient: var(--gradient-luxury);
-  
   --soft-skills-color-border: var(--color-border-light);
   --soft-skills-color-border-hover: var(--color-border-accent-hover);
-  
+
   /* Shadows - Uses core shadow system */
   --soft-skills-shadow-card: var(--shadow-card);
   --soft-skills-shadow-card-hover: var(--shadow-card-hover);
-  
+
   /* Transitions - Uses core transition system */
   --soft-skills-transition-fast: var(--transition-fast);
   --soft-skills-transition-base: var(--transition-base);
   --soft-skills-transition-slow: var(--transition-slow);
   --soft-skills-transition-smooth: var(--transition-smooth);
-  
+
   /* Typography - Uses core typography system */
   --soft-skills-font-main: var(--font-main);
   --soft-skills-font-size-base: var(--font-size-base);
@@ -73,13 +71,14 @@
 /* ─── Loading State ─── */
 .soft-skills-loading {
   display: flex;
+  padding: var(--soft-skills-spacing-xxl, 3rem)
+    var(--soft-skills-spacing-lg, 2rem);
+  color: var(--color-text-secondary);
+  font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
+  text-align: center;
   align-items: center;
   justify-content: center;
-  padding: var(--soft-skills-spacing-xxl, 3rem) var(--soft-skills-spacing-lg, 2rem);
-  text-align: center;
-  color: var(--color-text-secondary);
   font-family: var(--soft-skills-font-main);
-  font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
 }
 
 /* ─── Error State ─── */
@@ -87,16 +86,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--soft-skills-spacing-xxl, 3rem) var(--soft-skills-spacing-lg, 2rem);
+  padding: var(--soft-skills-spacing-xxl, 3rem)
+    var(--soft-skills-spacing-lg, 2rem);
   text-align: center;
 }
 
 .soft-skills-error-text {
+  margin: 0;
   color: var(--color-text-muted);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  font-family: var(--soft-skills-font-main);
-  margin: 0;
   font-weight: 500;
+  font-family: var(--soft-skills-font-main);
 }
 
 /* ─── Empty State (Section Level) ─── */
@@ -105,7 +105,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--soft-skills-spacing-xxl, 3rem) var(--soft-skills-spacing-lg, 2rem);
+  padding: var(--soft-skills-spacing-xxl, 3rem)
+    var(--soft-skills-spacing-lg, 2rem);
   text-align: center;
 }
 
@@ -117,15 +118,15 @@
 }
 
 #soft-skills-section .soft-skills-empty-text {
+  margin: 0;
   color: var(--color-text-secondary);
   font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  font-family: var(--soft-skills-font-main);
-  margin: 0;
   font-weight: 400;
+  font-family: var(--soft-skills-font-main);
 }
 
 /* ─── Responsive Design - Large Desktop (1400px+) ─── */
-@media screen and (min-width: 1400px) {
+@media screen and (width >= 1400px) {
   #soft-skills-section {
     --soft-skills-spacing-xl: 3rem;
     --soft-skills-spacing-xxl: 4rem;
@@ -133,7 +134,7 @@
 }
 
 /* ─── Responsive Design - Desktop (1200px - 1399px) ─── */
-@media screen and (max-width: 1399px) and (min-width: 1200px) {
+@media screen and (width <= 1399px) and (width >= 1200px) {
   #soft-skills-section {
     --soft-skills-spacing-lg: 2rem;
     --soft-skills-spacing-xl: 2.5rem;
@@ -142,7 +143,7 @@
 }
 
 /* ─── Responsive Design - Large Tablets (992px - 1199px) ─── */
-@media screen and (max-width: 1199px) and (min-width: 992px) {
+@media screen and (width <= 1199px) and (width >= 992px) {
   #soft-skills-section {
     --soft-skills-spacing-lg: 1.75rem;
     --soft-skills-spacing-xl: 2rem;
@@ -151,7 +152,7 @@
 }
 
 /* ─── Responsive Design - Tablets (768px - 991px) ─── */
-@media screen and (max-width: 991px) and (min-width: 768px) {
+@media screen and (width <= 991px) and (width >= 768px) {
   #soft-skills-section {
     --soft-skills-spacing-md: 1.5rem;
     --soft-skills-spacing-lg: 1.75rem;
@@ -159,7 +160,8 @@
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-xl, 2rem) var(--soft-skills-spacing-md, 1.5rem);
+    padding: var(--soft-skills-spacing-xl, 2rem)
+      var(--soft-skills-spacing-md, 1.5rem);
   }
 
   #soft-skills-section .soft-skills-empty-icon {
@@ -169,7 +171,7 @@
 }
 
 /* ─── Responsive Design - Small Tablets (600px - 767px) ─── */
-@media screen and (max-width: 767px) and (min-width: 600px) {
+@media screen and (width <= 767px) and (width >= 600px) {
   #soft-skills-section {
     --soft-skills-spacing-md: 1.25rem;
     --soft-skills-spacing-lg: 1.5rem;
@@ -177,7 +179,8 @@
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-xl, 1.75rem) var(--soft-skills-spacing-md, 1.25rem);
+    padding: var(--soft-skills-spacing-xl, 1.75rem)
+      var(--soft-skills-spacing-md, 1.25rem);
   }
 
   #soft-skills-section .soft-skills-empty-icon {
@@ -187,14 +190,15 @@
 }
 
 /* ─── Responsive Design - Mobile (480px - 599px) ─── */
-@media screen and (max-width: 599px) and (min-width: 480px) {
+@media screen and (width <= 599px) and (width >= 480px) {
   #soft-skills-section {
     --soft-skills-spacing-md: 1.25rem;
     --soft-skills-spacing-lg: 1.5rem;
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.5rem) var(--soft-skills-spacing-sm, 1rem);
+    padding: var(--soft-skills-spacing-lg, 1.5rem)
+      var(--soft-skills-spacing-sm, 1rem);
   }
 
   #soft-skills-section .soft-skills-empty-icon {
@@ -204,7 +208,7 @@
 }
 
 /* ─── Responsive Design - Small Mobile (≤ 479px) ─── */
-@media screen and (max-width: 479px) {
+@media screen and (width <= 479px) {
   #soft-skills-section {
     --soft-skills-spacing-sm: 0.875rem;
     --soft-skills-spacing-md: 1rem;
@@ -213,8 +217,9 @@
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.25rem) var(--soft-skills-spacing-sm, 0.875rem);
     width: 100%;
+    padding: var(--soft-skills-spacing-lg, 1.25rem)
+      var(--soft-skills-spacing-sm, 0.875rem);
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -230,7 +235,7 @@
 }
 
 /* ─── Responsive Design - Extra Small Mobile (≤ 360px) ─── */
-@media screen and (max-width: 360px) {
+@media screen and (width <= 360px) {
   #soft-skills-section {
     --soft-skills-spacing-xs: 0.5rem;
     --soft-skills-spacing-sm: 0.75rem;
@@ -239,7 +244,8 @@
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.25rem) var(--soft-skills-spacing-xs, 0.5rem);
+    padding: var(--soft-skills-spacing-lg, 1.25rem)
+      var(--soft-skills-spacing-xs, 0.5rem);
   }
 
   #soft-skills-section .soft-skills-empty-icon {
@@ -252,14 +258,15 @@
 }
 
 /* ─── Landscape Orientation - Mobile/Tablet ─── */
-@media screen and (orientation: landscape) and (max-width: 991px) {
+@media screen and (orientation: landscape) and (width <= 991px) {
   #soft-skills-section {
     --soft-skills-spacing-md: 1.25rem;
     --soft-skills-spacing-lg: 1.5rem;
   }
 
   #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.5rem) var(--soft-skills-spacing-md, 1.25rem);
+    padding: var(--soft-skills-spacing-lg, 1.5rem)
+      var(--soft-skills-spacing-md, 1.25rem);
     min-height: 200px;
   }
 }
@@ -274,10 +281,10 @@
 }
 
 /* ─── High Contrast Mode (Accessibility) ─── */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   #soft-skills-section {
-    --soft-skills-color-border: var(--soft-skills-color-text-heading, #1f2d3d);
-    --soft-skills-color-border-hover: var(--soft-skills-color-text-heading, #1f2d3d);
+    --soft-skills-color-border: var(--color-text-heading);
+    --soft-skills-color-border-hover: var(--color-text-heading);
   }
 }
 

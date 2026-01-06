@@ -1,4 +1,5 @@
 import React, { Component, ReactNode, CSSProperties } from "react";
+import { BackgroundColors, TextColors } from "../../../constants/colors";
 
 type ImageProps = {
   src: string;
@@ -28,7 +29,7 @@ type ImageState = {
  * - Error handling with fallback
  * - Performance optimizations (decoding, loading attributes)
  * - Edge case handling
- * 
+ *
  * Principles Applied:
  * - SOLID (Single Responsibility)
  * - DRY
@@ -61,7 +62,11 @@ class Image extends Component<ImageProps, ImageState> {
 
   componentDidMount(): void {
     // Setup lazy loading with Intersection Observer if supported
-    if (this.props.lazy && typeof IntersectionObserver !== "undefined" && this.imageRef) {
+    if (
+      this.props.lazy &&
+      typeof IntersectionObserver !== "undefined" &&
+      this.imageRef
+    ) {
       this.setupLazyLoading();
     }
   }
@@ -73,7 +78,12 @@ class Image extends Component<ImageProps, ImageState> {
     }
 
     // Re-setup lazy loading if needed
-    if (this.props.lazy && typeof IntersectionObserver !== "undefined" && this.imageRef && !this.observer) {
+    if (
+      this.props.lazy &&
+      typeof IntersectionObserver !== "undefined" &&
+      this.imageRef &&
+      !this.observer
+    ) {
       this.setupLazyLoading();
     }
   }
@@ -108,7 +118,7 @@ class Image extends Component<ImageProps, ImageState> {
       {
         rootMargin: "50px", // Start loading 50px before entering viewport
         threshold: 0.01,
-      }
+      },
     );
 
     this.observer.observe(this.imageRef);
@@ -127,28 +137,28 @@ class Image extends Component<ImageProps, ImageState> {
    */
   private handleError = (): void => {
     this.setState({ error: true, loaded: false });
-    
-    if (process.env.NODE_ENV === 'development') {
-      const { logWarn } = require('../../../utils/logger');
+
+    if (process.env.NODE_ENV === "development") {
+      const { logWarn } = require("../../../utils/logger");
       logWarn(`Failed to load image: ${this.props.src}`, undefined, "Image");
     }
   };
 
   public render(): ReactNode {
-    const { 
-      src, 
-      alt = "Image", 
-      width, 
-      height, 
-      style, 
-      className = "", 
+    const {
+      src,
+      alt = "Image",
+      width,
+      height,
+      style,
+      className = "",
       rounded,
       loading = "lazy",
       decoding = "async",
     } = this.props;
 
     // Edge case: Validate src
-    if (!src || typeof src !== 'string') {
+    if (!src || typeof src !== "string") {
       return null;
     }
 
@@ -170,11 +180,11 @@ class Image extends Component<ImageProps, ImageState> {
           className={`image-component image-error ${className}`}
           style={{
             ...combinedStyle,
-            backgroundColor: "#f0f4f8",
+            backgroundColor: BackgroundColors.QUATERNARY,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#5c6b7a",
+            color: TextColors.SUBTLE,
             fontSize: "0.875rem",
           }}
           role="img"

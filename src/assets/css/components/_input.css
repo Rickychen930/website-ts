@@ -17,7 +17,7 @@
  */
 
 /* Import core system for constants and variables */
-@import '../core/index.css';
+@import url("../core/index.css");
 
 /* ============================================
    Block: Input Group
@@ -34,15 +34,15 @@
    ============================================ */
 .input-label {
   display: block;
+  color: var(--color-text-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-heading);
   font-family: var(--font-main);
   margin-bottom: 0.25rem;
 }
 
 .input-label--required::after {
-  content: ' *';
+  content: " *";
   color: var(--color-error);
   margin-left: 2px;
 }
@@ -53,16 +53,16 @@
 .input {
   width: 100%;
   padding: 0.75rem 1rem;
-  font-size: var(--font-size-base);
-  font-family: var(--font-main);
-  color: var(--color-text-main);
-  background: var(--color-bg-card);
   border: 2px solid var(--color-border-default);
-  border-radius: 12px;
-  transition: 
+  background: var(--color-bg-card);
+  color: var(--color-text-main);
+  font-size: var(--font-size-base);
+  transition:
     all var(--transition-base),
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
+  font-family: var(--font-main);
+  border-radius: 12px;
   box-sizing: border-box;
   outline: none;
 }
@@ -79,10 +79,6 @@
   border-color: var(--color-accent-primary);
   box-shadow: var(--shadow-focus);
   background: var(--color-bg-card-hover);
-}
-
-.input:hover:not(:disabled):not(:focus) {
-  border-color: var(--color-border-medium);
 }
 
 .input:disabled {
@@ -129,18 +125,18 @@
    ============================================ */
 .textarea {
   width: 100%;
-  min-height: 120px;
   padding: 0.75rem 1rem;
-  font-size: var(--font-size-base);
-  font-family: var(--font-main);
-  color: var(--color-text-main);
-  background: var(--color-bg-card);
   border: 2px solid var(--color-border-default);
-  border-radius: 12px;
-  transition: 
+  background: var(--color-bg-card);
+  color: var(--color-text-main);
+  font-size: var(--font-size-base);
+  transition:
     all var(--transition-base),
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
+  min-height: 120px;
+  font-family: var(--font-main);
+  border-radius: 12px;
   box-sizing: border-box;
   outline: none;
   resize: vertical;
@@ -157,15 +153,15 @@
   background: var(--color-bg-card-hover);
 }
 
-.textarea:hover:not(:disabled):not(:focus) {
-  border-color: var(--color-border-medium);
-}
-
 .textarea:disabled {
   background: var(--color-bg-lighter);
   color: var(--color-text-muted);
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+.textarea:hover:not(:disabled, :focus) {
+  border-color: var(--color-border-medium);
 }
 
 .textarea--error {
@@ -182,8 +178,8 @@
    ============================================ */
 .input-error {
   display: block;
-  font-size: var(--font-size-small);
   color: var(--color-error);
+  font-size: var(--font-size-small);
   margin-top: 0.25rem;
   font-family: var(--font-main);
 }
@@ -197,8 +193,8 @@
    ============================================ */
 .input-help {
   display: block;
-  font-size: var(--font-size-small);
   color: var(--color-text-muted);
+  font-size: var(--font-size-small);
   margin-top: 0.25rem;
   font-family: var(--font-main);
 }
@@ -207,8 +203,8 @@
    Element: Input Icon
    ============================================ */
 .input-wrapper {
-  position: relative;
   display: flex;
+  position: relative;
   align-items: center;
 }
 
@@ -221,20 +217,24 @@
   padding-right: 2.75rem;
 }
 
+.input:hover:not(:disabled, :focus) {
+  border-color: var(--color-border-medium);
+}
+
 .input-icon {
   position: absolute;
-  left: 1rem;
   top: 50%;
-  transform: translateY(-50%);
+  left: 1rem;
+  z-index: 1;
   color: var(--color-text-muted);
   font-size: 1.25rem;
+  transform: translateY(-50%);
   pointer-events: none;
-  z-index: 1;
 }
 
 .input-wrapper--icon-right .input-icon {
-  left: auto;
   right: 1rem;
+  left: auto;
 }
 
 .input:focus ~ .input-icon {
@@ -244,7 +244,7 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .input,
   .textarea {
     font-size: var(--font-size-small);
@@ -265,4 +265,3 @@
     transition: none !important;
   }
 }
-

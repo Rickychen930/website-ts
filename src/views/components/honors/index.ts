@@ -3,7 +3,9 @@
  * Centralized exports for honors components
  */
 
-export { HonorCard, IHonorCardProps } from "./HonorCard";
-export { HonorBadge, IHonorBadgeProps } from "./HonorBadge";
-export { HonorTimeline, IHonorTimelineProps } from "./HonorTimeline";
-
+export { HonorCard } from "./HonorCard";
+export type { IHonorCardProps } from "./HonorCard";
+export { HonorBadge } from "./HonorBadge";
+export type { IHonorBadgeProps } from "./HonorBadge";
+export { HonorTimeline } from "./HonorTimeline";
+export type { IHonorTimelineProps } from "./HonorTimeline";

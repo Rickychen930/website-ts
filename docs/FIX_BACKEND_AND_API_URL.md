@@ -12,17 +12,20 @@
 
 **File:** `backend/src/main.ts`
 
-**Masalah:** 
+**Masalah:**
+
 ```typescript
 app.use("/api/*", (req, res) => { ... })  // ❌ Invalid di Express 5
 ```
 
 **Perbaikan:**
+
 ```typescript
 app.use("/api/:path(*)", (req, res) => { ... })  // ✅ Valid
 ```
 
 **Action di server:**
+
 ```bash
 # Rebuild backend
 cd /root/backend
@@ -40,10 +43,12 @@ pm2 restart website-backend
 **File:** `.github/workflows/deploy.yml`
 
 **Perubahan:**
+
 - Sebelum: `REACT_APP_API_URL: 'https://rickychen930.cloud:4000'`
 - Sesudah: `REACT_APP_API_URL: 'https://rickychen930.cloud/api'`
 
 **Action:**
+
 - Push perubahan ke GitHub untuk trigger rebuild otomatis
 - Atau rebuild manual di server (lihat di bawah)
 
@@ -69,6 +74,7 @@ pm2 logs website-backend --lines 20
 ### Step 2: Rebuild Frontend dengan API URL yang Benar
 
 **Opsi A: Via GitHub Actions (Recommended)**
+
 - Push perubahan ini ke GitHub
 - GitHub Actions akan rebuild dengan API URL yang benar
 
@@ -154,4 +160,3 @@ curl http://localhost:4000/api/Ricky%20Chen
 - [ ] Frontend di-rebuild dengan `REACT_APP_API_URL=https://rickychen930.cloud/api`
 - [ ] Website bisa load profile tanpa error
 - [ ] Network request menunjukkan API call ke `/api` bukan `:4000`
-

@@ -6,6 +6,7 @@
 import React, { Component, ReactNode, createRef } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { UserProfile } from "../../types/user";
+import { SectionIds, SectionNames } from "../../constants";
 import "../../assets/css/global-search.css";
 
 export interface SearchResult {
@@ -13,7 +14,13 @@ export interface SearchResult {
   sectionId: string;
   title: string;
   content: string;
-  type: "section" | "project" | "skill" | "experience" | "certification" | "academic";
+  type:
+    | "section"
+    | "project"
+    | "skill"
+    | "experience"
+    | "certification"
+    | "academic";
   url?: string;
 }
 
@@ -33,7 +40,10 @@ interface GlobalSearchState {
   isSearching: boolean;
 }
 
-export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState> {
+export class GlobalSearch extends Component<
+  GlobalSearchProps,
+  GlobalSearchState
+> {
   private inputRef = createRef<HTMLInputElement>();
   private searchTimeout: NodeJS.Timeout | null = null;
 
@@ -92,7 +102,9 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
     }
   };
 
-  private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  private handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
     const query = e.target.value;
     this.setState({ query });
 
@@ -130,8 +142,8 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
       profile.bio?.toLowerCase().includes(lowerQuery)
     ) {
       results.push({
-        section: "About Me",
-        sectionId: "about",
+        section: SectionNames.ABOUT,
+        sectionId: SectionIds.ABOUT,
         title: profile.name || "Profile",
         content: profile.bio || profile.title || "",
         type: "section",
@@ -148,8 +160,8 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
           description.toLowerCase().includes(lowerQuery)
         ) {
           results.push({
-            section: "Projects",
-            sectionId: "projects",
+            section: SectionNames.PROJECTS,
+            sectionId: SectionIds.PROJECTS,
             title: name,
             content: description,
             type: "project",
@@ -164,12 +176,15 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
       profile.technicalSkills.forEach((skillCategory) => {
         const category = (skillCategory as any).category || "";
         const items = (skillCategory as any).items || [];
-        
+
         items.forEach((item: string) => {
-          if (item.toLowerCase().includes(lowerQuery) || category.toLowerCase().includes(lowerQuery)) {
+          if (
+            item.toLowerCase().includes(lowerQuery) ||
+            category.toLowerCase().includes(lowerQuery)
+          ) {
             results.push({
-              section: "Technical Skills",
-              sectionId: "skills",
+              section: SectionNames.TECHNICAL_SKILLS,
+              sectionId: SectionIds.SKILLS,
               title: item,
               content: `Category: ${category}`,
               type: "skill",
@@ -185,15 +200,15 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
         const company = (exp as any).company || "";
         const position = (exp as any).position || "";
         const description = (exp as any).description || "";
-        
+
         if (
           company.toLowerCase().includes(lowerQuery) ||
           position.toLowerCase().includes(lowerQuery) ||
           description.toLowerCase().includes(lowerQuery)
         ) {
           results.push({
-            section: "Work Experience",
-            sectionId: "experience",
+            section: SectionNames.WORK_EXPERIENCE,
+            sectionId: SectionIds.EXPERIENCE,
             title: `${position} at ${company}`,
             content: description,
             type: "experience",
@@ -207,11 +222,14 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
       profile.certifications.forEach((cert) => {
         const name = (cert as any).name || "";
         const issuer = (cert as any).issuer || "";
-        
-        if (name.toLowerCase().includes(lowerQuery) || issuer.toLowerCase().includes(lowerQuery)) {
+
+        if (
+          name.toLowerCase().includes(lowerQuery) ||
+          issuer.toLowerCase().includes(lowerQuery)
+        ) {
           results.push({
-            section: "Certifications",
-            sectionId: "certifications",
+            section: SectionNames.CERTIFICATIONS,
+            sectionId: SectionIds.CERTIFICATIONS,
             title: name,
             content: `Issued by: ${issuer}`,
             type: "certification",
@@ -225,11 +243,14 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
       profile.academics.forEach((academic) => {
         const degree = (academic as any).degree || "";
         const institution = (academic as any).institution || "";
-        
-        if (degree.toLowerCase().includes(lowerQuery) || institution.toLowerCase().includes(lowerQuery)) {
+
+        if (
+          degree.toLowerCase().includes(lowerQuery) ||
+          institution.toLowerCase().includes(lowerQuery)
+        ) {
           results.push({
-            section: "Academic",
-            sectionId: "academic",
+            section: SectionNames.ACADEMIC,
+            sectionId: SectionIds.ACADEMIC,
             title: degree,
             content: institution,
             type: "academic",
@@ -247,7 +268,10 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
     if (e.key === "ArrowDown") {
       e.preventDefault();
       this.setState({
-        selectedIndex: selectedIndex < results.length - 1 ? selectedIndex + 1 : selectedIndex,
+        selectedIndex:
+          selectedIndex < results.length - 1
+            ? selectedIndex + 1
+            : selectedIndex,
       });
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
@@ -265,10 +289,18 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
   };
 
   private handleResultClick = (result: SearchResult): void => {
-    // Scroll to section
+    // Scroll to section with consistent offset
     const element = document.getElementById(result.sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const offset = 80; // Consistent with SmoothScrollManager
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
 
     if (this.props.onResultClick) {
@@ -296,7 +328,9 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
           <div className="search-result-title">{result.title}</div>
           <div className="search-result-section">{result.section}</div>
           {result.content && (
-            <div className="search-result-preview">{result.content.substring(0, 100)}...</div>
+            <div className="search-result-preview">
+              {result.content.substring(0, 100)}...
+            </div>
           )}
         </div>
       </div>
@@ -327,12 +361,12 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
     if (!isOpen) {
       if (triggerButton) {
         return (
-          <div onClick={this.openSearch} style={{ display: 'inline-block' }}>
+          <div onClick={this.openSearch} style={{ display: "inline-block" }}>
             {triggerButton}
           </div>
         );
       }
-      
+
       if (!showTrigger) {
         return null;
       }
@@ -344,7 +378,9 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
           aria-label="Open search (Ctrl+K)"
           title="Search (Ctrl+K or Cmd+K)"
         >
-          <span className="search-icon" aria-hidden="true">🔍</span>
+          <span className="search-icon" aria-hidden="true">
+            🔍
+          </span>
           <span className="search-placeholder">Search...</span>
           <span className="search-shortcut">Ctrl+K</span>
         </button>
@@ -353,10 +389,15 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
 
     return (
       <div className="global-search-overlay" onClick={this.closeSearch}>
-        <div className="global-search-modal" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="global-search-modal"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="global-search-header">
             <div className="search-input-wrapper">
-              <span className="search-icon" aria-hidden="true">🔍</span>
+              <span className="search-icon" aria-hidden="true">
+                🔍
+              </span>
               <input
                 ref={this.inputRef}
                 type="text"
@@ -393,7 +434,9 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
             ) : query.trim().length === 0 ? (
               <div className="search-empty">
                 <div className="search-empty-icon">🔍</div>
-                <div className="search-empty-text">Start typing to search...</div>
+                <div className="search-empty-text">
+                  Start typing to search...
+                </div>
                 <div className="search-empty-hint">
                   Search across projects, skills, experience, and more
                 </div>
@@ -410,7 +453,9 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
                   {results.length} result{results.length !== 1 ? "s" : ""} found
                 </div>
                 <div className="search-results-list">
-                  {results.map((result, index) => this.renderResult(result, index))}
+                  {results.map((result, index) =>
+                    this.renderResult(result, index),
+                  )}
                 </div>
               </>
             )}
@@ -437,4 +482,3 @@ export class GlobalSearch extends Component<GlobalSearchProps, GlobalSearchState
 }
 
 export default GlobalSearch;
-

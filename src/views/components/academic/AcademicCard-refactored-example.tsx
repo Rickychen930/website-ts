@@ -1,9 +1,9 @@
 /**
  * AcademicCard Component - Example Refactored with New CSS Architecture
  * Professional, Code-Based, OOP, SOLID, DRY, KISS
- * 
+ *
  * This is an EXAMPLE showing how to refactor AcademicCard to use the new CSS architecture
- * 
+ *
  * Changes:
  * - Uses CSS helpers instead of string concatenation
  * - Uses CSS variables in inline styles
@@ -40,8 +40,8 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
     const { academicLevel } = this.props;
     // Using BEM helper for consistent naming
     return cn(
-      bemClass('academic-level-badge'),
-      bemClass('academic-level-badge', undefined, academicLevel)
+      bemClass("academic-level-badge"),
+      bemClass("academic-level-badge", undefined, academicLevel),
     );
   }
 
@@ -65,13 +65,13 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
   private renderIcon(): ReactNode {
     const { item } = this.props;
     return (
-      <div className={bemClass('academic-card', 'icon')} aria-hidden="true">
-        <div className={bemClass('academic-card-icon', 'inner')}>
-          <span className={bemClass('academic-card-icon', 'emoji')}>
+      <div className={bemClass("academic-card", "icon")} aria-hidden="true">
+        <div className={bemClass("academic-card-icon", "inner")}>
+          <span className={bemClass("academic-card-icon", "emoji")}>
             {item.icon || "🎓"}
           </span>
         </div>
-        <div className={bemClass('academic-card-icon', 'glow')}></div>
+        <div className={bemClass("academic-card-icon", "glow")}></div>
       </div>
     );
   }
@@ -82,12 +82,14 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
   private renderHeader(): ReactNode {
     const { item } = this.props;
     return (
-      <div className={bemClass('academic-card', 'header')}>
-        <div className={bemClass('academic-card', 'title-wrapper')}>
-          <h3 className={bemClass('academic-card', 'title')}>{item.title}</h3>
-          <span className={this.getLevelBadgeClass()}>{this.getLevelLabel()}</span>
+      <div className={bemClass("academic-card", "header")}>
+        <div className={bemClass("academic-card", "title-wrapper")}>
+          <h3 className={bemClass("academic-card", "title")}>{item.title}</h3>
+          <span className={this.getLevelBadgeClass()}>
+            {this.getLevelLabel()}
+          </span>
         </div>
-        <div className={bemClass('academic-card', 'institution')}>
+        <div className={bemClass("academic-card", "institution")}>
           {item.institution}
         </div>
       </div>
@@ -100,10 +102,10 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
   private renderPeriod(): ReactNode {
     const { item } = this.props;
     return (
-      <div className={bemClass('academic-card', 'period')}>
-        <time 
-          dateTime={item.period} 
-          className={bemClass('academic-card-period', 'text')}
+      <div className={bemClass("academic-card", "period")}>
+        <time
+          dateTime={item.period}
+          className={bemClass("academic-card-period", "text")}
         >
           {item.period}
         </time>
@@ -121,8 +123,8 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
     }
 
     return (
-      <div className={bemClass('academic-card', 'description')}>
-        <p className={bemClass('academic-card-description', 'text')}>
+      <div className={bemClass("academic-card", "description")}>
+        <p className={bemClass("academic-card-description", "text")}>
           {item.description}
         </p>
       </div>
@@ -138,10 +140,10 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
 
     // Use CSS helpers for class names
     const cardClasses = cn(
-      bemClass('academic-card'),
-      isVisible && bemClass('academic-card', undefined, 'visible'),
-      !isVisible && bemClass('academic-card', undefined, 'hidden'),
-      className
+      bemClass("academic-card"),
+      isVisible && bemClass("academic-card", undefined, "visible"),
+      !isVisible && bemClass("academic-card", undefined, "hidden"),
+      className,
     );
 
     // Use CSS variables in inline styles
@@ -160,15 +162,15 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
         data-index={index}
         aria-label={`Academic achievement: ${item.title} at ${item.institution}`}
       >
-        <div className={bemClass('academic-card', 'content')}>
+        <div className={bemClass("academic-card", "content")}>
           {this.renderIcon()}
-          <div className={bemClass('academic-card', 'body')}>
+          <div className={bemClass("academic-card", "body")}>
             {this.renderHeader()}
             {this.renderPeriod()}
             {this.renderDescription()}
           </div>
         </div>
-        <div className={bemClass('academic-card', 'glow')}></div>
+        <div className={bemClass("academic-card", "glow")}></div>
       </article>
     );
   }
@@ -176,17 +178,16 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
 
 /**
  * Usage Notes:
- * 
+ *
  * 1. This example shows how to use CSS helpers while keeping existing CSS
  * 2. Gradually migrate CSS classes to use BEM helpers
  * 3. Replace hardcoded values in CSS with CSS variables
  * 4. Use cn() for combining classes instead of array.join()
  * 5. Use bemClass() for BEM naming consistency
- * 
+ *
  * Migration Steps:
  * 1. Start using CSS helpers in component (this example)
  * 2. Update CSS file to use CSS variables
  * 3. Convert class names to BEM format
  * 4. Remove old CSS and use new component CSS
  */
-

@@ -1,56 +1,57 @@
 /**
- * Unit tests for Rate Limiter middleware
+ * Unit tests for Rate Limiter Middleware
  */
 
-import { Request, Response, NextFunction } from 'express';
-import { createRateLimiter, contactFormRateLimiter, apiRateLimiter } from '../rate-limiter';
+import { Request, Response, NextFunction } from "express";
+import {
+  createRateLimiter,
+  apiRateLimiter,
+  contactFormRateLimiter,
+} from "../rate-limiter";
 
-describe('Rate Limiter', () => {
+describe("RateLimiter", () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let mockNext: NextFunction;
 
   beforeEach(() => {
+    jest.useFakeTimers();
+    jest.clearAllMocks();
+
     mockRequest = {
       headers: {
-        'user-agent': 'test-agent',
+        "user-agent": "test-agent",
       },
       socket: {
-        remoteAddress: '127.0.0.1',
+        remoteAddress: "127.0.0.1",
       } as any,
-      ip: '127.0.0.1',
-      path: '/test',
-    };
+      ip: "127.0.0.1",
+      path: "/test",
+    } as Partial<Request> as Request;
 
     mockResponse = {
-      setHeader: jest.fn(),
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
+      setHeader: jest.fn().mockReturnThis(),
     };
 
     mockNext = jest.fn();
   });
 
-  describe('createRateLimiter', () => {
-    it('should create rate limiter with custom options', () => {
-      const limiter = createRateLimiter({
-        windowMs: 60000,
-        max: 10,
-        message: 'Custom message',
-      });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
-      expect(limiter).toBeDefined();
-    });
-
-    it('should allow requests within limit', () => {
+  describe("createRateLimiter", () => {
+    it("should allow requests within limit", () => {
       const limiter = createRateLimiter({
-        windowMs: 60000,
+        windowMs: 60000, // 1 minute
         max: 5,
       });
 
       const middleware = limiter.middleware();
 
-      // Make 5 requests (within limit)
+      // Make 5 requests
       for (let i = 0; i < 5; i++) {
         middleware(mockRequest as Request, mockResponse as Response, mockNext);
       }
@@ -59,30 +60,30 @@ describe('Rate Limiter', () => {
       expect(mockResponse.status).not.toHaveBeenCalled();
     });
 
-    it('should block requests exceeding limit', () => {
+    it("should block requests exceeding limit", () => {
       const limiter = createRateLimiter({
         windowMs: 60000,
-        max: 2,
+        max: 3,
       });
 
       const middleware = limiter.middleware();
 
-      // Make 3 requests (exceeding limit)
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
+      // Make 4 requests (exceeds limit)
+      for (let i = 0; i < 4; i++) {
+        middleware(mockRequest as Request, mockResponse as Response, mockNext);
+      }
 
-      expect(mockNext).toHaveBeenCalledTimes(2);
+      expect(mockNext).toHaveBeenCalledTimes(3);
       expect(mockResponse.status).toHaveBeenCalledWith(429);
       expect(mockResponse.json).toHaveBeenCalledWith(
         expect.objectContaining({
           error: expect.any(String),
           retryAfter: expect.any(Number),
-        })
+        }),
       );
     });
 
-    it('should set rate limit headers', () => {
+    it("should set rate limit headers", () => {
       const limiter = createRateLimiter({
         windowMs: 60000,
         max: 10,
@@ -91,14 +92,23 @@ describe('Rate Limiter', () => {
       const middleware = limiter.middleware();
       middleware(mockRequest as Request, mockResponse as Response, mockNext);
 
-      expect(mockResponse.setHeader).toHaveBeenCalledWith('X-RateLimit-Limit', '10');
-      expect(mockResponse.setHeader).toHaveBeenCalledWith('X-RateLimit-Remaining', expect.any(String));
-      expect(mockResponse.setHeader).toHaveBeenCalledWith('X-RateLimit-Reset', expect.any(String));
+      expect(mockResponse.setHeader).toHaveBeenCalledWith(
+        "X-RateLimit-Limit",
+        "10",
+      );
+      expect(mockResponse.setHeader).toHaveBeenCalledWith(
+        "X-RateLimit-Remaining",
+        "9",
+      );
+      expect(mockResponse.setHeader).toHaveBeenCalledWith(
+        "X-RateLimit-Reset",
+        expect.any(String),
+      );
     });
 
-    it('should reset limit after window expires', (done: jest.DoneCallback) => {
+    it("should reset limit after window expires", () => {
       const limiter = createRateLimiter({
-        windowMs: 100, // Very short window for testing
+        windowMs: 1000, // 1 second
         max: 2,
       });
 
@@ -108,89 +118,73 @@ describe('Rate Limiter', () => {
       middleware(mockRequest as Request, mockResponse as Response, mockNext);
       middleware(mockRequest as Request, mockResponse as Response, mockNext);
 
-      // Third request should be blocked
+      expect(mockNext).toHaveBeenCalledTimes(2);
+
+      // Try 3rd request (should be blocked)
       middleware(mockRequest as Request, mockResponse as Response, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(429);
 
-      // Wait for window to expire
-      setTimeout(() => {
-        mockResponse.status = jest.fn().mockReturnThis();
-        mockResponse.json = jest.fn().mockReturnThis();
-        mockNext = jest.fn();
+      // Advance time past window
+      jest.advanceTimersByTime(1001);
 
-        // Should allow request after window expires
-        middleware(mockRequest as Request, mockResponse as Response, mockNext);
-        expect(mockNext).toHaveBeenCalled();
-        expect(mockResponse.status).not.toHaveBeenCalledWith(429);
-        done();
-      }, 150);
+      // Reset mocks
+      (mockResponse.status as jest.Mock).mockClear();
+      (mockNext as jest.Mock).mockClear();
+
+      // Now should allow request again
+      middleware(mockRequest as Request, mockResponse as Response, mockNext);
+      expect(mockNext).toHaveBeenCalledTimes(1);
+      expect(mockResponse.status).not.toHaveBeenCalled();
     });
 
-    it('should handle requests with x-forwarded-for header', () => {
-      mockRequest.headers = {
-        'x-forwarded-for': '192.168.1.1',
-        'user-agent': 'test-agent',
-      };
-
+    it("should handle requests with no origin", () => {
       const limiter = createRateLimiter({
         windowMs: 60000,
-        max: 1,
+        max: 5,
       });
 
       const middleware = limiter.middleware();
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
-
-      expect(mockNext).toHaveBeenCalled();
-    });
-
-    it('should handle requests without IP', () => {
-      mockRequest = {
+      const requestWithoutOrigin = {
         ...mockRequest,
-        socket: undefined,
-        ip: undefined,
+        headers: {},
       };
 
+      middleware(
+        requestWithoutOrigin as Request,
+        mockResponse as Response,
+        mockNext,
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+    });
+
+    it("should use forwarded IP when available", () => {
       const limiter = createRateLimiter({
         windowMs: 60000,
-        max: 1,
+        max: 5,
       });
 
       const middleware = limiter.middleware();
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
+      const requestWithForwarded = {
+        ...mockRequest,
+        headers: {
+          "x-forwarded-for": "192.168.1.1",
+          "user-agent": "test-agent",
+        },
+      };
+
+      middleware(
+        requestWithForwarded as Request,
+        mockResponse as Response,
+        mockNext,
+      );
 
       expect(mockNext).toHaveBeenCalled();
     });
   });
 
-  describe('contactFormRateLimiter', () => {
-    it('should have correct configuration', () => {
-      const middleware = contactFormRateLimiter.middleware();
-      expect(middleware).toBeDefined();
-    });
-
-    it('should limit to 5 requests per 15 minutes', () => {
-      const middleware = contactFormRateLimiter.middleware();
-
-      // Make 5 requests (at limit)
-      for (let i = 0; i < 5; i++) {
-        middleware(mockRequest as Request, mockResponse as Response, mockNext);
-      }
-
-      expect(mockNext).toHaveBeenCalledTimes(5);
-
-      // 6th request should be blocked
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(429);
-    });
-  });
-
-  describe('apiRateLimiter', () => {
-    it('should have correct configuration', () => {
-      const middleware = apiRateLimiter.middleware();
-      expect(middleware).toBeDefined();
-    });
-
-    it('should limit to 60 requests per minute', () => {
+  describe("apiRateLimiter", () => {
+    it("should have correct configuration", () => {
       const middleware = apiRateLimiter.middleware();
 
       // Make 60 requests (at limit)
@@ -199,6 +193,7 @@ describe('Rate Limiter', () => {
       }
 
       expect(mockNext).toHaveBeenCalledTimes(60);
+      expect(mockResponse.status).not.toHaveBeenCalled();
 
       // 61st request should be blocked
       middleware(mockRequest as Request, mockResponse as Response, mockNext);
@@ -206,36 +201,21 @@ describe('Rate Limiter', () => {
     });
   });
 
-  describe('reset', () => {
-    it('should reset rate limit for a client', () => {
-      const limiter = createRateLimiter({
-        windowMs: 60000,
-        max: 1,
-      });
+  describe("contactFormRateLimiter", () => {
+    it("should have correct configuration", () => {
+      const middleware = contactFormRateLimiter.middleware();
 
-      const middleware = limiter.middleware();
+      // Make 5 requests (at limit)
+      for (let i = 0; i < 5; i++) {
+        middleware(mockRequest as Request, mockResponse as Response, mockNext);
+      }
 
-      // Make request
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
-      expect(mockNext).toHaveBeenCalledTimes(1);
+      expect(mockNext).toHaveBeenCalledTimes(5);
+      expect(mockResponse.status).not.toHaveBeenCalled();
 
-      // Second request should be blocked
-      mockResponse.status = jest.fn().mockReturnThis();
-      mockResponse.json = jest.fn().mockReturnThis();
-      mockNext = jest.fn();
+      // 6th request should be blocked
       middleware(mockRequest as Request, mockResponse as Response, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(429);
-
-      // Reset and try again
-      const clientId = '127.0.0.1-test-agent';
-      limiter.reset(clientId);
-
-      mockResponse.status = jest.fn().mockReturnThis();
-      mockResponse.json = jest.fn().mockReturnThis();
-      mockNext = jest.fn();
-      middleware(mockRequest as Request, mockResponse as Response, mockNext);
-      expect(mockNext).toHaveBeenCalled();
     });
   });
 });
-

@@ -1,9 +1,32 @@
 {
-  "extends": [
-    "stylelint-config-standard"
-  ],
+  "extends": ["stylelint-config-standard"],
   "plugins": ["stylelint-order"],
   "rules": {
+    "selector-class-pattern": "^[a-z]([a-z0-9-]+)?(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+    "keyframes-name-pattern": "^[a-z0-9-]+$",
+    "media-feature-name-no-unknown": [
+      true,
+      {
+        "ignoreMediaFeatureNames": ["min-device-pixel-ratio"]
+      }
+    ],
+    "declaration-property-value-no-unknown": [
+      true,
+      {
+        "ignoreProperties": {
+          "mask-composite": ["xor", "destination-out", "exclude"]
+        }
+      }
+    ],
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": ["backdrop-filter"]
+      }
+    ],
+    "color-function-notation": null,
+    "color-function-alias-notation": null,
+    "alpha-value-notation": null,
     "order/properties-order": [
       "display",
       "position",

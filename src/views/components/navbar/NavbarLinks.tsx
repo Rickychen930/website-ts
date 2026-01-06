@@ -1,9 +1,9 @@
 /**
  * NavbarLinks Component
- * 
+ *
  * Component-Based Architecture - Single Responsibility Principle (SRP)
  * Handles navigation links list rendering
- * 
+ *
  * Principles:
  * - OOP: Encapsulated component with clear interface
  * - SOLID: Single responsibility - only handles links container
@@ -21,7 +21,7 @@ export interface NavbarLinksProps {
   isOpen: boolean;
   isCompact: boolean;
   onClick: (itemId: string, href: string) => void;
-  linksRef?: RefObject<HTMLUListElement>;
+  linksRef?: RefObject<HTMLUListElement | null>;
   style?: CSSProperties;
 }
 
@@ -36,10 +36,10 @@ class NavbarLinks extends React.Component<NavbarLinksProps> {
     const flattened: NavbarItem[] = [];
 
     items.forEach((item) => {
-      if ('children' in item && item.children && item.children.length > 0) {
+      if ("children" in item && item.children && item.children.length > 0) {
         // Add parent as a link (optional, or skip it)
         // flattened.push({ ...item, id: item.id, label: item.label, href: item.href });
-        
+
         // Add all children
         item.children.forEach((child) => {
           flattened.push(child);
@@ -67,17 +67,15 @@ class NavbarLinks extends React.Component<NavbarLinksProps> {
     const className = `navbar-links ${isOpen ? "open" : ""} ${isCompact ? "mobile" : ""}`;
 
     // For mobile, flatten dropdown items
-    const displayItems = isCompact 
+    const displayItems = isCompact
       ? this.flattenItemsForMobile(items)
-      : items.filter(item => !('children' in item && item.children && item.children.length > 0)) as NavbarItem[];
+      : (items.filter(
+          (item) =>
+            !("children" in item && item.children && item.children.length > 0),
+        ) as NavbarItem[]);
 
     return (
-      <ul
-        ref={linksRef}
-        className={className}
-        role="menubar"
-        style={style}
-      >
+      <ul ref={linksRef} className={className} role="menubar" style={style}>
         {displayItems.map((item: NavbarItem, index: number) => (
           <NavbarLink
             key={item.id}
@@ -93,4 +91,3 @@ class NavbarLinks extends React.Component<NavbarLinksProps> {
 }
 
 export default NavbarLinks;
-

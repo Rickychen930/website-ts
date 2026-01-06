@@ -21,7 +21,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ─── Component-Specific Variables (DRY) ─── */
 #certification-section.card,
@@ -33,18 +33,18 @@
   --cert-spacing-lg: var(--spacing-lg);
   --cert-spacing-xl: var(--spacing-xl);
   --cert-spacing-xxl: var(--spacing-3xl);
-  
+
   /* Colors - Uses core color system */
   --cert-color-primary: var(--color-accent-primary);
   --cert-color-primary-light: var(--color-accent-light);
   --cert-color-primary-dark: var(--color-accent-dark);
   --cert-color-secondary: var(--color-accent-alt);
   --cert-color-accent: var(--color-accent-hover);
-  
+
   /* Shadows - Uses core shadow system */
   --cert-shadow-card: var(--shadow-card);
   --cert-shadow-card-hover: var(--shadow-card-hover);
-  
+
   /* Transitions - Uses core transition system */
   --cert-transition-smooth: var(--transition-smooth);
   --cert-transition-bounce: var(--transition-bounce);
@@ -60,45 +60,44 @@
 /* ─── Grid Layout - Desktop (Default) ─── */
 #certification-section .certification-grid {
   display: grid;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 2rem;
-  padding: 0;
-  margin: 0;
   list-style: none;
-  width: 100%;
   max-width: 100%;
   perspective: 2000px;
-  position: relative;
 }
 
 /* ─── Certification Card - Luxury Design ─── */
 #certification-section .certification-card {
   position: relative;
   width: 100%;
-  min-height: 420px;
+  padding: 0;
+  border: 1.5px solid var(--color-accent-alpha-15);
   background: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(250, 252, 255, 0.95) 50%,
-    rgba(248, 250, 255, 0.98) 100%
+    var(--color-white-alpha-98) 0%,
+    var(--color-bg-card-alt) 50%,
+    var(--color-white-alpha-98) 100%
   );
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 28px;
-  padding: 0;
-  overflow: visible;
   opacity: 0;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 420px;
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 28px;
+  overflow: visible;
   transform: translateY(50px) scale(0.92) rotateX(8deg);
   transform-style: preserve-3d;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
-  border: 1.5px solid rgba(102, 126, 234, 0.15);
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.08),
-    0 10px 30px rgba(0, 0, 0, 0.05),
-    0 4px 12px rgba(102, 126, 234, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(102, 126, 234, 0.05);
+  box-shadow:
+    0 20px 60px var(--color-black-alpha-08),
+    0 10px 30px var(--color-black-alpha-05),
+    0 4px 12px var(--color-accent-alpha-10),
+    inset 0 1px 0 var(--color-white-alpha-90),
+    inset 0 -1px 0 var(--color-accent-alpha-05);
   will-change: transform, opacity, filter;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
@@ -109,11 +108,11 @@
 
 /* Premium gradient overlay */
 #certification-section .certification-card::before {
-  content: "";
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
+  left: 0;
+  z-index: 2;
   height: 5px;
   background: linear-gradient(
     90deg,
@@ -122,18 +121,20 @@
     var(--color-accent-secondary) 60%,
     var(--color-accent-tertiary) 100%
   );
-  background-size: 200% 100%;
-  border-radius: 28px 28px 0 0;
   opacity: 0;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  content: "";
+  background-size: 200% 100%;
+  border-radius: 28px 28px 0 0;
   animation: cert-gradient-shift 3s ease infinite;
-  z-index: 2;
 }
 
 @keyframes cert-gradient-shift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -141,30 +142,34 @@
 
 /* Animated Border Gradient */
 #certification-section .certification-card::after {
-  content: "";
   position: absolute;
-  inset: -3px;
-  border-radius: 28px;
+  z-index: -1;
   padding: 3px;
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.4) 0%,
-    rgba(118, 75, 162, 0.4) 50%,
-    rgba(240, 147, 251, 0.4) 100%
+    var(--color-accent-alpha-40) 0%,
+    var(--color-accent-alt-alpha-40) 50%,
+    var(--color-accent-secondary-alpha-30) 100%
   );
-  -webkit-mask: linear-gradient(var(--color-white) 0 0) content-box, linear-gradient(var(--color-white) 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.6s ease;
-  z-index: -1;
+  content: "";
+  inset: -3px;
+  border-radius: 28px;
+  mask:
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
+  mask-composite: xor;
+  mask-composite: exclude;
   animation: cert-border-pulse 3s ease-in-out infinite;
 }
 
 @keyframes cert-border-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
   }
+
   50% {
     opacity: 0.3;
   }
@@ -172,15 +177,15 @@
 
 /* Card Inner Container */
 #certification-section .certification-card-inner {
+  display: flex;
   position: relative;
   z-index: 2;
-  padding: 3.5rem 3rem;
   height: 100%;
-  display: flex;
+  padding: 3.5rem 3rem;
+  background: inherit;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: inherit;
   border-radius: inherit;
   gap: 1.75rem;
   transform-style: preserve-3d;
@@ -190,7 +195,8 @@
 #certification-section .certification-card-visible {
   opacity: 1;
   transform: translateY(0) scale(1) rotateX(0deg);
-  animation: cert-card-enter-advanced 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: cert-card-enter-advanced 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)
+    forwards;
   filter: blur(0);
 }
 
@@ -204,11 +210,13 @@
     transform: translateY(50px) scale(0.9) rotateX(10deg);
     filter: blur(12px);
   }
+
   50% {
     opacity: 1;
     transform: translateY(-8px) scale(1.02) rotateX(-2deg);
     filter: blur(3px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateX(0deg);
@@ -220,17 +228,17 @@
 #certification-section .certification-card:hover,
 #certification-section .certification-card-hovered {
   transform: translateY(-16px) scale(1.03) rotateX(-3deg) rotateY(2deg);
-  border-color: rgba(102, 126, 234, 0.3);
-  box-shadow: 
-    0 30px 80px rgba(102, 126, 234, 0.15),
-    0 15px 40px rgba(0, 0, 0, 0.08),
-    0 6px 16px rgba(102, 126, 234, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(102, 126, 234, 0.08);
+  border-color: var(--color-accent-alpha-30);
+  box-shadow:
+    0 30px 80px var(--color-accent-alpha-15),
+    0 15px 40px var(--color-black-alpha-08),
+    0 6px 16px var(--color-accent-alpha-12),
+    inset 0 1px 0 var(--color-white-alpha-95),
+    inset 0 -1px 0 var(--color-accent-alpha-08);
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.98) 100%
+    var(--color-white) 0%,
+    var(--color-white-alpha-98) 100%
   );
   filter: brightness(1.02);
 }
@@ -242,10 +250,12 @@
 }
 
 @keyframes cert-border-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     filter: brightness(1);
   }
+
   50% {
     opacity: 1;
     filter: brightness(1.3);
@@ -270,9 +280,9 @@
 #certification-section .certification-card:focus {
   outline: none;
   border-color: var(--cert-color-primary);
-  box-shadow: 
-    0 0 0 4px rgba(102, 126, 234, 0.2),
-    0 30px 80px rgba(102, 126, 234, 0.15);
+  box-shadow:
+    0 0 0 4px var(--color-accent-alpha-20),
+    0 30px 80px var(--color-accent-alpha-15);
 }
 
 #certification-section .certification-card:focus-visible {
@@ -282,16 +292,16 @@
 
 /* ─── Advanced Icon Styling ─── */
 #certification-section .certification-icon-wrapper {
+  display: flex;
   position: relative;
+  z-index: 3;
   width: 120px;
   height: 120px;
-  display: flex;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   align-items: center;
   justify-content: center;
   margin-bottom: 0.75rem;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   perspective: 1000px;
-  z-index: 3;
 }
 
 #certification-section .certification-icon-medium {
@@ -310,12 +320,12 @@
 }
 
 #certification-section .certification-icon-emoji {
-  font-size: 4rem;
-  line-height: 1;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+  font-size: 4rem;
+  line-height: 1;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 6px 12px var(--color-black-alpha-20));
   transform-style: preserve-3d;
 }
 
@@ -323,28 +333,32 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  z-index: 1;
   width: 140%;
   height: 140%;
   background: radial-gradient(
     circle,
-    rgba(102, 126, 234, 0.4) 0%,
-    rgba(102, 126, 234, 0.2) 30%,
-    rgba(118, 75, 162, 0.1) 50%,
+    var(--color-accent-alpha-40) 0%,
+    var(--color-accent-alpha-20) 30%,
+    var(--color-accent-alt-alpha-10) 50%,
     transparent 75%
   );
-  border-radius: 50%;
   opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  z-index: 1;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
   animation: cert-icon-pulse 3s ease-in-out infinite;
 }
 
 @keyframes cert-icon-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1);
   }
+
   50% {
     opacity: 0.4;
     transform: translate(-50%, -50%) scale(1.4);
@@ -353,7 +367,7 @@
 
 #certification-section .certification-card:hover .certification-icon-emoji {
   transform: scale(1.25) rotate(12deg) translateZ(20px);
-  filter: drop-shadow(0 10px 20px rgba(102, 126, 234, 0.4));
+  filter: drop-shadow(0 10px 20px var(--color-accent-alpha-40));
 }
 
 #certification-section .certification-card:hover .certification-icon-glow {
@@ -363,10 +377,12 @@
 }
 
 @keyframes cert-icon-pulse-fast {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.5;
     transform: translate(-50%, -50%) scale(1.1);
   }
+
   50% {
     opacity: 0.8;
     transform: translate(-50%, -50%) scale(1.3);
@@ -375,35 +391,33 @@
 
 /* ─── Advanced Content Styling ─── */
 #certification-section .certification-card-content {
+  display: flex;
+  position: relative;
+  z-index: 2;
   width: 100%;
   text-align: center;
-  display: flex;
   flex-direction: column;
   gap: 1.25rem;
   flex: 1;
-  position: relative;
-  z-index: 2;
 }
 
 #certification-section .certification-card-title {
+  position: relative;
   margin: 0;
-  color: var(--text-heading);
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  font-weight: 800;
-  line-height: 1.35;
-  letter-spacing: -0.5px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
   background: linear-gradient(
     135deg,
     var(--color-text-primary) 0%,
     var(--color-accent-primary) 100%
   );
-  -webkit-background-clip: text;
+  color: var(--text-heading);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.35;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.5px;
+  overflow-wrap: break-word;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  position: relative;
 }
 
 #certification-section .certification-card:hover .certification-card-title {
@@ -413,7 +427,6 @@
     var(--color-accent-alt) 50%,
     var(--color-accent-secondary) 100%
   );
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transform: translateY(-2px);
@@ -429,26 +442,36 @@
 }
 
 #certification-section .certification-card-provider-label {
+  position: relative;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-accent-alpha-15);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-alpha-08) 0%,
+    var(--color-accent-alt-alpha-08) 100%
+  );
   color: var(--text-subtle);
   font-size: clamp(0.85rem, 1.2vw, 0.95rem);
   font-weight: 700;
   line-height: 1.5;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
   opacity: 0.85;
   transition: all 0.4s ease;
-  position: relative;
-  padding: 0.5rem 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
-  border: 1px solid rgba(102, 126, 234, 0.15);
 }
 
-#certification-section .certification-card:hover .certification-card-provider-label {
+#certification-section
+  .certification-card:hover
+  .certification-card-provider-label {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-alpha-15) 0%,
+    var(--color-accent-alt-alpha-15) 100%
+  );
   color: var(--cert-color-primary);
   opacity: 1;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-  border-color: rgba(102, 126, 234, 0.3);
+  border-color: var(--color-accent-alpha-30);
   transform: scale(1.05);
 }
 
@@ -463,62 +486,66 @@
 
 #certification-section .certification-badge {
   display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  position: relative;
   padding: 0.5rem 1rem;
-  border-radius: 14px;
   font-size: 0.8rem;
   font-weight: 600;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 14px;
   font-family: var(--font-mono);
   letter-spacing: 0.4px;
-  position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
 }
 
 #certification-section .certification-badge-default {
-  background: linear-gradient(135deg, rgba(245, 247, 250, 0.9) 0%, rgba(240, 244, 248, 0.9) 100%);
+  border: 1.5px solid var(--color-border-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-lighter) 0%,
+    var(--color-bg-lightest) 100%
+  );
   color: var(--text-muted);
-  border: 1.5px solid rgba(220, 227, 234, 0.6);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px var(--color-black-alpha-05);
 }
 
 #certification-section .certification-badge-accent {
+  border: 1.5px solid var(--color-accent-alpha-30);
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.15) 0%,
-    rgba(118, 75, 162, 0.15) 100%
+    var(--color-accent-alpha-15) 0%,
+    var(--color-accent-alt-alpha-15) 100%
   );
   color: var(--cert-color-primary);
-  border: 1.5px solid rgba(102, 126, 234, 0.3);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 12px var(--color-accent-alpha-20);
 }
 
 #certification-section .certification-badge:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 16px var(--color-black-alpha-10);
 }
 
 #certification-section .certification-badge-accent:hover {
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 6px 20px var(--color-accent-alpha-30);
 }
 
 /* ─── Advanced Date Styling ─── */
 #certification-section .certification-card-date {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
+  position: relative;
+  width: 100%;
   color: var(--text-muted-alt);
   font-size: clamp(0.9rem, 1.2vw, 0.95rem);
   font-weight: 600;
+  transition: all 0.4s ease;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   margin-top: 1.25rem;
   padding-top: 1.25rem;
-  border-top: 2px solid rgba(220, 227, 234, 0.6);
-  width: 100%;
-  position: relative;
-  transition: all 0.4s ease;
+  border-top: 2px solid var(--color-border-primary);
 }
 
 #certification-section .certification-card-date::before {
@@ -537,27 +564,31 @@
   transition: width 0.6s ease;
 }
 
-#certification-section .certification-card:hover .certification-card-date::before {
+#certification-section
+  .certification-card:hover
+  .certification-card-date::before {
   width: 60%;
 }
 
 /* ─── Advanced Link Hint ─── */
 #certification-section .certification-card-link-hint {
+  display: flex;
+  position: relative;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 1.25rem;
   padding-top: 1.25rem;
-  border-top: 2px solid rgba(220, 227, 234, 0.6);
-  display: flex;
+  border-top: 2px solid var(--color-border-primary);
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  opacity: 0;
   transform: translateY(12px) scale(0.95);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
-  position: relative;
 }
 
-#certification-section .certification-card.clickable:hover .certification-card-link-hint {
+#certification-section
+  .certification-card.clickable:hover
+  .certification-card-link-hint {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
@@ -565,12 +596,12 @@
 /* ─── Advanced Empty State ─── */
 #certification-section .certification-empty {
   display: flex;
+  position: relative;
+  padding: 4rem 2rem;
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
-  text-align: center;
-  position: relative;
   min-height: 300px;
 }
 
@@ -583,10 +614,12 @@
 }
 
 @keyframes cert-empty-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(1.05);
@@ -594,37 +627,37 @@
 }
 
 #certification-section .certification-empty-title {
-  color: var(--text-heading);
-  font-size: 1.75rem;
-  font-weight: 800;
-  margin: 0 0 1rem 0;
-  letter-spacing: -0.5px;
+  margin: 0 0 1rem;
   background: linear-gradient(
     135deg,
     var(--text-heading) 0%,
     var(--text-subtle) 100%
   );
-  -webkit-background-clip: text;
+  color: var(--text-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 #certification-section .certification-empty-message {
+  margin: 0;
   color: var(--text-muted);
   font-size: 1.1rem;
-  margin: 0;
   line-height: 1.7;
-  max-width: 450px;
   opacity: 0.85;
+  max-width: 450px;
 }
 
 /* ─── Advanced Animations ─── */
-@keyframes fadeInUpAdvanced {
+@keyframes fade-in-up-advanced {
   from {
     opacity: 0;
     transform: translateY(40px);
     filter: blur(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -638,16 +671,17 @@
    ============================================ */
 
 /* Tablet (768px - 991px) - HORIZONTAL SCROLL */
-@media screen and (max-width: 991px) and (min-width: 768px) {
+@media screen and (width <= 991px) and (width >= 768px) {
   /* Container removed - Card component handles styling */
 
   /* Horizontal scroll for grid on tablet */
   #certification-section .certification-grid {
     display: flex !important;
+    position: relative;
+    width: calc(100% + 4rem);
     flex-direction: row !important;
     gap: 1.75rem;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -656,9 +690,7 @@
     margin-right: calc(-1 * 2rem);
     padding-left: 2rem;
     padding-right: 2rem;
-    width: calc(100% + 4rem);
     grid-template-columns: none !important;
-    position: relative;
   }
 
   #certification-section .certification-grid > * {
@@ -675,10 +707,10 @@
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 4px;
     margin: 0 1rem;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    background: var(--color-black-alpha-08);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px var(--color-black-alpha-10);
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb {
@@ -689,62 +721,58 @@
     );
     border-radius: 4px;
     transition: all 0.3s ease;
-    box-shadow: 
-      0 2px 4px rgba(102, 126, 234, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 2px 4px var(--color-accent-alpha-40),
+      inset 0 1px 0 var(--color-white-alpha-30);
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(
       90deg,
-      var(--cert-color-secondary, #764ba2) 0%,
-      var(--cert-color-primary, #667eea) 100%
+      var(--color-accent-alt) 0%,
+      var(--color-accent-primary) 100%
     );
-    box-shadow: 
-      0 4px 8px rgba(102, 126, 234, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 4px 8px var(--color-accent-alpha-50),
+      inset 0 1px 0 var(--color-white-alpha-40);
     transform: scaleY(1.2);
   }
 
-  /* Firefox scrollbar */
-  #certification-section .certification-grid {
-    scrollbar-width: thin;
-    scrollbar-color: var(--cert-color-primary, var(--color-accent-primary)) var(--color-black-alpha-08);
-  }
+  /* Firefox scrollbar - merged with previous selector */
 
   /* Fade gradients at edges */
   #certification-section .certification-grid::before {
-    content: "";
     position: sticky;
     top: 0;
     left: 0;
+    z-index: 10;
     width: 60px;
     height: 100%;
-    pointer-events: none;
-    z-index: 10;
-    transition: opacity 0.3s ease;
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.98) 0%,
+      var(--color-white-alpha-98) 0%,
       transparent 100%
     );
+    transition: opacity 0.3s ease;
+    content: "";
+    pointer-events: none;
   }
 
   /* Right fade gradient */
   #certification-section .certification-grid::after {
-    content: "";
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 10;
     width: 60px;
     height: 100%;
-    pointer-events: none;
-    z-index: 10;
     background: linear-gradient(
       270deg,
-      rgba(255, 255, 255, 0.98) 0%,
+      var(--color-white-alpha-98) 0%,
       transparent 100%
     );
+    content: "";
+    pointer-events: none;
   }
 
   /* Scroll hint indicator - using Card body */
@@ -754,22 +782,22 @@
   }
 
   #certification-section .card-body::before {
-    content: "← Swipe to see more →";
+    display: flex;
     position: absolute;
     bottom: 0.25rem;
     left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    z-index: 5;
     color: var(--color-text-subtle);
     font-size: 0.75rem;
     font-weight: 500;
-    font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
     opacity: 0.8;
     transition: opacity 0.3s ease;
+    content: "← Swipe to see more →";
+    transform: translateX(-50%);
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
     pointer-events: none;
-    z-index: 5;
     white-space: nowrap;
   }
 
@@ -801,21 +829,20 @@
   }
 
   #certification-section .certification-card-provider-label {
-    font-size: 0.85rem;
     padding: 0.4rem 0.85rem;
+    font-size: 0.85rem;
   }
 }
 
 /* Mobile Landscape / Small Tablet (600px - 767px) */
-@media screen and (max-width: 767px) and (min-width: 600px) {
+@media screen and (width <= 767px) and (width >= 600px) {
   /* Container removed - Card component handles styling */
 
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -841,9 +868,9 @@
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 4px;
     margin: 0 1rem;
+    background: var(--color-black-alpha-08);
+    border-radius: 4px;
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb {
@@ -879,15 +906,14 @@
 }
 
 /* Mobile Portrait (480px - 599px) */
-@media screen and (max-width: 599px) and (min-width: 480px) {
+@media screen and (width <= 599px) and (width >= 480px) {
   /* Container removed - Card component handles styling */
 
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -931,15 +957,14 @@
 }
 
 /* Small Mobile (320px - 479px) */
-@media screen and (max-width: 479px) {
+@media screen and (width <= 479px) {
   /* Container removed - Card component handles styling */
 
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -988,15 +1013,14 @@
 }
 
 /* Extra Small Mobile (240px - 319px) */
-@media screen and (max-width: 319px) {
+@media screen and (width <= 319px) {
   /* Container removed - Card component handles styling */
 
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -1040,15 +1064,14 @@
 }
 
 /* ─── Landscape Orientation (Mobile) ─── */
-@media screen and (orientation: landscape) and (max-width: 767px) {
+@media screen and (orientation: landscape) and (width <= 767px) {
   /* Container removed - Card component handles styling */
 
   #certification-section .certification-grid {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;

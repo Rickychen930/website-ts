@@ -1,7 +1,7 @@
 /**
  * Footer Model
  * Model Layer (MVC Pattern)
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): Handles footer data structure and validation
  * - Open/Closed Principle (OCP): Extensible via interfaces
@@ -11,6 +11,7 @@
 
 import { UserProfile } from "../types/user";
 import { IContact, ContactType } from "./contact-model";
+import { SocialColors } from "../constants/colors";
 
 /**
  * Footer Link Interface
@@ -120,7 +121,7 @@ export class FooterModel {
     if (profile.technicalSkills && profile.technicalSkills.length > 0) {
       const totalSkills = profile.technicalSkills.reduce(
         (sum, category) => sum + (category.items?.length || 0),
-        0
+        0,
       );
       if (totalSkills > 0) {
         stats.push({
@@ -162,7 +163,12 @@ export class FooterModel {
     return [
       { key: "about", label: "About", href: "#about", icon: "👤" },
       { key: "skills", label: "Skills", href: "#skills", icon: "💻" },
-      { key: "experience", label: "Experience", href: "#experience", icon: "💼" },
+      {
+        key: "experience",
+        label: "Experience",
+        href: "#experience",
+        icon: "💼",
+      },
       { key: "projects", label: "Projects", href: "#projects", icon: "🚀" },
       { key: "contact", label: "Contact", href: "#contact", icon: "📧" },
     ];
@@ -177,12 +183,12 @@ export class FooterModel {
     }
 
     const socialPlatforms: Record<string, { icon: string; color: string }> = {
-      linkedin: { icon: "💼", color: "#0077b5" },
-      github: { icon: "💻", color: "#333" },
-      twitter: { icon: "🐦", color: "#1da1f2" },
-      instagram: { icon: "📷", color: "#e4405f" },
-      facebook: { icon: "👥", color: "#1877f2" },
-      email: { icon: "✉️", color: "#ea4335" },
+      linkedin: { icon: "💼", color: SocialColors.LINKEDIN },
+      github: { icon: "💻", color: SocialColors.GITHUB },
+      twitter: { icon: "🐦", color: SocialColors.TWITTER },
+      instagram: { icon: "📷", color: SocialColors.INSTAGRAM },
+      facebook: { icon: "👥", color: SocialColors.FACEBOOK },
+      email: { icon: "✉️", color: SocialColors.EMAIL },
     };
 
     return profile.contacts
@@ -200,7 +206,10 @@ export class FooterModel {
       .map((contact) => {
         const key = contact.key?.toLowerCase() || "";
         const platform = this.detectPlatform(key);
-        const platformData = socialPlatforms[platform] || { icon: "🔗", color: "#667eea" };
+        const platformData = socialPlatforms[platform] || {
+          icon: "🔗",
+          color: SocialColors.DEFAULT,
+        };
 
         return {
           key: contact.key || `social-${platform}`,
@@ -275,7 +284,7 @@ export class FooterModel {
   private static detectContactType(
     label: string,
     value: string,
-    link?: string
+    link?: string,
   ): ContactType {
     const lowerLabel = label.toLowerCase();
     const lowerValue = value.toLowerCase();
@@ -356,4 +365,3 @@ export class FooterModel {
     return !!profile && !!profile.name;
   }
 }
-

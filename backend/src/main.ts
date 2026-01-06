@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import fs from "fs";
 import https from "https";
 import http from "http";
@@ -10,6 +11,7 @@ import userRoutes from "./routes/user-routes";
 import contactRoutes from "./routes/contact-routes";
 import { logger } from "./utils/logger";
 import { validateEnv, getEnvNumber } from "./utils/env-validator";
+import { apiRateLimiter } from "./middleware/rate-limiter";
 
 // ✅ Load .env
 const envPath = path.join(__dirname, "../../.env");
@@ -23,7 +25,11 @@ if (fs.existsSync(envPath)) {
 // ✅ Validate environment variables
 const envValidation = validateEnv();
 if (!envValidation.isValid) {
-  logger.error("Environment validation failed", { errors: envValidation.errors }, "Main");
+  logger.error(
+    "Environment validation failed",
+    { errors: envValidation.errors },
+    "Main",
+  );
   process.exit(1);
 }
 
@@ -50,6 +56,27 @@ const SSL_KEY_PATH = process.env.SSL_KEY_PATH;
 // ✅ Express setup
 const app = express();
 
+// ✅ Security headers with Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: ["'self'"],
+        frameSrc: ["'none'"],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: NODE_ENV === "production" ? [] : null,
+      },
+    },
+    crossOriginEmbedderPolicy: false, // Allow external resources
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
+
 // ✅ Security middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
@@ -58,7 +85,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 const corsOptions = {
   origin: function (
     origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
+    callback: (err: Error | null, allow?: boolean) => void,
   ) {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) {
@@ -79,6 +106,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// ✅ Apply general API rate limiting (before routes)
+app.use("/api", apiRateLimiter.middleware());
+
 // ✅ API Routes (must be before static files)
 app.use("/api", userRoutes);
 app.use("/api/contact", contactRoutes);
@@ -97,10 +127,12 @@ app.get("/health", (_, res) => {
 const buildPath = path.join(__dirname, "../../build");
 if (NODE_ENV === "production" && fs.existsSync(buildPath)) {
   // Serve static files
-  app.use(express.static(buildPath, {
-    maxAge: "1y", // Cache static assets for 1 year
-    etag: true,
-  }));
+  app.use(
+    express.static(buildPath, {
+      maxAge: "1y", // Cache static assets for 1 year
+      etag: true,
+    }),
+  );
 
   // Handle React Router - serve index.html for all non-API routes
   app.get("*", (req, res, next) => {
@@ -145,7 +177,11 @@ if (NODE_ENV === "production" && SSL_KEY_PATH && SSL_CERT_PATH) {
       logger.error("Failed to load SSL certificates", error, "Main");
     }
   } else {
-    logger.warn("SSL certificate paths specified but files not found", undefined, "Main");
+    logger.warn(
+      "SSL certificate paths specified but files not found",
+      undefined,
+      "Main",
+    );
   }
 }
 
@@ -168,17 +204,25 @@ connectDB(mongoUri)
 function startServer() {
   server.listen(PORT, "0.0.0.0", () => {
     const protocol = sslOptions ? "https" : "http";
-    logger.info("Backend server started", {
-      protocol,
-      port: PORT,
-      env: NODE_ENV,
-      origins: allowedOrigins,
-    }, "Main");
+    logger.info(
+      "Backend server started",
+      {
+        protocol,
+        port: PORT,
+        env: NODE_ENV,
+        origins: allowedOrigins,
+      },
+      "Main",
+    );
   });
 
   // ✅ Graceful shutdown
   process.on("SIGTERM", () => {
-    logger.info("SIGTERM signal received: closing HTTP server", undefined, "Main");
+    logger.info(
+      "SIGTERM signal received: closing HTTP server",
+      undefined,
+      "Main",
+    );
     server.close(() => {
       logger.info("HTTP server closed", undefined, "Main");
       process.exit(0);
@@ -186,7 +230,11 @@ function startServer() {
   });
 
   process.on("SIGINT", () => {
-    logger.info("SIGINT signal received: closing HTTP server", undefined, "Main");
+    logger.info(
+      "SIGINT signal received: closing HTTP server",
+      undefined,
+      "Main",
+    );
     server.close(() => {
       logger.info("HTTP server closed", undefined, "Main");
       process.exit(0);

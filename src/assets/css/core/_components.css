@@ -24,11 +24,11 @@
   position: relative;
   width: 100%;
   padding: var(--spacing-card-padding);
-  background: var(--color-bg-card);
-  border-radius: var(--spacing-card-radius);
   border: 1px solid var(--color-border-light);
-  box-shadow: var(--shadow-card);
+  background: var(--color-bg-card);
   transition: var(--transition-all);
+  border-radius: var(--spacing-card-radius);
+  box-shadow: var(--shadow-card);
 }
 
 /* Card Modifiers */
@@ -66,17 +66,17 @@
 }
 
 .card__title {
+  margin: 0;
+  color: var(--color-text-heading);
   font-size: var(--font-size-title-component);
   font-weight: var(--font-weight-title);
-  color: var(--color-text-heading);
-  margin: 0;
 }
 
 .card__subtitle {
+  margin: var(--spacing-xs) 0 0 0;
+  color: var(--color-text-subtle);
   font-size: var(--font-size-subtitle);
   font-weight: var(--font-weight-subtitle);
-  color: var(--color-text-subtle);
-  margin: var(--spacing-xs) 0 0 0;
 }
 
 .card__body {
@@ -96,20 +96,20 @@
 .btn {
   /* Base styles */
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-lg);
-  font-family: var(--font-main);
+  border: 1px solid transparent;
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   line-height: 1.5;
   text-align: center;
+  transition: var(--transition-all);
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-main);
   text-decoration: none;
-  border: 1px solid transparent;
   border-radius: var(--component-radius-button);
   cursor: pointer;
-  transition: var(--transition-all);
   user-select: none;
   white-space: nowrap;
 }
@@ -173,14 +173,14 @@
 .input {
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-md);
-  font-family: var(--font-main);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-bg-card);
+  color: var(--color-text-main);
   font-size: var(--font-size-base);
   line-height: 1.5;
-  color: var(--color-text-main);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--component-radius-input);
   transition: var(--transition-all);
+  font-family: var(--font-main);
+  border-radius: var(--component-radius-input);
 }
 
 .input:focus {
@@ -190,9 +190,9 @@
 }
 
 .input:disabled {
+  background: var(--color-bg-lighter);
   opacity: var(--opacity-disabled);
   cursor: not-allowed;
-  background: var(--color-bg-lighter);
 }
 
 .input--error {
@@ -209,8 +209,8 @@
 .section {
   position: relative;
   width: 100%;
-  padding: var(--spacing-section-padding);
   margin: var(--spacing-section-margin) 0;
+  padding: var(--spacing-section-padding);
 }
 
 .section__container {
@@ -226,17 +226,17 @@
 }
 
 .section__title {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text-heading);
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-title);
-  color: var(--color-text-heading);
-  margin: 0 0 var(--spacing-md) 0;
 }
 
 .section__subtitle {
+  margin: 0;
+  color: var(--color-text-subtle);
   font-size: var(--font-size-subtitle);
   font-weight: var(--font-weight-subtitle);
-  color: var(--color-text-subtle);
-  margin: 0;
 }
 
 .section__content {
@@ -384,22 +384,22 @@
 /* ============================================
    Responsive Utilities
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .section {
-    padding: var(--spacing-section-padding-mobile);
     margin: var(--spacing-section-margin-mobile) 0;
+    padding: var(--spacing-section-padding-mobile);
   }
-  
+
   .section__container,
   .container {
     padding: 0 var(--spacing-md);
   }
-  
+
   .card {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
   }
-  
+
   .grid--cols-2,
   .grid--cols-3,
   .grid--cols-4 {
@@ -416,4 +416,3 @@
     transform: none;
   }
 }
-

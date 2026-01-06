@@ -1,7 +1,7 @@
 /**
  * Project Model
  * Model Layer (MVC Pattern)
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): Handles project data structure
  * - Open/Closed Principle (OCP): Extensible via interfaces
@@ -12,19 +12,23 @@
 /**
  * Project Status Type
  */
-export type ProjectStatus = "completed" | "in-progress" | "archived" | "on-hold";
+export type ProjectStatus =
+  | "completed"
+  | "in-progress"
+  | "archived"
+  | "on-hold";
 
 /**
  * Project Category Type
  */
-export type ProjectCategory = 
-  | "web-development" 
-  | "mobile-development" 
-  | "full-stack" 
-  | "frontend" 
-  | "backend" 
-  | "devops" 
-  | "ai-ml" 
+export type ProjectCategory =
+  | "web-development"
+  | "mobile-development"
+  | "full-stack"
+  | "frontend"
+  | "backend"
+  | "devops"
+  | "ai-ml"
   | "data-science"
   | "other";
 
@@ -32,7 +36,13 @@ export type ProjectCategory =
  * Project Link Interface
  */
 export interface IProjectLink {
-  type: "github" | "demo" | "documentation" | "playstore" | "appstore" | "other";
+  type:
+    | "github"
+    | "demo"
+    | "documentation"
+    | "playstore"
+    | "appstore"
+    | "other";
   url: string;
   label?: string;
 }
@@ -43,12 +53,31 @@ export interface IProjectLink {
 export interface IProjectTechnology {
   name: string;
   icon?: string;
-  category?: "language" | "framework" | "library" | "tool" | "database" | "cloud";
+  category?:
+    | "language"
+    | "framework"
+    | "library"
+    | "tool"
+    | "database"
+    | "cloud";
+}
+
+/**
+ * Case Study Information
+ * For detailed project case studies (HR/Recruiter perspective)
+ */
+export interface ICaseStudy {
+  problem?: string; // What problem did this project solve?
+  solution?: string; // How did you solve it?
+  impact?: string; // What was the result/impact?
+  challenges?: string[]; // What challenges did you face?
+  learnings?: string[]; // What did you learn?
+  metrics?: { label: string; value: string }[]; // Key metrics/achievements
 }
 
 /**
  * Project Item Interface
- * Enhanced project data structure
+ * Enhanced project data structure with case study support
  */
 export interface IProject {
   key: string;
@@ -67,6 +96,7 @@ export interface IProject {
   teamSize?: number;
   role?: string;
   duration?: string;
+  caseStudy?: ICaseStudy; // Detailed case study information
 }
 
 /**
@@ -133,19 +163,36 @@ export class ProjectModel {
       }
       keys.add(item.key);
 
-      if (!item.name || typeof item.name !== "string" || item.name.trim() === "") {
+      if (
+        !item.name ||
+        typeof item.name !== "string" ||
+        item.name.trim() === ""
+      ) {
         errors.push(`Project ${item.key} missing name`);
       }
 
-      if (!item.description || typeof item.description !== "string" || item.description.trim() === "") {
+      if (
+        !item.description ||
+        typeof item.description !== "string" ||
+        item.description.trim() === ""
+      ) {
         errors.push(`Project ${item.key} missing description`);
       }
 
-      if (!item.date || typeof item.date !== "string" || item.date.trim() === "") {
+      if (
+        !item.date ||
+        typeof item.date !== "string" ||
+        item.date.trim() === ""
+      ) {
         errors.push(`Project ${item.key} missing date`);
       }
 
-      if (!item.status || !["completed", "in-progress", "archived", "on-hold"].includes(item.status)) {
+      if (
+        !item.status ||
+        !["completed", "in-progress", "archived", "on-hold"].includes(
+          item.status,
+        )
+      ) {
         errors.push(`Project ${item.key} has invalid status`);
       }
 
@@ -164,7 +211,9 @@ export class ProjectModel {
       if (item.links) {
         item.links.forEach((link, linkIndex) => {
           if (!link.type || !link.url) {
-            errors.push(`Project ${item.key} link at index ${linkIndex} is invalid`);
+            errors.push(
+              `Project ${item.key} link at index ${linkIndex} is invalid`,
+            );
           }
         });
       }
@@ -211,7 +260,7 @@ export class ProjectModel {
    */
   public static filterByCategory(
     projects: IProject[],
-    category: ProjectCategory
+    category: ProjectCategory,
   ): IProject[] {
     return projects.filter((project) => project.category === category);
   }
@@ -224,7 +273,7 @@ export class ProjectModel {
    */
   public static filterByStatus(
     projects: IProject[],
-    status: ProjectStatus
+    status: ProjectStatus,
   ): IProject[] {
     return projects.filter((project) => project.status === status);
   }
@@ -237,12 +286,12 @@ export class ProjectModel {
    */
   public static filterByTechnology(
     projects: IProject[],
-    technology: string
+    technology: string,
   ): IProject[] {
     return projects.filter((project) =>
       project.technologies.some(
-        (tech) => tech.name.toLowerCase() === technology.toLowerCase()
-      )
+        (tech) => tech.name.toLowerCase() === technology.toLowerCase(),
+      ),
     );
   }
 
@@ -251,7 +300,9 @@ export class ProjectModel {
    * @param projects - Array of projects
    * @returns Grouped projects
    */
-  public static groupByCategory(projects: IProject[]): Map<ProjectCategory, IProject[]> {
+  public static groupByCategory(
+    projects: IProject[],
+  ): Map<ProjectCategory, IProject[]> {
     const grouped = new Map<ProjectCategory, IProject[]>();
 
     projects.forEach((project) => {
@@ -342,13 +393,15 @@ export class ProjectModel {
    * @param legacyData - Legacy project data
    * @returns Converted project data
    */
-  public static convertFromLegacy(legacyData: {
-    key: string;
-    icon: string;
-    name: string;
-    date: string;
-    description: string;
-  }[]): IProject[] {
+  public static convertFromLegacy(
+    legacyData: {
+      key: string;
+      icon: string;
+      name: string;
+      date: string;
+      description: string;
+    }[],
+  ): IProject[] {
     return legacyData.map((item) => ({
       key: item.key,
       name: item.name,
@@ -362,4 +415,3 @@ export class ProjectModel {
     }));
   }
 }
-

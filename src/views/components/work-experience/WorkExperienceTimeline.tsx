@@ -1,7 +1,7 @@
 /**
  * WorkExperienceTimeline Component
  * Reusable timeline container component for work experience entries
- * 
+ *
  * Principles Applied:
  * - Single Responsibility: Manages timeline layout
  * - Open/Closed: Extensible through props
@@ -30,7 +30,7 @@ export interface IWorkExperienceTimelineProps {
  * Displays work experience items in a luxury timeline layout
  */
 export class WorkExperienceTimeline extends PureComponent<IWorkExperienceTimelineProps> {
-  private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
+  private itemRefs = new Map<string, RefObject<HTMLDivElement | null>>();
 
   constructor(props: IWorkExperienceTimelineProps) {
     super(props);
@@ -98,10 +98,7 @@ export class WorkExperienceTimeline extends PureComponent<IWorkExperienceTimelin
       return null;
     }
 
-    const timelineClasses = [
-      "work-experience-timeline",
-      className,
-    ]
+    const timelineClasses = ["work-experience-timeline", className]
       .filter(Boolean)
       .join(" ");
 
@@ -113,4 +110,3 @@ export class WorkExperienceTimeline extends PureComponent<IWorkExperienceTimelin
     );
   }
 }
-

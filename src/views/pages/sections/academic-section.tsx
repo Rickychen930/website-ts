@@ -1,12 +1,12 @@
 /**
  * AcademicSection - View Layer (MVC Pattern)
  * Professional, Clean, Luxury, Responsive Academic Section
- * 
+ *
  * Architecture:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
  * - Component-Based: Uses reusable sub-components
- * 
+ *
  * Principles Applied:
  * - SOLID:
  *   - SRP: Each method has single responsibility
@@ -62,7 +62,7 @@ const SCROLL_THROTTLE_MS = 100;
 
 /**
  * AcademicSection Component
- * 
+ *
  * Features:
  * - Professional, Clean, Luxury Design
  * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
@@ -70,7 +70,7 @@ const SCROLL_THROTTLE_MS = 100;
  * - Component-Based Architecture (Reusable Components)
  * - MVC Pattern (Controller, Model, View separation)
  * - Shows Software Engineering Capabilities
- * 
+ *
  * Principles Applied:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
@@ -80,12 +80,12 @@ const SCROLL_THROTTLE_MS = 100;
  */
 class AcademicSection extends Component<AcademicProps, AcademicState> {
   private readonly controller: AcademicController;
-  private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
+  private itemRefs = new Map<string, RefObject<HTMLDivElement | null>>();
   private observer: IntersectionObserver | null = null;
   private lastScrollY: number = 0;
   private scrollTimeoutId: number | null = null;
   private isMounted: boolean = false;
-  private containerRef: RefObject<HTMLDivElement> = createRef();
+  private containerRef: RefObject<HTMLDivElement | null> = createRef();
 
   constructor(props: AcademicProps) {
     super(props);
@@ -109,7 +109,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    */
   private initializeRefs(): void {
     const { data } = this.props;
-    
+
     if (!Array.isArray(data) || data.length === 0) {
       return;
     }
@@ -127,9 +127,13 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    */
   componentDidMount(): void {
     this.isMounted = true;
-    
+
     // Edge case: Validate data exists before initializing
-    if (!this.props.data || !Array.isArray(this.props.data) || this.props.data.length === 0) {
+    if (
+      !this.props.data ||
+      !Array.isArray(this.props.data) ||
+      this.props.data.length === 0
+    ) {
       this.setState({ isInitialized: true });
       return;
     }
@@ -161,10 +165,10 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     if (prevProps.data !== this.props.data) {
       // Cleanup existing observers and listeners
       this.cleanup();
-      
+
       // Reinitialize refs for new data
       this.initializeRefs();
-      
+
       // Reset state
       this.setState({
         visibleItems: new Set(),
@@ -219,7 +223,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       // Create new observer
       this.observer = new IntersectionObserver(
         this.handleIntersection,
-        OBSERVER_CONFIG
+        OBSERVER_CONFIG,
       );
 
       // Observe all items with error handling
@@ -231,9 +235,13 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
             observedCount++;
           } catch (err) {
             // Edge case: Handle individual observe errors
-            if (process.env.NODE_ENV === 'development') {
-              const { logWarn } = require('../../../utils/logger');
-              logWarn(`Failed to observe academic item for key: ${key}`, { err }, "AcademicSection");
+            if (process.env.NODE_ENV === "development") {
+              const { logWarn } = require("../../../utils/logger");
+              logWarn(
+                `Failed to observe academic item for key: ${key}`,
+                { err },
+                "AcademicSection",
+              );
             }
           }
         }
@@ -252,11 +260,15 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       }
     } catch (error) {
       // Enhanced error handling
-      if (process.env.NODE_ENV === 'development') {
-        const { logError } = require('../../../utils/logger');
-        logError("Error initializing IntersectionObserver", error, "AcademicSection");
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require("../../../utils/logger");
+        logError(
+          "Error initializing IntersectionObserver",
+          error,
+          "AcademicSection",
+        );
       }
-      
+
       // Fallback: show all items
       const allKeys = Array.from(this.itemRefs.keys());
       this.setState({
@@ -282,12 +294,12 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
         const updated = new Set(prevState.visibleItems);
         const { data } = this.props;
         let currentVisibleIndex = prevState.currentVisibleIndex;
-        
+
         if (entry.isIntersecting) {
           updated.add(key);
-          
+
           // Update current visible index
-          const itemIndex = data.findIndex(item => item.key === key);
+          const itemIndex = data.findIndex((item) => item.key === key);
           if (itemIndex > currentVisibleIndex) {
             currentVisibleIndex = itemIndex;
           }
@@ -298,7 +310,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
           }
         }
 
-        return { 
+        return {
           visibleItems: updated,
           currentVisibleIndex,
         };
@@ -312,9 +324,11 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    */
   private setupScrollListener(): void {
     if (typeof window === "undefined") return;
-    
+
     this.lastScrollY = window.scrollY;
-    window.addEventListener("scroll", this.handleScrollThrottled, { passive: true });
+    window.addEventListener("scroll", this.handleScrollThrottled, {
+      passive: true,
+    });
   }
 
   /**
@@ -341,11 +355,11 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
     const currentY = window.scrollY;
     const direction = currentY > this.lastScrollY ? "down" : "up";
-    
+
     if (direction !== this.state.scrollDirection) {
       this.setState({ scrollDirection: direction });
     }
-    
+
     this.lastScrollY = currentY;
   };
 
@@ -424,7 +438,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
     // Edge case: Handle missing ref
     if (!refObj) {
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === "development") {
         // Missing ref is not critical, skip logging
       }
     }
@@ -479,12 +493,16 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     }
 
     return (
-      <div 
-        className="academic-items-grid" 
+      <div
+        className="academic-items-grid"
         ref={this.containerRef}
-        role="list" 
+        role="list"
         aria-label="Academic background timeline"
-        style={{ '--academic-item-count': renderedItems.length } as React.CSSProperties}
+        style={
+          {
+            "--academic-item-count": renderedItems.length,
+          } as React.CSSProperties
+        }
       >
         <AcademicTimeline
           itemCount={renderedItems.length}
@@ -503,14 +521,14 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Edge case: No data
     if (!this.validateData()) {
       return (
-        <Card id="academic-section" title="Academic Background" variant="default">
+        <Card id="academic" title="Academic Background" variant="default">
           {this.renderEmptyState()}
         </Card>
       );
     }
 
     return (
-      <Card id="academic-section" title="Academic Background" variant="default">
+      <Card id="academic" title="Academic Background" variant="default">
         {this.renderItems()}
       </Card>
     );

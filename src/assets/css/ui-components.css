@@ -13,7 +13,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Empty State Component - Extends Core Component
@@ -33,14 +33,17 @@
   font-size: 4rem;
   margin-bottom: 1.5rem;
   opacity: 0.7;
-  animation: emptyStatePulse var(--duration-base) var(--easing-ease-in-out) infinite;
+  animation: empty-state-pulse var(--duration-base) var(--easing-ease-in-out)
+    infinite;
 }
 
-@keyframes emptyStatePulse {
-  0%, 100% {
+@keyframes empty-state-pulse {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.7;
   }
+
   50% {
     transform: scale(1.05);
     opacity: 0.9;
@@ -48,17 +51,17 @@
 }
 
 .empty-state-title {
-  margin: 0 0 1rem 0;
+  margin: 0 0 1rem;
+  color: var(--color-text-heading);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-text-heading);
   font-family: var(--font-main);
 }
 
 .empty-state-message {
   margin: 0;
-  font-size: 1rem;
   color: var(--color-text-subtle);
+  font-size: 1rem;
   line-height: 1.6;
   max-width: 500px;
   font-family: var(--font-main);
@@ -109,7 +112,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .empty-state {
     padding: 2rem 1.5rem;
     min-height: 180px;
@@ -144,7 +147,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .empty-state {
     padding: 1.5rem 1rem;
     min-height: 150px;
@@ -182,4 +185,3 @@
     color: var(--color-text-subtle);
   }
 }
-

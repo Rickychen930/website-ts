@@ -1,42 +1,45 @@
 /**
  * Controllers Index
  * Centralized export for all controllers
- * 
+ *
  * Usage:
  * import { AboutMeController, BaseController } from '@/controllers';
  * import { MainPageController } from '@/controllers';
  */
 
 // Base Controller
-export { BaseController, IBaseController } from './base-controller';
-import { BaseController } from './base-controller';
+import { BaseController } from "./base-controller";
+import { AboutMeController } from "./about-me-controller";
+import { AcademicController } from "./academic-controller";
+import { TechnicalSkillsController } from "./technical-skills-controller";
+import { ContactController } from "./contact-controller";
+import { CertificationController } from "./certification-controller";
+import { HonorsController } from "./honors-controller";
+import { LanguageController } from "./language-controller";
+import { SoftSkillsController } from "./soft-skills-controller";
+import { WorkExperienceController } from "./work-experience-controller";
+import { ProjectController } from "./project-controller";
+export { BaseController } from "./base-controller";
+export type { IBaseController } from "./base-controller";
 
 // Section Controllers
-export { AboutMeController } from './about-me-controller';
-import { AboutMeController } from './about-me-controller';
-export { AcademicController } from './academic-controller';
-import { AcademicController } from './academic-controller';
-export { TechnicalSkillsController } from './technical-skills-controller';
-import { TechnicalSkillsController } from './technical-skills-controller';
-export { ContactController } from './contact-controller';
-import { ContactController } from './contact-controller';
-export { CertificationController } from './certification-controller';
-import { CertificationController } from './certification-controller';
-export { HonorsController } from './honors-controller';
-import { HonorsController } from './honors-controller';
-export { LanguageController } from './language-controller';
-import { LanguageController } from './language-controller';
-export { SoftSkillsController } from './soft-skills-controller';
-import { SoftSkillsController } from './soft-skills-controller';
-export { WorkExperienceController } from './work-experience-controller';
-import { WorkExperienceController } from './work-experience-controller';
-export { ProjectController } from './project-controller';
-import { ProjectController } from './project-controller';
+export { AboutMeController } from "./about-me-controller";
+export { AcademicController } from "./academic-controller";
+export { TechnicalSkillsController } from "./technical-skills-controller";
+export { ContactController } from "./contact-controller";
+export { CertificationController } from "./certification-controller";
+export { HonorsController } from "./honors-controller";
+export { LanguageController } from "./language-controller";
+export { SoftSkillsController } from "./soft-skills-controller";
+export { WorkExperienceController } from "./work-experience-controller";
+export { ProjectController } from "./project-controller";
+// TestimonialsController exported but not imported to avoid unused warning
+export { TestimonialsController } from "./testimonials-controller";
 
 // Page Controllers
-export { MainPageController } from './main-page-controller';
-export { FooterController } from './footer-controller';
-export { default as NavbarController } from './navbar-controller';
+export { MainPageController } from "./main-page-controller";
+export { FooterController } from "./footer-controller";
+export { default as NavbarController } from "./navbar-controller";
 
 /**
  * Controller Factory (Optional)
@@ -88,4 +91,3 @@ export class ControllerFactory {
     };
   }
 }
-

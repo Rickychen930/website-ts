@@ -16,6 +16,7 @@ scp scripts/nginx-check-and-fix.sh ubuntu@rickychen930.cloud:/home/ubuntu/websit
 ```
 
 Setelah upload, set permission:
+
 ```bash
 ssh USER@HOST "chmod +x /path/to/website-ts/scripts/nginx-check-and-fix.sh"
 ```
@@ -23,11 +24,13 @@ ssh USER@HOST "chmod +x /path/to/website-ts/scripts/nginx-check-and-fix.sh"
 ## Cara 2: Upload Semua Script (Recommended)
 
 Edit file `scripts/upload-to-server.sh` dulu:
+
 ```bash
 nano scripts/upload-to-server.sh
 ```
 
 Update baris 10-12:
+
 ```bash
 SERVER_USER="root"  # atau "ubuntu"
 SERVER_HOST="rickychen930.cloud"  # atau IP address
@@ -35,6 +38,7 @@ SERVER_PATH="/root/website-ts"  # atau /home/ubuntu/website-ts
 ```
 
 Kemudian jalankan:
+
 ```bash
 bash scripts/upload-to-server.sh
 ```
@@ -42,6 +46,7 @@ bash scripts/upload-to-server.sh
 ## Cara 3: Manual Upload via SSH
 
 1. **Login ke server:**
+
    ```bash
    ssh root@rickychen930.cloud
    # atau
@@ -49,6 +54,7 @@ bash scripts/upload-to-server.sh
    ```
 
 2. **Clone/pull project terbaru (jika menggunakan git):**
+
    ```bash
    cd /root/website-ts  # atau /home/ubuntu/website-ts
    git pull origin main
@@ -63,6 +69,7 @@ bash scripts/upload-to-server.sh
 ## Setelah Upload
 
 Jalankan di server:
+
 ```bash
 # Login ke server
 ssh root@rickychen930.cloud
@@ -77,16 +84,18 @@ sudo bash scripts/nginx-check-and-fix.sh
 ## Troubleshooting
 
 ### Error: "Could not resolve hostname"
+
 - Pastikan hostname atau IP address benar
 - Cek koneksi internet
 - Coba dengan IP address langsung: `scp ... root@123.456.789.0:/path/...`
 
 ### Error: "Permission denied"
+
 - Pastikan user memiliki akses ke server
 - Cek SSH key sudah ter-setup
 - Coba dengan password: `scp -o PreferredAuthentications=password ...`
 
 ### Error: "No such file or directory"
+
 - Pastikan folder `scripts/` sudah ada di server
 - Buat folder dulu: `ssh USER@HOST "mkdir -p /path/to/website-ts/scripts"`
-

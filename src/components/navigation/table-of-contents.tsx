@@ -19,7 +19,10 @@ interface TableOfContentsState {
   sections: ISectionConfig[];
 }
 
-export class TableOfContents extends Component<TableOfContentsProps, TableOfContentsState> {
+export class TableOfContents extends Component<
+  TableOfContentsProps,
+  TableOfContentsState
+> {
   private observer: IntersectionObserver | null = null;
   private sectionRefs = new Map<string, HTMLElement>();
 
@@ -90,7 +93,10 @@ export class TableOfContents extends Component<TableOfContentsProps, TableOfCont
       const element = document.getElementById(section.id);
       if (element) {
         const { offsetTop, offsetHeight } = element;
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        if (
+          scrollPosition >= offsetTop &&
+          scrollPosition < offsetTop + offsetHeight
+        ) {
           this.setState({ activeSection: section.id });
           break;
         }
@@ -101,8 +107,10 @@ export class TableOfContents extends Component<TableOfContentsProps, TableOfCont
   private handleSectionClick = (sectionId: string): void => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      // Use consistent offset with SmoothScrollManager (80px default)
+      const offset = 80;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({
@@ -157,7 +165,9 @@ export class TableOfContents extends Component<TableOfContentsProps, TableOfCont
                 <button
                   className={`toc-link ${activeSection === section.id ? "active" : ""}`}
                   onClick={() => this.handleSectionClick(section.id)}
-                  aria-current={activeSection === section.id ? "true" : undefined}
+                  aria-current={
+                    activeSection === section.id ? "true" : undefined
+                  }
                 >
                   {section.title}
                 </button>
@@ -171,4 +181,3 @@ export class TableOfContents extends Component<TableOfContentsProps, TableOfCont
 }
 
 export default TableOfContents;
-

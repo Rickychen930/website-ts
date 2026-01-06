@@ -1,7 +1,7 @@
 /**
  * Projects Section Component
  * View Layer (MVC Pattern)
- * 
+ *
  * Features:
  * - Professional, Luxury, Clean Design
  * - Performance Optimized (throttled scroll, optimized observers, memoization)
@@ -9,7 +9,7 @@
  * - Comprehensive Edge Case Handling
  * - Clean UI/UX with smooth animations
  * - Accessibility Support
- * 
+ *
  * Principles Applied:
  * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
  * - DRY (Don't Repeat Yourself)
@@ -150,16 +150,22 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         projects = data as IProject[];
       } else {
         // Convert from legacy format
-        projects = this.controller.convertFromLegacy(data as LegacyProjectItem[]);
+        projects = this.controller.convertFromLegacy(
+          data as LegacyProjectItem[],
+        );
       }
 
       // Validate projects
       const validation = this.controller.validate(projects);
       if (!validation.isValid) {
         // Log validation errors (development only)
-        if (process.env.NODE_ENV === 'development') {
-          const { logWarn } = require('../../../utils/logger');
-          logWarn("Project validation errors", { errors: validation.errors }, "ProjectsSection");
+        if (process.env.NODE_ENV === "development") {
+          const { logWarn } = require("../../../utils/logger");
+          logWarn(
+            "Project validation errors",
+            { errors: validation.errors },
+            "ProjectsSection",
+          );
         }
         // Continue with projects anyway, but log errors
       }
@@ -167,16 +173,17 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       // Sort projects (featured first, then by date)
       projects = this.controller.getAllProjects(projects);
 
-      this.setState({ 
-        projects, 
+      this.setState({
+        projects,
         filteredProjects: projects,
-        isInitialized: true 
+        isInitialized: true,
       });
     } catch (error) {
-      const { logError } = require('../../../utils/logger');
+      const { logError } = require("../../../utils/logger");
       logError("Error processing project data", error, "ProjectsSection");
       this.setState({
-        error: error instanceof Error ? error.message : "Failed to process projects",
+        error:
+          error instanceof Error ? error.message : "Failed to process projects",
         projects: [],
         filteredProjects: [],
         isInitialized: true,
@@ -215,7 +222,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     try {
       this.observer = new IntersectionObserver(
         this.handleIntersection.bind(this),
-        OBSERVER_CONFIG
+        OBSERVER_CONFIG,
       );
 
       // Observe all project cards
@@ -225,7 +232,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
           this.observer?.observe(card);
         } catch (err) {
           if (process.env.NODE_ENV === "development") {
-            const { logWarn } = require('../../../utils/logger');
+            const { logWarn } = require("../../../utils/logger");
             logWarn("Failed to observe project card", err, "ProjectsSection");
           }
         }
@@ -234,8 +241,12 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       this.setState({ isInitialized: true });
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../../utils/logger');
-        logError("Error initializing IntersectionObserver", error, "ProjectsSection");
+        const { logError } = require("../../../utils/logger");
+        logError(
+          "Error initializing IntersectionObserver",
+          error,
+          "ProjectsSection",
+        );
       }
 
       // Fallback: show all items
@@ -323,7 +334,9 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
   private renderEmptyState(): ReactNode {
     return (
       <div className="projects-empty-state" role="status" aria-live="polite">
-        <div className="projects-empty-icon" aria-hidden="true">🚀</div>
+        <div className="projects-empty-icon" aria-hidden="true">
+          🚀
+        </div>
         <h3 className="projects-empty-title">No Projects Yet</h3>
         <p className="projects-empty-text">
           Projects will appear here once they are added to your profile.
@@ -341,35 +354,31 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
 
     // Edge case: Empty data
     if (!projects || projects.length === 0) {
-      return (
-        <Card id="projects-section">
-          {this.renderEmptyState()}
-        </Card>
-      );
+      return <Card id="projects">{this.renderEmptyState()}</Card>;
     }
 
     // Edge case: Error state (but don't show error, just fallback gracefully)
     if (error) {
       // Don't show error state, just render empty state for better UX
       if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../../utils/logger');
+        const { logError } = require("../../../utils/logger");
         logError("Projects section error", error, "ProjectsSection");
       }
-      return (
-        <Card id="projects-section">
-          {this.renderEmptyState()}
-        </Card>
-      );
+      return <Card id="projects">{this.renderEmptyState()}</Card>;
     }
 
     return (
-      <Card id="projects-section" title="Projects">
+      <Card id="projects" title="Projects">
         <ProjectFilters
           projects={projects}
           onFilterChange={this.handleFilterChange}
         />
         <ProjectGrid
-          projects={this.state.filteredProjects.length > 0 ? this.state.filteredProjects : projects}
+          projects={
+            this.state.filteredProjects.length > 0
+              ? this.state.filteredProjects
+              : projects
+          }
           visibleProjects={this.state.visibleProjects}
           onVisibilityChange={this.handleVisibilityChange}
           onLinkClick={this.handleLinkClick}

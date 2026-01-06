@@ -492,7 +492,10 @@
 }
 
 .transition-colors {
-  transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .transition-transform {
@@ -506,27 +509,27 @@
 /* ============================================
    Responsive Utilities
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .hidden-mobile {
     display: none;
   }
-  
+
   .block-mobile {
     display: block;
   }
-  
+
   .flex-mobile {
     display: flex;
   }
-  
+
   .flex-column-mobile {
     flex-direction: column;
   }
-  
+
   .text-center-mobile {
     text-align: center;
   }
-  
+
   .w-full-mobile {
     width: 100%;
   }
@@ -539,10 +542,10 @@
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
+  padding: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
 }
@@ -564,4 +567,3 @@
     transition: none !important;
   }
 }
-

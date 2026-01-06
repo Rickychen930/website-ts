@@ -4,6 +4,7 @@
  * Follows DRY principle
  */
 
-export { AcademicCard, IAcademicCardProps } from "./AcademicCard";
-export { AcademicTimeline, IAcademicTimelineProps } from "./AcademicTimeline";
-
+export { AcademicCard } from "./AcademicCard";
+export type { IAcademicCardProps } from "./AcademicCard";
+export { AcademicTimeline } from "./AcademicTimeline";
+export type { IAcademicTimelineProps } from "./AcademicTimeline";

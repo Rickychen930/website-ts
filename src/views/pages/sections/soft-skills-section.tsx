@@ -1,13 +1,13 @@
 /**
  * Soft Skills Section Component
- * 
+ *
  * Main section component following MVC, OOP, SOLID, DRY, KISS principles
- * 
+ *
  * Architecture:
  * - Model: SoftSkillsModel (data validation)
  * - View: SoftSkillCard, SoftSkillGrid, SoftSkillIcon (reusable components)
  * - Controller: SoftSkillsController (business logic)
- * 
+ *
  * Features:
  * - Professional, luxury, clean design
  * - Fully responsive (mobile, tablet, desktop, landscape)
@@ -15,7 +15,7 @@
  * - Accessibility support (ARIA labels, semantic HTML)
  * - Smooth animations with staggered effects
  * - Comprehensive edge case handling
- * 
+ *
  * Principles Applied:
  * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)
  * - DRY (Don't Repeat Yourself)
@@ -27,7 +27,10 @@ import React, { Component, ReactNode } from "react";
 import { Card } from "../../components/common";
 import { SoftSkillGrid } from "../../components/soft-skills";
 import { SoftSkillsController } from "../../../controllers/soft-skills-controller";
-import { SoftSkillsModel, SoftSkillItem } from "../../../models/soft-skills-model";
+import {
+  SoftSkillsModel,
+  SoftSkillItem,
+} from "../../../models/soft-skills-model";
 import { EmptyState } from "../../components/ui";
 import "../../../assets/css/soft-skills-section.css";
 
@@ -59,7 +62,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
   constructor(props: SoftSkillsProps) {
     super(props);
     this.controller = new SoftSkillsController();
-    
+
     this.state = {
       validatedSkills: [],
       visibleItems: new Set(),
@@ -93,7 +96,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
   private initializeData(): void {
     try {
       const validatedSkills = this.controller.getValidatedSkills(
-        this.props.data
+        this.props.data,
       );
 
       // Validate using model
@@ -109,12 +112,12 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
       }
 
       this.setState({
-        validatedSkills: validationResult.validItems,
+        validatedSkills: [...validationResult.validItems],
         error: null,
         isInitialized: true,
       });
     } catch (error) {
-      const { logError } = require('../../../utils/logger');
+      const { logError } = require("../../../utils/logger");
       logError("Error initializing soft skills", error, "SoftSkillsSection");
       this.setState({
         error: error instanceof Error ? error.message : "Unknown error",
@@ -167,7 +170,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
     if (!isInitialized) {
       return (
         <Card
-          id="soft-skills-section"
+          id="soft-skills"
           variant="default"
           ariaLabel="Soft skills section"
         >
@@ -182,7 +185,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
     if (error && validatedSkills.length === 0) {
       return (
         <Card
-          id="soft-skills-section"
+          id="soft-skills"
           variant="default"
           ariaLabel="Soft skills section"
         >
@@ -195,7 +198,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
     if (!validatedSkills || validatedSkills.length === 0) {
       return (
         <Card
-          id="soft-skills-section"
+          id="soft-skills"
           title="Soft Skills"
           variant="default"
           ariaLabel="Soft skills section"
@@ -212,7 +215,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
 
     return (
       <Card
-        id="soft-skills-section"
+        id="soft-skills"
         title="Soft Skills"
         variant="default"
         ariaLabel="Soft skills section"

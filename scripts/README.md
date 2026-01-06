@@ -27,11 +27,13 @@ npm run css:check:file src/assets/css/my-file.css
 ```
 
 **Checks for**:
+
 - Hardcoded colors (should use CSS variables)
 - Hardcoded spacing (should use CSS variables)
 - Non-BEM naming (should follow BEM convention)
 
 **Example Output**:
+
 ```
 🔍 Checking CSS architecture...
 
@@ -107,6 +109,7 @@ fi
 ### Script not found
 
 Make sure scripts are executable:
+
 ```bash
 chmod +x scripts/*.js
 ```
@@ -114,6 +117,7 @@ chmod +x scripts/*.js
 ### glob not found
 
 Install glob if needed:
+
 ```bash
 npm install --save-dev glob
 ```
@@ -121,6 +125,7 @@ npm install --save-dev glob
 ### Script fails
 
 Check Node.js version (requires Node 12+):
+
 ```bash
 node --version
 ```
@@ -137,4 +142,3 @@ When adding new scripts:
 ---
 
 **Happy coding!** 🎉
-

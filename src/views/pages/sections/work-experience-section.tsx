@@ -1,7 +1,7 @@
 /**
  * Work Experience Section Component
  * View Layer (MVC Pattern)
- * 
+ *
  * Features:
  * - Professional, Luxury, Clean Design
  * - Performance Optimized (IntersectionObserver, memoization)
@@ -10,7 +10,7 @@
  * - Clean UI/UX with smooth animations
  * - Accessibility Support
  * - Showcases Software Engineering Skills
- * 
+ *
  * Principles Applied:
  * - MVC: Separated Controller, Model, and View
  * - OOP: Class-based component with encapsulation
@@ -27,7 +27,10 @@
 
 import React, { Component, ReactNode, createRef, RefObject } from "react";
 import { WorkExperienceController } from "../../../controllers/work-experience-controller";
-import { WorkExperienceModel, IWorkExperienceItem } from "../../../models/work-experience-model";
+import {
+  WorkExperienceModel,
+  IWorkExperienceItem,
+} from "../../../models/work-experience-model";
 import { WorkExperienceTimeline } from "../../components/work-experience";
 import { EmptyState } from "../../components/ui";
 import { Card } from "../../components/common";
@@ -75,7 +78,7 @@ const OBSERVER_CONFIG: IntersectionObserverInit = {
 
 /**
  * Work Experience Section Component
- * 
+ *
  * Architecture:
  * - Uses IntersectionObserver for performance-optimized scroll animations
  * - Implements staggered animations for elegant visual flow
@@ -83,12 +86,16 @@ const OBSERVER_CONFIG: IntersectionObserverInit = {
  * - Fully responsive with mobile-first approach
  * - MVC Pattern: Separates concerns between Controller, Model, and View
  */
-class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienceState> {
+class WorkExperienceSection extends Component<
+  WorkExperienceProps,
+  WorkExperienceState
+> {
   private readonly controller: WorkExperienceController;
   private observer: IntersectionObserver | null = null;
   private isMounted: boolean = false;
-  private containerRef: RefObject<HTMLDivElement> = createRef<HTMLDivElement>();
-  private itemRefs = new Map<string, RefObject<HTMLDivElement>>();
+  private containerRef: RefObject<HTMLDivElement | null> =
+    createRef<HTMLDivElement>();
+  private itemRefs = new Map<string, RefObject<HTMLDivElement | null>>();
 
   constructor(props: WorkExperienceProps) {
     super(props);
@@ -175,12 +182,14 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
       data.forEach((item) => {
         // Normalize item
         const normalized = WorkExperienceModel.normalizeItem(item);
-        
+
         if (WorkExperienceModel.isValidItem(normalized)) {
           experiences.push(normalized);
-          
+
           // Calculate duration
-          const duration = this.controller.getFormattedDuration(normalized.period);
+          const duration = this.controller.getFormattedDuration(
+            normalized.period,
+          );
           if (duration) {
             durations.set(normalized.key, duration);
           }
@@ -202,16 +211,23 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         error: null,
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to process work experience data";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to process work experience data";
       this.setState({
         error: errorMessage,
         experiences: [],
         durations: new Map(),
       });
 
-      if (process.env.NODE_ENV === 'development') {
-        const { logError } = require('../../../utils/logger');
-        logError("Error processing work experience data", error, "WorkExperienceSection");
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require("../../../utils/logger");
+        logError(
+          "Error processing work experience data",
+          error,
+          "WorkExperienceSection",
+        );
       }
     }
   }
@@ -229,7 +245,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
     // Show all items immediately for better UX
     const allKeys = this.state.experiences.map((item) => item.key);
-    this.setState({ 
+    this.setState({
       visibleItems: new Set(allKeys),
       isInitialized: true,
     });
@@ -247,7 +263,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
 
       this.observer = new IntersectionObserver(
         this.handleIntersection.bind(this),
-        OBSERVER_CONFIG
+        OBSERVER_CONFIG,
       );
 
       // Use querySelector to find actual DOM elements (like ProjectsSection does)
@@ -255,7 +271,9 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
       const observeElements = (): number => {
         if (!this.isMounted || !this.observer) return 0;
 
-        const cards = this.containerRef.current?.querySelectorAll(".work-experience-card[data-key]");
+        const cards = this.containerRef.current?.querySelectorAll(
+          ".work-experience-card[data-key]",
+        );
         let observedCount = 0;
 
         if (cards && cards.length > 0) {
@@ -264,9 +282,13 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
               this.observer?.observe(card);
               observedCount++;
             } catch (err) {
-              if (process.env.NODE_ENV === 'development') {
-                const { logWarn } = require('../../../utils/logger');
-                logWarn("Failed to observe work experience card", err, "WorkExperienceSection");
+              if (process.env.NODE_ENV === "development") {
+                const { logWarn } = require("../../../utils/logger");
+                logWarn(
+                  "Failed to observe work experience card",
+                  err,
+                  "WorkExperienceSection",
+                );
               }
             }
           });
@@ -282,14 +304,18 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
         observeElements();
       }, 50);
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        const { logError } = require('../../../utils/logger');
-        logError("Error initializing IntersectionObserver", error, "WorkExperienceSection");
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require("../../../utils/logger");
+        logError(
+          "Error initializing IntersectionObserver",
+          error,
+          "WorkExperienceSection",
+        );
       }
-      
+
       // Fallback: show all items immediately
       const allKeys = this.state.experiences.map((item) => item.key);
-      this.setState({ 
+      this.setState({
         visibleItems: new Set(allKeys),
         isInitialized: true,
       });
@@ -356,7 +382,9 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     const { error } = this.state;
     return (
       <div className="work-experience-error" role="alert">
-        <div className="work-experience-error-icon" aria-hidden="true">⚠️</div>
+        <div className="work-experience-error-icon" aria-hidden="true">
+          ⚠️
+        </div>
         <p className="work-experience-error-text">
           {error || "Failed to load work experience data"}
         </p>
@@ -369,12 +397,13 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
    * Enhanced with filtering for null items and consistent Card wrapper
    */
   public render(): ReactNode {
-    const { experiences, visibleItems, durations, error, isInitialized } = this.state;
+    const { experiences, visibleItems, durations, error, isInitialized } =
+      this.state;
 
     // Edge case: Handle error state
     if (error) {
       return (
-        <Card id="work-experience-section" title="Work Experience">
+        <Card id="experience" title="Work Experience">
           {this.renderErrorState()}
         </Card>
       );
@@ -383,7 +412,7 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     // Edge case: Handle empty or undefined data
     if (!experiences || experiences.length === 0) {
       return (
-        <Card id="work-experience-section" title="Work Experience">
+        <Card id="experience" title="Work Experience">
           {this.renderEmptyState()}
         </Card>
       );
@@ -392,14 +421,14 @@ class WorkExperienceSection extends Component<WorkExperienceProps, WorkExperienc
     // Wait for observer initialization
     if (!isInitialized) {
       return (
-        <Card id="work-experience-section" title="Work Experience">
+        <Card id="experience" title="Work Experience">
           <div className="work-experience-loading">Loading...</div>
         </Card>
       );
     }
 
     return (
-      <Card id="work-experience-section" title="Work Experience">
+      <Card id="experience" title="Work Experience">
         <div ref={this.containerRef}>
           <WorkExperienceTimeline
             items={experiences}

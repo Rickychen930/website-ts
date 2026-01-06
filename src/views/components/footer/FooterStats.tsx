@@ -1,7 +1,7 @@
 /**
  * Footer Stats Component
  * Displays software engineering achievements and statistics
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): Only handles stats display
  * - Open/Closed Principle (OCP): Extensible via props
@@ -33,9 +33,16 @@ export class FooterStats extends PureComponent<FooterStatsProps> {
   /**
    * Render single stat item
    */
-  private renderStatItem(stat: FooterStatsProps["stats"][0], index: number): ReactNode {
+  private renderStatItem(
+    stat: NonNullable<FooterStatsProps["stats"]>[0],
+    index: number,
+  ): ReactNode {
     return (
-      <div key={stat.key} className="footer-stat-item" style={{ animationDelay: `${index * 0.1}s` }}>
+      <div
+        key={stat.key}
+        className="footer-stat-item"
+        style={{ animationDelay: `${index * 0.1}s` }}
+      >
         <div className="footer-stat-icon">{stat.icon || "📊"}</div>
         <div className="footer-stat-content">
           <div className="footer-stat-value">{stat.value}</div>
@@ -67,4 +74,3 @@ export class FooterStats extends PureComponent<FooterStatsProps> {
 }
 
 export default FooterStats;
-

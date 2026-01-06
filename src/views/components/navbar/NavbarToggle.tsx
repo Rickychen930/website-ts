@@ -1,9 +1,9 @@
 /**
  * NavbarToggle Component
- * 
+ *
  * Component-Based Architecture - Single Responsibility Principle (SRP)
  * Handles mobile menu toggle button
- * 
+ *
  * Principles:
  * - OOP: Encapsulated component with clear interface
  * - SOLID: Single responsibility - only handles toggle button
@@ -15,7 +15,7 @@ import React, { ReactNode, createRef, RefObject } from "react";
 export interface NavbarToggleProps {
   isOpen: boolean;
   onClick: () => void;
-  toggleRef?: RefObject<HTMLButtonElement>;
+  toggleRef?: RefObject<HTMLButtonElement | null>;
 }
 
 class NavbarToggle extends React.Component<NavbarToggleProps> {
@@ -44,4 +44,3 @@ class NavbarToggle extends React.Component<NavbarToggleProps> {
 }
 
 export default NavbarToggle;
-

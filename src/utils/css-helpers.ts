@@ -1,15 +1,15 @@
 /**
  * CSS Helpers - Utility Functions for CSS Classes
  * Professional, Code-Based, DRY, KISS
- * 
+ *
  * Architecture Principles:
  * - DRY: Reusable class name builders
  * - KISS: Simple, clear functions
  * - Type-safe: TypeScript support
- * 
+ *
  * Usage:
  * import { cn, btnClass, inputClass } from '@/utils/css-helpers';
- * 
+ *
  * <button className={btnClass('primary', 'large')}>Click</button>
  * <div className={cn('card', 'card--elevated', isActive && 'card--active')}>
  */
@@ -18,8 +18,10 @@
  * Combine class names (similar to clsx/classnames)
  * Filters out falsy values
  */
-export function cn(...classes: (string | boolean | undefined | null)[]): string {
-  return classes.filter(Boolean).join(' ');
+export function cn(
+  ...classes: (string | boolean | undefined | null)[]
+): string {
+  return classes.filter(Boolean).join(" ");
 }
 
 /**
@@ -29,14 +31,14 @@ export function cn(...classes: (string | boolean | undefined | null)[]): string 
  * @param additional - Additional classes
  */
 export function btnClass(
-  variant: 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost' = 'primary',
-  size: 'small' | 'default' | 'large' | 'icon' = 'default',
-  additional?: string
+  variant: "primary" | "secondary" | "danger" | "outline" | "ghost" = "primary",
+  size: "small" | "default" | "large" | "icon" = "default",
+  additional?: string,
 ): string {
-  const base = 'btn';
+  const base = "btn";
   const variantClass = `btn--${variant}`;
-  const sizeClass = size !== 'default' ? `btn--${size}` : '';
-  
+  const sizeClass = size !== "default" ? `btn--${size}` : "";
+
   return cn(base, variantClass, sizeClass, additional);
 }
 
@@ -47,14 +49,14 @@ export function btnClass(
  * @param additional - Additional classes
  */
 export function inputClass(
-  state: 'normal' | 'error' | 'success' = 'normal',
-  size: 'small' | 'default' | 'large' = 'default',
-  additional?: string
+  state: "normal" | "error" | "success" = "normal",
+  size: "small" | "default" | "large" = "default",
+  additional?: string,
 ): string {
-  const base = 'input';
-  const stateClass = state !== 'normal' ? `input--${state}` : '';
-  const sizeClass = size !== 'default' ? `input--${size}` : '';
-  
+  const base = "input";
+  const stateClass = state !== "normal" ? `input--${state}` : "";
+  const sizeClass = size !== "default" ? `input--${size}` : "";
+
   return cn(base, stateClass, sizeClass, additional);
 }
 
@@ -64,12 +66,12 @@ export function inputClass(
  * @param additional - Additional classes
  */
 export function cardClass(
-  variant: 'default' | 'elevated' | 'outlined' | 'minimal' = 'default',
-  additional?: string
+  variant: "default" | "elevated" | "outlined" | "minimal" = "default",
+  additional?: string,
 ): string {
-  const base = 'card';
-  const variantClass = variant !== 'default' ? `card--${variant}` : '';
-  
+  const base = "card";
+  const variantClass = variant !== "default" ? `card--${variant}` : "";
+
   return cn(base, variantClass, additional);
 }
 
@@ -80,13 +82,13 @@ export function cardClass(
  * @param additional - Additional classes
  */
 export function formClass(
-  element: 'form' | 'group' | 'label' | 'actions',
+  element: "form" | "group" | "label" | "actions",
   modifier?: string,
-  additional?: string
+  additional?: string,
 ): string {
   const base = `form__${element}`;
-  const modifierClass = modifier ? `${base}--${modifier}` : '';
-  
+  const modifierClass = modifier ? `${base}--${modifier}` : "";
+
   return cn(base, modifierClass, additional);
 }
 
@@ -96,12 +98,12 @@ export function formClass(
  * @param additional - Additional classes
  */
 export function emptyStateClass(
-  size: 'small' | 'default' | 'large' = 'default',
-  additional?: string
+  size: "small" | "default" | "large" = "default",
+  additional?: string,
 ): string {
-  const base = 'empty-state';
-  const sizeClass = size !== 'default' ? `${base}--${size}` : '';
-  
+  const base = "empty-state";
+  const sizeClass = size !== "default" ? `${base}--${size}` : "";
+
   return cn(base, sizeClass, additional);
 }
 
@@ -111,12 +113,12 @@ export function emptyStateClass(
  * @param additional - Additional classes
  */
 export function loadingClass(
-  size: 'small' | 'default' | 'large' | 'inline' = 'default',
-  additional?: string
+  size: "small" | "default" | "large" | "inline" = "default",
+  additional?: string,
 ): string {
-  const base = 'loading';
-  const sizeClass = size !== 'default' ? `${base}--${size}` : '';
-  
+  const base = "loading";
+  const sizeClass = size !== "default" ? `${base}--${size}` : "";
+
   return cn(base, sizeClass, additional);
 }
 
@@ -129,7 +131,7 @@ export function loadingClass(
 export function bemClass(
   block: string,
   element?: string,
-  modifier?: string
+  modifier?: string,
 ): string {
   if (element && modifier) {
     return `${block}__${element}--${modifier}`;
@@ -156,4 +158,3 @@ export const CSSHelpers = {
   loadingClass,
   bemClass,
 };
-

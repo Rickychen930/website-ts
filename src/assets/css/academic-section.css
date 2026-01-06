@@ -20,7 +20,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Component-Specific Variables (DRY)
@@ -35,18 +35,18 @@
   --academic-spacing-lg: var(--spacing-lg);
   --academic-spacing-xl: var(--spacing-xl);
   --academic-spacing-xxl: var(--spacing-3xl);
-  
+
   /* Colors - Uses core color system */
   --academic-color-primary: var(--color-accent-primary);
   --academic-color-primary-light: var(--color-accent-light);
   --academic-color-primary-dark: var(--color-accent-dark);
   --academic-color-secondary: var(--color-accent-alt);
   --academic-color-accent: var(--color-accent-hover);
-  
+
   /* Shadows - Uses core shadow system */
   --academic-shadow-card: var(--shadow-card);
   --academic-shadow-card-hover: var(--shadow-card-hover);
-  
+
   /* Transitions - Uses core transition system */
   --academic-transition-smooth: var(--transition-smooth);
   --academic-transition-bounce: var(--transition-bounce);
@@ -66,26 +66,24 @@
    ============================================ */
 .academic-items-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--academic-spacing-xl, 3rem);
-  width: 100%;
   position: relative;
   z-index: calc(var(--z-base) + 1);
+  width: 100%;
   padding: var(--academic-spacing-lg, 2rem) 0;
+  grid-template-columns: 1fr;
+  gap: var(--academic-spacing-xl, 3rem);
+
   --academic-item-count: 1; /* Will be set dynamically via inline style */
 }
 
 /* Timeline positioned absolutely within grid to align with cards */
 .academic-items-grid > .academic-timeline {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  z-index: 1;
   height: 100%;
   padding: 0;
   pointer-events: none;
-  z-index: 1;
 }
 
 /* Position timeline dots to align with card centers */
@@ -95,74 +93,93 @@
 
 .academic-item-wrapper {
   position: relative;
+  z-index: 2;
   width: 100%;
   transform-style: preserve-3d;
   perspective: 1000px;
-  z-index: 2;
 }
 
 /* Staggered animation delays */
-.academic-item-wrapper:nth-child(1) { animation-delay: 0ms; }
-.academic-item-wrapper:nth-child(2) { animation-delay: 150ms; }
-.academic-item-wrapper:nth-child(3) { animation-delay: 300ms; }
-.academic-item-wrapper:nth-child(4) { animation-delay: 450ms; }
-.academic-item-wrapper:nth-child(5) { animation-delay: 600ms; }
-.academic-item-wrapper:nth-child(n+6) { animation-delay: 750ms; }
+.academic-item-wrapper:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.academic-item-wrapper:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.academic-item-wrapper:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+.academic-item-wrapper:nth-child(4) {
+  animation-delay: 450ms;
+}
+
+.academic-item-wrapper:nth-child(5) {
+  animation-delay: 600ms;
+}
+
+.academic-item-wrapper:nth-child(n + 6) {
+  animation-delay: 750ms;
+}
 
 /* ============================================
    Empty State - Enhanced Design
    ============================================ */
 .academic-empty-state {
   display: flex;
+  position: relative;
+  padding: var(--academic-spacing-xl, 3rem) var(--academic-spacing-lg, 2rem);
+  border: 1px solid var(--color-accent-alpha-10);
+  background: linear-gradient(
+    135deg,
+    var(--color-white-alpha-95) 0%,
+    var(--color-bg-card-alt) 100%
+  );
+  color: var(--color-text-subtle);
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--academic-spacing-xl, 3rem) var(--academic-spacing-lg, 2rem);
-  text-align: center;
-  color: var(--color-text-subtle);
   min-height: 300px;
-  position: relative;
   overflow: hidden;
   border-radius: 24px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(250, 252, 255, 0.9) 100%
-  );
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.05),
-    0 4px 12px rgba(102, 126, 234, 0.08);
+  box-shadow:
+    0 10px 40px var(--color-black-alpha-05),
+    0 4px 12px var(--color-accent-alpha-08);
 }
 
 .academic-empty-state::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--color-accent-alpha-05) 0%,
+    transparent 70%
+  );
   animation: academic-empty-pulse 3s ease-in-out infinite;
   border-radius: 24px;
 }
 
 .academic-empty-icon {
-  font-size: 5rem;
-  margin-bottom: var(--academic-spacing-lg, 2rem);
-  opacity: 0.7;
-  animation: academic-empty-icon-float 3s ease-in-out infinite;
-  filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.2));
   position: relative;
   z-index: 1;
+  font-size: 5rem;
+  opacity: 0.7;
+  margin-bottom: var(--academic-spacing-lg, 2rem);
+  animation: academic-empty-icon-float 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px var(--color-accent-alpha-20));
 }
 
 .academic-empty-text {
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  margin: 0;
-  color: var(--color-text-subtle);
   position: relative;
   z-index: 1;
+  margin: 0;
+  color: var(--color-text-subtle);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: 500;
 }
 
@@ -175,6 +192,7 @@
     transform: translateY(30px);
     filter: blur(10px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -183,10 +201,12 @@
 }
 
 @keyframes academic-empty-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.6;
     transform: scale(1.1);
@@ -194,12 +214,15 @@
 }
 
 @keyframes academic-empty-icon-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
+
   33% {
     transform: translateY(-10px) rotate(5deg);
   }
+
   66% {
     transform: translateY(10px) rotate(-5deg);
   }
@@ -208,25 +231,25 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (min-width: 1400px) {
+@media screen and (width >= 1400px) {
   .academic-items-grid {
     gap: var(--academic-spacing-xl, 3rem);
     padding: var(--academic-spacing-lg, 2rem) 0;
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (width <= 1200px) {
   /* Container removed - Card component handles styling */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .academic-items-grid {
     gap: var(--academic-spacing-lg, 2rem);
     padding: var(--academic-spacing-md, 1.5rem) 0;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .academic-items-grid {
     gap: var(--academic-spacing-md, 1.5rem);
     padding: var(--academic-spacing-sm, 1rem) 0;
@@ -242,18 +265,18 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .academic-items-grid {
-    gap: var(--academic-spacing-sm, 1rem);
-    padding: var(--academic-spacing-xs, 0.75rem) 0;
     width: 100%;
+    padding: var(--academic-spacing-xs, 0.75rem) 0;
+    gap: var(--academic-spacing-sm, 1rem);
     max-width: 100%;
   }
 
   .academic-empty-state {
+    width: 100%;
     padding: var(--academic-spacing-lg, 2rem) var(--academic-spacing-md, 1.5rem);
     min-height: 250px;
-    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -263,7 +286,7 @@
   }
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (width <= 360px) {
   .academic-empty-state {
     padding: var(--academic-spacing-md, 1.5rem) var(--academic-spacing-sm, 1rem);
     min-height: 200px;
@@ -277,7 +300,7 @@
 /* ============================================
    Landscape Orientation - Mobile/Tablet
    ============================================ */
-@media screen and (orientation: landscape) and (max-width: 768px) {
+@media screen and (orientation: landscape) and (width <= 768px) {
   .academic-items-grid {
     gap: var(--academic-spacing-md, 1.5rem);
   }
@@ -286,7 +309,7 @@
 /* ============================================
    High DPI / Retina Displays
    ============================================ */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
   /* Container removed - Card component handles styling */
 }
 
@@ -312,6 +335,5 @@
 
   .academic-item-wrapper {
     break-inside: avoid;
-    page-break-inside: avoid;
   }
 }

@@ -13,9 +13,10 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ─── Component-Specific Variables (DRY) ─── */
+
 /* Uses core constants as base */
 :root {
   /* Colors - Uses core color system */
@@ -27,15 +28,23 @@
   --language-success: var(--color-success);
   --language-warning: var(--color-warning);
   --language-error: var(--color-error);
-  
+
   /* Gradients - Uses core gradients */
   --language-gradient-primary: var(--gradient-accent-full);
   --language-gradient-accent: var(--gradient-accent);
-  --language-gradient-success: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%);
+  --language-gradient-success: linear-gradient(
+    135deg,
+    var(--color-success) 0%,
+    var(--color-success-dark) 100%
+  );
   --language-gradient-card: var(--gradient-primary);
   --language-gradient-hover: var(--gradient-luxury);
-  --language-gradient-glow: radial-gradient(circle at center, var(--color-info-alpha-15) 0%, transparent 70%);
-  
+  --language-gradient-glow: radial-gradient(
+    circle at center,
+    var(--color-accent-alpha-15) 0%,
+    transparent 70%
+  );
+
   /* Shadows - Uses core shadow system */
   --language-shadow-xs: var(--shadow-xs);
   --language-shadow-sm: var(--shadow-sm);
@@ -44,27 +53,27 @@
   --language-shadow-xl: var(--shadow-xl);
   --language-shadow-glow: var(--shadow-glow);
   --language-shadow-inner: inset 0 2px 4px var(--color-black-alpha-06);
-  
+
   /* Transitions - Uses core transition system */
   --language-transition-fast: var(--transition-fast);
   --language-transition-base: var(--transition-base);
   --language-transition-slow: var(--transition-slow);
   --language-transition-bounce: var(--transition-bounce);
-  
+
   /* Spacing - Uses core spacing system */
   --language-spacing-xs: var(--spacing-xs);
   --language-spacing-sm: var(--spacing-sm);
   --language-spacing-md: var(--spacing-md);
   --language-spacing-lg: var(--spacing-lg);
   --language-spacing-xl: var(--spacing-xl);
-  
+
   /* Border Radius - Uses core radius system */
   --language-radius-sm: var(--radius-md);
   --language-radius-md: var(--radius-lg);
   --language-radius-lg: var(--radius-xl);
   --language-radius-xl: var(--radius-2xl);
   --language-radius-full: var(--radius-full);
-  
+
   /* Typography - Uses core typography system */
   --language-font-weight-normal: 400;
   --language-font-weight-medium: 500;
@@ -80,46 +89,46 @@
 /* ─── Language Grid ─── */
 .language-grid {
   display: grid;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: var(--language-spacing-md);
-  position: relative;
-  padding: 0;
-  margin: 0;
-  width: 100%;
 }
 
 /* ─── Language Card ─── */
 .language-card {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   padding: var(--language-spacing-xl) var(--language-spacing-lg);
+  border: 2px solid var(--color-border-alpha-60);
   background: linear-gradient(
     135deg,
     var(--color-white-alpha-95) 0%,
     var(--color-bg-lighter-alpha-90) 50%,
     var(--color-bg-lighter-alpha-95) 100%
   );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 2px solid var(--color-border-slate-alpha-60);
-  border-radius: var(--language-radius-xl);
-  box-shadow: 
-    var(--language-shadow-sm),
-    inset 0 1px 0 var(--color-white-alpha-80),
-    inset 0 -1px 0 var(--color-black-alpha-05);
+  text-align: center;
   opacity: 0;
-  transform: translateY(40px) scale(0.95) perspective(1000px) rotateX(5deg);
-  filter: blur(8px);
-  transition: 
+  transition:
     opacity var(--language-transition-base),
     transform var(--language-transition-bounce),
     filter var(--language-transition-base),
     box-shadow var(--language-transition-base),
     border-color var(--language-transition-base),
     background var(--language-transition-base);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  border-radius: var(--language-radius-xl);
+  box-shadow:
+    var(--language-shadow-sm),
+    inset 0 1px 0 var(--color-white-alpha-80),
+    inset 0 -1px 0 var(--color-black-alpha-05);
+  transform: translateY(40px) scale(0.95) perspective(1000px) rotateX(5deg);
+  filter: blur(8px);
   will-change: transform, opacity, filter;
   overflow: hidden;
   cursor: default;
@@ -127,7 +136,6 @@
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   min-height: 320px;
   transform-style: preserve-3d;
 }
@@ -137,52 +145,74 @@
   opacity: 1;
   transform: translateY(0) scale(1) perspective(1000px) rotateX(0deg);
   filter: blur(0);
-  animation: languageCardReveal var(--language-transition-bounce) cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: language-card-reveal var(--language-transition-bounce)
+    cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 /* ─── Staggered Animation Delays ─── */
-.language-card-visible:nth-child(1) { animation-delay: 0.05s; }
-.language-card-visible:nth-child(2) { animation-delay: 0.1s; }
-.language-card-visible:nth-child(3) { animation-delay: 0.15s; }
-.language-card-visible:nth-child(4) { animation-delay: 0.2s; }
-.language-card-visible:nth-child(5) { animation-delay: 0.25s; }
-.language-card-visible:nth-child(6) { animation-delay: 0.3s; }
-.language-card-visible:nth-child(n+7) { animation-delay: 0.35s; }
+.language-card-visible:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.language-card-visible:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.language-card-visible:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.language-card-visible:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.language-card-visible:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.language-card-visible:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.language-card-visible:nth-child(n + 7) {
+  animation-delay: 0.35s;
+}
 
 /* ─── Language Card Hover State ─── */
 .language-card-visible:hover,
 .language-card-visible:focus-within {
-  transform: translateY(-16px) scale(1.03) perspective(1000px) rotateX(-2deg) rotateY(2deg);
-  border-color: var(--color-info-alpha-50);
+  transform: translateY(-16px) scale(1.03) perspective(1000px) rotateX(-2deg)
+    rotateY(2deg);
+  border-color: var(--color-accent-alpha-50);
   background: linear-gradient(
     135deg,
     var(--color-white-alpha-98) 0%,
     var(--color-bg-lightest-alpha-95) 50%,
     var(--color-bg-lightest-alpha-98) 100%
   );
-  box-shadow: 
+  box-shadow:
     var(--language-shadow-xl),
-    0 0 0 1px var(--color-info-alpha-15),
-    0 32px 64px var(--color-info-alpha-25),
+    0 0 0 1px var(--color-accent-alpha-15),
+    0 32px 64px var(--color-accent-alpha-25),
     inset 0 1px 0 var(--color-white-alpha-90);
   outline: none;
 }
 
 /* ─── Language Card Inner ─── */
 .language-card-inner {
+  display: flex;
   position: relative;
   z-index: 2;
-  display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   gap: var(--language-spacing-md);
-  width: 100%;
 }
 
 /* ─── Language Card Icon Wrapper ─── */
 .language-card-icon-wrapper {
-  position: relative;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   margin-bottom: var(--language-spacing-xs);
@@ -195,7 +225,7 @@
   justify-content: center;
   position: relative;
   z-index: 2;
-  transition: 
+  transition:
     transform var(--language-transition-base),
     filter var(--language-transition-base);
   filter: drop-shadow(0 4px 8px var(--color-black-alpha-10));
@@ -234,7 +264,7 @@
 
 .language-card-visible:hover .language-icon {
   transform: scale(1.15) rotate(5deg);
-  filter: drop-shadow(0 8px 16px rgba(59, 130, 246, 0.3));
+  filter: drop-shadow(0 8px 16px var(--color-accent-alpha-30));
 }
 
 .language-card-visible:hover .language-icon-emoji {
@@ -252,13 +282,13 @@
 
 /* ─── Language Card Title ─── */
 .language-card-title {
+  margin: 0;
+  padding: 0;
   color: var(--language-primary);
   font-size: 1.5rem;
   font-weight: var(--language-font-weight-bold);
   line-height: 1.3;
-  margin: 0;
-  padding: 0;
-  transition: 
+  transition:
     color var(--language-transition-fast),
     transform var(--language-transition-fast);
   letter-spacing: -0.02em;
@@ -283,26 +313,26 @@
 /* ─── Language Badge ─── */
 .language-badge {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   padding: 0.625rem 1.5rem;
+  border: 2px solid transparent;
   background: var(--language-gradient-accent);
   color: var(--color-text-on-accent);
   font-size: 0.95rem;
   font-weight: var(--language-font-weight-semibold);
-  border-radius: var(--language-radius-full);
-  border: 2px solid transparent;
-  box-shadow: 
-    var(--language-shadow-sm),
-    inset 0 1px 2px rgba(255, 255, 255, 0.2);
-  transition: 
+  transition:
     transform var(--language-transition-fast),
     box-shadow var(--language-transition-fast),
     background var(--language-transition-fast);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--language-radius-full);
+  box-shadow:
+    var(--language-shadow-sm),
+    inset 0 1px 2px var(--color-white-alpha-20);
   overflow: hidden;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 2px var(--color-black-alpha-10);
 }
 
 .language-badge-text {
@@ -317,7 +347,11 @@
   transform: translate(-50%, -50%);
   width: 120%;
   height: 120%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    var(--color-white-alpha-30) 0%,
+    transparent 70%
+  );
   opacity: 0;
   transition: opacity var(--language-transition-base);
   pointer-events: none;
@@ -325,10 +359,10 @@
 
 .language-card-visible:hover .language-badge {
   transform: scale(1.08);
-  box-shadow: 
+  box-shadow:
     var(--language-shadow-md),
-    0 0 16px rgba(59, 130, 246, 0.4),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    0 0 16px var(--color-accent-alpha-40),
+    inset 0 1px 2px var(--color-white-alpha-30);
 }
 
 .language-card-visible:hover .language-badge-glow {
@@ -337,23 +371,43 @@
 
 /* ─── Proficiency Level Colors ─── */
 .proficiency-native {
-  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-success) 0%,
+    var(--color-success-dark) 100%
+  );
 }
 
 .proficiency-professional {
-  background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-info) 0%,
+    var(--color-info-dark) 100%
+  );
 }
 
 .proficiency-fluent {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-purple) 0%,
+    var(--color-accent-purple-dark) 100%
+  );
 }
 
 .proficiency-intermediate {
-  background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-warning) 0%,
+    var(--color-warning-dark) 100%
+  );
 }
 
 .proficiency-basic {
-  background: linear-gradient(135deg, var(--color-text-muted-alt) 0%, var(--color-text-muted) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-muted-alt) 0%,
+    var(--color-text-muted) 100%
+  );
 }
 
 /* ─── Language Card Decorative Elements ─── */
@@ -361,19 +415,19 @@
   position: absolute;
   top: -50%;
   left: -50%;
+  z-index: 1;
   width: 200%;
   height: 200%;
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.2) 50%,
+    var(--color-white-alpha-20) 50%,
     transparent 70%
   );
-  transform: rotate(45deg);
-  transition: left 0.8s ease;
-  pointer-events: none;
-  z-index: 1;
   opacity: 0;
+  transition: left 0.8s ease;
+  transform: rotate(45deg);
+  pointer-events: none;
 }
 
 .language-card-visible:hover .language-card-shine {
@@ -383,15 +437,12 @@
 
 .language-card-gradient {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  z-index: 1;
   background: var(--language-gradient-glow);
   opacity: 0;
   transition: opacity var(--language-transition-base);
   pointer-events: none;
-  z-index: 1;
   border-radius: var(--language-radius-xl);
 }
 
@@ -401,16 +452,13 @@
 
 .language-card-border-glow {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
+  inset: -2px;
+  z-index: 0;
   background: var(--language-gradient-primary);
-  border-radius: var(--language-radius-xl);
   opacity: 0;
   transition: opacity var(--language-transition-base);
+  border-radius: var(--language-radius-xl);
   pointer-events: none;
-  z-index: 0;
   filter: blur(8px);
 }
 
@@ -421,14 +469,11 @@
 /* ─── Language Card Particles ─── */
 .language-card-particles {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
+  inset: 0;
   z-index: 1;
   opacity: 0;
   transition: opacity var(--language-transition-base);
+  pointer-events: none;
   overflow: hidden;
   border-radius: var(--language-radius-xl);
 }
@@ -441,11 +486,15 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.8), transparent);
+  background: radial-gradient(
+    circle,
+    var(--color-accent-alpha-80),
+    transparent
+  );
   border-radius: 50%;
   opacity: 0;
-  animation: particleFloat 3s ease-in-out infinite;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+  animation: particle-float 3s ease-in-out infinite;
+  box-shadow: 0 0 8px var(--color-accent-alpha-60);
 }
 
 .language-card-particle:nth-child(1) {
@@ -476,11 +525,13 @@
   animation-duration: 3.2s;
 }
 
-@keyframes particleFloat {
-  0%, 100% {
+@keyframes particle-float {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) scale(1);
     opacity: 0;
   }
+
   50% {
     transform: translateY(-30px) translateX(15px) scale(1.2);
     opacity: 1;
@@ -490,30 +541,29 @@
 /* ─── Language Card Grid Overlay ─── */
 .language-card-grid-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
+  inset: 0;
+  z-index: 1;
   opacity: 0;
   transition: opacity var(--language-transition-base);
+  background-image:
+    linear-gradient(var(--color-accent-alpha-03) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent-alpha-03) 1px, transparent 1px);
+  background-size: 20px 20px;
   pointer-events: none;
-  z-index: 1;
   border-radius: var(--language-radius-xl);
 }
 
 .language-card-visible:hover .language-card-grid-overlay {
   opacity: 1;
-  animation: gridPulse 2s ease-in-out infinite;
+  animation: grid-pulse 2s ease-in-out infinite;
 }
 
-@keyframes gridPulse {
-  0%, 100% {
+@keyframes grid-pulse {
+  0%,
+  100% {
     opacity: 0.3;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -521,9 +571,9 @@
 
 /* ─── Language Progress Bar ─── */
 .language-progress-bar {
+  display: flex;
   width: 100%;
   margin-top: var(--language-spacing-sm);
-  display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
@@ -535,7 +585,7 @@
   background: var(--color-border-primary);
   border-radius: var(--language-radius-full);
   overflow: hidden;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 4px var(--color-black-alpha-10);
 }
 
 .language-progress-bar-fill {
@@ -543,9 +593,9 @@
   height: 100%;
   border-radius: var(--language-radius-full);
   transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 2px 8px var(--color-black-alpha-12),
+    inset 0 1px 0 var(--color-white-alpha-30);
   overflow: hidden;
 }
 
@@ -558,16 +608,17 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.4),
+    var(--color-white-alpha-40),
     transparent
   );
-  animation: progressShine 2s ease-in-out infinite;
+  animation: progress-shine 2s ease-in-out infinite;
 }
 
-@keyframes progressShine {
+@keyframes progress-shine {
   0% {
     left: -100%;
   }
+
   100% {
     left: 100%;
   }
@@ -582,17 +633,19 @@
   height: 200%;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 255, 255, 0.3) 0%,
+    var(--color-white-alpha-30) 0%,
     transparent 70%
   );
   opacity: 0.6;
-  animation: progressGlow 2s ease-in-out infinite;
+  animation: progress-glow 2s ease-in-out infinite;
 }
 
-@keyframes progressGlow {
-  0%, 100% {
+@keyframes progress-glow {
+  0%,
+  100% {
     opacity: 0.4;
   }
+
   50% {
     opacity: 0.8;
   }
@@ -606,52 +659,77 @@
 }
 
 .language-progress-bar-percentage {
+  color: var(--language-secondary);
   font-size: 0.75rem;
   font-weight: var(--language-font-weight-semibold);
-  color: var(--language-secondary);
   opacity: 0.7;
   transition: opacity var(--language-transition-fast);
 }
 
 .language-card-visible:hover .language-progress-bar-percentage {
-  opacity: 1;
   color: var(--language-accent);
+  opacity: 1;
 }
 
 /* ─── Proficiency Progress Bar Colors ─── */
 .language-progress-bar-fill.proficiency-native {
-  background: linear-gradient(90deg, var(--color-success) 0%, var(--color-success-dark) 50%, var(--color-success-text) 100%);
-  box-shadow: 
-    0 2px 8px rgba(16, 185, 129, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    90deg,
+    var(--color-success) 0%,
+    var(--color-success-dark) 50%,
+    var(--color-success-text) 100%
+  );
+  box-shadow:
+    0 2px 8px var(--color-success-alpha-30),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 .language-progress-bar-fill.proficiency-professional {
-  background: linear-gradient(90deg, var(--color-info) 0%, var(--color-info-dark) 50%, var(--color-info-text) 100%);
-  box-shadow: 
-    0 2px 8px rgba(59, 130, 246, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    90deg,
+    var(--color-info) 0%,
+    var(--color-info-dark) 50%,
+    var(--color-info-text) 100%
+  );
+  box-shadow:
+    0 2px 8px var(--color-info-alpha-30),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 .language-progress-bar-fill.proficiency-fluent {
-  background: linear-gradient(90deg, var(--color-accent-hover) 0%, var(--color-accent-dark) 50%, var(--color-accent-dark) 100%);
-  box-shadow: 
-    0 2px 8px rgba(139, 92, 246, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-purple) 0%,
+    var(--color-accent-purple-dark) 50%,
+    var(--color-accent-hover) 100%
+  );
+  box-shadow:
+    0 2px 8px var(--color-accent-purple-alpha-30),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 .language-progress-bar-fill.proficiency-intermediate {
-  background: linear-gradient(90deg, var(--color-warning) 0%, var(--color-warning-dark) 50%, var(--color-warning-text) 100%);
-  box-shadow: 
-    0 2px 8px rgba(245, 158, 11, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    90deg,
+    var(--color-warning) 0%,
+    var(--color-warning-dark) 50%,
+    var(--color-warning-text) 100%
+  );
+  box-shadow:
+    0 2px 8px var(--color-warning-alpha-30),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 .language-progress-bar-fill.proficiency-basic {
-  background: linear-gradient(90deg, var(--color-text-muted-alt) 0%, var(--color-text-muted) 50%, var(--color-text-accent) 100%);
-  box-shadow: 
-    0 2px 8px rgba(107, 114, 128, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    90deg,
+    var(--color-text-muted-alt) 0%,
+    var(--color-text-muted) 50%,
+    var(--color-text-accent) 100%
+  );
+  box-shadow:
+    0 2px 8px var(--color-muted-alpha-30),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 /* ─── Empty State ─── */
@@ -673,18 +751,18 @@
 }
 
 .language-empty-title {
+  margin: 0 0 var(--language-spacing-sm) 0;
+  color: var(--language-primary);
   font-size: 1.5rem;
   font-weight: var(--language-font-weight-bold);
-  color: var(--language-primary);
-  margin: 0 0 var(--language-spacing-sm) 0;
 }
 
 .language-empty-text {
-  font-size: 1rem;
-  color: var(--language-secondary);
   margin: 0;
-  max-width: 400px;
+  color: var(--language-secondary);
+  font-size: 1rem;
   opacity: 0.7;
+  max-width: 400px;
 }
 
 /* ─── Error State ─── */
@@ -705,18 +783,18 @@
 }
 
 .language-error-title {
+  margin: 0 0 var(--language-spacing-sm) 0;
+  color: var(--language-error);
   font-size: 1.5rem;
   font-weight: var(--language-font-weight-bold);
-  color: var(--language-error);
-  margin: 0 0 var(--language-spacing-sm) 0;
 }
 
 .language-error-message {
-  font-size: 1rem;
-  color: var(--language-secondary);
   margin: 0;
-  max-width: 400px;
+  color: var(--language-secondary);
+  font-size: 1rem;
   opacity: 0.7;
+  max-width: 400px;
 }
 
 /* ─── Loading State ─── */
@@ -733,7 +811,7 @@
 .language-loading-spinner {
   width: 48px;
   height: 48px;
-  border: 4px solid rgba(59, 130, 246, 0.1);
+  border: 4px solid var(--color-accent-alpha-10);
   border-top-color: var(--language-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -741,24 +819,26 @@
 }
 
 .language-loading-text {
-  font-size: 1rem;
-  color: var(--language-secondary);
   margin: 0;
+  color: var(--language-secondary);
+  font-size: 1rem;
   opacity: 0.7;
 }
 
 /* ─── Animations ─── */
-@keyframes languageCardReveal {
+@keyframes language-card-reveal {
   0% {
     opacity: 0;
     transform: translateY(40px) scale(0.95) perspective(1000px) rotateX(5deg);
     filter: blur(8px);
   }
+
   60% {
     opacity: 1;
     transform: translateY(-8px) scale(1.03) perspective(1000px) rotateX(-1deg);
     filter: blur(0);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1) perspective(1000px) rotateX(0deg);
@@ -767,9 +847,11 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-12px);
   }
@@ -779,13 +861,14 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 /* ─── Responsive Design: Large Desktop (1920px+) ─── */
-@media screen and (min-width: 1920px) {
+@media screen and (width >= 1920px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: var(--language-spacing-lg);
@@ -802,7 +885,7 @@
 }
 
 /* ─── Responsive Design: Desktop (1200px - 1919px) ─── */
-@media screen and (max-width: 1919px) and (min-width: 1200px) {
+@media screen and (width <= 1919px) and (width >= 1200px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: var(--language-spacing-lg);
@@ -810,7 +893,7 @@
 }
 
 /* ─── Responsive Design: Large Tablets (992px - 1199px) ─── */
-@media screen and (max-width: 1199px) and (min-width: 992px) {
+@media screen and (width <= 1199px) and (width >= 992px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--language-spacing-md);
@@ -833,7 +916,7 @@
 }
 
 /* ─── Responsive Design: Tablets (768px - 991px) ─── */
-@media screen and (max-width: 991px) and (min-width: 768px) {
+@media screen and (width <= 991px) and (width >= 768px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
     gap: var(--language-spacing-md);
@@ -854,8 +937,8 @@
   }
 
   .language-badge {
-    font-size: 0.9rem;
     padding: 0.5rem 1.25rem;
+    font-size: 0.9rem;
   }
 
   .language-icon-large {
@@ -866,7 +949,7 @@
 }
 
 /* ─── Responsive Design: Small Tablets (640px - 767px) ─── */
-@media screen and (max-width: 767px) and (min-width: 640px) {
+@media screen and (width <= 767px) and (width >= 640px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
     gap: var(--language-spacing-md);
@@ -889,7 +972,7 @@
 }
 
 /* ─── Responsive Design: Mobile (480px - 639px) ─── */
-@media screen and (max-width: 639px) and (min-width: 480px) {
+@media screen and (width <= 639px) and (width >= 480px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
     gap: var(--language-spacing-sm);
@@ -910,8 +993,8 @@
   }
 
   .language-badge {
-    font-size: 0.85rem;
     padding: 0.45rem 1.1rem;
+    font-size: 0.85rem;
   }
 
   .language-icon-large {
@@ -922,7 +1005,7 @@
 }
 
 /* ─── Responsive Design: Small Mobile (≤ 479px) ─── */
-@media screen and (max-width: 479px) {
+@media screen and (width <= 479px) {
   .language-grid {
     grid-template-columns: 1fr;
     gap: var(--language-spacing-sm);
@@ -934,11 +1017,11 @@
   }
 
   .language-card {
+    width: 100%;
     padding: var(--language-spacing-md) var(--language-spacing-sm);
     min-height: 200px;
     border-radius: var(--language-radius-md);
     max-width: 100%;
-    width: 100%;
     box-sizing: border-box;
   }
 
@@ -949,15 +1032,14 @@
   .language-card-title {
     font-size: 1.1rem;
     line-height: 1.4;
-    word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
   .language-badge {
-    font-size: 0.8rem;
     padding: 0.4rem 1rem;
+    font-size: 0.8rem;
     white-space: normal;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .language-icon-large {
@@ -969,9 +1051,9 @@
   .language-empty-state,
   .language-error-state,
   .language-loading-state {
+    width: 100%;
     padding: var(--language-spacing-lg) var(--language-spacing-sm);
     min-height: 250px;
-    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -989,14 +1071,14 @@
 
   .language-empty-text,
   .language-error-message {
+    padding: 0 0.5rem;
     font-size: 0.9rem;
     max-width: 100%;
-    padding: 0 0.5rem;
   }
 }
 
 /* ─── Responsive Design: Extra Small Mobile (≤ 360px) ─── */
-@media screen and (max-width: 360px) {
+@media screen and (width <= 360px) {
   .language-grid {
     gap: var(--language-spacing-xs);
     max-width: 100%;
@@ -1006,25 +1088,24 @@
   }
 
   .language-card {
+    width: 100%;
     padding: var(--language-spacing-sm) var(--language-spacing-xs);
     min-height: 180px;
     border-radius: var(--language-radius-sm);
-    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }
 
   .language-card-title {
     font-size: 1rem;
-    word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
   .language-badge {
-    font-size: 0.75rem;
     padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
     white-space: normal;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .language-icon-large {
@@ -1035,7 +1116,7 @@
 }
 
 /* ─── Responsive Design: Landscape Mobile ─── */
-@media screen and (orientation: landscape) and (max-width: 767px) {
+@media screen and (orientation: landscape) and (width <= 767px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
     gap: var(--language-spacing-sm);
@@ -1058,8 +1139,8 @@
 }
 
 /* ─── High DPI Displays ─── */
-@media screen and (-webkit-min-device-pixel-ratio: 2),
-       screen and (min-resolution: 192dpi) {
+@media screen and (min-device-pixel-ratio: 2),
+  screen and (resolution >= 192dpi) {
   .language-card {
     border-width: 1.5px;
   }
@@ -1105,9 +1186,8 @@
 @media print {
   .language-card {
     break-inside: avoid;
-    page-break-inside: avoid;
     box-shadow: none;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border-print);
   }
 
   .language-card-visible:hover {
@@ -1133,6 +1213,6 @@
 .language-card::selection,
 .language-card-title::selection,
 .language-badge::selection {
-  background: var(--color-info-alpha-20);
+  background: var(--color-accent-alpha-20);
   color: inherit;
 }

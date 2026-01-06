@@ -13,23 +13,24 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Base Skeleton Styles
    ============================================ */
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(240, 244, 248, 0.6) 0%,
-    rgba(230, 237, 245, 0.8) 50%,
-    rgba(240, 244, 248, 0.6) 100%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-shimmer var(--duration-base) var(--easing-ease-in-out) infinite;
-  border-radius: var(--radius-xs);
   display: inline-block;
   position: relative;
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-lightest) 0%,
+    var(--color-bg-lighter) 50%,
+    var(--color-bg-lightest) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--duration-base) var(--easing-ease-in-out)
+    infinite;
+  border-radius: var(--radius-xs);
   overflow: hidden;
 }
 
@@ -38,9 +39,9 @@
   .skeleton {
     background: linear-gradient(
       90deg,
-      rgba(30, 41, 59, 0.6) 0%,
-      rgba(51, 65, 85, 0.8) 50%,
-      rgba(30, 41, 59, 0.6) 100%
+      var(--color-bg-dark-alpha-70) 0%,
+      var(--color-bg-dark-light-alpha-75) 50%,
+      var(--color-bg-dark-alpha-70) 100%
     );
     background-size: 200% 100%;
   }
@@ -53,6 +54,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -77,9 +79,9 @@
   border-radius: var(--radius-sm);
   background: linear-gradient(
     90deg,
-    rgba(240, 244, 248, 0.5) 0%,
-    rgba(230, 237, 245, 0.7) 50%,
-    rgba(240, 244, 248, 0.5) 100%
+    var(--color-bg-lightest) 0%,
+    var(--color-bg-lighter) 50%,
+    var(--color-bg-lightest) 100%
   );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
@@ -90,11 +92,11 @@
 }
 
 .skeleton-card {
+  display: flex;
+  padding: 1.5rem;
   background: var(--color-bg-card);
   border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  display: flex;
+  box-shadow: 0 2px 8px var(--color-black-alpha-08);
   flex-direction: column;
   gap: 1rem;
 }
@@ -114,7 +116,7 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .skeleton-card {
     padding: 1rem;
   }
@@ -130,13 +132,12 @@
 @media (prefers-reduced-motion: reduce) {
   .skeleton {
     animation: none;
-    background: rgba(240, 244, 248, 0.6);
+    background: var(--color-bg-lightest);
   }
 
   @media (prefers-color-scheme: dark) {
     .skeleton {
-      background: rgba(30, 41, 59, 0.6);
+      background: var(--color-bg-dark-alpha-70);
     }
   }
 }
-

@@ -1,6 +1,6 @@
 /**
  * Technical Skills Section - View Layer (MVC Pattern)
- * 
+ *
  * Features:
  * - Professional, Luxury, Clean Design
  * - Performance Optimized (PureComponent, memoization)
@@ -8,7 +8,7 @@
  * - Comprehensive Edge Case Handling
  * - Clean UI/UX with hover effects and interactions
  * - Accessibility Support (ARIA labels, semantic HTML)
- * 
+ *
  * Principles Applied:
  * - MVC: Separates View from Controller and Model
  * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)
@@ -55,12 +55,12 @@ type TechnicalSkillsState = {
 
 /**
  * Technical Skills Section Component
- * 
+ *
  * Architecture:
  * - View Layer: This component (renders UI)
  * - Controller Layer: TechnicalSkillsController (handles business logic)
  * - Model Layer: TechnicalSkillsModel (handles data)
- * 
+ *
  * Follows MVC Pattern:
  * - Separates concerns between View, Controller, and Model
  * - View depends on Controller abstraction (Dependency Inversion)
@@ -125,7 +125,8 @@ class TechnicalSkillsSection extends Component<
       experiences: [],
     };
 
-    const enrichedCategories = this.controller.getEnrichedCategories(mockProfile);
+    const enrichedCategories =
+      this.controller.getEnrichedCategories(mockProfile);
     const statistics = this.controller.getSkillStatistics(mockProfile);
 
     this.setState({
@@ -161,26 +162,40 @@ class TechnicalSkillsSection extends Component<
     }
 
     return (
-      <div className="technical-skills-statistics" role="region" aria-label="Skills Statistics">
+      <div
+        className="technical-skills-statistics"
+        role="region"
+        aria-label="Skills Statistics"
+      >
         <div className="technical-skills-statistics__item">
           <span className="technical-skills-statistics__value">
             {statistics.totalSkills}
           </span>
-          <span className="technical-skills-statistics__label">Total Skills</span>
+          <span className="technical-skills-statistics__label">
+            Total Skills
+          </span>
         </div>
-        <div className="technical-skills-statistics__divider" aria-hidden="true"></div>
+        <div
+          className="technical-skills-statistics__divider"
+          aria-hidden="true"
+        ></div>
         <div className="technical-skills-statistics__item">
           <span className="technical-skills-statistics__value">
             {statistics.categoryCount}
           </span>
           <span className="technical-skills-statistics__label">Categories</span>
         </div>
-        <div className="technical-skills-statistics__divider" aria-hidden="true"></div>
+        <div
+          className="technical-skills-statistics__divider"
+          aria-hidden="true"
+        ></div>
         <div className="technical-skills-statistics__item">
           <span className="technical-skills-statistics__value">
             {statistics.averageSkillsPerCategory}
           </span>
-          <span className="technical-skills-statistics__label">Avg per Category</span>
+          <span className="technical-skills-statistics__label">
+            Avg per Category
+          </span>
         </div>
       </div>
     );
@@ -227,7 +242,11 @@ class TechnicalSkillsSection extends Component<
     // Edge case: Handle empty or invalid data
     if (!data || !Array.isArray(data) || data.length === 0) {
       return (
-        <Card id="technical-skills-section" title="Technical Skills" ariaLabel="Technical Skills Section">
+        <Card
+          id="skills"
+          title="Technical Skills"
+          ariaLabel="Technical Skills Section"
+        >
           {this.renderEmptyState()}
         </Card>
       );
@@ -236,7 +255,11 @@ class TechnicalSkillsSection extends Component<
     // Edge case: No enriched categories after processing
     if (!enrichedCategories || enrichedCategories.length === 0) {
       return (
-        <Card id="technical-skills-section" title="Technical Skills" ariaLabel="Technical Skills Section">
+        <Card
+          id="skills"
+          title="Technical Skills"
+          ariaLabel="Technical Skills Section"
+        >
           {this.renderEmptyState()}
         </Card>
       );
@@ -244,7 +267,7 @@ class TechnicalSkillsSection extends Component<
 
     return (
       <Card
-        id="technical-skills-section"
+        id="skills"
         title="Technical Skills"
         ariaLabel="Technical Skills Section"
       >

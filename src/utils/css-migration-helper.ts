@@ -2,7 +2,7 @@
  * CSS Migration Helper
  * Utility functions to help migrate existing components to new CSS architecture
  * Professional, Code-Based, DRY, KISS
- * 
+ *
  * Usage:
  * import { migrateClassName, findHardcodedValues } from '@/utils/css-migration-helper';
  */
@@ -13,35 +13,34 @@
  * @param block - BEM block name
  * @returns New BEM class name
  */
-export function migrateClassName(
-  oldClassName: string,
-  block: string
-): string {
+export function migrateClassName(oldClassName: string, block: string): string {
   // Convert camelCase or kebab-case to BEM
   const normalized = oldClassName
-    .replace(/([A-Z])/g, '-$1')
+    .replace(/([A-Z])/g, "-$1")
     .toLowerCase()
-    .replace(/^-+/, '');
+    .replace(/^-+/, "");
 
   // If it's already in BEM format, return as is
-  if (normalized.includes('__') || normalized.includes('--')) {
+  if (normalized.includes("__") || normalized.includes("--")) {
     return normalized;
   }
 
   // If it starts with block name, convert to BEM element
   if (normalized.startsWith(block)) {
-    const element = normalized.replace(new RegExp(`^${block}-?`), '');
+    const element = normalized.replace(new RegExp(`^${block}-?`), "");
     if (element) {
       return `${block}__${element}`;
     }
   }
 
   // If it's a modifier pattern (contains variant, state, etc.)
-  if (normalized.includes('-variant-') || normalized.includes('-state-')) {
-    const parts = normalized.split('-');
-    const modifierIndex = parts.findIndex(p => p === 'variant' || p === 'state');
+  if (normalized.includes("-variant-") || normalized.includes("-state-")) {
+    const parts = normalized.split("-");
+    const modifierIndex = parts.findIndex(
+      (p) => p === "variant" || p === "state",
+    );
     if (modifierIndex > 0) {
-      const modifier = parts.slice(modifierIndex + 1).join('-');
+      const modifier = parts.slice(modifierIndex + 1).join("-");
       return `${block}--${modifier}`;
     }
   }
@@ -60,14 +59,13 @@ export function findHardcodedValues(cssString: string): Array<{
   line: number;
 }> {
   const results: Array<{ value: string; property: string; line: number }> = [];
-  const lines = cssString.split('\n');
+  const lines = cssString.split("\n");
 
   // Common hardcoded patterns
   const colorPattern = /(color|background|border-color):\s*#[0-9a-fA-F]{3,6}/;
   const spacingPattern = /(padding|margin|gap|top|bottom|left|right):\s*\d+px/;
   const fontSizePattern = /font-size:\s*\d+px/;
   const borderRadiusPattern = /border-radius:\s*\d+px/;
-  const boxShadowPattern = /box-shadow:\s*[^;]+/;
 
   lines.forEach((line, index) => {
     if (colorPattern.test(line)) {
@@ -96,7 +94,7 @@ export function findHardcodedValues(cssString: string): Array<{
       const match = line.match(/font-size:\s*(\d+px)/);
       if (match) {
         results.push({
-          property: 'font-size',
+          property: "font-size",
           value: match[1],
           line: index + 1,
         });
@@ -107,7 +105,7 @@ export function findHardcodedValues(cssString: string): Array<{
       const match = line.match(/border-radius:\s*(\d+px)/);
       if (match) {
         results.push({
-          property: 'border-radius',
+          property: "border-radius",
           value: match[1],
           line: index + 1,
         });
@@ -126,48 +124,48 @@ export function findHardcodedValues(cssString: string): Array<{
  */
 export function suggestCSSVariable(
   property: string,
-  value: string
+  value: string,
 ): string | null {
   // Color mappings
-  if (property.includes('color') || property.includes('background')) {
-    if (value === '#667eea' || value === '#764ba2') {
-      return 'var(--color-accent-primary)';
+  if (property.includes("color") || property.includes("background")) {
+    if (value === "#667eea" || value === "#764ba2") {
+      return "var(--color-accent-primary)";
     }
-    if (value === '#ffffff' || value === '#fff') {
-      return 'var(--color-bg-card)';
+    if (value === "#ffffff" || value === "#fff") {
+      return "var(--color-bg-card)";
     }
-    if (value === '#1f2d3d' || value === '#1a2332') {
-      return 'var(--color-text-heading)';
+    if (value === "#1f2d3d" || value === "#1a2332") {
+      return "var(--color-text-heading)";
     }
   }
 
   // Spacing mappings
-  if (property.includes('padding') || property.includes('margin')) {
-    if (value === '2.5rem' || value === '40px') {
-      return 'var(--spacing-card-padding)';
+  if (property.includes("padding") || property.includes("margin")) {
+    if (value === "2.5rem" || value === "40px") {
+      return "var(--spacing-card-padding)";
     }
-    if (value === '1.75rem' || value === '28px') {
-      return 'var(--spacing-card-padding-mobile)';
+    if (value === "1.75rem" || value === "28px") {
+      return "var(--spacing-card-padding-mobile)";
     }
   }
 
   // Border radius mappings
-  if (property === 'border-radius') {
-    if (value === '24px' || value === '1.5rem') {
-      return 'var(--spacing-card-radius)';
+  if (property === "border-radius") {
+    if (value === "24px" || value === "1.5rem") {
+      return "var(--spacing-card-radius)";
     }
-    if (value === '18px' || value === '1.125rem') {
-      return 'var(--spacing-card-radius-mobile)';
+    if (value === "18px" || value === "1.125rem") {
+      return "var(--spacing-card-radius-mobile)";
     }
   }
 
   // Font size mappings
-  if (property === 'font-size') {
-    if (value === '2rem' || value === '32px') {
-      return 'var(--font-size-title)';
+  if (property === "font-size") {
+    if (value === "2rem" || value === "32px") {
+      return "var(--font-size-title)";
     }
-    if (value === '1rem' || value === '16px') {
-      return 'var(--font-size-base)';
+    if (value === "1rem" || value === "16px") {
+      return "var(--font-size-base)";
     }
   }
 
@@ -182,13 +180,18 @@ export function suggestCSSVariable(
  */
 export function generateMigrationReport(
   cssString: string,
-  blockName: string
+  blockName: string,
 ): {
-  hardcodedValues: Array<{ value: string; property: string; line: number; suggestion: string | null }>;
+  hardcodedValues: Array<{
+    value: string;
+    property: string;
+    line: number;
+    suggestion: string | null;
+  }>;
   classNames: Array<{ old: string; new: string }>;
 } {
   const hardcodedValues = findHardcodedValues(cssString);
-  const suggestions = hardcodedValues.map(hv => ({
+  const suggestions = hardcodedValues.map((hv) => ({
     ...hv,
     suggestion: suggestCSSVariable(hv.property, hv.value),
   }));
@@ -221,4 +224,3 @@ export const CSSMigrationHelper = {
   suggestCSSVariable,
   generateMigrationReport,
 };
-

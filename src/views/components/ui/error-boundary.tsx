@@ -1,5 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { logError } from "../../../utils/logger";
+import { trackComponentError } from "../../../utils/error-tracker";
 import "../../../assets/css/error-boundary.css";
 
 interface ErrorBoundaryProps {
@@ -34,8 +35,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    logError("ErrorBoundary caught an error", { error, errorInfo }, "ErrorBoundary");
-    
+    // Log error locally
+    logError(
+      "ErrorBoundary caught an error",
+      { error, errorInfo },
+      "ErrorBoundary",
+    );
+
+    // Track error for monitoring
+    trackComponentError(error, errorInfo, "ErrorBoundary");
+
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
@@ -54,13 +63,19 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         return this.props.fallback;
       }
 
-      const errorMessage = this.state.error?.message || "An unexpected error occurred";
+      const errorMessage =
+        this.state.error?.message || "An unexpected error occurred";
       const errorName = this.state.error?.name || "Error";
 
       return (
         <div className="error-boundary" role="alert" aria-live="assertive">
           <div className="error-boundary-content">
-            <div className="error-boundary-icon" aria-hidden="true" role="img" aria-label="Error icon">
+            <div
+              className="error-boundary-icon"
+              aria-hidden="true"
+              role="img"
+              aria-label="Error icon"
+            >
               ⚠️
             </div>
             <h1 className="error-boundary-title" id="error-boundary-title">
@@ -70,12 +85,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               {errorMessage}
             </p>
             <p className="error-boundary-help-text">
-              We're sorry, but something unexpected happened. Please try one of the options below.
+              We're sorry, but something unexpected happened. Please try one of
+              the options below.
             </p>
             {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="error-boundary-details">
                 <summary>Error Details (Development Only)</summary>
-                <pre className="error-boundary-stack" aria-label="Error stack trace">
+                <pre
+                  className="error-boundary-stack"
+                  aria-label="Error stack trace"
+                >
                   <code>{this.state.error.toString()}</code>
                   {this.state.error.stack && (
                     <code className="error-boundary-stack-trace">
@@ -85,7 +104,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 </pre>
               </details>
             )}
-            <div className="error-boundary-actions" role="group" aria-label="Error recovery actions">
+            <div
+              className="error-boundary-actions"
+              role="group"
+              aria-label="Error recovery actions"
+            >
               <button
                 className="error-boundary-button"
                 onClick={this.handleReset}
@@ -121,4 +144,3 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 }
 
 export default ErrorBoundary;
-

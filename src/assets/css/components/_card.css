@@ -23,7 +23,7 @@
  */
 
 /* Import core system for constants and variables */
-@import '../core/index.css';
+@import url("../core/index.css");
 
 /* ============================================
    Block: Card
@@ -31,20 +31,19 @@
 .card {
   position: relative;
   width: 100%;
-  max-width: var(--spacing-card-max-width);
   margin: 0 auto;
   padding: var(--spacing-card-padding);
-  background: var(--color-bg-card);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: var(--spacing-card-radius);
-  box-shadow: var(--shadow-card);
   border: 1px solid var(--color-border-light);
-  transition: 
+  background: var(--color-bg-card);
+  transition:
     transform var(--transition-smooth),
     box-shadow var(--transition-smooth),
     border-color var(--transition-smooth),
     background var(--transition-smooth);
+  max-width: var(--spacing-card-max-width);
+  backdrop-filter: blur(24px);
+  border-radius: var(--spacing-card-radius);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
   isolation: isolate;
 }
@@ -58,8 +57,8 @@
 }
 
 .card--outlined {
-  background: transparent;
   border: 2px solid var(--color-border-default);
+  background: transparent;
   box-shadow: none;
 }
 
@@ -69,10 +68,10 @@
 }
 
 .card--minimal {
-  background: transparent;
-  border: none;
-  box-shadow: none;
   padding: var(--spacing-card-padding-mobile);
+  border: none;
+  background: transparent;
+  box-shadow: none;
 }
 
 /* ============================================
@@ -104,22 +103,25 @@
    Element: Card Title
    ============================================ */
 .card__title {
-  position: relative;
   display: inline-block;
+  position: relative;
+  z-index: 1;
   margin: 0;
   color: var(--color-text-heading);
   font-size: clamp(1.875rem, 4vw, 3rem);
   font-weight: var(--font-weight-title);
   line-height: 1.2;
+  transition: color var(--transition-base);
   letter-spacing: -0.03em;
   font-family: var(--font-display);
-  transition: color var(--transition-base);
   user-select: none;
-  z-index: 1;
 }
 
-.card:hover .card__title,
 .card__title:focus {
+  color: var(--color-accent-primary);
+}
+
+.card:hover .card__title {
   color: var(--color-accent-primary);
 }
 
@@ -128,12 +130,12 @@
    ============================================ */
 .card__body {
   position: relative;
+  z-index: 1;
   color: var(--color-text-main);
   font-size: clamp(1rem, 1.6vw, 1.125rem);
   line-height: 1.8;
-  font-family: var(--font-main);
   transition: color var(--transition-base);
-  z-index: 1;
+  font-family: var(--font-main);
 }
 
 .card:hover .card__body {
@@ -160,7 +162,7 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .card {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
@@ -184,7 +186,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .card {
     padding: 2rem clamp(1.5rem, 2.5vw, 2rem);
     border-radius: 20px;
@@ -213,9 +215,8 @@
   }
 }
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .card {
     border: 2px solid var(--color-text-heading);
   }
 }
-

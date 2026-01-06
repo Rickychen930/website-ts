@@ -48,7 +48,7 @@ server {
     # SSL Configuration
     ssl_certificate /etc/letsencrypt/live/rickychen930.cloud/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/rickychen930.cloud/privkey.pem;
-    
+
     # SSL Security Settings
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384';
@@ -91,7 +91,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $host;
         proxy_cache_bypass $http_upgrade;
-        
+
         # Timeouts
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
@@ -142,7 +142,7 @@ server {
     location / {
         root /var/www/website-ts/build;
         try_files $uri $uri/ /index.html;
-        
+
         # No cache untuk index.html
         add_header Cache-Control "no-cache, no-store, must-revalidate" always;
         add_header Pragma "no-cache" always;
@@ -156,6 +156,7 @@ server {
 ```
 
 **Simpan file:**
+
 - Tekan `Ctrl+X`
 - Tekan `Y` untuk confirm
 - Tekan `Enter`
@@ -194,6 +195,7 @@ sudo nginx -t
 ```
 
 **Jika berhasil**, akan muncul:
+
 ```
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
@@ -263,10 +265,10 @@ server {
     listen 80;
     listen [::]:80;
     server_name rickychen930.cloud www.rickychen930.cloud;
-    
+
     root /var/www/website-ts/build;
     index index.html;
-    
+
     # ... (copy semua location blocks dari HTTPS server, tanpa SSL config)
 }
 ```
@@ -296,4 +298,3 @@ sudo tail -f /var/log/nginx/rickychen930.cloud.access.log
 ---
 
 **Selamat! Setup nginx selesai! 🎉**
-

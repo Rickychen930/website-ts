@@ -15,7 +15,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Card Container - Extends Core Card Component
@@ -24,34 +24,41 @@
   /* Extends .card from core/_components.css */
   position: relative;
   width: 100%;
-  max-width: 1400px;
   margin: 0 auto;
   padding: var(--spacing-card-padding);
+  border: 1px solid var(--color-white-alpha-10);
   background: var(--color-bg-dark-alpha-70);
+  transition: var(--transition-all);
+  max-width: 1400px;
   backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
   border-radius: var(--spacing-card-radius);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  border: 1px solid var(--color-white-alpha-10);
   animation: fade-in-card var(--duration-base) var(--easing-ease) forwards;
-  transition: var(--transition-all);
   outline: none;
   font-family: var(--font-main);
   isolation: isolate;
 }
 
 .card::before {
-  content: '';
   position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, var(--color-accent-alpha-12) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, var(--color-accent-alt-alpha-10) 0%, transparent 50%);
+  z-index: var(--z-base);
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      var(--color-accent-alpha-12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      var(--color-accent-alt-alpha-10) 0%,
+      transparent 50%
+    );
   opacity: 0;
   transition: var(--transition-opacity);
+  content: "";
+  inset: 0;
   pointer-events: none;
-  z-index: var(--z-base);
   border-radius: var(--spacing-card-radius);
 }
 
@@ -73,28 +80,28 @@
 }
 
 .card-variant-outlined {
-  background: transparent;
   border: 2px solid var(--color-border-alpha-60);
+  background: transparent;
   box-shadow: none;
 }
 
 .card-variant-outlined:hover {
   border-color: var(--color-accent-primary);
-  box-shadow: 0 8px 24px rgba(120, 162, 240, 0.15);
+  box-shadow: 0 8px 24px var(--color-border-link-alpha-15);
 }
 
 .card-variant-minimal {
-  background: transparent;
-  border: none;
-  box-shadow: none;
   padding: 2rem clamp(1.5rem, 4vw, 3rem);
+  border: none;
+  background: transparent;
+  box-shadow: none;
 }
 
 /* Hover & Focus States - Subtle & Professional */
 .card:hover,
 .card:focus-within {
   transform: translateY(-6px);
-  box-shadow: 
+  box-shadow:
     0 16px 48px var(--color-black-alpha-30),
     0 0 0 1px var(--color-accent-alpha-40),
     0 0 40px var(--color-accent-alpha-15);
@@ -124,27 +131,29 @@
 }
 
 .card-title {
-  position: relative;
   display: inline-block;
+  position: relative;
+  z-index: 1;
   margin: 0;
   color: var(--color-text-on-accent);
   font-size: clamp(1.875rem, 4vw, 3rem);
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.03em;
-  font-family: var(--font-display, 'Inter', system-ui, sans-serif);
   transition: all 0.3s ease;
+  letter-spacing: -0.03em;
+  font-family: var(--font-display, "Inter", system-ui, sans-serif);
   user-select: none;
   outline: none;
-  z-index: 1;
-  position: relative;
   text-shadow: 0 2px 20px var(--color-black-alpha-40);
 }
 
-.card:hover .card-title,
 .card-title:focus {
   color: var(--color-text-on-accent);
   outline: none;
+}
+
+.card:hover .card-title {
+  color: var(--color-text-on-accent);
 }
 
 /* ============================================
@@ -152,12 +161,12 @@
    ============================================ */
 .card-body {
   position: relative;
+  z-index: 1;
   color: var(--color-text-on-accent);
   font-size: clamp(1rem, 1.6vw, 1.125rem);
   line-height: 1.8;
-  font-family: var(--font-main, 'Inter', system-ui, sans-serif);
   transition: color 0.3s ease;
-  z-index: 1;
+  font-family: var(--font-main, "Inter", system-ui, sans-serif);
   letter-spacing: 0.01em;
 }
 
@@ -190,6 +199,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -225,7 +235,7 @@
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .card {
     padding: 2.25rem clamp(1.5rem, 3vw, 2.5rem);
     border-radius: var(--spacing-card-radius);
@@ -251,7 +261,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .card {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
@@ -285,7 +295,7 @@
 /* ============================================
    Responsive Design - Mobile
    ============================================ */
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .card {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
@@ -319,7 +329,7 @@
 /* ============================================
    Landscape Orientation
    ============================================ */
-@media screen and (orientation: landscape) and (max-width: 768px) {
+@media screen and (orientation: landscape) and (width <= 768px) {
   .card {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
@@ -348,8 +358,11 @@
     transform: none;
   }
 
-  .card:hover .card-title,
   .card-title:focus {
+    transform: none;
+  }
+
+  .card:hover .card-title {
     transform: none;
   }
 
@@ -363,10 +376,10 @@
    ============================================ */
 @media print {
   .card {
-    page-break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid var(--color-border-default);
     padding: 1.5rem;
+    border: 1px solid var(--color-border-default);
+    break-inside: avoid;
+    box-shadow: none;
   }
 
   .card-title {
@@ -383,7 +396,7 @@
 /* ============================================
    High Contrast Mode (Accessibility)
    ============================================ */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .card {
     border: 2px solid var(--color-text-heading);
   }

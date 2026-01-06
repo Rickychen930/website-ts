@@ -1,18 +1,18 @@
 /**
  * Button Component - Refactored with New CSS Architecture
  * Professional, Code-Based, OOP, SOLID, DRY, KISS
- * 
+ *
  * This is an example of how to refactor existing components to use the new CSS architecture
- * 
+ *
  * Architecture:
  * - Uses new CSS component classes (btn, btn--primary, etc.)
  * - Uses CSS helpers for class name building
  * - Follows BEM naming convention
  * - Type-safe with TypeScript
- * 
+ *
  * Usage:
  * import Button from '@/views/components/common/button-refactored';
- * 
+ *
  * <Button variant="primary" size="large">Click me</Button>
  */
 
@@ -24,8 +24,8 @@ type ButtonProps = {
   children: ReactNode;
   onClick?: () => void;
   type?: ButtonType;
-  variant?: ButtonVariant | 'outline' | 'ghost';
-  size?: 'small' | 'default' | 'large' | 'icon';
+  variant?: ButtonVariant | "outline" | "ghost";
+  size?: "small" | "default" | "large" | "icon";
   disabled?: ComponentState;
   loading?: boolean;
   className?: string;
@@ -41,7 +41,7 @@ class Button extends PureComponent<ButtonProps> {
   static defaultProps = {
     type: ButtonType.BUTTON,
     variant: ButtonVariant.PRIMARY,
-    size: 'default' as const,
+    size: "default" as const,
     disabled: ComponentState.ACTIVE,
     loading: false,
     className: "",
@@ -51,38 +51,38 @@ class Button extends PureComponent<ButtonProps> {
 
   private getVariantClass(): string {
     const { variant } = this.props;
-    
+
     // Map ButtonVariant enum to CSS class variant
     switch (variant) {
       case ButtonVariant.PRIMARY:
-        return 'primary';
+        return "primary";
       case ButtonVariant.SECONDARY:
-        return 'secondary';
+        return "secondary";
       case ButtonVariant.DANGER:
-        return 'danger';
-      case 'outline':
-        return 'outline';
-      case 'ghost':
-        return 'ghost';
+        return "danger";
+      case "outline":
+        return "outline";
+      case "ghost":
+        return "ghost";
       default:
-        return 'primary';
+        return "primary";
     }
   }
 
-  private getSizeClass(): 'small' | 'default' | 'large' | 'icon' {
-    return this.props.size || 'default';
+  private getSizeClass(): "small" | "default" | "large" | "icon" {
+    return this.props.size || "default";
   }
 
   protected _createComponent(): ReactNode {
-    const { 
-      children, 
-      onClick, 
-      type, 
-      disabled, 
+    const {
+      children,
+      onClick,
+      type,
+      disabled,
       loading,
-      className = "", 
+      className = "",
       ariaLabel,
-      icon 
+      icon,
     } = this.props;
 
     const isDisabled =
@@ -95,10 +95,19 @@ class Button extends PureComponent<ButtonProps> {
 
     // Build class names using CSS helpers
     const buttonClasses = cn(
-      btnClass(variant, size),
-      loading && 'btn--loading',
-      isDisabled && 'btn--disabled',
-      className
+      btnClass(
+        variant as
+          | "primary"
+          | "secondary"
+          | "danger"
+          | "outline"
+          | "ghost"
+          | undefined,
+        size,
+      ),
+      loading && "btn--loading",
+      isDisabled && "btn--disabled",
+      className,
     );
 
     return (
@@ -121,4 +130,3 @@ class Button extends PureComponent<ButtonProps> {
 }
 
 export default Button;
-

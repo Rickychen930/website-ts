@@ -1,7 +1,7 @@
 /**
  * Import Organizer Utility
  * Professional import organization and validation
- * 
+ *
  * This utility helps organize imports according to best practices:
  * 1. External dependencies (React, libraries)
  * 2. Internal absolute imports (@/...)
@@ -11,7 +11,7 @@
  */
 
 export interface ImportGroup {
-  type: 'external' | 'absolute' | 'relative' | 'types' | 'assets';
+  type: "external" | "absolute" | "relative" | "types" | "assets";
   imports: string[];
 }
 
@@ -19,11 +19,11 @@ export interface ImportGroup {
  * Import categories for organization
  */
 export enum ImportCategory {
-  EXTERNAL = 'external',
-  ABSOLUTE = 'absolute',
-  RELATIVE = 'relative',
-  TYPES = 'types',
-  ASSETS = 'assets',
+  EXTERNAL = "external",
+  ABSOLUTE = "absolute",
+  RELATIVE = "relative",
+  TYPES = "types",
+  ASSETS = "assets",
 }
 
 /**
@@ -41,22 +41,22 @@ export function organizeImports(imports: string[]): ImportGroup[] {
 
   imports.forEach((imp) => {
     const trimmed = imp.trim();
-    
+
     // Skip empty lines
     if (!trimmed) return;
 
     // Type imports
-    if (trimmed.startsWith('import type') || trimmed.includes('type ')) {
+    if (trimmed.startsWith("import type") || trimmed.includes("type ")) {
       types.push(trimmed);
       return;
     }
 
     // Asset imports (CSS, images, etc.)
     if (
-      trimmed.endsWith('.css') ||
-      trimmed.endsWith('.scss') ||
-      trimmed.endsWith('.sass') ||
-      trimmed.endsWith('.less') ||
+      trimmed.endsWith(".css") ||
+      trimmed.endsWith(".scss") ||
+      trimmed.endsWith(".sass") ||
+      trimmed.endsWith(".less") ||
       trimmed.match(/\.(png|jpg|jpeg|gif|svg|webp|ico)$/)
     ) {
       assets.push(trimmed);
@@ -81,19 +81,19 @@ export function organizeImports(imports: string[]): ImportGroup[] {
 
   // Build groups in order
   if (external.length > 0) {
-    groups.push({ type: 'external', imports: external });
+    groups.push({ type: "external", imports: external });
   }
   if (absolute.length > 0) {
-    groups.push({ type: 'absolute', imports: absolute });
+    groups.push({ type: "absolute", imports: absolute });
   }
   if (relative.length > 0) {
-    groups.push({ type: 'relative', imports: relative });
+    groups.push({ type: "relative", imports: relative });
   }
   if (types.length > 0) {
-    groups.push({ type: 'types', imports: types });
+    groups.push({ type: "types", imports: types });
   }
   if (assets.length > 0) {
-    groups.push({ type: 'assets', imports: assets });
+    groups.push({ type: "assets", imports: assets });
   }
 
   return groups;
@@ -109,7 +109,7 @@ export function sortImports(imports: string[]): string[] {
     // Extract the module name for comparison
     const getModuleName = (imp: string): string => {
       const match = imp.match(/from\s+['"](.+?)['"]/);
-      return match ? match[1] : '';
+      return match ? match[1] : "";
     };
 
     const aModule = getModuleName(a);
@@ -135,11 +135,11 @@ export function formatImports(groups: ImportGroup[]): string {
 
     // Add blank line between groups (except after last group)
     if (index < groups.length - 1) {
-      lines.push('');
+      lines.push("");
     }
   });
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 /**
@@ -152,7 +152,8 @@ export function validateImportOrder(imports: string[]): {
   errors: string[];
 } {
   const errors: string[] = [];
-  const groups = organizeImports(imports);
+  // Call organizeImports to validate structure, result not used
+  organizeImports(imports);
 
   // Check if external imports come before internal
   let foundAbsolute = false;
@@ -166,23 +167,33 @@ export function validateImportOrder(imports: string[]): {
     if (trimmed.includes("from '@/") && !foundAbsolute) {
       const hasExternalBefore = imports
         .slice(0, index)
-        .some((i) => !i.includes("from '@/") && !i.includes("from '../") && !i.includes("from './"));
-      
+        .some(
+          (i) =>
+            !i.includes("from '@/") &&
+            !i.includes("from '../") &&
+            !i.includes("from './"),
+        );
+
       if (!hasExternalBefore) {
         foundAbsolute = true;
       }
     }
 
     // Check if relative import appears before absolute
-    if ((trimmed.includes("from '../") || trimmed.includes("from './")) && !foundRelative) {
+    if (
+      (trimmed.includes("from '../") || trimmed.includes("from './")) &&
+      !foundRelative
+    ) {
       const hasAbsoluteBefore = imports
         .slice(0, index)
         .some((i) => i.includes("from '@/"));
-      
+
       if (hasAbsoluteBefore) {
         foundRelative = true;
       } else {
-        errors.push(`Relative import at line ${index + 1} should come after absolute imports`);
+        errors.push(
+          `Relative import at line ${index + 1} should come after absolute imports`,
+        );
       }
     }
   });
@@ -218,4 +229,3 @@ import type { SomeType } from '@/types/some-type';
 import './component.css';
 import '@/assets/css/global.css';
 `.trim();
-

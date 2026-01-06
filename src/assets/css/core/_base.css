@@ -29,14 +29,14 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  
+
   *,
   *::before,
   *::after {
@@ -52,7 +52,7 @@ body {
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   overflow-x: hidden;
   background: var(--color-bg-light);
   color: var(--color-text-main);
@@ -62,12 +62,17 @@ body {
 /* ============================================
    Typography Base
    ============================================ */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-title);
   color: var(--color-text-heading);
+  font-weight: var(--font-weight-title);
   line-height: 1.2;
+  font-family: var(--font-display);
 }
 
 h1 {
@@ -108,30 +113,31 @@ a:focus-visible {
    Code Elements
    ============================================ */
 code {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  background: var(--color-bg-lighter);
   padding: 0.2em 0.4em;
+  background: var(--color-bg-lighter);
+  font-size: 0.9em;
+  font-family: var(--font-mono);
   border-radius: 4px;
 }
 
 pre {
+  padding: 1rem;
+  background: var(--color-bg-lighter);
   font-family: var(--font-mono);
   overflow-x: auto;
-  background: var(--color-bg-lighter);
-  padding: 1rem;
   border-radius: 8px;
 }
 
 pre code {
-  background: transparent;
   padding: 0;
+  background: transparent;
 }
 
 /* ============================================
    Lists
    ============================================ */
-ul, ol {
+ul,
+ol {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -141,24 +147,24 @@ ul, ol {
    Images
    ============================================ */
 img {
-  max-width: 100%;
-  height: auto;
   display: block;
+  height: auto;
+  max-width: 100%;
 }
 
 /* ============================================
    Buttons
    ============================================ */
 button {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  cursor: pointer;
+  margin: 0;
+  padding: 0;
   border: none;
   background: none;
-  padding: 0;
-  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
   transition: all var(--transition-base);
+  font-family: inherit;
+  cursor: pointer;
 }
 
 button:focus-visible {
@@ -178,15 +184,15 @@ button:disabled {
 input,
 textarea,
 select {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  border: 1px solid var(--color-border-default);
-  border-radius: 8px;
   padding: 0.5rem 0.75rem;
-  transition: all var(--transition-base);
+  border: 1px solid var(--color-border-default);
   background: var(--color-bg-card);
   color: var(--color-text-main);
+  font-size: inherit;
+  line-height: inherit;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  border-radius: 8px;
 }
 
 input:focus,
@@ -200,20 +206,15 @@ select:focus {
 input:disabled,
 textarea:disabled,
 select:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
   background: var(--color-bg-lighter);
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ============================================
    Selection
    ============================================ */
 ::selection {
-  background: var(--color-accent-primary);
-  color: var(--color-text-on-accent);
-}
-
-::-moz-selection {
   background: var(--color-accent-primary);
   color: var(--color-text-on-accent);
 }
@@ -249,32 +250,31 @@ select:disabled {
     box-shadow: none !important;
     text-shadow: none !important;
   }
-  
+
   a,
   a:visited {
     text-decoration: underline;
   }
-  
+
   pre,
   blockquote {
     border: 1px solid var(--color-border-dark);
-    page-break-inside: avoid;
+    break-inside: avoid;
   }
-  
+
   img {
-    page-break-inside: avoid;
+    break-inside: avoid;
   }
-  
+
   p,
   h2,
   h3 {
     orphans: 3;
     widows: 3;
   }
-  
+
   h2,
   h3 {
-    page-break-after: avoid;
+    break-after: avoid;
   }
 }
-

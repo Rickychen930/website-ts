@@ -4,10 +4,15 @@
  */
 
 import React, { Component, ReactNode } from "react";
-import { IProject } from "../../models/project-model";
+import { IProject, ProjectCategory } from "../../models/project-model";
 import "../../assets/css/project-filters.css";
 
-export type SortOption = "date-desc" | "date-asc" | "name-asc" | "name-desc" | "featured";
+export type SortOption =
+  | "date-desc"
+  | "date-asc"
+  | "name-asc"
+  | "name-desc"
+  | "featured";
 export type FilterOption = string | "all"; // Category name or "all"
 
 interface ProjectFiltersProps {
@@ -21,17 +26,20 @@ interface ProjectFiltersState {
   categories: string[];
 }
 
-export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFiltersState> {
+export class ProjectFilters extends Component<
+  ProjectFiltersProps,
+  ProjectFiltersState
+> {
   constructor(props: ProjectFiltersProps) {
     super(props);
-    
+
     // Extract unique categories
     const categories = Array.from(
       new Set(
         props.projects
           .map((p) => p.category)
-          .filter((c): c is string => Boolean(c))
-      )
+          .filter((c): c is ProjectCategory => Boolean(c)),
+      ),
     ).sort();
 
     this.state = {
@@ -45,7 +53,10 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
     this.applyFilters();
   }
 
-  componentDidUpdate(prevProps: ProjectFiltersProps, prevState: ProjectFiltersState): void {
+  componentDidUpdate(
+    prevProps: ProjectFiltersProps,
+    prevState: ProjectFiltersState,
+  ): void {
     if (
       prevProps.projects !== this.props.projects ||
       prevState.selectedCategory !== this.state.selectedCategory ||
@@ -60,7 +71,9 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
 
     // Filter by category
     if (this.state.selectedCategory !== "all") {
-      filtered = filtered.filter((p) => p.category === this.state.selectedCategory);
+      filtered = filtered.filter(
+        (p) => p.category === this.state.selectedCategory,
+      );
     }
 
     // Sort
@@ -69,7 +82,10 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
     this.props.onFilterChange(filtered);
   };
 
-  private sortProjects = (projects: IProject[], sortOption: SortOption): IProject[] => {
+  private sortProjects = (
+    projects: IProject[],
+    sortOption: SortOption,
+  ): IProject[] => {
     const sorted = [...projects];
 
     switch (sortOption) {
@@ -117,19 +133,19 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
   private compareDates = (dateA: string, dateB: string): number => {
     const getDateValue = (dateStr: string): number => {
       if (!dateStr) return 0;
-      
+
       // Try to parse full date first (e.g., "2024-01-15", "Jan 2024", "2024")
       const fullDate = new Date(dateStr);
       if (!isNaN(fullDate.getTime())) {
         return fullDate.getTime();
       }
-      
+
       // Try to extract year from date string (e.g., "2020-2024" or "2024")
       const yearMatch = dateStr.match(/\d{4}/);
       if (yearMatch) {
         return parseInt(yearMatch[0], 10) * 10000; // Multiply to make year-based sorting work
       }
-      
+
       return 0;
     };
 
@@ -166,7 +182,9 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
                 All ({projects.length})
               </button>
               {categories.map((category) => {
-                const count = projects.filter((p) => p.category === category).length;
+                const count = projects.filter(
+                  (p) => p.category === category,
+                ).length;
                 return (
                   <button
                     key={category}
@@ -191,7 +209,9 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
               id="sort-filter"
               className="project-filter-select"
               value={sortOption}
-              onChange={(e) => this.handleSortChange(e.target.value as SortOption)}
+              onChange={(e) =>
+                this.handleSortChange(e.target.value as SortOption)
+              }
               aria-label="Sort projects"
             >
               <option value="featured">Featured First</option>
@@ -208,4 +228,3 @@ export class ProjectFilters extends Component<ProjectFiltersProps, ProjectFilter
 }
 
 export default ProjectFilters;
-

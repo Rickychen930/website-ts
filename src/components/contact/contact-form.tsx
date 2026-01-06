@@ -1,10 +1,13 @@
 /**
  * Contact Form Component
  * Professional contact form dengan validation
+ * Enhanced with DOMPurify for XSS protection
  */
 
 import React, { Component, ReactNode, FormEvent, ChangeEvent } from "react";
+import DOMPurify from "dompurify";
 import { toast } from "../../views/components/ui";
+import { trackContactFormSubmission } from "../../utils/analytics";
 import "../../assets/css/contact-form.css";
 
 interface ContactFormState {
@@ -44,9 +47,10 @@ export class ContactForm extends Component<{}, ContactFormState> {
     // Edge case: Trim whitespace before validation
     const trimmedEmail = email.trim();
     if (!trimmedEmail) return false;
-    
+
     // More comprehensive email validation
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     return emailRegex.test(trimmedEmail);
   };
 
@@ -63,7 +67,8 @@ export class ContactForm extends Component<{}, ContactFormState> {
     } else if (trimmedName.length > 100) {
       errors.name = "Name must be less than 100 characters";
     } else if (!/^[a-zA-Z\s'-]+$/.test(trimmedName)) {
-      errors.name = "Name can only contain letters, spaces, hyphens, and apostrophes";
+      errors.name =
+        "Name can only contain letters, spaces, hyphens, and apostrophes";
     }
 
     // Email validation with edge cases
@@ -100,12 +105,18 @@ export class ContactForm extends Component<{}, ContactFormState> {
     return Object.keys(errors).length === 0;
   };
 
-  private handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+  private handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void => {
     const { name, value } = e.target;
-    
-    // Edge case: Prevent XSS by sanitizing input (basic)
-    const sanitizedValue = value.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-    
+
+    // Edge case: Prevent XSS by sanitizing input with DOMPurify
+    // DOMPurify removes all HTML tags and dangerous content
+    const sanitizedValue = DOMPurify.sanitize(value, {
+      ALLOWED_TAGS: [], // No HTML tags allowed
+      ALLOWED_ATTR: [], // No attributes allowed
+    });
+
     this.setState((prevState) => ({
       formData: {
         ...prevState.formData,
@@ -119,7 +130,9 @@ export class ContactForm extends Component<{}, ContactFormState> {
     }));
   };
 
-  private handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  private handleSubmit = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     // Edge case: Prevent double submission
@@ -132,7 +145,9 @@ export class ContactForm extends Component<{}, ContactFormState> {
       // Focus first error field for better UX
       const firstErrorField = Object.keys(this.state.errors)[0];
       if (firstErrorField) {
-        const errorElement = document.getElementById(`contact-${firstErrorField}`);
+        const errorElement = document.getElementById(
+          `contact-${firstErrorField}`,
+        );
         if (errorElement) {
           errorElement.focus();
         }
@@ -159,20 +174,31 @@ export class ContactForm extends Component<{}, ContactFormState> {
       });
 
       toast.success("Message sent successfully! I'll get back to you soon.");
+
+      // Track successful submission
+      trackContactFormSubmission(true);
     } catch (error) {
       this.setState({ isSubmitting: false });
-      const errorMessage = error instanceof Error ? error.message : "Failed to send message. Please try again later.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again later.";
       toast.error(errorMessage);
+
+      // Track failed submission
+      trackContactFormSubmission(false);
       // Log error for debugging (only in development)
-      if (process.env.NODE_ENV === 'development') {
-        const { logError } = require('../../utils/logger');
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require("../../utils/logger");
         logError("Form submission error", error, "ContactForm");
       }
     }
   };
 
-  private submitForm = async (data: ContactFormState["formData"]): Promise<void> => {
-    const apiUrl = process.env.REACT_APP_API_URL || '';
+  private submitForm = async (
+    data: ContactFormState["formData"],
+  ): Promise<void> => {
+    const apiUrl = process.env.REACT_APP_API_URL || "";
     const endpoint = `${apiUrl}/api/contact`;
 
     // Edge case: Add timeout to prevent hanging requests
@@ -181,9 +207,9 @@ export class ContactForm extends Component<{}, ContactFormState> {
 
     try {
       const response = await fetch(endpoint, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
         signal: controller.signal,
@@ -192,30 +218,40 @@ export class ContactForm extends Component<{}, ContactFormState> {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ 
-          error: `Server error: ${response.status}` 
+        const errorData = await response.json().catch(() => ({
+          error: `Server error: ${response.status}`,
         }));
-        throw new Error(errorData.error || `HTTP ${response.status}: Failed to submit contact form`);
+        throw new Error(
+          errorData.error ||
+            `HTTP ${response.status}: Failed to submit contact form`,
+        );
       }
 
       const result = await response.json().catch(() => ({ success: true }));
       if (!result.success) {
-        throw new Error(result.error || 'Failed to submit contact form');
+        throw new Error(result.error || "Failed to submit contact form");
       }
     } catch (error) {
       clearTimeout(timeoutId);
-      
+
       // Edge case: Handle network errors and timeouts
       if (error instanceof Error) {
-        if (error.name === 'AbortError') {
-          throw new Error('Request timeout. Please check your connection and try again.');
+        if (error.name === "AbortError") {
+          throw new Error(
+            "Request timeout. Please check your connection and try again.",
+          );
         }
-        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-          throw new Error('Network error. Please check your connection and try again.');
+        if (
+          error.message.includes("Failed to fetch") ||
+          error.message.includes("NetworkError")
+        ) {
+          throw new Error(
+            "Network error. Please check your connection and try again.",
+          );
         }
         throw error;
       }
-      throw new Error('An unexpected error occurred. Please try again.');
+      throw new Error("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -241,7 +277,8 @@ export class ContactForm extends Component<{}, ContactFormState> {
           <div className="contact-form-success-icon">✓</div>
           <h3 className="contact-form-success-title">Message Sent!</h3>
           <p className="contact-form-success-message">
-            Thank you for your message. I'll get back to you as soon as possible.
+            Thank you for your message. I'll get back to you as soon as
+            possible.
           </p>
           <button
             className="contact-form-reset-button"
@@ -319,7 +356,11 @@ export class ContactForm extends Component<{}, ContactFormState> {
             aria-describedby={errors.subject ? "subject-error" : undefined}
           />
           {errors.subject && (
-            <span id="subject-error" className="contact-form-error" role="alert">
+            <span
+              id="subject-error"
+              className="contact-form-error"
+              role="alert"
+            >
               {errors.subject}
             </span>
           )}
@@ -342,7 +383,11 @@ export class ContactForm extends Component<{}, ContactFormState> {
             aria-describedby={errors.message ? "message-error" : undefined}
           />
           {errors.message && (
-            <span id="message-error" className="contact-form-error" role="alert">
+            <span
+              id="message-error"
+              className="contact-form-error"
+              role="alert"
+            >
               {errors.message}
             </span>
           )}
@@ -357,7 +402,10 @@ export class ContactForm extends Component<{}, ContactFormState> {
           >
             {isSubmitting ? (
               <>
-                <span className="contact-form-spinner" aria-hidden="true"></span>
+                <span
+                  className="contact-form-spinner"
+                  aria-hidden="true"
+                ></span>
                 Sending...
               </>
             ) : (
@@ -371,4 +419,3 @@ export class ContactForm extends Component<{}, ContactFormState> {
 }
 
 export default ContactForm;
-

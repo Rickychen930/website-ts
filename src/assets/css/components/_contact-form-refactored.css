@@ -42,15 +42,15 @@
    ============================================ */
 .contact-form__label {
   display: block;
-  margin-bottom: 0.5rem;
+  color: var(--color-text-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-heading);
+  margin-bottom: 0.5rem;
   font-family: var(--font-main);
 }
 
 .contact-form__label--required::after {
-  content: ' *';
+  content: " *";
   color: var(--color-error);
   margin-left: 2px;
 }
@@ -78,10 +78,10 @@
    ============================================ */
 .contact-form__error {
   display: block;
-  margin-top: 0.5rem;
-  font-size: var(--font-size-small);
   color: var(--color-error);
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-medium);
+  margin-top: 0.5rem;
   font-family: var(--font-main);
 }
 
@@ -121,37 +121,37 @@
    Element: Contact Form Success
    ============================================ */
 .contact-form__success {
-  text-align: center;
   padding: 3rem 2rem;
+  text-align: center;
 }
 
 .contact-form__success-icon {
+  display: flex;
   width: 64px;
   height: 64px;
   margin: 0 auto 1.5rem;
-  display: flex;
+  background: var(--color-success-light);
+  color: var(--color-success);
+  font-size: 32px;
+  font-weight: var(--font-weight-bold);
   align-items: center;
   justify-content: center;
-  background: var(--color-success-light);
   border-radius: 50%;
-  font-size: 32px;
-  color: var(--color-success);
-  font-weight: var(--font-weight-bold);
 }
 
 .contact-form__success-title {
+  color: var(--color-text-heading);
   font-size: var(--font-size-title-component);
   font-weight: var(--font-weight-title);
-  color: var(--color-text-heading);
   margin-bottom: 1rem;
   font-family: var(--font-display);
 }
 
 .contact-form__success-message {
-  font-size: var(--font-size-base);
   color: var(--color-text-subtle);
-  margin-bottom: 2rem;
+  font-size: var(--font-size-base);
   line-height: 1.75;
+  margin-bottom: 2rem;
   font-family: var(--font-main);
 }
 
@@ -162,13 +162,13 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .contact-form {
     padding: var(--spacing-card-padding-mobile);
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .contact-form {
     padding: 1.5rem;
   }
@@ -193,7 +193,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .contact-form {
     padding: 1rem;
   }
@@ -232,4 +232,3 @@
     animation: none !important;
   }
 }
-

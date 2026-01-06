@@ -3,11 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/csurf": "^1.11.5",
+    "@types/dompurify": "^3.0.5",
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "dompurify": "^3.3.1",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
     "mongoose": "^8.18.2",
     "pm2": "^6.0.13",
     "react": "^19.1.1",
@@ -40,7 +46,11 @@
     "docker:logs": "docker-compose -f docker/docker-compose.yml logs -f",
     "css:generate": "node scripts/generate-css-variables.js",
     "css:check": "node scripts/check-css-architecture.js",
-    "css:check:file": "node scripts/check-css-architecture.js"
+    "css:check:file": "node scripts/check-css-architecture.js",
+    "analyze:bundle": "node scripts/analyze-bundle.js",
+    "sitemap:generate": "node scripts/generate-sitemap.js",
+    "prebuild": "npm run sitemap:generate",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -80,6 +90,8 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "stylelint": "^16.24.0",
@@ -93,7 +105,9 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.ts"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"
@@ -116,5 +130,22 @@
         "statements": 70
       }
     }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,sass}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }

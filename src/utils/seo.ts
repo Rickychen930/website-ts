@@ -6,6 +6,12 @@
 
 import { UserProfile } from "../types/user";
 import { SEOLabels } from "../constants";
+import {
+  generateOrganizationSchema,
+  generateBreadcrumbSchema,
+  generateWebSiteSchema,
+  injectMultipleStructuredData,
+} from "./structured-data";
 
 /**
  * Update document title
@@ -19,13 +25,13 @@ export function updateTitle(title: string): void {
  */
 export function updateMetaTag(name: string, content: string): void {
   let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
-  
+
   if (!meta) {
     meta = document.createElement("meta");
     meta.name = name;
     document.head.appendChild(meta);
   }
-  
+
   meta.content = content;
 }
 
@@ -33,14 +39,16 @@ export function updateMetaTag(name: string, content: string): void {
  * Update Open Graph tag
  */
 export function updateOGTag(property: string, content: string): void {
-  let meta = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement;
-  
+  let meta = document.querySelector(
+    `meta[property="${property}"]`,
+  ) as HTMLMetaElement;
+
   if (!meta) {
     meta = document.createElement("meta");
     meta.setAttribute("property", property);
     document.head.appendChild(meta);
   }
-  
+
   meta.content = content;
 }
 
@@ -49,13 +57,13 @@ export function updateOGTag(property: string, content: string): void {
  */
 export function updateTwitterTag(name: string, content: string): void {
   let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
-  
+
   if (!meta) {
     meta = document.createElement("meta");
     meta.name = name;
     document.head.appendChild(meta);
   }
-  
+
   meta.content = content;
 }
 
@@ -78,7 +86,12 @@ export function generateStructuredData(profile: UserProfile): object {
       .filter((contact) => {
         // Filter contacts that have links (LinkedIn, GitHub, etc.)
         const label = contact.label?.toLowerCase() || "";
-        return contact.link && (label.includes("linkedin") || label.includes("github") || label.includes("twitter"));
+        return (
+          contact.link &&
+          (label.includes("linkedin") ||
+            label.includes("github") ||
+            label.includes("twitter"))
+        );
       })
       .map((contact) => contact.link)
       .filter((link): link is string => typeof link === "string"),
@@ -92,7 +105,7 @@ export function generateStructuredData(profile: UserProfile): object {
         allSkills.push(...category.items);
       }
     });
-    
+
     if (allSkills.length > 0) {
       structuredData.knowsAbout = allSkills.map((skill) => ({
         "@type": "Thing",
@@ -138,7 +151,9 @@ export function injectStructuredData(data: object): void {
  */
 export function updateSEOFromProfile(profile: UserProfile): void {
   const title = `${profile.name} - ${profile.title} | ${SEOLabels.PORTFOLIO}`;
-  const description = profile.bio || `${SEOLabels.PROFESSIONAL_PORTFOLIO} of ${profile.name}, ${profile.title}`;
+  const description =
+    profile.bio ||
+    `${SEOLabels.PROFESSIONAL_PORTFOLIO} of ${profile.name}, ${profile.title}`;
   const image = `${window.location.origin}/logo512.png`;
   const url = window.location.href;
 
@@ -147,7 +162,10 @@ export function updateSEOFromProfile(profile: UserProfile): void {
 
   // Update meta tags
   updateMetaTag("description", description);
-  updateMetaTag("keywords", `${profile.name}, ${profile.title}, ${SEOLabels.PORTFOLIO}, ${SEOLabels.SOFTWARE_ENGINEER}, ${SEOLabels.DEVELOPER}`);
+  updateMetaTag(
+    "keywords",
+    `${profile.name}, ${profile.title}, ${SEOLabels.PORTFOLIO}, ${SEOLabels.SOFTWARE_ENGINEER}, ${SEOLabels.DEVELOPER}`,
+  );
 
   // Update Open Graph
   updateOGTag("og:title", title);
@@ -165,16 +183,57 @@ export function updateSEOFromProfile(profile: UserProfile): void {
   // Inject structured data
   const structuredData = generateStructuredData(profile);
   injectStructuredData(structuredData);
+
+  // Inject additional structured data (Organization, WebSite, Breadcrumbs)
+  const baseUrl = window.location.origin;
+  const additionalSchemas = [];
+
+  // Organization schema
+  additionalSchemas.push({
+    data: generateOrganizationSchema({
+      name: profile.name,
+      url: baseUrl,
+      description: profile.bio,
+      sameAs: profile.contacts
+        .filter((contact) => contact.link)
+        .map((contact) => contact.link!)
+        .filter((link) => typeof link === "string"),
+    }),
+    id: "organization-schema",
+  });
+
+  // WebSite schema
+  additionalSchemas.push({
+    data: generateWebSiteSchema({
+      name: `${profile.name} - ${profile.title}`,
+      url: baseUrl,
+      description: profile.bio,
+    }),
+    id: "website-schema",
+  });
+
+  // Breadcrumb schema
+  const breadcrumbs = [
+    { name: "Home", url: baseUrl },
+    { name: profile.name, url: window.location.href },
+  ];
+  additionalSchemas.push({
+    data: generateBreadcrumbSchema(breadcrumbs),
+    id: "breadcrumb-schema",
+  });
+
+  injectMultipleStructuredData(additionalSchemas);
 }
 
 /**
  * Initialize SEO with default values
  */
 export function initializeSEO(): void {
-  updateTitle(`Ricky Chen - ${SEOLabels.SOFTWARE_ENGINEER} ${SEOLabels.PORTFOLIO}`);
+  updateTitle(
+    `Ricky Chen - ${SEOLabels.SOFTWARE_ENGINEER} ${SEOLabels.PORTFOLIO}`,
+  );
   updateMetaTag(
     "description",
-    `${SEOLabels.PROFESSIONAL_PORTFOLIO} ${SEOLabels.SHOWCASING}`
+    `${SEOLabels.PROFESSIONAL_PORTFOLIO} ${SEOLabels.SHOWCASING}`,
   );
 }
-

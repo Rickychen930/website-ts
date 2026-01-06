@@ -17,13 +17,13 @@
  */
 
 /* Base Components - All use core system */
-@import './_card.css';
-@import './_button.css';
-@import './_input.css';
-@import './_form.css';
-@import './_empty-state.css';
-@import './_loading.css';
+@import url("./_card.css");
+@import url("./_button.css");
+@import url("./_input.css");
+@import url("./_form.css");
+@import url("./_empty-state.css");
+@import url("./_loading.css");
 
 /* Refactored Examples (for reference) */
-/* @import './_contact-form-refactored.css'; */
 
+/* @import './_contact-form-refactored.css'; */

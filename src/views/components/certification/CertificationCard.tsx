@@ -1,7 +1,7 @@
 /**
  * Certification Card Component
  * Reusable card component for displaying individual certifications
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP)
  * - Open/Closed Principle (OCP)
@@ -41,7 +41,7 @@ export class CertificationCard extends PureComponent<
   CertificationCardProps,
   CertificationCardState
 > {
-  private readonly cardRef: RefObject<HTMLDivElement>;
+  private readonly cardRef: RefObject<HTMLDivElement | null>;
   private readonly ANIMATION_DELAY_BASE = 100;
   private readonly INTERSECTION_THRESHOLD = 0.1;
   private observer: IntersectionObserver | null = null;
@@ -83,14 +83,14 @@ export class CertificationCard extends PureComponent<
         entries.forEach((entry) => {
           this.props.onVisibilityChange(
             this.props.certification.key,
-            entry.isIntersecting
+            entry.isIntersecting,
           );
         });
       },
       {
         threshold: this.INTERSECTION_THRESHOLD,
         rootMargin: "50px",
-      }
+      },
     );
 
     if (this.cardRef.current) {
@@ -121,7 +121,9 @@ export class CertificationCard extends PureComponent<
   /**
    * Handle keyboard navigation
    */
-  private handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+  private handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ): void => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       this.handleCardClick();
@@ -195,9 +197,7 @@ export class CertificationCard extends PureComponent<
    */
   private renderTitle(): ReactNode {
     const { certification } = this.props;
-    return (
-      <h3 className="certification-card-title">{certification.title}</h3>
-    );
+    return <h3 className="certification-card-title">{certification.title}</h3>;
   }
 
   /**
@@ -229,7 +229,7 @@ export class CertificationCard extends PureComponent<
           value={`ID: ${certification.credentialId}`}
           variant="accent"
           icon="🔑"
-        />
+        />,
       );
     }
 
@@ -241,7 +241,7 @@ export class CertificationCard extends PureComponent<
           value={certification.level.toUpperCase()}
           variant="default"
           icon="⭐"
-        />
+        />,
       );
     }
 
@@ -359,4 +359,3 @@ export class CertificationCard extends PureComponent<
     );
   }
 }
-

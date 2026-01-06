@@ -1,7 +1,7 @@
 /**
  * ContactCard Component
  * Reusable component for displaying individual contact cards
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): Only handles card display
  * - DRY: Reusable across contact section
@@ -38,7 +38,10 @@ interface ContactCardState {
  * ContactCard Component
  * Displays a contact card with icon, label, value, and actions
  */
-export class ContactCard extends PureComponent<ContactCardProps, ContactCardState> {
+export class ContactCard extends PureComponent<
+  ContactCardProps,
+  ContactCardState
+> {
   private copyTimeout: NodeJS.Timeout | null = null;
 
   constructor(props: ContactCardProps) {
@@ -60,7 +63,6 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
     this.setState({ isHovered: true });
   };
 
-
   private handleFocus = (): void => {
     this.setState({ isFocused: true });
   };
@@ -81,13 +83,11 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
     const { contact, onCopyClick } = this.props;
 
     if (onCopyClick) {
-      const success = await onCopyClick(contact);
-      if (success) {
-        this.setState({ isCopied: true });
-        this.copyTimeout = setTimeout(() => {
-          this.setState({ isCopied: false });
-        }, 2000);
-      }
+      onCopyClick(contact);
+      this.setState({ isCopied: true });
+      this.copyTimeout = setTimeout(() => {
+        this.setState({ isCopied: false });
+      }, 2000);
     }
   };
 
@@ -120,8 +120,9 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
     const contactType = contact.type || ContactType.OTHER;
 
     if (contact.link) {
-      const isEmailOrPhone = contactType === ContactType.EMAIL || contactType === ContactType.PHONE;
-      
+      const isEmailOrPhone =
+        contactType === ContactType.EMAIL || contactType === ContactType.PHONE;
+
       return (
         <a
           href={contact.link}
@@ -135,14 +136,19 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
         >
           {contact.value}
           {!isEmailOrPhone && (
-            <span className="contact-card-link-icon" aria-hidden="true">↗</span>
+            <span className="contact-card-link-icon" aria-hidden="true">
+              ↗
+            </span>
           )}
         </a>
       );
     }
 
     return (
-      <span className="contact-card-value" aria-label={`${contact.label}: ${contact.value}`}>
+      <span
+        className="contact-card-value"
+        aria-label={`${contact.label}: ${contact.value}`}
+      >
         {contact.value}
       </span>
     );
@@ -200,25 +206,25 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
+
     const rotateX = (y - centerY) / 10;
     const rotateY = (centerX - x) / 10;
-    
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-    card.style.setProperty('--rotate-x', `${rotateX}deg`);
-    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+    card.style.setProperty("--rotate-x", `${rotateX}deg`);
+    card.style.setProperty("--rotate-y", `${rotateY}deg`);
   };
 
   private handleMouseLeave = (e: React.MouseEvent<HTMLElement>): void => {
     this.setState({ isHovered: false });
     // Reset transform
     const card = e.currentTarget;
-    card.style.setProperty('--rotate-x', '0deg');
-    card.style.setProperty('--rotate-y', '0deg');
+    card.style.setProperty("--rotate-x", "0deg");
+    card.style.setProperty("--rotate-y", "0deg");
   };
 
   public render(): ReactNode {
@@ -228,10 +234,12 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
     return (
       <article
         className={this.getCardClass()}
-        style={{ 
-          animationDelay: `${index * 0.1}s`,
-          '--index': index,
-        } as React.CSSProperties}
+        style={
+          {
+            animationDelay: `${index * 0.1}s`,
+            "--index": index,
+          } as React.CSSProperties
+        }
         data-contact-key={contact.key}
         onMouseEnter={this.handleMouseEnter}
         onMouseMove={this.handleMouseMove}
@@ -244,16 +252,16 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
       >
         {/* Animated Background Pattern */}
         <div className="contact-card-pattern" aria-hidden="true" />
-        
+
         {/* Glassmorphism Overlay */}
         <div className="contact-card-glass" aria-hidden="true" />
-        
+
         {/* Gradient Background */}
         <div className="contact-card-background" aria-hidden="true" />
-        
+
         {/* Shine Effect */}
         <div className="contact-card-shine" aria-hidden="true" />
-        
+
         {/* Content */}
         <div className="contact-card-content">
           <div className="contact-card-header">
@@ -266,7 +274,10 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
           <div className="contact-card-body">
             <h3 className="contact-card-label">
               <span className="contact-card-label-text">{contact.label}</span>
-              <span className="contact-card-label-underline" aria-hidden="true" />
+              <span
+                className="contact-card-label-underline"
+                aria-hidden="true"
+              />
             </h3>
             <div className="contact-card-value-wrapper">
               {this.renderValue()}
@@ -274,20 +285,30 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
             {this.renderDescription()}
           </div>
         </div>
-        
+
         {/* Glow Effects */}
         {(isHovered || isFocused) && (
           <>
-            <div className="contact-card-glow contact-card-glow--primary" aria-hidden="true" />
-            <div className="contact-card-glow contact-card-glow--secondary" aria-hidden="true" />
+            <div
+              className="contact-card-glow contact-card-glow--primary"
+              aria-hidden="true"
+            />
+            <div
+              className="contact-card-glow contact-card-glow--secondary"
+              aria-hidden="true"
+            />
             <div className="contact-card-particles" aria-hidden="true">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="contact-card-particle" style={{ '--particle-index': i } as React.CSSProperties} />
+                <div
+                  key={i}
+                  className="contact-card-particle"
+                  style={{ "--particle-index": i } as React.CSSProperties}
+                />
               ))}
             </div>
           </>
         )}
-        
+
         {/* Border Gradient */}
         <div className="contact-card-border-gradient" aria-hidden="true" />
       </article>
@@ -296,4 +317,3 @@ export class ContactCard extends PureComponent<ContactCardProps, ContactCardStat
 }
 
 export default ContactCard;
-

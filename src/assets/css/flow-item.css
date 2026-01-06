@@ -13,7 +13,7 @@
  */
 
 /* Import core system for constants and variables */
-@import './core/index.css';
+@import url("./core/index.css");
 
 /* ============================================
    Flow Item Container - Extends Card Component
@@ -22,33 +22,29 @@
   /* Extends .card component */
   position: relative;
   width: 100%;
-  margin-bottom: var(--spacing-xl);
   padding: var(--spacing-xl) clamp(1.5rem, 3vw, 2.5rem);
-  background: var(--gradient-primary);
-  border-radius: var(--radius-xl);
   border: 1px solid var(--color-border-light);
-  box-shadow: var(--shadow-md);
+  background: var(--gradient-primary);
   opacity: 0;
-  transform: translateY(30px);
   transition: var(--transition-all);
+  margin-bottom: var(--spacing-xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  transform: translateY(30px);
   will-change: opacity, transform;
   overflow: hidden;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 /* Visible State */
 .flow-item.flow-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* Animated State - Performance optimization */
-.flow-item.flow-visible {
   will-change: auto;
 }
 
 /* Variant Styles */
+
 /* .flow-item.flow-variant-default - Default styling already applied in base styles */
 
 .flow-item.flow-variant-elevated {
@@ -60,10 +56,10 @@
 }
 
 .flow-item.flow-variant-minimal {
-  background: transparent;
-  border: 1px solid var(--color-border-alpha-30);
-  box-shadow: 0 2px 8px var(--color-black-alpha-05);
   padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--color-border-alpha-30);
+  background: transparent;
+  box-shadow: 0 2px 8px var(--color-black-alpha-05);
 }
 
 /* Hover States - Uses Core Transition System */
@@ -88,12 +84,12 @@
    Flow Icon
    ============================================ */
 .flow-icon-wrapper {
-  position: relative;
   display: inline-flex;
+  position: relative;
+  z-index: 1;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.5rem;
-  z-index: 1;
 }
 
 .flow-icon-glow {
@@ -103,7 +99,8 @@
   transform: translate(-50%, -50%);
   width: 80px;
   height: 80px;
-  background: radial-gradient(circle,
+  background: radial-gradient(
+    circle,
     var(--color-accent-alpha-25),
     var(--color-accent-alpha-08),
     transparent
@@ -119,24 +116,25 @@
 }
 
 .flow-icon {
-  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
   width: 3.5rem;
   height: 3.5rem;
-  font-size: 1.75rem;
-  background: linear-gradient(135deg,
-    var(--color-accent-alpha-15),
-    var(--color-link-alpha-15)
-  );
   border: 2px solid var(--color-accent-alpha-30);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-alpha-15),
+    var(--color-accent-tertiary-alpha-15)
+  );
+  font-size: 1.75rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  justify-content: center;
   border-radius: 16px;
   box-shadow:
     0 4px 12px var(--color-accent-alpha-20),
     inset 0 1px 0 var(--color-white-alpha-50);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
 }
 
 .flow-item:hover .flow-icon {
@@ -145,7 +143,8 @@
   box-shadow:
     0 8px 24px var(--color-accent-alpha-30),
     inset 0 1px 0 var(--color-white-alpha-60);
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--color-accent-alpha-20),
     var(--color-link-alpha-20)
   );
@@ -156,12 +155,12 @@
    ============================================ */
 .flow-content {
   position: relative;
+  z-index: var(--z-base);
   color: var(--color-text-subtle);
   font-size: clamp(0.95rem, 1.5vw, 1.05rem);
   line-height: 1.75;
-  font-family: var(--font-main);
   transition: var(--transition-color);
-  z-index: var(--z-base);
+  font-family: var(--font-main);
 }
 
 .flow-item:hover .flow-content {
@@ -190,7 +189,7 @@
 /* ============================================
    Responsive Design - Uses Core Breakpoints
    ============================================ */
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .flow-item {
     padding: 1.75rem clamp(1.25rem, 2.5vw, 2rem);
     border-radius: var(--radius-lg);
@@ -215,7 +214,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .flow-item {
     padding: 1.5rem clamp(1.25rem, 2vw, 1.75rem);
     border-radius: var(--radius-lg);
@@ -248,7 +247,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .flow-item {
     padding: var(--spacing-md) clamp(1rem, 2vw, 1.5rem);
     border-radius: var(--radius-md);
@@ -281,7 +280,7 @@
   }
 }
 
-@media screen and (orientation: landscape) and (max-width: 768px) {
+@media screen and (orientation: landscape) and (width <= 768px) {
   .flow-item {
     padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
   }
@@ -327,11 +326,11 @@
    ============================================ */
 @media print {
   .flow-item {
-    page-break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid var(--color-border-light);
     padding: 1.5rem;
+    border: 1px solid var(--color-border-light);
     opacity: 1;
+    break-inside: avoid;
+    box-shadow: none;
     transform: none;
   }
 
@@ -348,7 +347,7 @@
 /* ============================================
    High Contrast Mode (Accessibility)
    ============================================ */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .flow-item {
     border: 2px solid var(--color-text-heading);
   }
@@ -357,4 +356,3 @@
     border: 2px solid var(--color-text-heading);
   }
 }
-

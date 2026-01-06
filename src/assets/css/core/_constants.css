@@ -23,15 +23,15 @@
      Spacing System - Consistent Spacing Scale
      Based on LayoutConfig constant
      ============================================ */
-  --spacing-xs: 0.5rem;      /* 8px */
-  --spacing-sm: 0.75rem;     /* 12px */
-  --spacing-md: 1rem;        /* 16px */
-  --spacing-lg: 1.5rem;      /* 24px */
-  --spacing-xl: 2rem;        /* 32px */
-  --spacing-2xl: 2.5rem;     /* 40px */
-  --spacing-3xl: 3rem;       /* 48px */
-  --spacing-4xl: 4rem;       /* 64px */
-  --spacing-5xl: 5rem;       /* 80px */
+  --spacing-xs: 0.5rem; /* 8px */
+  --spacing-sm: 0.75rem; /* 12px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 2.5rem; /* 40px */
+  --spacing-3xl: 3rem; /* 48px */
+  --spacing-4xl: 4rem; /* 64px */
+  --spacing-5xl: 5rem; /* 80px */
 
   /* ============================================
      Component Spacing - Reusable Patterns
@@ -41,7 +41,6 @@
   --component-padding-md: var(--spacing-md);
   --component-padding-lg: var(--spacing-lg);
   --component-padding-xl: var(--spacing-xl);
-  
   --component-margin-xs: var(--spacing-xs);
   --component-margin-sm: var(--spacing-sm);
   --component-margin-md: var(--spacing-md);
@@ -87,7 +86,7 @@
      ============================================ */
   --state-transition-duration: var(--transition-base);
   --state-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* ============================================
      Layout Breakpoints - From Breakpoints constant
      ============================================ */
@@ -106,7 +105,6 @@
   --size-icon-lg: 32px;
   --size-icon-xl: 40px;
   --size-icon-2xl: 48px;
-  
   --size-avatar-xs: 24px;
   --size-avatar-sm: 32px;
   --size-avatar-md: 48px;
@@ -124,7 +122,7 @@
   --z-modal: var(--z-index-modal);
   --z-tooltip: var(--z-index-tooltip);
   --z-max: var(--z-index-max);
-  
+
   /* Component-specific z-index */
   --z-navbar: var(--navbar-z-index);
   --z-backdrop: calc(var(--z-modal) - 1);
@@ -137,7 +135,7 @@
   --duration-fast: var(--animation-duration-fast);
   --duration-base: var(--animation-duration-base);
   --duration-slow: var(--animation-duration-slow);
-  
+
   /* ============================================
      Animation Easing - Professional Easing Functions
      ============================================ */
@@ -154,7 +152,8 @@
      Component Transitions - Reusable Transition Patterns
      ============================================ */
   --transition-color: color var(--duration-fast) var(--easing-smooth);
-  --transition-background: background-color var(--duration-fast) var(--easing-smooth);
+  --transition-background: background-color var(--duration-fast)
+    var(--easing-smooth);
   --transition-border: border-color var(--duration-fast) var(--easing-smooth);
   --transition-transform: transform var(--duration-base) var(--easing-smooth);
   --transition-opacity: opacity var(--duration-fast) var(--easing-smooth);
@@ -189,7 +188,6 @@
     --duration-fast: 0s;
     --duration-base: 0s;
     --duration-slow: 0s;
-    
     --transition-color: none;
     --transition-background: none;
     --transition-border: none;
@@ -199,4 +197,3 @@
     --transition-all: none;
   }
 }
-
