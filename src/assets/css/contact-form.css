@@ -26,7 +26,9 @@
 }
 
 .contact-form-label {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: var(--color-text-heading);
   font-size: var(--font-size-base);
   font-weight: 600;
@@ -36,6 +38,21 @@
 .contact-form-label .required {
   color: var(--color-error);
   margin-left: 2px;
+}
+
+.contact-form-char-count {
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  margin-left: auto;
+}
+
+.contact-form-hint {
+  display: block;
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-small);
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .contact-form-input,
@@ -68,6 +85,15 @@
 .contact-form-input.error,
 .contact-form-textarea.error {
   border-color: var(--color-error);
+}
+
+.contact-form-textarea.warning {
+  border-color: var(--color-warning);
+}
+
+.contact-form-textarea.warning:focus {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 0 3px var(--color-warning-alpha-10);
 }
 
 .contact-form-error {

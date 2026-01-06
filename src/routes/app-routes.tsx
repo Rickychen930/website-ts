@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { Suspense, lazy, ComponentType } from "react";
+import { Routes, Route } from "react-router-dom";
 import { LoadingComponent } from "../views/components/ui";
 import { ErrorBoundary } from "../views/components/ui";
 
@@ -8,12 +8,23 @@ import { ErrorBoundary } from "../views/components/ui";
  * Reduces initial bundle size and improves load time
  */
 const MainPage = lazy(() => import("../views/pages/main-page"));
+const NotFoundPage = lazy(() =>
+  import("../views/pages/404-page").then(
+    (module): { default: ComponentType<any> } => ({
+      default: module.default as unknown as ComponentType<any>,
+    }),
+  ),
+);
 
 /**
  * Loading fallback for lazy-loaded routes
  */
 const RouteLoadingFallback = () => (
-  <LoadingComponent message="Loading page..." useSkeleton={true} skeletonVariant="card" />
+  <LoadingComponent
+    message="Loading page..."
+    useSkeleton={true}
+    skeletonVariant="card"
+  />
 );
 
 /**
@@ -25,16 +36,16 @@ const AppRoutes = () => {
     <ErrorBoundary>
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
-          <Route 
-            path="/" 
-            element={<MainPage />} 
+          <Route
+            path="/"
+            element={<MainPage />}
             aria-label="Main portfolio page"
           />
-          {/* Future routes can be added here */}
-          <Route 
-            path="*" 
-            element={<Navigate to="/" replace />} 
-            aria-label="Redirect to home"
+          {/* 404 Page - Must be last route */}
+          <Route
+            path="*"
+            element={<NotFoundPage />}
+            aria-label="404 Not Found page"
           />
         </Routes>
       </Suspense>

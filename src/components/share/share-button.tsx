@@ -4,6 +4,7 @@
  */
 
 import React, { Component, ReactNode, createRef } from "react";
+import { toast } from "../../views/components/ui";
 import "../../assets/css/share-button.css";
 
 export interface ShareOptions {
@@ -135,13 +136,11 @@ export class ShareButton extends Component<ShareButtonProps, ShareButtonState> {
     try {
       await navigator.clipboard.writeText(url);
       this.setState({ isOpen: false });
-      // Show toast notification (assuming toast is available globally)
-      if (typeof window !== "undefined" && (window as any).toast) {
-        (window as any).toast.success("Link copied to clipboard!");
-      }
+      // Show toast notification
+      toast.success("Link copied to clipboard!", 3000);
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        const { logError } = require('../../utils/logger');
+      if (process.env.NODE_ENV === "development") {
+        const { logError } = require("../../utils/logger");
         logError("Failed to copy to clipboard", error, "ShareButton");
       }
     }
@@ -155,11 +154,15 @@ export class ShareButton extends Component<ShareButtonProps, ShareButtonState> {
     return (
       <button
         className="share-button share-button-icon"
-        onClick={this.state.isSupported ? this.handleNativeShare : this.toggleDropdown}
+        onClick={
+          this.state.isSupported ? this.handleNativeShare : this.toggleDropdown
+        }
         aria-label="Share"
         title="Share portfolio"
       >
-        <span className="share-icon" aria-hidden="true">🔗</span>
+        <span className="share-icon" aria-hidden="true">
+          🔗
+        </span>
       </button>
     );
   }
@@ -168,10 +171,14 @@ export class ShareButton extends Component<ShareButtonProps, ShareButtonState> {
     return (
       <button
         className="share-button share-button-full"
-        onClick={this.state.isSupported ? this.handleNativeShare : this.toggleDropdown}
+        onClick={
+          this.state.isSupported ? this.handleNativeShare : this.toggleDropdown
+        }
         aria-label="Share"
       >
-        <span className="share-icon" aria-hidden="true">🔗</span>
+        <span className="share-icon" aria-hidden="true">
+          🔗
+        </span>
         <span className="share-text">Share</span>
       </button>
     );
@@ -227,7 +234,9 @@ export class ShareButton extends Component<ShareButtonProps, ShareButtonState> {
               aria-label="Share"
               aria-expanded={isOpen}
             >
-              <span className="share-icon" aria-hidden="true">🔗</span>
+              <span className="share-icon" aria-hidden="true">
+                🔗
+              </span>
               <span className="share-text">Share</span>
               <span className="share-arrow" aria-hidden="true">
                 {isOpen ? "▲" : "▼"}
@@ -243,4 +252,3 @@ export class ShareButton extends Component<ShareButtonProps, ShareButtonState> {
 }
 
 export default ShareButton;
-

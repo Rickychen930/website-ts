@@ -729,7 +729,21 @@
 .footer-bottom {
   position: relative;
   padding: var(--footer-spacing-lg) 0;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
   text-align: center;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .footer-copyright {
@@ -737,6 +751,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--footer-spacing-sm);
+  flex: 1;
 }
 
 .footer-copyright-text {

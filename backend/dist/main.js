@@ -1,4 +1,4 @@
-
+"use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -66,7 +66,7 @@ app.use((0, helmet_1.default)({
             upgradeInsecureRequests: NODE_ENV === "production" ? [] : null,
         },
     },
-    crossOriginEmbedderPolicy: false,
+    crossOriginEmbedderPolicy: false, // Allow external resources
     crossOriginResourcePolicy: { policy: "cross-origin" },
 }));
 // ✅ Security middleware
@@ -112,7 +112,7 @@ const buildPath = path_1.default.join(__dirname, "../../build");
 if (NODE_ENV === "production" && fs_1.default.existsSync(buildPath)) {
     // Serve static files
     app.use(express_1.default.static(buildPath, {
-        maxAge: "1y",
+        maxAge: "1y", // Cache static assets for 1 year
         etag: true,
     }));
     // Handle React Router - serve index.html for all non-API routes

@@ -369,19 +369,26 @@ export class ContactForm extends Component<{}, ContactFormState> {
         <div className="contact-form-group">
           <label htmlFor="contact-message" className="contact-form-label">
             Message <span className="required">*</span>
+            <span className="contact-form-char-count">
+              {formData.message.length}/5000
+            </span>
           </label>
           <textarea
             id="contact-message"
             name="message"
             value={formData.message}
             onChange={this.handleChange}
-            className={`contact-form-textarea ${errors.message ? "error" : ""}`}
+            className={`contact-form-textarea ${errors.message ? "error" : ""} ${formData.message.length > 4500 ? "warning" : ""}`}
             placeholder="Your message..."
             rows={6}
+            maxLength={5000}
             aria-required="true"
             aria-invalid={!!errors.message}
-            aria-describedby={errors.message ? "message-error" : undefined}
+            aria-describedby={errors.message ? "message-error" : "message-hint"}
           />
+          <div id="message-hint" className="contact-form-hint">
+            Minimum 10 characters required
+          </div>
           {errors.message && (
             <span
               id="message-error"

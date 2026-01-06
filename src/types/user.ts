@@ -131,4 +131,15 @@ export type UserProfile = {
     period: string;
     description: string;
   }[];
+  testimonials?: {
+    key: string;
+    name: string;
+    role: string;
+    company: string;
+    image?: string;
+    text: string;
+    rating?: number;
+    date?: string;
+    link?: string;
+  }[];
 };

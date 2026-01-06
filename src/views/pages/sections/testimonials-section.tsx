@@ -33,7 +33,7 @@ import "../../../assets/css/testimonials-section.css";
  * Testimonials Section Props Interface
  */
 type TestimonialsProps = {
-  testimonials?: ITestimonial[];
+  data?: ITestimonial[] | unknown; // Accept data prop like other sections
 };
 
 /**
@@ -68,18 +68,54 @@ class TestimonialsSection extends Component<
   }
 
   componentDidUpdate(prevProps: TestimonialsProps): void {
-    if (prevProps.testimonials !== this.props.testimonials) {
+    // Re-process data if props changed
+    if (prevProps.data !== this.props.data) {
       this.processData();
     }
   }
 
   /**
    * Process testimonials data
+   * Handles data prop like other sections (consistent API)
    */
   private processData(): void {
-    const testimonials = this.controller.getTestimonials(
-      this.props.testimonials,
-    );
+    const { data } = this.props;
+
+    // Handle different data types
+    let testimonialsData: ITestimonial[] | undefined;
+
+    if (data === null || data === undefined) {
+      // No data provided - use defaults
+      testimonialsData = undefined;
+    } else if (Array.isArray(data)) {
+      // Data is an array - validate and use if valid
+      if (data.length > 0) {
+        // Validate that array contains ITestimonial objects
+        const isValid = data.every(
+          (item) =>
+            item &&
+            typeof item === "object" &&
+            "name" in item &&
+            "text" in item,
+        );
+
+        if (isValid) {
+          testimonialsData = data as ITestimonial[];
+        } else {
+          // Invalid array - use defaults
+          testimonialsData = undefined;
+        }
+      } else {
+        // Empty array - use defaults
+        testimonialsData = undefined;
+      }
+    } else {
+      // Data is not an array - use defaults
+      testimonialsData = undefined;
+    }
+
+    // Get testimonials from controller (will use defaults if testimonialsData is undefined)
+    const testimonials = this.controller.getTestimonials(testimonialsData);
     this.setState({ testimonials });
   }
 
@@ -194,8 +230,11 @@ class TestimonialsSection extends Component<
     const { isVisible } = this.state;
     const { testimonials } = this.state;
 
-    if (testimonials.length === 0 && !this.props.testimonials) {
-      // Don't render if no testimonials and no props
+    // Always show section if there are testimonials (including defaults from controller)
+    // Controller always returns default testimonials if no custom data provided
+    // This section should always be visible since defaults are always available
+    if (testimonials.length === 0) {
+      // Edge case: Only hide if somehow no testimonials (shouldn't happen with defaults)
       return null;
     }
 

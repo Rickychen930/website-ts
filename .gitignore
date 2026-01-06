@@ -6,6 +6,14 @@ node_modules
 .env.local
 .env.*.local
 
+# Directories
+backup/
+backup
+development/
+development
+production/
+production
+
 # Build outputs
 dist
 build

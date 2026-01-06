@@ -1,13 +1,13 @@
 /**
  * MainPageFooterComponent - Professional Footer Component
  * View Layer (MVC Pattern)
- * 
+ *
  * Architecture:
  * - MVC: Strict separation of View, Controller, and Model
  * - View: Only handles UI rendering and user interactions
  * - Controller: Handles all business logic (injected via DI)
  * - Model: Handles data structure and validation
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): View only renders UI
  * - Dependency Inversion Principle (DIP): Depends on Controller abstraction
@@ -16,7 +16,7 @@
  * - KISS: Simple, clear structure
  * - Component-Based: Composed of smaller, focused components
  * - OOP: Class-based component with proper encapsulation
- * 
+ *
  * Features:
  * - Professional, luxury, beautiful design
  * - Fully responsive on all devices
@@ -36,6 +36,7 @@ import {
   FooterStats,
   FooterCodeSnippet,
 } from "./index";
+import PrintButton from "../../../components/navigation/print-button";
 import "../../../assets/css/footer-section.css";
 
 /**
@@ -167,12 +168,8 @@ export class MainPageFooterComponent extends PureComponent<
                 onLinkClick={this.handleSocialLinkClick}
               />
             )}
-            {techStack.length > 0 && (
-              <FooterTechStack techStack={techStack} />
-            )}
-            {stats.length > 0 && (
-              <FooterStats stats={stats} />
-            )}
+            {techStack.length > 0 && <FooterTechStack techStack={techStack} />}
+            {stats.length > 0 && <FooterStats stats={stats} />}
           </div>
         </div>
       </div>
@@ -192,10 +189,15 @@ export class MainPageFooterComponent extends PureComponent<
     return (
       <div className="footer-bottom">
         <div className="footer-container">
-          <FooterCopyright
-            copyright={footerData.copyright}
-            author={footerData.author}
-          />
+          <div className="footer-bottom-content">
+            <FooterCopyright
+              copyright={footerData.copyright}
+              author={footerData.author}
+            />
+            <div className="footer-actions">
+              <PrintButton showLabel={false} />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -207,8 +209,14 @@ export class MainPageFooterComponent extends PureComponent<
   private renderDecorations(): ReactNode {
     return (
       <>
-        <div className="footer-decoration footer-decoration-top" aria-hidden="true"></div>
-        <div className="footer-decoration footer-decoration-bottom" aria-hidden="true"></div>
+        <div
+          className="footer-decoration footer-decoration-top"
+          aria-hidden="true"
+        ></div>
+        <div
+          className="footer-decoration footer-decoration-bottom"
+          aria-hidden="true"
+        ></div>
         <div className="footer-particles" aria-hidden="true">
           {Array.from({ length: 20 }).map((_, i) => (
             <span key={i} className="footer-particle"></span>

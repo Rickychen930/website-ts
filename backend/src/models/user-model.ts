@@ -7,7 +7,7 @@ const StatSchema = new Schema(
     value: { type: String, required: true, trim: true },
     label: { type: String, required: true, trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const AcademicSchema = new Schema(
@@ -19,7 +19,7 @@ const AcademicSchema = new Schema(
     period: { type: String, required: true, trim: true },
     description: { type: String, default: "", trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const CertificationSchema = new Schema(
@@ -30,7 +30,7 @@ const CertificationSchema = new Schema(
     provider: { type: String, required: true, trim: true },
     date: { type: String, required: true, trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const ContactSchema = new Schema(
@@ -41,7 +41,7 @@ const ContactSchema = new Schema(
     value: { type: String, required: true, trim: true },
     link: { type: String, trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const HonorSchema = new Schema(
@@ -53,7 +53,7 @@ const HonorSchema = new Schema(
     date: { type: String, required: true, trim: true },
     description: { type: String, default: "", trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const LanguageSchema = new Schema(
@@ -73,7 +73,7 @@ const LanguageSchema = new Schema(
       ],
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const ProjectSchema = new Schema(
@@ -84,7 +84,7 @@ const ProjectSchema = new Schema(
     date: { type: String, required: true, trim: true },
     description: { type: String, default: "", trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const SoftSkillSchema = new Schema(
@@ -94,7 +94,7 @@ const SoftSkillSchema = new Schema(
     name: { type: String, required: true, trim: true },
     description: { type: String, default: "", trim: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const SkillCategorySchema = new Schema(
@@ -106,7 +106,7 @@ const SkillCategorySchema = new Schema(
       validate: (v: string[]) => Array.isArray(v),
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const ExperienceSchema = new Schema(
@@ -118,7 +118,22 @@ const ExperienceSchema = new Schema(
     period: { type: String, required: true, trim: true },
     description: { type: String, default: "", trim: true },
   },
-  { _id: false }
+  { _id: false },
+);
+
+const TestimonialSchema = new Schema(
+  {
+    key: { type: String, required: true, index: true },
+    name: { type: String, required: true, trim: true },
+    role: { type: String, required: true, trim: true },
+    company: { type: String, required: true, trim: true },
+    image: { type: String, trim: true },
+    text: { type: String, required: true, trim: true },
+    rating: { type: Number, min: 1, max: 5 },
+    date: { type: String, trim: true },
+    link: { type: String, trim: true },
+  },
+  { _id: false },
 );
 
 /* Root document interface */
@@ -189,6 +204,17 @@ export interface IUser extends Document {
     period: string;
     description: string;
   }[];
+  testimonials?: {
+    key: string;
+    name: string;
+    role: string;
+    company: string;
+    image?: string;
+    text: string;
+    rating?: number;
+    date?: string;
+    link?: string;
+  }[];
 }
 
 /* Root schema */
@@ -208,8 +234,9 @@ const UserSchema = new Schema(
     softSkills: { type: [SoftSkillSchema], default: [] },
     technicalSkills: { type: [SkillCategorySchema], default: [] },
     experiences: { type: [ExperienceSchema], default: [] },
+    testimonials: { type: [TestimonialSchema], default: [] },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Unique index

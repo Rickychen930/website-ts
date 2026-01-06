@@ -3,6 +3,7 @@ import "../../assets/css/main-page.css";
 import TableOfContents from "../../components/navigation/table-of-contents";
 import FloatingCTA from "../../components/navigation/floating-cta";
 import SkipLinks from "../../components/navigation/skip-links";
+import Breadcrumbs from "../../components/navigation/breadcrumbs";
 import GlobalSearch from "../../components/search/global-search";
 import LazySection from "../../components/sections/lazy-section";
 import {
@@ -174,7 +175,7 @@ class MainPage extends BasePage<{}, MainPageState> {
         id: "testimonials",
         title: SectionNames.TESTIMONIALS,
         component: TestimonialsSection,
-        dataKey: "name", // Use name as dataKey, but always visible
+        dataKey: "testimonials", // Use testimonials as dataKey
         isVisible: () => true, // Always show testimonials section
       },
       {
@@ -443,12 +444,12 @@ class MainPage extends BasePage<{}, MainPageState> {
   ): unknown {
     const { dataKey, id } = config;
 
-    // Testimonials section doesn't need data from profile
-    if (id === "testimonials") {
-      return profile; // Pass profile for consistency, but component will use default data
-    }
-
     const data = profile[dataKey];
+
+    // Testimonials section - pass testimonials array directly
+    if (id === "testimonials") {
+      return data || null;
+    }
 
     if (!shouldDisplayData(data)) {
       return null;
@@ -540,9 +541,16 @@ class MainPage extends BasePage<{}, MainPageState> {
 
     const visibleSections = this.controller.getVisibleSections(profile);
 
+    // Generate breadcrumbs
+    const breadcrumbs = [
+      { name: "Home", url: "/" },
+      { name: profile.name, url: window.location.href },
+    ];
+
     return (
       <div className="main-page">
         <SkipLinks />
+        <Breadcrumbs items={breadcrumbs} />
         <main id="main-content" role="main">
           {this.renderSections()}
         </main>

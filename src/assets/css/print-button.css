@@ -1,0 +1,70 @@
+/**
+ * Print Button Styles
+ */
+
+.print-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-border-default);
+  background: var(--color-bg-card);
+  color: var(--color-text-main);
+  border-radius: 8px;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-main);
+}
+
+.print-button:hover {
+  background: var(--color-accent-alpha-10);
+  border-color: var(--color-accent-primary);
+  color: var(--color-accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--color-shadow-alpha-15);
+}
+
+.print-button:active {
+  transform: translateY(0);
+}
+
+.print-button:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+.print-icon {
+  font-size: 1.2rem;
+}
+
+.print-label {
+  font-size: var(--font-size-base);
+}
+
+/* Hide in print mode */
+@media print {
+  .print-button {
+    display: none;
+  }
+}
+
+/* Responsive */
+@media (width <= 768px) {
+  .print-button {
+    padding: 0.4rem 0.8rem;
+    font-size: var(--font-size-small);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .print-button {
+    transition: none;
+  }
+
+  .print-button:hover {
+    transform: none;
+  }
+}

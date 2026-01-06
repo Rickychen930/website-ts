@@ -1,4 +1,4 @@
-
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const express_validator_1 = require("express-validator");
@@ -12,14 +12,14 @@ router.use(rate_limiter_1.apiRateLimiter.middleware());
  * Validation middleware for user name parameter
  */
 const userNameValidation = [
-    (0, express_validator_1.param)('name')
+    (0, express_validator_1.param)("name")
         .trim()
         .notEmpty()
-        .withMessage('Name parameter is required')
+        .withMessage("Name parameter is required")
         .isLength({ min: 1, max: 100 })
-        .withMessage('Name must be between 1 and 100 characters')
+        .withMessage("Name must be between 1 and 100 characters")
         .matches(/^[a-zA-Z0-9\s'-]+$/)
-        .withMessage('Name contains invalid characters'),
+        .withMessage("Name contains invalid characters"),
 ];
 router.get("/:name", userNameValidation, async (req, res) => {
     try {
@@ -27,7 +27,7 @@ router.get("/:name", userNameValidation, async (req, res) => {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
-                error: 'Validation failed',
+                error: "Validation failed",
                 errors: errors.array(),
             });
         }

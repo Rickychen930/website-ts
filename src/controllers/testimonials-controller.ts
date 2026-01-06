@@ -94,8 +94,11 @@ export class TestimonialsController extends BaseController {
    * @returns Extracted data or null
    */
   protected getData(profile: UserProfile): unknown | null {
-    // Testimonials are currently mock data, not from profile
-    // In future, this could extract from profile.testimonials if added
+    // Extract testimonials from profile if available
+    if (profile.testimonials && profile.testimonials.length > 0) {
+      return profile.testimonials;
+    }
+    // Fallback to default testimonials
     return this.getDefaultTestimonials();
   }
 

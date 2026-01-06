@@ -68,6 +68,21 @@ export function updateTwitterTag(name: string, content: string): void {
 }
 
 /**
+ * Update canonical URL
+ */
+export function updateCanonicalURL(url: string): void {
+  let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "canonical";
+    document.head.appendChild(link);
+  }
+
+  link.href = url;
+}
+
+/**
  * Generate structured data (JSON-LD)
  */
 export function generateStructuredData(profile: UserProfile): object {
@@ -179,6 +194,9 @@ export function updateSEOFromProfile(profile: UserProfile): void {
   updateTwitterTag("twitter:title", title);
   updateTwitterTag("twitter:description", description);
   updateTwitterTag("twitter:image", image);
+
+  // Update canonical URL
+  updateCanonicalURL(url);
 
   // Inject structured data
   const structuredData = generateStructuredData(profile);
