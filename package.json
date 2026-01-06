@@ -20,6 +20,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:watch": "react-scripts test --watch",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:ci": "react-scripts test --coverage --watchAll=false --ci",
     "eject": "react-scripts eject",
     "server": "ts-node backend/src/main.ts",
     "server:watch": "nodemon --exec ts-node backend/src/main.ts",
@@ -56,12 +59,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.23",
     "@types/jest": "^27.5.2",
     "@types/node": "^24.5.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^8.44.1",
     "concurrently": "^9.2.1",
@@ -75,8 +82,36 @@
     "stylelint": "^16.24.0",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-order": "^7.0.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5",
     "typescript-eslint": "^8.44.1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.(ts|tsx|js)",
+      "**/*.(test|spec).(ts|tsx|js)"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/*.d.ts",
+      "!src/index.tsx",
+      "!src/react-app-env.d.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
+      }
+    }
   }
 }

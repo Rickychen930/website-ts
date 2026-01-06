@@ -61,7 +61,7 @@ export function updateTwitterTag(name: string, content: string): void {
  * Generate structured data (JSON-LD)
  */
 export function generateStructuredData(profile: UserProfile): object {
-  const structuredData = {
+  const structuredData: any = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: profile.name,
@@ -73,16 +73,30 @@ export function generateStructuredData(profile: UserProfile): object {
     },
     url: window.location.href,
     sameAs: profile.contacts
-      .filter((contact) => contact.type === "LinkedIn" || contact.type === "GitHub")
-      .map((contact) => contact.url),
+      .filter((contact) => {
+        // Filter contacts that have links (LinkedIn, GitHub, etc.)
+        const label = contact.label?.toLowerCase() || "";
+        return contact.link && (label.includes("linkedin") || label.includes("github") || label.includes("twitter"));
+      })
+      .map((contact) => contact.link)
+      .filter((link): link is string => typeof link === "string"),
   };
 
   // Add professional skills
   if (profile.technicalSkills && profile.technicalSkills.length > 0) {
-    structuredData.skills = profile.technicalSkills.map((skill) => ({
-      "@type": "Thing",
-      name: skill.name,
-    }));
+    const allSkills: string[] = [];
+    profile.technicalSkills.forEach((category) => {
+      if (category.items && Array.isArray(category.items)) {
+        allSkills.push(...category.items);
+      }
+    });
+    
+    if (allSkills.length > 0) {
+      structuredData.knowsAbout = allSkills.map((skill) => ({
+        "@type": "Thing",
+        name: skill,
+      }));
+    }
   }
 
   // Add work experience
@@ -90,9 +104,10 @@ export function generateStructuredData(profile: UserProfile): object {
     structuredData.worksFor = profile.experiences.map((exp) => ({
       "@type": "Organization",
       name: exp.company,
-      jobTitle: exp.position,
-      startDate: exp.startDate,
-      endDate: exp.endDate || undefined,
+      jobTitle: exp.title,
+      // Note: period is a string like "May 2023 - Present", not a date
+      // We'll extract what we can or leave it as description
+      description: exp.description,
     }));
   }
 
