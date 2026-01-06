@@ -23,10 +23,10 @@ Panduan lengkap untuk deployment aplikasi website-ts secara profesional.
 
 ## Environment Variables
 
-Copy file `env.example` ke `.env` dan sesuaikan nilai-nilainya:
+Copy file `config/env.example` ke `.env` dan sesuaikan nilai-nilainya:
 
 ```bash
-cp env.example .env
+cp config/env.example .env
 ```
 
 ### Variabel yang Diperlukan

@@ -1,46 +1,176 @@
-# Getting Started with Create React App
+# Website TypeScript - Fullstack Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplikasi portfolio fullstack yang dibangun dengan React (TypeScript) untuk frontend dan Express (TypeScript) untuk backend.
 
-## Available Scripts
+## 🚀 Quick Start
 
-In the project directory, you can run:
+### Development
 
-### `npm start`
+```bash
+# Install dependencies
+npm install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Setup environment
+cp config/env.example .env
+# Edit .env dengan konfigurasi Anda
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Run development server (frontend + backend)
+npm run dev
 
-### `npm test`
+# Atau secara terpisah:
+npm start              # Frontend (http://localhost:3000)
+npm run server:watch   # Backend (http://localhost:4000)
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Production Build
 
-### `npm run build`
+```bash
+# Build semua (frontend + backend)
+npm run build:all
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Atau secara terpisah:
+npm run build          # Frontend
+npm run backend:build  # Backend
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📁 Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+website-ts/
+├── backend/              # Backend Express API
+│   ├── src/             # TypeScript source files
+│   │   ├── config/      # Configuration files
+│   │   ├── controllers/ # Route controllers
+│   │   ├── models/      # Data models
+│   │   ├── routes/      # API routes
+│   │   ├── services/    # Business logic services
+│   │   ├── types/       # TypeScript type definitions
+│   │   └── seed/        # Database seeding scripts
+│   ├── dist/            # Compiled JavaScript (gitignored)
+│   ├── logs/            # Application logs (gitignored)
+│   ├── ecosystem.config.js  # PM2 configuration
+│   └── tsconfig.backend.json # TypeScript config for backend
+├── src/                 # React frontend source
+│   ├── assets/          # Static assets (images, CSS)
+│   ├── config/          # Frontend configuration
+│   ├── controllers/     # Frontend controllers (MVC pattern)
+│   ├── models/          # Frontend data models
+│   ├── routes/          # React Router configuration
+│   ├── services/        # API service layer
+│   ├── types/           # TypeScript type definitions
+│   ├── utils/           # Utility functions
+│   └── views/           # React components and pages
+│       ├── components/  # Reusable UI components
+│       └── pages/       # Page components
+├── public/              # Public static assets
+├── docs/                # Documentation files
+├── scripts/             # Deployment and setup scripts
+├── docker/              # Docker configuration files
+│   ├── Dockerfile       # Docker image configuration
+│   └── docker-compose.yml # Docker Compose setup
+├── config/              # Configuration files
+│   └── nginx.conf       # Nginx server configuration
+└── config/              # Configuration files
+    ├── env.example       # Environment variables template
+    └── nginx.conf        # Nginx server configuration
+```
 
-### `npm run eject`
+## 🛠 Tech Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Frontend
+- React 19
+- TypeScript
+- React Router
+- CSS Modules
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Backend
+- Express 5
+- TypeScript
+- MongoDB (Mongoose)
+- PM2 (Process Manager)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### DevOps
+- Docker & Docker Compose
+- GitHub Actions
+- PM2
+- Nginx (optional)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 📚 Documentation
 
-## Learn More
+Semua dokumentasi tersedia di folder [`docs/`](./docs/):
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [Project Structure](./docs/PROJECT_STRUCTURE.md) - Struktur proyek dan arsitektur lengkap
+- [Deployment Guide](./docs/DEPLOYMENT.md) - Panduan lengkap deployment
+- [Deployment Workflow](./docs/DEPLOYMENT_WORKFLOW.md) - Workflow deployment
+- [PM2 & Nginx Setup](./docs/PM2_NGINX_SETUP.md) - Konfigurasi PM2 dan Nginx
+- [Troubleshooting Cache](./docs/TROUBLESHOOTING_CACHE.md) - Solusi jika tampilan masih lama setelah deploy
+- [Changelog](./docs/CHANGELOG.md) - Riwayat perubahan
+- [Environment Variables](./config/env.example) - Contoh konfigurasi environment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Lihat [docs/README.md](./docs/README.md) untuk daftar lengkap dokumentasi.
+
+## 🔧 Available Scripts
+
+### Development
+- `npm start` - Start React development server
+- `npm run dev` - Start frontend + backend concurrently
+- `npm run server` - Start backend only
+- `npm run server:watch` - Start backend with hot reload
+
+### Build
+- `npm run build` - Build React app for production
+- `npm run backend:build` - Build backend TypeScript
+- `npm run build:all` - Build both frontend and backend
+
+### Deployment
+- `npm run backend:pm2` - Start backend with PM2 (production)
+- `npm run docker:build` - Build Docker image
+- `npm run docker:run` - Start with Docker Compose
+- `npm run docker:stop` - Stop Docker containers
+
+### Database
+- `npm run seed` - Seed database with sample data
+
+## 🌐 Environment Variables
+
+Lihat file `config/env.example` untuk daftar lengkap environment variables yang diperlukan.
+
+## 🐳 Docker
+
+### Build dan Run
+
+```bash
+# Build image
+npm run docker:build
+
+# Run dengan docker-compose
+npm run docker:run
+
+# View logs
+npm run docker:logs
+```
+
+## 📦 Deployment
+
+Deployment otomatis dilakukan melalui GitHub Actions saat push ke branch `main`.
+
+Untuk deployment manual, lihat [Deployment Guide](./docs/DEPLOYMENT.md).
+
+## 🔒 Security
+
+- CORS configuration via environment variables
+- SSL/TLS support untuk production
+- Environment variables untuk sensitive data
+- Input validation dan sanitization
+
+## 📝 License
+
+Private project
+
+## 👤 Author
+
+Ricky Chen
+
+---
+
+Untuk informasi lebih lanjut tentang deployment, lihat [Deployment Guide](./docs/DEPLOYMENT.md).

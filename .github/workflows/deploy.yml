@@ -182,7 +182,20 @@ jobs:
             pm2 start ecosystem.config.js --env production
             pm2 save
 
-      - name: Restart Nginx
+      - name: Deploy Nginx config
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "config/nginx.conf"
+          target: "/tmp"
+          strip_components: 0
+          rm: false
+        continue-on-error: true
+
+      - name: Update and Restart Nginx
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -190,7 +203,12 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           script: |
-            sudo systemctl restart nginx || true
+            if [ -f "/tmp/nginx.conf" ]; then
+              sudo cp /tmp/nginx.conf /etc/nginx/sites-available/rickychen930.cloud || true
+              sudo nginx -t && sudo systemctl reload nginx || sudo systemctl restart nginx || true
+            else
+              sudo systemctl restart nginx || true
+            fi
 
       # ============================
       # ✅ HEALTH CHECK & VERIFICATION
