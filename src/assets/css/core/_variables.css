@@ -175,6 +175,10 @@
   --color-accent-glow: rgb(102 126 234 / 35%);
   --color-accent-glow-strong: rgb(118 75 162 / 40%);
 
+  /* Accent Colors - Light Mode Specific (for better contrast) */
+  --color-accent-primary-light-mode: #667eea;
+  --color-accent-hover-light-mode: #7c3aed;
+
   /* ============================================
      Background Colors - Light Theme
      ============================================ */
@@ -612,6 +616,96 @@
   /* Background Red/Pink Alpha Variants - Dark Theme */
   --color-bg-red-alpha-95: rgb(30 37 50 / 95%);
   --color-bg-pink-alpha-95: rgb(30 37 50 / 95%);
+
+  /* Accent Alpha Variants - Dark Theme (adjusted for better visibility) */
+  --color-accent-alpha-015: rgb(167 139 250 / 2%);
+  --color-accent-alpha-03: rgb(167 139 250 / 4%);
+  --color-accent-alpha-04: rgb(167 139 250 / 5%);
+  --color-accent-alpha-05: rgb(167 139 250 / 6%);
+  --color-accent-alpha-06: rgb(167 139 250 / 8%);
+  --color-accent-alpha-08: rgb(167 139 250 / 10%);
+  --color-accent-alpha-10: rgb(167 139 250 / 12%);
+  --color-accent-alpha-12: rgb(167 139 250 / 15%);
+  --color-accent-alpha-15: rgb(167 139 250 / 18%);
+  --color-accent-alpha-18: rgb(167 139 250 / 20%);
+  --color-accent-alpha-20: rgb(167 139 250 / 25%);
+  --color-accent-alpha-25: rgb(167 139 250 / 30%);
+  --color-accent-alpha-30: rgb(167 139 250 / 35%);
+  --color-accent-alpha-35: rgb(167 139 250 / 40%);
+  --color-accent-alpha-40: rgb(167 139 250 / 45%);
+  --color-accent-alpha-50: rgb(167 139 250 / 55%);
+  --color-accent-alpha-60: rgb(167 139 250 / 65%);
+  --color-accent-alpha-80: rgb(167 139 250 / 85%);
+  --color-accent-alpha-100: rgb(167 139 250 / 100%);
+
+  /* Accent Alt Alpha Variants - Dark Theme (adjusted) */
+  --color-accent-alt-alpha-03: rgb(139 92 246 / 4%);
+  --color-accent-alt-alpha-06: rgb(139 92 246 / 8%);
+  --color-accent-alt-alpha-08: rgb(139 92 246 / 10%);
+  --color-accent-alt-alpha-10: rgb(139 92 246 / 12%);
+  --color-accent-alt-alpha-12: rgb(139 92 246 / 15%);
+  --color-accent-alt-alpha-15: rgb(139 92 246 / 18%);
+  --color-accent-alt-alpha-18: rgb(139 92 246 / 20%);
+  --color-accent-alt-alpha-20: rgb(139 92 246 / 25%);
+  --color-accent-alt-alpha-25: rgb(139 92 246 / 30%);
+  --color-accent-alt-alpha-30: rgb(139 92 246 / 35%);
+  --color-accent-alt-alpha-40: rgb(139 92 246 / 45%);
+  --color-accent-alt-alpha-50: rgb(139 92 246 / 55%);
+  --color-accent-alt-alpha-60: rgb(139 92 246 / 65%);
+  --color-accent-alt-alpha-80: rgb(139 92 246 / 85%);
+  --color-accent-alt-alpha-90: rgb(139 92 246 / 95%);
+
+  /* Border Alpha Variants - Dark Theme */
+  --color-border-alpha-30: rgb(51 65 85 / 40%);
+  --color-border-alpha-40: rgb(51 65 85 / 50%);
+  --color-border-alpha-50: rgb(51 65 85 / 60%);
+  --color-border-alpha-60: rgb(51 65 85 / 70%);
+
+  /* Border Medium Alpha Variants - Dark Theme */
+  --color-border-medium-alpha-50: rgb(71 85 105 / 60%);
+
+  /* Border Link Alpha Variants - Dark Theme */
+  --color-border-link-alpha-10: rgb(167 139 250 / 12%);
+  --color-border-link-alpha-15: rgb(167 139 250 / 18%);
+  --color-border-link-alpha-20: rgb(167 139 250 / 25%);
+
+  /* Info Alpha Variants - Dark Theme */
+  --color-info-alpha-03: rgb(96 165 250 / 4%);
+  --color-info-alpha-10: rgb(96 165 250 / 12%);
+  --color-info-alpha-15: rgb(96 165 250 / 18%);
+  --color-info-alpha-20: rgb(96 165 250 / 25%);
+  --color-info-alpha-25: rgb(96 165 250 / 30%);
+  --color-info-alpha-30: rgb(96 165 250 / 35%);
+  --color-info-alpha-40: rgb(96 165 250 / 45%);
+  --color-info-alpha-50: rgb(96 165 250 / 55%);
+  --color-info-alpha-60: rgb(96 165 250 / 65%);
+  --color-info-alpha-80: rgb(96 165 250 / 85%);
+
+  /* Success Alpha Variants - Dark Theme */
+  --color-success-alpha-30: rgb(74 222 128 / 35%);
+
+  /* Warning Alpha Variants - Dark Theme */
+  --color-warning-alpha-30: rgb(251 191 36 / 35%);
+
+  /* Accent Purple Alpha Variants - Dark Theme */
+  --color-accent-purple-alpha-30: rgb(167 139 250 / 35%);
+
+  /* Muted/Gray Alpha Variants - Dark Theme */
+  --color-muted-alpha-30: rgb(203 213 225 / 40%);
+
+  /* Accent Tertiary Alpha Variants - Dark Theme */
+  --color-accent-tertiary-alpha-15: rgb(79 172 254 / 18%);
+  --color-accent-tertiary-alpha-20: rgb(79 172 254 / 25%);
+
+  /* Accent Secondary Alpha Variants - Dark Theme */
+  --color-accent-secondary-alpha-10: rgb(240 147 251 / 12%);
+  --color-accent-secondary-alpha-15: rgb(240 147 251 / 18%);
+  --color-accent-secondary-alpha-18: rgb(240 147 251 / 20%);
+  --color-accent-secondary-alpha-30: rgb(240 147 251 / 35%);
+  --color-accent-secondary-alpha-50: rgb(240 147 251 / 55%);
+  --color-accent-secondary-alpha-90: rgb(240 147 251 / 95%);
+
+  /* Background Card and Component Colors - Dark Theme */
   --color-bg-card: #1e2532;
   --color-bg-card-alt: #1a2230;
   --color-bg-card-hover: #252d3d;
@@ -664,6 +758,7 @@
   --color-border-period: #475569;
   --color-border-accent: rgb(167 139 250 / 40%);
   --color-border-accent-hover: rgb(167 139 250 / 60%);
+  --color-border-print: #64748b;
 
   /* ============================================
      Status Colors - Dark Theme
@@ -694,6 +789,19 @@
   --color-info-text: #93c5fd;
 
   /* Note: Info colors kept as blue for status/notification purposes */
+
+  /* ============================================
+     Accent Colors - Dark Theme (adjusted for better visibility)
+     ============================================ */
+  --color-accent-primary: #a78bfa;
+  --color-accent-hover: #c4b5fd;
+  --color-accent-light: #c4b5fd;
+  --color-accent-glow: rgb(167 139 250 / 40%);
+  --color-accent-glow-strong: rgb(139 92 246 / 45%);
+
+  /* Special Purpose Colors - Dark Theme */
+  --color-purple: var(--color-accent-purple);
+  --color-purple-dark: var(--color-accent-purple-dark);
 
   /* ============================================
      Code Syntax Colors - Dark Theme
@@ -758,6 +866,13 @@
      Gradients - Dark Theme
      ============================================ */
   --gradient-primary: linear-gradient(135deg, #1e2532 0%, #151b26 100%);
+  --gradient-accent: linear-gradient(135deg, #a78bfa 0%, #764ba2 100%);
+  --gradient-accent-full: linear-gradient(
+    135deg,
+    #a78bfa 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
   --gradient-luxury: linear-gradient(
     135deg,
     #1e2532 0%,
@@ -768,6 +883,12 @@
     135deg,
     rgb(102 126 234 / 15%) 0%,
     rgb(118 75 162 / 15%) 100%
+  );
+  --gradient-primary-reverse: linear-gradient(
+    135deg,
+    #f093fb 0%,
+    #764ba2 50%,
+    #a78bfa 100%
   );
   --gradient-accent-subtle: linear-gradient(
     135deg,
@@ -794,10 +915,28 @@
   --shadow-card-hover:
     0 16px 40px rgb(0 0 0 / 60%), 0 32px 80px rgb(0 0 0 / 50%),
     0 48px 120px rgb(102 126 234 / 30%);
+  --shadow-card-alt: 0 10px 32px rgb(0 0 0 / 60%);
+  --shadow-item: 0 6px 16px rgb(0 0 0 / 50%), 0 12px 32px rgb(0 0 0 / 60%);
+  --shadow-item-hover:
+    0 16px 40px rgb(0 0 0 / 70%), 0 32px 80px rgb(0 0 0 / 60%),
+    0 40px 100px rgb(102 126 234 / 25%);
+  --shadow-icon: 0 4px 10px rgb(0 0 0 / 50%);
+  --shadow-icon-alt: 0 6px 16px rgb(0 0 0 / 50%);
+  --shadow-icon-hover: 0 12px 32px rgb(167 139 250 / 40%);
   --shadow-focus: 0 0 0 4px rgb(96 165 250 / 30%);
   --shadow-glow: 0 0 24px rgb(96 165 250 / 40%);
+  --shadow-glow-strong: 0 0 40px rgb(139 92 246 / 50%);
+  --shadow-accent: 0 0 16px rgb(167 139 250 / 40%);
+  --shadow-footer: 0 -6px 20px rgb(0 0 0 / 50%);
   --shadow-navbar: 0 8px 24px rgb(0 0 0 / 50%);
   --shadow-navbar-scrolled: 0 12px 32px rgb(0 0 0 / 60%);
+  --shadow-dropdown: 0 10px 32px rgb(0 0 0 / 60%);
+  --shadow-composite:
+    0 2px 4px rgb(0 0 0 / 50%), 0 6px 12px rgb(0 0 0 / 60%),
+    0 16px 32px rgb(0 0 0 / 70%), 0 32px 64px rgb(0 0 0 / 50%);
+  --shadow-composite-hover:
+    0 4px 8px rgb(0 0 0 / 60%), 0 12px 24px rgb(0 0 0 / 70%),
+    0 32px 64px rgb(0 0 0 / 80%), 0 48px 120px rgb(102 126 234 / 30%);
 
   /* ============================================
      Legacy Variable Aliases - Backward Compatibility (Dark Theme)
@@ -819,6 +958,7 @@
   --bg-stat: var(--color-bg-stat);
   --bg-overlay: var(--color-bg-overlay);
   --bg-gradient-primary: var(--gradient-primary);
+  --bg-gradient-accent: var(--gradient-accent);
   --bg-gradient-luxury: var(--gradient-luxury);
   --bg-gradient-sublime: var(--gradient-sublime);
 
