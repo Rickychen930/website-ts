@@ -79,10 +79,14 @@ class MainPage extends BasePage<{}, MainPageState> {
     this.state = {
       ...this.state,
       profile: null,
-      loading: true,
+      loading: false, // Changed to false - will be set to true when loadProfile() starts
       error: null,
       retryCount: 0,
     };
+    console.log("[MainPage.constructor] Initial state set:", {
+      loading: this.state.loading,
+      hasProfile: !!this.state.profile,
+    });
     this.controller = new MainPageController();
     this.smoothScrollManager = new SmoothScrollManager(ScrollConfig.OFFSET);
     this.scrollObserverManager = new ScrollObserverManager(
@@ -298,8 +302,20 @@ class MainPage extends BasePage<{}, MainPageState> {
     });
 
     // Edge case: Prevent multiple simultaneous loads
+    // BUT: If we already have a profile and it's valid, don't reload
     if (this.state.loading) {
       console.log("[MainPage.loadProfile] ⚠️ Already loading, skipping...");
+      console.log(
+        "[MainPage.loadProfile] This should not happen on first load!",
+      );
+      return;
+    }
+
+    // Only skip if we already have a valid profile (don't reload unnecessarily)
+    if (this.state.profile && !this.state.error) {
+      console.log(
+        "[MainPage.loadProfile] ✅ Profile already loaded, skipping reload",
+      );
       return;
     }
 
