@@ -300,13 +300,30 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
 
           // Update current visible index
           const itemIndex = data.findIndex((item) => item.key === key);
-          if (itemIndex > currentVisibleIndex) {
+          if (itemIndex >= 0 && itemIndex > currentVisibleIndex) {
             currentVisibleIndex = itemIndex;
           }
         } else {
           // Only remove if scrolling away significantly
           if (entry.intersectionRatio < 0.1) {
             updated.delete(key);
+
+            // Update current visible index if needed
+            const itemIndex = data.findIndex((item) => item.key === key);
+            if (itemIndex === currentVisibleIndex && currentVisibleIndex > 0) {
+              // Find the next visible item below
+              for (let i = currentVisibleIndex - 1; i >= 0; i--) {
+                const prevKey = data[i]?.key;
+                if (prevKey && updated.has(prevKey)) {
+                  currentVisibleIndex = i;
+                  break;
+                }
+              }
+              // If no previous visible item, reset to -1
+              if (currentVisibleIndex === itemIndex) {
+                currentVisibleIndex = -1;
+              }
+            }
           }
         }
 
@@ -498,11 +515,6 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
         ref={this.containerRef}
         role="list"
         aria-label="Academic background timeline"
-        style={
-          {
-            "--academic-item-count": renderedItems.length,
-          } as React.CSSProperties
-        }
       >
         <AcademicTimeline
           itemCount={renderedItems.length}

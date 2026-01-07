@@ -1,7 +1,7 @@
 /**
  * AcademicTimeline Component
  * Luxury timeline visualization for academic achievements
- * 
+ *
  * Principles Applied:
  * - Single Responsibility: Displays timeline visualization
  * - Open/Closed: Extensible through props
@@ -32,18 +32,29 @@ export class AcademicTimeline extends PureComponent<IAcademicTimelineProps> {
    * Render timeline line
    */
   private renderTimelineLine(): ReactNode {
-    const { itemCount, isVisible } = this.props;
+    const { itemCount, currentIndex, isVisible } = this.props;
 
     if (itemCount <= 1) {
       return null;
     }
+
+    // Calculate progress percentage based on current index
+    // Ensure progress is between 0 and 100%
+    const clampedIndex = Math.max(-1, Math.min(currentIndex, itemCount - 1));
+    const progressPercentage =
+      itemCount > 1 && clampedIndex >= 0
+        ? Math.min(100, ((clampedIndex + 1) / itemCount) * 100)
+        : 0;
 
     return (
       <div
         className={`academic-timeline-line ${isVisible ? "academic-timeline-visible" : ""}`}
         aria-hidden="true"
       >
-        <div className="academic-timeline-line-progress"></div>
+        <div
+          className="academic-timeline-line-progress"
+          style={{ height: `${progressPercentage}%` }}
+        ></div>
       </div>
     );
   }
@@ -58,10 +69,13 @@ export class AcademicTimeline extends PureComponent<IAcademicTimelineProps> {
       return null;
     }
 
+    // Clamp currentIndex to valid range
+    const clampedIndex = Math.max(-1, Math.min(currentIndex, itemCount - 1));
+
     const dots: ReactNode[] = [];
     for (let i = 0; i < itemCount; i++) {
-      const isActive = i <= currentIndex;
-      const isCurrent = i === currentIndex;
+      const isActive = clampedIndex >= 0 && i <= clampedIndex;
+      const isCurrent = i === clampedIndex;
 
       dots.push(
         <div
@@ -76,7 +90,7 @@ export class AcademicTimeline extends PureComponent<IAcademicTimelineProps> {
             transitionDelay: `${i * 100}ms`,
           }}
           aria-hidden="true"
-        />
+        />,
       );
     }
 
@@ -89,10 +103,7 @@ export class AcademicTimeline extends PureComponent<IAcademicTimelineProps> {
   public render(): ReactNode {
     const { className = "" } = this.props;
 
-    const timelineClasses = [
-      "academic-timeline",
-      className,
-    ]
+    const timelineClasses = ["academic-timeline", className]
       .filter(Boolean)
       .join(" ");
 
@@ -104,4 +115,3 @@ export class AcademicTimeline extends PureComponent<IAcademicTimelineProps> {
     );
   }
 }
-

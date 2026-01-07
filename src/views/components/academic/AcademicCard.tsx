@@ -1,7 +1,7 @@
 /**
  * AcademicCard Component
  * Reusable card component for displaying academic achievements
- * 
+ *
  * Principles Applied:
  * - Single Responsibility: Displays single academic item
  * - Open/Closed: Extensible through props
@@ -75,10 +75,16 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
     return (
       <div className="academic-card-header">
         <div className="academic-card-title-wrapper">
-          <h3 className="academic-card-title">{item.title}</h3>
-          <span className={this.getLevelBadgeClass()}>{this.getLevelLabel()}</span>
+          <h3 className="academic-card-title">
+            {item.title || "Academic Achievement"}
+          </h3>
+          <span className={this.getLevelBadgeClass()}>
+            {this.getLevelLabel()}
+          </span>
         </div>
-        <div className="academic-card-institution">{item.institution}</div>
+        {item.institution && (
+          <div className="academic-card-institution">{item.institution}</div>
+        )}
       </div>
     );
   }
@@ -88,6 +94,10 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
    */
   private renderPeriod(): ReactNode {
     const { item } = this.props;
+    if (!item.period || item.period.trim() === "") {
+      return null;
+    }
+
     return (
       <div className="academic-card-period">
         <time dateTime={item.period} className="academic-card-period-text">
@@ -153,4 +163,3 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
     );
   }
 }
-

@@ -1,22 +1,47 @@
 /**
- * Academic Section - LUXURY REDESIGN
- * Premium, Modern, Professional Section Design
- * Complete redesign for luxury appearance
+ * Academic Section - Professional Redesign
+ * Efficient, Responsive, Professional Layout
  * 
  * Architecture Principles:
  * - DRY: Uses CSS constants and variables from core system
  * - KISS: Simple, clear structure
  * - OOP: Component-based organization
  * - SOLID: Single Responsibility - section-specific styles only
- * - Reusable: Uses core components and utilities
  * 
  * Features:
- * - Luxury Glassmorphism & Advanced Visual Effects
- * - Premium Animations & Micro-interactions
- * - Modern Timeline Layout
+ * - Efficient Grid Layout
  * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
+ * - Professional Design
  * - Performance Optimized
- * - Component-Based Architecture
+ * - Clean Timeline Integration
+ * 
+ * Integration:
+ * - Imports core CSS system (variables, constants, utilities)
+ * - Defines component-specific variables scoped to #academic-section.card
+ * - Variables cascade to all child components:
+ *   - .academic-items-grid
+ *   - .academic-item-wrapper
+ *   - .academic-card (AcademicCard component)
+ *   - .academic-timeline (AcademicTimeline component)
+ * - All child components inherit variables automatically
+ * 
+ * Color Integration:
+ * - ALL colors use variables from _variables.css (NO hardcoded colors)
+ * - Academic colors map to core color system:
+ *   - --academic-color-primary → --color-accent-primary
+ *   - --academic-color-secondary → --color-accent-alt
+ *   - --academic-color-graduate → --color-accent-purple
+ *   - --academic-color-certificate → --color-accent-secondary
+ *   - --academic-color-tertiary → --color-accent-tertiary
+ * - All alpha variants use core system (--color-accent-alpha-*)
+ * - All background/text/border colors use core system
+ * 
+ * Component Structure:
+ * - AcademicSection (main container with Card wrapper)
+ *   - AcademicItemsGrid (grid container)
+ *     - AcademicTimeline (timeline visualization)
+ *     - AcademicItemWrapper (wrapper for each item)
+ *       - AcademicCard (card component)
  */
 
 /* Import core system for constants and variables */
@@ -24,7 +49,6 @@
 
 /* ============================================
    Component-Specific Variables (DRY)
-   Uses core constants as base
    ============================================ */
 #academic-section.card,
 .card#academic-section {
@@ -41,7 +65,113 @@
   --academic-color-primary-light: var(--color-accent-light);
   --academic-color-primary-dark: var(--color-accent-dark);
   --academic-color-secondary: var(--color-accent-alt);
+  --academic-color-tertiary: var(--color-accent-tertiary);
   --academic-color-accent: var(--color-accent-hover);
+  --academic-color-graduate: var(--color-accent-purple);
+  --academic-color-certificate: var(--color-accent-secondary);
+
+  /* Border Radius - Reusable */
+  --academic-radius-sm: 8px;
+  --academic-radius-md: 10px;
+  --academic-radius-lg: 12px;
+  --academic-radius-xl: 14px;
+  --academic-radius-xxl: 16px;
+
+  /* Icon Sizes - Reusable */
+  --academic-icon-size-xs: 2.75rem;
+  --academic-icon-size-sm: 3rem;
+  --academic-icon-size-md: 3.25rem;
+  --academic-icon-size-lg: 3.5rem;
+  --academic-icon-emoji-size-xs: 1.25rem;
+  --academic-icon-emoji-size-sm: 1.35rem;
+  --academic-icon-emoji-size-md: 1.4rem;
+  --academic-icon-emoji-size-lg: 1.5rem;
+
+  /* Timeline Sizes - Reusable */
+  --academic-timeline-width-xs: 2px;
+  --academic-timeline-width-sm: 2.5px;
+  --academic-timeline-width-md: 3px;
+  --academic-timeline-width-lg: 4px;
+  --academic-timeline-dot-size-xs: 10px;
+  --academic-timeline-dot-size-sm: 12px;
+  --academic-timeline-dot-size-md: 13px;
+  --academic-timeline-dot-size-lg: 14px;
+  --academic-timeline-dot-border-xs: 2px;
+  --academic-timeline-dot-border-sm: 2.5px;
+  --academic-timeline-dot-border-md: 2.5px;
+  --academic-timeline-dot-border-lg: 3px;
+
+  /* Padding - Reusable */
+  --academic-padding-xs: var(--academic-spacing-xs);
+  --academic-padding-sm: var(--academic-spacing-sm);
+  --academic-padding-md: var(--academic-spacing-md);
+  --academic-padding-lg: var(--academic-spacing-lg);
+  --academic-padding-xl: var(--academic-spacing-xl);
+  --academic-card-padding-xs: 1rem;
+  --academic-card-padding-sm: 1.25rem;
+  --academic-card-padding-md: 1.5rem;
+  --academic-card-padding-lg: 1.75rem;
+  --academic-card-padding-xl: 2rem;
+
+  /* Wrapper Padding - Reusable */
+  --academic-wrapper-padding-xs: 0;
+  --academic-wrapper-padding-sm: 0;
+  --academic-wrapper-padding-md: 3rem;
+  --academic-wrapper-padding-lg: 3.5rem;
+  --academic-wrapper-padding-xl: 4rem;
+  --academic-wrapper-padding-xxl: 4.5rem;
+  --academic-wrapper-padding-xxxl: 5rem;
+
+  /* Timeline Position - Reusable */
+  --academic-timeline-left-xs: 0.5rem;
+  --academic-timeline-left-sm: 0.75rem;
+  --academic-timeline-left-md: 1rem;
+  --academic-timeline-left-lg: 1.25rem;
+
+  /* Font Sizes - Reusable */
+  --academic-font-size-xs: 0.65rem;
+  --academic-font-size-sm: 0.7rem;
+  --academic-font-size-md: 0.85rem;
+  --academic-font-size-lg: 0.9rem;
+  --academic-font-size-xl: 0.95rem;
+  --academic-font-size-xxl: 1rem;
+  --academic-font-size-title-xs: 1.1rem;
+  --academic-font-size-title-sm: 1.15rem;
+  --academic-font-size-title-md: clamp(1.25rem, 2vw, 1.5rem);
+  --academic-font-size-institution-sm: 0.9rem;
+  --academic-font-size-institution-md: clamp(1rem, 1.4vw, 1.15rem);
+  --academic-font-size-description-xs: 0.85rem;
+  --academic-font-size-description-sm: 0.9rem;
+  --academic-font-size-description-md: clamp(0.95rem, 1.3vw, 1.05rem);
+  --academic-font-size-period-xs: 0.8rem;
+  --academic-font-size-period-md: clamp(0.85rem, 1.1vw, 0.95rem);
+  --academic-font-size-empty-xs: 0.875rem;
+  --academic-font-size-empty-sm: 0.95rem;
+  --academic-font-size-empty-md: clamp(1rem, 1.5vw, 1.2rem);
+
+  /* Icon Sizes - Reusable */
+  --academic-icon-empty-xs: 2rem;
+  --academic-icon-empty-sm: 2.5rem;
+  --academic-icon-empty-md: 3rem;
+  --academic-icon-empty-lg: 4rem;
+
+  /* Empty State - Reusable */
+  --academic-empty-min-height-xs: 150px;
+  --academic-empty-min-height-sm: 180px;
+  --academic-empty-min-height-md: 200px;
+  --academic-empty-min-height-lg: 300px;
+
+  /* Gaps - Reusable */
+  --academic-gap-xs: var(--academic-spacing-sm);
+  --academic-gap-sm: var(--academic-spacing-md);
+  --academic-gap-md: var(--academic-spacing-lg);
+  --academic-gap-lg: var(--academic-spacing-xl);
+  --academic-gap-xl: var(--academic-spacing-xxl);
+  --academic-card-gap-xs: 1rem;
+  --academic-card-gap-md: 1.25rem;
+  --academic-card-gap-lg: 1.5rem;
+  --academic-header-gap-sm: 0.75rem;
+  --academic-header-gap-md: 1rem;
 
   /* Shadows - Uses core shadow system */
   --academic-shadow-card: var(--shadow-card);
@@ -50,259 +180,373 @@
   /* Transitions - Uses core transition system */
   --academic-transition-smooth: var(--transition-smooth);
   --academic-transition-bounce: var(--transition-bounce);
+  --academic-transition-fast: 0.3s ease;
+  --academic-transition-base: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --academic-transition-slow: 0.6s ease;
+  --academic-transition-timeline: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index - Reusable */
+  --academic-z-base: 1;
+  --academic-z-content: 2;
+  --academic-z-icon: 10;
+  --academic-z-timeline: 3;
+
+  /* Opacity - Reusable */
+  --academic-opacity-hidden: 0;
+  --academic-opacity-visible: 1;
+  --academic-opacity-icon: 0.7;
+  --academic-opacity-glow: 0.6;
+  --academic-opacity-glow-hover: 1;
+
+  /* Transform - Reusable */
+  --academic-transform-hover-y: -4px;
+  --academic-transform-hover-y-mobile: -2px;
+  --academic-transform-hidden-y: 20px;
+  --academic-transform-scale-hover: 1.1;
+  --academic-transform-scale-period: translateY(-2px);
+
+  /* Animation Delays - Reusable */
+  --academic-animation-delay-1: 0ms;
+  --academic-animation-delay-2: 100ms;
+  --academic-animation-delay-3: 200ms;
+  --academic-animation-delay-4: 300ms;
+  --academic-animation-delay-5: 400ms;
+  --academic-animation-duration: 0.6s;
 }
 
 /* ─── Global Reset ─── */
-#academic-section * {
+#academic-section *,
+#academic-section.card *,
+.card#academic-section * {
   box-sizing: border-box;
 }
 
-/* ============================================
-   Main Section Container - REMOVED (not needed, Card component handles styling)
-   ============================================ */
+/* ─── Variables Inheritance ─── */
+
+/* Ensure all child components can access academic variables */
+
+/* Variables cascade from #academic-section.card to all children */
+#academic-section,
+#academic-section.card,
+.card#academic-section {
+  /* All variables are defined above in the component-specific variables section */
+
+  /* They will cascade to all children: .academic-items-grid, .academic-card, .academic-timeline, etc. */
+}
 
 /* ============================================
-   Advanced Grid Layout
+   Main Grid Layout - Efficient & Responsive
    ============================================ */
 .academic-items-grid {
   display: grid;
   position: relative;
-  z-index: calc(var(--z-base) + 1);
   width: 100%;
   padding: var(--academic-spacing-lg, 2rem) 0;
   grid-template-columns: 1fr;
   gap: var(--academic-spacing-xl, 3rem);
-
-  --academic-item-count: 1; /* Will be set dynamically via inline style */
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Timeline positioned absolutely within grid to align with cards */
+/* Timeline positioned absolutely within grid */
 .academic-items-grid > .academic-timeline {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  height: 100%;
-  padding: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--academic-z-base, 1);
+  width: var(--academic-timeline-width-xs, 2px);
   pointer-events: none;
-}
-
-/* Position timeline dots to align with card centers */
-.academic-items-grid .academic-timeline-dots {
-  display: contents;
 }
 
 .academic-item-wrapper {
   position: relative;
-  z-index: 2;
+  z-index: var(--academic-z-content, 2);
   width: 100%;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-/* Staggered animation delays */
-.academic-item-wrapper:nth-child(1) {
-  animation-delay: 0ms;
-}
-
-.academic-item-wrapper:nth-child(2) {
-  animation-delay: 150ms;
-}
-
-.academic-item-wrapper:nth-child(3) {
-  animation-delay: 300ms;
-}
-
-.academic-item-wrapper:nth-child(4) {
-  animation-delay: 450ms;
-}
-
-.academic-item-wrapper:nth-child(5) {
-  animation-delay: 600ms;
-}
-
-.academic-item-wrapper:nth-child(n + 6) {
-  animation-delay: 750ms;
+  max-width: 100%;
+  padding-left: var(--academic-wrapper-padding-md, 3rem);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  animation: academic-fade-in var(--academic-animation-duration, 0.6s) ease-out
+    forwards;
 }
 
 /* ============================================
-   Empty State - Enhanced Design
+   Responsive Design - Mobile First
    ============================================ */
-.academic-empty-state {
-  display: flex;
-  position: relative;
-  padding: var(--academic-spacing-xl, 3rem) var(--academic-spacing-lg, 2rem);
-  border: 1px solid var(--color-accent-alpha-10);
-  background: linear-gradient(
-    135deg,
-    var(--color-white-alpha-95) 0%,
-    var(--color-bg-card-alt) 100%
-  );
-  color: var(--color-text-subtle);
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  overflow: hidden;
-  border-radius: 24px;
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 10px 40px var(--color-black-alpha-05),
-    0 4px 12px var(--color-accent-alpha-08);
-}
 
-.academic-empty-state::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    var(--color-accent-alpha-05) 0%,
-    transparent 70%
-  );
-  animation: academic-empty-pulse 3s ease-in-out infinite;
-  border-radius: 24px;
-}
-
-.academic-empty-icon {
-  position: relative;
-  z-index: 1;
-  font-size: 5rem;
-  opacity: 0.7;
-  margin-bottom: var(--academic-spacing-lg, 2rem);
-  animation: academic-empty-icon-float 3s ease-in-out infinite;
-  filter: drop-shadow(0 4px 12px var(--color-accent-alpha-20));
-}
-
-.academic-empty-text {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  color: var(--color-text-subtle);
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  font-weight: 500;
-}
-
-/* ============================================
-   Advanced Animations
-   ============================================ */
-@keyframes academic-section-fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-    filter: blur(10px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes academic-empty-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.6;
-    transform: scale(1.1);
-  }
-}
-
-@keyframes academic-empty-icon-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  33% {
-    transform: translateY(-10px) rotate(5deg);
-  }
-
-  66% {
-    transform: translateY(10px) rotate(-5deg);
-  }
-}
-
-/* ============================================
-   Responsive Design
-   ============================================ */
-@media screen and (width >= 1400px) {
+/* Extra Small Devices (320px - 480px) */
+@media screen and (width <= 480px) {
   .academic-items-grid {
-    gap: var(--academic-spacing-xl, 3rem);
-    padding: var(--academic-spacing-lg, 2rem) 0;
+    width: 100%;
+    padding: var(--academic-spacing-sm, 1rem) 0;
+    gap: var(--academic-spacing-md, 1.5rem);
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .academic-item-wrapper {
+    padding-left: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .academic-items-grid > .academic-timeline {
+    display: none; /* Hide timeline on very small screens for cleaner look */
   }
 }
 
-@media screen and (width <= 1200px) {
-  /* Container removed - Card component handles styling */
-}
-
-@media screen and (width <= 992px) {
-  .academic-items-grid {
-    gap: var(--academic-spacing-lg, 2rem);
-    padding: var(--academic-spacing-md, 1.5rem) 0;
-  }
-}
-
-@media screen and (width <= 768px) {
+/* Small Mobile (481px - 575px) */
+@media screen and (width >= 481px) and (width <= 575px) {
   .academic-items-grid {
     gap: var(--academic-spacing-md, 1.5rem);
     padding: var(--academic-spacing-sm, 1rem) 0;
   }
 
-  .academic-empty-state {
-    padding: var(--academic-spacing-md, 1.5rem) var(--academic-spacing-sm, 1rem);
-    min-height: 200px;
+  .academic-item-wrapper {
+    padding-left: 0;
   }
 
-  .academic-empty-icon {
-    font-size: 4rem;
+  .academic-items-grid > .academic-timeline {
+    display: none;
   }
 }
 
-@media screen and (width <= 480px) {
+/* Mobile (576px - 767px) */
+@media screen and (width >= 576px) and (width <= 767px) {
   .academic-items-grid {
-    width: 100%;
-    padding: var(--academic-spacing-xs, 0.75rem) 0;
-    gap: var(--academic-spacing-sm, 1rem);
-    max-width: 100%;
+    gap: var(--academic-spacing-lg, 2rem);
+    padding: var(--academic-spacing-md, 1.5rem) 0;
   }
 
+  .academic-item-wrapper {
+    padding-left: 0;
+  }
+
+  .academic-items-grid > .academic-timeline {
+    display: none;
+  }
+}
+
+/* Tablet Portrait (768px - 991px) */
+@media screen and (width >= 768px) and (width <= 991px) {
+  .academic-items-grid {
+    gap: var(--academic-spacing-xl, 3rem);
+    padding: var(--academic-spacing-lg, 2rem) 0;
+  }
+
+  .academic-item-wrapper {
+    padding-left: var(--academic-wrapper-padding-lg, 3.5rem);
+  }
+
+  .academic-items-grid > .academic-timeline {
+    left: var(--academic-timeline-left-xs, 0.5rem);
+    width: var(--academic-timeline-width-sm, 2.5px);
+  }
+}
+
+/* Tablet Landscape & Small Desktop (992px - 1199px) */
+@media screen and (width >= 992px) and (width <= 1199px) {
+  .academic-items-grid {
+    gap: var(--academic-spacing-xl, 3rem);
+    padding: var(--academic-spacing-lg, 2rem) 0;
+  }
+
+  .academic-item-wrapper {
+    padding-left: var(--academic-wrapper-padding-xl, 4rem);
+  }
+
+  .academic-items-grid > .academic-timeline {
+    left: var(--academic-timeline-left-sm, 0.75rem);
+    width: var(--academic-timeline-width-md, 3px);
+  }
+}
+
+/* Desktop (1200px - 1399px) */
+@media screen and (width >= 1200px) and (width <= 1399px) {
+  .academic-items-grid {
+    gap: var(--academic-spacing-xl, 3rem);
+    padding: var(--academic-spacing-lg, 2rem) 0;
+  }
+
+  .academic-item-wrapper {
+    padding-left: var(--academic-wrapper-padding-xxl, 4.5rem);
+  }
+
+  .academic-items-grid > .academic-timeline {
+    left: var(--academic-timeline-left-md, 1rem);
+    width: var(--academic-timeline-width-lg, 4px);
+  }
+}
+
+/* Large Desktop (1400px+) */
+@media screen and (width >= 1400px) {
+  .academic-items-grid {
+    gap: var(--academic-spacing-xxl, 4rem);
+    padding: var(--academic-spacing-lg, 2rem) 0;
+  }
+
+  .academic-item-wrapper {
+    padding-left: var(--academic-wrapper-padding-xxxl, 5rem);
+  }
+
+  .academic-items-grid > .academic-timeline {
+    left: var(--academic-timeline-left-lg, 1.25rem);
+    width: var(--academic-timeline-width-lg, 4px);
+  }
+}
+
+/* Landscape Orientation - Mobile/Tablet */
+@media screen and (orientation: landscape) and (width <= 991px) {
+  .academic-items-grid {
+    gap: var(--academic-spacing-lg, 2rem);
+    padding: var(--academic-spacing-md, 1.5rem) 0;
+  }
+
+  .academic-item-wrapper {
+    padding-left: 0;
+  }
+
+  .academic-items-grid > .academic-timeline {
+    display: none;
+  }
+}
+
+/* Landscape Orientation - Tablet */
+@media screen and (orientation: landscape) and (width >= 992px) and (width <= 1199px) {
+  .academic-items-grid {
+    gap: var(--academic-spacing-lg, 2rem);
+  }
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+.academic-empty-state {
+  display: flex;
+  padding: var(--academic-spacing-xl, 3rem) var(--academic-spacing-lg, 2rem);
+  border: 1px solid var(--color-accent-alpha-10);
+  background: var(--color-bg-card-alt);
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--academic-empty-min-height-lg, 300px);
+  border-radius: var(--academic-radius-xxl, 16px);
+}
+
+.academic-empty-icon {
+  font-size: var(--academic-icon-empty-lg, 4rem);
+  margin-bottom: var(--academic-spacing-md, 1.5rem);
+  opacity: var(--academic-opacity-icon, 0.7);
+}
+
+.academic-empty-text {
+  margin: 0;
+  color: var(--color-text-subtle);
+  font-size: var(--academic-font-size-empty-md, clamp(1rem, 1.5vw, 1.2rem));
+}
+
+@media screen and (width <= 768px) {
   .academic-empty-state {
     width: 100%;
     padding: var(--academic-spacing-lg, 2rem) var(--academic-spacing-md, 1.5rem);
-    min-height: 250px;
+    min-height: var(--academic-empty-min-height-md, 200px);
     max-width: 100%;
     box-sizing: border-box;
   }
 
   .academic-empty-icon {
-    font-size: 3rem;
+    font-size: var(--academic-icon-empty-md, 3rem);
   }
 }
 
-@media screen and (width <= 360px) {
+@media screen and (width <= 480px) {
   .academic-empty-state {
     padding: var(--academic-spacing-md, 1.5rem) var(--academic-spacing-sm, 1rem);
-    min-height: 200px;
+    min-height: var(--academic-empty-min-height-sm, 180px);
   }
 
   .academic-empty-icon {
-    font-size: 2.5rem;
+    font-size: var(--academic-icon-empty-sm, 2.5rem);
+  }
+
+  .academic-empty-text {
+    font-size: var(--academic-font-size-empty-sm, 0.95rem);
   }
 }
 
 /* ============================================
-   Landscape Orientation - Mobile/Tablet
+   Animations
    ============================================ */
-@media screen and (orientation: landscape) and (width <= 768px) {
+@keyframes academic-fade-in {
+  from {
+    opacity: var(--academic-opacity-hidden, 0);
+    transform: translateY(var(--academic-transform-hidden-y, 20px));
+  }
+
+  to {
+    opacity: var(--academic-opacity-visible, 1);
+    transform: translateY(0);
+  }
+}
+
+.academic-item-wrapper:nth-child(1) {
+  animation-delay: var(--academic-animation-delay-1, 0ms);
+}
+
+.academic-item-wrapper:nth-child(2) {
+  animation-delay: var(--academic-animation-delay-2, 100ms);
+}
+
+.academic-item-wrapper:nth-child(3) {
+  animation-delay: var(--academic-animation-delay-3, 200ms);
+}
+
+.academic-item-wrapper:nth-child(4) {
+  animation-delay: var(--academic-animation-delay-4, 300ms);
+}
+
+.academic-item-wrapper:nth-child(n + 5) {
+  animation-delay: var(--academic-animation-delay-5, 400ms);
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .academic-item-wrapper {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Very Small Devices (320px - 360px)
+   ============================================ */
+@media screen and (width <= 360px) {
   .academic-items-grid {
-    gap: var(--academic-spacing-md, 1.5rem);
+    gap: var(--academic-spacing-sm, 1rem);
+    padding: var(--academic-spacing-xs, 0.75rem) 0;
+  }
+
+  .academic-item-wrapper {
+    padding-left: 0;
+  }
+
+  .academic-empty-state {
+    padding: var(--academic-spacing-md, 1.5rem)
+      var(--academic-spacing-xs, 0.75rem);
+    min-height: var(--academic-empty-min-height-xs, 150px);
+  }
+
+  .academic-empty-icon {
+    font-size: var(--academic-icon-empty-xs, 2rem);
+  }
+
+  .academic-empty-text {
+    font-size: var(--academic-font-size-empty-xs, 0.875rem);
   }
 }
 
@@ -310,18 +554,8 @@
    High DPI / Retina Displays
    ============================================ */
 @media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
-  /* Container removed - Card component handles styling */
-}
-
-/* ============================================
-   Reduced Motion (Accessibility)
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-  .academic-item-wrapper,
-  .academic-empty-icon,
-  .academic-empty-state::before {
-    animation: none !important;
-    transition: none !important;
+  .academic-card-content {
+    border-width: 0.5px;
   }
 }
 
@@ -335,5 +569,15 @@
 
   .academic-item-wrapper {
     break-inside: avoid;
+    padding-left: 0;
+  }
+
+  .academic-items-grid > .academic-timeline {
+    display: none;
+  }
+
+  .academic-card-content {
+    box-shadow: none;
+    border: 1px solid var(--color-border-alpha-50);
   }
 }

@@ -111,6 +111,7 @@
   --color-accent-alt-alpha-90: rgb(118 75 162 / 90%);
 
   /* Accent Tertiary Alpha Variants */
+  --color-accent-tertiary-alpha-10: rgb(79 172 254 / 10%);
   --color-accent-tertiary-alpha-15: rgb(79 172 254 / 15%);
   --color-accent-tertiary-alpha-20: rgb(79 172 254 / 20%);
 
@@ -118,6 +119,7 @@
   --color-accent-secondary-alpha-10: rgb(240 147 251 / 10%);
   --color-accent-secondary-alpha-15: rgb(240 147 251 / 15%);
   --color-accent-secondary-alpha-18: rgb(240 147 251 / 18%);
+  --color-accent-secondary-alpha-20: rgb(240 147 251 / 20%);
   --color-accent-secondary-alpha-30: rgb(240 147 251 / 30%);
   --color-accent-secondary-alpha-50: rgb(240 147 251 / 50%);
   --color-accent-secondary-alpha-90: rgb(240 147 251 / 90%);
@@ -141,6 +143,8 @@
   --color-warning-alpha-30: rgb(245 158 11 / 30%);
 
   /* Accent Purple Alpha Variants - Harmonized */
+  --color-accent-purple-alpha-15: rgb(139 92 246 / 15%);
+  --color-accent-purple-alpha-20: rgb(139 92 246 / 20%);
   --color-accent-purple-alpha-30: rgb(139 92 246 / 30%);
 
   /* Muted/Gray Alpha Variants */
