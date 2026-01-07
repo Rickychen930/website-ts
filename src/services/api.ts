@@ -48,7 +48,10 @@ const DEFAULT_CONFIG: {
 /**
  * In-memory cache for API responses
  */
-const responseCache = new Map<string, { data: unknown; timestamp: number; cacheTime: number }>();
+const responseCache = new Map<
+  string,
+  { data: unknown; timestamp: number; cacheTime: number }
+>();
 
 /**
  * Get cache key from URL and config
@@ -87,10 +90,11 @@ function setCachedResponse<T>(key: string, data: T, cacheTime: number): void {
 function createTimeoutController(timeout: number): AbortController {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
+
   // Store timeout ID for cleanup
-  (controller as AbortController & { _timeoutId?: NodeJS.Timeout })._timeoutId = timeoutId;
-  
+  (controller as AbortController & { _timeoutId?: NodeJS.Timeout })._timeoutId =
+    timeoutId;
+
   return controller;
 }
 
@@ -98,7 +102,9 @@ function createTimeoutController(timeout: number): AbortController {
  * Cleanup timeout
  */
 function cleanupTimeout(controller: AbortController): void {
-  const timeoutId = (controller as AbortController & { _timeoutId?: NodeJS.Timeout })._timeoutId;
+  const timeoutId = (
+    controller as AbortController & { _timeoutId?: NodeJS.Timeout }
+  )._timeoutId;
   if (timeoutId) {
     clearTimeout(timeoutId);
   }
@@ -108,7 +114,7 @@ function cleanupTimeout(controller: AbortController): void {
  * Sleep utility for retry delays
  */
 function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -116,7 +122,7 @@ function sleep(ms: number): Promise<void> {
  */
 async function fetchWithRetry<T>(
   url: string,
-  config: RequestConfig = {}
+  config: RequestConfig = {},
 ): Promise<ApiResponse<T>> {
   const {
     timeout = DEFAULT_CONFIG.timeout,
@@ -128,15 +134,15 @@ async function fetchWithRetry<T>(
   } = config;
 
   // Check cache first (only for GET requests)
-  if (fetchConfig.method === undefined || fetchConfig.method === 'GET') {
-    if (cache === 'force-cache' || cacheTime) {
+  if (fetchConfig.method === undefined || fetchConfig.method === "GET") {
+    if (cache === "force-cache" || cacheTime) {
       const cacheKey = getCacheKey(url, config);
       const cached = getCachedResponse<T>(cacheKey);
       if (cached !== null) {
         return {
           data: cached,
           status: 200,
-          statusText: 'OK (Cached)',
+          statusText: "OK (Cached)",
           headers: new Headers(),
         };
       }
@@ -149,7 +155,7 @@ async function fetchWithRetry<T>(
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       timeoutController = createTimeoutController(timeout);
-      
+
       const response = await fetch(url, {
         ...fetchConfig,
         signal: timeoutController.signal,
@@ -163,14 +169,17 @@ async function fetchWithRetry<T>(
       timeoutController = null;
 
       if (!response.ok) {
-        const errorText = await response.text().catch(() => 'Unknown error');
+        const errorText = await response.text().catch(() => "Unknown error");
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
       const data = (await response.json()) as T;
 
       // Cache successful GET responses
-      if ((fetchConfig.method === undefined || fetchConfig.method === 'GET') && cacheTime) {
+      if (
+        (fetchConfig.method === undefined || fetchConfig.method === "GET") &&
+        cacheTime
+      ) {
         const cacheKey = getCacheKey(url, config);
         setCachedResponse(cacheKey, data, cacheTime);
       }
@@ -186,15 +195,15 @@ async function fetchWithRetry<T>(
         cleanupTimeout(timeoutController);
         timeoutController = null;
       }
-      
+
       lastError = error instanceof Error ? error : new Error(String(error));
 
       // Don't retry on certain errors
       if (error instanceof Error) {
-        if (error.name === 'AbortError') {
+        if (error.name === "AbortError") {
           throw new Error(`Request timeout after ${timeout}ms`);
         }
-        if (error.message.includes('HTTP 4')) {
+        if (error.message.includes("HTTP 4")) {
           // Don't retry on client errors (4xx)
           throw error;
         }
@@ -211,7 +220,7 @@ async function fetchWithRetry<T>(
     }
   }
 
-  throw lastError || new Error('Request failed after retries');
+  throw lastError || new Error("Request failed after retries");
 }
 
 /**
@@ -221,33 +230,49 @@ export class ApiClient {
   private baseUrl: string;
 
   constructor(baseUrl?: string) {
-    this.baseUrl = baseUrl || process.env.REACT_APP_API_URL || '';
-    
-    if (!this.baseUrl && process.env.NODE_ENV === 'development') {
-      const { logWarn } = require('../utils/logger');
-      logWarn('REACT_APP_API_URL is not defined', undefined, 'ApiClient');
+    // Get base URL from parameter or environment variable
+    let rawUrl = baseUrl || process.env.REACT_APP_API_URL || "";
+
+    // Handle multiple URLs separated by comma - take the first one
+    if (rawUrl.includes(",")) {
+      rawUrl = rawUrl.split(",")[0].trim();
+    }
+
+    // Remove trailing /api if present (endpoints already include /api)
+    this.baseUrl = rawUrl.replace(/\/api\/?$/, "").trim();
+
+    if (!this.baseUrl && process.env.NODE_ENV === "development") {
+      const { logWarn } = require("../utils/logger");
+      logWarn("REACT_APP_API_URL is not defined", undefined, "ApiClient");
     }
   }
 
   /**
    * GET request
    */
-  async get<T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async get<T>(
+    endpoint: string,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
     return fetchWithRetry<T>(url, {
       ...config,
-      method: 'GET',
+      method: "GET",
     });
   }
 
   /**
    * POST request
    */
-  async post<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async post<T>(
+    endpoint: string,
+    data?: unknown,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
     return fetchWithRetry<T>(url, {
       ...config,
-      method: 'POST',
+      method: "POST",
       body: data ? JSON.stringify(data) : undefined,
     });
   }
@@ -255,11 +280,15 @@ export class ApiClient {
   /**
    * PUT request
    */
-  async put<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async put<T>(
+    endpoint: string,
+    data?: unknown,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
     return fetchWithRetry<T>(url, {
       ...config,
-      method: 'PUT',
+      method: "PUT",
       body: data ? JSON.stringify(data) : undefined,
     });
   }
@@ -267,11 +296,14 @@ export class ApiClient {
   /**
    * DELETE request
    */
-  async delete<T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async delete<T>(
+    endpoint: string,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
     return fetchWithRetry<T>(url, {
       ...config,
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -300,7 +332,7 @@ export const apiClient = new ApiClient();
  * Legacy function for backward compatibility
  */
 export async function getUsers() {
-  const response = await apiClient.get('/api/users', {
+  const response = await apiClient.get("/api/users", {
     cacheTime: 60000, // Cache for 1 minute
   });
   return response.data;
