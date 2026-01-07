@@ -172,6 +172,20 @@ app.use(cors(corsOptions));
 // ✅ Apply general API rate limiting (before routes)
 app.use("/api", apiRateLimiter.middleware());
 
+// ✅ API info endpoint
+app.get("/api", (_, res) => {
+  res.status(200).json({
+    message: "API is running",
+    version: "1.0.0",
+    endpoints: {
+      health: "/health",
+      user: "/api/:name",
+      contact: "/api/contact",
+    },
+    example: "/api/Ricky%20Chen",
+  });
+});
+
 // ✅ API Routes (must be before static files)
 app.use("/api", userRoutes);
 app.use("/api/contact", contactRoutes);

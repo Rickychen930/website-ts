@@ -38,7 +38,7 @@ if (envPath) {
 }
 else {
     logger_1.logger.warn(".env file not found in any of these locations", {
-        searched: possibleEnvPaths
+        searched: possibleEnvPaths,
     }, "Main");
     // Try to load from environment variables directly (for production deployments)
     logger_1.logger.info("Attempting to use environment variables directly", undefined, "Main");
@@ -112,14 +112,20 @@ const corsOptions = {
         else {
             logger_1.logger.warn("CORS blocked origin", {
                 origin: normalizedOrigin,
-                allowedOrigins
+                allowedOrigins,
             }, "Main");
             callback(new Error(`Not allowed by CORS: ${normalizedOrigin}`));
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-Forwarded-For", "X-Real-IP"],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "X-Forwarded-For",
+        "X-Real-IP",
+    ],
     exposedHeaders: ["Content-Length", "Content-Type"],
     optionsSuccessStatus: 200,
     maxAge: 86400, // 24 hours
@@ -127,6 +133,19 @@ const corsOptions = {
 app.use((0, cors_1.default)(corsOptions));
 // ✅ Apply general API rate limiting (before routes)
 app.use("/api", rate_limiter_1.apiRateLimiter.middleware());
+// ✅ API info endpoint
+app.get("/api", (_, res) => {
+    res.status(200).json({
+        message: "API is running",
+        version: "1.0.0",
+        endpoints: {
+            health: "/health",
+            user: "/api/:name",
+            contact: "/api/contact",
+        },
+        example: "/api/Ricky%20Chen",
+    });
+});
 // ✅ API Routes (must be before static files)
 app.use("/api", user_routes_1.default);
 app.use("/api/contact", contact_routes_1.default);
