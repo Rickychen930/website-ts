@@ -231,20 +231,24 @@ export class ApiClient {
 
   constructor(baseUrl?: string) {
     // Get base URL from parameter or environment variable
+    // React Scripts embeds REACT_APP_* variables at build time
     let rawUrl = baseUrl || process.env.REACT_APP_API_URL || "";
-
-    // If no URL provided, use current origin (for production)
-    if (!rawUrl && typeof window !== "undefined") {
-      rawUrl = window.location.origin;
-      if (process.env.NODE_ENV === "development") {
-        // In development, default to localhost
-        rawUrl = "http://localhost:4000";
-      }
-    }
 
     // Handle multiple URLs separated by comma - take the first one
     if (rawUrl.includes(",")) {
       rawUrl = rawUrl.split(",")[0].trim();
+    }
+
+    // If no URL provided at build time, use runtime fallback
+    if (!rawUrl) {
+      if (typeof window !== "undefined") {
+        // In production, use same origin - nginx will proxy /api requests to backend
+        // This is the safest approach: use relative URLs which work with nginx proxy
+        rawUrl = "";
+      } else if (process.env.NODE_ENV === "development") {
+        // In development (SSR or tests), default to localhost
+        rawUrl = "http://localhost:4000";
+      }
     }
 
     // Remove trailing /api if present (endpoints already include /api)
@@ -254,14 +258,20 @@ export class ApiClient {
       .replace(/\/$/, "")
       .trim();
 
-    // Ensure we have a valid base URL
-    if (!this.baseUrl) {
-      console.warn(
-        "[ApiClient] REACT_APP_API_URL is not defined. Using current origin.",
-      );
-      if (typeof window !== "undefined") {
-        this.baseUrl = window.location.origin;
+    // Final fallback: if still empty and we're in browser, use empty string for relative URLs
+    // This is preferred in production because nginx proxies /api to backend
+    if (!this.baseUrl && typeof window !== "undefined") {
+      // Empty string = relative URLs (e.g., /api/...)
+      // This works perfectly with nginx proxy configuration
+      // This works because frontend and API are on same domain via nginx
+      this.baseUrl = "";
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[ApiClient] Using relative URLs (nginx will proxy /api requests)",
+        );
       }
+    } else if (this.baseUrl && process.env.NODE_ENV === "development") {
+      console.log(`[ApiClient] Base URL: ${this.baseUrl}`);
     }
   }
 
@@ -272,16 +282,18 @@ export class ApiClient {
     endpoint: string,
     config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
-    // Ensure endpoint starts with / if baseUrl is set
+    // Ensure endpoint starts with /
     const normalizedEndpoint = endpoint.startsWith("/")
       ? endpoint
       : `/${endpoint}`;
-    const url = `${this.baseUrl}${normalizedEndpoint}`;
 
-    // Debug logging in development
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[ApiClient] GET ${url}`);
-    }
+    // Construct final URL (handle both absolute and relative URLs)
+    const url = this.baseUrl
+      ? `${this.baseUrl}${normalizedEndpoint}`
+      : normalizedEndpoint;
+
+    // Always log URL for debugging (helps troubleshoot in production)
+    console.log(`[ApiClient] GET ${url}`);
 
     return fetchWithRetry<T>(url, {
       ...config,

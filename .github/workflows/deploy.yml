@@ -47,14 +47,46 @@ jobs:
         id: build-frontend
         run: |
           echo "🔷 Building React app..."
-          npm run build
+
+          # Load .env file if exists, or use secrets/environment
+          if [ -f ".env" ]; then
+            echo "📄 Loading REACT_APP_API_URL from .env file..."
+            export REACT_APP_API_URL=$(grep "^REACT_APP_API_URL=" .env | cut -d'=' -f2- | sed 's/^"//;s/"$//' | tr -d '\r\n' || echo "")
+            echo "✅ Loaded from .env: REACT_APP_API_URL=$REACT_APP_API_URL"
+          fi
+
+          # Fallback to GitHub Secrets or default
+          if [ -z "$REACT_APP_API_URL" ]; then
+            REACT_APP_API_URL="${{ secrets.REACT_APP_API_URL }}"
+            if [ -z "$REACT_APP_API_URL" ]; then
+              REACT_APP_API_URL="https://rickychen930.cloud"
+            fi
+            export REACT_APP_API_URL
+            echo "✅ Using fallback: REACT_APP_API_URL=$REACT_APP_API_URL"
+          fi
+
+          # Verify the value
+          echo "🔍 Final REACT_APP_API_URL=$REACT_APP_API_URL"
+
+          # Build with the environment variable
+          REACT_APP_API_URL="$REACT_APP_API_URL" npm run build
+
           if [ ! -d "build" ] || [ -z "$(ls -A build)" ]; then
             echo "❌ Frontend build failed or is empty"
             exit 1
           fi
+
+          # Verify REACT_APP_API_URL is embedded in build (check for the URL in JS files)
+          if grep -r "rickychen930.cloud" build/static/js/*.js > /dev/null 2>&1; then
+            echo "✅ Verified: API URL is embedded in build"
+          else
+            echo "⚠️  Warning: API URL might not be embedded in build"
+          fi
+
           echo "✅ Frontend build verified ($(du -sh build | cut -f1))"
           echo "cache-key=frontend-${{ github.sha }}" >> $GITHUB_OUTPUT
         env:
+          # This will be overridden by .env file or script logic above
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL || 'https://rickychen930.cloud' }}
 
       - name: Build backend
