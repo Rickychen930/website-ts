@@ -1,28 +1,44 @@
 /**
- * WorkExperienceCard Styles - LUXURY REDESIGN
- * Premium, Modern, Professional Card Design
- * Complete redesign for luxury appearance
+ * WorkExperienceCard Component Styles - PROFESSIONAL REDESIGN
+ * Efficient, Modern, Professional Card Design
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS variables from work-experience-section.css
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - card-specific styles only
+ * - Reusable: Uses core variables and utilities
+ * 
+ * Features:
+ * - Professional, Clean, Modern UI/UX
+ * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
+ * - Performance Optimized
+ * - Grid-based efficient layout
+ * - Accessibility Support
  */
 
 .work-experience-card {
+  display: grid;
   position: relative;
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  padding-left: 4rem;
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
+  opacity: 1;
+  transition: all var(--work-transition-base, 0.4s) cubic-bezier(0.4, 0, 0.2, 1);
+  grid-template-columns: auto 1fr;
+  gap: var(--work-spacing-lg, 1.5rem);
+  margin-bottom: var(--work-spacing-xl, 2rem);
+  transform: translateY(0);
   max-width: 100%;
   box-sizing: border-box;
-  align-items: flex-start;
+  align-items: start;
+  min-height: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .work-experience-card-visible {
   opacity: 1;
   transform: translateY(0);
-  animation: cardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: card-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .work-experience-card-hidden {
@@ -31,124 +47,74 @@
   filter: blur(4px);
 }
 
-@keyframes cardFadeIn {
+@keyframes card-fade-in {
   from {
     opacity: 0;
     transform: translateY(30px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
-/* ─── Premium Card Content ─── */
+/* ─── Professional Card Content ─── */
 .work-experience-card-content {
-  flex: 1;
+  display: flex;
   position: relative;
-  padding: 2.5rem;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(250, 252, 255, 0.95) 50%,
-    rgba(248, 250, 255, 0.98) 100%
-  );
-  border: 1.5px solid rgba(102, 126, 234, 0.15);
-  border-radius: 28px;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.08),
-    0 10px 30px rgba(0, 0, 0, 0.05),
-    0 4px 12px rgba(102, 126, 234, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(102, 126, 234, 0.05);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  overflow: visible;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
   z-index: 1;
+  width: 100%;
+  padding: var(--work-spacing-lg, 1.75rem);
+  border: 1px solid var(--work-color-border, var(--color-border-light));
+  background: var(--work-color-bg-card, var(--color-bg-card));
+  transition: all var(--work-transition-base, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+  grid-column: 2;
+  border-radius: 16px;
+  box-shadow: var(
+    --work-shadow-card,
+    0 2px 8px var(--color-black-alpha-04),
+    0 1px 3px var(--color-black-alpha-06)
+  );
+  overflow: hidden;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-direction: column;
 }
 
-/* Premium gradient overlay */
+/* Subtle top accent line */
 .work-experience-card-content::before {
-  content: "";
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
-  height: 5px;
+  left: 0;
+  z-index: 2;
+  height: 3px;
   background: linear-gradient(
     90deg,
-    #667eea 0%,
-    #764ba2 30%,
-    #f093fb 60%,
-    #4facfe 100%
+    var(--work-color-primary),
+    var(--work-color-secondary)
   );
-  background-size: 200% 100%;
-  border-radius: 28px 28px 0 0;
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: gradientShift 3s ease infinite;
-  z-index: 2;
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Animated background glow */
-.work-experience-card-content::after {
+  transition: opacity var(--work-transition-fast, 0.3s) ease;
   content: "";
-  position: absolute;
-  top: -50%;
-  right: -30%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    circle,
-    rgba(102, 126, 234, 0.08) 0%,
-    rgba(118, 75, 162, 0.05) 30%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  z-index: 0;
-  animation: backgroundFloat 8s ease-in-out infinite;
+  border-radius: 16px 16px 0 0;
 }
 
-@keyframes backgroundFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-10px, -10px) scale(1.05);
-  }
-}
-
-/* Premium hover effects */
+/* Professional hover effects */
 .work-experience-card:hover .work-experience-card-content {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 
-    0 32px 80px rgba(0, 0, 0, 0.12),
-    0 16px 40px rgba(0, 0, 0, 0.08),
-    0 8px 20px rgba(102, 126, 234, 0.25),
-    0 0 40px rgba(102, 126, 234, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(102, 126, 234, 0.1);
-  border-color: rgba(102, 126, 234, 0.4);
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(252, 254, 255, 0.98) 50%,
-    rgba(250, 252, 255, 1) 100%
+  transform: translateY(-4px);
+  box-shadow: var(
+    --work-shadow-card-hover,
+    0 8px 24px var(--color-black-alpha-08),
+    0 4px 12px var(--work-color-primary-alpha-12)
+  );
+  border-color: var(
+    --work-color-border-hover,
+    var(--work-color-primary-alpha-25)
   );
 }
 
@@ -156,493 +122,279 @@
   opacity: 1;
 }
 
-.work-experience-card:hover .work-experience-card-content::after {
-  opacity: 1;
-}
-
-/* Premium glow effect */
+/* Remove glow effect for efficiency */
 .work-experience-card-glow {
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(102, 126, 234, 0.15) 0%,
-    rgba(118, 75, 162, 0.1) 30%,
-    transparent 70%
-  );
-  border-radius: 32px;
-  opacity: 0;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(20px);
-}
-
-.work-experience-card:hover .work-experience-card-glow {
-  opacity: 1;
+  display: none;
 }
 
 .work-experience-card-body {
+  display: flex;
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 100%;
+  flex-direction: column;
+  gap: 0;
 }
 
-/* ─── Premium Header Design ─── */
+/* ─── Professional Header Design ─── */
 .work-experience-card-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 2px solid rgba(102, 126, 234, 0.1);
-  position: relative;
-}
-
-.work-experience-card-header::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 2px;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.work-experience-card:hover .work-experience-card-header::after {
-  width: 100%;
+  margin-bottom: var(--work-spacing-md, 1.25rem);
+  padding-bottom: var(--work-spacing-sm, 1rem);
+  border-bottom: 1px solid var(--work-color-border, var(--color-border-light));
 }
 
 .work-experience-card-title-wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: 0.75rem;
+  gap: var(--work-spacing-sm, 1rem);
+  margin-bottom: var(--work-spacing-xs, 0.5rem);
   flex-wrap: wrap;
 }
 
 .work-experience-card-title {
   margin: 0;
-  color: #1a2332;
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 800;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(
-    135deg,
-    #1a2332 0%,
-    #667eea 50%,
-    #764ba2 100%
-  );
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  animation: titleGradientShift 4s ease infinite;
-  filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.2));
-}
-
-@keyframes titleGradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  color: var(--work-color-text-heading, var(--color-text-heading));
+  font-size: var(--work-font-size-title, clamp(1.25rem, 2.5vw, 1.75rem));
+  font-weight: 700;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
+  line-height: var(--work-line-height-tight, 1.3);
+  letter-spacing: -0.01em;
+  transition: color var(--work-transition-fast, 0.3s) ease;
+  overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .work-experience-card:hover .work-experience-card-title {
-  background: linear-gradient(
-    135deg,
-    #667eea 0%,
-    #764ba2 50%,
-    #f093fb 100%
-  );
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transform: translateX(4px);
-  filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.3));
+  color: var(--work-color-primary);
 }
 
-/* Premium duration badge */
+/* Professional duration badge */
 .work-experience-card-duration {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.15) 0%,
-    rgba(118, 75, 162, 0.12) 100%
+  padding: var(--work-spacing-xs, 0.375rem) var(--work-spacing-sm, 0.875rem);
+  background: var(
+    --work-color-primary-light,
+    var(--work-color-primary-alpha-10)
   );
-  color: #667eea;
-  font-size: 0.875rem;
-  font-weight: 700;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  border-radius: 12px;
-  border: 1.5px solid rgba(102, 126, 234, 0.3);
+  color: var(--work-color-primary);
+  font-size: clamp(0.75rem, 1.2vw, 0.8125rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
+  border-radius: 8px;
   white-space: nowrap;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 4px 12px rgba(102, 126, 234, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  position: relative;
-  overflow: hidden;
-}
-
-.work-experience-card-duration::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  transition: left 0.6s ease;
-}
-
-.work-experience-card-duration:hover::before {
-  left: 100%;
-}
-
-.work-experience-card:hover .work-experience-card-duration {
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.25) 0%,
-    rgba(118, 75, 162, 0.2) 100%
-  );
-  border-color: rgba(102, 126, 234, 0.5);
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 
-    0 6px 20px rgba(102, 126, 234, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  color: #5b21b6;
+  transition: all var(--work-transition-fast, 0.3s) ease;
 }
 
 .work-experience-card-company-wrapper {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--work-spacing-sm, 0.75rem);
   flex-wrap: wrap;
 }
 
 .work-experience-card-company {
-  color: #34495e;
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  font-weight: 700;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: -0.01em;
+  color: var(--work-color-text-primary, var(--color-text-primary));
+  font-size: var(--work-font-size-company, clamp(1rem, 2vw, 1.2rem));
+  font-weight: 600;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
+  transition: color var(--work-transition-fast, 0.3s) ease;
 }
 
 .work-experience-card:hover .work-experience-card-company {
-  color: #667eea;
-  transform: translateX(2px);
+  color: var(--work-color-primary);
 }
 
 .work-experience-card-separator {
-  color: #7a8b9c;
+  color: var(--work-color-text-muted, var(--color-text-muted));
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
   font-weight: 300;
-  opacity: 0.5;
-  font-size: 1.2rem;
+  opacity: 0.6;
 }
 
 .work-experience-card-location {
-  color: #5c6b7a;
-  font-size: clamp(1rem, 1.8vw, 1.15rem);
-  font-weight: 500;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
   display: inline-flex;
+  color: var(--work-color-text-secondary, var(--color-text-secondary));
+  font-size: clamp(0.9rem, 1.6vw, 1rem);
+  font-weight: 500;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--work-spacing-xs, 0.375rem);
 }
 
 .work-experience-card-location::before {
   content: "📍";
-  font-size: 0.9em;
+  font-size: 0.875em;
   opacity: 0.7;
 }
 
-/* ─── Premium Period Badge ─── */
+/* ─── Professional Period Badge ─── */
 .work-experience-card-period {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--work-spacing-md, 1.25rem);
 }
 
 .work-experience-card-period-text {
   display: inline-flex;
   align-items: center;
-  padding: 0.65rem 1.25rem;
-  background: linear-gradient(
-    135deg,
-    rgba(240, 244, 248, 0.9) 0%,
-    rgba(230, 237, 245, 0.95) 100%
-  );
-  color: #2c3e50;
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  font-weight: 700;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  border-radius: 14px;
-  border: 1.5px solid rgba(102, 126, 234, 0.2);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: var(--work-spacing-xs, 0.5rem) var(--work-spacing-sm, 1rem);
+  background: var(--work-color-bg-period, var(--work-color-primary-alpha-08));
+  color: var(--work-color-text-primary, var(--color-text-primary));
+  font-size: var(--work-font-size-period, clamp(0.875rem, 1.4vw, 0.9375rem));
+  font-weight: 600;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
+  border-radius: 8px;
   white-space: nowrap;
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
-  overflow: hidden;
-}
-
-.work-experience-card-period-text::before {
-  content: "📅";
-  margin-right: 0.5rem;
-  font-size: 1em;
-  opacity: 0.7;
+  transition: all var(--work-transition-fast, 0.3s) ease;
 }
 
 .work-experience-card:hover .work-experience-card-period-text {
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.1) 0%,
-    rgba(118, 75, 162, 0.08) 100%
+  background: var(
+    --work-color-bg-period-hover,
+    var(--work-color-primary-alpha-12)
   );
-  color: #667eea;
-  border-color: rgba(102, 126, 234, 0.4);
-  transform: scale(1.05) translateY(-2px);
-  box-shadow: 
-    0 4px 16px rgba(102, 126, 234, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: var(--work-color-primary);
 }
 
-/* ─── Premium Description ─── */
+/* ─── Professional Description ─── */
 .work-experience-card-description {
-  margin-bottom: 1.5rem;
-  position: relative;
+  margin-bottom: var(--work-spacing-md, 1.25rem);
 }
 
 .work-experience-card-description-text {
   margin: 0;
-  color: #2c3e50;
-  font-size: clamp(1rem, 1.8vw, 1.1rem);
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  line-height: 1.85;
-  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  color: var(--work-color-text-primary, var(--color-text-primary));
+  font-size: var(
+    --work-font-size-description,
+    clamp(0.9375rem, 1.6vw, 1.0625rem)
+  );
   font-weight: 400;
-  text-rendering: optimizeLegibility;
+  line-height: var(--work-line-height-relaxed, 1.7);
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  letter-spacing: 0.01em;
+  overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-.work-experience-card-description-text::first-letter {
-  font-size: 1.4em;
-  font-weight: 800;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-right: 0.15em;
-  float: left;
-  padding-top: 0.1em;
-}
-
-.work-experience-card:hover .work-experience-card-description-text {
-  color: #1a2332;
-}
-
-/* ─── Premium Technologies Section ─── */
+/* ─── Professional Technologies Section ─── */
 .work-experience-card-technologies {
-  margin-bottom: 1.5rem;
-  position: relative;
-  padding: 1.25rem;
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.05) 0%,
-    rgba(118, 75, 162, 0.03) 100%
+  padding: var(--work-spacing-sm, 1rem);
+  border: 1px solid var(--work-color-border, var(--work-color-primary-alpha-08));
+  background: var(
+    --work-color-primary-light,
+    var(--work-color-primary-alpha-04)
   );
-  border-radius: 16px;
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--work-transition-fast, 0.3s) ease;
+  margin-bottom: var(--work-spacing-md, 1.25rem);
+  border-radius: 12px;
 }
 
 .work-experience-card:hover .work-experience-card-technologies {
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.08) 0%,
-    rgba(118, 75, 162, 0.05) 100%
+  background: var(
+    --work-color-accent-light,
+    var(--work-color-primary-alpha-06)
   );
-  border-color: rgba(102, 126, 234, 0.2);
-  transform: translateY(-2px);
+  border-color: var(
+    --work-color-border-hover,
+    var(--work-color-primary-alpha-15)
+  );
 }
 
 .work-experience-card-technologies-label {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  color: #34495e;
-  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  font-weight: 700;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  gap: var(--work-spacing-xs, 0.5rem);
+  margin-bottom: var(--work-spacing-sm, 0.75rem);
+  color: var(--work-color-text-primary, var(--color-text-primary));
+  font-size: clamp(0.875rem, 1.4vw, 0.9375rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
 }
 
 .work-experience-card-technologies-label::before {
   content: "⚡";
-  font-size: 1.25rem;
-  filter: drop-shadow(0 2px 6px rgba(102, 126, 234, 0.4));
-  animation: techIconPulse 2s ease-in-out infinite;
-}
-
-@keyframes techIconPulse {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.15) rotate(10deg);
-    opacity: 0.9;
-  }
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
 }
 
 .work-experience-card-technologies-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--work-spacing-xs, 0.5rem);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* ─── Premium Achievements Section ─── */
+/* ─── Professional Achievements Section ─── */
 .work-experience-card-achievements {
-  margin-top: 1.5rem;
-  position: relative;
-  padding: 1.25rem;
-  background: linear-gradient(
-    135deg,
-    rgba(240, 147, 251, 0.05) 0%,
-    rgba(102, 126, 234, 0.03) 100%
-  );
-  border-radius: 16px;
-  border: 1px solid rgba(118, 75, 162, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: var(--work-spacing-sm, 1rem);
+  border: 1px solid
+    var(--work-color-border, var(--work-color-secondary-alpha-08));
+  background: var(--work-color-secondary, var(--work-color-secondary-alpha-04));
+  transition: all var(--work-transition-fast, 0.3s) ease;
+  margin-top: var(--work-spacing-md, 1.25rem);
+  border-radius: 12px;
 }
 
 .work-experience-card:hover .work-experience-card-achievements {
-  background: linear-gradient(
-    135deg,
-    rgba(240, 147, 251, 0.08) 0%,
-    rgba(102, 126, 234, 0.05) 100%
+  background: var(
+    --work-color-accent-light,
+    var(--work-color-secondary-alpha-06)
   );
-  border-color: rgba(118, 75, 162, 0.2);
-  transform: translateY(-2px);
+  border-color: var(
+    --work-color-border-hover,
+    var(--work-color-secondary-alpha-15)
+  );
 }
 
 .work-experience-card-achievements-label {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  color: #34495e;
-  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  font-weight: 700;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
+  gap: var(--work-spacing-xs, 0.5rem);
+  margin-bottom: var(--work-spacing-sm, 0.75rem);
+  color: var(--work-color-text-primary, var(--color-text-primary));
+  font-size: clamp(0.875rem, 1.4vw, 0.9375rem);
+  font-weight: 600;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
 }
 
 .work-experience-card-achievements-label::before {
   content: "🏆";
-  font-size: 1.25rem;
-  filter: drop-shadow(0 2px 6px rgba(118, 75, 162, 0.4));
-  animation: achievementIconPulse 2s ease-in-out infinite;
-}
-
-@keyframes achievementIconPulse {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.15) rotate(-10deg);
-    opacity: 0.9;
-  }
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
 }
 
 .work-experience-card-achievements-list {
-  position: relative;
   margin: 0;
   padding: 0;
-  padding-left: 2rem;
+  padding-left: var(--work-spacing-lg, 1.5rem);
   list-style: none;
-}
-
-.work-experience-card-achievements-list::before {
-  content: "";
-  position: absolute;
-  left: 0.75rem;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(
-    180deg,
-    #667eea 0%,
-    #764ba2 50%,
-    #f093fb 100%
-  );
-  border-radius: 2px;
-  opacity: 0.7;
-  box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
 }
 
 .work-experience-card-achievement-item {
   position: relative;
-  margin-bottom: 1rem;
-  padding-left: 1.25rem;
-  color: #5c6b7a;
-  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  line-height: 1.75;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--work-color-text-secondary, var(--color-text-secondary));
+  font-size: clamp(0.875rem, 1.4vw, 0.9375rem);
   font-weight: 400;
+  line-height: var(--work-line-height-normal, 1.6);
+  margin-bottom: var(--work-spacing-sm, 0.75rem);
+  padding-left: var(--work-spacing-sm, 0.75rem);
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
 }
 
 .work-experience-card-achievement-item::before {
-  content: "▸";
   position: absolute;
-  left: -0.25rem;
-  color: #667eea;
-  font-weight: 900;
-  font-size: 1.2em;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.3));
-}
-
-.work-experience-card:hover .work-experience-card-achievement-item {
-  color: #2c3e50;
-  transform: translateX(4px);
-}
-
-.work-experience-card:hover .work-experience-card-achievement-item::before {
-  transform: translateX(6px);
-  color: #764ba2;
-  filter: drop-shadow(0 2px 6px rgba(118, 75, 162, 0.4));
+  left: -0.5rem;
+  color: var(--work-color-primary);
+  font-size: 1em;
+  font-weight: 700;
+  content: "▸";
 }
 
 .work-experience-card-achievement-item:last-child {
@@ -652,62 +404,74 @@
 /* ─── Responsive Design ─── */
 @media screen and (width <= 992px) {
   .work-experience-card {
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    gap: var(--work-spacing-md, 1.25rem);
+    margin-bottom: var(--work-spacing-xl, 1.75rem);
   }
 
   .work-experience-card-content {
-    padding: 2rem;
-    border-radius: 24px;
+    padding: var(--work-spacing-lg, 1.5rem);
+  }
+
+  .work-experience-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    min-width: 3.25rem;
   }
 }
 
 @media screen and (width <= 768px) {
   .work-experience-card {
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    flex-direction: row;
-    padding-left: 3.5rem;
-    align-items: flex-start;
+    grid-template-columns: auto 1fr;
+    gap: var(--work-spacing-sm, 1rem);
+    margin-bottom: var(--work-spacing-lg, 1.5rem);
   }
 
   .work-experience-card-content {
-    padding: 1.75rem;
-    border-radius: 20px;
+    padding: var(--work-spacing-md, 1.25rem);
+    border-radius: 12px;
+  }
+
+  .work-experience-icon {
+    width: 3rem;
+    height: 3rem;
+    min-width: 3rem;
   }
 
   .work-experience-card-title-wrapper {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: var(--work-spacing-sm, 0.75rem);
   }
 }
 
 @media screen and (width <= 480px) {
   .work-experience-card {
-    gap: 1.25rem;
-    margin-bottom: 1.75rem;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    flex-direction: row;
-    padding-left: 3rem;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    gap: var(--work-spacing-sm, 0.75rem);
+    margin-bottom: var(--work-spacing-lg, 1.5rem);
   }
 
   .work-experience-card-content {
-    padding: 1.5rem;
-    border-radius: 18px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+    grid-column: 1;
+    padding: var(--work-spacing-md, 1.125rem);
+    border-radius: 12px;
+  }
+
+  .work-experience-icon {
+    grid-column: 1;
+    justify-self: start;
+    margin-bottom: var(--work-spacing-xs, 0.5rem);
+    margin-top: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    margin-left: 0;
   }
 
   .work-experience-card-company-wrapper {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    gap: var(--work-spacing-xs, 0.375rem);
   }
 
   .work-experience-card-separator {
@@ -717,41 +481,115 @@
   .work-experience-card-title-wrapper {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: var(--work-spacing-xs, 0.625rem);
   }
 
   .work-experience-card-technologies,
   .work-experience-card-achievements {
-    padding: 1rem;
+    padding: var(--work-spacing-sm, 0.875rem);
   }
 
   .work-experience-card-technologies-list {
-    gap: 0.5rem;
+    gap: var(--work-spacing-xs, 0.5rem);
   }
 
   .work-experience-card-achievements-list {
-    padding-left: 1.5rem;
+    padding-left: var(--work-spacing-md, 1.25rem);
   }
 }
 
 @media screen and (width <= 360px) {
   .work-experience-card {
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-left: 2.5rem;
+    gap: var(--work-spacing-xs, 0.625rem);
+    margin-bottom: var(--work-spacing-md, 1.25rem);
   }
 
   .work-experience-card-content {
-    padding: 1.25rem;
-    border-radius: 16px;
+    padding: var(--work-spacing-sm, 1rem);
+    border-radius: 10px;
+  }
+
+  .work-experience-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
   }
 
   .work-experience-card-title {
-    font-size: 1.35rem;
+    font-size: clamp(1rem, 2vw, 1.125rem);
   }
 
   .work-experience-card-company {
-    font-size: 1rem;
+    font-size: clamp(0.875rem, 1.6vw, 0.9375rem);
+  }
+
+  .work-experience-card-technologies,
+  .work-experience-card-achievements {
+    padding: var(--work-spacing-sm, 0.75rem);
+  }
+
+  .work-experience-card-achievements-list {
+    padding-left: var(--work-spacing-sm, 1rem);
+  }
+}
+
+/* ─── Landscape Orientation - Mobile/Tablet ─── */
+@media screen and (orientation: landscape) and (width <= 991px) {
+  .work-experience-card {
+    gap: var(--work-spacing-sm, 1rem);
+    margin-bottom: var(--work-spacing-lg, 1.5rem);
+  }
+
+  .work-experience-card-content {
+    padding: var(--work-spacing-md, 1.25rem);
+  }
+}
+
+/* ─── Landscape Orientation - Small Mobile ─── */
+@media screen and (orientation: landscape) and (width <= 600px) {
+  .work-experience-card {
+    gap: var(--work-spacing-sm, 0.875rem);
+    margin-bottom: var(--work-spacing-md, 1.25rem);
+  }
+
+  .work-experience-card-content {
+    padding: var(--work-spacing-sm, 1rem);
+  }
+}
+
+/* ─── Large Desktop (1400px+) ─── */
+@media screen and (width >= 1400px) {
+  .work-experience-card {
+    gap: var(--work-spacing-xl, 1.75rem);
+    margin-bottom: var(--work-spacing-xxl, 2.25rem);
+  }
+
+  .work-experience-card-content {
+    padding: var(--work-spacing-xl, 2rem);
+  }
+
+  .work-experience-icon {
+    width: 4rem;
+    height: 4rem;
+    min-width: 4rem;
+  }
+}
+
+/* ─── Desktop (1200px - 1399px) ─── */
+@media screen and (width <= 1399px) and (width >= 1200px) {
+  .work-experience-card {
+    gap: var(--work-spacing-lg, 1.625rem);
+    margin-bottom: var(--work-spacing-xl, 2rem);
+  }
+
+  .work-experience-card-content {
+    padding: var(--work-spacing-lg, 1.875rem);
+  }
+
+  .work-experience-icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    min-width: 3.75rem;
   }
 }
 
@@ -772,21 +610,5 @@
 
   .work-experience-card:hover .work-experience-card-content {
     transform: none;
-  }
-
-  .work-experience-card:hover .work-experience-card-duration,
-  .work-experience-card:hover .work-experience-card-period-text,
-  .work-experience-card:hover .work-experience-card-title {
-    transform: none;
-  }
-
-  .work-experience-card-technologies-label::before,
-  .work-experience-card-achievements-label::before {
-    animation: none;
-  }
-
-  .work-experience-card-content::before,
-  .work-experience-card-content::after {
-    animation: none;
   }
 }

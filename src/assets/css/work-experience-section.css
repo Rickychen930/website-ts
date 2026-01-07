@@ -59,6 +59,26 @@
   --work-color-border-hover: var(--color-border-accent);
   --work-color-border-glow: var(--color-border-glow);
 
+  /* Alpha Variants - Uses core alpha system */
+  --work-color-primary-alpha-04: var(--color-accent-alpha-04);
+  --work-color-primary-alpha-06: var(--color-accent-alpha-06);
+  --work-color-primary-alpha-08: var(--color-accent-alpha-08);
+  --work-color-primary-alpha-10: var(--color-accent-alpha-10);
+  --work-color-primary-alpha-12: var(--color-accent-alpha-12);
+  --work-color-primary-alpha-15: var(--color-accent-alpha-15);
+  --work-color-primary-alpha-20: var(--color-accent-alpha-20);
+  --work-color-primary-alpha-25: var(--color-accent-alpha-25);
+  --work-color-primary-alpha-30: var(--color-accent-alpha-30);
+  --work-color-primary-alpha-35: var(--color-accent-alpha-35);
+  --work-color-secondary-alpha-04: var(--color-accent-alt-alpha-03);
+  --work-color-secondary-alpha-06: var(--color-accent-alt-alpha-06);
+  --work-color-secondary-alpha-08: var(--color-accent-alt-alpha-08);
+  --work-color-secondary-alpha-10: var(--color-accent-alt-alpha-10);
+  --work-color-secondary-alpha-15: var(--color-accent-alt-alpha-15);
+  --work-color-secondary-alpha-20: var(--color-accent-alt-alpha-20);
+  --work-color-secondary-alpha-30: var(--color-accent-alt-alpha-20);
+  --work-color-secondary-alpha-40: var(--color-accent-alt-alpha-20);
+
   /* Shadows - Uses core shadow system */
   --work-shadow-xs: var(--shadow-xs);
   --work-shadow-sm: var(--shadow-sm);
