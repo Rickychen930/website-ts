@@ -22,8 +22,8 @@
    Component-Specific Variables (DRY)
    Uses core constants as base
    ============================================ */
-#about-me-section.card,
-.card#about-me-section {
+#about.card,
+.card#about {
   /* Spacing - Uses core spacing system */
   --about-me-spacing-xs: var(--spacing-xs);
   --about-me-spacing-sm: var(--spacing-sm);
@@ -46,6 +46,7 @@
   --about-me-shadow-sm: var(--shadow-sm);
   --about-me-shadow-md: var(--shadow-md);
   --about-me-shadow-lg: var(--shadow-lg);
+  --about-me-shadow-xl: var(--shadow-xl);
   --about-me-shadow-glow: var(--shadow-glow);
 
   /* Transitions - Uses core transition system */
@@ -56,21 +57,22 @@
 }
 
 /* ============================================
-   Main Container & Layout
+   Main Container & Layout (Optimized)
    ============================================ */
 .about-me-content {
   /* Extends .flex component */
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-xl);
+  gap: var(--about-me-spacing-lg);
   width: 100%;
   max-width: 100%;
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity var(--duration-base) var(--easing-smooth),
-    transform var(--duration-base) var(--easing-smooth);
-  overflow: visible;
+    opacity var(--animation-duration-base) var(--transition-smooth),
+    transform var(--animation-duration-base) var(--transition-smooth);
+  overflow: hidden visible; /* Prevent horizontal scroll */
+  box-sizing: border-box;
 }
 
 .about-me-content.about-me-visible {
@@ -84,15 +86,16 @@
 }
 
 /* ============================================
-   Hero Section Layout
+   Hero Section Layout - Optimized & Efficient
    ============================================ */
 .about-me-main-content {
   position: relative;
   width: 100%;
-  padding: var(--about-me-spacing-xl) 0;
+  padding: var(--about-me-spacing-xl) var(--about-me-spacing-lg);
   max-width: 100%;
   border-radius: var(--spacing-card-radius);
-  overflow: visible;
+  overflow: hidden visible; /* Prevent horizontal scroll */
+  box-sizing: border-box;
 }
 
 .about-me-hero-background {
@@ -102,6 +105,7 @@
   inset: 0;
   border-radius: var(--spacing-card-radius);
   pointer-events: none;
+  overflow: hidden;
 }
 
 .about-me-hero-background::before {
@@ -109,8 +113,8 @@
   position: absolute;
   top: -50%;
   right: -20%;
-  width: 600px;
-  height: 600px;
+  width: min(600px, 80vw);
+  height: min(600px, 80vw);
   background: radial-gradient(
     circle,
     var(--color-accent-alpha-08) 0%,
@@ -125,8 +129,8 @@
   position: absolute;
   bottom: -30%;
   left: -10%;
-  width: 500px;
-  height: 500px;
+  width: min(500px, 70vw);
+  height: min(500px, 70vw);
   background: radial-gradient(
     circle,
     var(--color-accent-alt-alpha-06) 0%,
@@ -149,42 +153,49 @@
 
 .about-me-hero-section {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: var(--about-me-spacing-xl);
-  align-items: start;
+  align-items: center;
   margin-bottom: var(--about-me-spacing-lg);
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  box-sizing: border-box;
 }
 
 .about-me-hero-left {
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-lg);
+  gap: var(--about-me-spacing-md);
   min-width: 0;
   width: 100%;
   max-width: 100%;
   overflow: visible;
+  order: 2;
 }
 
 .about-me-hero-right {
   flex-shrink: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-width: fit-content;
+  align-items: center;
+  width: 100%;
+  order: 1;
 }
 
 /* ============================================
-   Profile Image - Luxury Design
+   Profile Image - Luxury Design (Optimized)
    ============================================ */
 .about-me-image-container {
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .about-me-image-wrapper {
@@ -192,6 +203,8 @@
   position: relative;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 100%;
 }
 
 .about-me-image-particles {
@@ -297,9 +310,11 @@
 .about-me-image-container img.about-me-image {
   position: relative;
   z-index: 2;
-  width: 320px;
-  height: 320px;
-  border: 8px solid var(--color-white-alpha-95);
+  width: min(280px, 70vw);
+  height: min(280px, 70vw);
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  border: clamp(4px, 1.5vw, 8px) solid var(--color-white-alpha-95);
   background: var(--gradient-primary);
   transition:
     transform var(--about-me-transition-smooth),
@@ -326,35 +341,40 @@
 }
 
 /* ============================================
-   Bio Section
+   Bio Section (Optimized)
    ============================================ */
 .about-me-bio-section {
-  margin-top: var(--about-me-spacing-xs);
+  margin-top: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .about-me-bio {
   width: 100%;
   margin: 0;
   color: var(--color-white-alpha-85);
-  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
   font-weight: 400;
-  line-height: 1.85;
+  line-height: 1.75;
   max-width: 100%;
   letter-spacing: 0.015em;
   text-shadow: 0 1px 10px var(--color-black-alpha-20);
   overflow-wrap: break-word;
   hyphens: auto;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 /* ============================================
-   Featured Tech Stack Section
+   Featured Tech Stack Section (Optimized)
    ============================================ */
 .about-me-featured-tech {
   width: 100%;
-  padding: var(--about-me-spacing-lg);
+  padding: var(--about-me-spacing-md) var(--about-me-spacing-lg);
   border: 1px solid var(--border-light);
   background: var(--bg-gradient-luxury);
-  margin-top: var(--about-me-spacing-md);
+  margin-top: var(--about-me-spacing-sm);
   border-radius: var(--item-radius);
   box-shadow: var(--shadow-sm);
   max-width: 100%;
@@ -363,35 +383,45 @@
 }
 
 /* ============================================
-   Actions Section
+   Actions Section (Optimized)
    ============================================ */
 .about-me-actions {
   display: flex;
   gap: var(--about-me-spacing-md);
   flex-wrap: wrap;
-  margin-top: var(--about-me-spacing-sm);
+  margin-top: var(--about-me-spacing-md);
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Enhanced Profile Button Styles */
-#about-me-section.card .profile-btn,
-.card#about-me-section .profile-btn {
+#about.card .profile-btn,
+.card#about .profile-btn {
+  display: inline-flex;
   position: relative;
   z-index: 1;
   padding: 1rem 2.5rem;
   border: none;
   font-size: clamp(0.95rem, 1.5vw, 1.05rem);
   font-weight: 600;
+  transition: all var(--about-me-transition-smooth);
   letter-spacing: 0.02em;
   border-radius: 12px;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
-  transition: all var(--about-me-transition-smooth);
   box-shadow: var(--about-me-shadow-sm);
   font-family: var(--font-main);
+  min-height: 44px; /* Touch target minimum */
+  min-width: 120px; /* Touch target minimum */
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation; /* Prevent double-tap zoom */
 }
 
-#about-me-section.card .profile-btn::before {
+#about.card .profile-btn::before {
   position: absolute;
   z-index: -1;
   background: linear-gradient(135deg, var(--color-white-alpha-20), transparent);
@@ -401,7 +431,7 @@
   inset: 0;
 }
 
-#about-me-section.card .profile-btn::after {
+#about.card .profile-btn::after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -417,27 +447,27 @@
   content: "";
 }
 
-#about-me-section.card .profile-btn:hover::after {
+#about.card .profile-btn:hover::after {
   width: 300px;
   height: 300px;
 }
 
-#about-me-section.card .profile-btn:hover {
+#about.card .profile-btn:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: var(--about-me-shadow-md);
 }
 
-#about-me-section.card .profile-btn:active {
+#about.card .profile-btn:active {
   transform: translateY(-1px) scale(0.98);
 }
 
-#about-me-section.card .profile-btn.primary {
+#about.card .profile-btn.primary {
   border: 2px solid transparent;
   background: var(--accent-gradient);
   color: var(--text-on-accent);
 }
 
-#about-me-section.card .profile-btn.primary:hover {
+#about.card .profile-btn.primary:hover {
   background: linear-gradient(
     135deg,
     var(--about-me-color-primary-hover),
@@ -446,54 +476,61 @@
   box-shadow: var(--about-me-shadow-md), var(--about-me-shadow-glow);
 }
 
-#about-me-section.card .profile-btn.secondary {
+#about.card .profile-btn.secondary {
   border: 2px solid var(--about-me-color-primary);
   background: transparent;
   color: var(--about-me-color-primary);
   backdrop-filter: blur(10px);
 }
 
-#about-me-section.card .profile-btn.secondary:hover {
+#about.card .profile-btn.secondary:hover {
   background: var(--about-me-color-primary);
   color: var(--text-on-accent);
   box-shadow: var(--about-me-shadow-md), var(--about-me-shadow-glow);
 }
 
 /* ============================================
-   Additional Content Section
+   Additional Content Section (Optimized)
    ============================================ */
 .about-me-additional-content {
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-xl);
-  margin-top: var(--about-me-spacing-lg);
+  gap: var(--about-me-spacing-lg);
+  margin-top: var(--about-me-spacing-md);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ============================================
-   Professional Highlights Section
+   Professional Highlights Section (Optimized)
    ============================================ */
 .about-me-highlights {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .about-me-highlights-title {
   position: relative;
-  margin: 0 0 var(--about-me-spacing-lg) 0;
+  margin: 0 0 var(--about-me-spacing-md) 0;
   color: var(--color-text-on-accent);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.03em;
   padding-bottom: var(--about-me-spacing-sm);
   text-shadow: 0 2px 15px var(--color-black-alpha-30);
+  text-align: center;
 }
 
 .about-me-highlights-title::after {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60px, 15vw);
   height: 4px;
   background: var(--accent-gradient);
   border-radius: 2px;
@@ -501,8 +538,8 @@
 
 .about-me-highlights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--about-me-spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: var(--about-me-spacing-md);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -538,32 +575,38 @@
 }
 
 /* ============================================
-   Statistics Section
+   Statistics Section (Optimized)
    ============================================ */
 .about-me-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: var(--about-me-spacing-lg);
-  margin-top: var(--about-me-spacing-xl);
-  padding-top: var(--about-me-spacing-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+  gap: var(--about-me-spacing-md);
+  margin-top: var(--about-me-spacing-lg);
+  padding-top: var(--about-me-spacing-lg);
   border-top: 2px solid var(--border-light);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-#about-me-section.card .profile-stat,
-.card#about-me-section .profile-stat {
+#about.card .profile-stat,
+.card#about .profile-stat {
   position: relative;
-  padding: var(--about-me-spacing-lg) var(--about-me-spacing-md);
+  width: 100%;
+  padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
   border: 1px solid var(--about-me-color-border);
   background: var(--bg-gradient-luxury);
   text-align: center;
   transition: all var(--about-me-transition-smooth);
   border-radius: var(--item-radius);
-  min-width: 140px;
+  min-width: 0;
   box-shadow: var(--about-me-shadow-sm);
   overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-#about-me-section.card .profile-stat::before {
+#about.card .profile-stat::before {
   position: absolute;
   top: 0;
   right: 0;
@@ -576,36 +619,38 @@
   transform-origin: left;
 }
 
-#about-me-section.card .profile-stat:hover {
+#about.card .profile-stat:hover {
   transform: translateY(-8px);
   box-shadow: var(--about-me-shadow-md);
   border-color: var(--about-me-color-primary);
 }
 
-#about-me-section.card .profile-stat:hover::before {
+#about.card .profile-stat:hover::before {
   transform: scaleX(1);
 }
 
-#about-me-section.card .profile-stat strong {
+#about.card .profile-stat strong {
   display: block;
   background: var(--accent-gradient);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   letter-spacing: -0.03em;
   filter: drop-shadow(0 2px 8px var(--color-accent-alpha-30));
+  overflow-wrap: break-word;
 }
 
-#about-me-section.card .profile-stat span {
+#about.card .profile-stat span {
   display: block;
   color: var(--color-white-alpha-70);
-  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.4;
   letter-spacing: 0.01em;
+  overflow-wrap: break-word;
 }
 
 /* ============================================
@@ -651,31 +696,53 @@
 }
 
 /* ============================================
-   Responsive Design - Desktop Large
+   Responsive Design - Desktop Large (Optimized)
    ============================================ */
-@media screen and (width >= 1400px) {
+@media screen and (width >= 1200px) {
+  .about-me-main-content {
+    padding: var(--about-me-spacing-xxl) var(--about-me-spacing-xl);
+  }
+
   .about-me-hero-section {
     gap: var(--about-me-spacing-xxl);
     grid-template-columns: 1.2fr 1fr;
-    max-width: 100%;
+    align-items: start;
   }
 
   .about-me-hero-left {
-    max-width: 100%;
+    order: 1;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .about-me-hero-right {
+    order: 2;
+    justify-content: flex-end;
+  }
+
+  .about-me-bio {
+    text-align: left;
+  }
+
+  .about-me-actions {
+    justify-content: flex-start;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 360px;
-    height: 360px;
-    max-width: 100%;
+    width: min(360px, 25vw);
+    height: min(360px, 25vw);
   }
 }
 
 /* ============================================
-   Responsive Design - Tablet
+   Responsive Design - Tablet (Optimized)
    ============================================ */
-@media screen and (width <= 992px) {
+@media screen and (width >= 768px) and (width < 1200px) {
+  .about-me-main-content {
+    padding: var(--about-me-spacing-xl) var(--about-me-spacing-lg);
+  }
+
   .about-me-hero-section {
     gap: var(--about-me-spacing-xl);
     grid-template-columns: 1fr;
@@ -687,42 +754,52 @@
     max-width: 100%;
     align-items: center;
     text-align: center;
+    order: 2;
   }
 
   .about-me-hero-right {
-    order: -1;
+    order: 1;
     width: 100%;
     justify-content: center;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 280px;
-    height: 280px;
+    width: min(280px, 50vw);
+    height: min(280px, 50vw);
   }
 
   .about-me-highlights-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--about-me-spacing-md);
   }
 
   .about-me-bio {
+    padding: 0 var(--about-me-spacing-md);
     text-align: center;
     max-width: 100%;
+  }
+
+  .about-me-featured-tech {
+    padding: var(--about-me-spacing-md) var(--about-me-spacing-lg);
   }
 }
 
 /* ============================================
-   Responsive Design - Mobile Tablet
+   Responsive Design - Mobile Tablet (Optimized)
    ============================================ */
-@media screen and (width <= 768px) {
+@media screen and (width < 768px) {
+  .about-me-main-content {
+    padding: var(--about-me-spacing-lg) var(--about-me-spacing-md);
+  }
+
   .about-me-content {
-    gap: var(--about-me-spacing-xl);
+    gap: var(--about-me-spacing-lg);
   }
 
   .about-me-hero-section {
     grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-xl);
+    gap: var(--about-me-spacing-lg);
     justify-items: center;
     text-align: center;
   }
@@ -730,11 +807,14 @@
   .about-me-hero-left {
     align-items: center;
     text-align: center;
+    gap: var(--about-me-spacing-sm);
+    order: 2;
   }
 
   .about-me-hero-right {
-    order: -1;
+    order: 1;
     justify-self: center;
+    width: 100%;
   }
 
   .about-me-image-particles {
@@ -743,18 +823,21 @@
 
   .about-me-featured-tech {
     padding: var(--about-me-spacing-md);
+    margin-top: var(--about-me-spacing-sm);
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 240px;
-    height: 240px;
-    border-width: 6px;
+    width: min(240px, 60vw);
+    height: min(240px, 60vw);
+    border-width: clamp(4px, 1.5vw, 6px);
   }
 
   .about-me-bio {
     width: 100%;
     padding: 0 var(--about-me-spacing-sm);
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    line-height: 1.7;
     text-align: center;
     max-width: 100%;
     box-sizing: border-box;
@@ -764,51 +847,60 @@
     justify-content: center;
     width: 100%;
     max-width: 100%;
+    gap: var(--about-me-spacing-sm);
     box-sizing: border-box;
   }
 
-  #about-me-section.card .profile-btn,
-  .card#about-me-section .profile-btn {
-    flex: 1;
-    min-width: 160px;
-    max-width: 240px;
+  #about.card .profile-btn,
+  .card#about .profile-btn {
+    flex: 1 1 auto;
+    min-width: 140px;
+    min-height: 44px; /* Touch target minimum */
+    max-width: 100%;
+    touch-action: manipulation;
   }
 
   .about-me-stats {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--about-me-spacing-md);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--about-me-spacing-sm);
   }
 
-  #about-me-section.card .profile-stat,
-  .card#about-me-section .profile-stat {
-    min-width: 120px;
+  #about.card .profile-stat,
+  .card#about .profile-stat {
+    width: 100%;
     padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
+    min-width: 0;
+  }
+
+  .about-me-highlights-grid {
+    grid-template-columns: 1fr;
+    gap: var(--about-me-spacing-sm);
   }
 }
 
 /* ============================================
-   Responsive Design - Mobile
+   Responsive Design - Mobile (Optimized)
    ============================================ */
 @media screen and (width <= 480px) {
-  .about-me-content {
-    gap: var(--about-me-spacing-lg);
-    padding: 0 var(--about-me-spacing-sm);
+  .about-me-main-content {
+    padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
   }
 
-  .about-me-main-content {
-    padding: var(--about-me-spacing-md) 0;
+  .about-me-content {
+    gap: var(--about-me-spacing-md);
+    padding: 0;
   }
 
   .about-me-hero-section {
-    gap: var(--about-me-spacing-lg);
+    gap: var(--about-me-spacing-md);
     padding: 0;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 180px;
-    height: 180px;
-    border-width: 4px;
+    width: min(180px, 50vw);
+    height: min(180px, 50vw);
+    border-width: clamp(3px, 1vw, 4px);
     max-width: 100%;
   }
 
@@ -829,21 +921,25 @@
 
   .about-me-hero-background::before,
   .about-me-hero-background::after {
-    width: 250px;
-    height: 250px;
+    width: min(250px, 70vw);
+    height: min(250px, 70vw);
   }
 
-  #about-me-section.card .profile-btn,
-  .card#about-me-section .profile-btn {
+  #about.card .profile-btn,
+  .card#about .profile-btn {
     width: 100%;
     max-width: 100%;
     min-width: auto;
+    min-height: 48px; /* Larger touch target for mobile */
+    padding: 0.875rem 1.5rem;
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    touch-action: manipulation;
   }
 
   .about-me-stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--about-me-spacing-sm);
-    padding-top: var(--about-me-spacing-lg);
+    gap: var(--about-me-spacing-xs);
+    padding-top: var(--about-me-spacing-md);
     width: 100%;
     max-width: 100%;
     overflow-x: visible;
@@ -851,8 +947,8 @@
     box-sizing: border-box;
   }
 
-  #about-me-section.card .profile-stat,
-  .card#about-me-section .profile-stat {
+  #about.card .profile-stat,
+  .card#about .profile-stat {
     width: 100%;
     padding: var(--about-me-spacing-sm);
     min-width: auto;
@@ -860,30 +956,34 @@
 
   .about-me-highlights-grid {
     grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-sm);
+    gap: var(--about-me-spacing-xs);
   }
 
   .about-me-bio {
     padding: 0 var(--about-me-spacing-xs);
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    line-height: 1.7;
+    font-size: clamp(0.875rem, 3.5vw, 0.95rem);
+    line-height: 1.65;
   }
 }
 
 /* ============================================
-   Responsive Design - Extra Small Mobile
+   Responsive Design - Extra Small Mobile (Optimized)
    ============================================ */
 @media screen and (width <= 360px) {
+  .about-me-main-content {
+    padding: var(--about-me-spacing-sm);
+  }
+
   .about-me-content {
-    gap: var(--about-me-spacing-md);
-    padding: 0 var(--about-me-spacing-xs);
+    gap: var(--about-me-spacing-sm);
+    padding: 0;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 150px;
-    height: 150px;
-    border-width: 3px;
+    width: min(150px, 45vw);
+    height: min(150px, 45vw);
+    border-width: clamp(2px, 0.8vw, 3px);
   }
 
   .about-me-stats {
@@ -893,34 +993,50 @@
 
   .about-me-hero-background::before,
   .about-me-hero-background::after {
-    width: 200px;
-    height: 200px;
+    width: min(200px, 60vw);
+    height: min(200px, 60vw);
+  }
+
+  .about-me-bio {
+    font-size: clamp(0.85rem, 4vw, 0.9rem);
+    line-height: 1.6;
+  }
+
+  #about.card .profile-btn,
+  .card#about .profile-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: clamp(0.85rem, 4vw, 0.95rem);
+    min-height: 44px; /* Touch target minimum */
+    touch-action: manipulation;
   }
 }
 
 /* ============================================
-   Landscape Orientation - Mobile/Tablet
+   Landscape Orientation - Mobile/Tablet (Optimized)
    ============================================ */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .about-me-hero-section {
     grid-template-columns: 1fr auto;
-    gap: var(--about-me-spacing-lg);
+    gap: var(--about-me-spacing-md);
     text-align: left;
+    align-items: center;
   }
 
   .about-me-hero-left {
     align-items: flex-start;
     text-align: left;
+    order: 1;
   }
 
   .about-me-hero-right {
-    order: 0;
+    order: 2;
+    justify-content: flex-end;
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: 180px;
-    height: 180px;
+    width: min(180px, 25vh);
+    height: min(180px, 25vh);
   }
 
   .about-me-bio {
@@ -929,6 +1045,10 @@
 
   .about-me-actions {
     justify-content: flex-start;
+  }
+
+  .about-me-main-content {
+    padding: var(--about-me-spacing-md) var(--about-me-spacing-lg);
   }
 }
 
@@ -946,10 +1066,10 @@
     transition: none;
   }
 
-  #about-me-section.card .profile-btn:hover,
-  .card#about-me-section .profile-btn:hover,
-  #about-me-section.card .profile-stat:hover,
-  .card#about-me-section .profile-stat:hover,
+  #about.card .profile-btn:hover,
+  .card#about .profile-btn:hover,
+  #about.card .profile-stat:hover,
+  .card#about .profile-stat:hover,
   .about-me-image-container:hover .image-component.about-me-image,
   .about-me-image-container:hover img.about-me-image {
     transform: none;
@@ -966,8 +1086,8 @@
     display: none;
   }
 
-  #about-me-section.card .profile-stat,
-  .card#about-me-section .profile-stat {
+  #about.card .profile-stat,
+  .card#about .profile-stat {
     break-inside: avoid;
   }
 

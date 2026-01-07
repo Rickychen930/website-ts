@@ -315,19 +315,20 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
   /**
    * Render main content layout
    * Follows Single Responsibility Principle (SRP)
+   * Optimized layout for better efficiency and responsiveness
    */
   private renderMainContent(): ReactNode {
     return (
       <div className="about-me-main-content">
         <div className="about-me-hero-background" aria-hidden="true"></div>
         <div className="about-me-hero-section">
+          <div className="about-me-hero-right">{this.renderProfileImage()}</div>
           <div className="about-me-hero-left">
             {this.renderHeroHeader()}
             {this.renderBio()}
             {this.renderFeaturedTechStack()}
             {this.renderActions()}
           </div>
-          <div className="about-me-hero-right">{this.renderProfileImage()}</div>
         </div>
       </div>
     );
