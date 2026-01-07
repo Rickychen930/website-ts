@@ -18,13 +18,30 @@ const user_routes_1 = __importDefault(require("./routes/user-routes"));
 const env_validator_1 = require("./utils/env-validator");
 const logger_1 = require("./utils/logger");
 // ✅ Load .env
-const envPath = path_1.default.join(__dirname, "../../.env");
-if (fs_1.default.existsSync(envPath)) {
+// Try multiple locations: backend/.env, root/.env, and current directory
+const possibleEnvPaths = [
+    path_1.default.join(__dirname, "../../.env"),
+    path_1.default.join(__dirname, "../.env"),
+    path_1.default.join(process.cwd(), ".env"),
+    "/root/backend/.env", // Server location
+];
+let envPath = null;
+for (const possiblePath of possibleEnvPaths) {
+    if (fs_1.default.existsSync(possiblePath)) {
+        envPath = possiblePath;
+        break;
+    }
+}
+if (envPath) {
     dotenv_1.default.config({ path: envPath });
     logger_1.logger.info(".env loaded", { path: envPath }, "Main");
 }
 else {
-    logger_1.logger.warn(".env file not found", { path: envPath }, "Main");
+    logger_1.logger.warn(".env file not found in any of these locations", {
+        searched: possibleEnvPaths
+    }, "Main");
+    // Try to load from environment variables directly (for production deployments)
+    logger_1.logger.info("Attempting to use environment variables directly", undefined, "Main");
 }
 // ✅ Validate environment variables
 const envValidation = (0, env_validator_1.validateEnv)();
@@ -75,22 +92,37 @@ app.use(express_1.default.urlencoded({ extended: true, limit: "10mb" }));
 // ✅ CORS setup
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests with no origin (mobile apps, curl, etc.)
+        // Allow requests with no origin (mobile apps, curl, server-to-server, nginx proxy)
+        // This is important for nginx proxy which may not send origin header
         if (!origin) {
+            logger_1.logger.info("CORS: Allowing request with no origin (likely server-to-server)", undefined, "Main");
             return callback(null, true);
         }
-        if (allowedOrigins.includes(origin)) {
+        // Normalize origin (remove trailing slash)
+        const normalizedOrigin = origin.replace(/\/$/, "");
+        // Check if origin is in allowed list
+        const isAllowed = allowedOrigins.some((allowed) => {
+            const normalizedAllowed = allowed.replace(/\/$/, "");
+            return normalizedOrigin === normalizedAllowed;
+        });
+        if (isAllowed) {
+            logger_1.logger.info("CORS: Allowing origin", { origin: normalizedOrigin }, "Main");
             callback(null, true);
         }
         else {
-            logger_1.logger.warn("CORS blocked origin", { origin }, "Main");
-            callback(new Error("Not allowed by CORS"));
+            logger_1.logger.warn("CORS blocked origin", {
+                origin: normalizedOrigin,
+                allowedOrigins
+            }, "Main");
+            callback(new Error(`Not allowed by CORS: ${normalizedOrigin}`));
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-Forwarded-For", "X-Real-IP"],
+    exposedHeaders: ["Content-Length", "Content-Type"],
     optionsSuccessStatus: 200,
+    maxAge: 86400, // 24 hours
 };
 app.use((0, cors_1.default)(corsOptions));
 // ✅ Apply general API rate limiting (before routes)

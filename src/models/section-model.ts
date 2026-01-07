@@ -44,11 +44,36 @@ export class SectionManager {
    * @returns Array of visible section configurations
    */
   getVisibleSections(profile: UserProfile): ISectionConfig[] {
-    return this.sections.filter(config => {
-      const data = profile[config.dataKey];
-      const hasData = data && (Array.isArray(data) ? data.length > 0 : true);
+    return this.sections.filter((config) => {
+      // Check custom visibility function first (e.g., testimonials always visible)
       const isVisible = config.isVisible ? config.isVisible(profile) : true;
-      return hasData && isVisible;
+
+      // If section has custom visibility function that returns true, always include it
+      // This allows sections like testimonials to always show even if data is empty
+      if (config.isVisible && isVisible) {
+        return true;
+      }
+
+      // For other sections, check if data exists
+      const data = profile[config.dataKey];
+
+      // For arrays, check if they have items
+      if (Array.isArray(data)) {
+        return data.length > 0;
+      }
+
+      // For non-array data (like profile.name which is a string), check if it exists and is not empty
+      if (typeof data === "string") {
+        return data.trim().length > 0;
+      }
+
+      // For objects, check if they exist and have keys
+      if (typeof data === "object" && data !== null) {
+        return Object.keys(data).length > 0;
+      }
+
+      // For other types (boolean, number), check if data is not null/undefined
+      return data !== null && data !== undefined;
     });
   }
 
@@ -58,7 +83,7 @@ export class SectionManager {
    * @returns Section configuration or undefined
    */
   getSectionById(id: string): ISectionConfig | undefined {
-    return this.sections.find(section => section.id === id);
+    return this.sections.find((section) => section.id === id);
   }
 
   /**
@@ -76,4 +101,3 @@ export class SectionManager {
     this.sections = [];
   }
 }
-

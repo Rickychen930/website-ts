@@ -14,12 +14,39 @@ import { getEnvNumber, validateEnv } from "./utils/env-validator";
 import { logger } from "./utils/logger";
 
 // ✅ Load .env
-const envPath = path.join(__dirname, "../../.env");
-if (fs.existsSync(envPath)) {
+// Try multiple locations: backend/.env, root/.env, and current directory
+const possibleEnvPaths = [
+  path.join(__dirname, "../../.env"), // Root of project
+  path.join(__dirname, "../.env"), // Backend directory
+  path.join(process.cwd(), ".env"), // Current working directory
+  "/root/backend/.env", // Server location
+];
+
+let envPath: string | null = null;
+for (const possiblePath of possibleEnvPaths) {
+  if (fs.existsSync(possiblePath)) {
+    envPath = possiblePath;
+    break;
+  }
+}
+
+if (envPath) {
   dotenv.config({ path: envPath });
   logger.info(".env loaded", { path: envPath }, "Main");
 } else {
-  logger.warn(".env file not found", { path: envPath }, "Main");
+  logger.warn(
+    ".env file not found in any of these locations",
+    {
+      searched: possibleEnvPaths,
+    },
+    "Main",
+  );
+  // Try to load from environment variables directly (for production deployments)
+  logger.info(
+    "Attempting to use environment variables directly",
+    undefined,
+    "Main",
+  );
 }
 
 // ✅ Validate environment variables
@@ -87,21 +114,57 @@ const corsOptions = {
     origin: string | undefined,
     callback: (err: Error | null, allow?: boolean) => void,
   ) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
+    // Allow requests with no origin (mobile apps, curl, server-to-server, nginx proxy)
+    // This is important for nginx proxy which may not send origin header
     if (!origin) {
+      logger.info(
+        "CORS: Allowing request with no origin (likely server-to-server)",
+        undefined,
+        "Main",
+      );
       return callback(null, true);
     }
-    if (allowedOrigins.includes(origin)) {
+
+    // Normalize origin (remove trailing slash)
+    const normalizedOrigin = origin.replace(/\/$/, "");
+
+    // Check if origin is in allowed list
+    const isAllowed = allowedOrigins.some((allowed) => {
+      const normalizedAllowed = allowed.replace(/\/$/, "");
+      return normalizedOrigin === normalizedAllowed;
+    });
+
+    if (isAllowed) {
+      logger.info(
+        "CORS: Allowing origin",
+        { origin: normalizedOrigin },
+        "Main",
+      );
       callback(null, true);
     } else {
-      logger.warn("CORS blocked origin", { origin }, "Main");
-      callback(new Error("Not allowed by CORS"));
+      logger.warn(
+        "CORS blocked origin",
+        {
+          origin: normalizedOrigin,
+          allowedOrigins,
+        },
+        "Main",
+      );
+      callback(new Error(`Not allowed by CORS: ${normalizedOrigin}`));
     }
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "X-Forwarded-For",
+    "X-Real-IP",
+  ],
+  exposedHeaders: ["Content-Length", "Content-Type"],
   optionsSuccessStatus: 200,
+  maxAge: 86400, // 24 hours
 };
 
 app.use(cors(corsOptions));

@@ -446,11 +446,19 @@ class MainPage extends BasePage<{}, MainPageState> {
 
     const data = profile[dataKey];
 
-    // Testimonials section - pass testimonials array directly
+    // Testimonials section - pass testimonials array directly (even if empty)
+    // This allows testimonials section to render empty state if needed
     if (id === "testimonials") {
-      return data || null;
+      return data !== undefined ? data : null;
     }
 
+    // For sections with custom isVisible function, allow null data
+    // The section component will handle rendering empty states
+    if (config.isVisible) {
+      return data !== undefined ? (dataKey === "name" ? profile : data) : null;
+    }
+
+    // For other sections, validate data before returning
     if (!shouldDisplayData(data)) {
       return null;
     }
@@ -489,30 +497,72 @@ class MainPage extends BasePage<{}, MainPageState> {
     if (!profile) return null;
 
     const visibleSections = this.controller.getVisibleSections(profile);
-    if (visibleSections.length === 0) return null;
 
-    return (
-      <div className="contents-section">
-        {visibleSections.map((config) => {
-          const sectionData = this.getSectionData(config, profile);
+    // Edge case: If no visible sections, show message instead of returning null
+    if (visibleSections.length === 0) {
+      if (process.env.NODE_ENV === "development") {
+        const { logWarn } = require("../../utils/logger");
+        logWarn(
+          "No visible sections found",
+          { profileKeys: Object.keys(profile) },
+          "MainPage",
+        );
+      }
+      return (
+        <div className="contents-section">
+          <div className="section-empty-state" role="status" aria-live="polite">
+            <p>No content sections available.</p>
+          </div>
+        </div>
+      );
+    }
 
-          if (!sectionData) return null;
+    // Filter out null sections and check if any remain
+    const renderedSections = visibleSections
+      .map((config) => {
+        const sectionData = this.getSectionData(config, profile);
 
-          return (
-            <LazySection
-              key={config.id}
-              config={config}
-              profile={profile}
-              priority={this.getSectionPriority(config.id)}
-              onVisible={(id) => {
-                // Optional: Track section visibility (development only)
-                // Logging handled by LazySection component if needed
-              }}
-            />
-          );
-        })}
-      </div>
-    );
+        // For sections with custom isVisible function, always render even if data is null
+        // This allows sections like testimonials to render empty states
+        if (!sectionData && !config.isVisible) {
+          return null;
+        }
+
+        return (
+          <LazySection
+            key={config.id}
+            config={config}
+            profile={profile}
+            priority={this.getSectionPriority(config.id)}
+            onVisible={(id) => {
+              // Optional: Track section visibility (development only)
+              // Logging handled by LazySection component if needed
+            }}
+          />
+        );
+      })
+      .filter((section) => section !== null);
+
+    // Edge case: If all sections were filtered out, show message
+    if (renderedSections.length === 0) {
+      if (process.env.NODE_ENV === "development") {
+        const { logWarn } = require("../../utils/logger");
+        logWarn(
+          "All sections were filtered out during rendering",
+          { visibleSectionsCount: visibleSections.length },
+          "MainPage",
+        );
+      }
+      return (
+        <div className="contents-section">
+          <div className="section-empty-state" role="status" aria-live="polite">
+            <p>Content is being prepared. Please check back soon.</p>
+          </div>
+        </div>
+      );
+    }
+
+    return <div className="contents-section">{renderedSections}</div>;
   }
 
   /**
