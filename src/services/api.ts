@@ -233,17 +233,35 @@ export class ApiClient {
     // Get base URL from parameter or environment variable
     let rawUrl = baseUrl || process.env.REACT_APP_API_URL || "";
 
+    // If no URL provided, use current origin (for production)
+    if (!rawUrl && typeof window !== "undefined") {
+      rawUrl = window.location.origin;
+      if (process.env.NODE_ENV === "development") {
+        // In development, default to localhost
+        rawUrl = "http://localhost:4000";
+      }
+    }
+
     // Handle multiple URLs separated by comma - take the first one
     if (rawUrl.includes(",")) {
       rawUrl = rawUrl.split(",")[0].trim();
     }
 
     // Remove trailing /api if present (endpoints already include /api)
-    this.baseUrl = rawUrl.replace(/\/api\/?$/, "").trim();
+    // Also remove trailing slash
+    this.baseUrl = rawUrl
+      .replace(/\/api\/?$/, "")
+      .replace(/\/$/, "")
+      .trim();
 
-    if (!this.baseUrl && process.env.NODE_ENV === "development") {
-      const { logWarn } = require("../utils/logger");
-      logWarn("REACT_APP_API_URL is not defined", undefined, "ApiClient");
+    // Ensure we have a valid base URL
+    if (!this.baseUrl) {
+      console.warn(
+        "[ApiClient] REACT_APP_API_URL is not defined. Using current origin.",
+      );
+      if (typeof window !== "undefined") {
+        this.baseUrl = window.location.origin;
+      }
     }
   }
 
@@ -254,7 +272,17 @@ export class ApiClient {
     endpoint: string,
     config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
-    const url = `${this.baseUrl}${endpoint}`;
+    // Ensure endpoint starts with / if baseUrl is set
+    const normalizedEndpoint = endpoint.startsWith("/")
+      ? endpoint
+      : `/${endpoint}`;
+    const url = `${this.baseUrl}${normalizedEndpoint}`;
+
+    // Debug logging in development
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[ApiClient] GET ${url}`);
+    }
+
     return fetchWithRetry<T>(url, {
       ...config,
       method: "GET",
