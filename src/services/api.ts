@@ -133,12 +133,19 @@ async function fetchWithRetry<T>(
     ...fetchConfig
   } = config;
 
+  console.log("[fetchWithRetry] ==========================================");
+  console.log("[fetchWithRetry] URL:", url);
+  console.log("[fetchWithRetry] Timeout:", timeout, "ms");
+  console.log("[fetchWithRetry] Max retries:", retries);
+  console.log("[fetchWithRetry] Cache enabled:", !!(cache || cacheTime));
+
   // Check cache first (only for GET requests)
   if (fetchConfig.method === undefined || fetchConfig.method === "GET") {
     if (cache === "force-cache" || cacheTime) {
       const cacheKey = getCacheKey(url, config);
       const cached = getCachedResponse<T>(cacheKey);
       if (cached !== null) {
+        console.log("[fetchWithRetry] ✅ Using cached response");
         return {
           data: cached,
           status: 200,
@@ -146,6 +153,7 @@ async function fetchWithRetry<T>(
           headers: new Headers(),
         };
       }
+      console.log("[fetchWithRetry] No valid cache found, making request...");
     }
   }
 
@@ -153,9 +161,18 @@ async function fetchWithRetry<T>(
   let timeoutController: AbortController | null = null;
 
   for (let attempt = 0; attempt <= retries; attempt++) {
+    console.log(`[fetchWithRetry] Attempt ${attempt + 1}/${retries + 1}`);
+
     try {
       timeoutController = createTimeoutController(timeout);
 
+      console.log(`[fetchWithRetry] Fetching: ${url}`);
+      console.log(`[fetchWithRetry] Headers:`, {
+        ...DEFAULT_CONFIG.headers,
+        ...fetchConfig.headers,
+      });
+
+      const fetchStartTime = Date.now();
       const response = await fetch(url, {
         ...fetchConfig,
         signal: timeoutController.signal,
@@ -164,16 +181,47 @@ async function fetchWithRetry<T>(
           ...fetchConfig.headers,
         },
       });
+      const fetchDuration = Date.now() - fetchStartTime;
 
       cleanupTimeout(timeoutController);
       timeoutController = null;
 
+      console.log(`[fetchWithRetry] Response received (${fetchDuration}ms)`);
+      console.log(
+        `[fetchWithRetry] Status: ${response.status} ${response.statusText}`,
+      );
+      console.log(
+        `[fetchWithRetry] Headers:`,
+        Object.fromEntries(response.headers.entries()),
+      );
+      console.log(
+        `[fetchWithRetry] Content-Type:`,
+        response.headers.get("content-type"),
+      );
+
       if (!response.ok) {
         const errorText = await response.text().catch(() => "Unknown error");
+        console.error(
+          `[fetchWithRetry] ❌ HTTP Error ${response.status}:`,
+          errorText.substring(0, 200),
+        );
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
       const data = (await response.json()) as T;
+
+      console.log(`[fetchWithRetry] ✅ Parsed JSON successfully`);
+      console.log(`[fetchWithRetry] Data type:`, typeof data);
+      console.log(
+        `[fetchWithRetry] Data is object:`,
+        typeof data === "object" && data !== null,
+      );
+      if (data && typeof data === "object") {
+        console.log(
+          `[fetchWithRetry] Data keys:`,
+          Object.keys(data).slice(0, 10),
+        );
+      }
 
       // Cache successful GET responses
       if (
@@ -182,8 +230,12 @@ async function fetchWithRetry<T>(
       ) {
         const cacheKey = getCacheKey(url, config);
         setCachedResponse(cacheKey, data, cacheTime);
+        console.log(`[fetchWithRetry] Cached response for ${cacheTime}ms`);
       }
 
+      console.log(
+        "[fetchWithRetry] ==========================================",
+      );
       return {
         data,
         status: response.status,
@@ -198,28 +250,41 @@ async function fetchWithRetry<T>(
 
       lastError = error instanceof Error ? error : new Error(String(error));
 
+      console.error(`[fetchWithRetry] Attempt ${attempt + 1} failed:`, {
+        error: lastError.message,
+        name: lastError.name,
+        stack: lastError.stack?.substring(0, 300),
+      });
+
       // Don't retry on certain errors
       if (error instanceof Error) {
         if (error.name === "AbortError") {
+          console.error(
+            `[fetchWithRetry] ❌ Request timeout after ${timeout}ms`,
+          );
           throw new Error(`Request timeout after ${timeout}ms`);
         }
         if (error.message.includes("HTTP 4")) {
           // Don't retry on client errors (4xx)
+          console.error(`[fetchWithRetry] ❌ Client error (4xx), not retrying`);
           throw error;
         }
       }
 
       // If this is the last attempt, throw the error
       if (attempt === retries) {
+        console.error(`[fetchWithRetry] ❌ All ${retries + 1} attempts failed`);
         break;
       }
 
       // Wait before retrying with exponential backoff
       const delay = retryDelay * Math.pow(2, attempt);
+      console.log(`[fetchWithRetry] Retrying in ${delay}ms...`);
       await sleep(delay);
     }
   }
 
+  console.error("[fetchWithRetry] ==========================================");
   throw lastError || new Error("Request failed after retries");
 }
 
@@ -234,9 +299,18 @@ export class ApiClient {
     // React Scripts embeds REACT_APP_* variables at build time
     let rawUrl = baseUrl || process.env.REACT_APP_API_URL || "";
 
+    console.log("[ApiClient] Initializing...");
+    console.log("[ApiClient] Raw baseUrl parameter:", baseUrl || "undefined");
+    console.log(
+      "[ApiClient] REACT_APP_API_URL from env:",
+      process.env.REACT_APP_API_URL || "undefined",
+    );
+    console.log("[ApiClient] Raw URL after fallback:", rawUrl || "empty");
+
     // Handle multiple URLs separated by comma - take the first one
     if (rawUrl.includes(",")) {
       rawUrl = rawUrl.split(",")[0].trim();
+      console.log("[ApiClient] Multiple URLs detected, using first:", rawUrl);
     }
 
     // If no URL provided at build time, use runtime fallback
@@ -245,9 +319,15 @@ export class ApiClient {
         // In production, use same origin - nginx will proxy /api requests to backend
         // This is the safest approach: use relative URLs which work with nginx proxy
         rawUrl = "";
+        console.log(
+          "[ApiClient] No URL provided, using empty string for relative URLs",
+        );
       } else if (process.env.NODE_ENV === "development") {
         // In development (SSR or tests), default to localhost
         rawUrl = "http://localhost:4000";
+        console.log(
+          "[ApiClient] No URL provided, using default localhost:4000",
+        );
       }
     }
 
@@ -265,13 +345,13 @@ export class ApiClient {
       // This works perfectly with nginx proxy configuration
       // This works because frontend and API are on same domain via nginx
       this.baseUrl = "";
-      if (process.env.NODE_ENV === "development") {
-        console.log(
-          "[ApiClient] Using relative URLs (nginx will proxy /api requests)",
-        );
-      }
-    } else if (this.baseUrl && process.env.NODE_ENV === "development") {
-      console.log(`[ApiClient] Base URL: ${this.baseUrl}`);
+      console.log(
+        "[ApiClient] ✅ Final: Using relative URLs (nginx will proxy /api requests)",
+      );
+    } else if (this.baseUrl) {
+      console.log(`[ApiClient] ✅ Final base URL: ${this.baseUrl}`);
+    } else {
+      console.log("[ApiClient] ⚠️ Final base URL is empty (unexpected)");
     }
   }
 
@@ -282,23 +362,55 @@ export class ApiClient {
     endpoint: string,
     config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
-    // Ensure endpoint starts with /
-    const normalizedEndpoint = endpoint.startsWith("/")
-      ? endpoint
-      : `/${endpoint}`;
+    try {
+      // Ensure endpoint starts with /
+      const normalizedEndpoint = endpoint.startsWith("/")
+        ? endpoint
+        : `/${endpoint}`;
 
-    // Construct final URL (handle both absolute and relative URLs)
-    const url = this.baseUrl
-      ? `${this.baseUrl}${normalizedEndpoint}`
-      : normalizedEndpoint;
+      // Construct final URL (handle both absolute and relative URLs)
+      const url = this.baseUrl
+        ? `${this.baseUrl}${normalizedEndpoint}`
+        : normalizedEndpoint;
 
-    // Always log URL for debugging (helps troubleshoot in production)
-    console.log(`[ApiClient] GET ${url}`);
+      console.log("[ApiClient.get] ==========================================");
+      console.log("[ApiClient.get] Endpoint:", endpoint);
+      console.log("[ApiClient.get] Normalized endpoint:", normalizedEndpoint);
+      console.log(
+        "[ApiClient.get] Base URL:",
+        this.baseUrl || "(empty - relative)",
+      );
+      console.log("[ApiClient.get] Final URL:", url);
+      console.log("[ApiClient.get] Config:", config || "default");
+      console.log("[ApiClient.get] Starting request...");
 
-    return fetchWithRetry<T>(url, {
-      ...config,
-      method: "GET",
-    });
+      const response = await fetchWithRetry<T>(url, {
+        ...config,
+        method: "GET",
+      });
+
+      console.log("[ApiClient.get] ✅ Request successful");
+      console.log("[ApiClient.get] Status:", response.status);
+      console.log("[ApiClient.get] Data type:", typeof response.data);
+      console.log("[ApiClient.get] Has data:", !!response.data);
+      if (response.data && typeof response.data === "object") {
+        console.log(
+          "[ApiClient.get] Data keys:",
+          Object.keys(response.data).slice(0, 5),
+        );
+      }
+      console.log("[ApiClient.get] ==========================================");
+
+      return response;
+    } catch (error) {
+      console.error("[ApiClient.get] ❌ Request failed:", error);
+      console.error("[ApiClient.get] Error details:", {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+      console.log("[ApiClient.get] ==========================================");
+      throw error;
+    }
   }
 
   /**

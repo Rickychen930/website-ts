@@ -192,9 +192,19 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Component lifecycle - Mount
    */
   async componentDidMount(): Promise<void> {
+    console.log(
+      "[MainPage.componentDidMount] ==========================================",
+    );
+    console.log("[MainPage.componentDidMount] Component mounting...");
     this.isMounted = true;
+    console.log("[MainPage.componentDidMount] isMounted set to true");
     this.smoothScrollManager.setup();
+    console.log("[MainPage.componentDidMount] Smooth scroll manager setup");
+    console.log("[MainPage.componentDidMount] Calling loadProfile...");
     await this.loadProfile();
+    console.log(
+      "[MainPage.componentDidMount] ==========================================",
+    );
   }
 
   /**
@@ -277,37 +287,82 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Enhanced with better error handling and edge cases
    */
   private async loadProfile(): Promise<void> {
+    console.log(
+      "[MainPage.loadProfile] ==========================================",
+    );
+    console.log("[MainPage.loadProfile] Starting loadProfile...");
+    console.log("[MainPage.loadProfile] Current state:", {
+      loading: this.state.loading,
+      hasProfile: !!this.state.profile,
+      error: this.state.error,
+    });
+
     // Edge case: Prevent multiple simultaneous loads
     if (this.state.loading) {
+      console.log("[MainPage.loadProfile] ⚠️ Already loading, skipping...");
       return;
     }
 
+    console.log(
+      "[MainPage.loadProfile] Setting state: loading=true, error=null",
+    );
     this.setState({ loading: true, error: null });
 
     try {
+      console.log(
+        "[MainPage.loadProfile] Calling controller.getUserProfile()...",
+      );
       // Edge case: Add timeout to prevent hanging requests
       const profilePromise = this.controller.getUserProfile();
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => reject(new Error("Request timeout")), 30000); // 30 second timeout
       });
 
+      console.log(
+        "[MainPage.loadProfile] Waiting for profile or timeout (30s)...",
+      );
       const profile = await Promise.race([profilePromise, timeoutPromise]);
+      console.log("[MainPage.loadProfile] ✅ Profile promise resolved");
+      console.log(
+        "[MainPage.loadProfile] Profile received:",
+        profile ? "exists" : "null/undefined",
+      );
 
       // Edge case: Validate profile structure
       if (!profile) {
+        console.error("[MainPage.loadProfile] ❌ Profile is null/undefined");
         throw new Error(ErrorMessages.LOAD_PROFILE_FAILED);
       }
+
+      console.log("[MainPage.loadProfile] Validating profile structure...");
+      console.log("[MainPage.loadProfile] Profile name:", profile.name);
+      console.log(
+        "[MainPage.loadProfile] Profile name type:",
+        typeof profile.name,
+      );
 
       if (
         !profile.name ||
         typeof profile.name !== "string" ||
         !profile.name.trim()
       ) {
+        console.error(
+          "[MainPage.loadProfile] ❌ Profile name validation failed",
+        );
+        console.error("[MainPage.loadProfile] Name value:", profile.name);
         throw new Error(ErrorMessages.INVALID_INPUT);
       }
 
       // Edge case: Validate required fields
       if (!profile.title || !profile.location || !profile.bio) {
+        console.warn(
+          "[MainPage.loadProfile] ⚠️ Profile missing some optional fields",
+        );
+        console.warn("[MainPage.loadProfile] Missing fields:", {
+          title: !profile.title,
+          location: !profile.location,
+          bio: !profile.bio,
+        });
         if (process.env.NODE_ENV === "development") {
           const { logWarn } = require("../../utils/logger");
           logWarn("Profile missing some fields", profile, "MainPage");
@@ -315,23 +370,59 @@ class MainPage extends BasePage<{}, MainPageState> {
       }
 
       // Update SEO metadata
+      console.log("[MainPage.loadProfile] Updating SEO metadata...");
       updateSEOFromProfile(profile);
+      console.log("[MainPage.loadProfile] SEO metadata updated");
 
-      this.setState({
-        profile,
-        loading: false,
-        error: null,
-        retryCount: 0,
+      console.log("[MainPage.loadProfile] Setting state with profile...");
+      console.log("[MainPage.loadProfile] Profile summary:", {
+        name: profile.name,
+        title: profile.title,
+        location: profile.location,
+        experiences: profile.experiences?.length || 0,
+        projects: profile.projects?.length || 0,
       });
+
+      this.setState(
+        {
+          profile,
+          loading: false,
+          error: null,
+          retryCount: 0,
+        },
+        () => {
+          console.log("[MainPage.loadProfile] ✅ State updated successfully");
+          console.log("[MainPage.loadProfile] Current state:", {
+            hasProfile: !!this.state.profile,
+            loading: this.state.loading,
+            error: this.state.error,
+          });
+        },
+      );
 
       // Show success notification (only on first load, not retries)
       if (this.state.retryCount === 0) {
         toast.success("Profile loaded successfully", 3000);
       }
     } catch (err) {
+      console.error("[MainPage.loadProfile] ❌ Error caught");
+      console.error("[MainPage.loadProfile] Error object:", err);
+      console.error(
+        "[MainPage.loadProfile] Error type:",
+        err instanceof Error ? err.constructor.name : typeof err,
+      );
+
       const errorMessage =
         err instanceof Error ? err.message : ErrorMessages.LOAD_PROFILE_FAILED;
+      console.error("[MainPage.loadProfile] Error message:", errorMessage);
+
       const newRetryCount = this.state.retryCount + 1;
+      console.log(
+        "[MainPage.loadProfile] Retry count:",
+        newRetryCount,
+        "/",
+        RetryConfig.MAX_RETRIES,
+      );
 
       // Edge case: Handle timeout and network errors differently
       const isNetworkError =
@@ -339,19 +430,34 @@ class MainPage extends BasePage<{}, MainPageState> {
         errorMessage.includes("network") ||
         errorMessage.includes("fetch");
 
+      console.log("[MainPage.loadProfile] Is network error:", isNetworkError);
+
       if (newRetryCount < RetryConfig.MAX_RETRIES && isNetworkError) {
         // Exponential backoff for network errors
         const retryDelay =
           RetryConfig.RETRY_DELAY * Math.pow(2, newRetryCount - 1);
+        console.log(
+          `[MainPage.loadProfile] 🔄 Scheduling retry ${newRetryCount}/${RetryConfig.MAX_RETRIES} in ${retryDelay}ms (exponential backoff)`,
+        );
         const timeoutId = setTimeout(() => {
+          console.log(
+            `[MainPage.loadProfile] 🔄 Retrying now (attempt ${newRetryCount})...`,
+          );
           if (this.state !== null && this.isMounted) {
             this.setState({ retryCount: newRetryCount });
             this.loadProfile();
+          } else {
+            console.warn(
+              "[MainPage.loadProfile] ⚠️ Component unmounted or state null, skipping retry",
+            );
           }
         }, retryDelay);
         this.retryTimeouts.push(timeoutId);
       } else if (newRetryCount < RetryConfig.MAX_RETRIES) {
         // Linear backoff for other errors
+        console.log(
+          `[MainPage.loadProfile] 🔄 Scheduling retry ${newRetryCount}/${RetryConfig.MAX_RETRIES} (linear backoff)`,
+        );
         const retryDelay = RetryConfig.RETRY_DELAY * newRetryCount;
         const timeoutId = setTimeout(() => {
           if (this.state !== null && this.isMounted) {
@@ -361,11 +467,27 @@ class MainPage extends BasePage<{}, MainPageState> {
         }, retryDelay);
         this.retryTimeouts.push(timeoutId);
       } else {
-        this.setState({
-          loading: false,
-          error: errorMessage,
-          retryCount: 0,
-        });
+        console.error(
+          `[MainPage.loadProfile] ❌ Max retries reached (${newRetryCount}/${RetryConfig.MAX_RETRIES})`,
+        );
+        console.error("[MainPage.loadProfile] Setting final error state");
+        this.setState(
+          {
+            loading: false,
+            error: errorMessage,
+            retryCount: 0,
+          },
+          () => {
+            console.error("[MainPage.loadProfile] Final error state set:", {
+              loading: this.state.loading,
+              error: this.state.error,
+              hasProfile: !!this.state.profile,
+            });
+            console.log(
+              "[MainPage.loadProfile] ==========================================",
+            );
+          },
+        );
 
         // Show error notification
         toast.error(errorMessage, 5000);

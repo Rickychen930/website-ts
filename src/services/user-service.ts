@@ -23,25 +23,86 @@ export class UserService {
   async getUserProfile(
     userName: string = this.DEFAULT_USER_NAME,
   ): Promise<UserProfile | null> {
+    console.log(
+      "[UserService.getUserProfile] ==========================================",
+    );
+    console.log("[UserService.getUserProfile] Starting...");
+    console.log("[UserService.getUserProfile] User name:", userName);
+    console.log(
+      "[UserService.getUserProfile] Default user name:",
+      this.DEFAULT_USER_NAME,
+    );
+    console.log(
+      "[UserService.getUserProfile] Cache time:",
+      this.CACHE_TIME,
+      "ms",
+    );
+
     try {
       const endpoint = `/api/${encodeURIComponent(userName)}`;
+      console.log("[UserService.getUserProfile] Endpoint:", endpoint);
+      console.log(
+        "[UserService.getUserProfile] Encoded user name:",
+        encodeURIComponent(userName),
+      );
 
+      console.log("[UserService.getUserProfile] Calling apiClient.get...");
       const response = await apiClient.get<UserProfile>(endpoint, {
         cacheTime: this.CACHE_TIME,
         retries: ApiConfig.RETRIES,
         timeout: ApiConfig.TIMEOUT,
       });
 
+      console.log("[UserService.getUserProfile] ✅ API response received");
+      console.log(
+        "[UserService.getUserProfile] Response status:",
+        response.status,
+      );
+      console.log(
+        "[UserService.getUserProfile] Response data type:",
+        typeof response.data,
+      );
+      console.log(
+        "[UserService.getUserProfile] Response data:",
+        response.data ? "exists" : "null/undefined",
+      );
+
       const data = response.data;
 
-      if (!this.isValidProfile(data)) {
-        logError(ErrorMessages.LOAD_DATA_FAILED, undefined, "UserService");
+      console.log("[UserService.getUserProfile] Validating profile data...");
+      const isValid = this.isValidProfile(data);
+      console.log(
+        "[UserService.getUserProfile] Profile validation result:",
+        isValid,
+      );
+
+      if (!isValid) {
+        console.error(
+          "[UserService.getUserProfile] ❌ Profile validation failed",
+        );
+        console.error("[UserService.getUserProfile] Data:", data);
+        logError(ErrorMessages.LOAD_DATA_FAILED, { data }, "UserService");
         return null;
       }
 
+      console.log(
+        "[UserService.getUserProfile] ✅ Profile validated successfully",
+      );
+      console.log("[UserService.getUserProfile] Profile name:", data.name);
+      console.log("[UserService.getUserProfile] Profile title:", data.title);
+      console.log(
+        "[UserService.getUserProfile] ==========================================",
+      );
       return data;
     } catch (error) {
+      console.error("[UserService.getUserProfile] ❌ Error occurred");
       const apiError = error as ApiError;
+      console.error("[UserService.getUserProfile] Error details:", {
+        message: apiError.message,
+        status: apiError.status,
+        code: apiError.code,
+        originalError: apiError.originalError,
+      });
       logError(
         ErrorMessages.LOAD_PROFILE_FAILED,
         {
@@ -50,6 +111,9 @@ export class UserService {
           originalError: apiError.originalError,
         },
         "UserService",
+      );
+      console.log(
+        "[UserService.getUserProfile] ==========================================",
       );
       throw error;
     }

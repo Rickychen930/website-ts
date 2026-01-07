@@ -3,12 +3,12 @@ import { SectionManager, ISectionConfig } from "../models/section-model";
 import { UserProfile } from "../types/user";
 import { logError } from "../utils/logger";
 import { NavbarItemType, NavbarDropdownItem } from "../types/navbar";
-import { 
-  SectionNames, 
-  NavLabels, 
-  NavIds, 
+import {
+  SectionNames,
+  NavLabels,
+  NavIds,
   SectionHrefs,
-  ErrorMessages 
+  ErrorMessages,
 } from "../constants";
 
 /**
@@ -53,10 +53,54 @@ export class MainPageController {
    * @returns Promise<UserProfile | null>
    */
   async getUserProfile(userName?: string): Promise<UserProfile | null> {
+    console.log(
+      "[MainPageController.getUserProfile] ==========================================",
+    );
+    console.log("[MainPageController.getUserProfile] Starting...");
+    console.log(
+      "[MainPageController.getUserProfile] User name:",
+      userName || "undefined (will use default)",
+    );
+
     try {
-      return await this.userService.getUserProfile(userName);
+      console.log(
+        "[MainPageController.getUserProfile] Calling userService.getUserProfile...",
+      );
+      const profile = await this.userService.getUserProfile(userName);
+
+      if (profile) {
+        console.log(
+          "[MainPageController.getUserProfile] ✅ Profile loaded successfully",
+        );
+        console.log(
+          "[MainPageController.getUserProfile] Profile name:",
+          profile.name,
+        );
+        console.log(
+          "[MainPageController.getUserProfile] Profile has sections:",
+          {
+            experiences: profile.experiences?.length || 0,
+            projects: profile.projects?.length || 0,
+            academics: profile.academics?.length || 0,
+          },
+        );
+      } else {
+        console.warn("[MainPageController.getUserProfile] ⚠️ Profile is null");
+      }
+
+      console.log(
+        "[MainPageController.getUserProfile] ==========================================",
+      );
+      return profile;
     } catch (error) {
+      console.error(
+        "[MainPageController.getUserProfile] ❌ Error loading profile",
+      );
+      console.error("[MainPageController.getUserProfile] Error:", error);
       logError(ErrorMessages.LOAD_PROFILE_FAILED, error, "MainPageController");
+      console.log(
+        "[MainPageController.getUserProfile] ==========================================",
+      );
       return null;
     }
   }
@@ -76,30 +120,30 @@ export class MainPageController {
    */
   getNavbarItemsWithDropdowns(): NavbarItemType[] {
     return [
-      { 
-        id: NavIds.ABOUT, 
-        label: NavLabels.ABOUT, 
-        href: SectionHrefs.ABOUT 
+      {
+        id: NavIds.ABOUT,
+        label: NavLabels.ABOUT,
+        href: SectionHrefs.ABOUT,
       },
       {
         id: NavIds.EDUCATION,
         label: NavLabels.EDUCATION,
         href: SectionHrefs.EDUCATION,
         children: [
-          { 
-            id: NavIds.ACADEMIC, 
-            label: NavLabels.ACADEMIC, 
-            href: SectionHrefs.ACADEMIC 
+          {
+            id: NavIds.ACADEMIC,
+            label: NavLabels.ACADEMIC,
+            href: SectionHrefs.ACADEMIC,
           },
-          { 
-            id: NavIds.HONORS, 
-            label: NavLabels.HONORS, 
-            href: SectionHrefs.HONORS 
+          {
+            id: NavIds.HONORS,
+            label: NavLabels.HONORS,
+            href: SectionHrefs.HONORS,
           },
-          { 
-            id: NavIds.CERTIFICATIONS, 
-            label: NavLabels.CERTIFICATIONS, 
-            href: SectionHrefs.CERTIFICATIONS 
+          {
+            id: NavIds.CERTIFICATIONS,
+            label: NavLabels.CERTIFICATIONS,
+            href: SectionHrefs.CERTIFICATIONS,
           },
         ],
       } as NavbarDropdownItem,
@@ -108,37 +152,37 @@ export class MainPageController {
         label: NavLabels.SKILLS,
         href: SectionHrefs.SKILLS,
         children: [
-          { 
-            id: NavIds.TECHNICAL_SKILLS, 
-            label: NavLabels.TECHNICAL_SKILLS, 
-            href: SectionHrefs.TECHNICAL_SKILLS 
+          {
+            id: NavIds.TECHNICAL_SKILLS,
+            label: NavLabels.TECHNICAL_SKILLS,
+            href: SectionHrefs.TECHNICAL_SKILLS,
           },
-          { 
-            id: NavIds.SOFT_SKILLS, 
-            label: NavLabels.SOFT_SKILLS, 
-            href: SectionHrefs.SOFT_SKILLS 
+          {
+            id: NavIds.SOFT_SKILLS,
+            label: NavLabels.SOFT_SKILLS,
+            href: SectionHrefs.SOFT_SKILLS,
           },
-          { 
-            id: NavIds.LANGUAGES, 
-            label: NavLabels.LANGUAGES, 
-            href: SectionHrefs.LANGUAGES 
+          {
+            id: NavIds.LANGUAGES,
+            label: NavLabels.LANGUAGES,
+            href: SectionHrefs.LANGUAGES,
           },
         ],
       } as NavbarDropdownItem,
-      { 
-        id: NavIds.EXPERIENCE, 
-        label: NavLabels.EXPERIENCE, 
-        href: SectionHrefs.EXPERIENCE 
+      {
+        id: NavIds.EXPERIENCE,
+        label: NavLabels.EXPERIENCE,
+        href: SectionHrefs.EXPERIENCE,
       },
-      { 
-        id: NavIds.PROJECTS, 
-        label: NavLabels.PROJECTS, 
-        href: SectionHrefs.PROJECTS 
+      {
+        id: NavIds.PROJECTS,
+        label: NavLabels.PROJECTS,
+        href: SectionHrefs.PROJECTS,
       },
-      { 
-        id: NavIds.CONTACT, 
-        label: NavLabels.CONTACT, 
-        href: SectionHrefs.CONTACT 
+      {
+        id: NavIds.CONTACT,
+        label: NavLabels.CONTACT,
+        href: SectionHrefs.CONTACT,
       },
     ];
   }
@@ -161,4 +205,3 @@ export class MainPageController {
     return this.sectionManager.getSectionById(id);
   }
 }
-
