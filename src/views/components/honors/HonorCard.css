@@ -12,40 +12,42 @@
  * - Modern Design Patterns
  */
 
-/* ─── CSS Variables ─── */
-.honor-card {
-  --honor-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
-  --honor-card-border: rgba(255, 255, 255, 0.8);
-  --honor-card-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --honor-card-shadow-hover: 
-    0 24px 80px rgba(102, 126, 234, 0.2),
-    0 12px 32px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(102, 126, 234, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --honor-card-glow: rgba(102, 126, 234, 0.15);
-  --honor-card-transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --honor-card-transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
 /* ─── Base Card Styles with Glassmorphism ─── */
 .honor-card {
-  position: relative;
+  /* CSS Variables */
+  --honor-card-bg: linear-gradient(
+    135deg,
+    var(--color-white-alpha-95) 0%,
+    var(--color-white-alpha-98) 100%
+  );
+  --honor-card-border: var(--color-white-alpha-80);
+  --honor-card-shadow:
+    0 10px 40px var(--color-black-alpha-08),
+    0 2px 8px var(--color-black-alpha-04),
+    inset 0 1px 0 var(--color-white-alpha-90);
+  --honor-card-shadow-hover:
+    0 24px 80px var(--color-accent-alpha-20),
+    0 12px 32px var(--color-black-alpha-12),
+    0 0 0 1px var(--color-accent-alpha-15),
+    inset 0 1px 0 var(--color-white-alpha-90);
+  --honor-card-glow: var(--color-accent-alpha-15);
+  --honor-card-transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --honor-card-transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
   display: flex;
-  flex-direction: column;
-  background: var(--honor-card-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--honor-card-border);
-  border-radius: 28px;
+  position: relative;
   padding: 2.5rem;
-  box-shadow: var(--honor-card-shadow);
+  border: 1px solid var(--honor-card-border);
+  background: var(--honor-card-bg);
+  opacity: 0;
   transition: all var(--honor-card-transition);
+  flex-direction: column;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 28px;
+  box-shadow: var(--honor-card-shadow);
   cursor: pointer;
   overflow: hidden;
-  opacity: 0;
   transform: translateY(50px) scale(0.92) rotateX(8deg);
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -57,54 +59,57 @@
 
 /* ─── Animated Gradient Background ─── */
 .honor-card::before {
-  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
+  z-index: 0;
   width: 200%;
   height: 200%;
   background: linear-gradient(
     45deg,
-    rgba(102, 126, 234, 0.04) 0%,
-    rgba(118, 75, 162, 0.04) 25%,
-    rgba(240, 147, 251, 0.04) 50%,
-    rgba(79, 172, 254, 0.04) 75%,
-    rgba(102, 126, 234, 0.04) 100%
+    var(--color-accent-alpha-04) 0%,
+    var(--color-accent-alt-alpha-04) 25%,
+    var(--color-accent-secondary-alpha-10) 50%,
+    var(--color-accent-tertiary-alpha-10) 75%,
+    var(--color-accent-alpha-04) 100%
   );
-  background-size: 400% 400%;
-  animation: honor-gradient-shift 18s ease infinite;
   opacity: 0;
   transition: opacity 0.6s ease;
-  z-index: 0;
+  content: "";
+  background-size: 400% 400%;
+  animation: honor-gradient-shift 18s ease infinite;
   pointer-events: none;
 }
 
 /* ─── Animated Border Gradient ─── */
 .honor-card::after {
-  content: "";
   position: absolute;
-  inset: -2px;
-  border-radius: 28px;
+  z-index: -1;
   padding: 2px;
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.4) 0%,
-    rgba(118, 75, 162, 0.4) 50%,
-    rgba(240, 147, 251, 0.4) 100%
+    var(--color-accent-alpha-40) 0%,
+    var(--color-accent-alt-alpha-40) 50%,
+    var(--color-accent-secondary-alpha-30) 100%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.6s ease;
-  z-index: -1;
+  content: "";
+  inset: -2px;
+  border-radius: 28px;
+  mask:
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
+  mask-composite: xor;
+  mask-composite: exclude;
   pointer-events: none;
 }
 
 .honor-card--visible {
   opacity: 1;
   transform: translateY(0) scale(1) rotateX(0deg);
-  animation: honorCardRevealAdvanced 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: honor-card-reveal-advanced 1s cubic-bezier(0.34, 1.56, 0.64, 1)
+    forwards;
 }
 
 .honor-card--visible::before {
@@ -116,7 +121,7 @@
 .honor-card--visible:focus-within {
   transform: translateY(-16px) scale(1.03) rotateX(-3deg) rotateY(2deg);
   box-shadow: var(--honor-card-shadow-hover);
-  border-color: rgba(102, 126, 234, 0.4);
+  border-color: var(--color-accent-alpha-40);
 }
 
 .honor-card--visible:hover::after,
@@ -138,18 +143,27 @@
 /* ─── Glow Effect (Particle-like) ─── */
 .honor-card__glow {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(240, 147, 251, 0.08) 0%, transparent 70%);
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      var(--color-accent-alpha-12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      var(--color-accent-alt-alpha-12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      var(--color-accent-secondary-alpha-10) 0%,
+      transparent 70%
+    );
   opacity: 0;
   transition: opacity 0.6s ease;
   pointer-events: none;
-  z-index: 1;
   animation: honor-particles 25s ease-in-out infinite;
 }
 
@@ -163,19 +177,19 @@
   position: absolute;
   top: -50%;
   left: -50%;
+  z-index: 2;
   width: 200%;
   height: 200%;
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.25) 50%,
+    var(--color-white-alpha-25) 50%,
     transparent 70%
   );
-  transform: rotate(45deg);
-  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  z-index: 2;
   opacity: 0;
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(45deg);
+  pointer-events: none;
   filter: blur(1px);
 }
 
@@ -187,50 +201,50 @@
 
 /* ─── Content Container ─── */
 .honor-card__content {
+  display: flex;
   position: relative;
   z-index: 3;
-  display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
 /* ─── Icon Styles (3D Enhanced) ─── */
 .honor-card__icon {
+  display: flex;
   position: relative;
+  z-index: 4;
   width: 5rem;
   height: 5rem;
-  display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 0.5rem;
   flex-shrink: 0;
   perspective: 1000px;
-  z-index: 4;
 }
 
 .honor-card__icon-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: var(--gradient-accent-full);
   border-radius: 50%;
-  box-shadow: 
-    0 12px 32px rgba(102, 126, 234, 0.35),
-    0 4px 12px rgba(118, 75, 162, 0.25),
-    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 12px 32px var(--color-accent-alpha-35),
+    0 4px 12px var(--color-accent-alt-alpha-25),
+    inset 0 2px 4px var(--color-white-alpha-30);
   transition: all var(--honor-card-transition);
   transform-style: preserve-3d;
 }
 
 .honor-card__icon-bg::before {
-  content: "";
   position: absolute;
+  z-index: -1;
+  background: var(--gradient-accent-full);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  content: "";
   inset: -4px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  opacity: 0;
   filter: blur(12px);
-  transition: opacity 0.5s ease;
-  z-index: -1;
 }
 
 .honor-card__icon-emoji {
@@ -238,17 +252,17 @@
   z-index: 1;
   font-size: 2.5rem;
   line-height: 1;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  filter: drop-shadow(0 4px 8px var(--color-black-alpha-15));
   transition: transform var(--honor-card-transition-bounce);
   transform-style: preserve-3d;
 }
 
 .honor-card--visible:hover .honor-card__icon-bg {
   transform: scale(1.15) rotateY(15deg) rotateX(5deg);
-  box-shadow: 
-    0 16px 48px rgba(102, 126, 234, 0.45),
-    0 8px 24px rgba(118, 75, 162, 0.3),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 16px 48px var(--color-accent-glow),
+    0 8px 24px var(--color-accent-alt-alpha-30),
+    inset 0 2px 4px var(--color-white-alpha-40);
   animation: honor-icon-pulse 2s ease-in-out infinite;
 }
 
@@ -279,23 +293,25 @@
 }
 
 .honor-card__title {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-text-heading) 0%,
+    var(--color-text-accent) 100%
+  );
   font-size: 1.75rem;
   font-weight: 800;
   line-height: 1.25;
-  background: linear-gradient(135deg, #1a1a2e 0%, #2d3748 100%);
-  -webkit-background-clip: text;
+  transition: all var(--honor-card-transition);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0;
-  padding: 0;
   letter-spacing: -0.8px;
-  transition: all var(--honor-card-transition);
   transform: translateZ(0);
 }
 
 .honor-card--visible:hover .honor-card__title {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  -webkit-background-clip: text;
+  background: var(--gradient-accent-full);
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transform: translateX(4px) translateZ(0);
@@ -309,117 +325,155 @@
 }
 
 .honor-card__event {
+  color: var(--color-text-subtle);
   font-size: 1.05rem;
   font-weight: 700;
-  color: #4a5568;
   transition: all var(--honor-card-transition);
   transform: translateZ(0);
 }
 
 .honor-card--visible:hover .honor-card__event {
-  color: #667eea;
+  color: var(--color-accent-primary);
   transform: translateX(2px) translateZ(0);
 }
 
 .honor-card__date {
   display: inline-flex;
-  align-items: center;
   padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, #e6edf5 0%, #f0f4f8 100%);
-  color: #2d3748;
+  border: 1px solid var(--color-border-medium-alpha-50);
+  background: var(--gradient-primary);
+  color: var(--color-text-heading-alt);
   font-size: 0.9rem;
   font-weight: 700;
-  border-radius: 16px;
-  border: 1px solid rgba(203, 213, 224, 0.6);
   transition: all var(--honor-card-transition-bounce);
+  align-items: center;
+  border-radius: 16px;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
   transform: translateZ(0);
 }
 
 .honor-card--visible:hover .honor-card__date {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  color: #ffffff;
+  background: var(--gradient-accent-full);
+  color: var(--color-text-on-accent);
   border-color: transparent;
   transform: scale(1.08) translateY(-2px) translateZ(0);
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 16px var(--color-accent-alpha-30);
 }
 
 /* ─── Description Styles ─── */
 .honor-card__description {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: #5a6778;
   margin: 0;
   padding: 0;
+  color: var(--color-text-subtle);
+  font-size: 1.05rem;
+  line-height: 1.75;
   transition: all var(--honor-card-transition);
   transform: translateZ(0);
 }
 
 .honor-card--visible:hover .honor-card__description {
-  color: #4a5568;
+  color: var(--color-text-subtle);
   transform: translateY(-2px) translateZ(0);
 }
 
 /* ─── Category Variants (Enhanced) ─── */
 .honor-card--award {
   border-top: 4px solid;
-  border-image: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) 1;
+  border-image: linear-gradient(
+      135deg,
+      var(--color-warning) 0%,
+      var(--color-warning-text) 100%
+    )
+    1;
 }
 
 .honor-card--award::after {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(251, 191, 36, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-warning-alpha-40) 0%,
+    var(--color-warning-alpha-40) 100%
+  );
 }
 
 .honor-card--recognition {
   border-top: 4px solid;
-  border-image: linear-gradient(135deg, #10b981 0%, #34d399 100%) 1;
+  border-image: linear-gradient(
+      135deg,
+      var(--color-success) 0%,
+      var(--color-success-text) 100%
+    )
+    1;
 }
 
 .honor-card--recognition::after {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(52, 211, 153, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-success-alpha-30) 0%,
+    var(--color-success-alpha-30) 100%
+  );
 }
 
 .honor-card--competition {
   border-top: 4px solid;
-  border-image: linear-gradient(135deg, #ef4444 0%, #f87171 100%) 1;
+  border-image: linear-gradient(
+      135deg,
+      var(--color-error) 0%,
+      var(--color-error-text) 100%
+    )
+    1;
 }
 
 .honor-card--competition::after {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.4) 0%, rgba(248, 113, 113, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-error-alpha-30) 0%,
+    var(--color-error-alpha-30) 100%
+  );
 }
 
 .honor-card--achievement {
   border-top: 4px solid;
-  border-image: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%) 1;
+  border-image: linear-gradient(
+      135deg,
+      var(--color-accent-purple) 0%,
+      var(--color-accent-light) 100%
+    )
+    1;
 }
 
 .honor-card--achievement::after {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4) 0%, rgba(167, 139, 250, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-purple-alpha-30) 0%,
+    var(--color-accent-purple-alpha-30) 100%
+  );
 }
 
 .honor-card--other {
   border-top: 4px solid;
-  border-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 1;
+  border-image: var(--gradient-accent) 1;
 }
 
 /* ─── Focus Styles ─── */
 .honor-card:focus-visible {
-  outline: 3px solid #667eea;
+  outline: 3px solid var(--color-accent-primary);
   outline-offset: 4px;
   border-radius: 28px;
 }
 
 /* ─── Advanced Animations ─── */
-@keyframes honorCardRevealAdvanced {
+@keyframes honor-card-reveal-advanced {
   0% {
     opacity: 0;
     transform: translateY(50px) scale(0.92) rotateX(8deg);
   }
+
   60% {
     opacity: 1;
     transform: translateY(-8px) scale(1.05) rotateX(-2deg);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateX(0deg);
@@ -427,19 +481,23 @@
 }
 
 @keyframes honor-gradient-shift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
 }
 
 @keyframes honor-border-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     filter: brightness(1);
   }
+
   50% {
     opacity: 1;
     filter: brightness(1.2);
@@ -447,14 +505,17 @@
 }
 
 @keyframes honor-particles {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
     opacity: 0.3;
   }
+
   33% {
     transform: translate(10px, -10px) scale(1.1);
     opacity: 0.5;
   }
+
   66% {
     transform: translate(-10px, 10px) scale(0.9);
     opacity: 0.4;
@@ -462,18 +523,22 @@
 }
 
 @keyframes honor-icon-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1.15) rotateY(15deg) rotateX(5deg);
   }
+
   50% {
     transform: scale(1.25) rotateY(20deg) rotateX(8deg);
   }
 }
 
 @keyframes honor-icon-rotate {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1.2) rotate(10deg) translateZ(20px);
   }
+
   50% {
     transform: scale(1.25) rotate(-10deg) translateZ(25px);
   }

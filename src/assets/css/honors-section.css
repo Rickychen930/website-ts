@@ -28,22 +28,26 @@
   /* Colors - Uses core color system */
   --honors-primary: var(--color-bg-dark);
   --honors-accent: var(--color-bg-dark-light);
-  --honors-gold: #f59e0b;
-  --honors-gold-light: #fbbf24;
-  --honors-gold-dark: #d97706;
+  --honors-gold: var(--honors-gold);
+  --honors-gold-light: var(--honors-gold-light);
+  --honors-gold-dark: var(--honors-gold-dark);
 
   /* Gradients - Uses core gradients */
-  --honors-gradient-primary: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  --honors-gradient-primary: linear-gradient(
+    135deg,
+    var(--honors-gold-light) 0%,
+    var(--honors-gold) 100%
+  );
   --honors-gradient-secondary: linear-gradient(
     135deg,
-    #f59e0b 0%,
-    #d97706 100%
+    var(--honors-gold) 0%,
+    var(--honors-gold-dark) 100%
   );
   --honors-gradient-luxury: linear-gradient(
     135deg,
-    #fbbf24 0%,
-    #f59e0b 50%,
-    #d97706 100%
+    var(--honors-gold-light) 0%,
+    var(--honors-gold) 50%,
+    var(--honors-gold-dark) 100%
   );
 
   /* Shadows - Uses core shadow system */

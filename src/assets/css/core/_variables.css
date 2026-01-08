@@ -72,57 +72,57 @@
   --color-bg-dark-light-alpha-75: rgb(30 37 50 / 75%);
   --color-bg-dark-overlay: rgb(15 20 40 / 80%);
 
-  /* Accent Alpha Variants */
-  --color-accent-alpha-015: rgb(102 126 234 / 1.5%);
-  --color-accent-alpha-03: rgb(102 126 234 / 3%);
-  --color-accent-alpha-04: rgb(102 126 234 / 4%);
-  --color-accent-alpha-05: rgb(102 126 234 / 5%);
-  --color-accent-alpha-06: rgb(102 126 234 / 6%);
-  --color-accent-alpha-08: rgb(102 126 234 / 8%);
-  --color-accent-alpha-10: rgb(102 126 234 / 10%);
-  --color-accent-alpha-12: rgb(102 126 234 / 12%);
-  --color-accent-alpha-15: rgb(102 126 234 / 15%);
-  --color-accent-alpha-18: rgb(102 126 234 / 18%);
-  --color-accent-alpha-20: rgb(102 126 234 / 20%);
-  --color-accent-alpha-25: rgb(102 126 234 / 25%);
-  --color-accent-alpha-30: rgb(102 126 234 / 30%);
-  --color-accent-alpha-35: rgb(102 126 234 / 35%);
-  --color-accent-alpha-40: rgb(102 126 234 / 40%);
-  --color-accent-alpha-50: rgb(102 126 234 / 50%);
-  --color-accent-alpha-60: rgb(102 126 234 / 60%);
-  --color-accent-alpha-80: rgb(102 126 234 / 80%);
-  --color-accent-alpha-100: rgb(102 126 234 / 100%);
+  /* Accent Alpha Variants - Modern Tech Cyan */
+  --color-accent-alpha-015: rgb(0 217 255 / 1.5%);
+  --color-accent-alpha-03: rgb(0 217 255 / 3%);
+  --color-accent-alpha-04: rgb(0 217 255 / 4%);
+  --color-accent-alpha-05: rgb(0 217 255 / 5%);
+  --color-accent-alpha-06: rgb(0 217 255 / 6%);
+  --color-accent-alpha-08: rgb(0 217 255 / 8%);
+  --color-accent-alpha-10: rgb(0 217 255 / 10%);
+  --color-accent-alpha-12: rgb(0 217 255 / 12%);
+  --color-accent-alpha-15: rgb(0 217 255 / 15%);
+  --color-accent-alpha-18: rgb(0 217 255 / 18%);
+  --color-accent-alpha-20: rgb(0 217 255 / 20%);
+  --color-accent-alpha-25: rgb(0 217 255 / 25%);
+  --color-accent-alpha-30: rgb(0 217 255 / 30%);
+  --color-accent-alpha-35: rgb(0 217 255 / 35%);
+  --color-accent-alpha-40: rgb(0 217 255 / 40%);
+  --color-accent-alpha-50: rgb(0 217 255 / 50%);
+  --color-accent-alpha-60: rgb(0 217 255 / 60%);
+  --color-accent-alpha-80: rgb(0 217 255 / 80%);
+  --color-accent-alpha-100: rgb(0 217 255 / 100%);
 
-  /* Accent Alt Alpha Variants */
-  --color-accent-alt-alpha-03: rgb(118 75 162 / 3%);
-  --color-accent-alt-alpha-06: rgb(118 75 162 / 6%);
-  --color-accent-alt-alpha-08: rgb(118 75 162 / 8%);
-  --color-accent-alt-alpha-10: rgb(118 75 162 / 10%);
-  --color-accent-alt-alpha-12: rgb(118 75 162 / 12%);
-  --color-accent-alt-alpha-15: rgb(118 75 162 / 15%);
-  --color-accent-alt-alpha-18: rgb(118 75 162 / 18%);
-  --color-accent-alt-alpha-20: rgb(118 75 162 / 20%);
-  --color-accent-alt-alpha-25: rgb(118 75 162 / 25%);
-  --color-accent-alt-alpha-30: rgb(118 75 162 / 30%);
-  --color-accent-alt-alpha-40: rgb(118 75 162 / 40%);
-  --color-accent-alt-alpha-50: rgb(118 75 162 / 50%);
-  --color-accent-alt-alpha-60: rgb(118 75 162 / 60%);
-  --color-accent-alt-alpha-80: rgb(118 75 162 / 80%);
-  --color-accent-alt-alpha-90: rgb(118 75 162 / 90%);
+  /* Accent Alt Alpha Variants - Modern Tech Blue */
+  --color-accent-alt-alpha-03: rgb(0 145 234 / 3%);
+  --color-accent-alt-alpha-06: rgb(0 145 234 / 6%);
+  --color-accent-alt-alpha-08: rgb(0 145 234 / 8%);
+  --color-accent-alt-alpha-10: rgb(0 145 234 / 10%);
+  --color-accent-alt-alpha-12: rgb(0 145 234 / 12%);
+  --color-accent-alt-alpha-15: rgb(0 145 234 / 15%);
+  --color-accent-alt-alpha-18: rgb(0 145 234 / 18%);
+  --color-accent-alt-alpha-20: rgb(0 145 234 / 20%);
+  --color-accent-alt-alpha-25: rgb(0 145 234 / 25%);
+  --color-accent-alt-alpha-30: rgb(0 145 234 / 30%);
+  --color-accent-alt-alpha-40: rgb(0 145 234 / 40%);
+  --color-accent-alt-alpha-50: rgb(0 145 234 / 50%);
+  --color-accent-alt-alpha-60: rgb(0 145 234 / 60%);
+  --color-accent-alt-alpha-80: rgb(0 145 234 / 80%);
+  --color-accent-alt-alpha-90: rgb(0 145 234 / 90%);
 
   /* Accent Tertiary Alpha Variants */
   --color-accent-tertiary-alpha-10: rgb(79 172 254 / 10%);
   --color-accent-tertiary-alpha-15: rgb(79 172 254 / 15%);
   --color-accent-tertiary-alpha-20: rgb(79 172 254 / 20%);
 
-  /* Accent Secondary Alpha Variants */
-  --color-accent-secondary-alpha-10: rgb(240 147 251 / 10%);
-  --color-accent-secondary-alpha-15: rgb(240 147 251 / 15%);
-  --color-accent-secondary-alpha-18: rgb(240 147 251 / 18%);
-  --color-accent-secondary-alpha-20: rgb(240 147 251 / 20%);
-  --color-accent-secondary-alpha-30: rgb(240 147 251 / 30%);
-  --color-accent-secondary-alpha-50: rgb(240 147 251 / 50%);
-  --color-accent-secondary-alpha-90: rgb(240 147 251 / 90%);
+  /* Accent Secondary Alpha Variants - Modern Tech Purple */
+  --color-accent-secondary-alpha-10: rgb(124 58 237 / 10%);
+  --color-accent-secondary-alpha-15: rgb(124 58 237 / 15%);
+  --color-accent-secondary-alpha-18: rgb(124 58 237 / 18%);
+  --color-accent-secondary-alpha-20: rgb(124 58 237 / 20%);
+  --color-accent-secondary-alpha-30: rgb(124 58 237 / 30%);
+  --color-accent-secondary-alpha-50: rgb(124 58 237 / 50%);
+  --color-accent-secondary-alpha-90: rgb(124 58 237 / 90%);
 
   /* Info Alpha Variants */
   --color-info-alpha-03: rgb(59 130 246 / 3%);
@@ -142,10 +142,10 @@
   /* Warning Alpha Variants */
   --color-warning-alpha-30: rgb(245 158 11 / 30%);
 
-  /* Accent Purple Alpha Variants - Harmonized */
-  --color-accent-purple-alpha-15: rgb(139 92 246 / 15%);
-  --color-accent-purple-alpha-20: rgb(139 92 246 / 20%);
-  --color-accent-purple-alpha-30: rgb(139 92 246 / 30%);
+  /* Accent Purple Alpha Variants - Modern Tech */
+  --color-accent-purple-alpha-15: rgb(167 139 250 / 15%);
+  --color-accent-purple-alpha-20: rgb(167 139 250 / 20%);
+  --color-accent-purple-alpha-30: rgb(167 139 250 / 30%);
 
   /* Muted/Gray Alpha Variants */
   --color-muted-alpha-30: rgb(107 114 128 / 30%);
@@ -159,53 +159,55 @@
   /* Border Medium Alpha Variants */
   --color-border-medium-alpha-50: rgb(203 213 224 / 50%);
 
-  /* Border Link Alpha Variants - Harmonized with accent primary */
-  --color-border-link-alpha-10: rgb(102 126 234 / 10%);
-  --color-border-link-alpha-15: rgb(102 126 234 / 15%);
-  --color-border-link-alpha-20: rgb(102 126 234 / 20%);
+  /* Border Link Alpha Variants - Modern Tech Cyan */
+  --color-border-link-alpha-10: rgb(0 217 255 / 10%);
+  --color-border-link-alpha-15: rgb(0 217 255 / 15%);
+  --color-border-link-alpha-20: rgb(0 217 255 / 20%);
 
   /* ============================================
      Accent Colors - Primary Brand Colors
+     Modern Tech: Cyan-Blue-Purple
      ============================================ */
-  --color-accent-primary: #667eea;
-  --color-accent-alt: #764ba2;
-  --color-accent-hover: #7c3aed;
-  --color-accent-light: #a78bfa;
-  --color-accent-dark: #5b21b6;
-  --color-accent-secondary: #f093fb;
-  --color-accent-tertiary: #4facfe;
-  --color-accent-purple: #8b5cf6;
+  --color-accent-primary: #00d9ff;
+  --color-accent-alt: #0091ea;
+  --color-accent-hover: #00b8d4;
+  --color-accent-light: #40e0d0;
+  --color-accent-dark: #06c;
+  --color-accent-secondary: #7c3aed;
+  --color-accent-tertiary: #8b5cf6;
+  --color-accent-purple: #a78bfa;
   --color-accent-purple-dark: #7c3aed;
-  --color-accent-glow: rgb(102 126 234 / 35%);
-  --color-accent-glow-strong: rgb(118 75 162 / 40%);
+  --color-accent-glow: rgb(0 217 255 / 35%);
+  --color-accent-glow-strong: rgb(0 145 234 / 40%);
 
   /* Accent Colors - Light Mode Specific (for better contrast) */
-  --color-accent-primary-light-mode: #667eea;
-  --color-accent-hover-light-mode: #7c3aed;
+  --color-accent-primary-light-mode: #00d9ff;
+  --color-accent-hover-light-mode: #00b8d4;
 
   /* ============================================
      Background Colors - Light Theme
+     Modern Tech: Subtle blue-gray tints
      ============================================ */
   --color-bg-primary: #fff;
-  --color-bg-secondary: #fafbfc;
-  --color-bg-tertiary: #f5f7fa;
-  --color-bg-quaternary: #f0f4f8;
-  --color-bg-light: #fafbfc;
-  --color-bg-lighter: #f5f7fa;
-  --color-bg-lightest: #f0f4f8;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-quaternary: #e8f0f7;
+  --color-bg-light: #f8fafc;
+  --color-bg-lighter: #f1f5f9;
+  --color-bg-lightest: #e8f0f7;
   --color-bg-card: #fff;
-  --color-bg-card-alt: #fafbfd;
+  --color-bg-card-alt: #f8fafc;
   --color-bg-card-hover: #fefefe;
   --color-bg-footer: #f1f5f9;
-  --color-bg-footer-alt: #e8edf3;
-  --color-bg-timeline: #f0f4f8;
-  --color-bg-content-hover: #f5f8fc;
-  --color-bg-stat: #f5f7fa;
+  --color-bg-footer-alt: #e8f0f7;
+  --color-bg-timeline: #e8f0f7;
+  --color-bg-content-hover: #f1f5f9;
+  --color-bg-stat: #f1f5f9;
   --color-bg-navbar: rgb(255 255 255 / 90%);
   --color-bg-navbar-scrolled: rgb(255 255 255 / 98%);
   --color-bg-overlay: rgb(0 0 0 / 45%);
-  --color-bg-dark: #0a0e14;
-  --color-bg-dark-light: #0f1419;
+  --color-bg-dark: #0a1625;
+  --color-bg-dark-light: #0f1b2e;
 
   /* ============================================
      Text Colors - Light Theme
@@ -222,10 +224,11 @@
   --color-text-muted-alt: #7a8b9c;
   --color-text-light: #9ca3af;
   --color-text-accent: #34495e;
-  --color-text-hover: #667eea;
+  --color-text-body: var(--color-text-main);
+  --color-text-hover: #00d9ff;
   --color-text-on-accent: #fff;
-  --color-text-link: #667eea;
-  --color-text-link-hover: #7c3aed;
+  --color-text-link: #0091ea;
+  --color-text-link-hover: #00d9ff;
 
   /* ============================================
      Border Colors - Light Theme
@@ -240,19 +243,19 @@
   --color-border-dark: #94a3b8;
   --color-border-navbar: rgb(220 227 234 / 50%);
   --color-border-navbar-dropdown: rgb(220 227 234 / 60%);
-  --color-border-glow: rgb(102 126 234 / 20%);
+  --color-border-glow: rgb(0 217 255 / 20%);
   --color-border-image: #dbe5f1;
   --color-border-period: #e2e8f0;
-  --color-border-accent: rgb(102 126 234 / 30%);
-  --color-border-accent-hover: rgb(102 126 234 / 50%);
+  --color-border-accent: rgb(0 217 255 / 30%);
+  --color-border-accent-hover: rgb(0 217 255 / 50%);
 
   /* ============================================
      Status Colors - Light Theme
      ============================================ */
-  --color-success: #22c55e;
-  --color-success-light: rgb(34 197 94 / 10%);
-  --color-success-dark: #16a34a;
-  --color-success-text: #15803d;
+  --color-success: #10b981;
+  --color-success-light: rgb(16 185 129 / 10%);
+  --color-success-dark: #059669;
+  --color-success-text: #047857;
   --color-error: #ef4444;
   --color-error-light: rgb(239 68 68 / 10%);
   --color-error-dark: #dc2626;
@@ -261,10 +264,10 @@
   --color-warning-light: rgb(245 158 11 / 10%);
   --color-warning-dark: #d97706;
   --color-warning-text: #b45309;
-  --color-info: #3b82f6;
-  --color-info-light: rgb(59 130 246 / 10%);
-  --color-info-dark: #2563eb;
-  --color-info-text: #1d4ed8;
+  --color-info: #0091ea;
+  --color-info-light: rgb(0 145 234 / 10%);
+  --color-info-dark: #06c;
+  --color-info-text: #0052a3;
 
   /* ============================================
      Code Syntax Colors - Light Theme
@@ -289,8 +292,9 @@
      Component-Specific Colors - Light Theme
      ============================================ */
 
-  /* Tech Showcase */
-  --tech-showcase-bg-card: rgb(15 20 40 / 90%);
+  /* Tech Showcase - Light Mode */
+  --tech-showcase-bg-card: var(--color-bg-card);
+  --tech-showcase-bg-overlay: rgb(0 217 255 / 3%);
 
   /* Languages Section */
   --language-success: var(--color-success);
@@ -308,59 +312,73 @@
   /* Certification Section */
   --cert-color-glow: var(--color-accent-glow-strong);
 
-  /* Footer Section */
-  --footer-gradient-start: var(--color-accent-glow);
-  --footer-gradient-end: rgb(118 75 162 / 10%);
-  --footer-text-primary: rgb(255 255 255 / 95%);
-  --footer-text-secondary: rgb(255 255 255 / 70%);
-  --footer-text-muted: rgb(255 255 255 / 50%);
-  --footer-border-color: rgb(255 255 255 / 10%);
+  /* Footer Section - Light Mode */
+  --footer-bg-primary: var(--color-bg-footer);
+  --footer-bg-secondary: var(--color-bg-footer-alt);
+  --footer-gradient-start: var(--color-accent-alpha-08);
+  --footer-gradient-end: rgb(0 145 234 / 5%);
+  --footer-text-primary: var(--color-text-main);
+  --footer-text-secondary: var(--color-text-subtle);
+  --footer-text-muted: var(--color-text-muted);
+  --footer-border-color: var(--color-border-light);
 
-  /* Contact Section */
+  /* Contact Section - Light Mode */
+  --contact-primary: var(--color-accent-primary);
   --contact-primary-light: var(--color-accent-glow);
-  --contact-primary-lighter: rgb(102 126 234 / 5%);
-
-  /* Contact Section Dark Mode Colors - Light Theme (for reference) */
-
-  /* These are only used in dark mode media query, defined in dark theme section */
+  --contact-primary-lighter: rgb(0 217 255 / 5%);
+  --contact-location-primary: #43e97b;
+  --contact-location-secondary: #38f9d7;
+  --contact-website-primary: #fa709a;
+  --contact-website-secondary: #fee140;
+  --contact-bg-card: var(--color-bg-card);
+  --contact-bg-hover: var(--color-bg-card-hover);
+  --contact-bg-subtle: var(--color-bg-card-alt);
+  --contact-text-primary: var(--color-text-main);
+  --contact-text-secondary: var(--color-text-subtle);
+  --contact-text-muted: var(--color-text-muted);
+  --contact-text-light: var(--color-text-light);
+  --contact-border: var(--color-border-default);
+  --contact-border-hover: var(--color-border-medium);
+  --contact-border-light: var(--color-border-light);
 
   /* ============================================
      Gradients - Light Theme
+     Modern Tech: Cyan-Blue-Purple gradients
      ============================================ */
-  --gradient-primary: linear-gradient(135deg, #fff 0%, #fafbfc 100%);
-  --gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-primary: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+  --gradient-accent: linear-gradient(135deg, #00d9ff 0%, #0091ea 100%);
   --gradient-accent-full: linear-gradient(
     135deg,
-    #667eea 0%,
-    #764ba2 50%,
-    #f093fb 100%
+    #00d9ff 0%,
+    #0091ea 50%,
+    #7c3aed 100%
   );
   --gradient-luxury: linear-gradient(
     135deg,
     #fff 0%,
-    #fafbfd 40%,
-    #f5f7fa 100%
+    #f8fafc 40%,
+    #f1f5f9 100%
   );
   --gradient-sublime: linear-gradient(
     135deg,
-    rgb(102 126 234 / 5%) 0%,
-    rgb(118 75 162 / 5%) 100%
+    rgb(0 217 255 / 5%) 0%,
+    rgb(0 145 234 / 5%) 100%
   );
   --gradient-primary-reverse: linear-gradient(
     135deg,
-    #f093fb 0%,
-    #764ba2 50%,
-    #667eea 100%
+    #7c3aed 0%,
+    #0091ea 50%,
+    #00d9ff 100%
   );
   --gradient-primary-radial: radial-gradient(
     ellipse at top,
-    rgb(102 126 234 / 15%),
+    rgb(0 217 255 / 15%),
     transparent 70%
   );
   --gradient-accent-subtle: linear-gradient(
     135deg,
-    rgb(102 126 234 / 10%) 0%,
-    rgb(118 75 162 / 10%) 100%
+    rgb(0 217 255 / 10%) 0%,
+    rgb(0 145 234 / 10%) 100%
   );
 
   /* ============================================
@@ -373,22 +391,22 @@
   --shadow-xl: 0 16px 32px rgb(0 0 0 / 10%), 0 32px 64px rgb(0 0 0 / 8%);
   --shadow-card:
     0 6px 20px rgb(0 0 0 / 5%), 0 16px 40px rgb(0 0 0 / 7%),
-    0 32px 80px rgb(102 126 234 / 6%);
+    0 32px 80px rgb(0 217 255 / 6%);
   --shadow-card-hover:
     0 16px 40px rgb(0 0 0 / 10%), 0 32px 80px rgb(0 0 0 / 12%),
-    0 48px 120px rgb(102 126 234 / 18%);
+    0 48px 120px rgb(0 217 255 / 18%);
   --shadow-card-alt: 0 10px 32px rgb(0 0 0 / 9%);
   --shadow-item: 0 6px 16px rgb(0 0 0 / 5%), 0 12px 32px rgb(0 0 0 / 7%);
   --shadow-item-hover:
     0 16px 40px rgb(0 0 0 / 10%), 0 32px 80px rgb(0 0 0 / 12%),
-    0 40px 100px rgb(102 126 234 / 15%);
+    0 40px 100px rgb(0 217 255 / 15%);
   --shadow-icon: 0 4px 10px rgb(0 0 0 / 6%);
   --shadow-icon-alt: 0 6px 16px rgb(0 0 0 / 6%);
-  --shadow-icon-hover: 0 12px 32px rgb(102 126 234 / 30%);
-  --shadow-focus: 0 0 0 4px rgb(102 126 234 / 25%);
-  --shadow-glow: 0 0 24px rgb(102 126 234 / 45%);
-  --shadow-glow-strong: 0 0 40px rgb(118 75 162 / 50%);
-  --shadow-accent: 0 0 16px rgb(102 126 234 / 35%);
+  --shadow-icon-hover: 0 12px 32px rgb(0 217 255 / 30%);
+  --shadow-focus: 0 0 0 4px rgb(0 217 255 / 25%);
+  --shadow-glow: 0 0 24px rgb(0 217 255 / 45%);
+  --shadow-glow-strong: 0 0 40px rgb(0 145 234 / 50%);
+  --shadow-accent: 0 0 16px rgb(0 217 255 / 35%);
   --shadow-footer: 0 -6px 20px rgb(0 0 0 / 5%);
   --shadow-navbar: 0 8px 24px rgb(0 0 0 / 7%);
   --shadow-navbar-scrolled: 0 12px 32px rgb(0 0 0 / 10%);
@@ -398,7 +416,7 @@
     0 16px 32px rgb(0 0 0 / 9%), 0 32px 64px rgb(0 0 0 / 6%);
   --shadow-composite-hover:
     0 4px 8px rgb(0 0 0 / 6%), 0 12px 24px rgb(0 0 0 / 10%),
-    0 32px 64px rgb(0 0 0 / 14%), 0 48px 120px rgb(102 126 234 / 18%);
+    0 32px 64px rgb(0 0 0 / 14%), 0 48px 120px rgb(0 217 255 / 18%);
 
   /* ============================================
      Typography - Universal
@@ -600,14 +618,15 @@
 [data-theme="dark"] {
   /* ============================================
      Background Colors - Dark Theme
+     Modern Tech: Dark blue-gray backgrounds
      ============================================ */
-  --color-bg-primary: #1e2532;
-  --color-bg-secondary: #151b26;
-  --color-bg-tertiary: #1a1f2e;
-  --color-bg-quaternary: #0f1419;
-  --color-bg-light: #0f1419;
-  --color-bg-lighter: #1a1f2e;
-  --color-bg-lightest: #151b26;
+  --color-bg-primary: #0f1b2e;
+  --color-bg-secondary: #0a1625;
+  --color-bg-tertiary: #151f2e;
+  --color-bg-quaternary: #0a1625;
+  --color-bg-light: #0a1625;
+  --color-bg-lighter: #151f2e;
+  --color-bg-lightest: #0a1625;
 
   /* Background Light Alpha Variants - Dark Theme */
   --color-bg-light-alpha-95: rgb(30 37 50 / 95%);
@@ -621,43 +640,43 @@
   --color-bg-red-alpha-95: rgb(30 37 50 / 95%);
   --color-bg-pink-alpha-95: rgb(30 37 50 / 95%);
 
-  /* Accent Alpha Variants - Dark Theme (adjusted for better visibility) */
-  --color-accent-alpha-015: rgb(167 139 250 / 2%);
-  --color-accent-alpha-03: rgb(167 139 250 / 4%);
-  --color-accent-alpha-04: rgb(167 139 250 / 5%);
-  --color-accent-alpha-05: rgb(167 139 250 / 6%);
-  --color-accent-alpha-06: rgb(167 139 250 / 8%);
-  --color-accent-alpha-08: rgb(167 139 250 / 10%);
-  --color-accent-alpha-10: rgb(167 139 250 / 12%);
-  --color-accent-alpha-12: rgb(167 139 250 / 15%);
-  --color-accent-alpha-15: rgb(167 139 250 / 18%);
-  --color-accent-alpha-18: rgb(167 139 250 / 20%);
-  --color-accent-alpha-20: rgb(167 139 250 / 25%);
-  --color-accent-alpha-25: rgb(167 139 250 / 30%);
-  --color-accent-alpha-30: rgb(167 139 250 / 35%);
-  --color-accent-alpha-35: rgb(167 139 250 / 40%);
-  --color-accent-alpha-40: rgb(167 139 250 / 45%);
-  --color-accent-alpha-50: rgb(167 139 250 / 55%);
-  --color-accent-alpha-60: rgb(167 139 250 / 65%);
-  --color-accent-alpha-80: rgb(167 139 250 / 85%);
-  --color-accent-alpha-100: rgb(167 139 250 / 100%);
+  /* Accent Alpha Variants - Dark Theme (Modern Tech Cyan) */
+  --color-accent-alpha-015: rgb(0 217 255 / 2%);
+  --color-accent-alpha-03: rgb(0 217 255 / 4%);
+  --color-accent-alpha-04: rgb(0 217 255 / 5%);
+  --color-accent-alpha-05: rgb(0 217 255 / 6%);
+  --color-accent-alpha-06: rgb(0 217 255 / 8%);
+  --color-accent-alpha-08: rgb(0 217 255 / 10%);
+  --color-accent-alpha-10: rgb(0 217 255 / 12%);
+  --color-accent-alpha-12: rgb(0 217 255 / 15%);
+  --color-accent-alpha-15: rgb(0 217 255 / 18%);
+  --color-accent-alpha-18: rgb(0 217 255 / 20%);
+  --color-accent-alpha-20: rgb(0 217 255 / 25%);
+  --color-accent-alpha-25: rgb(0 217 255 / 30%);
+  --color-accent-alpha-30: rgb(0 217 255 / 35%);
+  --color-accent-alpha-35: rgb(0 217 255 / 40%);
+  --color-accent-alpha-40: rgb(0 217 255 / 45%);
+  --color-accent-alpha-50: rgb(0 217 255 / 55%);
+  --color-accent-alpha-60: rgb(0 217 255 / 65%);
+  --color-accent-alpha-80: rgb(0 217 255 / 85%);
+  --color-accent-alpha-100: rgb(0 217 255 / 100%);
 
-  /* Accent Alt Alpha Variants - Dark Theme (adjusted) */
-  --color-accent-alt-alpha-03: rgb(139 92 246 / 4%);
-  --color-accent-alt-alpha-06: rgb(139 92 246 / 8%);
-  --color-accent-alt-alpha-08: rgb(139 92 246 / 10%);
-  --color-accent-alt-alpha-10: rgb(139 92 246 / 12%);
-  --color-accent-alt-alpha-12: rgb(139 92 246 / 15%);
-  --color-accent-alt-alpha-15: rgb(139 92 246 / 18%);
-  --color-accent-alt-alpha-18: rgb(139 92 246 / 20%);
-  --color-accent-alt-alpha-20: rgb(139 92 246 / 25%);
-  --color-accent-alt-alpha-25: rgb(139 92 246 / 30%);
-  --color-accent-alt-alpha-30: rgb(139 92 246 / 35%);
-  --color-accent-alt-alpha-40: rgb(139 92 246 / 45%);
-  --color-accent-alt-alpha-50: rgb(139 92 246 / 55%);
-  --color-accent-alt-alpha-60: rgb(139 92 246 / 65%);
-  --color-accent-alt-alpha-80: rgb(139 92 246 / 85%);
-  --color-accent-alt-alpha-90: rgb(139 92 246 / 95%);
+  /* Accent Alt Alpha Variants - Dark Theme (Modern Tech Blue) */
+  --color-accent-alt-alpha-03: rgb(0 145 234 / 4%);
+  --color-accent-alt-alpha-06: rgb(0 145 234 / 8%);
+  --color-accent-alt-alpha-08: rgb(0 145 234 / 10%);
+  --color-accent-alt-alpha-10: rgb(0 145 234 / 12%);
+  --color-accent-alt-alpha-12: rgb(0 145 234 / 15%);
+  --color-accent-alt-alpha-15: rgb(0 145 234 / 18%);
+  --color-accent-alt-alpha-18: rgb(0 145 234 / 20%);
+  --color-accent-alt-alpha-20: rgb(0 145 234 / 25%);
+  --color-accent-alt-alpha-25: rgb(0 145 234 / 30%);
+  --color-accent-alt-alpha-30: rgb(0 145 234 / 35%);
+  --color-accent-alt-alpha-40: rgb(0 145 234 / 45%);
+  --color-accent-alt-alpha-50: rgb(0 145 234 / 55%);
+  --color-accent-alt-alpha-60: rgb(0 145 234 / 65%);
+  --color-accent-alt-alpha-80: rgb(0 145 234 / 85%);
+  --color-accent-alt-alpha-90: rgb(0 145 234 / 95%);
 
   /* Border Alpha Variants - Dark Theme */
   --color-border-alpha-30: rgb(51 65 85 / 40%);
@@ -668,22 +687,22 @@
   /* Border Medium Alpha Variants - Dark Theme */
   --color-border-medium-alpha-50: rgb(71 85 105 / 60%);
 
-  /* Border Link Alpha Variants - Dark Theme */
-  --color-border-link-alpha-10: rgb(167 139 250 / 12%);
-  --color-border-link-alpha-15: rgb(167 139 250 / 18%);
-  --color-border-link-alpha-20: rgb(167 139 250 / 25%);
+  /* Border Link Alpha Variants - Dark Theme (Modern Tech Cyan) */
+  --color-border-link-alpha-10: rgb(0 217 255 / 12%);
+  --color-border-link-alpha-15: rgb(0 217 255 / 18%);
+  --color-border-link-alpha-20: rgb(0 217 255 / 25%);
 
-  /* Info Alpha Variants - Dark Theme */
-  --color-info-alpha-03: rgb(96 165 250 / 4%);
-  --color-info-alpha-10: rgb(96 165 250 / 12%);
-  --color-info-alpha-15: rgb(96 165 250 / 18%);
-  --color-info-alpha-20: rgb(96 165 250 / 25%);
-  --color-info-alpha-25: rgb(96 165 250 / 30%);
-  --color-info-alpha-30: rgb(96 165 250 / 35%);
-  --color-info-alpha-40: rgb(96 165 250 / 45%);
-  --color-info-alpha-50: rgb(96 165 250 / 55%);
-  --color-info-alpha-60: rgb(96 165 250 / 65%);
-  --color-info-alpha-80: rgb(96 165 250 / 85%);
+  /* Info Alpha Variants - Dark Theme (Modern Tech Cyan) */
+  --color-info-alpha-03: rgb(0 217 255 / 4%);
+  --color-info-alpha-10: rgb(0 217 255 / 12%);
+  --color-info-alpha-15: rgb(0 217 255 / 18%);
+  --color-info-alpha-20: rgb(0 217 255 / 25%);
+  --color-info-alpha-25: rgb(0 217 255 / 30%);
+  --color-info-alpha-30: rgb(0 217 255 / 35%);
+  --color-info-alpha-40: rgb(0 217 255 / 45%);
+  --color-info-alpha-50: rgb(0 217 255 / 55%);
+  --color-info-alpha-60: rgb(0 217 255 / 65%);
+  --color-info-alpha-80: rgb(0 217 255 / 85%);
 
   /* Success Alpha Variants - Dark Theme */
   --color-success-alpha-30: rgb(74 222 128 / 35%);
@@ -701,28 +720,29 @@
   --color-accent-tertiary-alpha-15: rgb(79 172 254 / 18%);
   --color-accent-tertiary-alpha-20: rgb(79 172 254 / 25%);
 
-  /* Accent Secondary Alpha Variants - Dark Theme */
-  --color-accent-secondary-alpha-10: rgb(240 147 251 / 12%);
-  --color-accent-secondary-alpha-15: rgb(240 147 251 / 18%);
-  --color-accent-secondary-alpha-18: rgb(240 147 251 / 20%);
-  --color-accent-secondary-alpha-30: rgb(240 147 251 / 35%);
-  --color-accent-secondary-alpha-50: rgb(240 147 251 / 55%);
-  --color-accent-secondary-alpha-90: rgb(240 147 251 / 95%);
+  /* Accent Secondary Alpha Variants - Dark Theme (Modern Tech Purple) */
+  --color-accent-secondary-alpha-10: rgb(124 58 237 / 12%);
+  --color-accent-secondary-alpha-15: rgb(124 58 237 / 18%);
+  --color-accent-secondary-alpha-18: rgb(124 58 237 / 20%);
+  --color-accent-secondary-alpha-30: rgb(124 58 237 / 35%);
+  --color-accent-secondary-alpha-50: rgb(124 58 237 / 55%);
+  --color-accent-secondary-alpha-90: rgb(124 58 237 / 95%);
 
   /* Background Card and Component Colors - Dark Theme */
-  --color-bg-card: #1e2532;
-  --color-bg-card-alt: #1a2230;
-  --color-bg-card-hover: #252d3d;
-  --color-bg-footer: #151b26;
-  --color-bg-footer-alt: #0f1419;
-  --color-bg-timeline: #1a1f2e;
-  --color-bg-content-hover: #252d3d;
-  --color-bg-stat: #1a1f2e;
-  --color-bg-navbar: rgb(30 37 50 / 90%);
-  --color-bg-navbar-scrolled: rgb(30 37 50 / 98%);
+  --color-bg-card: #1a2538;
+  --color-bg-card-alt: #151f2e;
+  --color-bg-card-hover: #1f2a3f;
+  --color-bg-footer: #0a1625;
+  --color-bg-footer-alt: #0a1625;
+  --color-bg-timeline: #151f2e;
+  --color-bg-content-hover: #1f2a3f;
+  --color-bg-stat: #151f2e;
+  --color-bg-navbar: rgb(15 27 46 / 90%);
+  --color-bg-navbar-scrolled: rgb(15 27 46 / 98%);
   --color-bg-overlay: rgb(0 0 0 / 75%);
-  --color-bg-dark: #0a0e14;
-  --color-bg-dark-light: #0f1419;
+  --color-bg-dark: #0a1625;
+  --color-bg-dark-light: #0f1b2e;
+  --color-bg-card-dark: var(--color-bg-card);
 
   /* ============================================
      Text Colors - Dark Theme
@@ -739,10 +759,14 @@
   --color-text-muted-alt: #64748b;
   --color-text-light: #475569;
   --color-text-accent: #cbd5e1;
-  --color-text-hover: #a78bfa;
+  --color-text-body: var(--color-text-main);
+  --color-text-body-dark: var(--color-text-main);
+  --color-text-heading-dark: var(--color-text-heading);
+  --color-text-subtle-dark: var(--color-text-subtle);
+  --color-text-hover: #00d9ff;
   --color-text-on-accent: #fff;
-  --color-text-link: #a78bfa;
-  --color-text-link-hover: #c4b5fd;
+  --color-text-link: #00d9ff;
+  --color-text-link-hover: #40e0d0;
 
   /* ============================================
      Border Colors - Dark Theme
@@ -757,20 +781,20 @@
   --color-border-dark: #64748b;
   --color-border-navbar: rgb(51 65 85 / 50%);
   --color-border-navbar-dropdown: rgb(51 65 85 / 60%);
-  --color-border-glow: rgb(167 139 250 / 30%);
+  --color-border-glow: rgb(0 217 255 / 30%);
   --color-border-image: #334155;
   --color-border-period: #475569;
-  --color-border-accent: rgb(167 139 250 / 40%);
-  --color-border-accent-hover: rgb(167 139 250 / 60%);
+  --color-border-accent: rgb(0 217 255 / 40%);
+  --color-border-accent-hover: rgb(0 217 255 / 60%);
   --color-border-print: #64748b;
 
   /* ============================================
      Status Colors - Dark Theme
      ============================================ */
-  --color-success: #4ade80;
-  --color-success-light: rgb(74 222 128 / 15%);
-  --color-success-dark: #22c55e;
-  --color-success-text: #86efac;
+  --color-success: #10b981;
+  --color-success-light: rgb(16 185 129 / 15%);
+  --color-success-dark: #059669;
+  --color-success-text: #34d399;
   --color-error: #f87171;
   --color-error-light: rgb(248 113 113 / 15%);
   --color-error-alpha-10: rgb(248 113 113 / 10%);
@@ -787,21 +811,21 @@
   --color-warning-alpha-50: rgb(251 191 36 / 50%);
   --color-warning-dark: #f59e0b;
   --color-warning-text: #fcd34d;
-  --color-info: #60a5fa;
-  --color-info-light: rgb(96 165 250 / 15%);
-  --color-info-dark: #3b82f6;
-  --color-info-text: #93c5fd;
+  --color-info: #00d9ff;
+  --color-info-light: rgb(0 217 255 / 15%);
+  --color-info-dark: #00b8d4;
+  --color-info-text: #40e0d0;
 
   /* Note: Info colors kept as blue for status/notification purposes */
 
   /* ============================================
-     Accent Colors - Dark Theme (adjusted for better visibility)
+     Accent Colors - Dark Theme (Modern Tech Cyan)
      ============================================ */
-  --color-accent-primary: #a78bfa;
-  --color-accent-hover: #c4b5fd;
-  --color-accent-light: #c4b5fd;
-  --color-accent-glow: rgb(167 139 250 / 40%);
-  --color-accent-glow-strong: rgb(139 92 246 / 45%);
+  --color-accent-primary: #00d9ff;
+  --color-accent-hover: #40e0d0;
+  --color-accent-light: #40e0d0;
+  --color-accent-glow: rgb(0 217 255 / 40%);
+  --color-accent-glow-strong: rgb(0 145 234 / 45%);
 
   /* Special Purpose Colors - Dark Theme */
   --color-purple: var(--color-accent-purple);
@@ -823,8 +847,9 @@
      Component-Specific Colors - Dark Theme
      ============================================ */
 
-  /* Tech Showcase */
-  --tech-showcase-bg-card: rgb(15 20 40 / 95%);
+  /* Tech Showcase - Dark Mode */
+  --tech-showcase-bg-card: var(--color-bg-card);
+  --tech-showcase-bg-overlay: rgb(0 217 255 / 8%);
 
   /* Languages Section */
   --language-success: var(--color-success);
@@ -842,66 +867,72 @@
   /* Certification Section */
   --cert-color-glow: var(--color-accent-glow-strong);
 
-  /* Footer Section */
+  /* Footer Section - Dark Mode */
+  --footer-bg-primary: var(--color-bg-footer);
+  --footer-bg-secondary: var(--color-bg-footer-alt);
   --footer-gradient-start: var(--color-accent-glow);
-  --footer-gradient-end: rgb(118 75 162 / 15%);
-  --footer-text-primary: rgb(255 255 255 / 95%);
-  --footer-text-secondary: rgb(255 255 255 / 70%);
-  --footer-text-muted: rgb(255 255 255 / 50%);
-  --footer-border-color: rgb(255 255 255 / 15%);
+  --footer-gradient-end: rgb(0 145 234 / 15%);
+  --footer-text-primary: var(--color-text-main);
+  --footer-text-secondary: var(--color-text-subtle);
+  --footer-text-muted: var(--color-text-muted);
+  --footer-border-color: var(--color-border-light);
 
-  /* Contact Section */
+  /* Contact Section - Dark Mode */
+  --contact-primary: var(--color-accent-primary);
   --contact-primary-light: var(--color-accent-glow);
-  --contact-primary-lighter: rgb(102 126 234 / 8%);
-
-  /* Contact Section Dark Mode Colors */
+  --contact-primary-lighter: rgb(0 217 255 / 8%);
+  --contact-location-primary: #43e97b;
+  --contact-location-secondary: #38f9d7;
+  --contact-website-primary: #fa709a;
+  --contact-website-secondary: #fee140;
   --contact-bg-card: #1a202c;
   --contact-bg-hover: #2d3748;
   --contact-bg-subtle: #252b37;
-  --contact-text-primary: #f7fafc;
-  --contact-text-secondary: #e2e8f0;
-  --contact-text-muted: #cbd5e1;
-  --contact-text-light: #a0aec0;
-  --contact-border: #4a5568;
-  --contact-border-hover: #718096;
-  --contact-border-light: #2d3748;
+  --contact-text-primary: var(--color-text-main);
+  --contact-text-secondary: var(--color-text-subtle);
+  --contact-text-muted: var(--color-text-muted);
+  --contact-text-light: var(--color-text-light);
+  --contact-border: var(--color-border-default);
+  --contact-border-hover: var(--color-border-medium);
+  --contact-border-light: var(--color-border-light);
 
   /* ============================================
      Gradients - Dark Theme
+     Modern Tech: Cyan-Blue-Purple gradients
      ============================================ */
-  --gradient-primary: linear-gradient(135deg, #1e2532 0%, #151b26 100%);
-  --gradient-accent: linear-gradient(135deg, #a78bfa 0%, #764ba2 100%);
+  --gradient-primary: linear-gradient(135deg, #0f1b2e 0%, #0a1625 100%);
+  --gradient-accent: linear-gradient(135deg, #00d9ff 0%, #0091ea 100%);
   --gradient-accent-full: linear-gradient(
     135deg,
-    #a78bfa 0%,
-    #764ba2 50%,
-    #f093fb 100%
+    #00d9ff 0%,
+    #0091ea 50%,
+    #7c3aed 100%
   );
   --gradient-luxury: linear-gradient(
     135deg,
-    #1e2532 0%,
-    #1a2230 40%,
-    #151b26 100%
+    #0f1b2e 0%,
+    #151f2e 40%,
+    #0a1625 100%
   );
   --gradient-sublime: linear-gradient(
     135deg,
-    rgb(102 126 234 / 15%) 0%,
-    rgb(118 75 162 / 15%) 100%
+    rgb(0 217 255 / 15%) 0%,
+    rgb(0 145 234 / 15%) 100%
   );
   --gradient-primary-reverse: linear-gradient(
     135deg,
-    #f093fb 0%,
-    #764ba2 50%,
-    #a78bfa 100%
+    #7c3aed 0%,
+    #0091ea 50%,
+    #00d9ff 100%
   );
   --gradient-accent-subtle: linear-gradient(
     135deg,
-    rgb(102 126 234 / 15%) 0%,
-    rgb(118 75 162 / 15%) 100%
+    rgb(0 217 255 / 15%) 0%,
+    rgb(0 145 234 / 15%) 100%
   );
   --gradient-primary-radial: radial-gradient(
     ellipse at top,
-    rgb(102 126 234 / 20%),
+    rgb(0 217 255 / 20%),
     transparent 70%
   );
 
@@ -915,22 +946,22 @@
   --shadow-xl: 0 16px 32px rgb(0 0 0 / 70%), 0 32px 64px rgb(0 0 0 / 60%);
   --shadow-card:
     0 6px 20px rgb(0 0 0 / 50%), 0 16px 40px rgb(0 0 0 / 40%),
-    0 32px 80px rgb(102 126 234 / 20%);
+    0 32px 80px rgb(0 217 255 / 20%);
   --shadow-card-hover:
     0 16px 40px rgb(0 0 0 / 60%), 0 32px 80px rgb(0 0 0 / 50%),
-    0 48px 120px rgb(102 126 234 / 30%);
+    0 48px 120px rgb(0 217 255 / 30%);
   --shadow-card-alt: 0 10px 32px rgb(0 0 0 / 60%);
   --shadow-item: 0 6px 16px rgb(0 0 0 / 50%), 0 12px 32px rgb(0 0 0 / 60%);
   --shadow-item-hover:
     0 16px 40px rgb(0 0 0 / 70%), 0 32px 80px rgb(0 0 0 / 60%),
-    0 40px 100px rgb(102 126 234 / 25%);
+    0 40px 100px rgb(0 217 255 / 25%);
   --shadow-icon: 0 4px 10px rgb(0 0 0 / 50%);
   --shadow-icon-alt: 0 6px 16px rgb(0 0 0 / 50%);
-  --shadow-icon-hover: 0 12px 32px rgb(167 139 250 / 40%);
-  --shadow-focus: 0 0 0 4px rgb(96 165 250 / 30%);
-  --shadow-glow: 0 0 24px rgb(96 165 250 / 40%);
-  --shadow-glow-strong: 0 0 40px rgb(139 92 246 / 50%);
-  --shadow-accent: 0 0 16px rgb(167 139 250 / 40%);
+  --shadow-icon-hover: 0 12px 32px rgb(0 217 255 / 40%);
+  --shadow-focus: 0 0 0 4px rgb(0 217 255 / 30%);
+  --shadow-glow: 0 0 24px rgb(0 217 255 / 40%);
+  --shadow-glow-strong: 0 0 40px rgb(0 145 234 / 50%);
+  --shadow-accent: 0 0 16px rgb(0 217 255 / 40%);
   --shadow-footer: 0 -6px 20px rgb(0 0 0 / 50%);
   --shadow-navbar: 0 8px 24px rgb(0 0 0 / 50%);
   --shadow-navbar-scrolled: 0 12px 32px rgb(0 0 0 / 60%);
@@ -940,7 +971,7 @@
     0 16px 32px rgb(0 0 0 / 70%), 0 32px 64px rgb(0 0 0 / 50%);
   --shadow-composite-hover:
     0 4px 8px rgb(0 0 0 / 60%), 0 12px 24px rgb(0 0 0 / 70%),
-    0 32px 64px rgb(0 0 0 / 80%), 0 48px 120px rgb(102 126 234 / 30%);
+    0 32px 64px rgb(0 0 0 / 80%), 0 48px 120px rgb(0 217 255 / 30%);
 
   /* ============================================
      Legacy Variable Aliases - Backward Compatibility (Dark Theme)

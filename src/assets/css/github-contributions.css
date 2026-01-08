@@ -20,16 +20,16 @@
   background: var(--color-bg-card);
   border-radius: 20px;
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04);
+    0 4px 16px var(--color-black-alpha-08),
+    0 2px 8px var(--color-black-alpha-04);
   transition: all 0.3s ease;
 }
 
 .github-contributions:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.08);
+    0 12px 32px var(--color-black-alpha-12),
+    0 6px 16px var(--color-black-alpha-08);
   border-color: var(--color-accent-alpha-20);
 }
 
@@ -75,7 +75,7 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
 }
 
 /* Footer */
@@ -105,8 +105,8 @@
   color: var(--color-text-inverse);
   transform: translateY(-2px);
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.12),
-    0 4px 8px rgba(0, 0, 0, 0.08);
+    0 8px 24px var(--color-black-alpha-12),
+    0 4px 8px var(--color-black-alpha-08);
 }
 
 .github-contributions-button:active {

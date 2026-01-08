@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from "react";
+import { StatusColors } from "../../../constants";
 
 type LabelProps = {
   htmlFor: string;
@@ -23,7 +24,8 @@ class Label extends Component<LabelProps> {
 
     return (
       <label htmlFor={htmlFor} className="form-label">
-        {text} {required && <span style={{ color: "red" }}>*</span>}
+        {text}{" "}
+        {required && <span style={{ color: StatusColors.ERROR }}>*</span>}
       </label>
     );
   }

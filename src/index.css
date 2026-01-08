@@ -7,7 +7,7 @@
  */
 
 /* Core CSS System - Must be imported first */
-@import './assets/css/core/index.css';
+@import url("./assets/css/core/index.css");
 
 /* Legacy tokens.css - Will be deprecated in favor of core/variables.css */
-@import './assets/css/tokens.css';
+@import url("./assets/css/tokens.css");

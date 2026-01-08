@@ -3,47 +3,52 @@
    ============================================ */
 
 .soft-skills-grid-container {
-  width: 100%;
-  max-width: 100%;
-  padding: 2rem 0;
   position: relative;
+  width: 100%;
+  padding: 2rem 0;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
 /* Animated Background Pattern */
 .soft-skills-grid-container::before {
-  content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
-  pointer-events: none;
+  inset: 0;
   z-index: 0;
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      var(--color-accent-alpha-03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 50%,
+      var(--color-accent-alt-alpha-03) 0%,
+      transparent 50%
+    );
+  content: "";
+  pointer-events: none;
 }
 
 .soft-skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 3rem;
-  width: 100%;
   position: relative;
   z-index: 1;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 3rem;
 }
 
 /* Empty State */
 .soft-skills-empty {
   display: flex;
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem;
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem 2rem;
-  text-align: center;
-  position: relative;
-  z-index: 1;
 }
 
 .soft-skills-empty-icon {
@@ -51,22 +56,24 @@
   margin-bottom: 2rem;
   opacity: 0.5;
   filter: grayscale(0.3);
-  animation: softSkillsEmptyPulse 2s ease-in-out infinite;
+  animation: soft-skills-empty-pulse 2s ease-in-out infinite;
 }
 
 .soft-skills-empty-text {
-  color: var(--text-subtle, #5c6b7a);
-  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
   margin: 0;
+  color: var(--text-subtle);
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
   font-weight: 400;
+  font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
 }
 
-@keyframes softSkillsEmptyPulse {
-  0%, 100% {
+@keyframes soft-skills-empty-pulse {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.5;
   }
+
   50% {
     transform: scale(1.1);
     opacity: 0.7;
@@ -74,14 +81,14 @@
 }
 
 /* Responsive Design */
-@media screen and (min-width: 1400px) {
+@media screen and (width >= 1400px) {
   .soft-skills-grid {
     grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     gap: 3.5rem;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   /* Horizontal scroll for grid on tablet */
   .soft-skills-grid-container {
     overflow-x: hidden;
@@ -92,8 +99,7 @@
     display: flex;
     flex-direction: row;
     gap: 2.5rem;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -104,6 +110,12 @@
     padding-right: 2rem;
     width: calc(100% + 4rem);
     grid-template-columns: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(
+        --soft-skills-color-primary,
+        var(--color-accent-primary)
+      )
+      var(--color-black-alpha-05);
   }
 
   .soft-skills-grid > * {
@@ -119,27 +131,21 @@
   }
 
   .soft-skills-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--color-black-alpha-05);
     border-radius: 3px;
   }
 
   .soft-skills-grid::-webkit-scrollbar-thumb {
-    background: var(--soft-skills-color-primary, #667eea);
+    background: var(--soft-skills-color-primary, var(--color-accent-primary));
     border-radius: 3px;
   }
 
   .soft-skills-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--soft-skills-color-secondary, #764ba2);
-  }
-
-  /* Firefox scrollbar */
-  .soft-skills-grid {
-    scrollbar-width: thin;
-    scrollbar-color: var(--soft-skills-color-primary, #667eea) rgba(0, 0, 0, 0.05);
+    background: var(--soft-skills-color-secondary, var(--color-accent-alt));
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .soft-skills-grid {
     margin-left: calc(-1 * 1.5rem);
     margin-right: calc(-1 * 1.5rem);
@@ -164,7 +170,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .soft-skills-grid {
     margin-left: 0;
     margin-right: 0;
@@ -190,7 +196,7 @@
 }
 
 /* Landscape Orientation */
-@media screen and (orientation: landscape) and (max-width: 768px) {
+@media screen and (orientation: landscape) and (width <= 768px) {
   /* Keep horizontal scroll in landscape */
   .soft-skills-grid {
     gap: 2rem;

@@ -2,6 +2,7 @@
  * Image Optimization Utilities
  * Provides utilities for optimizing images (WebP, responsive images, etc.)
  */
+import { BackgroundColors } from "../constants";
 
 export interface ImageOptimizationOptions {
   width?: number;
@@ -201,7 +202,7 @@ export async function getImageDimensions(
 export function generatePlaceholder(
   width: number,
   height: number,
-  color: string = "#f0f0f0",
+  color: string = BackgroundColors.LIGHTEST,
 ): string {
   // Generate a simple colored placeholder
   // In production, consider using blur-up technique or low-quality image placeholders

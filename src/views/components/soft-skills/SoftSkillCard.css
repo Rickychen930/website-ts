@@ -4,34 +4,35 @@
    ============================================ */
 
 .soft-skill-card {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  position: relative;
   padding: 3.5rem clamp(2.5rem, 4vw, 3rem);
+  border: 2px solid var(--color-border-alpha-30);
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(249, 251, 253, 0.92)
+    var(--color-white-alpha-95),
+    var(--color-bg-card-alt)
   );
-  border-radius: 32px;
-  border: 2px solid rgba(220, 227, 234, 0.3);
-  box-shadow:
-    0 10px 32px rgba(0, 0, 0, 0.06),
-    0 20px 64px rgba(0, 0, 0, 0.08),
-    0 40px 120px rgba(102, 126, 234, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
+  text-align: center;
   opacity: 0;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-direction: column;
+  align-items: center;
+  border-radius: 32px;
+  box-shadow:
+    0 10px 32px var(--color-black-alpha-06),
+    0 20px 64px var(--color-black-alpha-08),
+    0 40px 120px var(--color-accent-alpha-10),
+    inset 0 1px 0 var(--color-white-alpha-80);
+  overflow: hidden;
   transform: translateY(50px) scale(0.95) rotateX(5deg);
   transform-style: preserve-3d;
   perspective: 1000px;
   will-change: transform, opacity, box-shadow;
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   cursor: default;
+
   --mouse-x: 0deg;
   --mouse-y: 0deg;
 }
@@ -39,16 +40,13 @@
 /* Animated Grid Background */
 .soft-skill-card-grid-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   opacity: 0.03;
-  background-image: 
-    linear-gradient(rgba(102, 126, 234, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
+  background-image:
+    linear-gradient(var(--color-accent-alpha-10) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent-alpha-10) 1px, transparent 1px);
   background-size: 40px 40px;
-  animation: softSkillCardGridMove 20s linear infinite;
+  animation: soft-skill-card-grid-move 20s linear infinite;
   pointer-events: none;
 }
 
@@ -57,10 +55,10 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(102, 126, 234, 0.2),
+    var(--color-accent-alpha-20),
     transparent
   );
-  animation: softSkillCardGridLine 3s ease-in-out infinite;
+  animation: soft-skill-card-grid-line 3s ease-in-out infinite;
 }
 
 .soft-skill-card-grid-line:nth-child(1) {
@@ -90,10 +88,7 @@
 /* Animated Particles */
 .soft-skill-card-particles {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
@@ -102,10 +97,14 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: radial-gradient(circle, rgba(102, 126, 234, 0.6), transparent);
+  background: radial-gradient(
+    circle,
+    var(--color-accent-alpha-60),
+    transparent
+  );
   border-radius: 50%;
   opacity: 0;
-  animation: softSkillCardParticle 8s ease-in-out infinite;
+  animation: soft-skill-card-particle 8s ease-in-out infinite;
 }
 
 .soft-skill-card-particle:nth-child(1) {
@@ -135,10 +134,7 @@
 /* Background Decoration */
 .soft-skill-card-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
@@ -151,13 +147,13 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(102, 126, 234, 0.08) 0%,
-    rgba(118, 75, 162, 0.05) 40%,
+    var(--color-accent-alpha-08) 0%,
+    var(--color-accent-alt-alpha-06) 40%,
     transparent 70%
   );
   opacity: 0;
   transition: opacity 0.6s ease;
-  animation: softSkillCardBgRotate 15s linear infinite;
+  animation: soft-skill-card-bg-rotate 15s linear infinite;
 }
 
 .soft-skill-card-bg-radial {
@@ -169,7 +165,7 @@
   height: 300px;
   background: radial-gradient(
     circle,
-    rgba(102, 126, 234, 0.1) 0%,
+    var(--color-accent-alpha-10) 0%,
     transparent 70%
   );
   opacity: 0;
@@ -187,7 +183,7 @@
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.4) 50%,
+    var(--color-white-alpha-40) 50%,
     transparent 70%
   );
   transform: rotate(45deg);
@@ -211,8 +207,8 @@
   position: absolute;
   background: linear-gradient(
     135deg,
-    var(--accent, #667eea),
-    var(--accent-alt, #764ba2)
+    var(--accent, #00d9ff),
+    var(--accent-alt, #0091ea)
   );
   opacity: 0.3;
 }
@@ -245,11 +241,11 @@
   transform: translate(-50%, -50%);
   width: 140px;
   height: 140px;
-  border: 2px solid rgba(102, 126, 234, 0.2);
+  border: 2px solid var(--color-accent-alpha-20);
   border-radius: 50%;
   opacity: 0;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: softSkillCardIconRing 3s ease-in-out infinite;
+  animation: soft-skill-card-icon-ring 3s ease-in-out infinite;
 }
 
 .soft-skill-card-icon-pulse {
@@ -261,19 +257,19 @@
   height: 120px;
   background: radial-gradient(
     circle,
-    rgba(102, 126, 234, 0.3) 0%,
+    var(--color-accent-alpha-30) 0%,
     transparent 70%
   );
   border-radius: 50%;
   opacity: 0;
-  animation: softSkillCardIconPulse 2s ease-in-out infinite;
+  animation: soft-skill-card-icon-pulse 2s ease-in-out infinite;
 }
 
 /* Content */
 .soft-skill-card-inner {
   position: relative;
-  width: 100%;
   z-index: 2;
+  width: 100%;
 }
 
 .soft-skill-card-header {
@@ -287,61 +283,59 @@
 
 .soft-skill-card-title {
   margin: 0;
-  color: var(--text-heading, #1f2d3d);
-  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
-  font-weight: 800;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
-  letter-spacing: -0.8px;
-  line-height: 1.2;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(
     135deg,
-    var(--text-heading, #1f2d3d) 0%,
-    var(--accent, #667eea) 50%,
-    var(--accent-alt, #764ba2) 100%
+    var(--text-heading) 0%,
+    var(--accent) 50%,
+    var(--accent-alt) 100%
   );
-  -webkit-background-clip: text;
+  color: var(--text-heading);
+  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.2;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
+  letter-spacing: -0.8px;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 200%;
-  animation: softSkillCardTitleGradient 3s ease infinite;
+  animation: soft-skill-card-title-gradient 3s ease infinite;
 }
 
 /* Badge */
 .soft-skill-card-badge {
   display: inline-flex;
-  align-items: center;
   padding: 0.4rem 1rem;
+  border: 1px solid var(--color-accent-alpha-30);
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.15),
-    rgba(118, 75, 162, 0.15)
+    var(--color-accent-alpha-15),
+    var(--color-accent-alt-alpha-15)
   );
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  align-items: center;
   border-radius: 20px;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .soft-skill-card-badge-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent-alt));
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  background: linear-gradient(135deg, var(--accent, #667eea), var(--accent-alt, #764ba2));
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .soft-skill-card-description {
   margin: 0 0 2rem;
-  color: var(--text-subtle, #5c6b7a);
+  color: var(--text-subtle);
   font-size: clamp(1rem, 1.6vw, 1.15rem);
-  line-height: 1.8;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
-  transition: color 0.3s ease;
   font-weight: 400;
+  line-height: 1.8;
+  transition: color 0.3s ease;
+  font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
 }
 
 /* Skill Level Indicator */
@@ -358,33 +352,32 @@
 }
 
 .soft-skill-card-level-label {
+  color: var(--text-muted);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-muted, #3b4a59);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
 }
 
 .soft-skill-card-level-value {
+  background: linear-gradient(135deg, var(--accent), var(--accent-alt));
   font-size: 0.9rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent, #667eea), var(--accent-alt, #764ba2));
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
 }
 
 .soft-skill-card-level-bar {
   position: relative;
   width: 100%;
   height: 8px;
-  background: rgba(220, 227, 234, 0.3);
+  background: var(--color-border-alpha-30);
   border-radius: 10px;
   overflow: hidden;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .soft-skill-card-level-fill {
@@ -392,29 +385,26 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    var(--accent, #667eea),
-    var(--accent-alt, #764ba2),
-    var(--accent-tertiary, #4facfe)
+    var(--accent),
+    var(--accent-alt),
+    var(--accent-tertiary)
   );
   border-radius: 10px;
   transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 12px rgba(102, 126, 234, 0.5);
-  animation: softSkillCardLevelPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 12px var(--color-accent-alpha-50);
+  animation: soft-skill-card-level-pulse 2s ease-in-out infinite;
 }
 
 .soft-skill-card-level-glow {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.4),
+    var(--color-white-alpha-40),
     transparent
   );
-  animation: softSkillCardLevelGlow 2s ease-in-out infinite;
+  animation: soft-skill-card-level-glow 2s ease-in-out infinite;
 }
 
 /* Indicator */
@@ -427,27 +417,24 @@
   height: 4px;
   background: linear-gradient(
     90deg,
-    var(--accent, #667eea),
-    var(--accent-alt, #764ba2),
-    var(--accent-tertiary, #4facfe)
+    var(--accent),
+    var(--accent-alt),
+    var(--accent-tertiary)
   );
   border-radius: 4px 4px 0 0;
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 -2px 8px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 -2px 8px var(--color-accent-alpha-40);
 }
 
 /* 3D Transform Overlay */
 .soft-skill-card-3d-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.1) 0%,
+    var(--color-white-alpha-10) 0%,
     transparent 50%,
-    rgba(102, 126, 234, 0.05) 100%
+    var(--color-accent-alpha-05) 100%
   );
   opacity: 0;
   transition: opacity 0.6s ease;
@@ -459,7 +446,7 @@
 .soft-skill-card-visible {
   opacity: 1;
   transform: translateY(0) scale(1) rotateX(0deg);
-  animation: softSkillCardFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: soft-skill-card-fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .soft-skill-card-visible .soft-skill-card-level-fill {
@@ -469,19 +456,18 @@
 /* Hover States - Advanced 3D Effects */
 .soft-skill-card:hover,
 .soft-skill-card:focus-within {
-  transform: translateY(-16px) scale(1.04) 
-    rotateX(var(--mouse-y, 0deg)) 
+  transform: translateY(-16px) scale(1.04) rotateX(var(--mouse-y, 0deg))
     rotateY(var(--mouse-x, 0deg));
   box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.12),
-    0 40px 96px rgba(0, 0, 0, 0.15),
-    0 60px 140px rgba(102, 126, 234, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  border-color: rgba(102, 126, 234, 0.5);
+    0 24px 64px var(--color-black-alpha-12),
+    0 40px 96px var(--color-black-alpha-12),
+    0 60px 140px var(--color-accent-alpha-25),
+    inset 0 1px 0 var(--color-white-alpha-90);
+  border-color: var(--color-accent-alpha-50);
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 1),
-    rgba(249, 251, 253, 0.98)
+    var(--color-white),
+    var(--color-bg-card-alt)
   );
 }
 
@@ -499,7 +485,7 @@
 .soft-skill-card:hover .soft-skill-card-shine,
 .soft-skill-card:focus-within .soft-skill-card-shine {
   opacity: 1;
-  animation: softSkillCardShine 2s ease-in-out;
+  animation: soft-skill-card-shine 2s ease-in-out;
 }
 
 .soft-skill-card:hover .soft-skill-card-indicator,
@@ -530,17 +516,19 @@
 }
 
 /* Animations */
-@keyframes softSkillCardFadeIn {
+@keyframes soft-skill-card-fade-in {
   0% {
     opacity: 0;
     transform: translateY(50px) scale(0.95) rotateX(5deg);
     filter: blur(8px);
   }
+
   60% {
     opacity: 1;
     transform: translateY(-6px) scale(1.02) rotateX(-2deg);
     filter: blur(2px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateX(0deg);
@@ -548,118 +536,135 @@
   }
 }
 
-@keyframes softSkillCardShine {
+@keyframes soft-skill-card-shine {
   0% {
     transform: translateX(-100%) translateY(-100%) rotate(45deg);
     opacity: 0;
   }
+
   50% {
     opacity: 0.6;
   }
+
   100% {
     transform: translateX(100%) translateY(100%) rotate(45deg);
     opacity: 0;
   }
 }
 
-@keyframes softSkillCardGridMove {
+@keyframes soft-skill-card-grid-move {
   0% {
     transform: translate(0, 0);
   }
+
   100% {
     transform: translate(40px, 40px);
   }
 }
 
-@keyframes softSkillCardGridLine {
-  0%, 100% {
+@keyframes soft-skill-card-grid-line {
+  0%,
+  100% {
     opacity: 0;
     transform: translateX(-100%);
   }
+
   50% {
     opacity: 1;
     transform: translateX(100%);
   }
 }
 
-@keyframes softSkillCardParticle {
-  0%, 100% {
+@keyframes soft-skill-card-particle {
+  0%,
+  100% {
     opacity: 0;
     transform: translate(0, 0) scale(0);
   }
+
   50% {
     opacity: 1;
     transform: translate(20px, -20px) scale(1);
   }
 }
 
-@keyframes softSkillCardBgRotate {
+@keyframes soft-skill-card-bg-rotate {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
-@keyframes softSkillCardIconRing {
-  0%, 100% {
+@keyframes soft-skill-card-icon-ring {
+  0%,
+  100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
   }
+
   50% {
     opacity: 0.5;
     transform: translate(-50%, -50%) scale(1);
   }
 }
 
-@keyframes softSkillCardIconPulse {
-  0%, 100% {
+@keyframes soft-skill-card-icon-pulse {
+  0%,
+  100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
   }
+
   50% {
     opacity: 0.4;
     transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
-@keyframes softSkillCardTitleGradient {
-  0%, 100% {
+@keyframes soft-skill-card-title-gradient {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
 }
 
-@keyframes softSkillCardLevelPulse {
-  0%, 100% {
-    box-shadow: 0 0 12px rgba(102, 126, 234, 0.5);
+@keyframes soft-skill-card-level-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px var(--color-accent-alpha-50);
   }
+
   50% {
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+    box-shadow: 0 0 20px var(--color-accent-alpha-80);
   }
 }
 
-@keyframes softSkillCardLevelGlow {
+@keyframes soft-skill-card-level-glow {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
 }
 
 /* Responsive Design */
-@media screen and (min-width: 1400px) {
+@media screen and (width >= 1400px) {
   .soft-skill-card {
     padding: 4rem clamp(3rem, 5vw, 3.5rem);
     border-radius: 36px;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .soft-skill-card {
     padding: 3rem clamp(2rem, 3vw, 2.5rem);
     border-radius: 28px;
@@ -670,7 +675,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .soft-skill-card {
     padding: 2.5rem clamp(1.75rem, 2.5vw, 2.25rem);
     border-radius: 24px;
@@ -682,7 +687,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .soft-skill-card {
     padding: 2rem clamp(1.5rem, 2vw, 2rem);
     border-radius: 20px;
@@ -708,13 +713,13 @@
 }
 
 /* High Contrast */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .soft-skill-card {
     border: 3px solid var(--text-heading, #1f2d3d);
   }
 
   .soft-skill-card-title {
     -webkit-text-fill-color: var(--text-heading, #1f2d3d);
-    color: var(--text-heading, #1f2d3d);
+    color: var(--text-heading);
   }
 }

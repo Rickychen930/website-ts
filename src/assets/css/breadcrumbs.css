@@ -1,7 +1,18 @@
 /**
  * Breadcrumbs Styles
  * Professional, clean breadcrumb navigation
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * 
+ * Usage:
+ * @import '@/assets/css/breadcrumbs.css';
  */
+
+/* Import core system for constants and variables */
+@import url("./core/index.css");
 
 .breadcrumbs {
   padding: 1rem 0;

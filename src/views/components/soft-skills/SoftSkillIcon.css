@@ -3,11 +3,11 @@
    ============================================ */
 
 .soft-skill-icon-wrapper {
-  position: relative;
   display: inline-flex;
+  position: relative;
+  z-index: 1;
   align-items: center;
   justify-content: center;
-  z-index: 1;
 }
 
 /* Icon Glow Effect */
@@ -15,20 +15,36 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  z-index: 0;
   width: 120px;
   height: 120px;
   background: radial-gradient(
     circle,
-    rgba(102, 126, 234, 0.35),
-    rgba(102, 126, 234, 0.2),
+    var(--color-accent-alpha-35),
+    var(--color-accent-alpha-20),
     transparent 70%
   );
-  border-radius: 50%;
   opacity: 0;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
   pointer-events: none;
-  z-index: 0;
+}
+
+/* Size-specific glow variants (must come before hover) */
+.soft-skill-icon-small .soft-skill-icon-glow {
+  width: 80px;
+  height: 80px;
+}
+
+.soft-skill-icon-medium .soft-skill-icon-glow {
+  width: 120px;
+  height: 120px;
+}
+
+.soft-skill-icon-large .soft-skill-icon-glow {
+  width: 140px;
+  height: 140px;
 }
 
 .soft-skill-icon-wrapper:hover .soft-skill-icon-glow,
@@ -38,31 +54,31 @@
 
 /* Icon Container */
 .soft-skill-icon-container {
-  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
+  border: 2px solid var(--color-accent-alpha-25);
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.12),
-    rgba(118, 75, 162, 0.15)
+    var(--color-accent-alpha-12),
+    var(--color-accent-alt-alpha-15)
   );
-  border: 2px solid rgba(102, 126, 234, 0.25);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  justify-content: center;
   border-radius: 20px;
   box-shadow:
-    0 6px 20px rgba(102, 126, 234, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
-  backdrop-filter: blur(10px);
+    0 6px 20px var(--color-accent-alpha-15),
+    inset 0 1px 0 var(--color-white-alpha-70);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 /* Icon Emoji */
 .soft-skill-icon-emoji {
   display: block;
   line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -77,11 +93,6 @@
   font-size: 1.5rem;
 }
 
-.soft-skill-icon-small .soft-skill-icon-glow {
-  width: 80px;
-  height: 80px;
-}
-
 .soft-skill-icon-medium .soft-skill-icon-container {
   width: 5rem;
   height: 5rem;
@@ -90,11 +101,6 @@
 
 .soft-skill-icon-medium .soft-skill-icon-emoji {
   font-size: 2.25rem;
-}
-
-.soft-skill-icon-medium .soft-skill-icon-glow {
-  width: 120px;
-  height: 120px;
 }
 
 .soft-skill-icon-large .soft-skill-icon-container {
@@ -107,23 +113,38 @@
   font-size: 2.75rem;
 }
 
-.soft-skill-icon-large .soft-skill-icon-glow {
-  width: 140px;
-  height: 140px;
+/* Animation (must come before hover for specificity) */
+.soft-skill-icon-animated .soft-skill-icon-container {
+  animation: soft-skill-icon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes soft-skill-icon-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 6px 20px var(--color-accent-alpha-15),
+      inset 0 1px 0 var(--color-white-alpha-70);
+  }
+
+  50% {
+    box-shadow:
+      0 8px 24px var(--color-accent-alpha-25),
+      inset 0 1px 0 var(--color-white-alpha-70);
+  }
 }
 
 /* Hover Effects */
 .soft-skill-icon-wrapper:hover .soft-skill-icon-container,
 .soft-skill-icon-wrapper:focus-within .soft-skill-icon-container {
   transform: scale(1.1) rotate(5deg);
-  border-color: rgba(102, 126, 234, 0.5);
+  border-color: var(--color-accent-alpha-50);
   box-shadow:
-    0 12px 32px rgba(102, 126, 234, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 12px 32px var(--color-accent-alpha-30),
+    inset 0 1px 0 var(--color-white-alpha-80);
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.18),
-    rgba(118, 75, 162, 0.22)
+    var(--color-accent-alpha-18),
+    var(--color-accent-alt-alpha-20)
   );
 }
 
@@ -132,27 +153,8 @@
   transform: scale(1.1);
 }
 
-/* Animation */
-.soft-skill-icon-animated .soft-skill-icon-container {
-  animation: softSkillIconPulse 2s ease-in-out infinite;
-}
-
-@keyframes softSkillIconPulse {
-  0%,
-  100% {
-    box-shadow:
-      0 6px 20px rgba(102, 126, 234, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  }
-  50% {
-    box-shadow:
-      0 8px 24px rgba(102, 126, 234, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  }
-}
-
 /* Responsive Design */
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .soft-skill-icon-medium .soft-skill-icon-container {
     width: 4rem;
     height: 4rem;
@@ -174,7 +176,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .soft-skill-icon-medium .soft-skill-icon-container {
     width: 3.5rem;
     height: 3.5rem;
@@ -197,4 +199,3 @@
     transform: none;
   }
 }
-

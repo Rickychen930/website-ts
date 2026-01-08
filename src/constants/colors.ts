@@ -23,52 +23,53 @@ export const BaseColors = {
 
 /**
  * Accent Colors - Primary Brand Colors
- * Harmonized indigo-purple-pink gradient scheme
+ * Modern tech-oriented color scheme: Cyan-Blue-Purple gradient
  */
 export const AccentColors = {
-  PRIMARY: "#667eea", // Indigo - main brand color
-  ALT: "#764ba2", // Purple - secondary brand color
-  HOVER: "#7c3aed", // Violet - hover state (harmonized with purple)
-  LIGHT: "#a78bfa", // Light purple - light variant
-  DARK: "#5b21b6", // Dark purple - dark variant
-  SECONDARY: "#f093fb", // Pink - tertiary accent
-  TERTIARY: "#4facfe", // Blue - complementary accent
-  PURPLE: "#8b5cf6", // Purple - proficiency/special use (harmonized)
-  PURPLE_DARK: "#7c3aed", // Dark purple - same as HOVER for consistency
-  GLOW: "rgba(102, 126, 234, 0.35)",
-  GLOW_STRONG: "rgba(118, 75, 162, 0.4)",
+  PRIMARY: "#00d9ff", // Electric Cyan - main brand color (modern tech)
+  ALT: "#0091ea", // Bright Blue - secondary brand color
+  HOVER: "#00b8d4", // Cyan - hover state
+  LIGHT: "#40e0d0", // Light Cyan - light variant
+  DARK: "#0066cc", // Deep Blue - dark variant
+  SECONDARY: "#7c3aed", // Purple - tertiary accent
+  TERTIARY: "#8b5cf6", // Violet - complementary accent
+  PURPLE: "#a78bfa", // Light Purple - proficiency/special use
+  PURPLE_DARK: "#7c3aed", // Dark Purple - for consistency
+  GLOW: "rgba(0, 217, 255, 0.35)",
+  GLOW_STRONG: "rgba(0, 145, 234, 0.4)",
 } as const;
 
 /**
  * Background Colors - Light Theme
+ * Modern tech backgrounds with subtle blue tint
  */
 export const BackgroundColors = {
   PRIMARY: "#ffffff",
-  SECONDARY: "#fafbfc",
-  TERTIARY: "#f5f7fa",
-  QUATERNARY: "#f0f4f8",
+  SECONDARY: "#f8fafc", // Slight blue tint
+  TERTIARY: "#f1f5f9", // Cool gray-blue
+  QUATERNARY: "#e8f0f7", // Light blue-gray
 
-  LIGHT: "#fafbfc",
-  LIGHTER: "#f5f7fa",
-  LIGHTEST: "#f0f4f8",
+  LIGHT: "#f8fafc",
+  LIGHTER: "#f1f5f9",
+  LIGHTEST: "#e8f0f7",
 
   CARD: "#ffffff",
-  CARD_ALT: "#fafbfd",
+  CARD_ALT: "#f8fafc",
   CARD_HOVER: "#fefefe",
 
   FOOTER: "#f1f5f9",
-  FOOTER_ALT: "#e8edf3",
+  FOOTER_ALT: "#e8f0f7",
 
-  TIMELINE: "#f0f4f8",
-  CONTENT_HOVER: "#f5f8fc",
-  STAT: "#f5f7fa",
+  TIMELINE: "#e8f0f7",
+  CONTENT_HOVER: "#f1f5f9",
+  STAT: "#f1f5f9",
 
   NAVBAR: "rgba(255, 255, 255, 0.9)",
   NAVBAR_SCROLLED: "rgba(255, 255, 255, 0.98)",
 
   OVERLAY: "rgba(0, 0, 0, 0.45)",
-  DARK: "#0a0e14",
-  DARK_LIGHT: "#0f1419",
+  DARK: "#0a1625", // Dark blue-black
+  DARK_LIGHT: "#0f1b2e", // Dark blue-gray
 } as const;
 
 /**
@@ -89,10 +90,10 @@ export const TextColors = {
   MUTED_ALT: "#7a8b9c",
   LIGHT: "#9ca3af",
   ACCENT: "#34495e",
-  HOVER: "#667eea", // Harmonized: uses accent primary instead of LinkedIn blue
+  HOVER: "#00d9ff", // Modern tech: uses accent primary (cyan)
   ON_ACCENT: "#ffffff",
-  LINK: "#667eea", // Harmonized: uses accent primary (indigo)
-  LINK_HOVER: "#7c3aed", // Harmonized: uses accent hover (violet)
+  LINK: "#0091ea", // Modern tech: bright blue for links
+  LINK_HOVER: "#00d9ff", // Modern tech: cyan hover
 } as const;
 
 /**
@@ -113,36 +114,37 @@ export const BorderColors = {
   NAVBAR: "rgba(220, 227, 234, 0.5)",
   NAVBAR_DROPDOWN: "rgba(220, 227, 234, 0.6)",
 
-  GLOW: "rgba(102, 126, 234, 0.2)", // Harmonized: uses accent primary
+  GLOW: "rgba(0, 217, 255, 0.2)", // Modern tech: cyan glow
   IMAGE: "#dbe5f1",
   PERIOD: "#e2e8f0",
-  ACCENT: "rgba(102, 126, 234, 0.3)", // Harmonized: uses accent primary
-  ACCENT_HOVER: "rgba(102, 126, 234, 0.5)", // Harmonized: uses accent primary
+  ACCENT: "rgba(0, 217, 255, 0.3)", // Modern tech: cyan accent
+  ACCENT_HOVER: "rgba(0, 217, 255, 0.5)", // Modern tech: cyan hover
 } as const;
 
 /**
  * Status Colors - Light Theme
+ * Modern tech status colors with better contrast
  */
 export const StatusColors = {
-  SUCCESS: "#22c55e",
-  SUCCESS_LIGHT: "rgba(34, 197, 94, 0.1)",
-  SUCCESS_DARK: "#16a34a",
-  SUCCESS_TEXT: "#15803d",
+  SUCCESS: "#10b981", // Modern green
+  SUCCESS_LIGHT: "rgba(16, 185, 129, 0.1)",
+  SUCCESS_DARK: "#059669",
+  SUCCESS_TEXT: "#047857",
 
-  ERROR: "#ef4444",
+  ERROR: "#ef4444", // Keep red for errors
   ERROR_LIGHT: "rgba(239, 68, 68, 0.1)",
   ERROR_DARK: "#dc2626",
   ERROR_TEXT: "#b91c1c",
 
-  WARNING: "#f59e0b",
+  WARNING: "#f59e0b", // Amber for warnings
   WARNING_LIGHT: "rgba(245, 158, 11, 0.1)",
   WARNING_DARK: "#d97706",
   WARNING_TEXT: "#b45309",
 
-  INFO: "#3b82f6",
-  INFO_LIGHT: "rgba(59, 130, 246, 0.1)",
-  INFO_DARK: "#2563eb",
-  INFO_TEXT: "#1d4ed8",
+  INFO: "#0091ea", // Modern tech blue
+  INFO_LIGHT: "rgba(0, 145, 234, 0.1)",
+  INFO_DARK: "#0066cc",
+  INFO_TEXT: "#0052a3",
 } as const;
 
 /**
@@ -169,7 +171,7 @@ export const SocialColors = {
   INSTAGRAM: "#e4405f",
   FACEBOOK: "#1877f2",
   EMAIL: "#ea4335",
-  DEFAULT: "#667eea", // Fallback to accent primary
+  DEFAULT: "#00d9ff", // Fallback to accent primary (modern tech cyan)
 } as const;
 
 /**
@@ -186,20 +188,21 @@ export const SpecialColors = {
 
 /**
  * Gradient Definitions - Light Theme
+ * Modern tech gradients: Cyan-Blue-Purple
  */
 export const Gradients = {
-  PRIMARY: "linear-gradient(135deg, #ffffff 0%, #fafbfc 100%)",
-  ACCENT: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  ACCENT_FULL: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
-  LUXURY: "linear-gradient(135deg, #ffffff 0%, #fafbfd 40%, #f5f7fa 100%)",
+  PRIMARY: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+  ACCENT: "linear-gradient(135deg, #00d9ff 0%, #0091ea 100%)",
+  ACCENT_FULL: "linear-gradient(135deg, #00d9ff 0%, #0091ea 50%, #7c3aed 100%)",
+  LUXURY: "linear-gradient(135deg, #ffffff 0%, #f8fafc 40%, #f1f5f9 100%)",
   SUBLIME:
-    "linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)",
+    "linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 145, 234, 0.05) 100%)",
   PRIMARY_REVERSE:
-    "linear-gradient(135deg, #f093fb 0%, #764ba2 50%, #667eea 100%)",
+    "linear-gradient(135deg, #7c3aed 0%, #0091ea 50%, #00d9ff 100%)",
   PRIMARY_RADIAL:
-    "radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15), transparent 70%)",
+    "radial-gradient(ellipse at top, rgba(0, 217, 255, 0.15), transparent 70%)",
   ACCENT_SUBTLE:
-    "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
+    "linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(0, 145, 234, 0.1) 100%)",
 } as const;
 
 /**
@@ -208,11 +211,11 @@ export const Gradients = {
  */
 export const DarkThemeColors = {
   BACKGROUND: {
-    PRIMARY: "#1e2532",
-    SECONDARY: "#151b26",
-    TERTIARY: "#1a1f2e",
-    CARD: "#1e2532",
-    CARD_HOVER: "#252d3d",
+    PRIMARY: "#0f1b2e", // Dark blue-gray
+    SECONDARY: "#0a1625", // Darker blue-black
+    TERTIARY: "#151f2e", // Medium dark blue
+    CARD: "#1a2538", // Card background with blue tint
+    CARD_HOVER: "#1f2a3f", // Hover state
   },
   TEXT: {
     PRIMARY: "#e2e8f0",
@@ -221,10 +224,10 @@ export const DarkThemeColors = {
     SUBTLE: "#94a3b8",
   },
   STATUS: {
-    SUCCESS: "#4ade80",
+    SUCCESS: "#10b981", // Modern green
     ERROR: "#f87171",
     WARNING: "#fbbf24",
-    INFO: "#60a5fa",
+    INFO: "#00d9ff", // Cyan for info in dark mode
   },
 } as const;
 
@@ -255,26 +258,26 @@ export enum ColorEnum {
   TRANSPARENT = "transparent",
 
   // Accent
-  ACCENT_PRIMARY = "#667eea",
-  ACCENT_ALT = "#764ba2",
-  ACCENT_HOVER = "#7c3aed",
-  ACCENT_LIGHT = "#a78bfa",
-  ACCENT_DARK = "#5b21b6",
-  ACCENT_SECONDARY = "#f093fb",
-  ACCENT_TERTIARY = "#4facfe",
-  ACCENT_PURPLE = "#8b5cf6",
+  ACCENT_PRIMARY = "#00d9ff",
+  ACCENT_ALT = "#0091ea",
+  ACCENT_HOVER = "#00b8d4",
+  ACCENT_LIGHT = "#40e0d0",
+  ACCENT_DARK = "#0066cc",
+  ACCENT_SECONDARY = "#7c3aed",
+  ACCENT_TERTIARY = "#8b5cf6",
+  ACCENT_PURPLE = "#a78bfa",
 
   // Text
   TEXT_MAIN = "#1a2332",
   TEXT_HEADING = "#1f2d3d",
   TEXT_SUBTLE = "#5c6b7a",
-  TEXT_LINK = "#667eea", // Harmonized: uses accent primary
+  TEXT_LINK = "#0091ea", // Modern tech: bright blue
 
   // Status
-  SUCCESS = "#22c55e",
+  SUCCESS = "#10b981",
   ERROR = "#ef4444",
   WARNING = "#f59e0b",
-  INFO = "#3b82f6",
+  INFO = "#0091ea",
 }
 
 /**

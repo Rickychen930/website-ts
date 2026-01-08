@@ -6,34 +6,34 @@
 
 .work-experience-badge {
   display: inline-flex;
-  align-items: center;
+  position: relative;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 700;
-  font-family: var(--work-font-family, 'Inter', 'Segoe UI', sans-serif);
-  border-radius: 10px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
   line-height: 1.3;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
+  border-radius: 10px;
+  white-space: nowrap;
   letter-spacing: 0.02em;
-  position: relative;
   overflow: hidden;
 }
 
 /* ─── Premium Technology Badge ─── */
 .work-experience-badge-technology {
+  position: relative;
+  border: 1.5px solid var(--color-accent-alpha-30);
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.15) 0%,
-    rgba(118, 75, 162, 0.12) 100%
+    var(--color-accent-alpha-15) 0%,
+    var(--color-accent-alt-alpha-12) 100%
   );
-  color: #667eea;
-  border: 1.5px solid rgba(102, 126, 234, 0.3);
-  box-shadow: 
-    0 4px 12px rgba(102, 126, 234, 0.2),
-    0 2px 6px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  position: relative;
+  color: var(--color-accent-primary);
+  box-shadow:
+    0 4px 12px var(--color-accent-alpha-20),
+    0 2px 6px var(--color-black-alpha-08),
+    inset 0 1px 0 var(--color-white-alpha-60);
   overflow: hidden;
 }
 
@@ -47,26 +47,23 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
+    var(--color-white-alpha-40) 50%,
     transparent 100%
   );
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .work-experience-badge-technology::after {
-  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.1) 0%,
+    var(--color-accent-alpha-10) 0%,
     transparent 50%
   );
   opacity: 0;
   transition: opacity 0.4s ease;
+  content: "";
 }
 
 .work-experience-badge-technology:hover::before {
@@ -80,32 +77,32 @@
 .work-experience-badge-technology:hover {
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.22) 0%,
-    rgba(118, 75, 162, 0.18) 100%
+    var(--color-accent-alpha-20) 0%,
+    var(--color-accent-alt-alpha-18) 100%
   );
-  color: #5b21b6;
-  border-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 
-    0 6px 20px rgba(102, 126, 234, 0.3),
-    0 3px 10px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent-alpha-50);
+  box-shadow:
+    0 6px 20px var(--color-accent-alpha-30),
+    0 3px 10px var(--color-black-alpha-10),
+    inset 0 1px 0 var(--color-white-alpha-80);
   transform: translateY(-3px) scale(1.05);
 }
 
 /* ─── Premium Achievement Badge ─── */
 .work-experience-badge-achievement {
+  position: relative;
+  border: 1.5px solid var(--color-accent-alt-alpha-25);
   background: linear-gradient(
     135deg,
-    rgba(240, 147, 251, 0.12) 0%,
-    rgba(102, 126, 234, 0.1) 100%
+    var(--color-accent-secondary-alpha-12) 0%,
+    var(--color-accent-alpha-10) 100%
   );
-  color: #764ba2;
-  border: 1.5px solid rgba(118, 75, 162, 0.25);
-  box-shadow: 
-    0 4px 12px rgba(118, 75, 162, 0.15),
-    0 2px 6px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  position: relative;
+  color: var(--color-accent-alt);
+  box-shadow:
+    0 4px 12px var(--color-accent-alt-alpha-15),
+    0 2px 6px var(--color-black-alpha-08),
+    inset 0 1px 0 var(--color-white-alpha-60);
   overflow: hidden;
 }
 
@@ -119,7 +116,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
+    var(--color-white-alpha-40) 50%,
     transparent 100%
   );
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -132,32 +129,32 @@
 .work-experience-badge-achievement:hover {
   background: linear-gradient(
     135deg,
-    rgba(240, 147, 251, 0.18) 0%,
-    rgba(102, 126, 234, 0.15) 100%
+    var(--color-accent-secondary-alpha-18) 0%,
+    var(--color-accent-alpha-15) 100%
   );
-  color: #5b21b6;
-  border-color: rgba(118, 75, 162, 0.4);
-  box-shadow: 
-    0 6px 20px rgba(118, 75, 162, 0.25),
-    0 3px 10px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent-alt-alpha-40);
+  box-shadow:
+    0 6px 20px var(--color-accent-alt-alpha-25),
+    0 3px 10px var(--color-black-alpha-10),
+    inset 0 1px 0 var(--color-white-alpha-80);
   transform: translateY(-3px) scale(1.05);
 }
 
 /* ─── Premium Default Badge ─── */
 .work-experience-badge-default {
+  position: relative;
+  border: 1.5px solid var(--color-accent-alpha-25);
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.12) 0%,
-    rgba(118, 75, 162, 0.1) 100%
+    var(--color-accent-alpha-12) 0%,
+    var(--color-accent-alt-alpha-10) 100%
   );
-  color: #667eea;
-  border: 1.5px solid rgba(102, 126, 234, 0.25);
-  box-shadow: 
-    0 4px 12px rgba(102, 126, 234, 0.15),
-    0 2px 6px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  position: relative;
+  color: var(--color-accent-primary);
+  box-shadow:
+    0 4px 12px var(--color-accent-alpha-15),
+    0 2px 6px var(--color-black-alpha-08),
+    inset 0 1px 0 var(--color-white-alpha-60);
   overflow: hidden;
 }
 
@@ -171,7 +168,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
+    var(--color-white-alpha-40) 50%,
     transparent 100%
   );
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -184,15 +181,15 @@
 .work-experience-badge-default:hover {
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.18) 0%,
-    rgba(118, 75, 162, 0.15) 100%
+    var(--color-accent-alpha-18) 0%,
+    var(--color-accent-alt-alpha-15) 100%
   );
-  color: #5b21b6;
-  border-color: rgba(102, 126, 234, 0.4);
-  box-shadow: 
-    0 6px 20px rgba(102, 126, 234, 0.25),
-    0 3px 10px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent-alpha-40);
+  box-shadow:
+    0 6px 20px var(--color-accent-alpha-25),
+    0 3px 10px var(--color-black-alpha-10),
+    inset 0 1px 0 var(--color-white-alpha-80);
   transform: translateY(-3px) scale(1.05);
 }
 

@@ -248,11 +248,14 @@ class WorkExperienceSection extends Component<
         this.itemRefs.set(item.key, createRef<HTMLDivElement>());
       });
 
+      // Set all items to visible immediately for better UX
+      const allKeys = sorted.map((item) => item.key);
       this.setState(
         {
           experiences: sorted,
           durations,
           error: null,
+          visibleItems: new Set(allKeys),
         },
         () => {
           if (process.env.NODE_ENV === "development") {

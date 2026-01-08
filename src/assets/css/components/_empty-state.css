@@ -124,6 +124,8 @@
 /* ============================================
    Responsive Design
    ============================================ */
+
+/* Tablet and smaller (≤ 768px) */
 @media screen and (width <= 768px) {
   .empty-state {
     padding: 2rem 1.5rem;
@@ -141,6 +143,115 @@
 
   .empty-state__message {
     font-size: var(--font-size-small);
+  }
+
+  .empty-state--large {
+    padding: 3rem 2rem;
+    min-height: 250px;
+  }
+
+  .empty-state--large .empty-state__icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .empty-state--large .empty-state__title {
+    font-size: var(--font-size-title-component);
+  }
+}
+
+/* Mobile devices (≤ 480px) */
+@media screen and (width <= 480px) {
+  .empty-state {
+    padding: 1.5rem 1rem;
+    min-height: 120px;
+  }
+
+  .empty-state__icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .empty-state__title {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state__message {
+    font-size: clamp(0.875rem, 3vw, 0.9375rem);
+    max-width: 100%;
+  }
+
+  .empty-state--small {
+    padding: 1.25rem 1rem;
+    min-height: 100px;
+  }
+
+  .empty-state--small .empty-state__icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state--large {
+    padding: 2rem 1.5rem;
+    min-height: 200px;
+  }
+
+  .empty-state--large .empty-state__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Extra small mobile (≤ 360px) */
+@media screen and (width <= 360px) {
+  .empty-state {
+    padding: 1rem 0.75rem;
+    min-height: 100px;
+  }
+
+  .empty-state__icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state__title {
+    font-size: clamp(0.9375rem, 5vw, 1.125rem);
+  }
+
+  .empty-state__message {
+    font-size: clamp(0.8125rem, 3.5vw, 0.875rem);
+  }
+
+  .empty-state--small {
+    padding: 1rem 0.75rem;
+    min-height: 80px;
+  }
+
+  .empty-state--small .empty-state__icon {
+    font-size: 1.75rem;
+  }
+
+  .empty-state--large {
+    padding: 1.5rem 1rem;
+    min-height: 150px;
+  }
+
+  .empty-state--large .empty-state__icon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Landscape orientation (≤ 768px) */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .empty-state {
+    min-height: 120px;
+    padding: 1.5rem 2rem;
+  }
+
+  .empty-state__icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
   }
 }
 

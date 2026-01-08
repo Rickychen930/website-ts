@@ -67,7 +67,6 @@
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 .academic-card:hover .academic-card-content,
@@ -357,7 +356,6 @@
   .academic-card-title {
     font-size: var(--academic-font-size-title-sm, 1.15rem);
     overflow-wrap: break-word;
-    overflow-wrap: break-word;
   }
 
   .academic-card-title-wrapper {
@@ -369,12 +367,10 @@
   .academic-card-institution {
     font-size: var(--academic-font-size-xl, 0.95rem);
     overflow-wrap: break-word;
-    overflow-wrap: break-word;
   }
 
   .academic-card-description-text {
     font-size: var(--academic-font-size-description-sm, 0.9rem);
-    overflow-wrap: break-word;
     overflow-wrap: break-word;
   }
 

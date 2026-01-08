@@ -265,15 +265,89 @@
 /* ============================================
    Responsive Design
    ============================================ */
+
+/* Tablet and smaller (≤ 768px) */
 @media screen and (width <= 768px) {
   .btn {
     padding: 0.625rem 1.25rem;
     font-size: var(--font-size-small);
+    min-height: 44px; /* Touch target size */
   }
 
   .btn--large {
     padding: 0.875rem 1.75rem;
     font-size: var(--font-size-base);
+    min-height: 48px;
+  }
+
+  .btn--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    min-height: 36px;
+  }
+
+  .btn__icon {
+    font-size: 1.125rem;
+  }
+
+  .btn--icon .btn__icon {
+    font-size: 1.375rem;
+  }
+}
+
+/* Mobile devices (≤ 480px) */
+@media screen and (width <= 480px) {
+  .btn {
+    padding: 0.625rem 1rem;
+    font-size: clamp(0.875rem, 3vw, 0.9375rem);
+    min-height: 44px; /* Touch target size */
+  }
+
+  .btn--large {
+    padding: 0.875rem 1.5rem;
+    font-size: clamp(1rem, 3.5vw, 1.0625rem);
+    min-height: 48px;
+  }
+
+  .btn--small {
+    padding: 0.5rem 0.875rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.8125rem);
+    min-height: 36px;
+  }
+
+  .btn--full {
+    width: 100%;
+  }
+}
+
+/* Extra small mobile (≤ 360px) */
+@media screen and (width <= 360px) {
+  .btn {
+    padding: 0.5625rem 0.875rem;
+    font-size: clamp(0.8125rem, 4vw, 0.875rem);
+  }
+
+  .btn--large {
+    padding: 0.75rem 1.25rem;
+    font-size: clamp(0.9375rem, 4vw, 1rem);
+  }
+
+  .btn--small {
+    padding: 0.4375rem 0.75rem;
+    font-size: clamp(0.6875rem, 3vw, 0.75rem);
+  }
+}
+
+/* Landscape orientation (≤ 768px) */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    min-height: 40px;
+  }
+
+  .btn--large {
+    padding: 0.75rem 1.5rem;
+    min-height: 44px;
   }
 }
 

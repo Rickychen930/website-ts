@@ -68,7 +68,9 @@ export class WorkExperienceTimeline extends PureComponent<IWorkExperienceTimelin
    */
   private renderCard(item: IWorkExperienceItem, index: number): ReactNode {
     const { visibleItems, durations } = this.props;
-    const isVisible = visibleItems.has(item.key);
+    // Default to visible if visibleItems is empty or item is in the Set
+    // This ensures cards are shown by default instead of hidden
+    const isVisible = visibleItems.size === 0 || visibleItems.has(item.key);
     const duration = durations?.get(item.key);
 
     return (

@@ -6,53 +6,52 @@
 
 .work-experience-code-snippet {
   position: relative;
-  margin-top: 1.75rem;
+  width: 100%;
+  border: 1.5px solid var(--color-accent-alpha-30);
   background: linear-gradient(
     135deg,
-    #1e293b 0%,
-    #0f172a 50%,
-    #1e293b 100%
+    var(--color-code-background) 0%,
+    var(--color-bg-dark) 50%,
+    var(--color-code-background) 100%
   );
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 1.75rem;
   background-size: 200% 100%;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.3),
-    0 6px 20px rgba(0, 0, 0, 0.2),
-    0 0 60px rgba(102, 126, 234, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1.5px solid rgba(102, 126, 234, 0.3);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: codeBackgroundShift 8s ease infinite;
-  width: 100%;
+  box-shadow:
+    0 12px 40px var(--color-black-alpha-30),
+    0 6px 20px var(--color-black-alpha-20),
+    0 0 60px var(--color-accent-alpha-15),
+    inset 0 1px 0 var(--color-white-alpha-10);
+  animation: code-background-shift 8s ease infinite;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-@keyframes codeBackgroundShift {
-  0%, 100% {
+@keyframes code-background-shift {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
 }
 
 .work-experience-code-snippet::before {
-  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.05) 0%,
+    var(--color-accent-alpha-05) 0%,
     transparent 50%,
-    rgba(118, 75, 162, 0.05) 100%
+    var(--color-accent-alt-alpha-05) 100%
   );
   opacity: 0;
   transition: opacity 0.5s ease;
+  content: "";
   pointer-events: none;
 }
 
@@ -61,29 +60,29 @@
 }
 
 .work-experience-code-snippet:hover {
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.4),
-    0 8px 24px rgba(0, 0, 0, 0.3),
-    0 0 80px rgba(102, 126, 234, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow:
+    0 16px 48px var(--color-black-alpha-40),
+    0 8px 24px var(--color-black-alpha-30),
+    0 0 80px var(--color-accent-alpha-25),
+    inset 0 1px 0 var(--color-white-alpha-15);
+  border-color: var(--color-accent-alpha-50);
   transform: translateY(-4px);
 }
 
 .work-experience-code-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: relative;
   padding: 1rem 1.25rem;
   background: linear-gradient(
     135deg,
-    rgba(15, 23, 42, 0.95) 0%,
-    rgba(30, 41, 59, 0.9) 100%
+    var(--color-bg-dark-alpha-70) 0%,
+    var(--color-code-background) 100%
   );
-  border-bottom: 1.5px solid rgba(102, 126, 234, 0.3);
-  backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid var(--color-accent-alpha-30);
   -webkit-backdrop-filter: blur(12px);
-  position: relative;
+  backdrop-filter: blur(12px);
 }
 
 .work-experience-code-header::after {
@@ -93,7 +92,7 @@
   left: 0;
   width: 60px;
   height: 1.5px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: var(--gradient-accent);
   transition: width 0.5s ease;
 }
 
@@ -108,11 +107,11 @@
 }
 
 .work-experience-code-dot {
+  position: relative;
   width: 0.875rem;
   height: 0.875rem;
-  border-radius: 50%;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  border-radius: 50%;
   overflow: hidden;
 }
 
@@ -126,7 +125,7 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.3) 0%,
+    var(--color-white-alpha-30) 0%,
     transparent 70%
   );
   opacity: 0;
@@ -138,62 +137,74 @@
 }
 
 .work-experience-code-dot-red {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  box-shadow: 
-    0 0 12px rgba(239, 68, 68, 0.5),
-    0 2px 6px rgba(239, 68, 68, 0.3);
+  background: linear-gradient(
+    135deg,
+    var(--color-error),
+    var(--color-error-dark)
+  );
+  box-shadow:
+    0 0 12px var(--color-error-alpha-50),
+    0 2px 6px var(--color-error-alpha-30);
 }
 
 .work-experience-code-dot-yellow {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  box-shadow: 
-    0 0 12px rgba(245, 158, 11, 0.5),
-    0 2px 6px rgba(245, 158, 11, 0.3);
+  background: linear-gradient(
+    135deg,
+    var(--color-warning),
+    var(--color-warning-dark)
+  );
+  box-shadow:
+    0 0 12px var(--color-warning-alpha-50),
+    0 2px 6px var(--color-warning-alpha-30);
 }
 
 .work-experience-code-dot-green {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 
-    0 0 12px rgba(16, 185, 129, 0.5),
-    0 2px 6px rgba(16, 185, 129, 0.3);
+  background: linear-gradient(
+    135deg,
+    var(--color-success),
+    var(--color-success-dark)
+  );
+  box-shadow:
+    0 0 12px var(--color-success-alpha-30),
+    0 2px 6px var(--color-success-alpha-30);
 }
 
 .work-experience-code-snippet:hover .work-experience-code-dot {
   transform: scale(1.15);
-  box-shadow: 
-    0 0 16px currentColor,
-    0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 0 16px currentcolor,
+    0 4px 8px var(--color-black-alpha-20);
 }
 
 .work-experience-code-language {
-  color: #94a3b8;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--color-accent-alpha-20);
+  background: var(--color-accent-alpha-10);
+  color: var(--color-text-muted-alt);
   font-size: 0.8125rem;
   font-weight: 700;
-  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+  transition: all 0.4s ease;
+  font-family: "Fira Code", Monaco, "Courier New", monospace;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 0.35rem 0.75rem;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.2);
   border-radius: 8px;
-  transition: all 0.4s ease;
 }
 
 .work-experience-code-snippet:hover .work-experience-code-language {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.3);
-  color: #cbd5e1;
+  background: var(--color-accent-alpha-15);
+  border-color: var(--color-accent-alpha-30);
+  color: var(--color-text-muted);
 }
 
 .work-experience-code-pre {
+  position: relative;
   margin: 0;
   padding: 1.5rem;
   background: transparent;
-  overflow-x: auto;
-  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
   font-size: 0.9rem;
   line-height: 1.7;
-  position: relative;
+  overflow-x: auto;
+  font-family: "Fira Code", Monaco, "Courier New", monospace;
 }
 
 .work-experience-code-pre::-webkit-scrollbar {
@@ -201,26 +212,29 @@
 }
 
 .work-experience-code-pre::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-black-alpha-20);
   border-radius: 3px;
 }
 
 .work-experience-code-pre::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: var(--gradient-accent);
   border-radius: 3px;
 }
 
 .work-experience-code-pre::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #764ba2, #f093fb);
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-alt),
+    var(--color-accent-secondary)
+  );
 }
 
 .work-experience-code-code {
   display: block;
-  color: #e2e8f0;
-  font-family: inherit;
   width: 100%;
+  color: var(--color-text-main);
+  font-family: inherit;
   max-width: 100%;
-  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
@@ -232,17 +246,17 @@
 
 .work-experience-code-line {
   display: flex;
+  padding: 0.15rem 0.5rem;
+  transition: background 0.3s ease;
   align-items: center;
   min-height: 1.6rem;
-  transition: background 0.3s ease;
-  padding: 0.15rem 0.5rem;
   border-radius: 4px;
   margin-left: -0.5rem;
   margin-right: -0.5rem;
 }
 
 .work-experience-code-line:hover {
-  background: rgba(102, 126, 234, 0.08);
+  background: var(--color-accent-alpha-08);
 }
 
 .work-experience-code-line-indented {
@@ -250,36 +264,36 @@
 }
 
 .work-experience-code-keyword {
-  color: #c792ea;
+  color: var(--color-code-keyword);
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(199, 146, 234, 0.3);
+  text-shadow: 0 0 8px var(--color-code-keyword);
 }
 
 .work-experience-code-variable {
-  color: #82aaff;
+  color: var(--color-code-variable);
   font-weight: 600;
-  text-shadow: 0 0 6px rgba(130, 170, 255, 0.2);
+  text-shadow: 0 0 6px var(--color-code-variable);
 }
 
 .work-experience-code-operator {
-  color: #89ddff;
   margin: 0 0.35rem;
+  color: var(--color-code-operator);
   font-weight: 500;
 }
 
 .work-experience-code-bracket {
-  color: #ffcb6b;
+  color: var(--color-code-bracket);
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(255, 203, 107, 0.3);
+  text-shadow: 0 0 8px var(--color-code-bracket);
 }
 
 .work-experience-code-string {
-  color: #c3e88d;
-  text-shadow: 0 0 6px rgba(195, 232, 141, 0.2);
+  color: var(--color-code-string);
+  text-shadow: 0 0 6px var(--color-code-string);
 }
 
 .work-experience-code-punctuation {
-  color: #89ddff;
+  color: var(--color-code-punctuation);
   margin-left: 0.35rem;
 }
 

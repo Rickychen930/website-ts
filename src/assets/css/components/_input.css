@@ -244,15 +244,116 @@
 /* ============================================
    Responsive Design
    ============================================ */
+
+/* Tablet and smaller (≤ 768px) */
 @media screen and (width <= 768px) {
   .input,
   .textarea {
     font-size: var(--font-size-small);
+    min-height: 44px; /* Touch target size */
   }
 
   .input--large {
     padding: 0.875rem 1.125rem;
     font-size: var(--font-size-base);
+    min-height: 48px;
+  }
+
+  .input--small {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+    min-height: 36px;
+  }
+
+  .input-icon {
+    font-size: 1.125rem;
+  }
+
+  .input-wrapper .input {
+    padding-left: 2.5rem;
+  }
+
+  .input-wrapper--icon-right .input {
+    padding-right: 2.5rem;
+  }
+}
+
+/* Mobile devices (≤ 480px) */
+@media screen and (width <= 480px) {
+  .input,
+  .textarea {
+    padding: 0.625rem 1rem;
+    font-size: clamp(0.875rem, 3vw, 0.9375rem);
+    min-height: 44px; /* Touch target size */
+  }
+
+  .input--large {
+    padding: 0.875rem 1.125rem;
+    font-size: clamp(1rem, 3.5vw, 1.0625rem);
+    min-height: 48px;
+  }
+
+  .input--small {
+    padding: 0.5rem 0.875rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.8125rem);
+    min-height: 36px;
+  }
+
+  .textarea {
+    min-height: 120px;
+  }
+
+  .textarea--large {
+    min-height: 160px;
+  }
+
+  .input-wrapper .input {
+    padding-left: 2.25rem;
+  }
+
+  .input-wrapper--icon-right .input {
+    padding-right: 2.25rem;
+  }
+
+  .input-icon {
+    left: 0.875rem;
+    font-size: 1rem;
+  }
+
+  .input-wrapper--icon-right .input-icon {
+    right: 0.875rem;
+  }
+}
+
+/* Extra small mobile (≤ 360px) */
+@media screen and (width <= 360px) {
+  .input,
+  .textarea {
+    padding: 0.5625rem 0.875rem;
+    font-size: clamp(0.8125rem, 4vw, 0.875rem);
+  }
+
+  .input--large {
+    padding: 0.75rem 1rem;
+    font-size: clamp(0.9375rem, 4vw, 1rem);
+  }
+
+  .input--small {
+    padding: 0.4375rem 0.75rem;
+    font-size: clamp(0.6875rem, 3vw, 0.75rem);
+  }
+}
+
+/* Landscape orientation (≤ 768px) */
+@media screen and (orientation: landscape) and (width <= 768px) {
+  .input,
+  .textarea {
+    padding: 0.5rem 1rem;
+    min-height: 40px;
+  }
+
+  .textarea {
+    min-height: 100px;
   }
 }
 

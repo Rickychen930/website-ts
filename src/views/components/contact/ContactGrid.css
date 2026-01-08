@@ -10,12 +10,12 @@
 
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  position: relative;
   width: 100%;
   padding: 0;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
   list-style: none;
-  position: relative;
   isolation: isolate;
 }
 
@@ -25,42 +25,42 @@
 }
 
 /* Responsive Grid Adjustments */
-@media screen and (min-width: 1600px) {
+@media screen and (width >= 1600px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2.5rem;
   }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (width <= 1400px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (width <= 1200px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.75rem;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (width <= 992px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 1.75rem;
@@ -70,7 +70,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
   .contact-grid {
     gap: 1.5rem;
     width: 100%;
@@ -79,7 +79,7 @@
   }
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (width <= 360px) {
   .contact-grid {
     gap: 1.25rem;
   }
