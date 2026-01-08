@@ -166,7 +166,22 @@ class WorkExperienceSection extends Component<
     try {
       const { data } = this.props;
 
+      // Debug logging
+      if (process.env.NODE_ENV === "development") {
+        console.log("[WorkExperienceSection.processData] Processing data:", {
+          hasData: !!data,
+          isArray: Array.isArray(data),
+          dataLength: Array.isArray(data) ? data.length : 0,
+          data: data,
+        });
+      }
+
       if (!data || !Array.isArray(data) || data.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn(
+            "[WorkExperienceSection.processData] No data or empty array",
+          );
+        }
         this.setState({
           experiences: [],
           durations: new Map(),
@@ -179,9 +194,20 @@ class WorkExperienceSection extends Component<
       const experiences: IWorkExperienceItem[] = [];
       const durations = new Map<string, string>();
 
-      data.forEach((item) => {
+      data.forEach((item, index) => {
         // Normalize item
         const normalized = WorkExperienceModel.normalizeItem(item);
+
+        if (process.env.NODE_ENV === "development") {
+          console.log(
+            `[WorkExperienceSection.processData] Processing item ${index}:`,
+            {
+              original: item,
+              normalized: normalized,
+              isValid: WorkExperienceModel.isValidItem(normalized),
+            },
+          );
+        }
 
         if (WorkExperienceModel.isValidItem(normalized)) {
           experiences.push(normalized);
@@ -193,11 +219,28 @@ class WorkExperienceSection extends Component<
           if (duration) {
             durations.set(normalized.key, duration);
           }
+        } else {
+          if (process.env.NODE_ENV === "development") {
+            console.warn(
+              `[WorkExperienceSection.processData] Item ${index} failed validation:`,
+              normalized,
+            );
+          }
         }
       });
 
       // Sort by period (newest first)
       const sorted = WorkExperienceModel.sortByPeriod(experiences);
+
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[WorkExperienceSection.processData] Processed experiences:",
+          {
+            total: sorted.length,
+            experiences: sorted,
+          },
+        );
+      }
 
       // Initialize refs
       this.itemRefs.clear();
@@ -205,11 +248,21 @@ class WorkExperienceSection extends Component<
         this.itemRefs.set(item.key, createRef<HTMLDivElement>());
       });
 
-      this.setState({
-        experiences: sorted,
-        durations,
-        error: null,
-      });
+      this.setState(
+        {
+          experiences: sorted,
+          durations,
+          error: null,
+        },
+        () => {
+          if (process.env.NODE_ENV === "development") {
+            console.log("[WorkExperienceSection.processData] State updated:", {
+              experiencesCount: this.state.experiences.length,
+              durationsCount: this.state.durations.size,
+            });
+          }
+        },
+      );
     } catch (error) {
       const errorMessage =
         error instanceof Error
@@ -399,6 +452,19 @@ class WorkExperienceSection extends Component<
   public render(): ReactNode {
     const { experiences, visibleItems, durations, error, isInitialized } =
       this.state;
+
+    // Debug logging
+    if (process.env.NODE_ENV === "development") {
+      console.log("[WorkExperienceSection.render] Render state:", {
+        experiencesCount: experiences?.length || 0,
+        visibleItemsCount: visibleItems?.size || 0,
+        durationsCount: durations?.size || 0,
+        error,
+        isInitialized,
+        hasData: !!this.props.data,
+        dataLength: Array.isArray(this.props.data) ? this.props.data.length : 0,
+      });
+    }
 
     // Edge case: Handle error state
     if (error) {

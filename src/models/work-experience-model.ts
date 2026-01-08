@@ -41,7 +41,11 @@ export class WorkExperienceModel {
    * Follows Single Responsibility Principle (SRP)
    */
   static extractFromProfile(profile: UserProfile): IWorkExperienceData | null {
-    if (!profile || !profile.experiences || !Array.isArray(profile.experiences)) {
+    if (
+      !profile ||
+      !profile.experiences ||
+      !Array.isArray(profile.experiences)
+    ) {
       return null;
     }
 
@@ -61,17 +65,42 @@ export class WorkExperienceModel {
    * Follows Single Responsibility Principle (SRP)
    */
   static isValidItem(item: any): item is IWorkExperienceItem {
-    return (
-      item &&
-      typeof item.key === "string" &&
-      item.key.trim() !== "" &&
-      typeof item.title === "string" &&
-      item.title.trim() !== "" &&
-      typeof item.company === "string" &&
-      item.company.trim() !== "" &&
-      typeof item.period === "string" &&
-      item.period.trim() !== ""
-    );
+    if (!item) {
+      return false;
+    }
+
+    // Key is required - but can be generated if missing (handled in normalizeItem)
+    const hasValidKey = typeof item.key === "string" && item.key.trim() !== "";
+
+    // Title is required
+    const hasValidTitle =
+      typeof item.title === "string" && item.title.trim() !== "";
+
+    // Company is required
+    const hasValidCompany =
+      typeof item.company === "string" && item.company.trim() !== "";
+
+    // Period is required
+    const hasValidPeriod =
+      typeof item.period === "string" && item.period.trim() !== "";
+
+    const isValid =
+      hasValidKey && hasValidTitle && hasValidCompany && hasValidPeriod;
+
+    if (!isValid && process.env.NODE_ENV === "development") {
+      console.warn(
+        "[WorkExperienceModel.isValidItem] Item validation failed:",
+        {
+          item,
+          hasValidKey,
+          hasValidTitle,
+          hasValidCompany,
+          hasValidPeriod,
+        },
+      );
+    }
+
+    return isValid;
   }
 
   /**
@@ -79,19 +108,38 @@ export class WorkExperienceModel {
    * Ensures consistent data structure
    */
   static normalizeItem(item: any): IWorkExperienceItem {
+    // Generate key if missing (use company + title as fallback)
+    let key = item.key?.trim();
+    if (!key || key === "") {
+      const company = (item.company?.trim() || "")
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+      const title = (item.title?.trim() || "")
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+      key =
+        company && title
+          ? `${company}-${title}`
+          : company || title || `experience-${Date.now()}`;
+    }
+
     return {
-      key: item.key?.trim() || "",
+      key: key,
       icon: item.icon?.trim() || "💼",
       title: item.title?.trim() || "",
       company: item.company?.trim() || "",
       period: item.period?.trim() || "",
       description: item.description?.trim() || "",
       location: item.location?.trim() || undefined,
-      technologies: Array.isArray(item.technologies) 
-        ? item.technologies.filter((tech: any) => typeof tech === "string" && tech.trim() !== "")
+      technologies: Array.isArray(item.technologies)
+        ? item.technologies.filter(
+            (tech: any) => typeof tech === "string" && tech.trim() !== "",
+          )
         : this.extractTechnologiesFromDescription(item.description || ""),
       achievements: Array.isArray(item.achievements)
-        ? item.achievements.filter((ach: any) => typeof ach === "string" && ach.trim() !== "")
+        ? item.achievements.filter(
+            (ach: any) => typeof ach === "string" && ach.trim() !== "",
+          )
         : undefined,
     };
   }
@@ -100,15 +148,48 @@ export class WorkExperienceModel {
    * Extract technologies from description (fallback)
    * Uses simple keyword matching for common technologies
    */
-  private static extractTechnologiesFromDescription(description: string): string[] {
+  private static extractTechnologiesFromDescription(
+    description: string,
+  ): string[] {
     if (!description) return [];
-    
+
     const techKeywords = [
-      "React", "TypeScript", "JavaScript", "Node.js", "Python", "Java", "C++", "C#",
-      "Vue", "Angular", "Next.js", "Express", "MongoDB", "PostgreSQL", "MySQL",
-      "AWS", "Docker", "Kubernetes", "Git", "CI/CD", "REST API", "GraphQL",
-      "Redux", "Zustand", "Tailwind CSS", "SASS", "CSS3", "HTML5", "Webpack",
-      "Jest", "Cypress", "TypeScript", "ES6+", "Microservices", "Agile", "Scrum"
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "Node.js",
+      "Python",
+      "Java",
+      "C++",
+      "C#",
+      "Vue",
+      "Angular",
+      "Next.js",
+      "Express",
+      "MongoDB",
+      "PostgreSQL",
+      "MySQL",
+      "AWS",
+      "Docker",
+      "Kubernetes",
+      "Git",
+      "CI/CD",
+      "REST API",
+      "GraphQL",
+      "Redux",
+      "Zustand",
+      "Tailwind CSS",
+      "SASS",
+      "CSS3",
+      "HTML5",
+      "Webpack",
+      "Jest",
+      "Cypress",
+      "TypeScript",
+      "ES6+",
+      "Microservices",
+      "Agile",
+      "Scrum",
     ];
 
     const found: string[] = [];
@@ -127,7 +208,9 @@ export class WorkExperienceModel {
    * Validate work experience data
    * Follows Single Responsibility Principle (SRP)
    */
-  static isValid(data: IWorkExperienceData | null): data is IWorkExperienceData {
+  static isValid(
+    data: IWorkExperienceData | null,
+  ): data is IWorkExperienceData {
     return (
       data !== null &&
       Array.isArray(data.items) &&
@@ -158,10 +241,10 @@ export class WorkExperienceModel {
       // If same year, check for "Present" keyword
       const aIsPresent = a.period.toLowerCase().includes("present");
       const bIsPresent = b.period.toLowerCase().includes("present");
-      
+
       if (aIsPresent && !bIsPresent) return -1;
       if (!aIsPresent && bIsPresent) return 1;
-      
+
       return 0;
     });
   }
@@ -170,7 +253,9 @@ export class WorkExperienceModel {
    * Get work experience items grouped by company
    * Follows Single Responsibility Principle (SRP)
    */
-  static groupByCompany(items: IWorkExperienceItem[]): Map<string, IWorkExperienceItem[]> {
+  static groupByCompany(
+    items: IWorkExperienceItem[],
+  ): Map<string, IWorkExperienceItem[]> {
     const grouped = new Map<string, IWorkExperienceItem[]>();
 
     items.forEach((item) => {
@@ -210,17 +295,20 @@ export class WorkExperienceModel {
     // Format examples: "May 2023 - Present", "2020-2024", "Jan 2020 - Dec 2022"
     const dateRegex = /(\w+)\s+(\d{4})/g;
     const matches = Array.from(period.matchAll(dateRegex));
-    
+
     if (matches.length < 1) return null;
-    
+
     const startMatch = matches[0];
     const startMonth = this.getMonthNumber(startMatch[1]);
     const startYear = parseInt(startMatch[2], 10);
-    
+
     let endMonth: number;
     let endYear: number;
-    
-    if (period.toLowerCase().includes("present") || period.toLowerCase().includes("current")) {
+
+    if (
+      period.toLowerCase().includes("present") ||
+      period.toLowerCase().includes("current")
+    ) {
       const now = new Date();
       endMonth = now.getMonth() + 1;
       endYear = now.getFullYear();
@@ -231,7 +319,7 @@ export class WorkExperienceModel {
     } else {
       return null;
     }
-    
+
     const months = (endYear - startYear) * 12 + (endMonth - startMonth);
     return Math.max(0, months);
   }
@@ -241,12 +329,31 @@ export class WorkExperienceModel {
    */
   private static getMonthNumber(monthName: string): number {
     const months: { [key: string]: number } = {
-      jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3,
-      apr: 4, april: 4, may: 5, jun: 6, june: 6, jul: 7, july: 7,
-      aug: 8, august: 8, sep: 9, september: 9, oct: 10, october: 10,
-      nov: 11, november: 11, dec: 12, december: 12,
+      jan: 1,
+      january: 1,
+      feb: 2,
+      february: 2,
+      mar: 3,
+      march: 3,
+      apr: 4,
+      april: 4,
+      may: 5,
+      jun: 6,
+      june: 6,
+      jul: 7,
+      july: 7,
+      aug: 8,
+      august: 8,
+      sep: 9,
+      september: 9,
+      oct: 10,
+      october: 10,
+      nov: 11,
+      november: 11,
+      dec: 12,
+      december: 12,
     };
-    
+
     return months[monthName.toLowerCase()] || 1;
   }
 
@@ -257,19 +364,18 @@ export class WorkExperienceModel {
   static getFormattedDuration(period: string): string {
     const months = this.getDuration(period);
     if (months === null) return "";
-    
+
     if (months < 12) {
       return `${months} ${months === 1 ? "month" : "months"}`;
     }
-    
+
     const years = Math.floor(months / 12);
     const remainingMonths = months % 12;
-    
+
     if (remainingMonths === 0) {
       return `${years} ${years === 1 ? "year" : "years"}`;
     }
-    
-    return `${years}.${Math.round(remainingMonths / 12 * 10)} ${years === 1 ? "year" : "years"}`;
+
+    return `${years}.${Math.round((remainingMonths / 12) * 10)} ${years === 1 ? "year" : "years"}`;
   }
 }
-
