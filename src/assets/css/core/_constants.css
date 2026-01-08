@@ -73,6 +73,8 @@
   /* ============================================
      Opacity System - Consistent Opacity Scale
      ============================================ */
+  --opacity-0: 0;
+  --opacity-1: 1;
   --opacity-disabled: 0.5;
   --opacity-hover: 0.8;
   --opacity-pressed: 0.6;
@@ -80,6 +82,23 @@
   --opacity-overlay-dark: 0.75;
   --opacity-muted: 0.6;
   --opacity-subtle: 0.4;
+  --opacity-very-subtle: 0.1;
+  --opacity-light: 0.3;
+  --opacity-medium: 0.4;
+  --opacity-strong: 0.5;
+
+  /* ============================================
+     Blur System - Consistent Blur Scale
+     ============================================ */
+  --blur-xs: 3px;
+  --blur-sm: 8px;
+  --blur-md: 10px;
+  --blur-lg: 12px;
+  --blur-xl: 16px;
+  --blur-2xl: 20px;
+  --blur-3xl: 24px;
+  --blur-4xl: 30px;
+  --blur-5xl: 60px;
 
   /* ============================================
      Component States - Reusable State Patterns

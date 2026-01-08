@@ -41,7 +41,7 @@
     border-color var(--transition-smooth),
     background var(--transition-smooth);
   max-width: var(--spacing-card-max-width);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(var(--blur-3xl));
   border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-card);
   overflow: hidden;
@@ -105,7 +105,7 @@
 .card__title {
   display: inline-block;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   margin: 0;
   color: var(--color-text-heading);
   font-size: clamp(1.875rem, 4vw, 3rem);
@@ -130,7 +130,7 @@
    ============================================ */
 .card__body {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   color: var(--color-text-main);
   font-size: clamp(1rem, 1.6vw, 1.125rem);
   line-height: 1.8;

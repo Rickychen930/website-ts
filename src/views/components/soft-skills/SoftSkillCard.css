@@ -15,10 +15,10 @@
   );
   text-align: center;
   opacity: 0;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-all);
   flex-direction: column;
   align-items: center;
-  border-radius: 32px;
+  border-radius: var(--radius-3xl);
   box-shadow:
     0 10px 32px var(--color-black-alpha-06),
     0 20px 64px var(--color-black-alpha-08),
@@ -29,8 +29,8 @@
   transform-style: preserve-3d;
   perspective: 1000px;
   will-change: transform, opacity, box-shadow;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(var(--blur-xl));
+  backdrop-filter: blur(var(--blur-xl));
   cursor: default;
 
   --mouse-x: 0deg;
@@ -58,7 +58,6 @@
     var(--color-accent-alpha-20),
     transparent
   );
-  animation: soft-skill-card-grid-line 3s ease-in-out infinite;
 }
 
 .soft-skill-card-grid-line:nth-child(1) {
@@ -152,7 +151,7 @@
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity var(--transition-slow);
   animation: soft-skill-card-bg-rotate 15s linear infinite;
 }
 
@@ -169,8 +168,8 @@
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.6s ease;
-  filter: blur(40px);
+  transition: opacity var(--transition-slow);
+  filter: blur(var(--blur-4xl));
 }
 
 /* Shine Effect */
@@ -188,7 +187,7 @@
   );
   transform: rotate(45deg);
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity var(--transition-slow);
   pointer-events: none;
 }
 
@@ -207,8 +206,8 @@
   position: absolute;
   background: linear-gradient(
     135deg,
-    var(--accent, #00d9ff),
-    var(--accent-alt, #0091ea)
+    var(--accent, var(--color-accent-primary)),
+    var(--accent-alt, var(--color-accent-alt))
   );
   opacity: 0.3;
 }
@@ -231,7 +230,7 @@
 .soft-skill-card-icon-wrapper {
   position: relative;
   margin-bottom: 2.5rem;
-  z-index: 2;
+  z-index: calc(var(--z-base) + 2);
 }
 
 .soft-skill-card-icon-ring {
@@ -244,8 +243,7 @@
   border: 2px solid var(--color-accent-alpha-20);
   border-radius: 50%;
   opacity: 0;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: soft-skill-card-icon-ring 3s ease-in-out infinite;
+  transition: var(--transition-all);
 }
 
 .soft-skill-card-icon-pulse {
@@ -262,13 +260,12 @@
   );
   border-radius: 50%;
   opacity: 0;
-  animation: soft-skill-card-icon-pulse 2s ease-in-out infinite;
 }
 
 /* Content */
 .soft-skill-card-inner {
   position: relative;
-  z-index: 2;
+  z-index: calc(var(--z-base) + 2);
   width: 100%;
 }
 
@@ -293,13 +290,12 @@
   font-size: clamp(1.5rem, 2.5vw, 1.85rem);
   font-weight: 800;
   line-height: 1.2;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
   letter-spacing: -0.8px;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 200%;
-  animation: soft-skill-card-title-gradient 3s ease infinite;
 }
 
 /* Badge */
@@ -313,9 +309,9 @@
     var(--color-accent-alt-alpha-15)
   );
   align-items: center;
-  border-radius: 20px;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  backdrop-filter: blur(var(--blur-md));
 }
 
 .soft-skill-card-badge-text {
@@ -334,7 +330,7 @@
   font-size: clamp(1rem, 1.6vw, 1.15rem);
   font-weight: 400;
   line-height: 1.8;
-  transition: color 0.3s ease;
+  transition: color var(--transition-fast);
   font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
 }
 
@@ -374,10 +370,10 @@
   width: 100%;
   height: 8px;
   background: var(--color-border-alpha-30);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  backdrop-filter: blur(var(--blur-md));
 }
 
 .soft-skill-card-level-fill {
@@ -389,10 +385,9 @@
     var(--accent-alt),
     var(--accent-tertiary)
   );
-  border-radius: 10px;
-  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-md);
+  transition: width var(--animation-duration-slow) var(--transition-smooth);
   box-shadow: 0 0 12px var(--color-accent-alpha-50);
-  animation: soft-skill-card-level-pulse 2s ease-in-out infinite;
 }
 
 .soft-skill-card-level-glow {
@@ -404,7 +399,6 @@
     var(--color-white-alpha-40),
     transparent
   );
-  animation: soft-skill-card-level-glow 2s ease-in-out infinite;
 }
 
 /* Indicator */
@@ -421,8 +415,8 @@
     var(--accent-alt),
     var(--accent-tertiary)
   );
-  border-radius: 4px 4px 0 0;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  transition: width var(--animation-duration-base) var(--transition-smooth);
   box-shadow: 0 -2px 8px var(--color-accent-alpha-40);
 }
 
@@ -437,16 +431,17 @@
     var(--color-accent-alpha-05) 100%
   );
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity var(--transition-slow);
   pointer-events: none;
-  border-radius: 32px;
+  border-radius: var(--radius-3xl);
 }
 
 /* Visible State */
 .soft-skill-card-visible {
   opacity: 1;
   transform: translateY(0) scale(1) rotateX(0deg);
-  animation: soft-skill-card-fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: soft-skill-card-fade-in var(--animation-duration-slow, 0.9s)
+    var(--easing-smooth, var(--transition-smooth)) forwards;
 }
 
 .soft-skill-card-visible .soft-skill-card-level-fill {
@@ -520,13 +515,13 @@
   0% {
     opacity: 0;
     transform: translateY(50px) scale(0.95) rotateX(5deg);
-    filter: blur(8px);
+    filter: blur(var(--blur-sm));
   }
 
   60% {
     opacity: 1;
     transform: translateY(-6px) scale(1.02) rotateX(-2deg);
-    filter: blur(2px);
+    filter: blur(var(--blur-xs));
   }
 
   100% {
@@ -660,14 +655,14 @@
 @media screen and (width >= 1400px) {
   .soft-skill-card {
     padding: 4rem clamp(3rem, 5vw, 3.5rem);
-    border-radius: 36px;
+    border-radius: var(--radius-3xl);
   }
 }
 
 @media screen and (width <= 992px) {
   .soft-skill-card {
     padding: 3rem clamp(2rem, 3vw, 2.5rem);
-    border-radius: 28px;
+    border-radius: var(--radius-2xl);
   }
 
   .soft-skill-card-icon-wrapper {
@@ -678,7 +673,7 @@
 @media screen and (width <= 768px) {
   .soft-skill-card {
     padding: 2.5rem clamp(1.75rem, 2.5vw, 2.25rem);
-    border-radius: 24px;
+    border-radius: var(--radius-2xl);
   }
 
   .soft-skill-card-header {
@@ -690,7 +685,7 @@
 @media screen and (width <= 480px) {
   .soft-skill-card {
     padding: 2rem clamp(1.5rem, 2vw, 2rem);
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
   }
 }
 
@@ -699,7 +694,7 @@
   .soft-skill-card,
   .soft-skill-card * {
     animation: none !important;
-    transition: opacity 0.3s ease !important;
+    transition: opacity var(--transition-fast) !important;
   }
 
   .soft-skill-card {
@@ -715,11 +710,11 @@
 /* High Contrast */
 @media (prefers-contrast: more) {
   .soft-skill-card {
-    border: 3px solid var(--text-heading, #1f2d3d);
+    border: 3px solid var(--text-heading, var(--color-text-heading));
   }
 
   .soft-skill-card-title {
-    -webkit-text-fill-color: var(--text-heading, #1f2d3d);
+    -webkit-text-fill-color: var(--text-heading, var(--color-text-heading));
     color: var(--text-heading);
   }
 }

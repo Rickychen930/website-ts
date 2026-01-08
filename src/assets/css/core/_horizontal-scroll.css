@@ -35,7 +35,7 @@
 .horizontal-scroll-container::-webkit-scrollbar-track {
   margin: 0 1rem;
   background: var(--color-black-alpha-05);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .horizontal-scroll-container::-webkit-scrollbar-thumb {
@@ -44,8 +44,8 @@
     var(--color-accent-primary) 0%,
     var(--color-accent-alt) 100%
   );
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  border-radius: var(--radius-xs);
+  transition: var(--transition-all);
   box-shadow: 0 2px 4px var(--color-accent-alpha-30);
 }
 
@@ -67,7 +67,7 @@
   z-index: 10;
   width: 60px;
   height: 100%;
-  transition: opacity 0.3s ease;
+  transition: var(--transition-opacity);
   content: "";
   pointer-events: none;
 }
@@ -111,7 +111,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   opacity: 0;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   transform: translateY(-50%);
   align-items: center;
   justify-content: center;
@@ -121,7 +121,7 @@
     0 2px 6px var(--color-black-alpha-20);
   cursor: pointer;
   pointer-events: none;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--blur-md));
 }
 
 .horizontal-scroll-indicator-left {
@@ -173,7 +173,7 @@
   font-size: 0.75rem;
   font-weight: 500;
   opacity: 0.7;
-  transition: opacity 0.3s ease;
+  transition: var(--transition-opacity);
   transform: translateX(-50%);
   align-items: center;
   gap: 0.5rem;
@@ -185,13 +185,11 @@
 .horizontal-scroll-hint::before {
   content: "←";
   font-size: 1rem;
-  animation: scroll-hint-left 1.5s ease-in-out infinite;
 }
 
 .horizontal-scroll-hint::after {
   content: "→";
   font-size: 1rem;
-  animation: scroll-hint-right 1.5s ease-in-out infinite;
 }
 
 @keyframes scroll-hint-left {
@@ -236,7 +234,7 @@
     var(--color-accent-primary) 0%,
     var(--color-accent-alt) 100%
   );
-  transition: width 0.1s ease;
+  transition: width var(--transition-fast);
   border-radius: 2px;
   box-shadow: 0 2px 4px var(--color-accent-alpha-30);
 }

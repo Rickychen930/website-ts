@@ -16,12 +16,12 @@
     var(--color-accent-alt-alpha-06) 50%,
     var(--color-accent-secondary-alpha-05) 100%
   );
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   gap: 1.5rem;
   margin-top: 1.75rem;
-  border-radius: 18px;
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  backdrop-filter: blur(12px) saturate(180%);
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
   box-shadow:
     0 8px 24px var(--color-accent-alpha-15),
     0 4px 12px var(--color-black-alpha-05),
@@ -39,7 +39,7 @@
   height: 3px;
   background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity var(--transition-slow);
   content: "";
   border-radius: 18px 18px 0 0;
 }
@@ -67,12 +67,12 @@
   display: flex;
   position: relative;
   padding: 0.75rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   align-items: center;
   gap: 1rem;
   flex: 1;
   min-width: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .work-experience-stat-item::after {
@@ -104,7 +104,7 @@
   position: relative;
   font-size: 1.75rem;
   line-height: 1;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   flex-shrink: 0;
   filter: drop-shadow(0 3px 6px var(--color-accent-alpha-30));
 }
@@ -122,7 +122,7 @@
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity var(--transition-smooth);
   content: "";
   transform: translate(-50%, -50%);
   border-radius: 50%;
@@ -155,7 +155,7 @@
   font-size: clamp(1.35rem, 2.5vw, 1.65rem);
   font-weight: 800;
   line-height: 1.2;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -176,7 +176,7 @@
   font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color var(--transition-smooth);
 }
 
 .work-experience-stats:hover .work-experience-stat-label {
@@ -189,7 +189,7 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1.25rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
   }
 
   .work-experience-stat-item {
@@ -213,7 +213,7 @@
 @media screen and (width <= 480px) {
   .work-experience-stats {
     padding: 1rem;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     gap: 0.875rem;
   }
 
@@ -237,7 +237,7 @@
 @media screen and (width <= 360px) {
   .work-experience-stats {
     padding: 0.875rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
   }
 
   .work-experience-stat-icon {

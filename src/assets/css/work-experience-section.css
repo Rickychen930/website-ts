@@ -150,7 +150,6 @@
   font-size: 4rem;
   margin-bottom: var(--work-spacing-md);
   opacity: 0.6;
-  animation: empty-icon-float 3s ease-in-out infinite;
 }
 
 @keyframes empty-icon-float {

@@ -25,7 +25,7 @@
   padding: var(--spacing-xl) clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--color-border-light);
   background: var(--gradient-primary);
-  opacity: 0;
+  opacity: var(--opacity-0);
   transition: var(--transition-all);
   margin-bottom: var(--spacing-xl);
   border-radius: var(--radius-xl);
@@ -33,12 +33,12 @@
   transform: translateY(30px);
   will-change: opacity, transform;
   overflow: hidden;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(var(--blur-sm));
 }
 
 /* Visible State */
 .flow-item.flow-visible {
-  opacity: 1;
+  opacity: var(--opacity-1);
   transform: translateY(0);
   will-change: auto;
 }
@@ -106,13 +106,13 @@
     transparent
   );
   border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  opacity: var(--opacity-0);
+  transition: var(--transition-opacity);
   pointer-events: none;
 }
 
 .flow-item:hover .flow-icon-glow {
-  opacity: 1;
+  opacity: var(--opacity-1);
 }
 
 .flow-icon {
@@ -128,10 +128,10 @@
     var(--color-accent-tertiary-alpha-15)
   );
   font-size: 1.75rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow:
     0 4px 12px var(--color-accent-alpha-20),
     inset 0 1px 0 var(--color-white-alpha-50);
@@ -328,7 +328,7 @@
   .flow-item {
     padding: 1.5rem;
     border: 1px solid var(--color-border-light);
-    opacity: 1;
+    opacity: var(--opacity-1);
     break-inside: avoid;
     box-shadow: none;
     transform: none;

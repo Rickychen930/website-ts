@@ -121,7 +121,6 @@
     transparent 70%
   );
   border-radius: 50%;
-  animation: hero-background-float 20s ease-in-out infinite;
 }
 
 .about-me-hero-background::after {
@@ -137,7 +136,6 @@
     transparent 70%
   );
   border-radius: 50%;
-  animation: hero-background-float 15s ease-in-out infinite reverse;
 }
 
 @keyframes hero-background-float {
@@ -218,7 +216,6 @@
   position: absolute;
   font-size: 2rem;
   opacity: 0;
-  animation: particle-float 6s ease-in-out infinite;
   filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
 }
 
@@ -271,13 +268,11 @@
   transition: opacity var(--about-me-transition-slow);
   inset: -20px;
   border-radius: 50%;
-  animation: about-me-glow-pulse 4s ease-in-out infinite;
   pointer-events: none;
 }
 
 .about-me-image-container:hover .about-me-image-glow {
   opacity: 1;
-  animation: about-me-glow-pulse 2s ease-in-out infinite;
 }
 
 .about-me-image-border {
@@ -480,7 +475,7 @@
   border: 2px solid var(--about-me-color-primary);
   background: transparent;
   color: var(--about-me-color-primary);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--blur-md));
 }
 
 #about.card .profile-btn.secondary:hover {
@@ -672,7 +667,7 @@
   from {
     opacity: 0;
     transform: scale(0.9) translateY(30px);
-    filter: blur(8px);
+    filter: blur(var(--blur-sm));
   }
 
   to {

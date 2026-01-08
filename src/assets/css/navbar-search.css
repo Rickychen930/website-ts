@@ -45,8 +45,8 @@
   background: var(--color-accent-alpha-10);
   transform: translate(-50%, -50%);
   transition:
-    width 0.4s,
-    height 0.4s;
+    width var(--transition-smooth),
+    height var(--transition-smooth);
 }
 
 .navbar-search-button:hover {
@@ -69,7 +69,7 @@
 .navbar-search-icon {
   display: flex;
   font-size: 1rem;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-smooth);
   align-items: center;
   justify-content: center;
 }
@@ -93,8 +93,8 @@
 /* Mobile responsive */
 @media (width <= 768px) {
   .navbar-search-button {
-    padding: 0.5rem;
-    gap: 0.25rem;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
   }
 
   .navbar-search-shortcut {

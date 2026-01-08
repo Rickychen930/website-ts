@@ -65,7 +65,7 @@
 
 /* Navbar integration */
 .navbar .theme-toggle {
-  padding: 6px 10px;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border: none;
   background: transparent;
   margin-left: auto;
@@ -85,7 +85,7 @@
 /* Mobile adjustments */
 @media (width <= 768px) {
   .theme-toggle {
-    padding: 6px 10px;
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 
   .theme-toggle-icon {

@@ -9,12 +9,12 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-fast) var(--transition-smooth);
   box-shadow: var(--shadow-xs);
 }
 
@@ -90,7 +90,7 @@
   .honor-badge {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
   }
 
   .honor-badge__icon {
@@ -103,7 +103,7 @@
   .honor-badge {
     padding: 0.35rem 0.7rem;
     font-size: 0.75rem;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
   }
 
   .honor-badge__icon {

@@ -61,8 +61,8 @@
   gap: var(--academic-card-gap-lg, 1.5rem);
   border-radius: var(--academic-radius-xxl, 16px);
   box-shadow: var(--academic-shadow-card);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  backdrop-filter: blur(var(--blur-md));
   max-width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -134,7 +134,7 @@
   transition: opacity var(--academic-transition-base, 0.4s ease);
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  filter: blur(20px);
+  filter: blur(var(--blur-2xl));
 }
 
 .academic-card:hover .academic-card-icon-inner,
@@ -303,7 +303,7 @@
 /* ─── Glow Effect ─── */
 .academic-card-glow {
   position: absolute;
-  z-index: 0;
+  z-index: var(--z-base);
   background: radial-gradient(
     circle at 50% 50%,
     var(--color-accent-alpha-08) 0%,

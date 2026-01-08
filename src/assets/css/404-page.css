@@ -49,7 +49,6 @@
 .not-found-icon {
   font-size: var(--spacing-4xl, 4rem);
   margin-bottom: var(--spacing-md, 1rem);
-  animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {

@@ -14,7 +14,7 @@
 .soft-skills-grid-container::before {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: var(--z-base);
   background:
     radial-gradient(
       circle at 20% 50%,
@@ -33,7 +33,7 @@
 .soft-skills-grid {
   display: grid;
   position: relative;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 3rem;
@@ -43,7 +43,7 @@
 .soft-skills-empty {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   padding: 5rem 2rem;
   text-align: center;
   flex-direction: column;
@@ -56,7 +56,6 @@
   margin-bottom: 2rem;
   opacity: 0.5;
   filter: grayscale(0.3);
-  animation: soft-skills-empty-pulse 2s ease-in-out infinite;
 }
 
 .soft-skills-empty-text {
@@ -132,12 +131,12 @@
 
   .soft-skills-grid::-webkit-scrollbar-track {
     background: var(--color-black-alpha-05);
-    border-radius: 3px;
+    border-radius: var(--radius-xs);
   }
 
   .soft-skills-grid::-webkit-scrollbar-thumb {
     background: var(--soft-skills-color-primary, var(--color-accent-primary));
-    border-radius: 3px;
+    border-radius: var(--radius-xs);
   }
 
   .soft-skills-grid::-webkit-scrollbar-thumb:hover {

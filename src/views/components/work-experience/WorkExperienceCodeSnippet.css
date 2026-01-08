@@ -14,17 +14,16 @@
     var(--color-bg-dark) 50%,
     var(--color-code-background) 100%
   );
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   margin-top: 1.75rem;
   background-size: 200% 100%;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow:
     0 12px 40px var(--color-black-alpha-30),
     0 6px 20px var(--color-black-alpha-20),
     0 0 60px var(--color-accent-alpha-15),
     inset 0 1px 0 var(--color-white-alpha-10);
-  animation: code-background-shift 8s ease infinite;
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -50,7 +49,7 @@
     var(--color-accent-alt-alpha-05) 100%
   );
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity var(--transition-slow);
   content: "";
   pointer-events: none;
 }
@@ -81,8 +80,8 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1.5px solid var(--color-accent-alpha-30);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  backdrop-filter: blur(var(--blur-lg));
 }
 
 .work-experience-code-header::after {
@@ -93,7 +92,7 @@
   width: 60px;
   height: 1.5px;
   background: var(--gradient-accent);
-  transition: width 0.5s ease;
+  transition: width var(--transition-slow);
 }
 
 .work-experience-code-snippet:hover .work-experience-code-header::after {
@@ -110,7 +109,7 @@
   position: relative;
   width: 0.875rem;
   height: 0.875rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   border-radius: 50%;
   overflow: hidden;
 }
@@ -129,7 +128,7 @@
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity var(--transition-smooth);
 }
 
 .work-experience-code-dot:hover::before {
@@ -183,11 +182,11 @@
   color: var(--color-text-muted-alt);
   font-size: 0.8125rem;
   font-weight: 700;
-  transition: all 0.4s ease;
+  transition: all var(--transition-smooth);
   font-family: "Fira Code", Monaco, "Courier New", monospace;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .work-experience-code-snippet:hover .work-experience-code-language {
@@ -213,12 +212,12 @@
 
 .work-experience-code-pre::-webkit-scrollbar-track {
   background: var(--color-black-alpha-20);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
 }
 
 .work-experience-code-pre::-webkit-scrollbar-thumb {
   background: var(--gradient-accent);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
 }
 
 .work-experience-code-pre::-webkit-scrollbar-thumb:hover {
@@ -247,10 +246,10 @@
 .work-experience-code-line {
   display: flex;
   padding: 0.15rem 0.5rem;
-  transition: background 0.3s ease;
+  transition: background var(--transition-fast);
   align-items: center;
   min-height: 1.6rem;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   margin-left: -0.5rem;
   margin-right: -0.5rem;
 }
@@ -301,7 +300,7 @@
 @media screen and (width <= 768px) {
   .work-experience-code-snippet {
     margin-top: 1.5rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
   }
 
   .work-experience-code-header {
@@ -321,7 +320,7 @@
 @media screen and (width <= 480px) {
   .work-experience-code-snippet {
     margin-top: 1.25rem;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
   }
 
   .work-experience-code-header {

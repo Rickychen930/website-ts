@@ -70,12 +70,12 @@
   --academic-color-graduate: var(--color-accent-purple);
   --academic-color-certificate: var(--color-accent-secondary);
 
-  /* Border Radius - Reusable */
-  --academic-radius-sm: 8px;
-  --academic-radius-md: 10px;
-  --academic-radius-lg: 12px;
-  --academic-radius-xl: 14px;
-  --academic-radius-xxl: 16px;
+  /* Border Radius - Uses core radius system */
+  --academic-radius-sm: var(--radius-sm);
+  --academic-radius-md: var(--radius-md);
+  --academic-radius-lg: var(--radius-lg);
+  --academic-radius-xl: var(--radius-xl);
+  --academic-radius-xxl: var(--radius-lg);
 
   /* Icon Sizes - Reusable */
   --academic-icon-size-xs: 2.75rem;

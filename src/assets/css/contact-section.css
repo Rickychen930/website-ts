@@ -22,8 +22,8 @@
   /* Colors - Uses core color system */
   --contact-primary: var(--color-accent-primary);
   --contact-primary-hover: var(--color-accent-hover);
-  --contact-primary-light: var(--contact-primary-light);
-  --contact-primary-lighter: var(--contact-primary-lighter);
+  --contact-primary-light: var(--color-accent-glow);
+  --contact-primary-lighter: rgb(0 217 255 / 5%);
 
   /* Gradient Colors - Uses core gradients */
   --contact-gradient-start: var(--color-accent-primary);
@@ -97,7 +97,6 @@
   font-size: 4rem;
   margin-bottom: var(--contact-spacing-md);
   opacity: 0.6;
-  animation: contact-pulse 2s ease-in-out infinite;
 }
 
 @keyframes contact-pulse {

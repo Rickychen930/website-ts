@@ -35,8 +35,8 @@
   background: var(--color-bg-lighter);
   border-radius: var(--component-radius-md);
   margin-bottom: var(--spacing-xl);
-  animation: skeleton-pulse var(--duration-base) var(--easing-ease-in-out)
-    infinite;
+  animation: skeleton-pulse var(--animation-duration-base)
+    var(--transition-base) infinite;
 }
 
 .lazy-section-skeleton-content {
@@ -50,8 +50,8 @@
   height: 20px;
   background: var(--color-bg-lighter);
   border-radius: var(--component-radius-md);
-  animation: skeleton-pulse var(--duration-base) var(--easing-ease-in-out)
-    infinite;
+  animation: skeleton-pulse var(--animation-duration-base)
+    var(--transition-base) infinite;
 }
 
 .lazy-section-skeleton-line.short {

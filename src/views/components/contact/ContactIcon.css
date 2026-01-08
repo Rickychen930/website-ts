@@ -15,12 +15,12 @@
   position: relative;
   border: 2px solid var(--color-white-alpha-30);
   background: var(--color-white-alpha-60);
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all var(--transition-smooth);
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
-  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
   box-shadow:
     0 4px 16px var(--color-black-alpha-08),
     0 2px 8px var(--color-black-alpha-04),
@@ -57,11 +57,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: var(--z-base);
   width: 100%;
   height: 100%;
   opacity: 0.15;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   border-radius: 50%;
   background-size: 200% 200%;
   background-position: 0% 0%;
@@ -83,7 +83,7 @@
 .contact-icon-content {
   display: flex;
   position: relative;
-  z-index: 3;
+  z-index: calc(var(--z-base) + 3);
   width: 100%;
   height: 100%;
   align-items: center;
@@ -94,7 +94,7 @@
 .contact-icon-emoji {
   display: block;
   line-height: 1;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   transform: scale(1);
   filter: grayscale(0%);
 }
@@ -104,21 +104,20 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   width: 0;
   height: 0;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--animation-duration-base) var(--transition-smooth);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  filter: blur(15px);
+  filter: blur(var(--blur-lg));
 }
 
 .contact-icon--active .contact-icon-glow {
   width: 180%;
   height: 180%;
   opacity: 0.5;
-  animation: contact-icon-glow-pulse 2s ease-in-out infinite;
 }
 
 @keyframes contact-icon-glow-pulse {
@@ -194,7 +193,7 @@
   position: absolute;
   top: -50%;
   left: -50%;
-  z-index: 2;
+  z-index: calc(var(--z-base) + 2);
   width: 200%;
   height: 200%;
   background: linear-gradient(
@@ -213,8 +212,8 @@
 .contact-icon--active {
   background: var(--color-white-alpha-80);
   transform: scale(1.2) rotate(10deg) rotateY(5deg);
-  -webkit-backdrop-filter: blur(20px) saturate(200%);
-  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--blur-2xl)) saturate(200%);
+  backdrop-filter: blur(var(--blur-2xl)) saturate(200%);
   border-color: var(--color-white-alpha-50);
   box-shadow:
     0 8px 32px var(--color-accent-alpha-30),
@@ -305,7 +304,7 @@
 
 /* Focus State */
 .contact-icon:focus-visible {
-  outline: 3px solid var(--contact-primary, #00d9ff);
+  outline: 3px solid var(--contact-primary, var(--color-accent-primary));
   outline-offset: 4px;
   border-radius: 50%;
 }

@@ -28,8 +28,8 @@
     var(--color-bg-lightest) 100%
   );
   background-size: 200% 100%;
-  animation: skeleton-shimmer var(--duration-base) var(--easing-ease-in-out)
-    infinite;
+  animation: skeleton-shimmer var(--animation-duration-base)
+    var(--transition-base) infinite;
   border-radius: var(--radius-xs);
   overflow: hidden;
 }
@@ -84,7 +84,8 @@
     var(--color-bg-lightest) 100%
   );
   background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  animation: skeleton-shimmer var(--animation-duration-slow)
+    var(--transition-base) infinite;
 }
 
 .skeleton-circle {
@@ -95,7 +96,7 @@
   display: flex;
   padding: 1.5rem;
   background: var(--color-bg-card);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   box-shadow: 0 2px 8px var(--color-black-alpha-08);
   flex-direction: column;
   gap: 1rem;

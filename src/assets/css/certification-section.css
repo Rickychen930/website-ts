@@ -84,10 +84,10 @@
     var(--color-white-alpha-98) 100%
   );
   opacity: 0;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--cert-transition-smooth, var(--transition-smooth));
   min-height: 420px;
-  backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 28px;
+  backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
+  border-radius: var(--radius-2xl);
   overflow: visible;
   transform: translateY(50px) scale(0.92) rotateX(8deg);
   transform-style: preserve-3d;
@@ -122,11 +122,10 @@
     var(--color-accent-tertiary) 100%
   );
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--cert-transition-smooth, var(--transition-smooth));
   content: "";
   background-size: 200% 100%;
-  border-radius: 28px 28px 0 0;
-  animation: cert-gradient-shift 3s ease infinite;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
 @keyframes cert-gradient-shift {
@@ -144,7 +143,7 @@
 #certification-section .certification-card::after {
   position: absolute;
   z-index: -1;
-  padding: 3px;
+  padding: var(--spacing-xs);
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-40) 0%,
@@ -152,16 +151,15 @@
     var(--color-accent-secondary-alpha-30) 100%
   );
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity var(--cert-transition-smooth, var(--transition-smooth));
   content: "";
   inset: -3px;
-  border-radius: 28px;
+  border-radius: var(--radius-2xl);
   mask:
     linear-gradient(var(--color-white) 0 0) content-box,
     linear-gradient(var(--color-white) 0 0);
   mask-composite: xor;
   mask-composite: exclude;
-  animation: cert-border-pulse 3s ease-in-out infinite;
 }
 
 @keyframes cert-border-pulse {
@@ -195,8 +193,8 @@
 #certification-section .certification-card-visible {
   opacity: 1;
   transform: translateY(0) scale(1) rotateX(0deg);
-  animation: cert-card-enter-advanced 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)
-    forwards;
+  animation: cert-card-enter-advanced var(--animation-duration-slow, 0.9s)
+    var(--easing-spring, var(--transition-bounce)) forwards;
   filter: blur(0);
 }
 
@@ -208,13 +206,13 @@
   0% {
     opacity: 0;
     transform: translateY(50px) scale(0.9) rotateX(10deg);
-    filter: blur(12px);
+    filter: blur(var(--blur-lg));
   }
 
   50% {
     opacity: 1;
     transform: translateY(-8px) scale(1.02) rotateX(-2deg);
-    filter: blur(3px);
+    filter: blur(var(--blur-xs));
   }
 
   100% {
@@ -246,7 +244,6 @@
 #certification-section .certification-card:hover::after,
 #certification-section .certification-card-hovered::after {
   opacity: 1;
-  animation: cert-border-glow 2s ease-in-out infinite;
 }
 
 @keyframes cert-border-glow {
@@ -265,7 +262,6 @@
 #certification-section .certification-card:hover::before,
 #certification-section .certification-card-hovered::before {
   opacity: 1;
-  animation: cert-gradient-shift 10s ease infinite;
 }
 
 #certification-section .certification-card-clickable {
@@ -297,7 +293,7 @@
   z-index: 3;
   width: 120px;
   height: 120px;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--cert-transition-smooth, var(--transition-smooth));
   align-items: center;
   justify-content: center;
   margin-bottom: 0.75rem;
@@ -324,7 +320,7 @@
   z-index: 2;
   font-size: 4rem;
   line-height: 1;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--cert-transition-smooth, var(--transition-smooth));
   filter: drop-shadow(0 6px 12px var(--color-black-alpha-20));
   transform-style: preserve-3d;
 }
@@ -349,7 +345,6 @@
     transform 0.6s ease;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  animation: cert-icon-pulse 3s ease-in-out infinite;
 }
 
 @keyframes cert-icon-pulse {
@@ -361,19 +356,18 @@
 
   50% {
     opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1.4);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
 #certification-section .certification-card:hover .certification-icon-emoji {
-  transform: scale(1.25) rotate(12deg) translateZ(20px);
-  filter: drop-shadow(0 10px 20px var(--color-accent-alpha-40));
+  transform: scale(1.1) rotate(5deg) translateZ(10px);
+  filter: drop-shadow(0 6px 12px var(--color-accent-alpha-30));
 }
 
 #certification-section .certification-card:hover .certification-icon-glow {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1.2);
-  animation: cert-icon-pulse-fast 1.5s ease-in-out infinite;
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
 @keyframes cert-icon-pulse-fast {
@@ -385,7 +379,7 @@
 
   50% {
     opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.3);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
@@ -413,7 +407,7 @@
   font-size: clamp(1.35rem, 2.2vw, 1.75rem);
   font-weight: 800;
   line-height: 1.35;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--cert-transition-smooth, var(--transition-smooth));
   letter-spacing: -0.5px;
   overflow-wrap: break-word;
   -webkit-text-fill-color: transparent;
@@ -455,10 +449,10 @@
   font-weight: 700;
   line-height: 1.5;
   opacity: 0.85;
-  transition: all 0.4s ease;
+  transition: var(--transition-all);
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 #certification-section
@@ -490,10 +484,10 @@
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   font-weight: 600;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--cert-transition-smooth, var(--transition-smooth));
   align-items: center;
   gap: 0.5rem;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   font-family: var(--font-mono);
   letter-spacing: 0.4px;
   overflow: hidden;
@@ -539,7 +533,7 @@
   color: var(--text-muted-alt);
   font-size: clamp(0.9rem, 1.2vw, 0.95rem);
   font-weight: 600;
-  transition: all 0.4s ease;
+  transition: var(--transition-all);
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
@@ -561,7 +555,7 @@
     var(--cert-color-primary) 0%,
     var(--cert-color-secondary) 100%
   );
-  transition: width 0.6s ease;
+  transition: width var(--animation-duration-base);
 }
 
 #certification-section
@@ -576,7 +570,7 @@
   position: relative;
   width: 100%;
   opacity: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--cert-transition-smooth, var(--transition-smooth));
   margin-top: 1.25rem;
   padding-top: 1.25rem;
   border-top: 2px solid var(--color-border-primary);
@@ -610,7 +604,6 @@
   margin-bottom: 2rem;
   opacity: 0.3;
   filter: grayscale(0.4);
-  animation: cert-empty-pulse 3s ease-in-out infinite;
 }
 
 @keyframes cert-empty-pulse {
@@ -655,7 +648,7 @@
   from {
     opacity: 0;
     transform: translateY(40px);
-    filter: blur(10px);
+    filter: blur(var(--blur-md));
   }
 
   to {
@@ -709,7 +702,7 @@
   #certification-section .certification-grid::-webkit-scrollbar-track {
     margin: 0 1rem;
     background: var(--color-black-alpha-08);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     box-shadow: inset 0 1px 2px var(--color-black-alpha-10);
   }
 
@@ -719,8 +712,8 @@
       var(--cert-color-primary, var(--color-accent-primary)) 0%,
       var(--cert-color-secondary, var(--color-accent-alt)) 100%
     );
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    border-radius: var(--radius-xs);
+    transition: var(--transition-all);
     box-shadow:
       0 2px 4px var(--color-accent-alpha-40),
       inset 0 1px 0 var(--color-white-alpha-30);
@@ -753,7 +746,7 @@
       var(--color-white-alpha-98) 0%,
       transparent 100%
     );
-    transition: opacity 0.3s ease;
+    transition: var(--transition-opacity);
     content: "";
     pointer-events: none;
   }
@@ -791,7 +784,7 @@
     font-size: 0.75rem;
     font-weight: 500;
     opacity: 0.8;
-    transition: opacity 0.3s ease;
+    transition: var(--transition-opacity);
     content: "← Swipe to see more →";
     transform: translateX(-50%);
     align-items: center;
@@ -870,7 +863,7 @@
   #certification-section .certification-grid::-webkit-scrollbar-track {
     margin: 0 1rem;
     background: var(--color-black-alpha-08);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb {
@@ -879,7 +872,7 @@
       var(--cert-color-primary, var(--color-accent-primary)) 0%,
       var(--cert-color-secondary, var(--color-accent-alt)) 100%
     );
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
   }
 
   #certification-section .certification-card {

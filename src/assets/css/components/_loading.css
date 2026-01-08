@@ -39,7 +39,8 @@
   border: 3px solid var(--color-border-light);
   border-top-color: var(--color-accent-primary);
   border-radius: 50%;
-  animation: loading-spin 0.8s linear infinite;
+  animation: loading-spin var(--animation-duration-slow, 0.9s)
+    var(--easing-linear, linear) infinite;
 }
 
 @keyframes loading-spin {

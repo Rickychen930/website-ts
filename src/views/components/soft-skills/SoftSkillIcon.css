@@ -5,7 +5,7 @@
 .soft-skill-icon-wrapper {
   display: inline-flex;
   position: relative;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   align-items: center;
   justify-content: center;
 }
@@ -15,7 +15,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 0;
+  z-index: var(--z-base);
   width: 120px;
   height: 120px;
   background: radial-gradient(
@@ -25,7 +25,7 @@
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--transition-smooth);
   transform: translate(-50%, -50%);
   border-radius: 50%;
   pointer-events: none;
@@ -56,22 +56,22 @@
 .soft-skill-icon-container {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   border: 2px solid var(--color-accent-alpha-25);
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-12),
     var(--color-accent-alt-alpha-15)
   );
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-smooth);
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   box-shadow:
     0 6px 20px var(--color-accent-alpha-15),
     inset 0 1px 0 var(--color-white-alpha-70);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  backdrop-filter: blur(var(--blur-md));
 }
 
 /* Icon Emoji */
@@ -79,7 +79,7 @@
   display: block;
   line-height: 1;
   filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-fast) var(--transition-smooth);
 }
 
 /* Size Variants */
@@ -96,7 +96,7 @@
 .soft-skill-icon-medium .soft-skill-icon-container {
   width: 5rem;
   height: 5rem;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
 }
 
 .soft-skill-icon-medium .soft-skill-icon-emoji {
@@ -106,7 +106,7 @@
 .soft-skill-icon-large .soft-skill-icon-container {
   width: 6rem;
   height: 6rem;
-  border-radius: 24px;
+  border-radius: var(--radius-2xl);
 }
 
 .soft-skill-icon-large .soft-skill-icon-emoji {
@@ -114,9 +114,6 @@
 }
 
 /* Animation (must come before hover for specificity) */
-.soft-skill-icon-animated .soft-skill-icon-container {
-  animation: soft-skill-icon-pulse 2s ease-in-out infinite;
-}
 
 @keyframes soft-skill-icon-pulse {
   0%,
@@ -158,7 +155,7 @@
   .soft-skill-icon-medium .soft-skill-icon-container {
     width: 4rem;
     height: 4rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
   }
 
   .soft-skill-icon-medium .soft-skill-icon-emoji {
@@ -168,7 +165,7 @@
   .soft-skill-icon-large .soft-skill-icon-container {
     width: 5rem;
     height: 5rem;
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
   }
 
   .soft-skill-icon-large .soft-skill-icon-emoji {

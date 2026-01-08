@@ -38,13 +38,14 @@
 .work-experience-card-visible {
   opacity: 1;
   transform: translateY(0);
-  animation: card-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: card-fade-in var(--animation-duration-slow)
+    var(--transition-smooth) forwards;
 }
 
 .work-experience-card-hidden {
   opacity: 0;
   transform: translateY(30px);
-  filter: blur(4px);
+  filter: blur(var(--blur-xs));
 }
 
 @keyframes card-fade-in {
@@ -63,14 +64,14 @@
 .work-experience-card-content {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   width: 100%;
   padding: var(--work-spacing-lg, 1.75rem);
   border: 1px solid var(--work-color-border, var(--color-border-light));
   background: var(--work-color-bg-card, var(--color-bg-card));
   transition: all var(--work-transition-base, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
   grid-column: 2;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: var(
     --work-shadow-card,
     0 2px 8px var(--color-black-alpha-04),
@@ -90,7 +91,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 2;
+  z-index: calc(var(--z-base) + 2);
   height: 3px;
   background: linear-gradient(
     90deg,
@@ -129,7 +130,7 @@
 .work-experience-card-body {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: calc(var(--z-base) + 1);
   width: 100%;
   max-width: 100%;
   flex-direction: column;
@@ -181,7 +182,7 @@
   font-size: clamp(0.75rem, 1.2vw, 0.8125rem);
   font-weight: 600;
   font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
   transition: all var(--work-transition-fast, 0.3s) ease;
 }
@@ -242,7 +243,7 @@
   font-size: var(--work-font-size-period, clamp(0.875rem, 1.4vw, 0.9375rem));
   font-weight: 600;
   font-family: var(--work-font-family, "Inter", "Segoe UI", sans-serif);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
   transition: all var(--work-transition-fast, 0.3s) ease;
 }
@@ -286,7 +287,7 @@
   );
   transition: all var(--work-transition-fast, 0.3s) ease;
   margin-bottom: var(--work-spacing-md, 1.25rem);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .work-experience-card:hover .work-experience-card-technologies {
@@ -335,7 +336,7 @@
   background: var(--work-color-secondary, var(--work-color-secondary-alpha-04));
   transition: all var(--work-transition-fast, 0.3s) ease;
   margin-top: var(--work-spacing-md, 1.25rem);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .work-experience-card:hover .work-experience-card-achievements {
@@ -425,7 +426,7 @@
 
   .work-experience-card-content {
     padding: var(--work-spacing-md, 1.25rem);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
   }
 
   .work-experience-icon {
@@ -451,7 +452,7 @@
   .work-experience-card-content {
     grid-column: 1;
     padding: var(--work-spacing-md, 1.125rem);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
   }
 
   .work-experience-icon {
@@ -503,7 +504,7 @@
 
   .work-experience-card-content {
     padding: var(--work-spacing-sm, 1rem);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
   }
 
   .work-experience-icon {

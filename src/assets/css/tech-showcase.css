@@ -75,8 +75,7 @@
     0 20px 60px var(--color-black-alpha-40),
     0 0 0 1px var(--color-accent-alpha-20),
     inset 0 1px 0 var(--color-white-alpha-10);
-  backdrop-filter: blur(20px);
-  animation: code-container-float 6s ease-in-out infinite;
+  backdrop-filter: blur(var(--blur-2xl));
 }
 
 @keyframes code-container-float {
@@ -147,7 +146,7 @@
   display: flex;
   position: relative;
   padding: 0.2rem 0;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
   align-items: center;
   min-height: 1.6em;
   cursor: pointer;
@@ -199,7 +198,7 @@
 
 .tech-showcase-cursor {
   color: var(--color-text-on-accent);
-  animation: cursor-blink 1s step-end infinite;
+  animation: cursor-blink var(--animation-duration-base) step-end infinite;
   margin-left: 0.25rem;
   font-weight: 700;
 }
@@ -236,11 +235,12 @@
     var(--color-accent-alt-alpha-08) 100%
   );
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all var(--transition-smooth)
+    var(--easing-spring, var(--transition-bounce));
   border-radius: 12px;
   cursor: pointer;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--blur-md));
 }
 
 .tech-showcase-item::before {
@@ -256,7 +256,7 @@
     var(--color-white-alpha-10),
     transparent
   );
-  transition: left 0.6s ease;
+  transition: left var(--animation-duration-base);
 }
 
 .tech-showcase-item:hover::before {
@@ -324,7 +324,7 @@
   color: var(--tech-showcase-text);
   font-size: 0.95rem;
   font-weight: 600;
-  transition: color 0.3s ease;
+  transition: color var(--transition-base);
   letter-spacing: 0.5px;
 }
 
