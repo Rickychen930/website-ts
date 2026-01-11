@@ -25,6 +25,7 @@ import { HonorsController } from "../../../controllers/honors-controller";
 import { HonorsModel, IHonorItem } from "../../../models/honors-model";
 import { HonorCard } from "../../components/honors/HonorCard";
 import { EmptyState } from "../../components/ui";
+import { logError, logWarn } from "../../../utils/logger";
 
 /**
  * Honors Section Props Interface
@@ -143,7 +144,6 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           ? error.message
           : "Failed to initialize honors section";
       this.setState({ error: errorMessage });
-      const { logError } = require("../../../utils/logger");
       logError("HonorsSection initialization error", error, "HonorsSection");
     }
   }
@@ -211,19 +211,15 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
           try {
             this.observer?.observe(element);
           } catch (error) {
-            if (process.env.NODE_ENV === "development") {
-              const { logWarn } = require("../../../utils/logger");
-              logWarn(
-                `Failed to observe item ${key}`,
-                { error },
-                "HonorsSection",
-              );
-            }
+            logWarn(
+              `Failed to observe item ${key}`,
+              { error },
+              "HonorsSection",
+            );
           }
         }
       });
     } catch (error) {
-      const { logError } = require("../../../utils/logger");
       logError("Failed to setup IntersectionObserver", error, "HonorsSection");
       // Fallback: show all items
       const allKeys = new Set(data.map((item) => item.key).filter(Boolean));
@@ -400,15 +396,20 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
 
   /**
    * Render Error State
-   * User-friendly error display
+   * User-friendly error display with improved accessibility
    */
   private renderErrorState(error: string): ReactNode {
     return (
-      <div className="honors-error-state" role="alert" aria-live="polite">
+      <div
+        className="honors-error-state"
+        role="alert"
+        aria-live="assertive"
+        aria-label="Error loading honors"
+      >
         <div className="honors-error-icon" aria-hidden="true">
           ⚠️
         </div>
-        <h3 className="honors-error-title">Unable to Display Honors</h3>
+        <h3 className="honors-error-title">Error Loading Honors</h3>
         <p className="honors-error-message">{error}</p>
       </div>
     );

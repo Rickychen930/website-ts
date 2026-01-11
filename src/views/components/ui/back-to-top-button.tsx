@@ -1,7 +1,7 @@
 /**
  * BackToTopButton - Component for scrolling back to top
  * Professional, Accessible, Responsive
- * 
+ *
  * Features:
  * - Smooth scroll animation
  * - Visibility based on scroll position
@@ -11,6 +11,7 @@
  */
 
 import React, { Component, ReactNode } from "react";
+import { logError, logWarn } from "../../../utils/logger";
 import "../../../assets/css/back-to-top-button.css";
 
 interface BackToTopButtonState {
@@ -31,24 +32,24 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
 
   componentDidMount(): void {
     // Edge case: Check browser environment
-    if (typeof window === "undefined" || typeof document === "undefined") return;
-    
+    if (typeof window === "undefined" || typeof document === "undefined")
+      return;
+
     try {
-      window.addEventListener("scroll", this.handleScrollThrottled, { passive: true });
+      window.addEventListener("scroll", this.handleScrollThrottled, {
+        passive: true,
+      });
       // Check initial scroll position
       this.checkScrollPosition();
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../../utils/logger');
-        logError("Error setting up scroll listener", error, "BackToTopButton");
-      }
+      logError("Error setting up scroll listener", error, "BackToTopButton");
     }
   }
 
   componentWillUnmount(): void {
     // Edge case: Cleanup properly
     if (typeof window === "undefined") return;
-    
+
     try {
       window.removeEventListener("scroll", this.handleScrollThrottled);
       if (this.scrollTimeoutId !== null) {
@@ -56,10 +57,7 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
         this.scrollTimeoutId = null;
       }
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../../utils/logger');
-        logError("Error cleaning up scroll listener", error, "BackToTopButton");
-      }
+      logError("Error cleaning up scroll listener", error, "BackToTopButton");
     }
   }
 
@@ -93,10 +91,7 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
         this.setState({ isVisible });
       }
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../../utils/logger');
-        logError("Error checking scroll position", error, "BackToTopButton");
-      }
+      logError("Error checking scroll position", error, "BackToTopButton");
     }
   };
 
@@ -106,12 +101,14 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
    */
   private handleClick = (): void => {
     // Edge case: Check browser environment
-    if (typeof window === "undefined" || typeof document === "undefined") return;
+    if (typeof window === "undefined" || typeof document === "undefined")
+      return;
 
     try {
       // Edge case: Check if smooth scroll is supported
-      const supportsSmoothScroll = 'scrollBehavior' in document.documentElement.style;
-      
+      const supportsSmoothScroll =
+        "scrollBehavior" in document.documentElement.style;
+
       if (supportsSmoothScroll) {
         window.scrollTo({
           top: 0,
@@ -134,17 +131,14 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
       const focusElement = () => {
         try {
           const firstFocusableElement = document.querySelector(
-            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
           ) as HTMLElement;
-          
+
           if (firstFocusableElement) {
             firstFocusableElement.focus();
           }
         } catch (error) {
-          if (process.env.NODE_ENV === "development") {
-            const { logWarn } = require('../../../utils/logger');
-            logWarn("Error focusing element", error, "BackToTopButton");
-          }
+          logWarn("Error focusing element", error, "BackToTopButton");
         }
       };
 
@@ -156,10 +150,7 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
         setTimeout(focusElement, 500);
       }
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require('../../../utils/logger');
-        logError("Error scrolling to top", error, "BackToTopButton");
-      }
+      logError("Error scrolling to top", error, "BackToTopButton");
       // Fallback: simple scroll
       window.scrollTo(0, 0);
     }
@@ -180,13 +171,13 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
 
     return (
       <button
-        className={`back-to-top-button ${isVisible ? 'visible' : ''}`}
+        className={`back-to-top-button ${isVisible ? "visible" : ""}`}
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
         aria-label="Scroll to top"
         title="Scroll to top"
         tabIndex={isVisible ? 0 : -1}
-        style={{ display: 'block' }}
+        style={{ display: "block" }}
       >
         <span className="back-to-top-icon" aria-hidden="true">
           ↑
@@ -198,4 +189,3 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
 }
 
 export default BackToTopButton;
-

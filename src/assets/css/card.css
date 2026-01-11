@@ -98,15 +98,26 @@
 }
 
 /* Hover & Focus States - Subtle & Professional */
-.card:hover,
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 16px 48px var(--color-black-alpha-30),
+      0 0 0 1px var(--color-accent-alpha-40),
+      0 0 40px var(--color-accent-alpha-15);
+    border-color: var(--color-accent-alpha-50);
+    background: var(--color-bg-dark-light-alpha-75);
+  }
+}
+
 .card:focus-within {
-  transform: translateY(-6px);
+  outline: 3px solid var(--color-accent-primary);
+  outline-offset: 4px;
   box-shadow:
-    0 16px 48px var(--color-black-alpha-30),
-    0 0 0 1px var(--color-accent-alpha-40),
-    0 0 40px var(--color-accent-alpha-15);
-  border-color: var(--color-accent-alpha-50);
-  background: var(--color-bg-dark-light-alpha-75);
+    var(--shadow-focus),
+    0 16px 48px var(--color-black-alpha-30);
+  border-color: var(--color-accent-primary);
+  transform: translateY(-2px);
 }
 
 .card-variant-elevated:hover {

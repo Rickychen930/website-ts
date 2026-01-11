@@ -32,8 +32,9 @@ import {
   IWorkExperienceItem,
 } from "../../../models/work-experience-model";
 import { WorkExperienceTimeline } from "../../components/work-experience";
-import { EmptyState } from "../../components/ui";
+import { EmptyState, LoadingComponent } from "../../components/ui";
 import { Card } from "../../components/common";
+import { logDebug, logWarn, logError } from "../../../utils/logger";
 import "../../../assets/css/work-experience-section.css";
 
 /**
@@ -166,22 +167,22 @@ class WorkExperienceSection extends Component<
     try {
       const { data } = this.props;
 
-      // Debug logging
-      if (process.env.NODE_ENV === "development") {
-        console.log("[WorkExperienceSection.processData] Processing data:", {
+      logDebug(
+        "Processing data",
+        {
           hasData: !!data,
           isArray: Array.isArray(data),
           dataLength: Array.isArray(data) ? data.length : 0,
-          data: data,
-        });
-      }
+        },
+        "WorkExperienceSection.processData",
+      );
 
       if (!data || !Array.isArray(data) || data.length === 0) {
-        if (process.env.NODE_ENV === "development") {
-          console.warn(
-            "[WorkExperienceSection.processData] No data or empty array",
-          );
-        }
+        logWarn(
+          "No data or empty array",
+          undefined,
+          "WorkExperienceSection.processData",
+        );
         this.setState({
           experiences: [],
           durations: new Map(),
@@ -198,16 +199,15 @@ class WorkExperienceSection extends Component<
         // Normalize item
         const normalized = WorkExperienceModel.normalizeItem(item);
 
-        if (process.env.NODE_ENV === "development") {
-          console.log(
-            `[WorkExperienceSection.processData] Processing item ${index}:`,
-            {
-              original: item,
-              normalized: normalized,
-              isValid: WorkExperienceModel.isValidItem(normalized),
-            },
-          );
-        }
+        logDebug(
+          `Processing item ${index}`,
+          {
+            original: item,
+            normalized: normalized,
+            isValid: WorkExperienceModel.isValidItem(normalized),
+          },
+          "WorkExperienceSection.processData",
+        );
 
         if (WorkExperienceModel.isValidItem(normalized)) {
           experiences.push(normalized);
@@ -220,27 +220,25 @@ class WorkExperienceSection extends Component<
             durations.set(normalized.key, duration);
           }
         } else {
-          if (process.env.NODE_ENV === "development") {
-            console.warn(
-              `[WorkExperienceSection.processData] Item ${index} failed validation:`,
-              normalized,
-            );
-          }
+          logWarn(
+            `Item ${index} failed validation`,
+            normalized,
+            "WorkExperienceSection.processData",
+          );
         }
       });
 
       // Sort by period (newest first)
       const sorted = WorkExperienceModel.sortByPeriod(experiences);
 
-      if (process.env.NODE_ENV === "development") {
-        console.log(
-          "[WorkExperienceSection.processData] Processed experiences:",
-          {
-            total: sorted.length,
-            experiences: sorted,
-          },
-        );
-      }
+      logDebug(
+        "Processed experiences",
+        {
+          total: sorted.length,
+          experiences: sorted,
+        },
+        "WorkExperienceSection.processData",
+      );
 
       // Initialize refs
       this.itemRefs.clear();
@@ -258,12 +256,14 @@ class WorkExperienceSection extends Component<
           visibleItems: new Set(allKeys),
         },
         () => {
-          if (process.env.NODE_ENV === "development") {
-            console.log("[WorkExperienceSection.processData] State updated:", {
+          logDebug(
+            "State updated",
+            {
               experiencesCount: this.state.experiences.length,
               durationsCount: this.state.durations.size,
-            });
-          }
+            },
+            "WorkExperienceSection.processData",
+          );
         },
       );
     } catch (error) {
@@ -277,14 +277,11 @@ class WorkExperienceSection extends Component<
         durations: new Map(),
       });
 
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require("../../../utils/logger");
-        logError(
-          "Error processing work experience data",
-          error,
-          "WorkExperienceSection",
-        );
-      }
+      logError(
+        "Error processing work experience data",
+        error,
+        "WorkExperienceSection",
+      );
     }
   }
 
@@ -338,14 +335,11 @@ class WorkExperienceSection extends Component<
               this.observer?.observe(card);
               observedCount++;
             } catch (err) {
-              if (process.env.NODE_ENV === "development") {
-                const { logWarn } = require("../../../utils/logger");
-                logWarn(
-                  "Failed to observe work experience card",
-                  err,
-                  "WorkExperienceSection",
-                );
-              }
+              logWarn(
+                "Failed to observe work experience card",
+                err,
+                "WorkExperienceSection",
+              );
             }
           });
         }
@@ -360,14 +354,11 @@ class WorkExperienceSection extends Component<
         observeElements();
       }, 50);
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require("../../../utils/logger");
-        logError(
-          "Error initializing IntersectionObserver",
-          error,
-          "WorkExperienceSection",
-        );
-      }
+      logError(
+        "Error initializing IntersectionObserver",
+        error,
+        "WorkExperienceSection",
+      );
 
       // Fallback: show all items immediately
       const allKeys = this.state.experiences.map((item) => item.key);
@@ -432,15 +423,23 @@ class WorkExperienceSection extends Component<
 
   /**
    * Render error state
-   * Handles edge case when data processing fails
+   * Handles edge case when data processing fails - Standardized error display
    */
   private renderErrorState(): ReactNode {
     const { error } = this.state;
     return (
-      <div className="work-experience-error" role="alert">
+      <div
+        className="work-experience-error"
+        role="alert"
+        aria-live="assertive"
+        aria-label="Error loading work experience"
+      >
         <div className="work-experience-error-icon" aria-hidden="true">
           ⚠️
         </div>
+        <h3 className="work-experience-error-title">
+          Error Loading Work Experience
+        </h3>
         <p className="work-experience-error-text">
           {error || "Failed to load work experience data"}
         </p>
@@ -456,9 +455,9 @@ class WorkExperienceSection extends Component<
     const { experiences, visibleItems, durations, error, isInitialized } =
       this.state;
 
-    // Debug logging
-    if (process.env.NODE_ENV === "development") {
-      console.log("[WorkExperienceSection.render] Render state:", {
+    logDebug(
+      "Render state",
+      {
         experiencesCount: experiences?.length || 0,
         visibleItemsCount: visibleItems?.size || 0,
         durationsCount: durations?.size || 0,
@@ -466,8 +465,9 @@ class WorkExperienceSection extends Component<
         isInitialized,
         hasData: !!this.props.data,
         dataLength: Array.isArray(this.props.data) ? this.props.data.length : 0,
-      });
-    }
+      },
+      "WorkExperienceSection.render",
+    );
 
     // Edge case: Handle error state
     if (error) {
@@ -491,7 +491,11 @@ class WorkExperienceSection extends Component<
     if (!isInitialized) {
       return (
         <Card id="experience" title="Work Experience">
-          <div className="work-experience-loading">Loading...</div>
+          <LoadingComponent
+            message="Loading work experience..."
+            useSkeleton={true}
+            skeletonVariant="card"
+          />
         </Card>
       );
     }

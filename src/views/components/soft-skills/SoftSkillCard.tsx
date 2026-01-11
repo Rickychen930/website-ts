@@ -18,6 +18,18 @@ import { SoftSkillItem } from "../../../models/soft-skills-model";
 import { SoftSkillIcon } from "./SoftSkillIcon";
 import "./SoftSkillCard.css";
 
+/**
+ * Extended HTMLElement interface for mouse handlers storage
+ * Type-safe extension for custom properties
+ */
+interface HTMLElementWithMouseHandlers extends HTMLElement {
+  __mouseHandlers?: {
+    handleMouseMove: (e: MouseEvent) => void;
+    handleMouseLeave: () => void;
+  };
+  __observer?: IntersectionObserver;
+}
+
 export interface ISoftSkillCardProps {
   readonly skill: SoftSkillItem;
   readonly index: number;
@@ -30,7 +42,8 @@ export interface ISoftSkillCardProps {
  * PureComponent for performance optimization
  */
 export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
-  private cardRef: RefObject<HTMLElement | null> = createRef<HTMLElement>();
+  private cardRef: RefObject<HTMLElementWithMouseHandlers | null> =
+    createRef<HTMLElementWithMouseHandlers>();
   private mouseX: number = 0;
   private mouseY: number = 0;
 
@@ -75,7 +88,7 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
 
-    (card as any).__mouseHandlers = { handleMouseMove, handleMouseLeave };
+    card.__mouseHandlers = { handleMouseMove, handleMouseLeave };
   }
 
   /**
@@ -84,7 +97,7 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
   private removeMouseTracking(): void {
     if (!this.cardRef.current) return;
     const card = this.cardRef.current;
-    const handlers = (card as any).__mouseHandlers;
+    const handlers = card.__mouseHandlers;
 
     if (handlers) {
       card.removeEventListener("mousemove", handlers.handleMouseMove);
@@ -136,18 +149,17 @@ export class SoftSkillCard extends PureComponent<ISoftSkillCardProps> {
 
     if (this.cardRef.current) {
       observer.observe(this.cardRef.current);
+      // Store observer for cleanup
+      this.cardRef.current.__observer = observer;
     }
-
-    // Store observer for cleanup
-    (this.cardRef.current as any).__observer = observer;
   }
 
   /**
    * Disconnect observer
    */
   private disconnectObserver(): void {
-    if (this.cardRef.current && (this.cardRef.current as any).__observer) {
-      (this.cardRef.current as any).__observer.disconnect();
+    if (this.cardRef.current && this.cardRef.current.__observer) {
+      this.cardRef.current.__observer.disconnect();
     }
   }
 

@@ -26,6 +26,7 @@ import { AcademicModel, IAcademicItem } from "../../../models/academic-model";
 import { AcademicCard } from "../../components/academic/AcademicCard";
 import { AcademicTimeline } from "../../components/academic/AcademicTimeline";
 import { EmptyState } from "../../components/ui";
+import { logWarn, logError } from "../../../utils/logger";
 
 /**
  * Academic Section Props Interface
@@ -235,14 +236,11 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
             observedCount++;
           } catch (err) {
             // Edge case: Handle individual observe errors
-            if (process.env.NODE_ENV === "development") {
-              const { logWarn } = require("../../../utils/logger");
-              logWarn(
-                `Failed to observe academic item for key: ${key}`,
-                { err },
-                "AcademicSection",
-              );
-            }
+            logWarn(
+              `Failed to observe academic item for key: ${key}`,
+              { err },
+              "AcademicSection",
+            );
           }
         }
       });
@@ -260,14 +258,11 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       }
     } catch (error) {
       // Enhanced error handling
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require("../../../utils/logger");
-        logError(
-          "Error initializing IntersectionObserver",
-          error,
-          "AcademicSection",
-        );
-      }
+      logError(
+        "Error initializing IntersectionObserver",
+        error,
+        "AcademicSection",
+      );
 
       // Fallback: show all items
       const allKeys = Array.from(this.itemRefs.keys());

@@ -266,6 +266,11 @@
   max-width: 100%;
   overflow-wrap: break-word;
   hyphens: auto;
+  transition: color var(--transition-base);
+}
+
+.professional-highlight:hover .professional-highlight-title {
+  color: var(--color-text-hover);
 }
 
 .professional-highlight-description {
@@ -277,6 +282,7 @@
   max-width: 100%;
   overflow-wrap: break-word;
   hyphens: auto;
+  transition: color var(--transition-base);
 }
 
 /* ============================================

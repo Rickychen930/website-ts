@@ -323,7 +323,7 @@
   background: var(--projects-gradient-primary);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: var(--projects-accent);
+  color: var(--color-text-hover);
 }
 
 .project-card-badges-top {

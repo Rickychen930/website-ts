@@ -1,4 +1,5 @@
 import React, { ReactNode, PureComponent } from "react";
+import { logWarn } from "../../../utils/logger";
 import "../../../assets/css/card.css";
 
 /**
@@ -17,7 +18,7 @@ type CardProps = {
 
 /**
  * Card Component
- * 
+ *
  * Features:
  * - Luxury & Elegant Design with smooth animations
  * - Performance Optimized (PureComponent for memoization)
@@ -25,7 +26,7 @@ type CardProps = {
  * - Comprehensive Edge Case Handling
  * - Clean UI/UX with hover effects
  * - Accessibility Support (ARIA labels, semantic HTML)
- * 
+ *
  * Principles Applied:
  * - SOLID (Single Responsibility, Open/Closed, Liskov Substitution)
  * - DRY (Don't Repeat Yourself)
@@ -49,11 +50,7 @@ class Card extends PureComponent<CardProps> {
    */
   private getClassNames(): string {
     const { className = "", variant = "default" } = this.props;
-    const classes = [
-      "card",
-      `card-variant-${variant}`,
-      className,
-    ];
+    const classes = ["card", `card-variant-${variant}`, className];
 
     return classes.filter(Boolean).join(" ");
   }
@@ -92,8 +89,8 @@ class Card extends PureComponent<CardProps> {
     }
 
     return (
-      <div 
-        className="card-body" 
+      <div
+        className="card-body"
         role="region"
         aria-labelledby={id && title ? `${id}-title` : undefined}
       >
@@ -127,10 +124,7 @@ class Card extends PureComponent<CardProps> {
 
     // Edge case: Ensure we always have content
     if (!this.props.children && !this.props.title) {
-      if (process.env.NODE_ENV === 'development') {
-        const { logWarn } = require('../../../utils/logger');
-        logWarn("Card component rendered without content", undefined, "Card");
-      }
+      logWarn("Card component rendered without content", undefined, "Card");
       return null;
     }
 

@@ -31,6 +31,7 @@ import { ContactController } from "../../../controllers/contact-controller";
 import { IContact } from "../../../models/contact-model";
 import { ContactGrid } from "../../components/contact";
 import ContactForm from "../../../components/contact/contact-form";
+import { LoadingComponent } from "../../components/ui";
 import { safeSlice } from "../../../utils/view-helpers";
 import "../../../assets/css/contact-section.css";
 
@@ -211,12 +212,14 @@ class ContactSection extends Component<
 
   /**
    * Render error state
+   * Standardized error display with improved accessibility
    */
   private renderErrorState(error: string): ReactNode {
     return (
       <div
         className="contact-section-error"
         role="alert"
+        aria-live="assertive"
         aria-label="Contact error"
       >
         <div className="contact-section-error-icon" aria-hidden="true">
@@ -230,21 +233,15 @@ class ContactSection extends Component<
 
   /**
    * Render loading state
+   * Standardized with LoadingComponent
    */
   private renderLoadingState(): ReactNode {
     return (
-      <div
-        className="contact-section-loading"
-        role="status"
-        aria-live="polite"
-        aria-label="Loading contact information"
-      >
-        <div
-          className="contact-section-loading-spinner"
-          aria-hidden="true"
-        ></div>
-        <p className="contact-section-loading-message">Loading contacts...</p>
-      </div>
+      <LoadingComponent
+        message="Loading contacts..."
+        useSkeleton={true}
+        skeletonVariant="card"
+      />
     );
   }
 

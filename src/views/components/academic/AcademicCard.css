@@ -189,7 +189,7 @@
 
 .academic-card:hover .academic-card-title,
 .academic-card:focus-within .academic-card-title {
-  color: var(--academic-color-primary);
+  color: var(--color-text-hover);
 }
 
 /* ─── Level Badge ─── */
@@ -244,7 +244,7 @@
 
 .academic-card:hover .academic-card-institution,
 .academic-card:focus-within .academic-card-institution {
-  color: var(--academic-color-primary);
+  color: var(--color-text-hover);
 }
 
 /* ─── Period Badge ─── */
@@ -274,7 +274,7 @@
 .academic-card:hover .academic-card-period-text,
 .academic-card:focus-within .academic-card-period-text {
   background: var(--color-accent-alpha-10);
-  color: var(--academic-color-primary);
+  color: var(--color-text-hover);
   border-color: var(--color-accent-alpha-20);
   transform: var(--academic-transform-scale-period, translateY(-2px));
 }

@@ -1,7 +1,6 @@
 /**
  * Floating CTA Component
- * Hire Me button that starts static at bottom, becomes floating after scroll,
- * and moves above Back to Top button when it appears
+ * Hire Me button positioned above Back to Top button with 24px gap
  */
 
 import React, { Component, ReactNode } from "react";
@@ -12,52 +11,11 @@ interface FloatingCTAProps {
   onHireMeClick?: () => void;
 }
 
-interface FloatingCTAState {
-  isFloating: boolean; // True when button should be floating (fixed position)
-  backToTopVisible: boolean; // True when Back to Top button is visible
-}
-
 /**
  * FloatingCTA Component
- * Displays Hire Me button with dynamic positioning based on scroll
+ * Displays Hire Me button floating above Back to Top button
  */
-class FloatingCTA extends Component<FloatingCTAProps, FloatingCTAState> {
-  private floatThreshold = 100; // Start floating after scrolling 100px
-  private backToTopThreshold = 400; // Back to Top appears after 400px (same as BackToTopButton)
-  private scrollListener: (() => void) | null = null;
-
-  constructor(props: FloatingCTAProps) {
-    super(props);
-    this.state = {
-      isFloating: false,
-      backToTopVisible: false,
-    };
-  }
-
-  componentDidMount(): void {
-    // Check scroll position on mount and scroll
-    this.scrollListener = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const isFloating = scrollY > this.floatThreshold;
-      const backToTopVisible = scrollY > this.backToTopThreshold;
-
-      this.setState({
-        isFloating,
-        backToTopVisible,
-      });
-    };
-
-    window.addEventListener("scroll", this.scrollListener, { passive: true });
-    // Initial check
-    this.scrollListener();
-  }
-
-  componentWillUnmount(): void {
-    if (this.scrollListener) {
-      window.removeEventListener("scroll", this.scrollListener);
-    }
-  }
-
+class FloatingCTA extends Component<FloatingCTAProps> {
   private handleHireMeClick = (): void => {
     // Track analytics
     trackCTAClick("hire-me", "floating-cta");
@@ -74,12 +32,9 @@ class FloatingCTA extends Component<FloatingCTAProps, FloatingCTAState> {
   };
 
   render(): ReactNode {
-    const { isFloating, backToTopVisible } = this.state;
-
-    // Always render, but with different positioning based on state
     return (
       <div
-        className={`floating-cta ${isFloating ? "floating" : "static"} ${backToTopVisible ? "above-back-to-top" : ""}`}
+        className="floating-cta"
         role="complementary"
         aria-label="Call to action"
       >

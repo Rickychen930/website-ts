@@ -1,5 +1,6 @@
 import React, { Component, ReactNode, CSSProperties } from "react";
 import { BackgroundColors, TextColors } from "../../../constants/colors";
+import { logWarn } from "../../../utils/logger";
 
 type ImageProps = {
   src: string;
@@ -137,11 +138,7 @@ class Image extends Component<ImageProps, ImageState> {
    */
   private handleError = (): void => {
     this.setState({ error: true, loaded: false });
-
-    if (process.env.NODE_ENV === "development") {
-      const { logWarn } = require("../../../utils/logger");
-      logWarn(`Failed to load image: ${this.props.src}`, undefined, "Image");
-    }
+    logWarn(`Failed to load image: ${this.props.src}`, undefined, "Image");
   };
 
   public render(): ReactNode {

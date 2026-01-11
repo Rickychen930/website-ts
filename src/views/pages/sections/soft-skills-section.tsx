@@ -31,15 +31,17 @@ import {
   SoftSkillsModel,
   SoftSkillItem,
 } from "../../../models/soft-skills-model";
-import { EmptyState } from "../../components/ui";
+import { EmptyState, LoadingComponent } from "../../components/ui";
+import { logError } from "../../../utils/logger";
 import "../../../assets/css/soft-skills-section.css";
 
 /**
  * Soft Skills Section Props Interface
  * Follows Interface Segregation Principle (ISP)
+ * Improved type safety: Accept array of SoftSkillItem or unknown (for backward compatibility)
  */
 type SoftSkillsProps = {
-  data: unknown;
+  data: SoftSkillItem[] | unknown;
 };
 
 /**
@@ -117,7 +119,6 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
         isInitialized: true,
       });
     } catch (error) {
-      const { logError } = require("../../../utils/logger");
       logError("Error initializing soft skills", error, "SoftSkillsSection");
       this.setState({
         error: error instanceof Error ? error.message : "Unknown error",
@@ -141,7 +142,7 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
 
   /**
    * Render error state
-   * Edge case handling
+   * Edge case handling - Standardized error display
    */
   private renderErrorState(): ReactNode {
     const { error } = this.state;
@@ -151,9 +152,18 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
     }
 
     return (
-      <div className="soft-skills-error" role="alert">
+      <div
+        className="soft-skills-error"
+        role="alert"
+        aria-live="assertive"
+        aria-label="Error loading soft skills"
+      >
+        <div className="soft-skills-error-icon" aria-hidden="true">
+          ⚠️
+        </div>
+        <h3 className="soft-skills-error-title">Error Loading Soft Skills</h3>
         <p className="soft-skills-error-text">
-          Unable to load soft skills. Please try again later.
+          {error || "Unable to load soft skills. Please try again later."}
         </p>
       </div>
     );
@@ -174,9 +184,11 @@ class SoftSkillsSection extends Component<SoftSkillsProps, SoftSkillsState> {
           variant="default"
           ariaLabel="Soft skills section"
         >
-          <div className="soft-skills-loading" role="status" aria-live="polite">
-            <p>Loading soft skills...</p>
-          </div>
+          <LoadingComponent
+            message="Loading soft skills..."
+            useSkeleton={true}
+            skeletonVariant="card"
+          />
         </Card>
       );
     }

@@ -95,7 +95,7 @@
 }
 
 .btn--primary:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
 }
 
 .btn--secondary {
@@ -110,6 +110,10 @@
   border-color: var(--color-accent-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
+}
+
+.btn--secondary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn--danger {
@@ -128,6 +132,10 @@
   box-shadow: var(--shadow-md);
 }
 
+.btn--danger:active {
+  transform: translateY(0) scale(0.98);
+}
+
 .btn--outline {
   background: transparent;
   color: var(--color-accent-primary);
@@ -139,6 +147,10 @@
   border-color: var(--color-accent-primary);
 }
 
+.btn--outline:active {
+  transform: translateY(0) scale(0.98);
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-text-heading);
@@ -147,6 +159,10 @@
 
 .btn--ghost:hover {
   background: var(--color-bg-content-hover);
+}
+
+.btn--ghost:active {
+  transform: scale(0.98);
 }
 
 /* ============================================
@@ -183,20 +199,31 @@
 /* ============================================
    Button States
    ============================================ */
-.btn:hover::after {
-  width: 300px;
-  height: 300px;
+@media (hover: hover) {
+  .btn:hover::after {
+    width: 300px;
+    height: 300px;
+  }
+
+  .btn:hover {
+    /* Ensure hover effects only on devices that support hover */
+  }
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 3px solid var(--color-accent-primary);
   outline-offset: 4px;
-  box-shadow: var(--shadow-focus);
+  box-shadow:
+    var(--shadow-focus),
+    0 0 0 1px var(--color-accent-primary);
+  z-index: 1;
 }
 
 .btn:disabled,
 .btn--disabled {
-  opacity: 0.6;
+  background: var(--color-bg-lighter);
+  color: var(--color-text-muted);
+  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -210,22 +237,49 @@
    ============================================ */
 .btn--loading {
   position: relative;
-  color: transparent;
+  color: transparent !important;
   pointer-events: none;
 }
 
 .btn--loading::before {
-  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1rem;
-  height: 1rem;
-  margin: -0.5rem 0 0 -0.5rem;
-  border: 2px solid currentcolor;
+  z-index: 10;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: -0.625rem 0 0 -0.625rem;
+  border: 3px solid;
+  content: "";
   border-top-color: transparent;
   border-radius: 50%;
   animation: btn-spin var(--animation-duration-base) linear infinite;
+}
+
+/* Loading spinner colors for different button variants */
+.btn--primary.btn--loading::before {
+  border-color: var(--color-text-on-accent);
+  border-top-color: transparent;
+}
+
+.btn--secondary.btn--loading::before {
+  border-color: var(--color-accent-primary);
+  border-top-color: transparent;
+}
+
+.btn--danger.btn--loading::before {
+  border-color: var(--color-text-on-accent);
+  border-top-color: transparent;
+}
+
+.btn--outline.btn--loading::before {
+  border-color: var(--color-accent-primary);
+  border-top-color: transparent;
+}
+
+.btn--ghost.btn--loading::before {
+  border-color: var(--color-text-heading);
+  border-top-color: transparent;
 }
 
 @keyframes btn-spin {

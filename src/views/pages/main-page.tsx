@@ -22,6 +22,7 @@ import { updateSEOFromProfile } from "../../utils/seo";
 import { SmoothScrollManager } from "../../utils/smooth-scroll-manager";
 import { shouldDisplayData } from "../../utils/view-helpers";
 import { trackSectionView } from "../../utils/analytics";
+import { logDebug, logInfo, logWarn, logError } from "../../utils/logger";
 import { MainPageFooterComponent } from "../components/footer";
 import Navbar from "../components/navbar";
 import {
@@ -83,10 +84,14 @@ class MainPage extends BasePage<{}, MainPageState> {
       error: null,
       retryCount: 0,
     };
-    console.log("[MainPage.constructor] Initial state set:", {
-      loading: this.state.loading,
-      hasProfile: !!this.state.profile,
-    });
+    logDebug(
+      "Initial state set",
+      {
+        loading: this.state.loading,
+        hasProfile: !!this.state.profile,
+      },
+      "MainPage",
+    );
     this.controller = new MainPageController();
     this.smoothScrollManager = new SmoothScrollManager(ScrollConfig.OFFSET);
     this.scrollObserverManager = new ScrollObserverManager(
@@ -196,19 +201,15 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Component lifecycle - Mount
    */
   async componentDidMount(): Promise<void> {
-    console.log(
-      "[MainPage.componentDidMount] ==========================================",
-    );
-    console.log("[MainPage.componentDidMount] Component mounting...");
+    logDebug("Component mounting", undefined, "MainPage");
     this.isMounted = true;
-    console.log("[MainPage.componentDidMount] isMounted set to true");
     this.smoothScrollManager.setup();
-    console.log("[MainPage.componentDidMount] Smooth scroll manager setup");
-    console.log("[MainPage.componentDidMount] Calling loadProfile...");
-    await this.loadProfile();
-    console.log(
-      "[MainPage.componentDidMount] ==========================================",
+    logDebug(
+      "Smooth scroll manager setup, calling loadProfile",
+      undefined,
+      "MainPage",
     );
+    await this.loadProfile();
   }
 
   /**
@@ -260,14 +261,11 @@ class MainPage extends BasePage<{}, MainPageState> {
           try {
             return document.getElementById(config.id);
           } catch (error) {
-            if (process.env.NODE_ENV === "development") {
-              const { logWarn } = require("../../utils/logger");
-              logWarn(
-                `Failed to get element for section ${config.id}`,
-                error,
-                "MainPage",
-              );
-            }
+            logWarn(
+              `Failed to get element for section ${config.id}`,
+              error,
+              "MainPage",
+            );
             return null;
           }
         })
@@ -279,10 +277,7 @@ class MainPage extends BasePage<{}, MainPageState> {
       }
     } catch (error) {
       // Edge case: Handle observer initialization errors
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require("../../utils/logger");
-        logError("Error initializing section observer", error, "MainPage");
-      }
+      logError("Error initializing section observer", error, "MainPage");
     }
   }
 
@@ -291,42 +286,45 @@ class MainPage extends BasePage<{}, MainPageState> {
    * Enhanced with better error handling and edge cases
    */
   private async loadProfile(): Promise<void> {
-    console.log(
-      "[MainPage.loadProfile] ==========================================",
+    logDebug(
+      "Starting loadProfile",
+      {
+        loading: this.state.loading,
+        hasProfile: !!this.state.profile,
+        error: this.state.error,
+      },
+      "MainPage.loadProfile",
     );
-    console.log("[MainPage.loadProfile] Starting loadProfile...");
-    console.log("[MainPage.loadProfile] Current state:", {
-      loading: this.state.loading,
-      hasProfile: !!this.state.profile,
-      error: this.state.error,
-    });
 
     // Edge case: Prevent multiple simultaneous loads
     // BUT: If we already have a profile and it's valid, don't reload
     if (this.state.loading) {
-      console.log("[MainPage.loadProfile] ⚠️ Already loading, skipping...");
-      console.log(
-        "[MainPage.loadProfile] This should not happen on first load!",
-      );
+      logWarn("Already loading, skipping", undefined, "MainPage.loadProfile");
       return;
     }
 
     // Only skip if we already have a valid profile (don't reload unnecessarily)
     if (this.state.profile && !this.state.error) {
-      console.log(
-        "[MainPage.loadProfile] ✅ Profile already loaded, skipping reload",
+      logDebug(
+        "Profile already loaded, skipping reload",
+        undefined,
+        "MainPage.loadProfile",
       );
       return;
     }
 
-    console.log(
-      "[MainPage.loadProfile] Setting state: loading=true, error=null",
+    logDebug(
+      "Setting state: loading=true, error=null",
+      undefined,
+      "MainPage.loadProfile",
     );
     this.setState({ loading: true, error: null });
 
     try {
-      console.log(
-        "[MainPage.loadProfile] Calling controller.getUserProfile()...",
+      logDebug(
+        "Calling controller.getUserProfile",
+        undefined,
+        "MainPage.loadProfile",
       );
       // Edge case: Add timeout to prevent hanging requests
       const profilePromise = this.controller.getUserProfile();
@@ -334,27 +332,32 @@ class MainPage extends BasePage<{}, MainPageState> {
         setTimeout(() => reject(new Error("Request timeout")), 30000); // 30 second timeout
       });
 
-      console.log(
-        "[MainPage.loadProfile] Waiting for profile or timeout (30s)...",
+      logDebug(
+        "Waiting for profile or timeout (30s)",
+        undefined,
+        "MainPage.loadProfile",
       );
       const profile = await Promise.race([profilePromise, timeoutPromise]);
-      console.log("[MainPage.loadProfile] ✅ Profile promise resolved");
-      console.log(
-        "[MainPage.loadProfile] Profile received:",
-        profile ? "exists" : "null/undefined",
+      logDebug(
+        "Profile promise resolved",
+        { exists: !!profile },
+        "MainPage.loadProfile",
       );
 
       // Edge case: Validate profile structure
       if (!profile) {
-        console.error("[MainPage.loadProfile] ❌ Profile is null/undefined");
+        logError(
+          "Profile is null/undefined",
+          new Error("Profile is null"),
+          "MainPage.loadProfile",
+        );
         throw new Error(ErrorMessages.LOAD_PROFILE_FAILED);
       }
 
-      console.log("[MainPage.loadProfile] Validating profile structure...");
-      console.log("[MainPage.loadProfile] Profile name:", profile.name);
-      console.log(
-        "[MainPage.loadProfile] Profile name type:",
-        typeof profile.name,
+      logDebug(
+        "Validating profile structure",
+        { name: profile.name, nameType: typeof profile.name },
+        "MainPage.loadProfile",
       );
 
       if (
@@ -362,42 +365,43 @@ class MainPage extends BasePage<{}, MainPageState> {
         typeof profile.name !== "string" ||
         !profile.name.trim()
       ) {
-        console.error(
-          "[MainPage.loadProfile] ❌ Profile name validation failed",
+        logError(
+          "Profile name validation failed",
+          { name: profile.name },
+          "MainPage.loadProfile",
         );
-        console.error("[MainPage.loadProfile] Name value:", profile.name);
         throw new Error(ErrorMessages.INVALID_INPUT);
       }
 
       // Edge case: Validate required fields
       if (!profile.title || !profile.location || !profile.bio) {
-        console.warn(
-          "[MainPage.loadProfile] ⚠️ Profile missing some optional fields",
+        logWarn(
+          "Profile missing some optional fields",
+          {
+            title: !profile.title,
+            location: !profile.location,
+            bio: !profile.bio,
+          },
+          "MainPage.loadProfile",
         );
-        console.warn("[MainPage.loadProfile] Missing fields:", {
-          title: !profile.title,
-          location: !profile.location,
-          bio: !profile.bio,
-        });
-        if (process.env.NODE_ENV === "development") {
-          const { logWarn } = require("../../utils/logger");
-          logWarn("Profile missing some fields", profile, "MainPage");
-        }
       }
 
       // Update SEO metadata
-      console.log("[MainPage.loadProfile] Updating SEO metadata...");
+      logDebug("Updating SEO metadata", undefined, "MainPage.loadProfile");
       updateSEOFromProfile(profile);
-      console.log("[MainPage.loadProfile] SEO metadata updated");
+      logInfo("SEO metadata updated", undefined, "MainPage.loadProfile");
 
-      console.log("[MainPage.loadProfile] Setting state with profile...");
-      console.log("[MainPage.loadProfile] Profile summary:", {
-        name: profile.name,
-        title: profile.title,
-        location: profile.location,
-        experiences: profile.experiences?.length || 0,
-        projects: profile.projects?.length || 0,
-      });
+      logDebug(
+        "Setting state with profile",
+        {
+          name: profile.name,
+          title: profile.title,
+          location: profile.location,
+          experiences: profile.experiences?.length || 0,
+          projects: profile.projects?.length || 0,
+        },
+        "MainPage.loadProfile",
+      );
 
       this.setState(
         {
@@ -407,12 +411,15 @@ class MainPage extends BasePage<{}, MainPageState> {
           retryCount: 0,
         },
         () => {
-          console.log("[MainPage.loadProfile] ✅ State updated successfully");
-          console.log("[MainPage.loadProfile] Current state:", {
-            hasProfile: !!this.state.profile,
-            loading: this.state.loading,
-            error: this.state.error,
-          });
+          logDebug(
+            "State updated successfully",
+            {
+              hasProfile: !!this.state.profile,
+              loading: this.state.loading,
+              error: this.state.error,
+            },
+            "MainPage.loadProfile",
+          );
         },
       );
 
@@ -421,23 +428,18 @@ class MainPage extends BasePage<{}, MainPageState> {
         toast.success("Profile loaded successfully", 3000);
       }
     } catch (err) {
-      console.error("[MainPage.loadProfile] ❌ Error caught");
-      console.error("[MainPage.loadProfile] Error object:", err);
-      console.error(
-        "[MainPage.loadProfile] Error type:",
-        err instanceof Error ? err.constructor.name : typeof err,
-      );
-
       const errorMessage =
         err instanceof Error ? err.message : ErrorMessages.LOAD_PROFILE_FAILED;
-      console.error("[MainPage.loadProfile] Error message:", errorMessage);
+      logError("Error loading profile", err, "MainPage.loadProfile");
 
       const newRetryCount = this.state.retryCount + 1;
-      console.log(
-        "[MainPage.loadProfile] Retry count:",
-        newRetryCount,
-        "/",
-        RetryConfig.MAX_RETRIES,
+      logDebug(
+        "Retry attempt",
+        {
+          retryCount: newRetryCount,
+          maxRetries: RetryConfig.MAX_RETRIES,
+        },
+        "MainPage.loadProfile",
       );
 
       // Edge case: Handle timeout and network errors differently
@@ -446,35 +448,41 @@ class MainPage extends BasePage<{}, MainPageState> {
         errorMessage.includes("network") ||
         errorMessage.includes("fetch");
 
-      console.log("[MainPage.loadProfile] Is network error:", isNetworkError);
-
       if (newRetryCount < RetryConfig.MAX_RETRIES && isNetworkError) {
         // Exponential backoff for network errors
         const retryDelay =
           RetryConfig.RETRY_DELAY * Math.pow(2, newRetryCount - 1);
-        console.log(
-          `[MainPage.loadProfile] 🔄 Scheduling retry ${newRetryCount}/${RetryConfig.MAX_RETRIES} in ${retryDelay}ms (exponential backoff)`,
+        logInfo(
+          `Scheduling retry ${newRetryCount}/${RetryConfig.MAX_RETRIES} in ${retryDelay}ms (exponential backoff)`,
+          { retryDelay, retryCount: newRetryCount },
+          "MainPage.loadProfile",
         );
         const timeoutId = setTimeout(() => {
-          console.log(
-            `[MainPage.loadProfile] 🔄 Retrying now (attempt ${newRetryCount})...`,
+          logDebug(
+            `Retrying now (attempt ${newRetryCount})`,
+            undefined,
+            "MainPage.loadProfile",
           );
           if (this.state !== null && this.isMounted) {
             this.setState({ retryCount: newRetryCount });
             this.loadProfile();
           } else {
-            console.warn(
-              "[MainPage.loadProfile] ⚠️ Component unmounted or state null, skipping retry",
+            logWarn(
+              "Component unmounted or state null, skipping retry",
+              undefined,
+              "MainPage.loadProfile",
             );
           }
         }, retryDelay);
         this.retryTimeouts.push(timeoutId);
       } else if (newRetryCount < RetryConfig.MAX_RETRIES) {
         // Linear backoff for other errors
-        console.log(
-          `[MainPage.loadProfile] 🔄 Scheduling retry ${newRetryCount}/${RetryConfig.MAX_RETRIES} (linear backoff)`,
-        );
         const retryDelay = RetryConfig.RETRY_DELAY * newRetryCount;
+        logInfo(
+          `Scheduling retry ${newRetryCount}/${RetryConfig.MAX_RETRIES} (linear backoff)`,
+          { retryDelay, retryCount: newRetryCount },
+          "MainPage.loadProfile",
+        );
         const timeoutId = setTimeout(() => {
           if (this.state !== null && this.isMounted) {
             this.setState({ retryCount: newRetryCount });
@@ -483,10 +491,11 @@ class MainPage extends BasePage<{}, MainPageState> {
         }, retryDelay);
         this.retryTimeouts.push(timeoutId);
       } else {
-        console.error(
-          `[MainPage.loadProfile] ❌ Max retries reached (${newRetryCount}/${RetryConfig.MAX_RETRIES})`,
+        logError(
+          `Max retries reached (${newRetryCount}/${RetryConfig.MAX_RETRIES})`,
+          new Error(errorMessage),
+          "MainPage.loadProfile",
         );
-        console.error("[MainPage.loadProfile] Setting final error state");
         this.setState(
           {
             loading: false,
@@ -494,13 +503,14 @@ class MainPage extends BasePage<{}, MainPageState> {
             retryCount: 0,
           },
           () => {
-            console.error("[MainPage.loadProfile] Final error state set:", {
-              loading: this.state.loading,
-              error: this.state.error,
-              hasProfile: !!this.state.profile,
-            });
-            console.log(
-              "[MainPage.loadProfile] ==========================================",
+            logDebug(
+              "Final error state set",
+              {
+                loading: this.state.loading,
+                error: this.state.error,
+                hasProfile: !!this.state.profile,
+              },
+              "MainPage.loadProfile",
             );
           },
         );
@@ -638,14 +648,11 @@ class MainPage extends BasePage<{}, MainPageState> {
 
     // Edge case: If no visible sections, show message instead of returning null
     if (visibleSections.length === 0) {
-      if (process.env.NODE_ENV === "development") {
-        const { logWarn } = require("../../utils/logger");
-        logWarn(
-          "No visible sections found",
-          { profileKeys: Object.keys(profile) },
-          "MainPage",
-        );
-      }
+      logWarn(
+        "No visible sections found",
+        { profileKeys: Object.keys(profile) },
+        "MainPage",
+      );
       return (
         <div className="contents-section">
           <div className="section-empty-state" role="status" aria-live="polite">
@@ -683,14 +690,11 @@ class MainPage extends BasePage<{}, MainPageState> {
 
     // Edge case: If all sections were filtered out, show message
     if (renderedSections.length === 0) {
-      if (process.env.NODE_ENV === "development") {
-        const { logWarn } = require("../../utils/logger");
-        logWarn(
-          "All sections were filtered out during rendering",
-          { visibleSectionsCount: visibleSections.length },
-          "MainPage",
-        );
-      }
+      logWarn(
+        "All sections were filtered out during rendering",
+        { visibleSectionsCount: visibleSections.length },
+        "MainPage",
+      );
       return (
         <div className="contents-section">
           <div className="section-empty-state" role="status" aria-live="polite">

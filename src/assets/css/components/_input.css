@@ -177,15 +177,48 @@
    Element: Input Error
    ============================================ */
 .input-error {
-  display: block;
+  display: flex;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-error-light);
   color: var(--color-error);
   font-size: var(--font-size-small);
-  margin-top: 0.25rem;
+  font-weight: 500;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  border-left: 3px solid var(--color-error);
+  border-radius: var(--radius-xs);
   font-family: var(--font-main);
+  animation: error-slide-in 0.3s ease-out;
+}
+
+.input-error::before {
+  content: "⚠️";
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .input-error--hidden {
   display: none;
+}
+
+@keyframes error-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input-error {
+    animation: none;
+  }
 }
 
 /* ============================================

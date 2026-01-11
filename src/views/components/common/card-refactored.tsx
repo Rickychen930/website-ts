@@ -18,6 +18,7 @@
 
 import React, { ReactNode, PureComponent } from "react";
 import { cardClass, cn, bemClass } from "../../../utils/css-helpers";
+import { logWarn } from "../../../utils/logger";
 
 /**
  * Card Props Interface
@@ -144,9 +145,7 @@ class Card extends PureComponent<CardProps> {
 
     // Edge case: Ensure we always have content
     if (!this.props.children && !this.props.title) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("Card component rendered without content");
-      }
+      logWarn("Card component rendered without content", undefined, "Card");
       return null;
     }
 

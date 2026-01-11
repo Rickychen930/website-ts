@@ -10,8 +10,8 @@ import { ErrorBoundary } from "../views/components/ui";
 const MainPage = lazy(() => import("../views/pages/main-page"));
 const NotFoundPage = lazy(() =>
   import("../views/pages/404-page").then(
-    (module): { default: ComponentType<any> } => ({
-      default: module.default as unknown as ComponentType<any>,
+    (module): { default: ComponentType<{}> } => ({
+      default: module.default as ComponentType<{}>,
     }),
   ),
 );

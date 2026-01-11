@@ -55,8 +55,18 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
   private renderSkeleton(): ReactNode {
     const { skeletonVariant } = this.props;
     return (
-      <div className="main-page-loading-skeleton" role="status" aria-label={AriaLabels.LOADING}>
-        <LoadingSkeleton variant={skeletonVariant} width="100%" height="400px" />
+      <div
+        className="main-page-loading-skeleton"
+        role="status"
+        aria-label={AriaLabels.LOADING}
+        aria-busy="true"
+        aria-live="polite"
+      >
+        <LoadingSkeleton
+          variant={skeletonVariant}
+          width="100%"
+          height="400px"
+        />
       </div>
     );
   }
@@ -66,7 +76,7 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
    */
   public render(): ReactNode {
     const { className, useSkeleton } = this.props;
-    
+
     if (useSkeleton) {
       return this.renderSkeleton();
     }
@@ -74,7 +84,13 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
     const containerClass = `main-page-loading ${className || ""}`.trim();
 
     return (
-      <div className={containerClass} role="status" aria-label={AriaLabels.LOADING}>
+      <div
+        className={containerClass}
+        role="status"
+        aria-label={AriaLabels.LOADING}
+        aria-busy="true"
+        aria-live="polite"
+      >
         {this.renderSpinner()}
         {this.renderMessage()}
       </div>
@@ -83,4 +99,3 @@ export class LoadingComponent extends PureComponent<LoadingComponentProps> {
 }
 
 export default LoadingComponent;
-

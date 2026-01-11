@@ -26,7 +26,11 @@
 
 import React, { PureComponent, ReactNode } from "react";
 import { FooterController } from "../../../controllers/footer-controller";
-import { IFooterData } from "../../../models/footer-model";
+import {
+  IFooterData,
+  IFooterLink,
+  IFooterSocialLink,
+} from "../../../models/footer-model";
 import { UserProfile } from "../../../types/user";
 import {
   FooterQuickLinks,
@@ -113,14 +117,14 @@ export class MainPageFooterComponent extends PureComponent<
   /**
    * Handle quick link click
    */
-  private handleQuickLinkClick = (link: any): void => {
+  private handleQuickLinkClick = (link: IFooterLink): void => {
     this.controller.handleLinkClick(link);
   };
 
   /**
    * Handle social link click
    */
-  private handleSocialLinkClick = (link: any): void => {
+  private handleSocialLinkClick = (link: IFooterSocialLink): void => {
     this.controller.handleLinkClick(link);
   };
 

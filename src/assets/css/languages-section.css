@@ -294,7 +294,7 @@
 }
 
 .language-card-visible:hover .language-card-title {
-  color: var(--language-accent);
+  color: var(--color-text-hover);
   transform: translateY(-2px);
 }
 
@@ -662,7 +662,7 @@
 }
 
 .language-card-visible:hover .language-progress-bar-percentage {
-  color: var(--language-accent);
+  color: var(--color-text-hover);
   opacity: 1;
 }
 

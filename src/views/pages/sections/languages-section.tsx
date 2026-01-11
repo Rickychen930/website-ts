@@ -26,7 +26,8 @@ import { Card } from "../../components/common";
 import { LanguageController } from "../../../controllers/language-controller";
 import { ILanguage } from "../../../models/language-model";
 import { LanguageGrid } from "../../components/languages";
-import { EmptyState } from "../../components/ui";
+import { EmptyState, LoadingComponent } from "../../components/ui";
+import { logError } from "../../../utils/logger";
 import "../../../assets/css/languages-section.css";
 
 /**
@@ -126,7 +127,6 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
         isInitialized: true,
         sortedLanguages: [],
       });
-      const { logError } = require("../../../utils/logger");
       logError(
         "LanguagesSection initialization error",
         error,
@@ -173,15 +173,20 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
 
   /**
    * Render error state
-   * User-friendly error display
+   * User-friendly error display with improved accessibility
    */
   private renderErrorState(error: string): ReactNode {
     return (
-      <div className="language-error-state" role="alert" aria-live="polite">
+      <div
+        className="language-error-state"
+        role="alert"
+        aria-live="assertive"
+        aria-label="Error loading languages"
+      >
         <div className="language-error-icon" aria-hidden="true">
           ⚠️
         </div>
-        <h3 className="language-error-title">Unable to Display Languages</h3>
+        <h3 className="language-error-title">Error Loading Languages</h3>
         <p className="language-error-message">{error}</p>
       </div>
     );
@@ -253,14 +258,11 @@ class LanguagesSection extends Component<LanguagesProps, LanguagesState> {
     if (!isInitialized) {
       return (
         <Card id="languages" title="Languages">
-          <div
-            className="language-loading-state"
-            role="status"
-            aria-live="polite"
-          >
-            <div className="language-loading-spinner" aria-hidden="true"></div>
-            <p className="language-loading-text">Loading languages...</p>
-          </div>
+          <LoadingComponent
+            message="Loading languages..."
+            useSkeleton={true}
+            skeletonVariant="card"
+          />
         </Card>
       );
     }

@@ -329,7 +329,7 @@
 }
 
 .honor-card--visible:hover .honor-card__event {
-  color: var(--color-accent-primary);
+  color: var(--color-text-hover);
   transform: translateX(2px) translateZ(0);
 }
 

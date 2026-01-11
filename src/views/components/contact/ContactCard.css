@@ -413,7 +413,7 @@
 .contact-card-copy:hover,
 .contact-card-copy:focus {
   background: var(--color-accent-alpha-15);
-  border-color: var(--contact-primary, var(--color-accent-primary));
+  border-color: var(--color-border-accent-hover);
   transform: scale(1.15) rotate(5deg);
   box-shadow: 0 4px 16px var(--color-accent-alpha-20);
   outline: none;

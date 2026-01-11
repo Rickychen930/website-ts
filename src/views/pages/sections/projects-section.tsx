@@ -27,6 +27,7 @@ import { ProjectController } from "../../../controllers/project-controller";
 import { IProject } from "../../../models/project-model";
 import { Card } from "../../components/common";
 import { ProjectGrid } from "../../components/projects";
+import { logWarn, logError } from "../../../utils/logger";
 
 /**
  * Legacy Project Item Type (for backward compatibility)
@@ -158,15 +159,12 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
       // Validate projects
       const validation = this.controller.validate(projects);
       if (!validation.isValid) {
-        // Log validation errors (development only)
-        if (process.env.NODE_ENV === "development") {
-          const { logWarn } = require("../../../utils/logger");
-          logWarn(
-            "Project validation errors",
-            { errors: validation.errors },
-            "ProjectsSection",
-          );
-        }
+        // Log validation errors
+        logWarn(
+          "Project validation errors",
+          { errors: validation.errors },
+          "ProjectsSection",
+        );
         // Continue with projects anyway, but log errors
       }
 
@@ -179,7 +177,6 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         isInitialized: true,
       });
     } catch (error) {
-      const { logError } = require("../../../utils/logger");
       logError("Error processing project data", error, "ProjectsSection");
       this.setState({
         error:
@@ -231,23 +228,17 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
         try {
           this.observer?.observe(card);
         } catch (err) {
-          if (process.env.NODE_ENV === "development") {
-            const { logWarn } = require("../../../utils/logger");
-            logWarn("Failed to observe project card", err, "ProjectsSection");
-          }
+          logWarn("Failed to observe project card", err, "ProjectsSection");
         }
       });
 
       this.setState({ isInitialized: true });
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require("../../../utils/logger");
-        logError(
-          "Error initializing IntersectionObserver",
-          error,
-          "ProjectsSection",
-        );
-      }
+      logError(
+        "Error initializing IntersectionObserver",
+        error,
+        "ProjectsSection",
+      );
 
       // Fallback: show all items
       const allKeys = this.state.projects.map((p) => p.key);
@@ -360,10 +351,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
     // Edge case: Error state (but don't show error, just fallback gracefully)
     if (error) {
       // Don't show error state, just render empty state for better UX
-      if (process.env.NODE_ENV === "development") {
-        const { logError } = require("../../../utils/logger");
-        logError("Projects section error", error, "ProjectsSection");
-      }
+      logError("Projects section error", error, "ProjectsSection");
       return <Card id="projects">{this.renderEmptyState()}</Card>;
     }
 

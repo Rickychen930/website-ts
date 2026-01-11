@@ -166,7 +166,7 @@
 }
 
 .work-experience-card:hover .work-experience-card-title {
-  color: var(--work-color-primary);
+  color: var(--color-text-hover);
 }
 
 /* Professional duration badge */
@@ -203,7 +203,7 @@
 }
 
 .work-experience-card:hover .work-experience-card-company {
-  color: var(--work-color-primary);
+  color: var(--color-text-hover);
 }
 
 .work-experience-card-separator {
@@ -253,7 +253,7 @@
     --work-color-bg-period-hover,
     var(--work-color-primary-alpha-12)
   );
-  color: var(--work-color-primary);
+  color: var(--color-text-hover);
 }
 
 /* ─── Professional Description ─── */

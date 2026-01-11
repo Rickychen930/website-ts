@@ -1,7 +1,7 @@
 /**
  * HonorTimeline Component - Timeline View Component
  * Displays honors in a timeline format
- * 
+ *
  * Principles Applied:
  * - SRP: Single responsibility - displays timeline
  * - OCP: Open for extension via props
@@ -10,7 +10,7 @@
  */
 
 import React, { PureComponent, ReactNode } from "react";
-import { IHonorItem } from "../../../models/honors-model";
+import { IHonorItem, HonorCategory } from "../../../models/honors-model";
 import { HonorCard, IHonorCardProps } from "./HonorCard";
 import "./HonorTimeline.css";
 
@@ -20,7 +20,7 @@ import "./HonorTimeline.css";
 export interface IHonorTimelineProps {
   honors: IHonorItem[];
   visibleItems: Set<string>;
-  getCategory: (item: IHonorItem) => string;
+  getCategory: (item: IHonorItem) => HonorCategory;
   onCardClick?: (honor: IHonorItem) => void;
   className?: string;
 }
@@ -36,7 +36,7 @@ export class HonorTimeline extends PureComponent<IHonorTimelineProps> {
   private renderTimelineItem(honor: IHonorItem, index: number): ReactNode {
     const { visibleItems, getCategory, onCardClick } = this.props;
     const isVisible = visibleItems.has(honor.key);
-    const category = getCategory(honor) as any;
+    const category = getCategory(honor);
 
     return (
       <div key={honor.key} className="honor-timeline__item">
@@ -66,10 +66,13 @@ export class HonorTimeline extends PureComponent<IHonorTimelineProps> {
     }
 
     return (
-      <div className={`honor-timeline ${className}`} role="list" aria-label="Honors timeline">
+      <div
+        className={`honor-timeline ${className}`}
+        role="list"
+        aria-label="Honors timeline"
+      >
         {honors.map((honor, index) => this.renderTimelineItem(honor, index))}
       </div>
     );
   }
 }
-

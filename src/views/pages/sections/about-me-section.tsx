@@ -200,7 +200,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
     // Show only top 8 technologies as preview
     // Full list available in Technical Skills section
     return (
-      <div className="about-me-featured-tech">
+      <div
+        className="about-me-featured-tech"
+        aria-label="Featured Technologies"
+      >
         <TechBadgesGrid
           technologies={technologies}
           title={SectionTitles.FEATURED_TECHNOLOGIES}
@@ -340,7 +343,10 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
    */
   private renderGitHubContributions(): ReactNode {
     return (
-      <div className="about-me-github-contributions">
+      <div
+        className="about-me-github-contributions"
+        aria-label="GitHub Contributions"
+      >
         <GitHubContributions
           username="rickychen930"
           showStats={true}

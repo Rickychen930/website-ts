@@ -1,13 +1,13 @@
 /**
  * Certification Section Component
  * View Layer (MVC Pattern)
- * 
+ *
  * Architecture:
  * - MVC: Strict separation of View, Controller, and Model
  * - View: Only handles UI rendering and user interactions
  * - Controller: Handles all business logic (injected via DI)
  * - Model: Handles data structure and validation
- * 
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): View only renders UI
  * - Dependency Inversion Principle (DIP): Depends on Controller abstraction
@@ -15,7 +15,7 @@
  * - DRY: Uses reusable components and centralized logic
  * - KISS: Simple, clear structure
  * - Component-Based: Composed of smaller, focused components
- * 
+ *
  * Features:
  * - Clean separation of concerns
  * - Proper error handling
@@ -29,7 +29,7 @@ import { Card } from "../../components/common";
 import { CertificationController } from "../../../controllers/certification-controller";
 import { ICertification } from "../../../models/certification-model";
 import { CertificationGrid } from "../../components/certification";
-import { EmptyState } from "../../components/ui";
+import { EmptyState, LoadingComponent } from "../../components/ui";
 import "../../../assets/css/certification-section.css";
 
 /**
@@ -37,15 +37,17 @@ import "../../../assets/css/certification-section.css";
  * Supports both old format (from UserProfile) and new format (ICertification)
  */
 type CertificationSectionProps = {
-  data: ICertification[] | Array<{
-    key: string;
-    icon: string;
-    title: string;
-    provider: string;
-    date: string;
-    link?: string;
-    credentialId?: string;
-  }>;
+  data:
+    | ICertification[]
+    | Array<{
+        key: string;
+        icon: string;
+        title: string;
+        provider: string;
+        date: string;
+        link?: string;
+        credentialId?: string;
+      }>;
 };
 
 /**
@@ -122,7 +124,7 @@ class CertificationSection extends Component<
    * Handles both old and new data formats
    */
   private normalizeData(
-    data: CertificationSectionProps["data"]
+    data: CertificationSectionProps["data"],
   ): ICertification[] {
     if (!data || !Array.isArray(data)) {
       return [];
@@ -207,18 +209,22 @@ class CertificationSection extends Component<
 
   /**
    * Render error state
+   * Standardized error display with improved accessibility
    */
   private renderErrorState(error: string): ReactNode {
     return (
       <div
         className="certification-error"
         role="alert"
+        aria-live="assertive"
         aria-label="Certification error"
       >
         <div className="certification-error-icon" aria-hidden="true">
           ⚠️
         </div>
-        <h3 className="certification-error-title">Error Loading Certifications</h3>
+        <h3 className="certification-error-title">
+          Error Loading Certifications
+        </h3>
         <p className="certification-error-message">{error}</p>
       </div>
     );
@@ -255,18 +261,15 @@ class CertificationSection extends Component<
 
   /**
    * Render loading state
+   * Standardized with LoadingComponent
    */
   private renderLoadingState(): ReactNode {
     return (
-      <div
-        className="certification-loading"
-        role="status"
-        aria-live="polite"
-        aria-label="Loading certifications"
-      >
-        <div className="certification-loading-spinner" aria-hidden="true"></div>
-        <p className="certification-loading-message">Loading certifications...</p>
-      </div>
+      <LoadingComponent
+        message="Loading certifications..."
+        useSkeleton={true}
+        skeletonVariant="card"
+      />
     );
   }
 

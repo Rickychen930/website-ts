@@ -1,9 +1,9 @@
 /**
  * NavbarDropdown Component
- * 
+ *
  * Professional dropdown menu component for navbar
  * Follows Component-Based Architecture
- * 
+ *
  * Principles:
  * - OOP: Encapsulated component with clear interface
  * - SOLID: Single responsibility - handles dropdown rendering
@@ -30,13 +30,17 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
 
   private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
+  private keyboardHandler: ((event: KeyboardEvent) => void) | null = null;
+
   componentDidMount(): void {
     this.setupClickOutside();
+    this.setupKeyboard();
   }
 
   componentDidUpdate(prevProps: NavbarDropdownProps): void {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.setupClickOutside();
+      this.setupKeyboard();
     }
   }
 
@@ -65,6 +69,39 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
     }
   };
 
+  private setupKeyboard = (): void => {
+    if (typeof document === "undefined") return;
+
+    // Remove existing handler
+    if (this.keyboardHandler) {
+      document.removeEventListener("keydown", this.keyboardHandler);
+      this.keyboardHandler = null;
+    }
+
+    // Add new handler if dropdown is open
+    if (this.props.isOpen) {
+      this.keyboardHandler = (event: KeyboardEvent): void => {
+        const ref = this.props.dropdownRef || this.defaultRef;
+        if (!ref.current) return;
+
+        // Escape to close
+        if (event.key === "Escape") {
+          event.preventDefault();
+          event.stopPropagation();
+          this.props.onClose();
+          // Return focus to toggle button
+          const toggleButton = ref.current.querySelector(
+            ".navbar-dropdown-toggle",
+          ) as HTMLElement;
+          toggleButton?.focus();
+        }
+        // Arrow keys for navigation (if needed in future)
+        // Tab key is handled by browser default behavior
+      };
+      document.addEventListener("keydown", this.keyboardHandler);
+    }
+  };
+
   private cleanup = (): void => {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
@@ -73,6 +110,10 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
     if (this.clickOutsideHandler) {
       document.removeEventListener("mousedown", this.clickOutsideHandler);
       this.clickOutsideHandler = null;
+    }
+    if (this.keyboardHandler) {
+      document.removeEventListener("keydown", this.keyboardHandler);
+      this.keyboardHandler = null;
     }
   };
 
@@ -104,7 +145,13 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
   };
 
   render(): ReactNode {
-    const { item, isOpen, isActive, activeItemId, dropdownRef = this.defaultRef } = this.props;
+    const {
+      item,
+      isOpen,
+      isActive,
+      activeItemId,
+      dropdownRef = this.defaultRef,
+    } = this.props;
     const hasChildren = item.children && item.children.length > 0;
 
     if (!hasChildren) {
@@ -112,11 +159,11 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
     }
 
     // Determine dropdown type for special hover effects
-    const dropdownType = item.label.toLowerCase().includes("education") 
-      ? "education" 
+    const dropdownType = item.label.toLowerCase().includes("education")
+      ? "education"
       : item.label.toLowerCase().includes("skills")
-      ? "skills"
-      : null;
+        ? "skills"
+        : null;
 
     return (
       <div
@@ -169,11 +216,16 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
                     }}
                   >
                     {childItem.icon && (
-                      <span className="navbar-dropdown-item-icon" aria-hidden="true">
+                      <span
+                        className="navbar-dropdown-item-icon"
+                        aria-hidden="true"
+                      >
                         {childItem.icon}
                       </span>
                     )}
-                    <span className="navbar-dropdown-item-text">{childItem.label}</span>
+                    <span className="navbar-dropdown-item-text">
+                      {childItem.label}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -186,4 +238,3 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps> {
 }
 
 export default NavbarDropdown;
-

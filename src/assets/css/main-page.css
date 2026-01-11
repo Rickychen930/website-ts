@@ -393,11 +393,45 @@
 }
 
 .error-icon {
-  display: block;
+  display: inline-flex;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(
+    135deg,
+    var(--color-error-light) 0%,
+    transparent 100%
+  );
   font-size: 5rem;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 2.5rem;
   animation: error-shake 0.8s ease-in-out;
-  filter: drop-shadow(0 0 20px var(--color-warning));
+  filter: drop-shadow(0 0 20px var(--color-error));
+  border-radius: 50%;
+}
+
+.error-icon::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 3px solid var(--color-error);
+  opacity: 0.3;
+  animation: error-pulse 2s ease-in-out infinite;
+}
+
+@keyframes error-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
 }
 
 @keyframes error-shake {
@@ -481,11 +515,19 @@
     height 0.6s;
 }
 
-.error-retry-button:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow:
-    0 16px 48px var(--color-accent-alpha-50),
-    0 0 0 4px var(--color-accent-alpha-30);
+@media (hover: hover) {
+  .error-retry-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow:
+      0 16px 48px var(--color-accent-alpha-50),
+      0 0 0 4px var(--color-accent-alpha-30);
+  }
+}
+
+.error-retry-button:focus-visible {
+  outline: 3px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  box-shadow: var(--shadow-focus);
 }
 
 .error-retry-button:hover::before {
@@ -851,7 +893,11 @@
 
   .loading-text,
   .error-icon {
-    animation: none;
+    animation: none !important;
+  }
+
+  .error-icon::before {
+    animation: none !important;
   }
 
   .main-page-loading-skeleton .skeleton {
