@@ -21,9 +21,7 @@
   right: 2rem;
 
   /* Position above Back to Top button with 24px (1.5rem) gap */
-  bottom: calc(
-    10rem + 1.5rem
-  ); /* Back to Top bottom (10rem) + gap (1.5rem = 24px) */
+  bottom: 80px;
   z-index: 1000;
   transition: all var(--transition-smooth)
     var(--easing-spring, var(--transition-bounce));
@@ -148,9 +146,7 @@
 @media screen and (width <= 992px) {
   .floating-cta {
     right: 1.5rem;
-    bottom: calc(
-      9rem + 1.5rem
-    ); /* Back to Top bottom (9rem) + gap (1.5rem = 24px) */
+    bottom: 80px;
   }
 }
 
@@ -158,9 +154,7 @@
 @media screen and (width <= 768px) {
   .floating-cta {
     right: 1.25rem;
-    bottom: calc(
-      8.5rem + 1.5rem
-    ); /* Back to Top bottom (8.5rem) + gap (1.5rem = 24px) */
+    bottom: 80px;
     gap: 0.625rem;
   }
 
@@ -180,9 +174,7 @@
 @media screen and (width <= 480px) {
   .floating-cta {
     right: 1rem;
-    bottom: calc(
-      7.5rem + 1.5rem
-    ); /* Back to Top bottom (7.5rem) + gap (1.5rem = 24px) */
+    bottom: 80px;
     gap: 0.5rem;
   }
 
@@ -202,9 +194,7 @@
 @media screen and (width <= 360px) {
   .floating-cta {
     right: 0.75rem;
-    bottom: calc(
-      7rem + 1.5rem
-    ); /* Back to Top bottom (7rem) + gap (1.5rem = 24px) */
+    bottom: 80px;
   }
 
   .floating-cta-button {
@@ -222,9 +212,7 @@
 /* Landscape Orientation */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .floating-cta {
-    bottom: calc(
-      7rem + 1.5rem
-    ); /* Back to Top bottom (7rem) + gap (1.5rem = 24px) */
+    bottom: 80px;
   }
 }
 

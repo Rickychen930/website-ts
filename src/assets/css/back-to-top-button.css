@@ -28,7 +28,7 @@
   --back-to-top-tertiary: var(--color-accent-secondary);
 
   /* Spacing untuk stack vertikal dengan Floating CTA - calculated: 2 buttons (~51px each) + gap (12px) = ~114px + bottom (32px) + spacing gap (16px) = ~162px = 10.125rem */
-  --back-to-top-bottom: 10rem;
+  --back-to-top-bottom: 24px;
 }
 
 /* ============================================
@@ -162,7 +162,7 @@
 @media screen and (width <= 992px) {
   .back-to-top-button {
     right: 1.5rem;
-    bottom: 9rem;
+    bottom: var(--back-to-top-bottom);
     width: var(--back-to-top-size-mobile);
     height: var(--back-to-top-size-mobile);
   }
@@ -182,7 +182,7 @@
 @media screen and (width <= 768px) {
   .back-to-top-button {
     right: 1.25rem;
-    bottom: 8.5rem;
+    bottom: var(--back-to-top-bottom);
     width: var(--back-to-top-size-mobile);
     height: var(--back-to-top-size-mobile);
   }
@@ -202,7 +202,7 @@
 @media screen and (width <= 480px) {
   .back-to-top-button {
     right: 1rem;
-    bottom: 7.5rem;
+    bottom: var(--back-to-top-bottom);
     width: 44px;
     height: 44px;
   }
@@ -222,7 +222,7 @@
 @media screen and (orientation: landscape) and (width <= 768px) {
   .back-to-top-button {
     right: 1rem;
-    bottom: 7rem;
+    bottom: var(--back-to-top-bottom);
   }
 }
 
