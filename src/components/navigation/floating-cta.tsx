@@ -1,43 +1,50 @@
 /**
  * Floating CTA Component
- * Prominent call-to-action buttons for recruiters
- * Sticky/floating buttons that stay visible while scrolling
+ * Hire Me button that starts static at bottom, becomes floating after scroll,
+ * and moves above Back to Top button when it appears
  */
 
 import React, { Component, ReactNode } from "react";
-import { trackCTAClick, trackResumeDownload } from "../../utils/analytics";
+import { trackCTAClick } from "../../utils/analytics";
 import "../../assets/css/floating-cta.css";
 
 interface FloatingCTAProps {
   onHireMeClick?: () => void;
-  onDownloadResumeClick?: () => void;
-  resumeUrl?: string;
 }
 
 interface FloatingCTAState {
-  isVisible: boolean;
+  isFloating: boolean; // True when button should be floating (fixed position)
+  backToTopVisible: boolean; // True when Back to Top button is visible
 }
 
 /**
  * FloatingCTA Component
- * Displays prominent CTA buttons that float on the page
+ * Displays Hire Me button with dynamic positioning based on scroll
  */
 class FloatingCTA extends Component<FloatingCTAProps, FloatingCTAState> {
-  private scrollThreshold = 300; // Show after scrolling 300px
+  private floatThreshold = 100; // Start floating after scrolling 100px
+  private backToTopThreshold = 400; // Back to Top appears after 400px (same as BackToTopButton)
   private scrollListener: (() => void) | null = null;
 
   constructor(props: FloatingCTAProps) {
     super(props);
     this.state = {
-      isVisible: false,
+      isFloating: false,
+      backToTopVisible: false,
     };
   }
 
   componentDidMount(): void {
-    // Show CTA after user scrolls down
+    // Check scroll position on mount and scroll
     this.scrollListener = () => {
       const scrollY = window.scrollY || window.pageYOffset;
-      this.setState({ isVisible: scrollY > this.scrollThreshold });
+      const isFloating = scrollY > this.floatThreshold;
+      const backToTopVisible = scrollY > this.backToTopThreshold;
+
+      this.setState({
+        isFloating,
+        backToTopVisible,
+      });
     };
 
     window.addEventListener("scroll", this.scrollListener, { passive: true });
@@ -66,36 +73,13 @@ class FloatingCTA extends Component<FloatingCTAProps, FloatingCTAState> {
     }
   };
 
-  private handleDownloadResume = (): void => {
-    // Track analytics
-    trackCTAClick("resume", "floating-cta");
-    trackResumeDownload();
-
-    if (this.props.onDownloadResumeClick) {
-      this.props.onDownloadResumeClick();
-    } else {
-      // Default: download resume
-      const resumeUrl =
-        this.props.resumeUrl || "/assets/document/RICKY_CV_8_AUG.pdf";
-      const link = document.createElement("a");
-      link.href = resumeUrl;
-      link.download = "Ricky_Chen_Resume.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
   render(): ReactNode {
-    const { isVisible } = this.state;
+    const { isFloating, backToTopVisible } = this.state;
 
-    if (!isVisible) {
-      return null;
-    }
-
+    // Always render, but with different positioning based on state
     return (
       <div
-        className="floating-cta"
+        className={`floating-cta ${isFloating ? "floating" : "static"} ${backToTopVisible ? "above-back-to-top" : ""}`}
         role="complementary"
         aria-label="Call to action"
       >
@@ -108,16 +92,6 @@ class FloatingCTA extends Component<FloatingCTAProps, FloatingCTAState> {
             💼
           </span>
           <span className="floating-cta-text">Hire Me</span>
-        </button>
-        <button
-          className="floating-cta-button floating-cta-secondary"
-          onClick={this.handleDownloadResume}
-          aria-label="Download resume"
-        >
-          <span className="floating-cta-icon" aria-hidden="true">
-            📄
-          </span>
-          <span className="floating-cta-text">Resume</span>
         </button>
       </div>
     );

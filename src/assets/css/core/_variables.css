@@ -232,20 +232,21 @@
 
   /* ============================================
      Border Colors - Light Theme
+     Improved contrast for better visibility
      ============================================ */
-  --color-border-primary: rgb(220 227 234 / 60%);
-  --color-border-secondary: #dce3ea;
-  --color-border-tertiary: #cbd5e1;
-  --color-border-quaternary: #94a3b8;
-  --color-border-light: rgb(220 227 234 / 60%);
-  --color-border-default: #dce3ea;
-  --color-border-medium: #cbd5e1;
-  --color-border-dark: #94a3b8;
-  --color-border-navbar: rgb(220 227 234 / 50%);
-  --color-border-navbar-dropdown: rgb(220 227 234 / 60%);
+  --color-border-primary: rgb(176 188 200 / 65%);
+  --color-border-secondary: #b0bcc8;
+  --color-border-tertiary: #94a3b8;
+  --color-border-quaternary: #64748b;
+  --color-border-light: rgb(176 188 200 / 65%);
+  --color-border-default: #b0bcc8;
+  --color-border-medium: #94a3b8;
+  --color-border-dark: #64748b;
+  --color-border-navbar: rgb(176 188 200 / 55%);
+  --color-border-navbar-dropdown: rgb(176 188 200 / 65%);
   --color-border-glow: rgb(0 217 255 / 20%);
-  --color-border-image: #dbe5f1;
-  --color-border-period: #e2e8f0;
+  --color-border-image: #cbd5e1;
+  --color-border-period: #cbd5e1;
   --color-border-accent: rgb(0 217 255 / 30%);
   --color-border-accent-hover: rgb(0 217 255 / 50%);
 
@@ -294,7 +295,7 @@
 
   /* Tech Showcase - Light Mode */
   --tech-showcase-bg-card: var(--color-bg-card);
-  --tech-showcase-bg-overlay: rgb(0 217 255 / 3%);
+  --tech-showcase-bg-overlay: var(--color-accent-alpha-03);
 
   /* Languages Section */
   --language-success: var(--color-success);
@@ -316,7 +317,7 @@
   --footer-bg-primary: var(--color-bg-footer);
   --footer-bg-secondary: var(--color-bg-footer-alt);
   --footer-gradient-start: var(--color-accent-alpha-08);
-  --footer-gradient-end: rgb(0 145 234 / 5%);
+  --footer-gradient-end: var(--color-accent-alt-alpha-05);
   --footer-text-primary: var(--color-text-main);
   --footer-text-secondary: var(--color-text-subtle);
   --footer-text-muted: var(--color-text-muted);
@@ -324,12 +325,17 @@
 
   /* Contact Section - Light Mode */
   --contact-primary: var(--color-accent-primary);
+  --contact-primary-hover: var(--color-accent-hover);
   --contact-primary-light: var(--color-accent-glow);
-  --contact-primary-lighter: rgb(0 217 255 / 5%);
-  --contact-location-primary: #43e97b;
-  --contact-location-secondary: #38f9d7;
-  --contact-website-primary: #fa709a;
-  --contact-website-secondary: #fee140;
+  --contact-primary-lighter: var(--color-accent-alpha-05);
+
+  /* Location uses Cyan variants (matches theme) */
+  --contact-location-primary: var(--color-accent-light);
+  --contact-location-secondary: var(--color-accent-primary);
+
+  /* Website uses Purple variants (matches theme) */
+  --contact-website-primary: var(--color-accent-tertiary);
+  --contact-website-secondary: var(--color-accent-purple);
   --contact-bg-card: var(--color-bg-card);
   --contact-bg-hover: var(--color-bg-card-hover);
   --contact-bg-subtle: var(--color-bg-card-alt);
@@ -770,19 +776,20 @@
 
   /* ============================================
      Border Colors - Dark Theme
+     Improved contrast for better visibility
      ============================================ */
-  --color-border-primary: rgb(51 65 85 / 60%);
-  --color-border-secondary: #334155;
-  --color-border-tertiary: #475569;
-  --color-border-quaternary: #64748b;
-  --color-border-light: rgb(51 65 85 / 60%);
-  --color-border-default: #334155;
-  --color-border-medium: #475569;
-  --color-border-dark: #64748b;
-  --color-border-navbar: rgb(51 65 85 / 50%);
-  --color-border-navbar-dropdown: rgb(51 65 85 / 60%);
+  --color-border-primary: rgb(71 85 105 / 65%);
+  --color-border-secondary: #475569;
+  --color-border-tertiary: #64748b;
+  --color-border-quaternary: #94a3b8;
+  --color-border-light: rgb(71 85 105 / 65%);
+  --color-border-default: #475569;
+  --color-border-medium: #64748b;
+  --color-border-dark: #94a3b8;
+  --color-border-navbar: rgb(71 85 105 / 55%);
+  --color-border-navbar-dropdown: rgb(71 85 105 / 65%);
   --color-border-glow: rgb(0 217 255 / 30%);
-  --color-border-image: #334155;
+  --color-border-image: #475569;
   --color-border-period: #475569;
   --color-border-accent: rgb(0 217 255 / 40%);
   --color-border-accent-hover: rgb(0 217 255 / 60%);
@@ -822,8 +829,14 @@
      Accent Colors - Dark Theme (Modern Tech Cyan)
      ============================================ */
   --color-accent-primary: #00d9ff;
+  --color-accent-alt: #0091ea;
   --color-accent-hover: #40e0d0;
   --color-accent-light: #40e0d0;
+  --color-accent-dark: #06c;
+  --color-accent-secondary: #7c3aed;
+  --color-accent-tertiary: #8b5cf6;
+  --color-accent-purple: #a78bfa;
+  --color-accent-purple-dark: #7c3aed;
   --color-accent-glow: rgb(0 217 255 / 40%);
   --color-accent-glow-strong: rgb(0 145 234 / 45%);
 
@@ -849,7 +862,7 @@
 
   /* Tech Showcase - Dark Mode */
   --tech-showcase-bg-card: var(--color-bg-card);
-  --tech-showcase-bg-overlay: rgb(0 217 255 / 8%);
+  --tech-showcase-bg-overlay: var(--color-accent-alpha-08);
 
   /* Languages Section */
   --language-success: var(--color-success);
@@ -871,7 +884,7 @@
   --footer-bg-primary: var(--color-bg-footer);
   --footer-bg-secondary: var(--color-bg-footer-alt);
   --footer-gradient-start: var(--color-accent-glow);
-  --footer-gradient-end: rgb(0 145 234 / 15%);
+  --footer-gradient-end: var(--color-accent-alt-alpha-15);
   --footer-text-primary: var(--color-text-main);
   --footer-text-secondary: var(--color-text-subtle);
   --footer-text-muted: var(--color-text-muted);
@@ -879,21 +892,26 @@
 
   /* Contact Section - Dark Mode */
   --contact-primary: var(--color-accent-primary);
+  --contact-primary-hover: var(--color-accent-hover);
   --contact-primary-light: var(--color-accent-glow);
-  --contact-primary-lighter: rgb(0 217 255 / 8%);
-  --contact-location-primary: #43e97b;
-  --contact-location-secondary: #38f9d7;
-  --contact-website-primary: #fa709a;
-  --contact-website-secondary: #fee140;
-  --contact-bg-card: #1a202c;
-  --contact-bg-hover: #2d3748;
-  --contact-bg-subtle: #252b37;
+  --contact-primary-lighter: var(--color-accent-alpha-08);
+
+  /* Location uses Cyan variants (matches theme) */
+  --contact-location-primary: var(--color-accent-light);
+  --contact-location-secondary: var(--color-accent-primary);
+
+  /* Website uses Purple variants (matches theme) */
+  --contact-website-primary: var(--color-accent-tertiary);
+  --contact-website-secondary: var(--color-accent-purple);
+  --contact-bg-card: var(--color-bg-card);
+  --contact-bg-hover: var(--color-bg-card-hover);
+  --contact-bg-subtle: var(--color-bg-card-alt);
   --contact-text-primary: var(--color-text-main);
   --contact-text-secondary: var(--color-text-subtle);
   --contact-text-muted: var(--color-text-muted);
   --contact-text-light: var(--color-text-light);
   --contact-border: var(--color-border-default);
-  --contact-border-hover: var(--color-border-medium);
+  --contact-border-hover: var(--color-border-accent);
   --contact-border-light: var(--color-border-light);
 
   /* ============================================

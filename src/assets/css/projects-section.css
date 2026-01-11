@@ -42,7 +42,7 @@
   --projects-gradient-secondary: var(--gradient-accent-full);
   --projects-gradient-luxury: var(--gradient-accent-full);
   --projects-gradient-card: var(--gradient-primary);
-  --projects-gradient-overlay: var(--gradient-overlay-dark);
+  --projects-gradient-overlay: var(--gradient-sublime);
 
   /* Shadows - Uses core shadow system */
   --projects-shadow-sm: var(--shadow-sm);

@@ -743,7 +743,7 @@ class MainPage extends BasePage<{}, MainPageState> {
           {this.renderSections()}
         </main>
         <BackToTopButton />
-        <FloatingCTA resumeUrl="/assets/document/RICKY_CV_8_AUG.pdf" />
+        <FloatingCTA />
         <GlobalSearch
           profile={profile}
           showTrigger={false}

@@ -23,7 +23,7 @@
   --contact-primary: var(--color-accent-primary);
   --contact-primary-hover: var(--color-accent-hover);
   --contact-primary-light: var(--color-accent-glow);
-  --contact-primary-lighter: rgb(0 217 255 / 5%);
+  --contact-primary-lighter: var(--color-accent-alpha-05);
 
   /* Gradient Colors - Uses core gradients */
   --contact-gradient-start: var(--color-accent-primary);
