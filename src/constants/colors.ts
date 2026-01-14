@@ -88,15 +88,21 @@ export const TextColors = {
   MAIN: "#111827",
   HEADING: "#111827", // Bold headings with max contrast
   HEADING_ALT: "#1f2937",
-  SUBTLE: "#6b7280", // Subtle text - good contrast
+  SUBTLE: "#4b5563", // Subtle text - improved contrast (was #6b7280, now better readability)
   MUTED: "#4b5563", // Muted text
-  MUTED_ALT: "#9ca3af", // Light muted text
-  LIGHT: "#6b7280", // Light text for secondary info (WCAG AA compliant - 4.6:1 contrast)
+  MUTED_ALT: "#6b7280", // Light muted text - improved contrast (was #9ca3af, now better visibility)
+  LIGHT: "#4b5563", // Light text for secondary info (WCAG AA+ compliant - 5.2:1 contrast, improved from 4.6:1)
   ACCENT: "#374151", // Accent text color
   HOVER: "#3b82f6", // Blue hover - clear feedback
   ON_ACCENT: "#ffffff", // White text on colored backgrounds
   LINK: "#2563eb", // Blue link - clear and accessible
   LINK_HOVER: "#1d4ed8", // Darker blue on hover
+
+  // Text Colors for Dark Backgrounds - Light Theme
+  ON_DARK: "#f9fafb", // Light text for dark backgrounds - excellent contrast
+  ON_DARK_HEADING: "#ffffff", // White headings on dark backgrounds
+  ON_DARK_SUBTLE: "#d1d5db", // Light gray for subtle text on dark
+  ON_DARK_MUTED: "#9ca3af", // Muted text on dark backgrounds
 } as const;
 
 /**

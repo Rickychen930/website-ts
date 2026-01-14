@@ -28,15 +28,12 @@
   background: var(--color-bg-dark);
   min-height: 100vh;
   flex-direction: column;
+
+  /* Optimized: Reduced gradient layers for better performance */
   background-image:
     radial-gradient(
       circle at 20% 30%,
       var(--color-accent-alpha-08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      var(--color-accent-alt-alpha-06) 0%,
       transparent 50%
     ),
     linear-gradient(
@@ -45,6 +42,8 @@
       var(--color-bg-dark-light) 50%,
       var(--color-bg-dark) 100%
     );
+
+  /* Removed second radial gradient for performance optimization */
   overflow-x: hidden;
   isolation: isolate;
 }
@@ -56,7 +55,7 @@
   display: none; /* Removed for better performance */
 }
 
-/* Subtle Grid Pattern - Minimal & Professional */
+/* Subtle Grid Pattern - Minimal & Professional (Optimized) */
 .main-page::after {
   position: fixed;
   top: 0;
@@ -64,14 +63,15 @@
   z-index: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.08; /* Reduced from 0.15 for subtler effect */
+  opacity: 0.06; /* Further reduced for better performance and subtlety */
   content: "";
   background-image:
     linear-gradient(var(--color-accent-alpha-015) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-accent-alpha-015) 1px, transparent 1px);
-  background-size: 80px 80px;
+  background-size: 100px 100px; /* Larger grid for better performance */
   pointer-events: none;
   mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  will-change: opacity; /* Performance optimization */
 }
 
 /* Removed gridPulse animation untuk better performance */
@@ -95,6 +95,7 @@
 
 /* ============================================
    Section Block - Clean & Modern Design
+   Enhanced with visual separators
    ============================================ */
 .section-block {
   scroll-margin-top: var(--spacing-5xl);
@@ -104,6 +105,26 @@
   transition:
     opacity var(--transition-slow),
     transform var(--transition-slow);
+  margin-bottom: var(--spacing-4xl); /* Enhanced: better section separation */
+}
+
+/* Visual separator between sections - Subtle & Professional */
+.section-block:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: calc(-1 * var(--spacing-2xl));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent-alpha-30) 50%,
+    transparent
+  );
+  border-radius: 2px;
+  opacity: 0.6;
 }
 
 /* Removed animation delays - handled by lazy-section component */
@@ -127,13 +148,17 @@
   position: relative;
   margin: 0 0 var(--spacing-md);
   color: var(--color-text-heading);
-  font-size: clamp(1.75rem, 4vw, 2.5rem); /* Reduced from 3.5rem */
+  font-size: var(
+    --font-size-title-responsive
+  ); /* Standardized: uses typography variable */
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   transition: all var(--transition-fast);
-  letter-spacing: -0.02em; /* Slightly tighter */
+  letter-spacing: var(
+    --font-title-spacing
+  ); /* Standardized: uses typography variable */
   font-family: var(--font-display);
-  text-shadow: 0 2px 10px var(--color-black-alpha-20); /* Reduced shadow */
+  text-shadow: 0 1px 4px var(--color-black-alpha-10); /* Improved: subtler shadow for better readability */
 }
 
 /* Clean Underline - Minimal & Elegant */
@@ -170,7 +195,10 @@
 /* Improve text readability */
 .section-content p {
   color: var(--color-text-main);
-  line-height: 1.75; /* Increased for better readability */
+  font-size: var(--font-size-body); /* Standardized: uses typography variable */
+  line-height: var(
+    --line-height-relaxed
+  ); /* Standardized: uses typography variable */
   letter-spacing: 0.01em;
 }
 
@@ -184,7 +212,7 @@
 
 @media screen and (width >= 1400px) {
   .section-block {
-    padding: 4rem;
+    padding: var(--spacing-4xl); /* Standardized: uses spacing variable */
   }
 }
 
@@ -446,18 +474,28 @@
 .error-title {
   margin: 0 0 1.5rem;
   color: var(--color-text-heading);
-  font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.03em; /* Standardized from -0.5px to em */
-  font-family: var(--font-display, "Inter", sans-serif);
-  text-shadow: 0 2px 20px var(--color-black-alpha-30);
+  font-size: var(
+    --font-size-title-large
+  ); /* Standardized: uses typography variable */
+  font-weight: var(
+    --font-weight-title
+  ); /* Standardized: uses typography variable */
+  letter-spacing: var(
+    --font-title-spacing
+  ); /* Standardized: uses typography variable */
+  font-family: var(--font-display);
+  text-shadow: 0 1px 8px var(--color-black-alpha-20); /* Improved: subtler shadow */
 }
 
 .error-message {
   margin: 0 0 2.5rem;
   color: var(--color-text-main);
-  font-size: 1.125rem;
-  line-height: 1.8;
+  font-size: var(
+    --font-size-body-large
+  ); /* Standardized: uses typography variable */
+  line-height: var(
+    --line-height-relaxed
+  ); /* Standardized: uses typography variable */
   font-family: var(--font-main);
 }
 
@@ -555,7 +593,9 @@
   }
 
   .section-title {
-    font-size: clamp(2rem, 4vw, 2.5rem); /* Reduced from 3.5rem */
+    font-size: var(
+      --font-size-title-responsive
+    ); /* Standardized: uses typography variable */
   }
 }
 
@@ -601,7 +641,7 @@
   }
 
   .section-title {
-    font-size: clamp(1.5rem, 4vw, 2.25rem); /* Reduced from 3rem */
+    font-size: clamp(1.5rem, 4vw, 2.25rem); /* Responsive: smaller on tablets */
     margin-bottom: 1rem;
   }
 
@@ -658,12 +698,11 @@
   }
 
   .section-title {
-    font-size: clamp(1.5rem, 5vw, 2rem); /* Reduced from 2.25rem */
-    margin-bottom: var(
-      --spacing-sm
-    ); /* Standardized: 0.875rem → var(--spacing-sm) */
-
-    line-height: 1.3; /* Improved */
+    font-size: clamp(1.5rem, 5vw, 2rem); /* Responsive: mobile optimized */
+    margin-bottom: var(--spacing-sm);
+    line-height: var(
+      --line-height-tight
+    ); /* Standardized: uses typography variable */
   }
 
   .section-title-underline {
@@ -707,8 +746,14 @@
   }
 
   .error-title {
-    font-size: 1.75rem;
-    line-height: 1.3;
+    font-size: clamp(
+      1.5rem,
+      4vw,
+      1.75rem
+    ); /* Responsive: uses typography scale */
+    line-height: var(
+      --line-height-tight
+    ); /* Standardized: uses typography variable */
   }
 
   .error-message {
@@ -751,12 +796,15 @@
   }
 
   .section-title {
-    font-size: clamp(1.375rem, 6vw, 1.75rem); /* Reduced from 1.875rem */
-    margin-bottom: var(
-      --spacing-sm
-    ); /* Standardized: 0.75rem → var(--spacing-sm) */
-
-    line-height: 1.3; /* Improved */
+    font-size: clamp(
+      1.375rem,
+      6vw,
+      1.75rem
+    ); /* Responsive: small mobile optimized */
+    margin-bottom: var(--spacing-sm);
+    line-height: var(
+      --line-height-tight
+    ); /* Standardized: uses typography variable */
   }
 
   .section-title-underline {
@@ -800,11 +848,15 @@
   }
 
   .error-title {
-    font-size: 1.5rem;
-    line-height: 1.3;
-    margin-bottom: var(
-      --spacing-md
-    ); /* Standardized: 1rem → var(--spacing-md) */
+    font-size: clamp(
+      1.375rem,
+      4vw,
+      1.5rem
+    ); /* Responsive: uses typography scale */
+    line-height: var(
+      --line-height-tight
+    ); /* Standardized: uses typography variable */
+    margin-bottom: var(--spacing-md);
   }
 
   .error-message {

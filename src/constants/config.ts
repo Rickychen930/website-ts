@@ -98,11 +98,18 @@ export const TypographyConfig = {
     "'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Consolas', monospace",
   FONT_DISPLAY: "'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif",
   TITLE_SIZE: "2rem",
+  TITLE_SIZE_RESPONSIVE: "clamp(1.75rem, 4vw, 2.5rem)", // For section titles
+  TITLE_SIZE_LARGE: "clamp(2rem, 4vw, 3rem)", // For hero titles
   TITLE_WEIGHT: 700,
+  TITLE_SPACING: "-0.02em", // Improved: tighter for modern look
   SUBTITLE_WEIGHT: 600,
+  SUBTITLE_SPACING: "-0.02em", // Improved: consistent with title
   BASE_SIZE: "1rem",
+  BODY_SIZE: "1rem", // Standardized body text
+  BODY_SIZE_LARGE: "1.125rem", // For emphasis
   TITLE_FONT_SIZE: "1.5rem",
   SUBTITLE_FONT_SIZE: "1.1rem",
+  SUBTITLE_SIZE_RESPONSIVE: "clamp(1rem, 2vw, 1.25rem)", // Responsive subtitles
   SMALL_FONT_SIZE: "0.875rem",
   XS_FONT_SIZE: "0.75rem",
 } as const;

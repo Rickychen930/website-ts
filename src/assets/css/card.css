@@ -147,19 +147,23 @@
   z-index: var(--z-base);
   margin: 0;
   color: var(--color-text-heading);
-  font-size: clamp(1.875rem, 4vw, 3rem);
-  font-weight: 700;
+  font-size: var(
+    --font-size-title-large
+  ); /* Standardized: uses typography variable */
+  font-weight: var(
+    --font-weight-title
+  ); /* Standardized: uses typography variable */
   line-height: var(
-    --line-height-tight,
-    1.2
-  ); /* Use variable instead of hardcoded */
-
+    --line-height-tight
+  ); /* Standardized: uses typography variable */
   transition: var(--transition-all);
-  letter-spacing: -0.03em;
-  font-family: var(--font-display, "Inter", system-ui, sans-serif);
+  letter-spacing: var(
+    --font-title-spacing
+  ); /* Standardized: uses typography variable */
+  font-family: var(--font-display);
   user-select: none;
   outline: none;
-  text-shadow: 0 2px 20px var(--color-black-alpha-40);
+  text-shadow: 0 1px 8px var(--color-black-alpha-20); /* Improved: subtler shadow for better readability */
 }
 
 .card-title:focus {

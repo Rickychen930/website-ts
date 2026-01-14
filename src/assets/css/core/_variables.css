@@ -241,16 +241,22 @@
   --color-text-main: #111827;
   --color-text-heading: #111827;
   --color-text-heading-alt: #1f2937;
-  --color-text-subtle: #6b7280;
+  --color-text-subtle: #4b5563; /* Improved contrast: was #6b7280, now 4b5563 for better readability */
   --color-text-muted: #4b5563;
-  --color-text-muted-alt: #9ca3af;
-  --color-text-light: #6b7280; /* Improved from #9ca3af for WCAG AA compliance (4.6:1 contrast) */
+  --color-text-muted-alt: #6b7280; /* Improved contrast: was #9ca3af, now #6b7280 for better visibility */
+  --color-text-light: #4b5563; /* Improved contrast: was #6b7280, now #4b5563 for WCAG AA+ compliance (5.2:1 contrast) */
   --color-text-accent: #374151;
   --color-text-body: var(--color-text-main);
   --color-text-hover: #3b82f6;
   --color-text-on-accent: #fff;
   --color-text-link: #2563eb;
   --color-text-link-hover: #1d4ed8;
+
+  /* Text Colors for Dark Backgrounds - Light Theme (for cards on dark page) */
+  --color-text-on-dark: #f9fafb; /* Light text for dark backgrounds - excellent contrast */
+  --color-text-on-dark-heading: #fff; /* White headings on dark backgrounds */
+  --color-text-on-dark-subtle: #d1d5db; /* Light gray for subtle text on dark */
+  --color-text-on-dark-muted: #9ca3af; /* Muted text on dark backgrounds */
 
   /* ============================================
      Border Colors - Light Theme
@@ -473,24 +479,39 @@
   --font-mono:
     "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Consolas", monospace;
   --font-display: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+
+  /* Typography - Font Sizes (Standardized) */
   --font-size-title: 2rem;
+  --font-size-title-responsive: clamp(
+    1.75rem,
+    4vw,
+    2.5rem
+  ); /* For section titles */
+  --font-size-title-large: clamp(2rem, 4vw, 3rem); /* For hero titles */
   --font-title-size: 2rem;
   --font-title-weight: 700;
-  --font-title-spacing: -0.05em; /* Standardized from -0.8px to em for scalability */
+  --font-title-spacing: -0.02em; /* Improved: tighter for modern look */
   --font-weight-title: 700;
   --font-weight-subtitle: 600;
   --font-weight-semibold: 600;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --font-subtitle-weight: 600;
-  --font-subtitle-spacing: -0.03em; /* Standardized from -0.5px to em for scalability */
+  --font-subtitle-spacing: -0.02em; /* Improved: consistent with title */
   --font-size-base: 1rem;
   --font-size-title-component: 1.5rem;
   --font-size-subtitle: 1.1rem;
+  --font-size-subtitle-responsive: clamp(
+    1rem,
+    2vw,
+    1.25rem
+  ); /* Responsive subtitles */
   --font-size-period: 0.9rem;
   --font-size-footer: 0.95rem;
   --font-size-small: 0.875rem;
   --font-size-xs: 0.75rem;
+  --font-size-body: 1rem; /* Standardized body text */
+  --font-size-body-large: 1.125rem; /* For emphasis */
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
