@@ -309,7 +309,7 @@
   height: min(280px, 70vw);
   max-width: 100%;
   aspect-ratio: 1 / 1;
-  border: clamp(4px, 1.5vw, 8px) solid var(--color-white-alpha-95);
+  border: clamp(4px, 1.5vw, 8px) solid var(--color-border-light);
   background: var(--gradient-primary);
   transition:
     transform var(--about-me-transition-smooth),
@@ -348,7 +348,7 @@
 .about-me-bio {
   width: 100%;
   margin: 0;
-  color: var(--color-white-alpha-85);
+  color: var(--color-text-main);
   font-size: clamp(0.95rem, 2vw, 1.15rem);
   font-weight: 400;
   line-height: 1.75;
@@ -419,7 +419,7 @@
 #about.card .profile-btn::before {
   position: absolute;
   z-index: -1;
-  background: linear-gradient(135deg, var(--color-white-alpha-20), transparent);
+  background: linear-gradient(135deg, var(--overlay-alpha-20), transparent);
   opacity: 0;
   transition: opacity var(--about-me-transition-fast);
   content: "";
@@ -433,7 +433,7 @@
   z-index: -1;
   width: 0;
   height: 0;
-  background: var(--color-white-alpha-30);
+  background: var(--overlay-alpha-30);
   transition:
     width 0.6s ease,
     height 0.6s ease;
@@ -645,7 +645,7 @@
 
 #about.card .profile-stat span {
   display: block;
-  color: var(--color-white-alpha-70);
+  color: var(--color-text-subtle);
   font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   font-weight: 500;
   line-height: 1.4;

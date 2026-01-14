@@ -51,7 +51,7 @@
   --color-white-alpha-98: rgb(255 255 255 / 98%);
   --color-white-alpha-99: rgb(255 255 255 / 99%);
 
-  /* Black Alpha Variants */
+  /* Black Alpha Variants - Light Theme (for shadows and overlays) */
   --color-black-alpha-02: rgb(0 0 0 / 2%);
   --color-black-alpha-03: rgb(0 0 0 / 3%);
   --color-black-alpha-04: rgb(0 0 0 / 4%);
@@ -66,6 +66,17 @@
   --color-black-alpha-50: rgb(0 0 0 / 50%);
   --color-black-alpha-60: rgb(0 0 0 / 60%);
   --color-black-alpha-80: rgb(0 0 0 / 80%);
+
+  /* Shadow Alpha Variants - Theme-aware (for use in effects) */
+  --shadow-alpha-05: var(--color-black-alpha-05);
+  --shadow-alpha-10: var(--color-black-alpha-10);
+  --shadow-alpha-15: var(--color-black-alpha-12);
+  --shadow-alpha-20: var(--color-black-alpha-20);
+  --shadow-alpha-30: var(--color-black-alpha-30);
+  --shadow-alpha-40: var(--color-black-alpha-40);
+  --overlay-alpha-10: var(--color-white-alpha-10);
+  --overlay-alpha-20: var(--color-white-alpha-20);
+  --overlay-alpha-30: var(--color-white-alpha-30);
 
   /* Dark Background Alpha Variants */
   --color-bg-dark-alpha-70: rgb(26 32 44 / 70%);
@@ -137,10 +148,17 @@
   --color-info-alpha-80: rgb(59 130 246 / 80%);
 
   /* Success Alpha Variants */
+  --color-success-alpha-04: rgb(34 197 94 / 4%);
+  --color-success-alpha-06: rgb(34 197 94 / 6%);
   --color-success-alpha-30: rgb(34 197 94 / 30%);
 
   /* Warning Alpha Variants */
+  --color-warning-alpha-03: rgb(245 158 11 / 3%);
+  --color-warning-alpha-04: rgb(245 158 11 / 4%);
+  --color-warning-alpha-06: rgb(245 158 11 / 6%);
   --color-warning-alpha-30: rgb(245 158 11 / 30%);
+  --color-warning-alpha-40: rgb(245 158 11 / 40%);
+  --color-warning-alpha-50: rgb(245 158 11 / 50%);
 
   /* Accent Purple Alpha Variants - Modern Tech */
   --color-accent-purple-alpha-15: rgb(167 139 250 / 15%);
@@ -259,6 +277,11 @@
   --color-success-text: #047857;
   --color-error: #ef4444;
   --color-error-light: rgb(239 68 68 / 10%);
+  --color-error-alpha-04: rgb(239 68 68 / 4%);
+  --color-error-alpha-06: rgb(239 68 68 / 6%);
+  --color-error-alpha-10: rgb(239 68 68 / 10%);
+  --color-error-alpha-20: rgb(239 68 68 / 20%);
+  --color-error-alpha-30: rgb(239 68 68 / 30%);
   --color-error-dark: #dc2626;
   --color-error-text: #b91c1c;
   --color-warning: #f59e0b;
@@ -282,6 +305,14 @@
   --color-code-comment: #6a9955;
   --color-code-background: #1e1e1e;
 
+  /* Code Editor Dots (macOS style) - Universal */
+  --color-code-dot-red: #ff5f56;
+  --color-code-dot-yellow: #ffbd2e;
+  --color-code-dot-green: #27c93f;
+  --color-code-dot-red-alpha-50: rgb(255 95 86 / 50%);
+  --color-code-dot-yellow-alpha-50: rgb(255 189 46 / 50%);
+  --color-code-dot-green-alpha-50: rgb(39 201 63 / 50%);
+
   /* Special Purpose Colors - Harmonized */
 
   /* Purple colors are now part of accent color scheme for consistency */
@@ -302,7 +333,7 @@
   --language-warning: var(--color-warning);
   --language-error: var(--color-error);
 
-  /* Honors Section */
+  /* Honors Section - Light Theme */
   --honors-gold: #d4af37;
   --honors-gold-light: #f4e4bc;
   --honors-gold-dark: #b8941f;
@@ -439,6 +470,9 @@
   --font-title-spacing: -0.8px;
   --font-weight-title: 700;
   --font-weight-subtitle: 600;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
   --font-subtitle-weight: 600;
   --font-subtitle-spacing: -0.5px;
   --font-size-base: 1rem;
@@ -693,6 +727,50 @@
   /* Border Medium Alpha Variants - Dark Theme */
   --color-border-medium-alpha-50: rgb(71 85 105 / 60%);
 
+  /* Black Alpha Variants - Dark Theme (adjusted for dark backgrounds) */
+  --color-black-alpha-02: rgb(0 0 0 / 8%);
+  --color-black-alpha-03: rgb(0 0 0 / 12%);
+  --color-black-alpha-04: rgb(0 0 0 / 15%);
+  --color-black-alpha-05: rgb(0 0 0 / 18%);
+  --color-black-alpha-06: rgb(0 0 0 / 20%);
+  --color-black-alpha-08: rgb(0 0 0 / 25%);
+  --color-black-alpha-10: rgb(0 0 0 / 30%);
+  --color-black-alpha-12: rgb(0 0 0 / 35%);
+  --color-black-alpha-20: rgb(0 0 0 / 50%);
+  --color-black-alpha-30: rgb(0 0 0 / 60%);
+  --color-black-alpha-40: rgb(0 0 0 / 70%);
+  --color-black-alpha-50: rgb(0 0 0 / 75%);
+  --color-black-alpha-60: rgb(0 0 0 / 80%);
+  --color-black-alpha-80: rgb(0 0 0 / 90%);
+
+  /* White Alpha Variants - Dark Theme (enhanced for better visibility) */
+  --color-white-alpha-10: rgb(255 255 255 / 15%);
+  --color-white-alpha-20: rgb(255 255 255 / 25%);
+  --color-white-alpha-30: rgb(255 255 255 / 35%);
+  --color-white-alpha-40: rgb(255 255 255 / 45%);
+  --color-white-alpha-60: rgb(255 255 255 / 60%);
+  --color-white-alpha-70: rgb(255 255 255 / 70%);
+  --color-white-alpha-75: rgb(255 255 255 / 75%);
+  --color-white-alpha-80: rgb(255 255 255 / 80%);
+  --color-white-alpha-85: rgb(255 255 255 / 85%);
+  --color-white-alpha-90: rgb(255 255 255 / 90%);
+  --color-white-alpha-92: rgb(255 255 255 / 92%);
+  --color-white-alpha-95: rgb(255 255 255 / 95%);
+  --color-white-alpha-97: rgb(255 255 255 / 97%);
+  --color-white-alpha-98: rgb(255 255 255 / 98%);
+  --color-white-alpha-99: rgb(255 255 255 / 99%);
+
+  /* Shadow Alpha Variants - Dark Theme (adjusted for dark mode) */
+  --shadow-alpha-05: var(--color-black-alpha-05);
+  --shadow-alpha-10: var(--color-black-alpha-10);
+  --shadow-alpha-15: var(--color-black-alpha-12);
+  --shadow-alpha-20: var(--color-black-alpha-20);
+  --shadow-alpha-30: var(--color-black-alpha-30);
+  --shadow-alpha-40: var(--color-black-alpha-40);
+  --overlay-alpha-10: var(--color-white-alpha-10);
+  --overlay-alpha-20: var(--color-white-alpha-20);
+  --overlay-alpha-30: var(--color-white-alpha-30);
+
   /* Border Link Alpha Variants - Dark Theme (Modern Tech Cyan) */
   --color-border-link-alpha-10: rgb(0 217 255 / 12%);
   --color-border-link-alpha-15: rgb(0 217 255 / 18%);
@@ -711,18 +789,28 @@
   --color-info-alpha-80: rgb(0 217 255 / 85%);
 
   /* Success Alpha Variants - Dark Theme */
+  --color-success-alpha-04: rgb(74 222 128 / 6%);
+  --color-success-alpha-06: rgb(74 222 128 / 8%);
   --color-success-alpha-30: rgb(74 222 128 / 35%);
 
   /* Warning Alpha Variants - Dark Theme */
+  --color-warning-alpha-03: rgb(251 191 36 / 5%);
+  --color-warning-alpha-04: rgb(251 191 36 / 6%);
+  --color-warning-alpha-06: rgb(251 191 36 / 8%);
   --color-warning-alpha-30: rgb(251 191 36 / 35%);
+  --color-warning-alpha-40: rgb(251 191 36 / 40%);
+  --color-warning-alpha-50: rgb(251 191 36 / 50%);
 
   /* Accent Purple Alpha Variants - Dark Theme */
+  --color-accent-purple-alpha-15: rgb(167 139 250 / 18%);
+  --color-accent-purple-alpha-20: rgb(167 139 250 / 25%);
   --color-accent-purple-alpha-30: rgb(167 139 250 / 35%);
 
   /* Muted/Gray Alpha Variants - Dark Theme */
   --color-muted-alpha-30: rgb(203 213 225 / 40%);
 
   /* Accent Tertiary Alpha Variants - Dark Theme */
+  --color-accent-tertiary-alpha-10: rgb(79 172 254 / 12%);
   --color-accent-tertiary-alpha-15: rgb(79 172 254 / 18%);
   --color-accent-tertiary-alpha-20: rgb(79 172 254 / 25%);
 
@@ -730,6 +818,7 @@
   --color-accent-secondary-alpha-10: rgb(124 58 237 / 12%);
   --color-accent-secondary-alpha-15: rgb(124 58 237 / 18%);
   --color-accent-secondary-alpha-18: rgb(124 58 237 / 20%);
+  --color-accent-secondary-alpha-20: rgb(124 58 237 / 25%);
   --color-accent-secondary-alpha-30: rgb(124 58 237 / 35%);
   --color-accent-secondary-alpha-50: rgb(124 58 237 / 55%);
   --color-accent-secondary-alpha-90: rgb(124 58 237 / 95%);
@@ -804,6 +893,8 @@
   --color-success-text: #34d399;
   --color-error: #f87171;
   --color-error-light: rgb(248 113 113 / 15%);
+  --color-error-alpha-04: rgb(248 113 113 / 6%);
+  --color-error-alpha-06: rgb(248 113 113 / 8%);
   --color-error-alpha-10: rgb(248 113 113 / 10%);
   --color-error-alpha-20: rgb(248 113 113 / 20%);
   --color-error-alpha-30: rgb(248 113 113 / 30%);
@@ -811,11 +902,6 @@
   --color-error-text: #fca5a5;
   --color-warning: #fbbf24;
   --color-warning-light: rgb(251 191 36 / 15%);
-  --color-warning-alpha-03: rgb(251 191 36 / 3%);
-  --color-warning-alpha-04: rgb(245 158 11 / 4%);
-  --color-warning-alpha-06: rgb(245 158 11 / 6%);
-  --color-warning-alpha-40: rgb(251 191 36 / 40%);
-  --color-warning-alpha-50: rgb(251 191 36 / 50%);
   --color-warning-dark: #f59e0b;
   --color-warning-text: #fcd34d;
   --color-info: #00d9ff;
@@ -856,6 +942,14 @@
   --color-code-comment: #6a9955;
   --color-code-background: #1e1e1e;
 
+  /* Code Editor Dots (macOS style) - Dark Theme (same colors, brighter glow) */
+  --color-code-dot-red: #ff5f56;
+  --color-code-dot-yellow: #ffbd2e;
+  --color-code-dot-green: #27c93f;
+  --color-code-dot-red-alpha-50: rgb(255 95 86 / 60%);
+  --color-code-dot-yellow-alpha-50: rgb(255 189 46 / 60%);
+  --color-code-dot-green-alpha-50: rgb(39 201 63 / 60%);
+
   /* ============================================
      Component-Specific Colors - Dark Theme
      ============================================ */
@@ -863,16 +957,18 @@
   /* Tech Showcase - Dark Mode */
   --tech-showcase-bg-card: var(--color-bg-card);
   --tech-showcase-bg-overlay: var(--color-accent-alpha-08);
+  --tech-showcase-text: var(--color-text-subtle);
+  --tech-showcase-text-muted: var(--color-text-light);
 
   /* Languages Section */
   --language-success: var(--color-success);
   --language-warning: var(--color-warning);
   --language-error: var(--color-error);
 
-  /* Honors Section */
-  --honors-gold: #d4af37;
-  --honors-gold-light: #f4e4bc;
-  --honors-gold-dark: #b8941f;
+  /* Honors Section - Dark Theme (brighter for better visibility) */
+  --honors-gold: #f4d03f;
+  --honors-gold-light: #fef5d4;
+  --honors-gold-dark: #d4af37;
 
   /* About Me Section */
   --about-me-color-bg-glow: var(--color-accent-glow);

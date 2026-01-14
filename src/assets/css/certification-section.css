@@ -189,56 +189,43 @@
   transform-style: preserve-3d;
 }
 
-/* ─── Visibility & Advanced Animation ─── */
+/* ─── Visibility & Animation ─── */
 #certification-section .certification-card-visible {
   opacity: 1;
-  transform: translateY(0) scale(1) rotateX(0deg);
-  animation: cert-card-enter-advanced var(--animation-duration-slow, 0.9s)
-    var(--easing-spring, var(--transition-bounce)) forwards;
-  filter: blur(0);
+  transform: translateY(0);
+  animation: cert-card-enter var(--animation-duration-base, 0.4s)
+    var(--transition-smooth) forwards;
 }
 
 #certification-section .certification-card-visible::before {
   opacity: 1;
 }
 
-@keyframes cert-card-enter-advanced {
+@keyframes cert-card-enter {
   0% {
     opacity: 0;
-    transform: translateY(50px) scale(0.9) rotateX(10deg);
-    filter: blur(var(--blur-lg));
-  }
-
-  50% {
-    opacity: 1;
-    transform: translateY(-8px) scale(1.02) rotateX(-2deg);
-    filter: blur(var(--blur-xs));
+    transform: translateY(30px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
-/* ─── Advanced Hover Effects ─── */
+/* ─── Hover Effects ─── */
 #certification-section .certification-card:hover,
 #certification-section .certification-card-hovered {
-  transform: translateY(-16px) scale(1.03) rotateX(-3deg) rotateY(2deg);
+  transform: translateY(-4px);
   border-color: var(--color-accent-alpha-30);
   box-shadow:
-    0 30px 80px var(--color-accent-alpha-15),
-    0 15px 40px var(--color-black-alpha-08),
-    0 6px 16px var(--color-accent-alpha-12),
-    inset 0 1px 0 var(--color-white-alpha-95),
-    inset 0 -1px 0 var(--color-accent-alpha-08);
+    0 8px 24px var(--color-accent-alpha-15),
+    0 4px 12px var(--color-black-alpha-08);
   background: linear-gradient(
     135deg,
     var(--color-white) 0%,
     var(--color-white-alpha-98) 100%
   );
-  filter: brightness(1.02);
 }
 
 #certification-section .certification-card:hover::after,
@@ -269,7 +256,7 @@
 }
 
 #certification-section .certification-card-clickable:active {
-  transform: translateY(-8px) scale(1.01) rotateX(-1deg);
+  transform: translateY(-2px);
 }
 
 /* ─── Focus States (Accessibility) ─── */
@@ -502,7 +489,7 @@
     var(--color-bg-lightest) 100%
   );
   color: var(--text-muted);
-  box-shadow: 0 2px 8px var(--color-black-alpha-05);
+  box-shadow: 0 2px 8px var(--shadow-alpha-05);
 }
 
 #certification-section .certification-badge-accent {
@@ -518,7 +505,7 @@
 
 #certification-section .certification-badge:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px var(--color-black-alpha-10);
+  box-shadow: 0 6px 16px var(--shadow-alpha-10);
 }
 
 #certification-section .certification-badge-accent:hover {
@@ -644,17 +631,15 @@
 }
 
 /* ─── Advanced Animations ─── */
-@keyframes fade-in-up-advanced {
+@keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(40px);
-    filter: blur(var(--blur-md));
+    transform: translateY(20px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 
@@ -703,7 +688,7 @@
     margin: 0 1rem;
     background: var(--color-black-alpha-08);
     border-radius: var(--radius-xs);
-    box-shadow: inset 0 1px 2px var(--color-black-alpha-10);
+    box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
   }
 
   #certification-section .certification-grid::-webkit-scrollbar-thumb {

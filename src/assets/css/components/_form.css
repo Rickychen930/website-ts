@@ -61,6 +61,20 @@
   margin-left: 2px;
 }
 
+/* Legacy form-label class support */
+.form-label {
+  display: block;
+  color: var(--color-text-heading);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-main);
+}
+
+.form-label-required {
+  color: var(--color-error);
+}
+
 /* ============================================
    Element: Form Actions
    ============================================ */

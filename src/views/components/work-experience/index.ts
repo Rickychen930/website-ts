@@ -15,10 +15,10 @@ export type { IWorkExperienceCardProps } from "./WorkExperienceCard";
 
 export { WorkExperienceTimeline } from "./WorkExperienceTimeline";
 export type { IWorkExperienceTimelineProps } from "./WorkExperienceTimeline";
+export { WorkExperienceTimeline as default } from "./WorkExperienceTimeline";
 
 export { WorkExperienceCodeSnippet } from "./WorkExperienceCodeSnippet";
 export type { IWorkExperienceCodeSnippetProps } from "./WorkExperienceCodeSnippet";
 
 export { WorkExperienceStats } from "./WorkExperienceStats";
 export type { IWorkExperienceStatsProps } from "./WorkExperienceStats";
-

@@ -59,7 +59,7 @@
   padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
   border: 1px solid var(--color-border-alpha-30);
   background: transparent;
-  box-shadow: 0 2px 8px var(--color-black-alpha-05);
+  box-shadow: 0 2px 8px var(--shadow-alpha-05);
 }
 
 /* Hover States - Uses Core Transition System */

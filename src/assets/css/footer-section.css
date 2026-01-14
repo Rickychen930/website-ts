@@ -88,7 +88,7 @@
   margin-top: auto;
   overflow: hidden;
   isolation: isolate;
-  border-top: 1px solid var(--color-white-alpha-08);
+  border-top: 1px solid var(--color-border-light);
 }
 
 /* Decorative Top Border */
@@ -136,7 +136,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-white-alpha-03),
+    var(--overlay-alpha-10),
     transparent
   );
   content: "";
@@ -330,7 +330,7 @@
   position: relative;
   padding: var(--footer-spacing-sm);
   border: 1px solid var(--footer-border-color);
-  background: var(--color-white-alpha-03);
+  background: var(--color-bg-card-alt);
   color: var(--footer-text-secondary);
   font-size: 0.95rem;
   font-weight: 500;
@@ -352,7 +352,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-white-alpha-10),
+    var(--overlay-alpha-20),
     transparent
   );
   transition: left var(--footer-transition-slow);
@@ -363,7 +363,7 @@
 }
 
 .footer-social-link:hover {
-  background: var(--color-white-alpha-10);
+  background: var(--color-bg-content-hover);
   color: var(--footer-text-primary);
   border-color: var(--footer-accent-primary);
   transform: translateY(-2px);
@@ -406,9 +406,9 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow:
-    0 8px 32px var(--color-black-alpha-40),
-    0 0 0 1px var(--color-white-alpha-10),
-    inset 0 1px 0 var(--color-white-alpha-10);
+    0 8px 32px var(--shadow-alpha-40),
+    0 0 0 1px var(--color-border-light),
+    inset 0 1px 0 var(--overlay-alpha-20);
   backdrop-filter: blur(var(--blur-2xl));
 }
 
@@ -453,8 +453,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--footer-spacing-sm) var(--footer-spacing-md);
-  background: var(--color-black-alpha-30);
-  border-bottom: 1px solid var(--color-white-alpha-10);
+  background: var(--color-bg-card-alt);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .footer-code-dots {
@@ -502,7 +502,7 @@
 .footer-code-pre {
   margin: 0;
   padding: var(--footer-spacing-lg);
-  background: var(--color-black-alpha-20);
+  background: var(--color-bg-card-alt);
   color: var(--color-text-subtle);
   font-size: 0.9rem;
   line-height: 1.8;
@@ -533,7 +533,7 @@
   position: relative;
   padding: var(--footer-spacing-md);
   border: 1px solid var(--footer-border-color);
-  background: var(--color-white-alpha-03);
+  background: var(--color-bg-card-alt);
   transition: all var(--footer-transition-base);
   align-items: center;
   gap: var(--footer-spacing-sm);
@@ -665,7 +665,7 @@
   position: relative;
   padding: var(--footer-spacing-xs) var(--footer-spacing-sm);
   border: 1px solid var(--footer-border-color);
-  background: var(--color-white-alpha-10);
+  background: var(--color-bg-content-hover);
   color: var(--footer-text-secondary);
   font-size: 0.85rem;
   font-weight: 500;

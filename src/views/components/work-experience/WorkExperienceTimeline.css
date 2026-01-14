@@ -85,7 +85,7 @@
 }
 
 .work-experience-timeline-item:hover::before {
-  transform: scale(1.2) translateX(-50%);
+  transform: scale(1.1) translateX(-50%);
   background: var(--work-color-secondary);
   box-shadow:
     0 0 0 3px var(--work-color-secondary-alpha-30),

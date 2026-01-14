@@ -172,7 +172,7 @@
   box-shadow:
     0 8px 32px var(--color-black-alpha-20),
     0 16px 64px var(--color-accent-alpha-15),
-    inset 0 1px 0 var(--color-white-alpha-10);
+    inset 0 1px 0 var(--overlay-alpha-20);
   overflow: visible;
   max-width: 100%;
   box-sizing: border-box;
@@ -279,7 +279,7 @@
 
 .technical-skills-statistics__label {
   position: relative;
-  color: var(--color-white-alpha-75);
+  color: var(--color-text-subtle);
   font-size: 0.875rem;
   font-weight: 600;
   font-family: var(--skills-font-main, "Inter", "Segoe UI", sans-serif);

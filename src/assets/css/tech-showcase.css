@@ -24,9 +24,8 @@
   --tech-showcase-secondary: var(--color-accent-alt);
   --tech-showcase-tertiary: var(--color-accent-secondary);
   --tech-showcase-bg-dark: var(--color-bg-dark);
-  --tech-showcase-bg-card: var(--tech-showcase-bg-card);
-  --tech-showcase-text: var(--color-text-subtle);
-  --tech-showcase-text-muted: var(--color-text-light);
+
+  /* tech-showcase-bg-card and text are defined in core/_variables.css */
 }
 
 /* ============================================
@@ -74,7 +73,7 @@
   box-shadow:
     0 20px 60px var(--color-black-alpha-40),
     0 0 0 1px var(--color-accent-alpha-20),
-    inset 0 1px 0 var(--color-white-alpha-10);
+    inset 0 1px 0 var(--overlay-alpha-20);
   backdrop-filter: blur(var(--blur-2xl));
 }
 
@@ -94,8 +93,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background: var(--color-black-alpha-30);
-  border-bottom: 1px solid var(--color-white-alpha-10);
+  background: var(--color-bg-card-alt);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .tech-showcase-code-dots {

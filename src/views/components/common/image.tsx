@@ -1,5 +1,4 @@
 import React, { Component, ReactNode, CSSProperties } from "react";
-import { BackgroundColors, TextColors } from "../../../constants/colors";
 import { logWarn } from "../../../utils/logger";
 
 type ImageProps = {
@@ -177,11 +176,11 @@ class Image extends Component<ImageProps, ImageState> {
           className={`image-component image-error ${className}`}
           style={{
             ...combinedStyle,
-            backgroundColor: BackgroundColors.QUATERNARY,
+            backgroundColor: "var(--color-bg-quaternary)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: TextColors.SUBTLE,
+            color: "var(--color-text-subtle)",
             fontSize: "0.875rem",
           }}
           role="img"

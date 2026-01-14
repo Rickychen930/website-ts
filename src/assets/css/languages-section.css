@@ -125,28 +125,24 @@
   border-radius: var(--language-radius-xl);
   box-shadow:
     var(--language-shadow-sm),
-    inset 0 1px 0 var(--color-white-alpha-80),
-    inset 0 -1px 0 var(--color-black-alpha-05);
-  transform: translateY(30px) scale(0.98);
-  filter: blur(var(--blur-sm));
-  will-change: transform, opacity, filter;
+    inset 0 1px 0 var(--overlay-alpha-20),
+    inset 0 -1px 0 var(--shadow-alpha-10);
+  transform: translateY(20px);
+  will-change: transform, opacity;
   overflow: hidden;
   cursor: default;
   user-select: none;
-  backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 320px;
-  transform-style: preserve-3d;
 }
 
 /* ─── Language Card Visible State ─── */
 .language-card-visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-  animation: language-card-reveal var(--language-transition-bounce)
-    var(--easing-spring, var(--transition-bounce)) forwards;
+  transform: translateY(0);
+  animation: language-card-reveal var(--language-transition-base)
+    var(--transition-smooth) forwards;
 }
 
 /* ─── Staggered Animation Delays ─── */
@@ -193,7 +189,7 @@
     var(--language-shadow-xl),
     0 0 0 1px var(--color-accent-alpha-15),
     0 32px 64px var(--color-accent-alpha-25),
-    inset 0 1px 0 var(--color-white-alpha-90);
+    inset 0 1px 0 var(--overlay-alpha-30);
   outline: none;
 }
 
@@ -582,7 +578,7 @@
   background: var(--color-border-primary);
   border-radius: var(--language-radius-full);
   overflow: hidden;
-  box-shadow: inset 0 2px 4px var(--color-black-alpha-10);
+  box-shadow: inset 0 2px 4px var(--shadow-alpha-10);
 }
 
 .language-progress-bar-fill {
@@ -822,20 +818,12 @@
 @keyframes language-card-reveal {
   0% {
     opacity: 0;
-    transform: translateY(30px) scale(0.98);
-    filter: blur(var(--blur-sm));
-  }
-
-  60% {
-    opacity: 1;
-    transform: translateY(-6px) scale(1.02);
-    filter: blur(0);
+    transform: translateY(20px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 

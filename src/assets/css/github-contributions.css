@@ -103,7 +103,7 @@
 
 .github-contributions-button:hover {
   background: var(--color-accent);
-  color: var(--color-text-inverse);
+  color: var(--color-text-on-accent);
   transform: translateY(-2px);
   box-shadow:
     0 8px 24px var(--color-black-alpha-12),

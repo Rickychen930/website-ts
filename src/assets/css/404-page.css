@@ -42,8 +42,8 @@
   max-width: 600px;
   border-radius: var(--radius-2xl, 24px);
   box-shadow:
-    0 10px 40px var(--color-shadow-alpha-10),
-    0 2px 8px var(--color-shadow-alpha-05);
+    0 10px 40px var(--shadow-alpha-10),
+    0 2px 8px var(--shadow-alpha-05);
 }
 
 .not-found-icon {
@@ -117,7 +117,7 @@
 
 .not-found-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--color-shadow-alpha-15);
+  box-shadow: 0 4px 12px var(--shadow-alpha-15);
 }
 
 .not-found-button-primary {

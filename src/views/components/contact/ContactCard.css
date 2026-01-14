@@ -29,12 +29,10 @@
     inset 0 1px 0 var(--color-white-alpha-50);
   cursor: pointer;
   overflow: hidden;
-  transform: translateY(30px) scale(0.95) rotateX(5deg);
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  will-change: transform, box-shadow, filter;
-  animation: contact-card-entrance var(--animation-duration-slow)
-    var(--transition-bounce) forwards;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+  animation: contact-card-entrance var(--animation-duration-base)
+    var(--transition-smooth) forwards;
   contain: layout style paint;
   backface-visibility: hidden;
   isolation: isolate;
@@ -43,20 +41,12 @@
 @keyframes contact-card-entrance {
   0% {
     opacity: 0;
-    transform: translateY(30px) scale(0.95) rotateX(10deg) rotateY(-5deg);
-    filter: blur(var(--blur-md));
-  }
-
-  50% {
-    opacity: 0.8;
-    transform: translateY(-8px) scale(1.02) rotateX(-2deg) rotateY(2deg);
-    filter: blur(var(--blur-xs));
+    transform: translateY(20px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg) rotateY(0deg);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
@@ -350,7 +340,7 @@
 .contact-card-link:hover .contact-card-link-icon,
 .contact-card-link:focus .contact-card-link-icon {
   opacity: 1;
-  transform: translate(3px, -3px) rotate(15deg);
+  transform: translateX(2px);
 }
 
 /* ─── Description ─── */
@@ -414,13 +404,13 @@
 .contact-card-copy:focus {
   background: var(--color-accent-alpha-15);
   border-color: var(--color-border-accent-hover);
-  transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 4px 16px var(--color-accent-alpha-20);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px var(--color-accent-alpha-20);
   outline: none;
 }
 
 .contact-card-copy:active {
-  transform: scale(1.05) rotate(0deg);
+  transform: scale(1);
 }
 
 .contact-card-copy-icon {
@@ -599,20 +589,15 @@
   }
 }
 
-/* ─── Active State (3D Transform) ─── */
+/* ─── Active State ─── */
 .contact-card--active {
   z-index: calc(var(--z-base) + 10);
   background: var(--color-white-alpha-85);
-  transform: translateY(-12px) scale(1.04) rotateX(var(--rotate-x, 0deg))
-    rotateY(var(--rotate-y, 0deg));
-  -webkit-backdrop-filter: blur(var(--blur-4xl)) saturate(200%);
-  backdrop-filter: blur(var(--blur-4xl)) saturate(200%);
+  transform: translateY(-4px);
   border-color: var(--color-accent-alpha-40);
   box-shadow:
-    0 20px 60px var(--color-accent-alpha-20),
-    0 8px 24px var(--color-black-alpha-10),
-    inset 0 1px 0 var(--color-white-alpha-60),
-    0 0 0 1px var(--color-accent-alpha-10);
+    0 8px 24px var(--color-accent-alpha-15),
+    0 4px 12px var(--color-black-alpha-08);
 }
 
 .contact-card--active .contact-card-pattern {

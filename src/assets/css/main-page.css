@@ -215,7 +215,7 @@
   position: absolute;
   border-radius: 50%;
   border: 4px solid transparent;
-  animation: spin-advanced 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: spin 2s linear infinite;
 }
 
 .spinner-ring:nth-child(1) {
@@ -253,17 +253,13 @@
   box-shadow: 0 0 10px var(--color-accent-secondary-alpha-25);
 }
 
-@keyframes spin-advanced {
+@keyframes spin {
   0% {
-    transform: rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: rotate(90deg) scale(1.05);
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: rotate(360deg) scale(1);
+    transform: rotate(360deg);
   }
 }
 
@@ -282,7 +278,7 @@
   box-shadow:
     0 0 20px var(--color-accent-alpha-80),
     0 0 40px var(--color-accent-alt-alpha-60),
-    inset 0 0 10px var(--color-white-alpha-30);
+    inset 0 0 10px var(--overlay-alpha-30);
 }
 
 @keyframes pulse-center {
@@ -299,7 +295,7 @@
 }
 
 .loading-text {
-  color: var(--color-white-alpha-90);
+  color: var(--color-text-heading);
   font-size: 0.875rem;
   font-weight: 600;
   font-family: var(--font-main);
@@ -359,20 +355,16 @@
   position: relative;
   width: 100%;
   padding: 5rem 4rem;
-  border: 1px solid var(--color-white-alpha-10);
-  background: linear-gradient(
-    135deg,
-    var(--color-white-alpha-10) 0%,
-    var(--color-white-alpha-05) 100%
-  );
+  border: 1px solid var(--color-border-light);
+  background: var(--color-bg-card);
   text-align: center;
   max-width: 600px;
   backdrop-filter: blur(var(--blur-2xl));
   border-radius: var(--radius-3xl);
   box-shadow:
     0 20px 60px var(--color-black-alpha-30),
-    0 0 0 1px var(--color-white-alpha-10),
-    inset 0 1px 0 var(--color-white-alpha-20);
+    0 0 0 1px var(--color-border-light),
+    inset 0 1px 0 var(--overlay-alpha-20);
   overflow: hidden;
 }
 
@@ -451,7 +443,7 @@
 
 .error-title {
   margin: 0 0 1.5rem;
-  color: var(--color-white-alpha-95);
+  color: var(--color-text-heading);
   font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -461,7 +453,7 @@
 
 .error-message {
   margin: 0 0 2.5rem;
-  color: var(--color-white-alpha-70);
+  color: var(--color-text-main);
   font-size: 1.125rem;
   line-height: 1.8;
   font-family: var(--font-main);
@@ -469,7 +461,7 @@
 
 .error-retry-info {
   margin: 0 0 2.5rem;
-  color: var(--color-white-alpha-60);
+  color: var(--color-text-subtle);
   font-size: 1rem;
   font-style: italic;
   font-family: var(--font-main);
@@ -508,7 +500,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: var(--color-white-alpha-30);
+  background: var(--overlay-alpha-30);
   transform: translate(-50%, -50%);
   transition:
     width 0.6s,
@@ -924,6 +916,6 @@
 
   .error-content,
   .footer {
-    border: 2px solid var(--color-white-alpha-30);
+    border: 2px solid var(--color-border-light);
   }
 }

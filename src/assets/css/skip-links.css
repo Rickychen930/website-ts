@@ -40,7 +40,7 @@
     var(--color-accent),
     var(--color-accent-alt)
   );
-  color: var(--color-text-inverse);
+  color: var(--color-text-on-accent);
   font-size: 0.95rem;
   font-weight: 600;
   opacity: 0;

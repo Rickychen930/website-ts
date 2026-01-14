@@ -104,7 +104,7 @@
     var(--color-accent) 100%
   );
   background-size: 200% 200%;
-  color: var(--color-text-inverse);
+  color: var(--color-text-on-accent);
 }
 
 .floating-cta-primary:hover {
