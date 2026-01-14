@@ -62,20 +62,24 @@
   justify-content: flex-end;
 }
 
+.flex-gap-xs {
+  gap: var(--spacing-xs); /* Standardized: using spacing-xs */
+}
+
 .flex-gap-sm {
-  gap: 0.5rem;
+  gap: var(--spacing-sm); /* Standardized: using spacing-sm */
 }
 
 .flex-gap-md {
-  gap: 1rem;
+  gap: var(--spacing-md); /* Standardized: using spacing-md */
 }
 
 .flex-gap-lg {
-  gap: 1.5rem;
+  gap: var(--spacing-lg); /* Standardized: using spacing-lg */
 }
 
 .flex-gap-xl {
-  gap: 2rem;
+  gap: var(--spacing-xl); /* Standardized: using spacing-xl */
 }
 
 .grid {
@@ -205,19 +209,19 @@
 }
 
 .mt-sm {
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-sm); /* Standardized: using spacing-sm */
 }
 
 .mt-md {
-  margin-top: 1rem;
+  margin-top: var(--spacing-md); /* Standardized: using spacing-md */
 }
 
 .mt-lg {
-  margin-top: 1.5rem;
+  margin-top: var(--spacing-lg); /* Standardized: using spacing-lg */
 }
 
 .mt-xl {
-  margin-top: 2rem;
+  margin-top: var(--spacing-xl); /* Standardized: using spacing-xl */
 }
 
 .mb-0 {
@@ -225,19 +229,19 @@
 }
 
 .mb-sm {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm); /* Standardized: using spacing-sm */
 }
 
 .mb-md {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md); /* Standardized: using spacing-md */
 }
 
 .mb-lg {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-lg); /* Standardized: using spacing-lg */
 }
 
 .mb-xl {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl); /* Standardized: using spacing-xl */
 }
 
 .p-0 {
@@ -245,19 +249,19 @@
 }
 
 .p-sm {
-  padding: 0.5rem;
+  padding: var(--spacing-sm); /* Standardized: using spacing-sm */
 }
 
 .p-md {
-  padding: 1rem;
+  padding: var(--spacing-md); /* Standardized: using spacing-md */
 }
 
 .p-lg {
-  padding: 1.5rem;
+  padding: var(--spacing-lg); /* Standardized: using spacing-lg */
 }
 
 .p-xl {
-  padding: 2rem;
+  padding: var(--spacing-xl); /* Standardized: using spacing-xl */
 }
 
 /* ============================================

@@ -163,7 +163,13 @@ button {
   background: none;
   font-size: inherit;
   line-height: inherit;
-  transition: all var(--transition-base);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    opacity var(--transition-base); /* Optimized: specific properties instead of 'all' */
+
   font-family: inherit;
   cursor: pointer;
 }
@@ -192,7 +198,12 @@ select {
   color: var(--color-text-main);
   font-size: inherit;
   line-height: inherit;
-  transition: all var(--transition-base);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base); /* Optimized: specific properties instead of 'all' */
+
   font-family: inherit;
   border-radius: 8px;
 }

@@ -26,7 +26,12 @@
   padding: var(--spacing-card-padding);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
-  transition: var(--transition-all);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background var(--transition-base); /* Optimized: specific properties instead of 'all' */
+
   border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-card);
 }
@@ -102,7 +107,12 @@
   font-weight: var(--font-weight-semibold);
   line-height: 1.5;
   text-align: center;
-  transition: var(--transition-all);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background var(--transition-base); /* Optimized: specific properties instead of 'all' */
+
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
@@ -178,7 +188,12 @@
   color: var(--color-text-main);
   font-size: var(--font-size-base);
   line-height: 1.5;
-  transition: var(--transition-all);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background var(--transition-base); /* Optimized: specific properties instead of 'all' */
+
   font-family: var(--font-main);
   border-radius: var(--component-radius-input);
 }
@@ -271,11 +286,11 @@
 }
 
 .container--narrow {
-  max-width: 800px;
+  max-width: 800px; /* Fixed narrow width for specific use cases */
 }
 
 .container--wide {
-  max-width: 1400px;
+  max-width: 1400px; /* Fixed wide width for specific use cases */
 }
 
 /* ============================================
@@ -283,7 +298,9 @@
    ============================================ */
 .grid {
   display: grid;
-  gap: var(--component-gap-md);
+  gap: var(
+    --spacing-lg
+  ); /* Standardized: using spacing-lg for default grid gap */
 }
 
 .grid--cols-1 {
@@ -303,19 +320,19 @@
 }
 
 .grid--gap-sm {
-  gap: var(--component-gap-sm);
+  gap: var(--spacing-sm); /* Standardized: using spacing-sm */
 }
 
 .grid--gap-md {
-  gap: var(--component-gap-md);
+  gap: var(--spacing-md); /* Standardized: using spacing-md */
 }
 
 .grid--gap-lg {
-  gap: var(--component-gap-lg);
+  gap: var(--spacing-lg); /* Standardized: using spacing-lg */
 }
 
 .grid--gap-xl {
-  gap: var(--component-gap-xl);
+  gap: var(--spacing-xl); /* Standardized: using spacing-xl */
 }
 
 /* ============================================
@@ -362,23 +379,23 @@
 }
 
 .flex--gap-xs {
-  gap: var(--component-gap-xs);
+  gap: var(--spacing-xs); /* Standardized: using spacing-xs */
 }
 
 .flex--gap-sm {
-  gap: var(--component-gap-sm);
+  gap: var(--spacing-sm); /* Standardized: using spacing-sm */
 }
 
 .flex--gap-md {
-  gap: var(--component-gap-md);
+  gap: var(--spacing-md); /* Standardized: using spacing-md */
 }
 
 .flex--gap-lg {
-  gap: var(--component-gap-lg);
+  gap: var(--spacing-lg); /* Standardized: using spacing-lg */
 }
 
 .flex--gap-xl {
-  gap: var(--component-gap-xl);
+  gap: var(--spacing-xl); /* Standardized: using spacing-xl */
 }
 
 /* ============================================

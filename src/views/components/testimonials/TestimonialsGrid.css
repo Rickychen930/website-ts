@@ -1,0 +1,101 @@
+/**
+ * TestimonialsGrid Component Styles
+ * Parent component styles for testimonials grid layout
+ * 
+ * Architecture Principles:
+ * - DRY: Uses CSS constants and variables from core system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - grid layout only
+ */
+
+/* Import core system for constants and variables */
+@import url("../../../assets/css/core/index.css");
+
+/* ============================================
+   TESTIMONIALS GRID
+   ============================================ */
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--spacing-2xl, 32px);
+  margin-top: var(--spacing-2xl, 32px);
+}
+
+.testimonial-card-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Large Desktop (1400px and up) */
+@media screen and (width >= 1400px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop (1200px - 1399px) */
+@media screen and (width <= 1399px) and (width >= 1200px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-xl, 24px);
+  }
+}
+
+/* Tablet Landscape (1024px - 1199px) */
+@media screen and (width <= 1199px) and (width >= 1024px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl, 24px);
+  }
+}
+
+/* Tablet Portrait (768px - 1023px) */
+@media screen and (width <= 1023px) and (width >= 768px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg, 20px);
+  }
+}
+
+/* Mobile Landscape (640px - 767px) */
+@media screen and (width <= 767px) and (width >= 640px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg, 20px);
+  }
+}
+
+/* Mobile Portrait (480px - 639px) */
+@media screen and (width <= 639px) and (width >= 480px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg, 20px);
+  }
+}
+
+/* Small Mobile (360px - 479px) */
+@media screen and (width <= 479px) and (width >= 360px) {
+  .testimonials-grid {
+    gap: var(--spacing-md, 16px);
+  }
+}
+
+/* Extra Small Mobile (below 360px) */
+@media screen and (width <= 359px) {
+  .testimonials-grid {
+    gap: var(--spacing-md, 16px);
+  }
+}
+
+/* Landscape Orientation (height <= 600px) */
+@media screen and (orientation: landscape) and (height <= 600px) {
+  .testimonials-grid {
+    gap: var(--spacing-md, 16px);
+  }
+}

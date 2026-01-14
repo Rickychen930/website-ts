@@ -32,14 +32,7 @@ import {
   IFooterSocialLink,
 } from "../../../models/footer-model";
 import { UserProfile } from "../../../types/user";
-import {
-  FooterQuickLinks,
-  FooterSocialLinks,
-  FooterTechStack,
-  FooterCopyright,
-  FooterStats,
-  FooterCodeSnippet,
-} from "./index";
+import { FooterQuickLinks, FooterSocialLinks, FooterCopyright } from "./index";
 import PrintButton from "../../../components/navigation/print-button";
 import "../../../assets/css/footer-section.css";
 
@@ -129,20 +122,7 @@ export class MainPageFooterComponent extends PureComponent<
   };
 
   /**
-   * Render footer hero section (Code Snippet)
-   */
-  private renderFooterHero(): ReactNode {
-    return (
-      <div className="footer-hero">
-        <div className="footer-container">
-          <FooterCodeSnippet />
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * Render footer top section (Quick Links, Social Links, Tech Stack, Stats)
+   * Render footer top section (Quick Links, Social Links)
    */
   private renderFooterTop(): ReactNode {
     const { footerData } = this.state;
@@ -153,8 +133,6 @@ export class MainPageFooterComponent extends PureComponent<
 
     const quickLinks = this.controller.getQuickLinks(footerData);
     const socialLinks = this.controller.getSocialLinks(footerData);
-    const techStack = this.controller.getTechStack(footerData);
-    const stats = this.controller.getStats(footerData);
 
     return (
       <div className="footer-top">
@@ -172,8 +150,6 @@ export class MainPageFooterComponent extends PureComponent<
                 onLinkClick={this.handleSocialLinkClick}
               />
             )}
-            {techStack.length > 0 && <FooterTechStack techStack={techStack} />}
-            {stats.length > 0 && <FooterStats stats={stats} />}
           </div>
         </div>
       </div>
@@ -208,25 +184,14 @@ export class MainPageFooterComponent extends PureComponent<
   }
 
   /**
-   * Render decorative elements
+   * Render decorative elements (simplified)
    */
   private renderDecorations(): ReactNode {
     return (
-      <>
-        <div
-          className="footer-decoration footer-decoration-top"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="footer-decoration footer-decoration-bottom"
-          aria-hidden="true"
-        ></div>
-        <div className="footer-particles" aria-hidden="true">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <span key={i} className="footer-particle"></span>
-          ))}
-        </div>
-      </>
+      <div
+        className="footer-decoration footer-decoration-top"
+        aria-hidden="true"
+      ></div>
     );
   }
 
@@ -247,7 +212,6 @@ export class MainPageFooterComponent extends PureComponent<
     return (
       <footer className={containerClass} role="contentinfo">
         {this.renderDecorations()}
-        {this.renderFooterHero()}
         {this.renderFooterTop()}
         {this.renderFooterBottom()}
       </footer>
