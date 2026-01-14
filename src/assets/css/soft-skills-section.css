@@ -143,7 +143,7 @@
 }
 
 /* ─── Responsive Design - Large Tablets (992px - 1199px) ─── */
-@media screen and (width <= 1199px) and (width >= 992px) {
+@media screen and (width <= 1199px) and (width >= 1024px) {
   #soft-skills-section {
     --soft-skills-spacing-lg: 1.75rem;
     --soft-skills-spacing-xl: 2rem;

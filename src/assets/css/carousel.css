@@ -1,0 +1,387 @@
+/**
+ * Carousel Component Styles
+ * Professional, Luxury, Clean, Responsive
+ * 
+ * Design System Compliance:
+ * - Uses design system color variables (no hardcoded colors)
+ * - Consistent spacing using --spacing-* variables
+ * - Proper touch targets (min 44px)
+ * - Smooth animations with design system transitions
+ * - Accessibility-first approach
+ * - Dark mode support
+ * - High contrast mode support
+ *
+ * Features:
+ * - Smooth horizontal scrolling
+ * - Navigation arrows with proper touch targets
+ * - Scroll indicators (fade gradients)
+ * - Progress indicator
+ * - Responsive design
+ * - Accessibility support
+ * - Performance optimized
+ * 
+ * Import carousel variables:
+ * @import '@/assets/css/core/carousel-variables.css';
+ */
+
+/* ─── Carousel Wrapper ─── */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ─── Carousel Container ─── */
+.carousel-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding: var(--carousel-padding-vertical, var(--spacing-md)) 0;
+  flex-direction: row;
+  overflow: auto hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-primary) var(--color-black-alpha-05);
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: 0;
+}
+
+/* Scroll Snap */
+.carousel-snap {
+  scroll-snap-type: x mandatory;
+}
+
+/* ─── Enhanced Scrollbar Styling ─── */
+.carousel-container::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.carousel-container::-webkit-scrollbar-track {
+  margin: 0 1rem;
+  background: var(--color-black-alpha-05);
+  border-radius: var(--radius-xs, 4px);
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-primary) 0%,
+    var(--color-accent-alt) 100%
+  );
+  border-radius: var(--radius-xs);
+  transition: var(--transition-all);
+  box-shadow: 0 2px 4px var(--color-accent-alpha-30);
+}
+
+.carousel-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-alt) 0%,
+    var(--color-accent-secondary) 100%
+  );
+  box-shadow: 0 4px 8px var(--color-accent-glow);
+  transform: scaleY(1.2);
+}
+
+/* ─── Fade Gradients at Edges ─── */
+.carousel-container::before,
+.carousel-container::after {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-tooltip);
+  width: var(--carousel-fade-width-desktop, 60px);
+  height: 100%;
+  transition: opacity var(--transition-opacity);
+  content: "";
+  pointer-events: none;
+}
+
+.carousel-container::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--color-bg-card) 0%, transparent 100%);
+  border-radius: 0;
+}
+
+.carousel-container::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--color-bg-card) 0%,
+    transparent 100%
+  );
+  border-radius: 0;
+}
+
+/* Hide gradients when scrolled to edges */
+.carousel-scrolled-to-start::before,
+.carousel-scrolled-to-end::after {
+  opacity: 0;
+}
+
+/* ─── Carousel Items ─── */
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  transition: transform var(--transition-base);
+}
+
+.carousel-item:hover {
+  transform: translateY(-4px);
+  transition: transform var(--transition-smooth);
+}
+
+.carousel-item[role="button"] {
+  cursor: pointer;
+}
+
+.carousel-item[role="button"]:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-focus);
+}
+
+/* ─── Navigation Arrows ─── */
+.carousel-arrow {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  z-index: var(--z-tooltip);
+  width: var(
+    --carousel-arrow-size-desktop,
+    48px
+  ); /* Touch target: 48px (meets 44px minimum) */
+  height: var(--carousel-arrow-size-desktop, 48px);
+  border: none;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-alpha-90) 0%,
+    var(--color-accent-alt-alpha-90) 100%
+  );
+  color: var(--color-white);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  opacity: 0;
+  transition: all var(--transition-smooth);
+  align-items: center;
+  justify-content: center;
+  min-width: var(
+    --carousel-arrow-size-desktop,
+    48px
+  ); /* Ensure minimum touch target */
+  min-height: var(--carousel-arrow-size-desktop, 48px);
+  border-radius: var(--radius-full);
+  box-shadow:
+    0 4px 12px var(--color-accent-alpha-40),
+    0 2px 6px var(--color-black-alpha-20);
+  cursor: pointer;
+  transform: translateY(-50%);
+  backdrop-filter: blur(var(--blur-md));
+  pointer-events: none;
+}
+
+.carousel-arrow-left {
+  left: var(--spacing-md);
+}
+
+.carousel-arrow-right {
+  right: var(--spacing-md);
+}
+
+.carousel-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow:
+    0 6px 16px var(--color-accent-alpha-50),
+    0 3px 8px var(--color-black-alpha-30);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-primary) 0%,
+    var(--color-accent-alt) 100%
+  );
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+  transition: transform var(--transition-fast);
+}
+
+.carousel-arrow:disabled,
+.carousel-arrow-hidden {
+  opacity: 0;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.carousel-arrow:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: var(--spacing-xs);
+  box-shadow: var(--shadow-focus);
+}
+
+.carousel-wrapper:hover .carousel-arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Progress Indicator ─── */
+.carousel-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-base);
+  width: 100%;
+  height: 3px;
+  background: var(--color-black-alpha-05);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.carousel-progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-primary) 0%,
+    var(--color-accent-alt) 100%
+  );
+  transition: width var(--transition-fast);
+  border-radius: var(--radius-xs);
+  box-shadow: 0 2px 4px var(--color-accent-alpha-30);
+}
+
+/* ─── Empty State ─── */
+.carousel-empty {
+  display: flex;
+  padding: var(--spacing-3xl) var(--spacing-md);
+  color: var(--color-text-subtle);
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+  opacity: var(--opacity-muted);
+}
+
+.carousel-empty-message {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ─── Responsive Design ─── */
+@media screen and (width <= 768px) {
+  .carousel-container {
+    padding: var(--carousel-padding-vertical-mobile, var(--spacing-sm)) 0;
+  }
+
+  .carousel-container::before,
+  .carousel-container::after {
+    width: var(--carousel-fade-width-tablet, 40px);
+  }
+
+  .carousel-arrow {
+    width: var(
+      --carousel-arrow-size-tablet,
+      44px
+    ); /* Maintain 44px minimum touch target */
+    height: var(--carousel-arrow-size-tablet, 44px);
+    min-width: var(--carousel-arrow-size-tablet, 44px);
+    min-height: var(--carousel-arrow-size-tablet, 44px);
+    font-size: 1.25rem;
+  }
+
+  .carousel-arrow-left {
+    left: var(--spacing-sm);
+  }
+
+  .carousel-arrow-right {
+    right: var(--spacing-sm);
+  }
+}
+
+@media screen and (width <= 480px) {
+  .carousel-container::before,
+  .carousel-container::after {
+    width: var(--carousel-fade-width-mobile, 30px);
+  }
+
+  .carousel-arrow {
+    width: var(
+      --carousel-arrow-size-mobile,
+      44px
+    ); /* Maintain 44px minimum touch target for accessibility */
+    height: var(--carousel-arrow-size-mobile, 44px);
+    min-width: var(--carousel-arrow-size-mobile, 44px);
+    min-height: var(--carousel-arrow-size-mobile, 44px);
+    font-size: 1.1rem;
+  }
+
+  .carousel-arrow-left {
+    left: var(--spacing-xs);
+  }
+
+  .carousel-arrow-right {
+    right: var(--spacing-xs);
+  }
+
+  .carousel-empty {
+    padding: var(--spacing-2xl) var(--spacing-sm);
+  }
+
+  .carousel-empty-icon {
+    font-size: 2.5rem;
+  }
+
+  .carousel-empty-message {
+    font-size: var(--font-size-small);
+  }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-container {
+    scroll-behavior: auto;
+  }
+
+  .carousel-arrow,
+  .carousel-progress-bar,
+  .carousel-item {
+    transition: none;
+  }
+}
+
+/* ─── Focus Visible (Accessibility) ─── */
+.carousel-container:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-focus);
+}
+
+/* ─── Dark Mode Support ─── */
+[data-theme="dark"] .carousel-container::before,
+[data-theme="dark"] .carousel-container::after {
+  background: linear-gradient(90deg, var(--color-bg-card) 0%, transparent 100%);
+}
+
+[data-theme="dark"] .carousel-empty {
+  color: var(--color-text-subtle);
+}
+
+/* ─── High Contrast Mode Support ─── */
+@media (prefers-contrast: more) {
+  .carousel-arrow {
+    border: 2px solid var(--color-accent-primary);
+  }
+
+  .carousel-container::-webkit-scrollbar-thumb {
+    border: 1px solid var(--color-accent-primary);
+  }
+}

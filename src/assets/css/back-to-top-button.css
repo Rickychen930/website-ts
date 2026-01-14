@@ -22,13 +22,19 @@
 :root {
   --back-to-top-size: var(--icon-size-large);
   --back-to-top-size-mobile: var(--icon-size-default);
+  --back-to-top-size-small: 44px; /* Minimum touch target */
   --back-to-top-z-index: calc(var(--z-fixed) - 1);
   --back-to-top-primary: var(--color-accent-primary);
   --back-to-top-secondary: var(--color-accent-alt);
   --back-to-top-tertiary: var(--color-accent-secondary);
 
   /* Spacing untuk stack vertikal dengan Floating CTA - calculated: 2 buttons (~51px each) + gap (12px) = ~114px + bottom (32px) + spacing gap (16px) = ~162px = 10.125rem */
-  --back-to-top-bottom: 24px;
+  --back-to-top-bottom: var(--spacing-lg);
+  --back-to-top-right-desktop: var(--spacing-xl);
+  --back-to-top-right-tablet: var(--spacing-lg);
+  --back-to-top-right-mobile: var(--spacing-md);
+  --back-to-top-right-small: var(--spacing-md);
+  --back-to-top-gap: var(--spacing-xs);
 }
 
 /* ============================================
@@ -37,11 +43,13 @@
 .back-to-top-button {
   display: flex;
   position: fixed;
-  right: 2rem;
+  right: var(--back-to-top-right-desktop);
   bottom: var(--back-to-top-bottom);
   z-index: var(--back-to-top-z-index);
   width: var(--back-to-top-size);
   height: var(--back-to-top-size);
+  min-width: var(--back-to-top-size-small); /* Ensure minimum touch target */
+  min-height: var(--back-to-top-size-small);
   border: none;
   background: linear-gradient(
     135deg,
@@ -54,13 +62,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  border-radius: 50%;
+  gap: var(--back-to-top-gap);
+  border-radius: var(--radius-full);
   cursor: pointer;
   box-shadow:
     0 4px 16px var(--color-accent-alpha-40),
-    0 8px 32px var(--color-accent-alt-alpha-30),
-    0 0 0 0 var(--color-accent-alpha-50);
+    0 8px 32px var(--color-accent-alt-alpha-30);
   font-family: var(--font-main);
   outline: none;
   will-change: transform, opacity, box-shadow;
@@ -78,9 +85,17 @@
 }
 
 .back-to-top-button:not(.visible) {
+  visibility: hidden; /* Better for accessibility */
   opacity: 0;
   transform: translateY(20px) scale(0.8);
   pointer-events: none;
+}
+
+.back-to-top-button:disabled {
+  cursor: not-allowed;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }
 
 @keyframes back-to-top-fade-in {
@@ -123,17 +138,18 @@
    Focus States (Accessibility)
    ============================================ */
 .back-to-top-button:focus-visible {
-  outline: 3px solid var(--back-to-top-primary);
-  outline-offset: 4px;
-  border-radius: 50%;
+  outline: 2px solid var(--back-to-top-primary);
+  outline-offset: var(--spacing-xs);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-focus);
 }
 
 /* ============================================
    Icon & Text
    ============================================ */
 .back-to-top-icon {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--font-size-title-component, 1.5rem);
+  font-weight: var(--font-weight-title);
   line-height: 1;
   transition: transform var(--transition-base);
   filter: drop-shadow(0 2px 4px var(--color-black-alpha-20));
@@ -144,12 +160,12 @@
 }
 
 .back-to-top-text {
-  font-size: 0.625rem;
-  font-weight: 600;
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.05em; /* Standardized from 0.5px to em */
   text-transform: uppercase;
   line-height: 1;
-  opacity: 0.9;
+  opacity: var(--opacity-hover);
   transition: opacity var(--transition-base);
 }
 
@@ -160,20 +176,22 @@
 /* ============================================
    Responsive Design - Tablet
    ============================================ */
-@media screen and (width <= 992px) {
+@media screen and (width <= 1024px) {
   .back-to-top-button {
-    right: 1.5rem;
+    right: var(--back-to-top-right-tablet);
     bottom: var(--back-to-top-bottom);
     width: var(--back-to-top-size-mobile);
     height: var(--back-to-top-size-mobile);
+    min-width: var(--back-to-top-size-small);
+    min-height: var(--back-to-top-size-small);
   }
 
   .back-to-top-icon {
-    font-size: 1.25rem;
+    font-size: var(--font-size-subtitle, 1.1rem);
   }
 
   .back-to-top-text {
-    font-size: 0.5625rem;
+    font-size: calc(var(--font-size-xs) * 0.75);
   }
 }
 
@@ -182,18 +200,20 @@
    ============================================ */
 @media screen and (width <= 768px) {
   .back-to-top-button {
-    right: 1.25rem;
+    right: var(--back-to-top-right-mobile);
     bottom: var(--back-to-top-bottom);
     width: var(--back-to-top-size-mobile);
     height: var(--back-to-top-size-mobile);
+    min-width: var(--back-to-top-size-small);
+    min-height: var(--back-to-top-size-small);
   }
 
   .back-to-top-icon {
-    font-size: 1.125rem;
+    font-size: calc(var(--font-size-subtitle) * 0.9);
   }
 
   .back-to-top-text {
-    font-size: 0.5rem;
+    font-size: calc(var(--font-size-xs) * 0.67);
   }
 }
 
@@ -202,18 +222,20 @@
    ============================================ */
 @media screen and (width <= 480px) {
   .back-to-top-button {
-    right: 1rem;
+    right: var(--back-to-top-right-small);
     bottom: var(--back-to-top-bottom);
-    width: 44px;
-    height: 44px;
+    width: var(--back-to-top-size-small);
+    height: var(--back-to-top-size-small);
+    min-width: var(--back-to-top-size-small);
+    min-height: var(--back-to-top-size-small);
   }
 
   .back-to-top-icon {
-    font-size: 1rem;
+    font-size: var(--font-size-subtitle, 1rem);
   }
 
   .back-to-top-text {
-    font-size: 0.4375rem;
+    font-size: calc(var(--font-size-xs) * 0.58);
   }
 }
 
@@ -222,7 +244,7 @@
    ============================================ */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .back-to-top-button {
-    right: 1rem;
+    right: var(--back-to-top-right-small);
     bottom: var(--back-to-top-bottom);
   }
 }

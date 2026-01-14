@@ -1,16 +1,22 @@
 /**
  * Project Grid Component
- * Grid container for displaying projects
- * 
+ * Grid container for displaying projects with Carousel support
+ *
  * Principles Applied:
  * - Single Responsibility Principle (SRP)
  * - DRY (Don't Repeat Yourself)
  * - KISS (Keep It Simple, Stupid)
+ * - OOP: Uses reusable Carousel component
  */
 
 import React, { PureComponent, ReactNode } from "react";
 import { IProject } from "../../../models/project-model";
 import { ProjectCard } from "./ProjectCard";
+import { Carousel, ICarouselItem } from "../ui/carousel";
+import {
+  ResponsiveStateManager,
+  isMobileOrTablet,
+} from "../../../utils/responsive-utils";
 
 /**
  * Project Grid Props
@@ -21,24 +27,48 @@ interface ProjectGridProps {
   onVisibilityChange: (key: string, visible: boolean) => void;
   onLinkClick?: (url: string, type: string) => void;
   className?: string;
-  layout?: "grid" | "masonry" | "list";
+  layout?: "grid" | "masonry" | "list" | "carousel";
 }
 
 /**
  * Project Grid Component
  * PureComponent for performance optimization
+ * Uses Carousel component for horizontal scrolling on mobile/tablet
  */
 export class ProjectGrid extends PureComponent<ProjectGridProps> {
+  private responsiveManager = new ResponsiveStateManager();
+  private isMobileState: boolean = false;
+
   static defaultProps: Partial<ProjectGridProps> = {
     className: "",
-    layout: "grid",
+    layout: "carousel",
   };
+
+  /**
+   * Component Did Mount
+   * Initialize responsive state
+   */
+  componentDidMount(): void {
+    this.isMobileState = isMobileOrTablet();
+    this.responsiveManager.initialize((isMobile) => {
+      this.isMobileState = isMobile;
+      this.forceUpdate();
+    });
+  }
+
+  /**
+   * Component Will Unmount
+   * Cleanup responsive listener
+   */
+  componentWillUnmount(): void {
+    this.responsiveManager.cleanup();
+  }
 
   /**
    * Get grid class names
    */
   private getClassNames(): string {
-    const { className = "", layout = "grid" } = this.props;
+    const { className = "", layout = "carousel" } = this.props;
     const classes = [
       "project-grid",
       `project-grid-layout-${layout}`,
@@ -48,7 +78,33 @@ export class ProjectGrid extends PureComponent<ProjectGridProps> {
   }
 
   /**
-   * Render project card
+   * Convert projects to carousel items
+   * Follows DRY principle
+   */
+  private convertToCarouselItems(): ICarouselItem[] {
+    const { projects, visibleProjects, onVisibilityChange, onLinkClick } =
+      this.props;
+
+    return projects.map((project, index) => {
+      const isVisible = visibleProjects.has(project.key);
+
+      return {
+        key: project.key,
+        content: (
+          <ProjectCard
+            project={project}
+            index={index}
+            isVisible={isVisible}
+            onVisibilityChange={onVisibilityChange}
+            onLinkClick={onLinkClick}
+          />
+        ),
+      };
+    });
+  }
+
+  /**
+   * Render project card (for non-carousel layouts)
    */
   private renderProjectCard(project: IProject, index: number): ReactNode {
     const { visibleProjects, onVisibilityChange, onLinkClick } = this.props;
@@ -67,20 +123,62 @@ export class ProjectGrid extends PureComponent<ProjectGridProps> {
   }
 
   /**
+   * Render carousel layout
+   */
+  private renderCarousel(): ReactNode {
+    const items = this.convertToCarouselItems();
+
+    if (items.length === 0) {
+      return null;
+    }
+
+    return (
+      <Carousel
+        items={items}
+        className={this.getClassNames()}
+        itemWidth={360}
+        gap={24}
+        showArrows={true}
+        showIndicators={true}
+        scrollSnap={true}
+        ariaLabel="Projects carousel"
+        emptyMessage="No projects available"
+        emptyIcon="🚀"
+      />
+    );
+  }
+
+  /**
+   * Render grid layout (desktop)
+   */
+  private renderGrid(): ReactNode {
+    const { projects } = this.props;
+
+    return (
+      <div className={this.getClassNames()} role="list" aria-label="Projects">
+        {projects.map((project, index) =>
+          this.renderProjectCard(project, index),
+        )}
+      </div>
+    );
+  }
+
+  /**
    * Main render method
    */
   public render(): ReactNode {
-    const { projects } = this.props;
+    const { projects, layout = "carousel" } = this.props;
 
     if (!projects || projects.length === 0) {
       return null;
     }
 
-    return (
-      <div className={this.getClassNames()} role="list" aria-label="Projects">
-        {projects.map((project, index) => this.renderProjectCard(project, index))}
-      </div>
-    );
+    // Use carousel for mobile/tablet, grid for desktop
+    // Use responsive state manager for reactive updates
+    if (layout === "carousel" || this.isMobileState) {
+      return this.renderCarousel();
+    }
+
+    return this.renderGrid();
   }
 }
-

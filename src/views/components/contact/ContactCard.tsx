@@ -195,6 +195,7 @@ export class ContactCard extends PureComponent<
 
     return (
       <button
+        type="button"
         className={`contact-card-copy ${isCopied ? "contact-card-copy--copied" : ""}`}
         onClick={this.handleCopyClick}
         aria-label={isCopied ? "Copied!" : `Copy ${contact.label}`}

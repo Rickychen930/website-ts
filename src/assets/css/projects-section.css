@@ -166,8 +166,9 @@
 .project-card-hovered {
   transform: translateY(-6px) scale(1.01); /* Reduced from -16px and 1.03 for subtler effect */
   box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.1),
+    0 12px 24px var(--color-black-alpha-10),
     0 0 0 1px var(--color-border-accent); /* Subtler shadow */
+
   border-color: var(--color-border-accent);
   background: var(--gradient-primary);
 }
@@ -957,7 +958,7 @@
 }
 
 /* Tablet */
-@media screen and (width <= 992px) {
+@media screen and (width <= 1024px) {
   /* Container removed - Card component handles styling */
 
   /* Override all layout variants to use horizontal scroll on mobile/tablet */

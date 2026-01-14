@@ -72,6 +72,8 @@ class ContactSection extends Component<
 > {
   private readonly controller: ContactController;
   private readonly MAX_ITEMS_TO_RENDER = 50;
+  private isMounted = false;
+  private copyTimeoutId: number | null = null;
 
   constructor(props: ContactSectionProps) {
     super(props);
@@ -94,7 +96,22 @@ class ContactSection extends Component<
    * Process data on mount
    */
   componentDidMount(): void {
+    this.isMounted = true;
     this.processData();
+  }
+
+  /**
+   * Component lifecycle - Unmount
+   * Cleanup resources to prevent memory leaks
+   */
+  componentWillUnmount(): void {
+    this.isMounted = false;
+
+    // Cleanup timeout if component unmounts before timeout completes
+    if (this.copyTimeoutId !== null) {
+      window.clearTimeout(this.copyTimeoutId);
+      this.copyTimeoutId = null;
+    }
   }
 
   /**
@@ -163,11 +180,20 @@ class ContactSection extends Component<
     const success = await this.controller.copyToClipboard(contact);
 
     if (success) {
+      // Clear any existing timeout before setting new one
+      if (this.copyTimeoutId !== null) {
+        window.clearTimeout(this.copyTimeoutId);
+        this.copyTimeoutId = null;
+      }
+
       this.setState({ copiedContact: contact.key });
       // Reset copied state after 2 seconds
       // Use window.setTimeout for better type safety
-      window.setTimeout(() => {
-        this.setState({ copiedContact: null });
+      this.copyTimeoutId = window.setTimeout(() => {
+        if (this.isMounted) {
+          this.setState({ copiedContact: null });
+        }
+        this.copyTimeoutId = null;
       }, 2000);
     }
 

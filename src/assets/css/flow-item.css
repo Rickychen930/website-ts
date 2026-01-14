@@ -56,7 +56,7 @@
 }
 
 .flow-item.flow-variant-minimal {
-  padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
+  padding: var(--spacing-lg) clamp(1.25rem, 2.5vw, 2rem);
   border: 1px solid var(--color-border-alpha-30);
   background: transparent;
   box-shadow: 0 2px 8px var(--shadow-alpha-05);
@@ -89,7 +89,7 @@
   z-index: 1;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .flow-icon-glow {
@@ -105,7 +105,7 @@
     var(--color-accent-alpha-08),
     transparent
   );
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   opacity: var(--opacity-0);
   transition: var(--transition-opacity);
   pointer-events: none;
@@ -189,11 +189,11 @@
 /* ============================================
    Responsive Design - Uses Core Breakpoints
    ============================================ */
-@media screen and (width <= 992px) {
+@media screen and (width <= 1024px) {
   .flow-item {
-    padding: 1.75rem clamp(1.25rem, 2.5vw, 2rem);
+    padding: var(--spacing-xl) clamp(1.25rem, 2.5vw, 2rem);
     border-radius: var(--radius-lg);
-    margin-bottom: 1.75rem;
+    margin-bottom: var(--spacing-xl);
   }
 
   .flow-icon {
@@ -282,7 +282,7 @@
 
 @media screen and (orientation: landscape) and (width <= 768px) {
   .flow-item {
-    padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
+    padding: var(--spacing-lg) clamp(1.25rem, 2.5vw, 2rem);
   }
 
   .flow-icon {
@@ -326,7 +326,7 @@
    ============================================ */
 @media print {
   .flow-item {
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
     border: 1px solid var(--color-border-light);
     opacity: var(--opacity-1);
     break-inside: avoid;

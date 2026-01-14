@@ -422,6 +422,7 @@ class NavbarContainer extends Component<
   private renderSearchButton(): ReactNode {
     return (
       <button
+        type="button"
         className="navbar-search-button"
         onClick={this.handleSearchClick}
         aria-label="Open search (Ctrl+K)"

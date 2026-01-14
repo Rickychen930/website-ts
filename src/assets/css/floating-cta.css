@@ -6,6 +6,7 @@
  * - KISS: Simple, clear structure
  * - OOP: Component-based organization
  * - SOLID: Single Responsibility - floating CTA styles only
+ * - Design System Compliant: All values use design system variables
  * 
  * Usage:
  * @import '@/assets/css/floating-cta.css';
@@ -14,19 +15,31 @@
 /* Import core system for constants and variables */
 @import url("./core/index.css");
 
+/* ============================================
+   Floating CTA Variables
+   ============================================ */
+:root {
+  --floating-cta-right-desktop: var(--spacing-xl);
+  --floating-cta-right-tablet: var(--spacing-lg);
+  --floating-cta-right-mobile: var(--spacing-md);
+  --floating-cta-right-small: var(--spacing-md);
+  --floating-cta-bottom: 80px; /* Fixed position above back-to-top button */
+  --floating-cta-gap: var(--spacing-sm);
+  --floating-cta-gap-mobile: var(--spacing-xs);
+  --floating-cta-z-index: var(--z-tooltip);
+}
+
 /* Floating CTA Container */
 .floating-cta {
   display: flex;
   position: fixed;
-  right: 2rem;
-
-  /* Position above Back to Top button with 24px (1.5rem) gap */
-  bottom: 80px;
-  z-index: 1000;
+  right: var(--floating-cta-right-desktop);
+  bottom: var(--floating-cta-bottom);
+  z-index: var(--floating-cta-z-index);
   transition: all var(--transition-smooth)
     var(--easing-spring, var(--transition-bounce));
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--floating-cta-gap);
   pointer-events: none;
   animation: slide-in-up var(--transition-smooth)
     var(--easing-spring, var(--transition-bounce));
@@ -52,16 +65,16 @@
 .floating-cta-button {
   display: flex;
   position: relative;
-  padding: 1rem 1.75rem;
+  padding: var(--spacing-md) var(--spacing-xl);
   border: none;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: var(--font-size-footer, 0.95rem);
+  font-weight: var(--font-weight-semibold);
   transition: all var(--transition-smooth)
     var(--easing-spring, var(--transition-bounce));
   letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   align-items: center;
-  gap: 0.625rem;
-  border-radius: 16px;
+  gap: var(--spacing-xs);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   box-shadow:
     0 8px 24px var(--color-black-alpha-12),
@@ -133,93 +146,94 @@
 
 /* Icon */
 .floating-cta-icon {
-  font-size: 1.2rem;
+  font-size: var(--icon-font-default, 1.2rem);
   line-height: 1;
 }
 
 /* Text */
 .floating-cta-text {
-  line-height: 1;
+  line-height: var(--line-height-tight);
 }
 
 /* Responsive Design - Tablet */
-@media screen and (width <= 992px) {
+@media screen and (width <= 1024px) {
   .floating-cta {
-    right: 1.5rem;
-    bottom: 80px;
+    right: var(--floating-cta-right-tablet);
+    bottom: var(--floating-cta-bottom);
   }
 }
 
 /* Responsive Design - Mobile */
 @media screen and (width <= 768px) {
   .floating-cta {
-    right: 1.25rem;
-    bottom: 80px;
-    gap: 0.625rem;
+    right: var(--floating-cta-right-mobile);
+    bottom: var(--floating-cta-bottom);
+    gap: var(--floating-cta-gap-mobile);
   }
 
   .floating-cta-button {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.9rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-small);
     min-width: 140px;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
   }
 
   .floating-cta-icon {
-    font-size: 1.1rem;
+    font-size: calc(var(--icon-font-default) * 0.92);
   }
 }
 
 /* Responsive Design - Small Mobile */
 @media screen and (width <= 480px) {
   .floating-cta {
-    right: 1rem;
-    bottom: 80px;
-    gap: 0.5rem;
+    right: var(--floating-cta-right-small);
+    bottom: var(--floating-cta-bottom);
+    gap: var(--spacing-xs);
   }
 
   .floating-cta-button {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.85rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: calc(var(--font-size-small) * 0.95);
     min-width: 130px;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
   }
 
   .floating-cta-icon {
-    font-size: 1rem;
+    font-size: var(--icon-font-default);
   }
 }
 
 /* Responsive Design - Extra Small Mobile */
 @media screen and (width <= 360px) {
   .floating-cta {
-    right: 0.75rem;
-    bottom: 80px;
+    right: var(--spacing-sm);
+    bottom: var(--floating-cta-bottom);
   }
 
   .floating-cta-button {
-    padding: 0.625rem 1rem;
-    font-size: 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-xs);
     min-width: 120px;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
   }
 
   .floating-cta-icon {
-    font-size: 0.95rem;
+    font-size: calc(var(--icon-font-default) * 0.95);
   }
 }
 
 /* Landscape Orientation */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .floating-cta {
-    bottom: 80px;
+    bottom: var(--floating-cta-bottom);
   }
 }
 
 /* Accessibility */
-.floating-cta-button:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+.floating-cta-button:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: var(--spacing-xs);
+  box-shadow: var(--shadow-focus);
 }
 
 .floating-cta-button:focus:not(:focus-visible) {

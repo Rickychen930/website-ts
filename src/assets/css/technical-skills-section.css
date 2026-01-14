@@ -416,7 +416,7 @@
 }
 
 /* ─── Responsive Design - Tablet (992px - 1199px) ─── */
-@media screen and (width <= 1199px) and (width >= 992px) {
+@media screen and (width <= 1199px) and (width >= 1024px) {
   .technical-skills-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: var(--skills-spacing-md, 1.5rem);

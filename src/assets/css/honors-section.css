@@ -340,7 +340,7 @@
 }
 
 /* ─── Responsive Design: Large Tablets ─── */
-@media screen and (width <= 1200px) and (width > 992px) {
+@media screen and (width <= 1200px) and (width > 1024px) {
   .honors-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
     gap: 1.75rem;
@@ -348,7 +348,7 @@
 }
 
 /* ─── Responsive Design: Tablets (768px - 991px) - HORIZONTAL SCROLL ─── */
-@media screen and (width <= 992px) {
+@media screen and (width <= 1024px) {
   /* FIXED: Allow horizontal scroll */
   #honors-section {
     position: relative;

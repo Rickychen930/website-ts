@@ -286,11 +286,11 @@
 }
 
 .container--narrow {
-  max-width: 800px; /* Fixed narrow width for specific use cases */
+  max-width: var(--spacing-card-max-width-narrow, 800px);
 }
 
 .container--wide {
-  max-width: 1400px; /* Fixed wide width for specific use cases */
+  max-width: var(--spacing-card-max-width-wide, 1400px);
 }
 
 /* ============================================

@@ -25,7 +25,11 @@ import { AcademicController } from "../../../controllers/academic-controller";
 import { AcademicModel, IAcademicItem } from "../../../models/academic-model";
 import { AcademicCard } from "../../components/academic/AcademicCard";
 import { AcademicTimeline } from "../../components/academic/AcademicTimeline";
-import { EmptyState } from "../../components/ui";
+import { EmptyState, Carousel, ICarouselItem } from "../../components/ui";
+import {
+  ResponsiveStateManager,
+  isMobileOrTablet,
+} from "../../../utils/responsive-utils";
 import { logWarn, logError } from "../../../utils/logger";
 
 /**
@@ -44,6 +48,7 @@ type AcademicState = {
   scrollDirection: "up" | "down";
   isInitialized: boolean;
   currentVisibleIndex: number;
+  isMobileOrTablet: boolean;
 };
 
 /**
@@ -87,6 +92,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   private scrollTimeoutId: number | null = null;
   private isMounted: boolean = false;
   private containerRef: RefObject<HTMLDivElement | null> = createRef();
+  private responsiveManager = new ResponsiveStateManager();
 
   constructor(props: AcademicProps) {
     super(props);
@@ -95,6 +101,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       scrollDirection: "down",
       isInitialized: false,
       currentVisibleIndex: -1,
+      isMobileOrTablet: isMobileOrTablet(),
     };
 
     // Initialize controller (MVC Pattern)
@@ -129,6 +136,11 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   componentDidMount(): void {
     this.isMounted = true;
 
+    // Initialize responsive state manager
+    this.responsiveManager.initialize((isMobile) => {
+      this.setState({ isMobileOrTablet: isMobile });
+    });
+
     // Edge case: Validate data exists before initializing
     if (
       !this.props.data ||
@@ -154,6 +166,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    */
   componentWillUnmount(): void {
     this.isMounted = false;
+    this.responsiveManager.cleanup();
     this.cleanup();
   }
 
@@ -474,8 +487,43 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   }
 
   /**
+   * Convert items to carousel items
+   * Follows DRY principle
+   */
+  private convertToCarouselItems(
+    sortedItems: IAcademicItem[],
+  ): ICarouselItem[] {
+    return sortedItems.map((item, index) => {
+      const { visibleItems } = this.state;
+      const refObj = this.itemRefs.get(item.key);
+      const isVisible = visibleItems.has(item.key);
+      const academicLevel = this.controller.getAcademicLevel(item.title);
+
+      return {
+        key: item.key,
+        content: (
+          <div
+            data-key={item.key}
+            data-visible={isVisible ? "true" : "false"}
+            ref={refObj}
+            className="academic-item-wrapper"
+          >
+            <AcademicCard
+              item={item}
+              index={index}
+              isVisible={isVisible}
+              academicLevel={academicLevel}
+            />
+          </div>
+        ),
+      };
+    });
+  }
+
+  /**
    * Render All Items
    * Main render logic with filtering for null items
+   * Uses Carousel for horizontal scrolling
    */
   private renderItems(): ReactNode {
     const { data } = this.props;
@@ -494,7 +542,35 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Get sorted items from model (MVC Pattern - using Model directly for data transformation)
     const sortedItems = AcademicModel.sortByPeriod(validItems);
 
-    // Render items
+    // Check if mobile/tablet for carousel layout
+    if (this.state.isMobileOrTablet) {
+      // Use Carousel for mobile/tablet
+      const carouselItems = this.convertToCarouselItems(sortedItems);
+
+      return (
+        <div className="academic-items-container" ref={this.containerRef}>
+          <AcademicTimeline
+            itemCount={sortedItems.length}
+            currentIndex={this.state.currentVisibleIndex}
+            isVisible={this.state.isInitialized}
+          />
+          <Carousel
+            items={carouselItems}
+            className="academic-items-carousel"
+            itemWidth={360}
+            gap={24}
+            showArrows={true}
+            showIndicators={true}
+            scrollSnap={true}
+            ariaLabel="Academic background carousel"
+            emptyMessage="No academic information available"
+            emptyIcon="🎓"
+          />
+        </div>
+      );
+    }
+
+    // Desktop: Use grid layout
     const renderedItems = sortedItems
       .map((item, index) => this.renderItem(item, index))
       .filter((item): item is ReactNode => item !== null);

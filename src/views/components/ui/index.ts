@@ -12,4 +12,5 @@ export { default as BackToTopButton } from "./back-to-top-button";
 export { ToastContainer, toast, toastManager } from "./toast";
 export type { Toast, ToastType } from "./toast";
 export { default as ThemeToggle } from "./theme-toggle";
-
+export { Carousel, default as CarouselDefault } from "./carousel";
+export type { ICarouselProps, ICarouselItem } from "./carousel";

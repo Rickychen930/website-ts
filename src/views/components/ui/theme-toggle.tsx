@@ -24,30 +24,56 @@ export class ThemeToggle extends Component<ThemeToggleProps, ThemeToggleState> {
     };
   }
 
+  private storageHandler?: (e: StorageEvent) => void;
+  private mediaQuery?: MediaQueryList;
+  private mediaQueryHandler?: () => void;
+
   componentDidMount(): void {
     // Listen for theme changes
     if (typeof window !== "undefined") {
-      const handleStorageChange = (e: StorageEvent) => {
+      this.storageHandler = (e: StorageEvent) => {
         if (e.key === "portfolio-theme") {
           this.setState({ theme: getTheme() });
         }
       };
 
-      window.addEventListener("storage", handleStorageChange);
-      
+      window.addEventListener("storage", this.storageHandler);
+
       // Also listen for system preference changes
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      const handleMediaChange = () => {
+      this.mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      this.mediaQueryHandler = () => {
         const currentTheme = getTheme();
         if (currentTheme === "auto") {
           this.setState({ theme: "auto" });
         }
       };
 
-      if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener("change", handleMediaChange);
-      } else {
-        mediaQuery.addListener(handleMediaChange);
+      if (this.mediaQuery.addEventListener) {
+        this.mediaQuery.addEventListener("change", this.mediaQueryHandler);
+      } else if (this.mediaQuery.addListener) {
+        // Fallback for older browsers
+        this.mediaQuery.addListener(this.mediaQueryHandler);
+      }
+    }
+  }
+
+  componentWillUnmount(): void {
+    // Cleanup event listeners to prevent memory leaks
+    if (typeof window !== "undefined") {
+      if (this.storageHandler) {
+        window.removeEventListener("storage", this.storageHandler);
+        this.storageHandler = undefined;
+      }
+
+      if (this.mediaQuery && this.mediaQueryHandler) {
+        if (this.mediaQuery.removeEventListener) {
+          this.mediaQuery.removeEventListener("change", this.mediaQueryHandler);
+        } else if (this.mediaQuery.removeListener) {
+          // Fallback for older browsers
+          this.mediaQuery.removeListener(this.mediaQueryHandler);
+        }
+        this.mediaQuery = undefined;
+        this.mediaQueryHandler = undefined;
       }
     }
   }
@@ -59,7 +85,7 @@ export class ThemeToggle extends Component<ThemeToggleProps, ThemeToggleState> {
 
   private getIcon(): string {
     const { theme } = this.state;
-    
+
     if (theme === "dark") {
       return "🌙";
     } else if (theme === "auto") {
@@ -71,7 +97,7 @@ export class ThemeToggle extends Component<ThemeToggleProps, ThemeToggleState> {
 
   private getLabel(): string {
     const { theme } = this.state;
-    
+
     if (theme === "dark") {
       return "Dark Mode";
     } else if (theme === "auto") {
@@ -111,4 +137,3 @@ export class ThemeToggle extends Component<ThemeToggleProps, ThemeToggleState> {
 }
 
 export default ThemeToggle;
-

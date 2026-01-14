@@ -877,7 +877,7 @@
 }
 
 /* ─── Responsive Design: Large Tablets (992px - 1199px) ─── */
-@media screen and (width <= 1199px) and (width >= 992px) {
+@media screen and (width <= 1199px) and (width >= 1024px) {
   .language-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--language-spacing-md);

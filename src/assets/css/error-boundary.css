@@ -38,7 +38,7 @@
 
 .error-boundary-icon {
   font-size: 4.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-lg);
   animation: shake var(--animation-duration-base) var(--transition-base);
 }
 
@@ -58,26 +58,23 @@
 }
 
 .error-boundary-title {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--spacing-md);
   color: var(--color-text-heading);
   font-size: 1.875rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-title);
   letter-spacing: -0.03em; /* Standardized from -0.5px to em */
 }
 
 .error-boundary-message {
-  margin: 0 0 2rem;
+  margin: 0 0 var(--spacing-xl);
   color: var(--color-text-subtle);
   font-size: 1.05rem;
-  line-height: var(
-    --line-height-relaxed,
-    1.75
-  ); /* Use variable instead of hardcoded */
+  line-height: var(--line-height-relaxed);
 }
 
 .error-boundary-details {
-  margin: 2rem 0;
-  padding: 1.5rem;
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
   border: 1px solid var(--color-border-default);
   background: var(--color-bg-lighter);
   text-align: left;
@@ -86,9 +83,9 @@
 
 .error-boundary-details summary {
   color: var(--color-text-heading);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
   user-select: none;
 }
 
@@ -96,31 +93,28 @@
   margin: 0;
   color: var(--color-text-subtle);
   font-size: 0.85rem;
-  line-height: var(
-    --line-height-normal,
-    1.5
-  ); /* Use variable instead of hardcoded */
+  line-height: var(--line-height-normal);
   overflow-x: auto;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-all;
-  font-family: var(--font-mono); /* Use CSS variable instead of hardcoded */
+  font-family: var(--font-mono);
 }
 
 .error-boundary-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-md);
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .error-boundary-button {
-  padding: 0.875rem 2rem;
+  padding: var(--spacing-sm) var(--spacing-xl);
   border: none;
   background: var(--color-accent-primary);
   color: var(--color-text-on-accent);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   transition: var(--transition-all);
   border-radius: var(--component-radius-button);
   cursor: pointer;
@@ -164,25 +158,22 @@
 }
 
 .error-boundary-help-text {
-  margin: 0 0 1.5rem;
+  margin: 0 0 var(--spacing-lg);
   color: var(--color-text-subtle);
-  font-size: 0.95rem;
-  line-height: var(
-    --line-height-normal,
-    1.5
-  ); /* Use variable instead of hardcoded */
+  font-size: var(--font-size-footer, 0.95rem);
+  line-height: var(--line-height-normal);
 }
 
 .error-boundary-stack-trace {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-xs);
   color: var(--color-text-muted);
 }
 
 /* Responsive Error Boundary */
 @media screen and (width <= 768px) {
   .error-boundary-content {
-    padding: 2.5rem 2rem;
+    padding: var(--spacing-2xl) var(--spacing-xl);
   }
 
   .error-boundary-icon {
@@ -205,11 +196,11 @@
 
 @media screen and (width <= 480px) {
   .error-boundary {
-    padding: 1.5rem 1rem;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   .error-boundary-content {
-    padding: 2rem 1.5rem;
+    padding: var(--spacing-xl) var(--spacing-lg);
   }
 
   .error-boundary-icon {
@@ -221,7 +212,7 @@
   }
 
   .error-boundary-message {
-    font-size: 0.95rem;
+    font-size: var(--font-size-footer, 0.95rem);
   }
 }
 

@@ -128,7 +128,7 @@
   transition: padding var(--timing-slow) var(--easing-premium);
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px; /* Reduced from 1400px for better consistency */
+  max-width: var(--spacing-card-max-width);
   gap: var(--spacing-lg);
   min-height: inherit;
 }
@@ -1159,6 +1159,7 @@
     --line-height-normal,
     1.5
   ); /* Use variable instead of hardcoded */
+
   flex: 1;
 }
 

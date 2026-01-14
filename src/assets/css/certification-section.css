@@ -65,7 +65,7 @@
   margin: 0;
   padding: 0;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2rem;
+  gap: var(--spacing-xl);
   list-style: none;
   max-width: 100%;
   perspective: 2000px;

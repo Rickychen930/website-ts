@@ -268,6 +268,7 @@
   --color-border-navbar: rgb(
     229 231 235 / 70%
   ); /* Increased from 60% for better visibility */
+
   --color-border-navbar-dropdown: rgb(229 231 235 / 80%);
   --color-border-glow: rgb(59 130 246 / 25%);
   --color-border-image: #e5e7eb;
@@ -514,6 +515,8 @@
   --spacing-card-padding-mobile: 1.75rem 1.25rem;
   --card-max-width: 1200px;
   --spacing-card-max-width: 1200px;
+  --spacing-card-max-width-narrow: 800px;
+  --spacing-card-max-width-wide: 1400px;
   --card-radius: 24px;
   --spacing-card-radius: 24px;
   --card-radius-alt: 20px;
@@ -887,6 +890,7 @@
   --color-border-navbar: rgb(
     71 85 105 / 65%
   ); /* Increased from 55% for better visibility in dark mode */
+
   --color-border-navbar-dropdown: rgb(71 85 105 / 65%);
   --color-border-glow: rgb(59 130 246 / 30%);
   --color-border-image: #475569;

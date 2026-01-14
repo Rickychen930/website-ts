@@ -1,0 +1,43 @@
+/**
+ * Carousel Design System Variables
+ * Standardized carousel dimensions and spacing
+ * 
+ * Design Principles:
+ * - Consistent item widths across all carousels
+ * - Standardized gaps using spacing system
+ * - Responsive scaling
+ * - Touch-friendly targets
+ */
+
+:root {
+  /* ─── Carousel Item Widths ─── */
+
+  /* Standard widths for different content types */
+  --carousel-item-width-xs: 280px; /* Small cards (soft skills) */
+  --carousel-item-width-sm: 300px; /* Medium cards (languages) */
+  --carousel-item-width-md: 340px; /* Standard cards (certifications) */
+  --carousel-item-width-lg: 360px; /* Large cards (projects) */
+  --carousel-item-width-xl: 380px; /* Extra large cards (testimonials, work exp) */
+
+  /* ─── Carousel Gaps ─── */
+
+  /* Standardized gaps using spacing system */
+  --carousel-gap-xs: var(--spacing-sm); /* 12px - Tight spacing */
+  --carousel-gap-sm: var(--spacing-md); /* 16px - Standard spacing */
+  --carousel-gap-md: var(--spacing-lg); /* 24px - Comfortable spacing */
+  --carousel-gap-lg: var(--spacing-xl); /* 32px - Spacious spacing */
+
+  /* ─── Carousel Arrow Sizes ─── */
+  --carousel-arrow-size-desktop: 48px; /* Desktop: 48px (meets 44px minimum) */
+  --carousel-arrow-size-tablet: 44px; /* Tablet: 44px (maintains touch target) */
+  --carousel-arrow-size-mobile: 44px; /* Mobile: 44px (maintains touch target) */
+
+  /* ─── Carousel Fade Gradient Widths ─── */
+  --carousel-fade-width-desktop: 60px;
+  --carousel-fade-width-tablet: 40px;
+  --carousel-fade-width-mobile: 30px;
+
+  /* ─── Carousel Padding ─── */
+  --carousel-padding-vertical: var(--spacing-md);
+  --carousel-padding-vertical-mobile: var(--spacing-sm);
+}

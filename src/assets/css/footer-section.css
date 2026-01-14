@@ -125,7 +125,7 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 clamp(1.5rem, 4vw, 3rem);
-  max-width: 1200px; /* Sync with other sections */
+  max-width: var(--spacing-card-max-width);
   box-sizing: border-box;
 }
 
@@ -413,7 +413,7 @@
    ============================================ */
 @media screen and (width >= 1400px) {
   .footer-container {
-    max-width: 1200px; /* Sync with other sections */
+    max-width: var(--spacing-card-max-width);
   }
 }
 
@@ -422,7 +422,7 @@
    ============================================ */
 @media screen and (width <= 1399px) {
   .footer-container {
-    max-width: 1200px; /* Sync with other sections */
+    max-width: var(--spacing-card-max-width);
   }
 }
 

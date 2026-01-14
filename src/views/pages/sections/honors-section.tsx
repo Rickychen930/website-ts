@@ -24,7 +24,7 @@ import { Card } from "../../components/common";
 import { HonorsController } from "../../../controllers/honors-controller";
 import { HonorsModel, IHonorItem } from "../../../models/honors-model";
 import { HonorCard } from "../../components/honors/HonorCard";
-import { EmptyState } from "../../components/ui";
+import { EmptyState, Carousel, ICarouselItem } from "../../components/ui";
 import { logError, logWarn } from "../../../utils/logger";
 
 /**
@@ -44,6 +44,7 @@ type HonorsState = {
   isInitialized: boolean;
   error: string | null;
   viewMode: "grid" | "timeline";
+  isMobileOrTablet: boolean;
 };
 
 /**
@@ -88,6 +89,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   private isMounted: boolean = false;
   private rafId: number | null = null;
   private containerRef: RefObject<HTMLDivElement | null> = createRef();
+  private responsiveManager = new ResponsiveStateManager();
 
   constructor(props: HonorsProps) {
     super(props);
@@ -97,6 +99,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
       isInitialized: false,
       error: null,
       viewMode: "grid",
+      isMobileOrTablet: isMobileOrTablet(),
     };
 
     // Initialize controller (MVC Pattern)
@@ -134,6 +137,11 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   componentDidMount(): void {
     this.isMounted = true;
 
+    // Initialize responsive state manager
+    this.responsiveManager.initialize((isMobile) => {
+      this.setState({ isMobileOrTablet: isMobile });
+    });
+
     try {
       this.setupIntersectionObserver();
       this.setupScrollListener();
@@ -154,6 +162,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   componentWillUnmount(): void {
     this.isMounted = false;
+    this.responsiveManager.cleanup();
     this.cleanup();
   }
 
@@ -473,8 +482,42 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   }
 
   /**
+   * Convert items to carousel items
+   * Follows DRY principle
+   */
+  private convertToCarouselItems(sortedItems: IHonorItem[]): ICarouselItem[] {
+    return sortedItems.map((item, index) => {
+      const { visibleItems } = this.state;
+      const refObj = this.itemRefs.get(item.key);
+      const isVisible = visibleItems.has(item.key);
+      const category = this.controller.getCategory(item);
+
+      return {
+        key: item.key,
+        content: (
+          <div
+            key={item.key}
+            data-key={item.key}
+            ref={refObj}
+            className="honors-grid__item"
+          >
+            <HonorCard
+              honor={item}
+              index={index}
+              isVisible={isVisible}
+              category={category}
+              onCardClick={this.handleCardClick}
+            />
+          </div>
+        ),
+      };
+    });
+  }
+
+  /**
    * Render All Items
    * Main render logic with proper list semantics
+   * Uses Carousel for horizontal scrolling
    */
   private renderItems(): ReactNode {
     const { data } = this.props;
@@ -495,6 +538,30 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Use data directly (already sorted if needed, or sort here)
     const sortedItems = HonorsModel.sortByDate(data);
 
+    // Check if mobile/tablet for carousel layout
+    if (this.state.isMobileOrTablet) {
+      // Use Carousel for mobile/tablet
+      const carouselItems = this.convertToCarouselItems(sortedItems);
+
+      return (
+        <div className="honors-container" ref={this.containerRef}>
+          <Carousel
+            items={carouselItems}
+            className="honors-carousel"
+            itemWidth={340}
+            gap={24}
+            showArrows={true}
+            showIndicators={true}
+            scrollSnap={true}
+            ariaLabel="Honors and achievements carousel"
+            emptyMessage="No honors available"
+            emptyIcon="🏆"
+          />
+        </div>
+      );
+    }
+
+    // Desktop: Use grid layout
     return (
       <div
         className="honors-grid"

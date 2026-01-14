@@ -31,6 +31,7 @@ class ProfileAction extends Component<ProfileActionProps> {
         {...(download ? { download: true } : {})}
       >
         <button
+          type="button"
           className={`profile-btn ${variant === ButtonVariant.SECONDARY ? "secondary" : "primary"}`}
         >
           {label}

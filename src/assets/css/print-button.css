@@ -5,14 +5,14 @@
 .print-button {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
   border: 2px solid var(--color-border-default);
   background: var(--color-bg-card);
   color: var(--color-text-main);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-base);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all var(--transition-base);
   font-family: var(--font-main);
@@ -30,13 +30,14 @@
   transform: translateY(0);
 }
 
-.print-button:focus {
+.print-button:focus-visible {
   outline: 2px solid var(--color-accent-primary);
-  outline-offset: 2px;
+  outline-offset: var(--spacing-xs);
+  box-shadow: var(--shadow-focus);
 }
 
 .print-icon {
-  font-size: 1.2rem;
+  font-size: var(--icon-font-default, 1.2rem);
 }
 
 .print-label {
@@ -53,7 +54,7 @@
 /* Responsive */
 @media (width <= 768px) {
   .print-button {
-    padding: 0.4rem 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-small);
   }
 }

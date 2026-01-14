@@ -81,8 +81,9 @@
 .card:focus-within {
   transform: translateY(-4px); /* Reduced from -6px for subtler effect */
   box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.1),
+    0 12px 24px var(--color-black-alpha-10),
     0 0 0 1px var(--color-border-accent); /* Subtler shadow */
+
   border-color: var(--color-border-accent);
   background: var(--color-bg-card-hover);
 }
@@ -97,7 +98,7 @@
    ============================================ */
 .card__header {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl);
   text-align: center;
 }
 
@@ -165,14 +166,14 @@
 /* ============================================
    Responsive Design
    ============================================ */
-@media screen and (width <= 992px) {
+@media screen and (width <= 1024px) {
   .card {
     padding: var(--spacing-card-padding-mobile);
     border-radius: var(--spacing-card-radius-mobile);
   }
 
   .card__header {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
   }
 
   .card__title {
@@ -184,14 +185,15 @@
   }
 
   .card__footer {
-    margin-top: 1.75rem;
-    padding-top: 1.75rem;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
   }
 }
 
 @media screen and (width <= 480px) {
   .card {
-    padding: 2rem clamp(1.5rem, 2.5vw, 2rem);
+    padding: var(--spacing-xl)
+      clamp(var(--spacing-lg), 2.5vw, var(--spacing-xl));
     border-radius: 20px;
   }
 

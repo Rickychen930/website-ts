@@ -18,6 +18,23 @@
 @import url("../core/index.css");
 
 /* ============================================
+   Loading Variables
+   ============================================ */
+:root {
+  --loading-gap-default: var(--spacing-md);
+  --loading-gap-mobile: var(--spacing-sm);
+  --loading-padding-default: var(--spacing-xl);
+  --loading-padding-mobile: var(--spacing-lg);
+  --loading-padding-small: var(--spacing-sm);
+  --loading-min-height-default: 200px;
+  --loading-min-height-mobile: 150px;
+  --loading-spinner-size-default: 3rem;
+  --loading-spinner-size-small: 2rem;
+  --loading-spinner-size-large: 4rem;
+  --loading-spinner-size-inline: 1.5rem;
+}
+
+/* ============================================
    Block: Loading
    ============================================ */
 .loading {
@@ -25,20 +42,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  min-height: 200px;
+  gap: var(--loading-gap-default);
+  padding: var(--loading-padding-default);
+  min-height: var(--loading-min-height-default);
 }
 
 /* ============================================
    Element: Loading Spinner
    ============================================ */
 .loading__spinner {
-  width: 3rem;
-  height: 3rem;
+  width: var(--loading-spinner-size-default);
+  height: var(--loading-spinner-size-default);
   border: 3px solid var(--color-border-light);
   border-top-color: var(--color-accent-primary);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   animation: loading-spin var(--animation-duration-slow, 0.9s)
     var(--easing-linear, linear) infinite;
 }
@@ -63,8 +80,8 @@
    Modifiers
    ============================================ */
 .loading--small .loading__spinner {
-  width: 2rem;
-  height: 2rem;
+  width: var(--loading-spinner-size-small);
+  height: var(--loading-spinner-size-small);
   border-width: 2px;
 }
 
@@ -73,8 +90,8 @@
 }
 
 .loading--large .loading__spinner {
-  width: 4rem;
-  height: 4rem;
+  width: var(--loading-spinner-size-large);
+  height: var(--loading-spinner-size-large);
   border-width: 4px;
 }
 
@@ -84,14 +101,14 @@
 
 .loading--inline {
   flex-direction: row;
-  padding: 0.5rem;
+  padding: var(--loading-padding-small);
   min-height: auto;
-  gap: 0.75rem;
+  gap: var(--spacing-sm);
 }
 
 .loading--inline .loading__spinner {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: var(--loading-spinner-size-inline);
+  height: var(--loading-spinner-size-inline);
   border-width: 2px;
 }
 
@@ -106,14 +123,14 @@
 /* Tablet and smaller (≤ 768px) */
 @media screen and (width <= 768px) {
   .loading {
-    padding: 1.5rem;
-    min-height: 150px;
-    gap: 0.875rem;
+    padding: var(--loading-padding-mobile);
+    min-height: var(--loading-min-height-mobile);
+    gap: var(--spacing-sm);
   }
 
   .loading__spinner {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: calc(var(--loading-spinner-size-default) * 0.83);
+    height: calc(var(--loading-spinner-size-default) * 0.83);
     border-width: 2.5px;
   }
 
@@ -122,33 +139,33 @@
   }
 
   .loading--small .loading__spinner {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: calc(var(--loading-spinner-size-small) * 0.875);
+    height: calc(var(--loading-spinner-size-small) * 0.875);
   }
 
   .loading--large .loading__spinner {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: calc(var(--loading-spinner-size-large) * 0.875);
+    height: calc(var(--loading-spinner-size-large) * 0.875);
     border-width: 3.5px;
   }
 
   .loading--inline .loading__spinner {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: calc(var(--loading-spinner-size-inline) * 0.83);
+    height: calc(var(--loading-spinner-size-inline) * 0.83);
   }
 }
 
 /* Mobile devices (≤ 480px) */
 @media screen and (width <= 480px) {
   .loading {
-    padding: 1.25rem;
+    padding: var(--spacing-md);
     min-height: 120px;
-    gap: 0.75rem;
+    gap: var(--spacing-sm);
   }
 
   .loading__spinner {
-    width: 2rem;
-    height: 2rem;
+    width: var(--loading-spinner-size-small);
+    height: var(--loading-spinner-size-small);
     border-width: 2px;
   }
 
@@ -157,8 +174,8 @@
   }
 
   .loading--small .loading__spinner {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: calc(var(--loading-spinner-size-small) * 0.75);
+    height: calc(var(--loading-spinner-size-small) * 0.75);
   }
 
   .loading--small .loading__text {
@@ -166,8 +183,8 @@
   }
 
   .loading--large .loading__spinner {
-    width: 3rem;
-    height: 3rem;
+    width: calc(var(--loading-spinner-size-large) * 0.75);
+    height: calc(var(--loading-spinner-size-large) * 0.75);
     border-width: 3px;
   }
 
@@ -176,13 +193,13 @@
   }
 
   .loading--inline {
-    padding: 0.5rem;
-    gap: 0.5rem;
+    padding: var(--loading-padding-small);
+    gap: var(--spacing-xs);
   }
 
   .loading--inline .loading__spinner {
-    width: 1rem;
-    height: 1rem;
+    width: calc(var(--loading-spinner-size-inline) * 0.67);
+    height: calc(var(--loading-spinner-size-inline) * 0.67);
   }
 
   .loading--inline .loading__text {
@@ -193,14 +210,14 @@
 /* Extra small mobile (≤ 360px) */
 @media screen and (width <= 360px) {
   .loading {
-    padding: 1rem;
+    padding: var(--spacing-md);
     min-height: 100px;
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
   }
 
   .loading__spinner {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: calc(var(--loading-spinner-size-small) * 0.875);
+    height: calc(var(--loading-spinner-size-small) * 0.875);
   }
 
   .loading__text {
@@ -208,25 +225,25 @@
   }
 
   .loading--small .loading__spinner {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: calc(var(--loading-spinner-size-small) * 0.625);
+    height: calc(var(--loading-spinner-size-small) * 0.625);
   }
 
   .loading--large .loading__spinner {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: calc(var(--loading-spinner-size-large) * 0.625);
+    height: calc(var(--loading-spinner-size-large) * 0.625);
   }
 }
 
 /* Landscape orientation (≤ 768px) */
 @media screen and (orientation: landscape) and (width <= 768px) {
   .loading {
-    padding: 1rem;
+    padding: var(--spacing-md);
     min-height: 100px;
   }
 
   .loading--inline {
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
   }
 }
 
