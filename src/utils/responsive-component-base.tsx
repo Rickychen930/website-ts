@@ -56,7 +56,10 @@ export abstract class ResponsiveComponentBase<P = {}, S = {}> extends Component<
     super.componentDidMount?.();
 
     this.responsiveManager.initialize((isMobile) => {
-      this.setState({ isMobileOrTablet: isMobile });
+      this.setState((prevState) => ({
+        ...prevState,
+        isMobileOrTablet: isMobile,
+      }));
     });
   }
 

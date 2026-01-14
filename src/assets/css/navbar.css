@@ -210,7 +210,9 @@
   position: relative;
   z-index: 1;
   background: var(--gradient-accent-full);
-  font-size: 2rem;
+  font-size: var(
+    --font-size-title
+  ); /* Standardized: uses typography variable */
   line-height: 1;
   transition: all var(--transition-base);
   align-items: center;
@@ -235,8 +237,14 @@
 .navbar-brand-text {
   position: relative;
   background: var(--gradient-text-premium);
-  font-size: 1.375rem; /* Reduced from 1.5rem */
-  font-weight: 700; /* Reduced from 800 */
+  font-size: clamp(
+    1.25rem,
+    2vw,
+    1.375rem
+  ); /* Standardized: responsive sizing */
+  font-weight: var(
+    --font-weight-title
+  ); /* Standardized: uses typography variable */
   transition: all var(--transition-base);
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -502,7 +510,7 @@
   z-index: 1;
   padding: 0.75rem 1.375rem;
   color: var(--color-text-heading);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base); /* Standardized: uses typography variable */
   font-weight: 600;
   transition: all var(--transition-smooth);
   align-items: center;
@@ -652,7 +660,7 @@
 }
 
 .navbar-link-icon {
-  font-size: 1rem;
+  font-size: var(--font-size-base); /* Standardized: uses typography variable */
   line-height: 1;
   transition: transform var(--transition-fast);
 }
@@ -691,7 +699,7 @@
   border: none;
   background: transparent;
   color: var(--color-text-heading);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base); /* Standardized: uses typography variable */
   font-weight: 600;
   transition: all var(--transition-smooth);
   align-items: center;
@@ -1086,7 +1094,7 @@
   position: relative;
   padding: 0.875rem 1.25rem;
   color: var(--color-text-heading);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base); /* Standardized: uses typography variable */
   font-weight: 500;
   opacity: var(--opacity-0);
   transition: var(--transition-all);
@@ -1194,7 +1202,7 @@
   z-index: 1;
   padding: 0.75rem 1.375rem;
   color: var(--color-text-heading);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base); /* Standardized: uses typography variable */
   font-weight: 600;
   transition: all var(--transition-smooth);
   align-items: center;
@@ -1497,7 +1505,9 @@
   .navbar-links.mobile li a {
     width: 100%;
     padding: 1rem 1.5rem;
-    font-size: 0.9375rem;
+    font-size: var(
+      --font-size-base
+    ); /* Standardized: uses typography variable */
     text-align: left;
     justify-content: flex-start;
     border-radius: var(--radius-md);
@@ -1548,11 +1558,19 @@
   }
 
   .navbar-brand-icon {
-    font-size: 1.75rem;
+    font-size: clamp(
+      1.5rem,
+      3vw,
+      1.75rem
+    ); /* Standardized: responsive sizing */
   }
 
   .navbar-brand-text {
-    font-size: 1.25rem;
+    font-size: clamp(
+      1.125rem,
+      2.5vw,
+      1.25rem
+    ); /* Standardized: responsive sizing */
   }
 
   .navbar-toggle {
@@ -1578,7 +1596,9 @@
 
   .navbar-links.mobile li a {
     padding: 0.875rem 1.25rem;
-    font-size: 0.875rem;
+    font-size: var(
+      --font-size-small
+    ); /* Standardized: uses typography variable */
   }
 }
 
@@ -1624,11 +1644,15 @@
   }
 
   .navbar-brand-icon {
-    font-size: 1.5rem;
+    font-size: clamp(
+      1.25rem,
+      2.5vw,
+      1.5rem
+    ); /* Standardized: responsive sizing */
   }
 
   .navbar-brand-text {
-    font-size: 1.125rem;
+    font-size: clamp(1rem, 2vw, 1.125rem); /* Standardized: responsive sizing */
   }
 
   .navbar-toggle {
@@ -1644,7 +1668,9 @@
 
   .navbar-links.mobile li a {
     padding: 0.75rem 1rem;
-    font-size: 0.8125rem;
+    font-size: var(
+      --font-size-small
+    ); /* Standardized: uses typography variable */
   }
 }
 
