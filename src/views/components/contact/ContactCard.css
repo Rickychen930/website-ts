@@ -14,36 +14,29 @@
 .contact-card {
   display: flex;
   position: relative;
-  padding: var(
-    --spacing-card-padding,
-    2.5rem clamp(1.5rem, 4vw, 3rem)
-  ); /* Use spacing variable */
-  border: 1px solid var(--color-white-alpha-30);
-  background: var(--color-white-alpha-70);
+  padding: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl))
+    clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+  border: 2px solid var(--color-border-light);
+  background: var(--color-bg-card);
   opacity: 0;
   transition:
-    opacity var(--transition-smooth),
     transform var(--transition-smooth),
-    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
-
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base),
+    background var(--transition-base);
   flex-direction: column;
-  -webkit-backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
-  backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(
-    --shadow-card,
-    0 6px 20px rgba(0, 0, 0, 0.05),
-    0 16px 40px rgba(0, 0, 0, 0.07),
-    0 32px 80px rgba(59, 130, 246, 0.06)
-  ); /* Use shadow variable */
+  backdrop-filter: blur(var(--blur-2xl));
+  border-radius: 32px; /* Modern bold radius */
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
   cursor: pointer;
   overflow: hidden;
   transform: translateY(20px);
-  will-change: transform, opacity; /* Removed after animation via JS */
+  will-change: transform, opacity;
   animation: contact-card-entrance var(--animation-duration-base)
     var(--transition-smooth) forwards;
-
-  /* Ensure proper touch target on mobile */
   min-height: 44px;
   contain: layout style paint;
   backface-visibility: hidden;
@@ -177,7 +170,7 @@
   z-index: calc(var(--z-base) + 3);
   width: 100%;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: var(--spacing-lg);
 }
 
 /* ─── Header ─── */
@@ -231,7 +224,7 @@
   width: 100%;
   text-align: center;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 /* ─── Label with Underline Animation ─── */
@@ -458,6 +451,7 @@
     0 4px 12px rgba(0, 0, 0, 0.07),
     0 8px 20px rgba(0, 0, 0, 0.08)
   ); /* Use shadow variable */
+
   outline: none;
 }
 
@@ -648,15 +642,18 @@
   }
 }
 
-/* ─── Active State ─── */
+/* ─── Enhanced Active State ─── */
 .contact-card--active {
   z-index: calc(var(--z-base) + 10);
-  background: var(--color-white-alpha-85);
-  transform: translateY(-2px); /* Reduced from -4px for subtler effect */
-  border-color: var(--color-accent-alpha-40);
+  background: var(--color-white-alpha-90);
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--color-accent-alpha-50);
   box-shadow:
-    0 4px 16px var(--color-accent-alpha-12),
-    /* Subtler shadow */ 0 2px 8px var(--color-black-alpha-06);
+    0 16px 48px var(--color-accent-alpha-20),
+    0 8px 24px var(--color-black-alpha-10),
+    0 0 0 1px var(--color-accent-alpha-40),
+    0 0 40px var(--color-accent-alpha-15),
+    inset 0 1px 0 var(--color-white-alpha-25);
 }
 
 .contact-card--active .contact-card-pattern {
@@ -798,6 +795,7 @@
       --spacing-card-padding-mobile,
       1.75rem 1.25rem
     ); /* Use spacing variable */
+
     border-radius: var(--radius-xl);
     max-width: 100%;
     box-sizing: border-box;
@@ -818,6 +816,7 @@
       --spacing-card-padding-mobile,
       1.75rem 1.25rem
     ); /* Use spacing variable */
+
     border-radius: var(--radius-lg);
   }
 }

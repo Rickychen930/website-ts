@@ -66,17 +66,20 @@
   position: relative;
   z-index: calc(var(--z-base) + 1);
   width: 100%;
-  padding: var(--work-spacing-lg, 1.75rem);
-  border: 1px solid var(--work-color-border, var(--color-border-light));
+  padding: clamp(var(--spacing-lg), 4vw, var(--spacing-xl));
+  border: 2px solid var(--work-color-border, var(--color-border-light));
   background: var(--work-color-bg-card, var(--color-bg-card));
-  transition: all var(--work-transition-base, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base),
+    background var(--transition-base);
   grid-column: 2;
-  border-radius: var(--radius-lg);
-  box-shadow: var(
-    --work-shadow-card,
-    0 2px 8px var(--color-black-alpha-04),
-    0 1px 3px var(--color-black-alpha-06)
-  );
+  border-radius: 32px; /* Modern bold radius */
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
   overflow: hidden;
   max-width: 100%;
   min-width: 0;
@@ -85,37 +88,51 @@
   flex-direction: column;
 }
 
-/* Subtle top accent line */
+/* Enhanced top accent line */
 .work-experience-card-content::before {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   z-index: calc(var(--z-base) + 2);
-  height: 3px;
+  height: 4px;
   background: linear-gradient(
     90deg,
-    var(--work-color-primary),
-    var(--work-color-secondary)
+    transparent,
+    var(--work-color-primary) 20%,
+    var(--work-color-secondary) 50%,
+    var(--work-color-primary) 80%,
+    transparent
   );
+  background-size: 200% 100%;
   opacity: 0;
-  transition: opacity var(--work-transition-fast, 0.3s) ease;
+  transition: opacity var(--work-transition-smooth, 0.4s) ease;
   content: "";
   border-radius: 16px 16px 0 0;
+  animation: work-accent-shimmer 3s ease infinite;
 }
 
-/* Professional hover effects */
+@keyframes work-accent-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Enhanced Professional hover effects */
 .work-experience-card:hover .work-experience-card-content {
-  transform: translateY(-4px);
-  box-shadow: var(
-    --work-shadow-card-hover,
-    0 8px 24px var(--color-black-alpha-08),
-    0 4px 12px var(--work-color-primary-alpha-12)
-  );
-  border-color: var(
-    --work-color-border-hover,
-    var(--work-color-primary-alpha-25)
-  );
+  transform: translateY(-10px) scale(1.02) rotateX(1deg);
+  box-shadow:
+    0 20px 80px var(--color-black-alpha-15),
+    0 32px 128px var(--color-black-alpha-12),
+    0 48px 192px var(--color-accent-alpha-20),
+    0 0 0 2px var(--color-accent-alpha-50);
+  border-color: var(--color-accent-primary);
+  background: var(--work-color-bg-card-hover, var(--color-bg-card-hover));
 }
 
 .work-experience-card:hover .work-experience-card-content::before {

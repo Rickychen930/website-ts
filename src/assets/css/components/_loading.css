@@ -42,22 +42,56 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--loading-gap-default);
-  padding: var(--loading-padding-default);
-  min-height: var(--loading-min-height-default);
+  gap: clamp(0.75rem, 2vw, 1rem);
+  padding: clamp(2rem, 5vw, 3rem);
+  min-height: clamp(150px, 25vw, 200px);
 }
 
 /* ============================================
    Element: Loading Spinner
    ============================================ */
 .loading__spinner {
-  width: var(--loading-spinner-size-default);
-  height: var(--loading-spinner-size-default);
+  position: relative;
+  width: clamp(2.5rem, 5vw, 3rem);
+  height: clamp(2.5rem, 5vw, 3rem);
   border: 3px solid var(--color-border-light);
   border-top-color: var(--color-accent-primary);
+  border-right-color: var(--color-accent-alpha-30);
   border-radius: var(--radius-full);
-  animation: loading-spin var(--animation-duration-slow, 0.9s)
-    var(--easing-linear, linear) infinite;
+  animation: loading-spin var(--animation-duration-slow) linear infinite;
+  will-change: transform;
+  box-shadow: 0 0 16px var(--color-accent-alpha-15);
+}
+
+.loading__spinner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(
+    circle,
+    var(--color-accent-primary),
+    var(--color-accent-primary)
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px var(--color-accent-alpha-60);
+  animation: loading-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
 }
 
 @keyframes loading-spin {
@@ -72,8 +106,10 @@
 .loading__text {
   margin: 0;
   color: var(--color-text-subtle);
-  font-size: var(--font-size-base);
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
   font-family: var(--font-main);
+  line-height: var(--line-height-normal);
+  letter-spacing: 0.01em;
 }
 
 /* ============================================

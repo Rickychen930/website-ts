@@ -24,15 +24,16 @@
   background: linear-gradient(
     90deg,
     var(--color-bg-lightest) 0%,
-    var(--color-bg-lighter) 40%,
-    var(--color-white-alpha-80) 50%,
-    var(--color-bg-lighter) 60%,
+    var(--color-bg-lighter) 35%,
+    var(--color-white-alpha-90) 50%,
+    var(--color-bg-lighter) 65%,
     var(--color-bg-lightest) 100%
   );
   background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
   border-radius: var(--radius-xs);
   overflow: hidden;
+  box-shadow: 0 1px 3px var(--color-black-alpha-05);
 }
 
 /* Dark mode support */

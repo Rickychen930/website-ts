@@ -68,8 +68,11 @@
   justify-content: center;
   border-radius: var(--radius-xl);
   box-shadow:
-    0 6px 20px var(--color-accent-alpha-15),
-    inset 0 1px 0 var(--color-white-alpha-70);
+    0 8px 32px var(--color-accent-alpha-20),
+    0 4px 16px var(--color-black-alpha-10),
+    0 2px 8px var(--color-black-alpha-08),
+    inset 0 2px 4px var(--color-white-alpha-75),
+    inset 0 -1px 2px var(--color-black-alpha-05);
   -webkit-backdrop-filter: blur(var(--blur-md));
   backdrop-filter: blur(var(--blur-md));
 }
@@ -78,7 +81,8 @@
 .soft-skill-icon-emoji {
   display: block;
   line-height: 1;
-  filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
+  filter: drop-shadow(0 4px 12px var(--color-black-alpha-15))
+    drop-shadow(0 2px 6px var(--color-accent-alpha-10));
   transition: transform var(--transition-fast) var(--transition-smooth);
 }
 
@@ -119,14 +123,20 @@
   0%,
   100% {
     box-shadow:
-      0 6px 20px var(--color-accent-alpha-15),
-      inset 0 1px 0 var(--color-white-alpha-70);
+      0 8px 32px var(--color-accent-alpha-20),
+      0 4px 16px var(--color-black-alpha-10),
+      0 2px 8px var(--color-black-alpha-08),
+      inset 0 2px 4px var(--color-white-alpha-75),
+      inset 0 -1px 2px var(--color-black-alpha-05);
   }
 
   50% {
     box-shadow:
-      0 8px 24px var(--color-accent-alpha-25),
-      inset 0 1px 0 var(--color-white-alpha-70);
+      0 12px 40px var(--color-accent-alpha-30),
+      0 6px 20px var(--color-black-alpha-12),
+      0 3px 10px var(--color-black-alpha-10),
+      inset 0 2px 4px var(--color-white-alpha-80),
+      inset 0 -1px 2px var(--color-accent-alpha-10);
   }
 }
 
@@ -136,8 +146,13 @@
   transform: scale(1.1) rotate(5deg);
   border-color: var(--color-accent-alpha-50);
   box-shadow:
-    0 12px 32px var(--color-accent-alpha-30),
-    inset 0 1px 0 var(--color-white-alpha-80);
+    0 16px 48px var(--color-accent-alpha-40),
+    0 8px 32px var(--color-accent-alpha-30),
+    0 4px 16px var(--color-black-alpha-15),
+    0 2px 8px var(--color-black-alpha-12),
+    inset 0 2px 4px var(--color-white-alpha-85),
+    inset 0 -1px 2px var(--color-accent-alpha-15),
+    0 0 0 2px var(--color-accent-alpha-20);
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-18),
@@ -148,6 +163,8 @@
 .soft-skill-icon-wrapper:hover .soft-skill-icon-emoji,
 .soft-skill-icon-wrapper:focus-within .soft-skill-icon-emoji {
   transform: scale(1.1);
+  filter: drop-shadow(0 6px 16px var(--color-black-alpha-20))
+    drop-shadow(0 3px 8px var(--color-accent-alpha-15));
 }
 
 /* Responsive Design */

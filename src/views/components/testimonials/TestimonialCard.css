@@ -19,9 +19,10 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 3vw, 2rem);
-  border: 1px solid var(--color-white-alpha-30);
-  background: var(--color-white-alpha-70);
+  padding: clamp(var(--spacing-lg), 4.5vw, var(--spacing-2xl))
+    clamp(var(--spacing-lg), 3.5vw, var(--spacing-2xl));
+  border: 2px solid var(--color-border-light);
+  background: var(--color-bg-card);
   opacity: 0;
   transition:
     opacity var(--transition-smooth),
@@ -31,13 +32,11 @@
   flex-direction: column;
   -webkit-backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
   backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(
-    --shadow-card,
-    0 6px 20px rgba(0, 0, 0, 0.05),
-    0 16px 40px rgba(0, 0, 0, 0.07),
-    0 32px 80px rgba(59, 130, 246, 0.06)
-  );
+  border-radius: 32px; /* Modern bold radius */
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
   cursor: pointer;
   overflow: hidden;
   transform: translateY(20px);
@@ -172,18 +171,17 @@
   pointer-events: none;
 }
 
-/* ─── Hover States ─── */
+/* ─── Enhanced Hover States ─── */
 .testimonial-card:hover,
 .testimonial-card--active {
-  transform: translateY(-12px) rotateX(var(--rotate-x, 0deg))
-    rotateY(var(--rotate-y, 0deg)) scale(1.02);
-  border-color: var(--color-accent-alpha-50);
-  background: var(--color-white-alpha-80);
+  transform: translateY(-10px) scale(1.02) rotateX(1deg);
+  border-color: var(--color-accent-primary);
+  background: var(--color-bg-card-hover);
   box-shadow:
-    0 20px 40px rgba(59, 130, 246, 0.15),
-    0 10px 20px rgba(0, 0, 0, 0.1),
-    0 0 0 1px var(--color-accent-alpha-20),
-    0 0 60px rgba(59, 130, 246, 0.1);
+    0 20px 80px var(--color-black-alpha-15),
+    0 32px 128px var(--color-black-alpha-12),
+    0 48px 192px var(--color-accent-alpha-20),
+    0 0 0 2px var(--color-accent-alpha-50);
 }
 
 .testimonial-card--active .testimonial-card-pattern,

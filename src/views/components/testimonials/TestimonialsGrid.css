@@ -21,9 +21,9 @@
   position: relative;
   width: 100%;
   padding: 0;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: var(--spacing-2xl, 32px);
-  margin-top: var(--spacing-2xl, 32px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)); /* More spacious */
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
   max-width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;

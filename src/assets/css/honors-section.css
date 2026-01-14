@@ -123,14 +123,16 @@
 .honors-grid {
   display: grid;
   position: relative;
-  z-index: var(--z-base, 1); /* Use z-index variable */
+  z-index: var(--z-base, 1);
   width: 100%;
   margin: 0;
-  padding: 0.75rem 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
-  gap: var(--spacing-xl, 2rem); /* Use spacing variable for consistency */
+  padding: clamp(var(--spacing-xl), 3vw, var(--spacing-2xl)) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+  gap: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)); /* More spacious */
   max-width: 100%;
   perspective: 2000px;
+  align-items: start;
+  box-sizing: border-box;
 }
 
 /* ─── Grid Item Wrapper with 3D Effect ─── */
@@ -151,7 +153,7 @@
 .honors-empty-state {
   display: flex;
   position: relative;
-  padding: 3.5rem 2rem;
+  padding: clamp(3rem, 6vw, 3.5rem) var(--spacing-xl);
   border: 1px solid var(--color-white-alpha-80);
   background: linear-gradient(
     135deg,
@@ -193,9 +195,9 @@
 .honors-empty-icon {
   position: relative;
   z-index: 1;
-  font-size: 4rem; /* Reduced from 5rem for consistency */
+  font-size: var(--font-size-title-large);
   opacity: 0.6; /* Reduced from 0.7 */
-  margin-bottom: 1.5rem; /* Reduced from 2rem */
+  margin-bottom: var(--spacing-lg);
   filter: drop-shadow(
     0 4px 8px var(--color-black-alpha-08)
   ); /* Subtler shadow */
@@ -204,13 +206,13 @@
 .honors-empty-title {
   position: relative;
   z-index: 1;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--spacing-md);
   background: linear-gradient(
     135deg,
     var(--color-text-heading) 0%,
     var(--color-text-muted) 100%
   );
-  font-size: 1.75rem;
+  font-size: var(--font-size-title-component);
   font-weight: 800;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -222,7 +224,7 @@
   z-index: 1;
   margin: 0;
   color: var(--color-text-light);
-  font-size: 1.1rem;
+  font-size: var(--font-size-subtitle);
   line-height: 1.7;
   max-width: 450px;
 }
@@ -231,7 +233,7 @@
 .honors-error-state {
   display: flex;
   position: relative;
-  padding: 3.5rem 2rem;
+  padding: clamp(3rem, 6vw, 3.5rem) var(--spacing-xl);
   border: 1px solid var(--color-error-alpha-30);
   background: linear-gradient(
     135deg,
@@ -254,18 +256,18 @@
 .honors-error-icon {
   position: relative;
   z-index: 1;
-  font-size: 4.5rem;
+  font-size: clamp(3.5rem, 7vw, 4.5rem);
   opacity: 0.8;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl);
   filter: drop-shadow(0 8px 16px var(--color-error-alpha-20));
 }
 
 .honors-error-title {
   position: relative;
   z-index: 1;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--spacing-md);
   color: var(--color-error);
-  font-size: 1.75rem;
+  font-size: var(--font-size-title-component);
   font-weight: 800;
   letter-spacing: -0.05em; /* Standardized from -0.8px to em for scalability */
 }
@@ -275,7 +277,7 @@
   z-index: 1;
   margin: 0;
   color: var(--color-text-light);
-  font-size: 1.1rem;
+  font-size: var(--font-size-subtitle);
   line-height: 1.7;
   max-width: 450px;
 }
@@ -343,256 +345,108 @@
 @media screen and (width <= 1200px) and (width > 1024px) {
   .honors-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
-    gap: 1.75rem;
+    gap: clamp(var(--spacing-lg), 3vw, var(--spacing-lg));
   }
 }
 
-/* ─── Responsive Design: Tablets (768px - 991px) - HORIZONTAL SCROLL ─── */
+/* ─── Responsive Design: Tablets (768px - 991px) - IMPROVED GRID LAYOUT ─── */
 @media screen and (width <= 1024px) {
-  /* FIXED: Allow horizontal scroll */
+  /* Improved: Use proper grid layout */
   #honors-section {
     position: relative;
     width: 100%;
     overflow: visible;
     max-width: 100%;
-    padding-bottom: 2rem;
+    padding-bottom: var(--spacing-xl);
   }
 
-  /* Horizontal scroll for grid on tablet */
+  /* Improved: Use proper grid layout */
   .honors-grid {
-    display: flex;
-    position: relative;
-    width: calc(100% + 3rem);
-    flex-direction: row;
-    gap: 1.5rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-    margin-left: calc(-1 * 1.5rem);
-    margin-right: calc(-1 * 1.5rem);
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    grid-template-columns: none;
-    scrollbar-width: thin;
-    scrollbar-color: var(--honors-gold) var(--color-black-alpha-08);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: var(--spacing-lg);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    align-items: start;
   }
 
-  .honors-grid > * {
-    flex: 0 0 calc(min(100%, 380px));
-    min-width: 340px;
-    max-width: 380px;
-    scroll-snap-align: start;
-  }
-
-  /* Enhanced scrollbar styling */
-  .honors-grid::-webkit-scrollbar {
-    height: 8px;
-    background: transparent;
-  }
-
-  .honors-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: 4px;
-    box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
-  }
-
-  .honors-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--honors-gold-light) 0%,
-      var(--honors-gold) 100%
-    );
-    border-radius: 4px;
-    transition: all var(--transition-base);
-    box-shadow:
-      0 2px 4px var(--color-warning-alpha-40),
-      inset 0 1px 0 var(--color-white-alpha-30);
-  }
-
-  .honors-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      90deg,
-      var(--honors-gold) 0%,
-      var(--honors-gold-light) 100%
-    );
-    box-shadow:
-      0 4px 8px var(--color-warning-alpha-50),
-      inset 0 1px 0 var(--color-white-alpha-40);
-    transform: scaleY(1.2);
-  }
-
-  /* Fade gradients at edges */
-  .honors-grid::before {
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 60px;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      var(--color-white-alpha-98) 0%,
-      transparent 100%
-    );
-    transition: opacity var(--transition-base);
-    content: "";
-    pointer-events: none;
-  }
-
-  #honors-section::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    width: 60px;
-    height: 100%;
-    background: linear-gradient(
-      270deg,
-      var(--color-white-alpha-98) 0%,
-      transparent 100%
-    );
-    content: "";
-    pointer-events: none;
-  }
-
-  /* Scroll hint indicator */
-  #honors-section::before {
-    display: flex;
-    position: absolute;
-    bottom: 0.25rem;
-    left: 50%;
-    z-index: 5;
-    color: var(--color-text-subtle);
-    font-size: 0.75rem;
-    font-weight: 500;
-    opacity: 0.8;
-    transition: opacity var(--transition-base);
-    content: "← Swipe to see more →";
-    transform: translateX(-50%);
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  #honors-section:hover::before {
-    opacity: 0.4;
-  }
+  /* Grid layout - no scroll indicators needed */
 
   .honors-empty-state,
   .honors-error-state {
-    padding: 3rem 1.5rem;
-    min-height: 280px;
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    min-height: clamp(250px, 40vh, 280px);
   }
 
   .honors-empty-icon,
   .honors-error-icon {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+    font-size: var(--font-size-title-large);
+    margin-bottom: var(--spacing-lg);
   }
 
   .honors-empty-title,
   .honors-error-title {
-    font-size: 1.5rem;
+    font-size: var(--font-size-title-component);
   }
 
   .honors-empty-text,
   .honors-error-message {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
 }
 
 /* ─── Responsive Design: Small Tablets ─── */
 @media screen and (width <= 900px) and (width > 768px) {
   .honors-grid {
-    gap: 1.6rem;
-  }
-
-  .honors-grid > * {
-    min-width: 320px;
-    max-width: 360px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--spacing-xl);
+    align-items: start;
   }
 }
 
 /* ─── Responsive Design: Mobile (480px - 767px) ─── */
 @media screen and (width <= 768px) {
-  /* FIXED: Allow horizontal scroll */
+  /* Improved: Use proper grid layout */
   #honors-section {
     position: relative;
     width: 100%;
     overflow: visible;
     max-width: 100%;
-    padding-bottom: 2rem;
+    padding-bottom: var(--spacing-xl);
   }
 
   .honors-grid {
-    display: flex;
-    flex-direction: row;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    margin-left: calc(-1 * 1rem);
-    margin-right: calc(-1 * 1rem);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    width: calc(100% + 2rem);
-    gap: 1.5rem;
-    padding-bottom: 1rem;
-  }
-
-  .honors-grid > * {
-    flex: 0 0 calc(min(100%, 340px));
-    min-width: 300px;
-    max-width: 340px;
-    scroll-snap-align: start;
-  }
-
-  /* Scrollbar styling */
-  .honors-grid::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  .honors-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: 4px;
-  }
-
-  .honors-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--honors-gold-light) 0%,
-      var(--honors-gold) 100%
-    );
-    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--spacing-lg);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    align-items: start;
   }
 
   .honors-empty-state,
   .honors-error-state {
-    padding: 2.5rem 1.5rem;
-    min-height: 250px;
-    border-radius: 24px;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    min-height: clamp(220px, 35vh, 250px);
+    border-radius: var(--radius-2xl);
   }
 
   .honors-empty-icon,
   .honors-error-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1.25rem;
+    font-size: clamp(3rem, 6vw, 3.5rem);
+    margin-bottom: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
   }
 
   .honors-empty-title,
   .honors-error-title {
-    font-size: 1.4rem;
+    font-size: var(--font-size-title-component);
   }
 
   .honors-empty-text,
   .honors-error-message {
-    font-size: 0.95rem;
+    font-size: var(--font-size-small);
   }
 }
 
@@ -600,62 +454,43 @@
 @media screen and (width <= 640px) and (width > 480px) {
   #honors-section {
     overflow: visible;
-    padding-bottom: 2rem;
+    padding-bottom: var(--spacing-xl);
   }
 
   .honors-grid {
-    gap: 1.35rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-  }
-
-  .honors-grid > * {
-    flex: 0 0 calc(min(100%, 320px));
-    min-width: 280px;
-    max-width: 320px;
-    scroll-snap-align: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--spacing-lg);
+    align-items: start;
   }
 
   .honors-empty-state,
   .honors-error-state {
-    padding: 2.5rem 1.25rem;
-    min-height: 220px;
+    padding: var(--spacing-2xl)
+      clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+    min-height: clamp(200px, 30vh, 220px);
   }
 }
 
 /* ─── Responsive Design: Small Mobile (320px - 479px) ─── */
 @media screen and (width <= 480px) {
-  /* FIXED: Allow horizontal scroll */
+  /* Improved: Use proper grid layout */
   #honors-section {
     position: relative;
     width: 100%;
     overflow: visible;
     max-width: 100%;
     box-sizing: border-box;
-    padding-bottom: 2rem;
+    padding-bottom: var(--spacing-xl);
   }
 
   .honors-grid {
-    display: flex;
-    flex-direction: row;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    margin-left: 0;
-    margin-right: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--spacing-lg);
     width: 100%;
-    gap: 1.25rem;
-    padding: 0.5rem 1rem 1rem;
-  }
-
-  .honors-grid > * {
-    flex: 0 0 calc(min(100%, 320px));
-    min-width: 280px;
-    max-width: 320px;
-    scroll-snap-align: start;
+    margin: 0;
+    padding: 0;
+    align-items: start;
   }
 
   .honors-grid__item {
@@ -667,65 +502,52 @@
   .honors-empty-state,
   .honors-error-state {
     width: 100%;
-    padding: 2.5rem 1rem;
-    min-height: 250px;
-    border-radius: 20px;
+    padding: var(--spacing-2xl) var(--spacing-md);
+    min-height: clamp(220px, 35vh, 250px);
+    border-radius: var(--radius-xl);
     max-width: 100%;
     box-sizing: border-box;
   }
 
   .honors-empty-icon,
   .honors-error-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-md);
   }
 
   .honors-empty-title,
   .honors-error-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-subtitle);
   }
 
   .honors-empty-text,
   .honors-error-message {
-    padding: 0 0.5rem;
-    font-size: 0.9rem;
+    padding: 0 var(--spacing-xs);
+    font-size: var(--font-size-small);
     max-width: 100%;
   }
 }
 
 /* ─── Responsive Design: Extra Small Mobile ─── */
 @media screen and (width <= 360px) {
-  /* FIXED: Allow horizontal scroll */
+  /* Improved: Use proper grid layout */
   #honors-section {
     position: relative;
     width: 100%;
     overflow: visible;
     max-width: 100%;
     box-sizing: border-box;
-    padding-bottom: 2rem;
+    padding-bottom: var(--spacing-xl);
   }
 
   .honors-grid {
-    display: flex;
-    flex-direction: row;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
     width: 100%;
-    gap: 1rem;
-    padding-bottom: 1rem;
-  }
-
-  .honors-grid > * {
-    flex: 0 0 calc(min(100%, 300px));
-    min-width: 260px;
-    max-width: 300px;
-    scroll-snap-align: start;
+    margin: 0;
+    padding: 0;
+    align-items: start;
   }
 
   .honors-grid__item {
@@ -737,25 +559,25 @@
   .honors-empty-state,
   .honors-error-state {
     width: 100%;
-    padding: 2rem 0.9rem;
-    border-radius: 18px;
+    padding: var(--spacing-xl) clamp(var(--spacing-sm), 2vw, var(--spacing-md));
+    border-radius: var(--radius-lg);
     max-width: 100%;
     box-sizing: border-box;
   }
 
   .honors-empty-icon,
   .honors-error-icon {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
   }
 
   .honors-empty-title,
   .honors-error-title {
-    font-size: 1.15rem;
+    font-size: var(--font-size-body-large);
   }
 
   .honors-empty-text,
   .honors-error-message {
-    font-size: 0.85rem;
+    font-size: var(--font-size-small);
     max-width: 100%;
   }
 }
@@ -764,37 +586,23 @@
 @media screen and (orientation: landscape) and (width <= 768px) {
   #honors-section {
     overflow: visible;
-    padding-bottom: 2rem;
+    padding-bottom: var(--spacing-xl);
   }
 
   .honors-grid {
-    display: flex;
-    flex-direction: row;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    gap: 1.5rem;
-    padding-bottom: 1rem;
-  }
-
-  .honors-grid > * {
-    flex: 0 0 calc(min(100%, 320px));
-    min-width: 280px;
-    max-width: 320px;
-    scroll-snap-align: start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--spacing-lg);
+    align-items: start;
   }
 }
 
 /* ─── Responsive Design: Landscape Small Mobile ─── */
 @media screen and (orientation: landscape) and (width <= 640px) {
   .honors-grid {
-    gap: 1.25rem;
-  }
-
-  .honors-grid > * {
-    min-width: 260px;
-    max-width: 300px;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
   }
 }
 
@@ -838,7 +646,7 @@
 @media print {
   .honors-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: var(--spacing-md);
   }
 
   .honors-grid__item {

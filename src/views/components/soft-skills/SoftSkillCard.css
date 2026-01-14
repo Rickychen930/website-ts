@@ -6,24 +6,24 @@
 .soft-skill-card {
   display: flex;
   position: relative;
-  padding: 3.5rem clamp(2.5rem, 4vw, 3rem);
-  border: 2px solid var(--color-border-alpha-30);
-  background: linear-gradient(
-    135deg,
-    var(--color-white-alpha-95),
-    var(--color-bg-card-alt)
-  );
+  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
+    clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+  border: 2px solid var(--color-border-light);
+  background: var(--color-bg-card);
   text-align: center;
   opacity: 0;
-  transition: var(--transition-all);
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base),
+    background var(--transition-base);
   flex-direction: column;
   align-items: center;
-  border-radius: var(--radius-3xl);
+  border-radius: 32px; /* Modern bold radius */
   box-shadow:
-    0 10px 32px var(--color-black-alpha-06),
-    0 20px 64px var(--color-black-alpha-08),
-    0 40px 120px var(--color-accent-alpha-10),
-    inset 0 1px 0 var(--color-white-alpha-80);
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
   overflow: hidden;
   transform: translateY(30px);
   will-change: transform, opacity;
@@ -227,7 +227,7 @@
 /* Icon Wrapper with Enhanced Effects */
 .soft-skill-card-icon-wrapper {
   position: relative;
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--spacing-2xl);
   z-index: calc(var(--z-base) + 2);
 }
 
@@ -271,8 +271,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
   flex-wrap: wrap;
 }
 
@@ -285,12 +285,14 @@
     var(--accent-alt) 100%
   );
   color: var(--text-heading);
-  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
-  font-weight: 800;
-  line-height: 1.2;
-  transition: all var(--transition-smooth);
-  font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
-  letter-spacing: -0.8px;
+  font-size: var(--font-size-title-component);
+  font-weight: var(--font-weight-title);
+  line-height: var(--line-height-tight);
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-smooth);
+  font-family: var(--font-display);
+  letter-spacing: var(--font-title-spacing);
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 200%;
@@ -446,19 +448,17 @@
   animation-delay: 0.5s;
 }
 
-/* Hover States */
+/* Enhanced Hover States */
 .soft-skill-card:hover,
 .soft-skill-card:focus-within {
-  transform: translateY(-4px);
+  transform: translateY(-10px) scale(1.02) rotateX(1deg);
   box-shadow:
-    0 8px 24px var(--color-black-alpha-10),
-    0 4px 12px var(--color-accent-alpha-15);
-  border-color: var(--color-accent-alpha-50);
-  background: linear-gradient(
-    135deg,
-    var(--color-white),
-    var(--color-bg-card-alt)
-  );
+    0 20px 80px var(--color-black-alpha-15),
+    0 32px 128px var(--color-black-alpha-12),
+    0 48px 192px var(--color-accent-alpha-20),
+    0 0 0 2px var(--color-accent-alpha-50);
+  border-color: var(--color-accent-primary);
+  background: var(--color-bg-card-hover);
 }
 
 .soft-skill-card:hover .soft-skill-card-bg-gradient,

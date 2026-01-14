@@ -71,58 +71,262 @@
 /* ─── Loading State ─── */
 .soft-skills-loading {
   display: flex;
-  padding: var(--soft-skills-spacing-xxl, 3rem)
-    var(--soft-skills-spacing-lg, 2rem);
-  color: var(--color-text-secondary);
-  font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  text-align: center;
+  position: relative;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: clamp(var(--soft-skills-spacing-xxl), 6vw, 4rem)
+    clamp(var(--soft-skills-spacing-lg), 4vw, var(--soft-skills-spacing-xl));
+  text-align: center;
+  min-height: clamp(300px, 40vw, 400px);
+  gap: var(--soft-skills-spacing-lg);
+}
+
+.soft-skills-loading-spinner {
+  position: relative;
+  width: clamp(56px, 8vw, 72px);
+  height: clamp(56px, 8vw, 72px);
+  background: radial-gradient(
+    circle,
+    var(--soft-skills-color-primary-alpha-80) 0%,
+    var(--soft-skills-color-secondary-alpha-60) 100%
+  );
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px var(--soft-skills-color-primary-alpha-50),
+    0 0 40px var(--soft-skills-color-secondary-alpha-30),
+    inset 0 0 10px var(--color-white-alpha-20);
+}
+
+/* Multi-ring spinner for modern bold design */
+.soft-skills-loading-spinner::before,
+.soft-skills-loading-spinner::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  animation: spin 2s linear infinite;
+}
+
+.soft-skills-loading-spinner::before {
+  inset: 0;
+  border-top-color: var(--soft-skills-color-primary);
+  border-right-color: var(--soft-skills-color-primary-light);
+  box-shadow: 0 0 16px var(--soft-skills-color-primary-alpha-30);
+}
+
+.soft-skills-loading-spinner::after {
+  inset: 20%;
+  border-top-color: var(--soft-skills-color-secondary);
+  border-right-color: var(--soft-skills-color-secondary-alpha-20);
+  border-width: 3px;
+  animation-duration: 1.5s;
+  animation-direction: reverse;
+  box-shadow: 0 0 12px var(--soft-skills-color-secondary-alpha-25);
+}
+
+.soft-skills-loading-text {
+  margin: 0;
+  color: var(--soft-skills-color-text-primary);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   font-family: var(--soft-skills-font-main);
+  opacity: 0.8;
+  filter: drop-shadow(0 1px 3px var(--color-black-alpha-10));
+  animation: text-glow 2s ease-in-out infinite;
+}
+
+@keyframes text-glow {
+  0%,
+  100% {
+    opacity: 0.7;
+    text-shadow: 0 0 8px var(--soft-skills-color-primary-alpha-40);
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow:
+      0 0 16px var(--soft-skills-color-primary),
+      0 0 24px var(--soft-skills-color-secondary-alpha-50);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── Error State ─── */
 .soft-skills-error {
   display: flex;
+  position: relative;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--soft-skills-spacing-xxl, 3rem)
-    var(--soft-skills-spacing-lg, 2rem);
+  padding: clamp(var(--soft-skills-spacing-xxl), 6vw, 4rem)
+    clamp(var(--soft-skills-spacing-lg), 4vw, var(--soft-skills-spacing-xl));
   text-align: center;
+  min-height: clamp(300px, 40vw, 400px);
+  gap: var(--soft-skills-spacing-md);
+}
+
+.soft-skills-error-icon {
+  font-size: clamp(3.5rem, 7vw, 5rem);
+  margin-bottom: clamp(
+    var(--soft-skills-spacing-md),
+    3vw,
+    var(--soft-skills-spacing-lg)
+  );
+  opacity: 0.75;
+  filter: drop-shadow(0 4px 16px var(--color-error-alpha-40)) grayscale(0.05);
+  transition:
+    transform var(--soft-skills-transition-base),
+    opacity var(--soft-skills-transition-base),
+    filter var(--soft-skills-transition-base);
+  animation: error-shake 0.8s ease-in-out;
+  will-change: transform;
+}
+
+@keyframes error-shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateX(-8px) rotate(-3deg);
+  }
+
+  75% {
+    transform: translateX(8px) rotate(3deg);
+  }
+}
+
+.soft-skills-error-title {
+  margin: 0 0
+    clamp(var(--soft-skills-spacing-sm), 2vw, var(--soft-skills-spacing-md));
+  background: linear-gradient(
+    135deg,
+    var(--color-error) 0%,
+    var(--color-error-light) 50%,
+    var(--color-error) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  filter: drop-shadow(0 2px 8px var(--color-error-alpha-30));
+  animation: gradient-shift 6s ease infinite;
 }
 
 .soft-skills-error-text {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  font-weight: 500;
+  color: var(--soft-skills-color-text-secondary);
+  font-size: clamp(0.95rem, 2.5vw, 1.0625rem);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.8;
+  max-width: clamp(400px, 80vw, 550px);
   font-family: var(--soft-skills-font-main);
+  letter-spacing: 0.01em;
+  opacity: 0.75;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* ─── Empty State (Section Level) ─── */
 #soft-skills-section .soft-skills-empty {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--soft-skills-spacing-xxl, 3rem)
-    var(--soft-skills-spacing-lg, 2rem);
+  padding: clamp(var(--soft-skills-spacing-xxl), 6vw, 4rem)
+    clamp(var(--soft-skills-spacing-lg), 4vw, var(--soft-skills-spacing-xl));
   text-align: center;
+  min-height: clamp(300px, 40vw, 400px);
 }
 
 #soft-skills-section .soft-skills-empty-icon {
-  font-size: 4rem;
-  margin-bottom: var(--soft-skills-spacing-md, 1.5rem);
-  opacity: 0.6;
-  filter: grayscale(0.3);
+  font-size: clamp(4rem, 8vw, 6rem); /* Larger, bolder */
+  margin-bottom: clamp(
+    var(--soft-skills-spacing-md),
+    3vw,
+    var(--soft-skills-spacing-lg)
+  );
+  opacity: 0.7; /* More visible */
+  filter: drop-shadow(0 4px 12px var(--color-black-alpha-15)) grayscale(0.1);
+  transition:
+    transform var(--soft-skills-transition-base),
+    opacity var(--soft-skills-transition-base),
+    filter var(--soft-skills-transition-base);
+  animation: empty-state-float 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes empty-state-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+#soft-skills-section .soft-skills-empty-title {
+  margin: 0 0
+    clamp(var(--soft-skills-spacing-sm), 2vw, var(--soft-skills-spacing-md));
+  background: linear-gradient(
+    135deg,
+    var(--soft-skills-color-text-heading) 0%,
+    var(--soft-skills-color-primary) 35%,
+    var(--soft-skills-color-secondary) 50%,
+    var(--soft-skills-color-accent) 65%,
+    var(--soft-skills-color-text-heading) 100%
+  );
+  background-size: 300% 300%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  filter: drop-shadow(0 2px 8px var(--color-black-alpha-15));
+  animation: gradient-shift 8s ease infinite;
 }
 
 #soft-skills-section .soft-skills-empty-text {
   margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--soft-skills-font-size-subtitle, 1.1rem);
-  font-weight: 400;
+  color: var(--soft-skills-color-text-secondary);
+  font-size: clamp(1rem, 2.5vw, 1.125rem); /* Larger */
+  font-weight: var(--font-weight-medium);
+  line-height: 1.8; /* More relaxed */
+  max-width: clamp(400px, 80vw, 600px);
   font-family: var(--soft-skills-font-main);
+  letter-spacing: 0.01em;
+  opacity: 0.75; /* More visible */
 }
 
 /* ─── Responsive Design - Large Desktop (1400px+) ─── */
@@ -165,7 +369,7 @@
   }
 
   #soft-skills-section .soft-skills-empty-icon {
-    font-size: 3.75rem;
+    font-size: clamp(3rem, 6vw, 3.75rem);
     margin-bottom: var(--soft-skills-spacing-md, 1.5rem);
   }
 }
@@ -184,7 +388,7 @@
   }
 
   #soft-skills-section .soft-skills-empty-icon {
-    font-size: 3.5rem;
+    font-size: clamp(2.75rem, 5.5vw, 3.5rem);
     margin-bottom: var(--soft-skills-spacing-sm, 1rem);
   }
 }
@@ -202,7 +406,7 @@
   }
 
   #soft-skills-section .soft-skills-empty-icon {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 5vw, 3rem);
     margin-bottom: var(--soft-skills-spacing-sm, 1rem);
   }
 }
@@ -225,12 +429,12 @@
   }
 
   #soft-skills-section .soft-skills-empty-icon {
-    font-size: 2.75rem;
+    font-size: clamp(2.25rem, 4.5vw, 2.75rem);
     margin-bottom: var(--soft-skills-spacing-xs, 0.5rem);
   }
 
   #soft-skills-section .soft-skills-empty-text {
-    font-size: 0.95rem;
+    font-size: var(--font-size-small);
   }
 }
 
@@ -249,11 +453,11 @@
   }
 
   #soft-skills-section .soft-skills-empty-icon {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
   }
 
   #soft-skills-section .soft-skills-empty-text {
-    font-size: 0.9rem;
+    font-size: var(--font-size-small);
   }
 }
 

@@ -18,6 +18,25 @@
 @import url("./core/index.css");
 
 /* ============================================
+   Z-Index Hierarchy Documentation
+   ============================================
+   Z-index values follow this hierarchy (from core/_variables.css):
+   - Base: 1 (--z-base)
+   - Dropdown: 100 (--z-dropdown)
+   - Sticky: 200 (--z-sticky)
+   - Fixed: 300 (--z-fixed)
+   - Modal: 400 (--z-modal)
+   - Tooltip: 500 (--z-tooltip)
+   - Max: 9999 (--z-max)
+   
+   Main page specific:
+   - .main-page::after (grid pattern): z-index: 0
+   - .contents-section: z-index: 1 (--z-base)
+   - .section-block: z-index: auto (inherits from parent)
+   - .section-content: z-index: 2 (slightly above base)
+   ============================================ */
+
+/* ============================================
    Main Page Container - Professional & Modern Design
    Clean, Sophisticated Background
    ============================================ */
@@ -29,21 +48,30 @@
   min-height: 100vh;
   flex-direction: column;
 
-  /* Optimized: Reduced gradient layers for better performance */
+  /* Modern Bold Background System */
   background-image:
     radial-gradient(
-      circle at 20% 30%,
-      var(--color-accent-alpha-08) 0%,
-      transparent 50%
+      ellipse 120% 80% at 10% 20%,
+      var(--color-accent-alpha-15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 100% 100% at 90% 80%,
+      var(--color-accent-alt-alpha-12) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      var(--color-accent-secondary-alpha-08) 0%,
+      transparent 70%
     ),
     linear-gradient(
       180deg,
       var(--color-bg-dark) 0%,
-      var(--color-bg-dark-light) 50%,
+      var(--color-bg-dark-light) 30%,
+      var(--color-bg-dark-light) 70%,
       var(--color-bg-dark) 100%
     );
-
-  /* Removed second radial gradient for performance optimization */
   overflow-x: hidden;
   isolation: isolate;
 }
@@ -55,7 +83,7 @@
   display: none; /* Removed for better performance */
 }
 
-/* Subtle Grid Pattern - Minimal & Professional (Optimized) */
+/* Modern Dynamic Grid Pattern */
 .main-page::after {
   position: fixed;
   top: 0;
@@ -63,15 +91,17 @@
   z-index: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.06; /* Further reduced for better performance and subtlety */
+  opacity: 0.04;
   content: "";
   background-image:
     linear-gradient(var(--color-accent-alpha-015) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-accent-alpha-015) 1px, transparent 1px);
-  background-size: 100px 100px; /* Larger grid for better performance */
+  background-size: 120px 120px;
   pointer-events: none;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-  will-change: opacity; /* Performance optimization */
+  mask-image:
+    radial-gradient(ellipse 150% 100% at 0% 0%, black 0%, transparent 60%),
+    radial-gradient(ellipse 150% 100% at 100% 100%, black 0%, transparent 60%);
+  will-change: opacity;
 }
 
 /* Removed gridPulse animation untuk better performance */
@@ -82,15 +112,19 @@
 .contents-section {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-4xl) clamp(var(--spacing-lg), 5vw, var(--spacing-3xl))
-    var(--spacing-2xl);
+  padding: clamp(var(--spacing-4xl), 7vw, var(--spacing-5xl))
+    clamp(var(--spacing-2xl), 5vw, var(--spacing-4xl));
   flex: 1;
   flex-direction: column;
-  gap: var(--spacing-2xl);
-  max-width: var(--spacing-card-max-width);
+  gap: clamp(
+    var(--spacing-4xl),
+    8vw,
+    6rem
+  ); /* Optimized: Reduced from 8rem to 6rem for better flow */
+  max-width: 1400px; /* Wider for modern layout */
 }
 
 /* ============================================
@@ -98,33 +132,83 @@
    Enhanced with visual separators
    ============================================ */
 .section-block {
-  scroll-margin-top: var(--spacing-5xl);
   position: relative;
+  width: 100%;
   opacity: 0;
-  transform: translateY(30px);
+  scroll-margin-top: clamp(var(--spacing-5xl), 10vw, 7rem);
+  margin-bottom: 0;
+  transform: translateY(50px) scale(0.96);
+  filter: blur(5px);
   transition:
-    opacity var(--transition-slow),
-    transform var(--transition-slow);
-  margin-bottom: var(--spacing-4xl); /* Enhanced: better section separation */
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    filter var(--transition-smooth);
+  will-change: opacity, transform, filter;
 }
 
-/* Visual separator between sections - Subtle & Professional */
+/* Revealed state - Smooth scroll animation */
+.section-block.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  animation: section-reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: auto;
+}
+
+@keyframes section-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.99);
+    filter: blur(3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Bold Section Separator - Modern Design */
+
 .section-block:not(:last-child)::after {
   content: "";
   position: absolute;
-  bottom: calc(-1 * var(--spacing-2xl));
+  bottom: calc(-1 * var(--spacing-5xl) / 2);
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 2px;
+  width: clamp(200px, 20vw, 300px);
+  height: 4px;
   background: linear-gradient(
     90deg,
-    transparent,
-    var(--color-accent-alpha-30) 50%,
-    transparent
+    transparent 0%,
+    var(--color-accent-primary) 30%,
+    var(--color-accent-primary) 50%,
+    var(--color-accent-alt) 70%,
+    transparent 100%
   );
-  border-radius: 2px;
-  opacity: 0.6;
+  border-radius: var(--radius-full);
+  opacity: 0.8;
+  box-shadow:
+    0 0 24px var(--color-accent-alpha-50),
+    0 0 48px var(--color-accent-alpha-30),
+    0 0 72px var(--color-accent-alpha-15);
+  transition:
+    width var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    opacity var(--transition-base),
+    height var(--transition-smooth);
+}
+
+.section-block:not(:last-child):hover::after {
+  width: clamp(250px, 25vw, 380px);
+  height: 5px;
+  opacity: 1;
+  box-shadow:
+    0 0 32px var(--color-accent-alpha-60),
+    0 0 64px var(--color-accent-alpha-40),
+    0 0 96px var(--color-accent-alpha-25),
+    0 0 128px var(--color-accent-alpha-12);
 }
 
 /* Removed animation delays - handled by lazy-section component */
@@ -136,81 +220,245 @@
    ============================================ */
 .section-header {
   position: relative;
-  padding: var(--spacing-lg) 0; /* Standardized: 1.25rem → var(--spacing-lg) */
+  width: 100%;
+  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)) 0;
+  margin-bottom: clamp(var(--spacing-2xl), 6vw, var(--spacing-4xl));
+  padding-bottom: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+  border-bottom: none; /* Removed border for cleaner look */
   text-align: center;
-  margin-bottom: var(
-    --spacing-2xl
-  ); /* Standardized: 2.5rem → var(--spacing-2xl) */
+  box-sizing: border-box;
 }
 
 .section-title {
   display: inline-block;
   position: relative;
-  margin: 0 0 var(--spacing-md);
-  color: var(--color-text-heading);
-  font-size: var(
-    --font-size-title-responsive
-  ); /* Standardized: uses typography variable */
-
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-  transition: all var(--transition-fast);
-  letter-spacing: var(
-    --font-title-spacing
-  ); /* Standardized: uses typography variable */
-
+  width: auto;
+  margin: 0 0 clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+  background: linear-gradient(
+    135deg,
+    var(--color-text-heading) 0%,
+    var(--color-accent-primary) 35%,
+    var(--color-accent-alt) 50%,
+    var(--color-accent-secondary) 65%,
+    var(--color-text-heading) 100%
+  );
+  background-size: 400% 400%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Much larger, bold statement */
+  font-weight: 900; /* Ultra bold */
+  line-height: 1.1; /* Very tight for maximum impact */
+  text-align: center;
+  letter-spacing: -0.04em; /* Tighter for modern bold look */
   font-family: var(--font-display);
-  text-shadow: 0 1px 4px var(--color-black-alpha-10); /* Improved: subtler shadow for better readability */
+  filter: drop-shadow(0 6px 20px var(--color-black-alpha-20));
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-smooth);
+  animation: gradient-shift 10s ease infinite;
+  text-transform: uppercase; /* Bold modern statement */
 }
 
-/* Clean Underline - Minimal & Elegant */
-.section-title-underline {
-  position: relative;
-  width: 100px;
+/* ============================================
+   Section Visual Hierarchy - Primary vs Secondary
+   ============================================ */
+
+/* Primary Sections - More Prominent (About, Skills, Projects, Experience) */
+.section-block--primary {
+  padding: clamp(var(--spacing-3xl), 6vw, var(--spacing-4xl)) 0;
+}
+
+.section-block--primary .section-header {
+  margin-bottom: clamp(var(--spacing-3xl), 7vw, var(--spacing-5xl));
+}
+
+.section-block--primary .section-title {
+  font-size: clamp(2.75rem, 6.5vw, 4.25rem); /* Larger for primary sections */
+  font-weight: 900; /* Ultra bold */
+}
+
+.section-block--primary::after {
+  width: clamp(250px, 25vw, 350px); /* Wider separator */
+  height: 5px; /* Thicker */
+  box-shadow:
+    0 0 32px var(--color-accent-alpha-60),
+    0 0 64px var(--color-accent-alpha-40),
+    0 0 96px var(--color-accent-alpha-25),
+    0 0 128px var(--color-accent-alpha-15);
+}
+
+.section-block--primary:not(:last-child):hover::after {
+  width: clamp(300px, 30vw, 420px);
+  height: 6px;
+  box-shadow:
+    0 0 40px var(--color-accent-alpha-70),
+    0 0 80px var(--color-accent-alpha-50),
+    0 0 120px var(--color-accent-alpha-30),
+    0 0 160px var(--color-accent-alpha-20);
+}
+
+/* Secondary Sections - Reduced Visual Weight (Languages, Soft Skills, etc.) */
+.section-block--secondary {
+  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)) 0;
+  opacity: 0.98; /* Slightly reduced for hierarchy */
+}
+
+.section-block--secondary .section-header {
+  margin-bottom: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+}
+
+.section-block--secondary .section-title {
+  font-size: clamp(2.25rem, 5.5vw, 3.5rem); /* Slightly smaller */
+  font-weight: 800; /* Still bold but less than primary */
+  opacity: 0.95; /* Subtle reduction */
+}
+
+.section-block--secondary::after {
+  width: clamp(180px, 18vw, 260px); /* Narrower separator */
+  height: 3px; /* Thinner */
+  opacity: 0.7; /* More subtle */
+  box-shadow:
+    0 0 20px var(--color-accent-alpha-40),
+    0 0 40px var(--color-accent-alpha-25),
+    0 0 60px var(--color-accent-alpha-12);
+}
+
+.section-block--secondary:not(:last-child):hover::after {
+  width: clamp(220px, 22vw, 320px);
   height: 4px;
-  margin: 0 auto;
+  opacity: 0.85;
+}
+
+/* Section Groups - Visual Grouping for Related Sections */
+.section-group {
+  position: relative;
+  margin-bottom: clamp(var(--spacing-4xl), 8vw, 6rem);
+}
+
+.section-group::before {
+  content: "";
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  width: clamp(300px, 30vw, 450px);
+  height: 2px;
+  transform: translateX(-50%);
   background: linear-gradient(
     90deg,
-    transparent,
-    var(--color-accent-alpha-100),
-    var(--color-accent-alt-alpha-80),
-    transparent
+    transparent 0%,
+    var(--color-accent-primary) 20%,
+    var(--color-accent-alt) 50%,
+    var(--color-accent-primary) 80%,
+    transparent 100%
   );
-  transition: width var(--transition-smooth);
-  border-radius: 2px;
-  box-shadow: 0 0 12px var(--color-accent-glow);
+  border-radius: var(--radius-full);
+  opacity: 0.6;
+  box-shadow:
+    0 0 16px var(--color-accent-alpha-30),
+    0 0 32px var(--color-accent-alpha-20);
+}
+
+.section-group-title {
+  position: relative;
+  width: 100%;
+  margin: 0 0 clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl));
+  padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl)) 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-text-heading) 0%,
+    var(--color-accent-primary) 50%,
+    var(--color-text-heading) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  filter: drop-shadow(0 2px 6px var(--color-black-alpha-12));
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Reduced gap within groups */
+.section-group .section-block {
+  margin-bottom: clamp(var(--spacing-3xl), 6vw, var(--spacing-4xl));
+}
+
+.section-group .section-block:last-child {
+  margin-bottom: 0;
+}
+
+/* Bold Modern Underline */
+.section-title-underline {
+  position: relative;
+  width: clamp(180px, 25vw, 280px);
+  height: 6px;
+  margin: clamp(var(--spacing-lg), 3vw, var(--spacing-xl)) auto 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-accent-primary) 20%,
+    var(--color-accent-primary) 50%,
+    var(--color-accent-alt) 80%,
+    transparent 100%
+  );
+  transition:
+    width var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    transform var(--transition-fast),
+    height var(--transition-smooth);
+  border-radius: var(--radius-full);
+  box-shadow:
+    0 0 32px var(--color-accent-alpha-60),
+    0 0 64px var(--color-accent-alpha-35),
+    0 0 96px var(--color-accent-alpha-20),
+    inset 0 0 20px var(--color-accent-alpha-30);
 }
 
 .section-header:hover .section-title-underline {
-  width: 120px; /* Reduced from 140px */
-  box-shadow: 0 0 8px var(--color-accent-glow); /* Subtler glow */
+  width: clamp(220px, 30vw, 340px);
+  height: 8px;
+  box-shadow:
+    0 0 40px var(--color-accent-alpha-70),
+    0 0 80px var(--color-accent-alpha-45),
+    0 0 120px var(--color-accent-alpha-25),
+    inset 0 0 30px var(--color-accent-alpha-40);
+  transform: scaleY(1.4);
 }
 
 .section-content {
   position: relative;
-  z-index: 2;
-  margin: 0 auto; /* Center content */
-  padding: 1rem 0;
-  max-width: var(--spacing-card-max-width-narrow, 800px);
+  z-index: calc(var(--z-base) + 1);
+  width: 100%;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
+    clamp(var(--spacing-xl), 5vw, var(--spacing-4xl));
+  box-sizing: border-box;
 }
 
-/* Improve text readability */
+/* Enhanced text readability */
 .section-content p {
   color: var(--color-text-main);
-  font-size: var(--font-size-body); /* Standardized: uses typography variable */
-  line-height: var(
-    --line-height-relaxed
-  ); /* Standardized: uses typography variable */
-
-  letter-spacing: 0.01em;
+  font-size: clamp(1.05rem, 2vw, 1.15rem);
+  line-height: 1.85; /* More relaxed */
+  letter-spacing: 0.02em; /* Better spacing */
+  margin-bottom: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
 }
 
 .section-content h2,
 .section-content h3,
 .section-content h4 {
   color: var(--color-text-heading);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.5rem, 3.5vw, 2rem); /* Larger, bolder */
+  font-weight: 700; /* Bolder */
+  line-height: 1.3; /* Tighter */
+  letter-spacing: -0.02em; /* Tighter */
+  margin-top: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+  margin-bottom: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
 }
 
 @media screen and (width >= 1400px) {
@@ -226,12 +474,12 @@
   display: flex;
   position: relative;
   z-index: 1;
-  padding: 3rem 2rem;
+  padding: var(--spacing-3xl) var(--spacing-xl);
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  gap: 2rem;
+  gap: var(--spacing-xl);
 }
 
 .loading-spinner {
@@ -246,7 +494,7 @@
 /* Advanced Multi-ring Spinner */
 .spinner-ring {
   position: absolute;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   border: 4px solid transparent;
   animation: spin 2s linear infinite;
 }
@@ -286,6 +534,17 @@
   box-shadow: 0 0 10px var(--color-accent-secondary-alpha-25);
 }
 
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -302,7 +561,7 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: radial-gradient(
     circle,
     var(--color-accent-alpha-100),
@@ -332,6 +591,7 @@
   font-size: var(
     --font-size-small
   ); /* Standardized: uses typography variable */
+
   font-weight: 600;
   font-family: var(--font-main);
   text-transform: uppercase;
@@ -361,7 +621,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 3rem 2rem;
+  padding: var(--spacing-3xl) var(--spacing-xl);
   align-items: center;
   justify-content: center;
   min-height: 60vh;
@@ -380,7 +640,7 @@
   display: flex;
   position: relative;
   z-index: 1;
-  padding: 3rem 2rem;
+  padding: var(--spacing-3xl) var(--spacing-xl);
   align-items: center;
   justify-content: center;
   min-height: 60vh;
@@ -389,7 +649,7 @@
 .error-content {
   position: relative;
   width: 100%;
-  padding: 5rem 4rem;
+  padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
   text-align: center;
@@ -397,9 +657,10 @@
   backdrop-filter: blur(var(--blur-2xl));
   border-radius: var(--radius-3xl);
   box-shadow:
-    0 20px 60px var(--color-black-alpha-30),
-    0 0 0 1px var(--color-border-light),
-    inset 0 1px 0 var(--overlay-alpha-20);
+    0 24px 70px var(--color-black-alpha-35),
+    0 8px 24px var(--color-black-alpha-15),
+    0 0 0 1px var(--color-error-alpha-15),
+    inset 0 1px 0 var(--color-white-alpha-20);
   overflow: hidden;
 }
 
@@ -422,27 +683,28 @@
 .error-icon {
   display: inline-flex;
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: clamp(100px, 15vw, 140px);
+  height: clamp(100px, 15vw, 140px);
   background: linear-gradient(
     135deg,
     var(--color-error-light) 0%,
     transparent 100%
   );
-  font-size: clamp(3rem, 8vw, 5rem); /* Standardized: responsive sizing */
+  font-size: clamp(3rem, 8vw, 5.5rem);
   align-items: center;
   justify-content: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: clamp(2rem, 4vw, 2.5rem);
   animation: error-shake 0.8s ease-in-out;
-  filter: drop-shadow(0 0 20px var(--color-error));
-  border-radius: 50%;
+  filter: drop-shadow(0 0 24px var(--color-error-alpha-50));
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 40px var(--color-error-alpha-30);
 }
 
 .error-icon::before {
   content: "";
   position: absolute;
   inset: -4px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   border: 3px solid var(--color-error);
   opacity: 0.3;
   animation: error-pulse 2s ease-in-out infinite;
@@ -477,7 +739,7 @@
 }
 
 .error-title {
-  margin: 0 0 1.5rem;
+  margin: 0 0 var(--spacing-lg);
   color: var(--color-text-heading);
   font-size: var(
     --font-size-title-large
@@ -496,7 +758,7 @@
 }
 
 .error-message {
-  margin: 0 0 2.5rem;
+  margin: 0 0 var(--spacing-2xl);
   color: var(--color-text-main);
   font-size: var(
     --font-size-body-large
@@ -510,7 +772,7 @@
 }
 
 .error-retry-info {
-  margin: 0 0 2.5rem;
+  margin: 0 0 var(--spacing-2xl);
   color: var(--color-text-subtle);
   font-size: var(--font-size-body); /* Standardized: uses typography variable */
   font-style: italic;
@@ -519,7 +781,7 @@
 
 .error-retry-button {
   position: relative;
-  padding: 1.25rem 3rem;
+  padding: clamp(1.125rem, 2.5vw, 1.25rem) var(--spacing-3xl);
   border: none;
   background: linear-gradient(
     135deg,
@@ -531,6 +793,7 @@
   font-size: var(
     --font-size-small
   ); /* Standardized: uses typography variable */
+
   font-weight: 700;
   transition: var(--transition-all);
   border-radius: var(--radius-lg);
@@ -551,7 +814,7 @@
   left: 50%;
   width: 0;
   height: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--overlay-alpha-30);
   transform: translate(-50%, -50%);
   transition:
@@ -593,45 +856,61 @@
    ============================================ */
 @media screen and (width >= 1400px) {
   .contents-section {
-    gap: var(--spacing-4xl); /* Standardized: 4rem → var(--spacing-4xl) */
+    gap: clamp(var(--spacing-4xl), 8vw, 6rem); /* Optimized spacing */
     padding: var(--spacing-5xl)
-      clamp(var(--spacing-2xl), 6vw, var(--spacing-5xl)) var(--spacing-4xl); /* Standardized spacing */
+      clamp(var(--spacing-3xl), 7vw, var(--spacing-5xl)) var(--spacing-5xl);
+    max-width: 1600px; /* Wider for modern layout */
+  }
+
+  .section-block:not(:last-child)::after {
+    bottom: calc(-1 * clamp(var(--spacing-4xl), 8vw, 6rem) / 2);
+    width: clamp(250px, 22vw, 350px);
   }
 
   .section-header {
-    margin-bottom: var(
-      --spacing-3xl
-    ); /* Standardized: 3rem → var(--spacing-3xl) */
+    margin-bottom: var(--spacing-5xl);
+    padding: var(--spacing-4xl) 0;
   }
 
   .section-title {
-    font-size: var(
-      --font-size-title-responsive
-    ); /* Standardized: uses typography variable */
+    font-size: clamp(3rem, 7vw, 4.5rem); /* Much larger on big screens */
+  }
+
+  .section-block--primary .section-title {
+    font-size: clamp(3rem, 7.5vw, 4.5rem);
+  }
+
+  .section-block--secondary .section-title {
+    font-size: clamp(2.5rem, 6vw, 3.75rem);
   }
 }
 
 /* ============================================
-   Responsive Design - Tablet (992px - 1399px)
+   Responsive Design - Tablet (993px - 1399px)
+   Mobile-first approach: Base styles for mobile, then enhance for larger screens
    ============================================ */
-@media screen and (width <= 1399px) and (width >= 993px) {
+@media screen and (width >= 993px) and (width <= 1399px) {
   .contents-section {
     gap: var(--spacing-3xl); /* Standardized: 3.5rem → var(--spacing-3xl) */
     padding: var(--spacing-5xl)
       clamp(var(--spacing-xl), 4vw, var(--spacing-4xl)) var(--spacing-4xl); /* Standardized spacing */
   }
 
+  .section-block:not(:last-child)::after {
+    bottom: calc(-1 * var(--spacing-4xl) / 2); /* More spacious for tablet */
+  }
+
   .section-header {
-    margin-bottom: var(
-      --spacing-3xl
-    ); /* Standardized: 3rem → var(--spacing-3xl) */
+    margin-bottom: var(--spacing-4xl);
+    padding: var(--spacing-3xl) 0;
+    padding-bottom: var(--spacing-2xl);
   }
 }
 
 /* ============================================
-   Responsive Design - Tablet (768px - 1024px)
+   Responsive Design - Tablet (769px - 1024px)
    ============================================ */
-@media screen and (width <= 1024px) {
+@media screen and (width >= 769px) and (width <= 1024px) {
   .contents-section {
     gap: var(--spacing-3xl); /* Standardized: 3rem → var(--spacing-3xl) */
     padding: var(--spacing-5xl)
@@ -644,17 +923,23 @@
     ); /* Standardized: 6rem → var(--spacing-5xl) */
   }
 
-  .section-header {
-    margin-bottom: var(
-      --spacing-2xl
-    ); /* Standardized: 2.5rem → var(--spacing-2xl) */
+  .section-block:not(:last-child)::after {
+    bottom: calc(-1 * var(--spacing-3xl) / 2); /* Adjusted for tablet gap */
+    width: 80px; /* Slightly smaller on tablet */
+  }
 
-    padding: var(--spacing-lg) 0; /* Standardized: 1.25rem → var(--spacing-lg) */
+  .section-header {
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-2xl) 0;
+    padding-bottom: var(--spacing-xl);
   }
 
   .section-title {
-    font-size: clamp(1.5rem, 4vw, 2.25rem); /* Responsive: smaller on tablets */
-    margin-bottom: 1rem;
+    font-size: var(--font-size-title-responsive); /* Per Design Guideline */
+    margin-bottom: var(--spacing-md); /* Consistent spacing */
+    text-shadow:
+      0 2px 6px var(--color-black-alpha-12),
+      0 1px 3px var(--color-black-alpha-08); /* Adjusted for tablet */
   }
 
   .section-title-underline {
@@ -670,7 +955,7 @@
   .main-page-loading-skeleton,
   .main-page-error {
     min-height: 70vh;
-    padding: 3rem 1.5rem;
+    padding: var(--spacing-3xl) var(--spacing-lg);
   }
 
   .loading-spinner {
@@ -679,14 +964,15 @@
   }
 
   .error-content {
-    padding: 4rem 3rem;
+    padding: var(--spacing-4xl) var(--spacing-3xl);
   }
 
   /* Footer styles moved to footer-section.css */
 }
 
 /* ============================================
-   Responsive Design - Mobile (480px - 767px)
+   Responsive Design - Mobile (≤ 768px)
+   Base mobile styles - mobile-first approach
    ============================================ */
 @media screen and (width <= 768px) {
   .contents-section {
@@ -701,20 +987,62 @@
     ); /* Standardized: 5rem → var(--spacing-5xl) */
   }
 
+  .section-title {
+    font-size: clamp(1.5rem, 5vw, 2rem); /* Responsive: mobile optimized */
+    line-height: var(
+      --line-height-tight
+    ); /* Standardized: uses typography variable */
+    margin-bottom: var(--spacing-sm);
+    text-shadow:
+      0 2px 6px var(--color-black-alpha-12),
+      0 1px 3px var(--color-black-alpha-08); /* Adjusted for mobile */
+  }
+
+  .section-block--primary .section-title {
+    font-size: clamp(2rem, 6vw, 2.5rem);
+  }
+
+  .section-block--secondary .section-title {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+  }
+
+  .section-group::before {
+    top: -1.5rem;
+    width: clamp(200px, 40vw, 300px);
+  }
+
+  .section-group-title {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+
+  .section-block:not(:last-child)::after {
+    bottom: calc(-1 * var(--spacing-3xl) / 2); /* More spacious for mobile */
+    width: 70px; /* Smaller on mobile */
+  }
+
+  .section-content {
+    padding: clamp(0.875rem, 2.5vw, 1.25rem) clamp(0.75rem, 2.5vw, 1.5rem); /* Enhanced mobile padding */
+  }
+
+  .section-content p {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    line-height: 1.7;
+  }
+
+  .section-content h2,
+  .section-content h3,
+  .section-content h4 {
+    font-size: clamp(1.15rem, 3.5vw, 1.5rem);
+    margin-top: clamp(1.25rem, 3vw, 1.75rem);
+    margin-bottom: clamp(0.625rem, 1.5vw, 0.875rem);
+  }
+
   .section-header {
     margin-bottom: var(
       --spacing-xl
     ); /* Standardized: 2rem → var(--spacing-xl) */
-
-    padding: var(--spacing-md) 0; /* Standardized: 1rem → var(--spacing-md) */
-  }
-
-  .section-title {
-    font-size: clamp(1.5rem, 5vw, 2rem); /* Responsive: mobile optimized */
-    margin-bottom: var(--spacing-sm);
-    line-height: var(
-      --line-height-tight
-    ); /* Standardized: uses typography variable */
+    padding: var(--spacing-md) 0 var(--spacing-sm); /* Standardized: 1rem → var(--spacing-md) */
+    border-bottom: 1px solid var(--color-border-alpha-30); /* Consistent border */
   }
 
   .section-title-underline {
@@ -773,6 +1101,7 @@
     font-size: var(
       --font-size-body
     ); /* Standardized: uses typography variable */
+
     line-height: var(
       --line-height-relaxed
     ); /* Standardized: uses typography variable */
@@ -784,6 +1113,7 @@
     font-size: var(
       --font-size-small
     ); /* Standardized: uses typography variable */
+
     max-width: 100%;
     min-height: 44px; /* Touch target size */
   }
@@ -793,25 +1123,12 @@
 
 /* ============================================
    Responsive Design - Small Mobile (≤ 480px)
+   Enhanced mobile styles for smaller devices
    ============================================ */
 @media screen and (width <= 480px) {
   .contents-section {
     gap: var(--spacing-2xl); /* Standardized: 2.5rem → var(--spacing-2xl) */
     padding: var(--spacing-4xl) var(--spacing-lg) var(--spacing-2xl); /* Standardized spacing */
-  }
-
-  .section-block {
-    scroll-margin-top: var(
-      --spacing-4xl
-    ); /* Standardized: 4rem → var(--spacing-4xl) */
-  }
-
-  .section-header {
-    margin-bottom: var(
-      --spacing-xl
-    ); /* Standardized: 1.75rem → var(--spacing-xl) */
-
-    padding: var(--spacing-sm) 0; /* Standardized: 0.75rem → var(--spacing-sm) */
   }
 
   .section-title {
@@ -820,11 +1137,66 @@
       6vw,
       1.75rem
     ); /* Responsive: small mobile optimized */
-
-    margin-bottom: var(--spacing-sm);
     line-height: var(
       --line-height-tight
     ); /* Standardized: uses typography variable */
+    margin-bottom: var(--spacing-sm);
+    text-shadow:
+      0 1px 4px var(--color-black-alpha-10),
+      0 1px 2px var(--color-black-alpha-08); /* Adjusted for small mobile */
+  }
+
+  .section-block--primary .section-title {
+    font-size: clamp(1.75rem, 7vw, 2.25rem);
+  }
+
+  .section-block--secondary .section-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .section-group::before {
+    top: -1rem;
+    width: clamp(150px, 35vw, 250px);
+  }
+
+  .section-group-title {
+    font-size: clamp(1.125rem, 4.5vw, 1.375rem);
+  }
+
+  .section-block {
+    scroll-margin-top: var(
+      --spacing-4xl
+    ); /* Standardized: 4rem → var(--spacing-4xl) */
+  }
+
+  .section-block:not(:last-child)::after {
+    bottom: calc(
+      -1 * var(--spacing-3xl) / 2
+    ); /* More spacious for small mobile */
+    width: 60px; /* Even smaller on small mobile */
+  }
+
+  .section-content {
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1rem); /* Optimized small mobile padding */
+  }
+
+  .section-content p {
+    font-size: clamp(0.875rem, 2.5vw, 0.95rem);
+    line-height: 1.65;
+  }
+
+  .section-content h2,
+  .section-content h3,
+  .section-content h4 {
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    margin-top: clamp(1rem, 2.5vw, 1.5rem);
+    margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem);
+  }
+
+  .section-header {
+    margin-bottom: var(--spacing-2xl);
+    padding: var(--spacing-lg) 0;
+    padding-bottom: var(--spacing-md);
   }
 
   .section-title-underline {
@@ -899,7 +1271,7 @@
   .error-retry-button {
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-xl); /* Standardized spacing */
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     max-width: 100%;
     min-height: 44px; /* Touch target size */
   }

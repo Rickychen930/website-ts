@@ -79,10 +79,14 @@
   color: var(--color-accent-dark);
 }
 
-/* ─── Hover Effects ─── */
+/* ─── Enhanced Hover Effects ─── */
 .honor-badge:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-6px) scale(1.1) rotateX(1deg);
+  box-shadow:
+    0 16px 64px var(--color-black-alpha-20),
+    0 8px 32px var(--color-black-alpha-15),
+    0 4px 16px var(--color-black-alpha-10),
+    0 0 0 2px var(--color-accent-alpha-30);
 }
 
 /* ─── Responsive: Mobile ─── */

@@ -33,13 +33,17 @@
 
 .global-search-trigger:hover {
   background: var(--color-bg-card-hover);
-  border-color: var(--color-border-medium);
+  border-color: var(--color-accent-alpha-30);
   color: var(--color-text-main);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 6px 20px var(--color-black-alpha-12),
+    0 2px 8px var(--color-black-alpha-08),
+    0 0 0 1px var(--color-accent-alpha-15);
 }
 
 .global-search-trigger .search-icon {
-  font-size: 16px;
+  font-size: var(--font-size-base);
 }
 
 .global-search-trigger .search-placeholder {
@@ -57,55 +61,67 @@
   font-family: var(--font-mono);
 }
 
-/* Search Overlay */
+/* Enhanced Search Overlay */
 .global-search-overlay {
   display: flex;
   position: fixed;
   z-index: var(--z-modal);
-  padding: var(--spacing-xl);
-  background: var(--color-black-alpha-50);
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--color-black-alpha-60);
   inset: 0;
-  backdrop-filter: blur(var(--blur-xs));
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
   align-items: flex-start;
   justify-content: center;
-  animation: search-overlay-fade-in var(--transition-fast);
+  animation: search-overlay-fade-in var(--transition-smooth);
+  will-change: opacity;
 }
 
 @keyframes search-overlay-fade-in {
   from {
     opacity: 0;
+    backdrop-filter: blur(0);
   }
 
   to {
     opacity: 1;
+    backdrop-filter: blur(var(--blur-lg)) saturate(180%);
   }
 }
 
-/* Search Modal */
+/* Enhanced Search Modal */
 .global-search-modal {
   display: flex;
   width: 100%;
+  border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
-  max-width: 600px;
-  border-radius: var(--spacing-card-radius);
-  box-shadow: var(--shadow-xl);
-  margin-top: 10vh;
-  max-height: 80vh;
+  max-width: clamp(500px, 90vw, 650px);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    0 24px 70px var(--color-black-alpha-35),
+    0 8px 24px var(--color-black-alpha-15),
+    0 0 0 1px var(--color-accent-alpha-10),
+    inset 0 1px 0 var(--color-white-alpha-20);
+  margin-top: clamp(5vh, 8vw, 12vh);
+  max-height: clamp(70vh, 85vw, 85vh);
   flex-direction: column;
-  animation: search-modal-slide-in var(--transition-base)
-    var(--transition-smooth);
+  animation: search-modal-slide-in var(--transition-smooth)
+    cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  backdrop-filter: blur(var(--blur-xl)) saturate(180%);
+  will-change: transform, opacity;
 }
 
 @keyframes search-modal-slide-in {
   from {
     opacity: 0;
-    transform: translateY(-20px) scale(0.95);
+    transform: translateY(-30px) scale(0.96);
+    filter: blur(8px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -124,27 +140,33 @@
 .search-input-wrapper {
   display: flex;
   position: relative;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 2px solid var(--border-light);
-  background: var(--bg-light);
-  transition: all var(--transition-base);
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.25rem);
+  border: 2px solid var(--color-border-light);
+  background: var(--color-bg-card);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base);
   flex: 1;
   align-items: center;
-  gap: var(
-    --spacing-sm,
-    0.75rem
-  ); /* Standardized from 12px to use spacing variable */
-  border-radius: var(--btn-radius);
+  gap: clamp(0.5rem, 1.5vw, 0.75rem);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px var(--color-black-alpha-05);
 }
 
 .search-input-wrapper:focus-within {
-  border-color: var(--accent);
-  box-shadow: var(--shadow-focus);
+  border-color: var(--color-accent-primary);
+  box-shadow:
+    var(--shadow-focus),
+    0 4px 16px var(--color-accent-alpha-15),
+    0 0 0 1px var(--color-accent-alpha-20);
+  background: var(--color-bg-card-hover);
+  transform: translateY(-1px);
 }
 
 .search-input-wrapper .search-icon {
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: var(--font-size-body-large);
   flex-shrink: 0;
 }
 
@@ -170,13 +192,16 @@
   border: none;
   background: transparent;
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: var(--font-size-subtitle);
   line-height: 1;
-  transition: all var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    background var(--transition-base),
+    color var(--transition-base);
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .search-clear:hover {
@@ -191,9 +216,12 @@
   border: 1px solid var(--border-light);
   background: transparent;
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: var(--font-size-subtitle);
   line-height: 1;
-  transition: all var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    background var(--transition-base),
+    color var(--transition-base);
   align-items: center;
   justify-content: center;
   border-radius: var(--btn-radius);
@@ -226,7 +254,7 @@
 }
 
 .search-empty-icon {
-  font-size: 48px;
+  font-size: var(--icon-font-large);
   margin-bottom: 16px;
   opacity: 0.5;
 }
@@ -263,17 +291,23 @@
     --spacing-sm,
     0.75rem
   ); /* Standardized from 12px to use spacing variable */
+
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--content-radius);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    background var(--transition-base),
+    color var(--transition-base);
   margin-bottom: 4px;
 }
 
 .search-result:hover,
 .search-result.selected {
-  background: var(--bg-light);
-  transform: translateX(4px);
+  background: var(--color-bg-content-hover);
+  transform: translateX(6px) scale(1.01);
+  box-shadow: 0 2px 8px var(--color-black-alpha-08);
+  border-left: 3px solid var(--color-accent-primary);
 }
 
 .search-result-icon {
@@ -281,11 +315,11 @@
   width: 32px;
   height: 32px;
   background: var(--bg-light);
-  font-size: 20px;
+  font-size: var(--font-size-subtitle);
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .search-result-content {
@@ -334,6 +368,7 @@
     --spacing-md,
     1rem
   ); /* Standardized from 16px to use spacing variable */
+
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -354,7 +389,7 @@
   border: 1px solid var(--border-light);
   background: var(--bg-card);
   font-size: var(--font-size-xs);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   font-family: var(--font-mono);
   box-shadow: var(--shadow-xs);
 }

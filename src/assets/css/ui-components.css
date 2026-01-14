@@ -31,54 +31,86 @@
 
 .empty-state-icon {
   display: inline-flex;
-  font-size: 4rem;
+  font-size: clamp(3rem, 8vw, 4.5rem);
   line-height: 1;
   opacity: 0.7;
   transition:
     transform var(--transition-smooth),
-    opacity var(--transition-base);
+    opacity var(--transition-smooth),
+    filter var(--transition-smooth);
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
-  animation: empty-state-pulse var(--animation-duration-base)
-    var(--transition-base) infinite;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+  animation: empty-state-float 3s ease-in-out infinite;
   filter: grayscale(0.2);
+}
+
+@keyframes empty-state-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .empty-state-icon:hover {
   opacity: 1;
-  transform: scale(1.05);
-  filter: grayscale(0);
+  transform: scale(1.08) translateY(-4px);
+  filter: grayscale(0) drop-shadow(0 4px 12px var(--color-accent-alpha-25));
+  animation-play-state: paused;
 }
 
-@keyframes empty-state-pulse {
+@keyframes empty-state-float {
   0%,
   100% {
-    transform: scale(1);
-    opacity: 0.7;
+    transform: translateY(0);
   }
 
   50% {
-    transform: scale(1.05);
-    opacity: 0.9;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }
 
 .empty-state-title {
-  margin: 0 0 1rem;
-  color: var(--color-text-heading);
-  font-size: 1.5rem;
+  margin: 0 0 clamp(0.75rem, 2vw, 1rem);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-heading) 0%,
+    var(--color-accent-primary) 50%,
+    var(--color-text-heading) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
   font-weight: 600;
-  font-family: var(--font-main);
+  font-family: var(--font-display);
+  filter: drop-shadow(0 1px 3px var(--color-black-alpha-15));
+  animation: gradient-shift 4s ease infinite;
 }
 
 .empty-state-message {
   margin: 0;
   color: var(--color-text-subtle);
-  font-size: 1rem;
-  line-height: 1.6;
-  max-width: 500px;
+  font-size: clamp(0.9375rem, 2.5vw, 1.0625rem);
+  line-height: 1.7;
+  max-width: clamp(400px, 80vw, 550px);
   font-family: var(--font-main);
+  letter-spacing: 0.01em;
 }
 
 .empty-state-action {

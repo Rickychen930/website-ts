@@ -21,23 +21,36 @@
    Card Container - Extends Core Card Component
    ============================================ */
 .card {
-  /* Extends .card from core/_components.css */
+  /* Modern Bold Card Design */
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-card-padding);
-  border: 1px solid var(--color-border-light);
+  padding: clamp(var(--spacing-2xl), 6vw, var(--spacing-4xl))
+    clamp(var(--spacing-xl), 5vw, var(--spacing-3xl));
+  border: 2px solid var(--color-border-light);
   background: var(--color-bg-card);
-  transition: var(--transition-all);
-  max-width: var(--spacing-card-max-width-wide, 1400px);
-  backdrop-filter: blur(var(--blur-3xl));
-  border-radius: var(--spacing-card-radius);
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base),
+    background var(--transition-base);
+  max-width: 100%;
+  backdrop-filter: blur(var(--blur-2xl));
+  border-radius: 32px; /* Larger, more modern radius */
   overflow: hidden;
-  box-shadow: var(--shadow-card);
-  animation: fade-in-card var(--duration-base) var(--easing-ease) forwards;
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
+  animation: fade-in-card var(--animation-duration-base)
+    cubic-bezier(0.4, 0, 0.2, 1) forwards;
   outline: none;
   font-family: var(--font-main);
   isolation: isolate;
+  will-change: transform, opacity, box-shadow;
+  contain: layout style paint;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .card::before {
@@ -45,21 +58,26 @@
   z-index: var(--z-base);
   background:
     radial-gradient(
-      circle at 20% 30%,
-      var(--color-accent-alpha-12) 0%,
-      transparent 50%
+      ellipse 150% 100% at 20% 30%,
+      var(--color-accent-alpha-15) 0%,
+      transparent 65%
     ),
     radial-gradient(
-      circle at 80% 70%,
-      var(--color-accent-alt-alpha-10) 0%,
-      transparent 50%
+      ellipse 150% 100% at 80% 70%,
+      var(--color-accent-alt-alpha-12) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      var(--color-accent-secondary-alpha-08) 0%,
+      transparent 70%
     );
   opacity: 0;
-  transition: var(--transition-opacity);
+  transition: opacity var(--transition-smooth);
   content: "";
   inset: 0;
   pointer-events: none;
-  border-radius: var(--spacing-card-radius);
+  border-radius: 32px;
 }
 
 .card:hover::before {
@@ -73,63 +91,64 @@
 
 .card-variant-elevated {
   box-shadow:
-    0 8px 24px var(--color-black-alpha-06),
-    0 16px 48px var(--color-black-alpha-08),
-    0 32px 80px var(--color-border-link-alpha-10);
-  border: 1px solid var(--color-border-link-alpha-20);
+    0 12px 48px var(--color-black-alpha-12),
+    0 24px 96px var(--color-black-alpha-10),
+    0 48px 192px var(--color-accent-alpha-15);
+  border: 2px solid var(--color-accent-primary);
 }
 
 .card-variant-outlined {
-  border: 2px solid var(--color-border-alpha-60);
+  border: 3px solid var(--color-border-default);
   background: transparent;
   box-shadow: none;
 }
 
 .card-variant-outlined:hover {
   border-color: var(--color-accent-primary);
-  box-shadow: 0 8px 24px var(--color-border-link-alpha-15);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-4px) scale(1.005);
 }
 
 .card-variant-minimal {
-  padding: 2rem clamp(1.5rem, 4vw, 3rem);
-  border: none;
-  background: transparent;
-  box-shadow: none;
+  padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
+    clamp(var(--spacing-lg), 4vw, var(--spacing-3xl));
+  border: 1px solid var(--color-border-alpha-20);
+  background: var(--color-bg-card);
+  box-shadow: var(--shadow-xs);
 }
 
-/* Hover & Focus States - Subtle & Professional */
+/* Hover & Focus States - Enhanced & Professional */
 @media (hover: hover) {
   .card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-12px) scale(1.03) rotateX(2deg);
     box-shadow:
-      0 16px 48px var(--color-black-alpha-30),
-      0 0 0 1px var(--color-accent-alpha-40),
-      0 0 40px var(--color-accent-alpha-15);
-    border-color: var(--color-accent-alpha-50);
-    background: var(--color-bg-dark-light-alpha-75);
+      0 20px 80px var(--color-black-alpha-15),
+      0 32px 128px var(--color-black-alpha-12),
+      0 48px 192px var(--color-accent-alpha-20),
+      0 0 0 2px var(--color-accent-alpha-50);
+    border-color: var(--color-accent-primary);
+    background: var(--color-bg-card-hover);
   }
 }
 
-.card:focus-within {
-  outline: 3px solid var(--color-accent-primary);
-  outline-offset: 4px;
-  box-shadow:
-    var(--shadow-focus),
-    0 16px 48px var(--color-black-alpha-30);
+.card:focus-within,
+.card:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: clamp(var(--spacing-xs), 0.4vw, var(--spacing-xs));
+  box-shadow: var(--shadow-focus);
   border-color: var(--color-accent-primary);
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.005);
 }
 
 .card-variant-elevated:hover {
-  box-shadow:
-    0 16px 48px var(--color-black-alpha-10),
-    0 32px 80px var(--color-black-alpha-12),
-    0 48px 120px var(--color-border-link-alpha-20);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-6px) scale(1.01);
 }
 
 .card-variant-minimal:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-sm);
+  background: var(--color-bg-card);
 }
 
 /* ============================================
@@ -137,8 +156,10 @@
    ============================================ */
 .card-header {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
   text-align: center;
+  padding-bottom: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  box-sizing: border-box;
 }
 
 .card-title {
@@ -146,24 +167,28 @@
   position: relative;
   z-index: var(--z-base);
   margin: 0;
-  color: var(--color-text-heading);
-  font-size: var(
-    --font-size-title-large
-  ); /* Standardized: uses typography variable */
-  font-weight: var(
-    --font-weight-title
-  ); /* Standardized: uses typography variable */
-  line-height: var(
-    --line-height-tight
-  ); /* Standardized: uses typography variable */
-  transition: var(--transition-all);
-  letter-spacing: var(
-    --font-title-spacing
-  ); /* Standardized: uses typography variable */
+  background: linear-gradient(
+    135deg,
+    var(--color-text-heading) 0%,
+    var(--color-accent-primary) 40%,
+    var(--color-accent-alt) 60%,
+    var(--color-text-heading) 100%
+  );
+  background-size: 300% 300%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.75rem, 4.5vw, 2.75rem); /* Larger, bolder */
+  font-weight: 800; /* Bolder */
+  line-height: 1.2; /* Tighter */
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-smooth);
+  letter-spacing: -0.03em; /* Tighter */
   font-family: var(--font-display);
   user-select: none;
   outline: none;
-  text-shadow: 0 1px 8px var(--color-black-alpha-20); /* Improved: subtler shadow for better readability */
+  filter: drop-shadow(0 4px 12px var(--color-black-alpha-20));
+  animation: gradient-shift 8s ease infinite;
 }
 
 .card-title:focus {
@@ -181,16 +206,13 @@
 .card-body {
   position: relative;
   z-index: var(--z-base);
-  color: var(--color-text-on-accent);
-  font-size: clamp(1rem, 1.6vw, 1.125rem);
-  line-height: var(
-    --line-height-loose,
-    2
-  ); /* Use variable instead of hardcoded (closest match) */
-
-  transition: var(--transition-color);
-  font-family: var(--font-main, "Inter", system-ui, sans-serif);
+  color: var(--color-text-body);
+  font-size: var(--font-size-body-responsive);
+  line-height: var(--line-height-relaxed);
+  transition: color var(--transition-base);
+  font-family: var(--font-main);
   letter-spacing: 0.01em;
+  box-sizing: border-box;
 }
 
 .card:hover .card-body {
@@ -202,12 +224,15 @@
    ============================================ */
 .card-footer {
   position: relative;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-border-alpha-50);
+  margin-top: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+  padding-top: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+  border-top: 2px solid var(--color-border-alpha-30); /* Thicker border */
   color: var(--color-text-subtle);
-  font-size: clamp(0.9rem, 1.4vw, 1rem);
-  transition: var(--transition-border);
+  font-size: clamp(0.9rem, 1.8vw, 1rem); /* Slightly larger */
+  transition:
+    border-color var(--transition-base),
+    color var(--transition-base);
+  box-sizing: border-box;
 }
 
 .card:hover .card-footer {
@@ -220,12 +245,23 @@
 @keyframes fade-in-card {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.98);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }
 
@@ -234,17 +270,18 @@
    ============================================ */
 @media screen and (width >= 1400px) {
   .card {
-    max-width: var(--spacing-card-max-width-wide, 1400px);
-    padding: 3rem clamp(2.5rem, 5vw, 4rem);
-    border-radius: 36px;
+    max-width: 100%;
+    padding: var(--spacing-4xl)
+      clamp(var(--spacing-3xl), 6vw, var(--spacing-5xl));
+    border-radius: 36px; /* Larger on big screens */
   }
 
   .card-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: var(--spacing-2xl);
   }
 
   .card-title {
-    font-size: clamp(2.25rem, 4.5vw, 3rem);
+    font-size: var(--font-size-title-large);
   }
 }
 
@@ -253,68 +290,69 @@
    ============================================ */
 @media screen and (width <= 1200px) {
   .card {
-    max-width: 95%;
-    padding: 2.5rem clamp(1.75rem, 3.5vw, 3rem);
+    max-width: 100%;
+    padding: var(--spacing-2xl)
+      clamp(var(--spacing-lg), 3.5vw, var(--spacing-3xl));
   }
 }
 
 @media screen and (width <= 1024px) {
   .card {
-    padding: 2.25rem clamp(1.5rem, 3vw, 2.5rem);
-    border-radius: var(--spacing-card-radius);
+    padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
+      clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+    border-radius: 28px; /* Slightly smaller on tablet */
   }
 
   .card-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
   }
 
   .card-title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    letter-spacing: -0.04em; /* Standardized from -0.6px to em */
+    font-size: var(--font-size-title-responsive);
+    letter-spacing: var(--font-title-spacing);
   }
 
   .card-body {
-    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-    line-height: 1.75;
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
   }
 
   .card-footer {
-    margin-top: 1.75rem;
-    padding-top: 1.75rem;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
   }
 }
 
 @media screen and (width <= 768px) {
   .card {
-    padding: var(--spacing-card-padding-mobile);
-    border-radius: var(--spacing-card-radius-mobile);
+    padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
+      clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+    border-radius: 24px; /* Modern mobile radius */
   }
 
   .card-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
   }
 
   .card-title {
-    font-size: clamp(1.4rem, 2.5vw, 1.75rem);
-    letter-spacing: -0.03em; /* Standardized from -0.5px to em */
+    font-size: var(--font-size-title);
+    letter-spacing: var(--font-title-spacing);
   }
 
   .card-body {
-    font-size: clamp(0.9rem, 1.4vw, 1rem);
-    line-height: var(
-      --line-height-relaxed,
-      1.75
-    ); /* Use variable instead of hardcoded (closest match) */
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-normal);
   }
 
   .card-footer {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    font-size: clamp(0.85rem, 1.3vw, 0.95rem);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    font-size: var(--font-size-small);
   }
 
   .card-variant-minimal {
-    padding: 1.75rem clamp(1.25rem, 2.5vw, 1.75rem);
+    padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl))
+      clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
   }
 }
 
@@ -323,35 +361,33 @@
    ============================================ */
 @media screen and (width <= 480px) {
   .card {
-    padding: var(--spacing-card-padding-mobile);
-    border-radius: var(--spacing-card-radius-mobile);
+    padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl))
+      clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+    border-radius: 20px; /* Modern mobile radius */
   }
 
   .card-header {
-    margin-bottom: 1.25rem;
+    margin-bottom: clamp(1rem, 2.5vw, 1.25rem);
   }
 
   .card-title {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    letter-spacing: -0.025em; /* Standardized from -0.4px to em */
+    font-size: var(--font-size-title-component);
+    letter-spacing: var(--font-title-spacing);
   }
 
   .card-body {
-    font-size: clamp(0.875rem, 1.3vw, 0.95rem);
-    line-height: var(
-      --line-height-relaxed,
-      1.75
-    ); /* Use variable instead of hardcoded (closest match) */
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-normal);
   }
 
   .card-footer {
-    margin-top: 1.25rem;
-    padding-top: 1.25rem;
-    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+    margin-top: clamp(1rem, 2.5vw, 1.25rem);
+    padding-top: clamp(1rem, 2.5vw, 1.25rem);
+    font-size: var(--font-size-small);
   }
 
   .card-variant-minimal {
-    padding: 1.5rem clamp(1rem, 2vw, 1.5rem);
+    padding: var(--spacing-lg) clamp(var(--spacing-md), 2vw, var(--spacing-lg));
   }
 }
 
@@ -365,11 +401,11 @@
   }
 
   .card-title {
-    font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+    font-size: var(--font-size-title-component);
   }
 
   .card-body {
-    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    font-size: var(--font-size-body);
   }
 }
 
@@ -405,7 +441,7 @@
    ============================================ */
 @media print {
   .card {
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
     border: 1px solid var(--color-border-default);
     break-inside: avoid;
     box-shadow: none;

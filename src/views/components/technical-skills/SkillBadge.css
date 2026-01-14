@@ -7,32 +7,27 @@
   display: inline-flex;
   position: relative;
   padding: 0.625rem 1.125rem;
-  border: 1.5px solid var(--color-accent-alpha-20);
-  background: linear-gradient(
-    135deg,
-    var(--color-white-alpha-95) 0%,
-    var(--color-bg-light) 50%,
-    var(--color-white-alpha-95) 100%
-  );
+  border: 2px solid var(--color-border-light);
+  background: var(--color-bg-card);
   color: var(--text-heading);
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: clamp(0.875rem, 1.8vw, 1rem); /* Larger, responsive */
+  font-weight: 700; /* Bolder */
   opacity: 0;
   transition: var(--transition-all);
   align-items: center;
   gap: 0.5rem;
-  border-radius: var(--radius-md);
+  border-radius: 20px; /* Modern rounded */
   overflow: hidden;
   transform: translateY(8px) scale(0.95);
   animation: skill-badge-fade-in var(--animation-duration-base)
     var(--transition-smooth) forwards;
   will-change: transform, box-shadow, filter;
-  -webkit-backdrop-filter: blur(var(--blur-md));
-  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-2xl));
+  backdrop-filter: blur(var(--blur-2xl));
   box-shadow:
-    0 2px 8px var(--color-black-alpha-04),
-    0 4px 16px var(--color-accent-alpha-08),
-    inset 0 1px 0 var(--color-white-alpha-90);
+    0 4px 16px var(--color-black-alpha-08),
+    0 8px 32px var(--color-black-alpha-06),
+    0 16px 64px var(--color-accent-alpha-08);
 }
 
 .skill-badge::before {
@@ -57,20 +52,15 @@
 
 .skill-badge:hover,
 .skill-badge:focus {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-6px) scale(1.05) rotateX(1deg);
   box-shadow:
-    0 8px 24px var(--color-accent-alpha-25),
-    0 16px 48px var(--color-accent-alpha-15),
-    0 0 20px var(--color-accent-alpha-10),
-    inset 0 1px 0 var(--color-white);
-  border-color: var(--color-accent-alpha-40);
-  background: linear-gradient(
-    135deg,
-    var(--color-white) 0%,
-    var(--color-bg-light) 50%,
-    var(--color-white) 100%
-  );
-  filter: brightness(1.05);
+    0 16px 64px var(--color-accent-alpha-30),
+    0 24px 96px var(--color-accent-alpha-20),
+    0 32px 128px var(--color-accent-alpha-15),
+    0 0 0 2px var(--color-accent-alpha-40);
+  border-color: var(--color-accent-primary);
+  background: var(--color-bg-card-hover);
+  filter: brightness(1.08);
 }
 
 .skill-badge:focus {

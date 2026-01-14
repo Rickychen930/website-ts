@@ -52,17 +52,23 @@
   display: flex;
   position: relative;
   width: 100%;
-  padding: var(--academic-card-padding-xl, 2rem);
-  border: 1px solid var(--color-accent-alpha-10);
+  padding: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+  border: 2px solid var(--color-border-light);
   background: var(--color-bg-card);
-  transition: all
-    var(--academic-transition-base, 0.4s cubic-bezier(0.4, 0, 0.2, 1));
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base),
+    background var(--transition-base);
   flex-direction: column;
-  gap: var(--academic-card-gap-lg, 1.5rem);
-  border-radius: var(--academic-radius-xxl, 16px);
-  box-shadow: var(--academic-shadow-card);
-  -webkit-backdrop-filter: blur(var(--blur-md));
-  backdrop-filter: blur(var(--blur-md));
+  gap: clamp(var(--spacing-lg), 3vw, var(--spacing-lg));
+  border-radius: 32px; /* Modern bold radius */
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  backdrop-filter: blur(var(--blur-lg));
   max-width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -71,9 +77,14 @@
 
 .academic-card:hover .academic-card-content,
 .academic-card:focus-within .academic-card-content {
-  transform: translateY(var(--academic-transform-hover-y, -4px));
-  box-shadow: var(--academic-shadow-card-hover);
-  border-color: var(--color-accent-alpha-20);
+  transform: translateY(-10px) scale(1.02) rotateX(1deg);
+  box-shadow:
+    0 20px 80px var(--color-black-alpha-15),
+    0 32px 128px var(--color-black-alpha-12),
+    0 48px 192px var(--color-accent-alpha-20),
+    0 0 0 2px var(--color-accent-alpha-50);
+  border-color: var(--color-accent-primary);
+  background: var(--color-bg-card-hover);
 }
 
 /* ─── Icon Design ─── */
@@ -196,7 +207,7 @@
 .academic-level-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.4rem 0.9rem;
+  padding: var(--spacing-xs) clamp(var(--spacing-xs), 1vw, var(--spacing-sm));
   font-size: var(--academic-font-size-sm, 0.7rem);
   font-weight: 600;
   text-transform: uppercase;
@@ -256,7 +267,7 @@
 
 .academic-card-period-text {
   display: inline-flex;
-  padding: 0.5rem 1rem;
+  padding: var(--spacing-xs) var(--spacing-md);
   border: 1px solid var(--color-accent-alpha-10);
   background: var(--color-bg-timeline);
   color: var(--color-text-primary);

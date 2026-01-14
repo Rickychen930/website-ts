@@ -36,16 +36,22 @@
 
   display: flex;
   position: relative;
-  padding: 2.5rem;
-  border: 1px solid var(--honor-card-border);
-  background: var(--honor-card-bg);
+  padding: clamp(var(--spacing-xl), 5vw, var(--spacing-3xl));
+  border: 2px solid var(--color-border-light);
+  background: var(--color-bg-card);
   opacity: 0;
-  transition: all var(--honor-card-transition);
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base),
+    background var(--transition-base);
   flex-direction: column;
-  -webkit-backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
-  backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--honor-card-shadow);
+  backdrop-filter: blur(var(--blur-2xl));
+  border-radius: 32px; /* Modern bold radius */
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
   cursor: pointer;
   overflow: hidden;
   transform: translateY(30px);
@@ -112,12 +118,13 @@
   opacity: 1;
 }
 
-/* ─── Hover Effects ─── */
+/* ─── Enhanced Hover Effects ─── */
 .honor-card--visible:hover,
 .honor-card--visible:focus-within {
-  transform: translateY(-4px);
-  box-shadow: var(--honor-card-shadow-hover);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-card-hover);
   border-color: var(--color-accent-alpha-40);
+  background: var(--color-bg-card-hover);
 }
 
 .honor-card--visible:hover::after,

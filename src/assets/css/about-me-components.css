@@ -42,13 +42,13 @@
   width: 100%;
   margin: 0;
   color: var(--color-text-heading);
-  font-size: clamp(2rem, 5vw, 3.5rem); /* Reduced from 4.5rem */
-  font-weight: 800; /* Reduced from 900 */
-  line-height: 1.2; /* Improved from 1.1 for better readability */
+  font-size: var(--font-size-title-large);
+  font-weight: 800;
+  line-height: var(--line-height-tight);
   opacity: 0;
   font-family: var(--font-display);
-  letter-spacing: -0.03em; /* Slightly less tight */
-  animation: hero-name-entrance 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Reduced from 1.2s */
+  letter-spacing: var(--font-title-spacing);
+  animation: hero-name-entrance 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transform: translateY(30px);
   max-width: 100%;
   overflow-wrap: break-word;
@@ -125,7 +125,7 @@
   opacity: 0.4;
   transition: transform var(--transition-base);
   content: "";
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   transform: scaleX(0);
 }
 
@@ -137,16 +137,20 @@
   position: relative;
   width: 100%;
   margin: 0;
-  background: var(--gradient-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-subtle) 0%,
+    var(--color-text-muted) 100%
+  );
   color: var(--color-text-subtle);
-  font-size: clamp(1.125rem, 2.5vw, 1.625rem); /* Reduced from 1.85rem */
-  font-weight: 600;
-  line-height: 1.6; /* Improved from 1.5 for better readability */
+  font-size: var(--font-size-subtitle-responsive);
+  font-weight: var(--font-weight-subtitle);
+  line-height: var(--line-height-normal);
   opacity: 0;
-  letter-spacing: 0.01em; /* Reduced from 0.02em */
-  animation: hero-title-entrance 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Reduced from 1.4s */
+  letter-spacing: var(--font-subtitle-spacing);
+  animation: hero-title-entrance 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transform: translateY(20px);
-  animation-delay: 0.2s;
+  animation-delay: 0.15s;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   max-width: 100%;
@@ -164,7 +168,7 @@
 .hero-header-location {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: var(--spacing-sm);
   color: var(--text-muted-alt);
   font-size: clamp(1rem, 2vw, 1.1rem);
   line-height: 1.5;
@@ -172,7 +176,7 @@
 }
 
 .hero-header-location-icon {
-  font-size: 1.2em;
+  font-size: var(--font-size-body-large);
   filter: drop-shadow(0 1px 2px var(--color-black-alpha-10));
 }
 
@@ -190,7 +194,9 @@
   padding: var(--about-me-comp-spacing-md);
   border: 1px solid var(--border-light);
   background: var(--bg-card);
-  transition: all var(--transition-smooth);
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-smooth);
   gap: var(--about-me-comp-spacing-md);
   border-radius: var(--item-radius);
   box-shadow: var(--shadow-sm);
@@ -233,10 +239,11 @@
 }
 
 .professional-highlight-icon {
-  font-size: 2.5rem;
+  font-size: var(--font-size-title-large);
   line-height: 1;
   flex-shrink: 0;
-  filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
+  filter: drop-shadow(0 4px 12px var(--color-black-alpha-15))
+    drop-shadow(0 2px 6px var(--color-accent-alpha-10));
   transition: transform var(--transition-base);
 }
 
@@ -290,19 +297,31 @@
    ============================================ */
 .tech-badge {
   display: inline-block;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid transparent;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all var(--transition-base);
-  border-radius: 8px;
-  letter-spacing: 0.02em;
+  padding: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm))
+    clamp(var(--spacing-sm), 2vw, var(--spacing-md));
+  border: 2px solid var(--color-border-light);
+  font-size: clamp(0.875rem, 1.8vw, 1rem); /* Larger, responsive */
+  font-weight: 700; /* Bolder */
+  transition:
+    transform var(--transition-fast),
+    opacity var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+  border-radius: 20px; /* Modern rounded */
+  letter-spacing: 0.03em; /* Better spacing */
+  box-shadow:
+    0 4px 16px var(--color-black-alpha-08),
+    0 2px 8px var(--color-black-alpha-06),
+    inset 0 1px 0 var(--color-white-alpha-20);
 }
 
 .tech-badge-primary {
   background: var(--bg-gradient-accent);
   color: var(--text-on-accent);
-  box-shadow: var(--shadow-xs);
+  box-shadow:
+    0 4px 16px var(--color-accent-alpha-20),
+    0 2px 8px var(--color-black-alpha-08),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 .tech-badge-secondary {
@@ -322,23 +341,27 @@
 }
 
 .tech-badge-sm {
-  padding: 0.3rem 0.7rem;
-  font-size: 0.75rem;
+  padding: clamp(0.25rem, 1.5vw, 0.3rem) clamp(0.625rem, 1.5vw, 0.7rem);
+  font-size: var(--font-size-xs);
 }
 
 .tech-badge-md {
-  padding: 0.4rem 0.9rem;
-  font-size: 0.875rem;
+  padding: var(--spacing-xs) clamp(0.75rem, 2vw, 0.9rem);
+  font-size: var(--font-size-small);
 }
 
 .tech-badge-lg {
-  padding: 0.5rem 1.1rem;
-  font-size: 1rem;
+  padding: var(--spacing-xs) clamp(1rem, 2.5vw, 1.1rem);
+  font-size: var(--font-size-base);
 }
 
 .tech-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 24px var(--color-black-alpha-15),
+    0 4px 12px var(--color-black-alpha-10),
+    0 2px 6px var(--color-black-alpha-08),
+    inset 0 1px 0 var(--color-white-alpha-30);
 }
 
 /* ============================================
@@ -361,7 +384,7 @@
       transparent 50%
     );
   transition: var(--transition-all);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow:
     0 20px 60px var(--color-black-alpha-50),
@@ -479,13 +502,13 @@
 
 .code-block-dots {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-xs);
 }
 
 .code-block-dot {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   transition: var(--transition-all);
   box-shadow: 0 0 10px currentcolor;
 }
@@ -529,7 +552,7 @@
 
 .code-block-language {
   color: var(--color-text-light);
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -560,12 +583,12 @@
 
 .code-block-pre::-webkit-scrollbar-track {
   background: var(--color-black-alpha-20);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .code-block-pre::-webkit-scrollbar-thumb {
   background: var(--gradient-accent);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .code-block-pre::-webkit-scrollbar-thumb:hover {
@@ -584,17 +607,17 @@
 .code-block-content {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--spacing-xs);
 }
 
 .code-block-line {
   display: flex;
   position: relative;
-  padding: 0.2rem 0.5rem;
+  padding: clamp(0.125rem, 1vw, 0.2rem) var(--spacing-xs);
   transition: var(--transition-all);
   align-items: center;
   min-height: 1.6em;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   cursor: default;
 }
 
@@ -613,7 +636,7 @@
   opacity: 0;
   transition: var(--transition-opacity);
   content: "";
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
 }
 
 .code-block-line:hover::before {
@@ -711,7 +734,7 @@
 }
 
 .tech-badges-grid-compact {
-  gap: 0.5rem;
+  gap: var(--spacing-xs);
 }
 
 .tech-badges-grid .tech-badge {
@@ -823,7 +846,7 @@
   }
 
   .tech-badges-grid {
-    gap: 0.6rem;
+    gap: var(--spacing-sm);
   }
 
   .tech-badges-grid-title {
@@ -854,7 +877,7 @@
   .tech-badges-grid-container::-webkit-scrollbar-track {
     margin: 0 1rem;
     background: var(--color-black-alpha-08);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
   }
 
@@ -864,7 +887,7 @@
       var(--accent, var(--color-accent-primary)) 0%,
       var(--accent-alt, var(--color-accent-alt)) 100%
     );
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     transition: var(--transition-all);
     box-shadow:
       0 2px 4px var(--color-accent-alpha-40),
@@ -916,7 +939,7 @@
     content: "← Swipe to see more →";
     transform: translateX(-50%);
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
     font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
     pointer-events: none;
     white-space: nowrap;
@@ -973,7 +996,7 @@
   }
 
   .tech-badge {
-    padding: 0.35rem 0.8rem;
+    padding: clamp(0.3rem, 1.5vw, 0.35rem) clamp(0.75rem, 2vw, 0.8rem);
     font-size: clamp(0.75rem, 3.5vw, 0.875rem);
   }
 }

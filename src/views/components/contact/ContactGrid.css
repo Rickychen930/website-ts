@@ -13,10 +13,12 @@
   position: relative;
   width: 100%;
   padding: 0;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)); /* More spacious */
   list-style: none;
   isolation: isolate;
+  align-items: start;
+  box-sizing: border-box;
 }
 
 /* Staggered Animation Support */
@@ -28,42 +30,42 @@
 @media screen and (width >= 1600px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
+    gap: var(--spacing-2xl);
   }
 }
 
 @media screen and (width <= 1400px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: var(--spacing-xl);
   }
 }
 
 @media screen and (width <= 1200px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.75rem;
+    gap: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
   }
 }
 
 @media screen and (width <= 992px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
+    gap: var(--spacing-lg);
   }
 }
 
 @media screen and (width <= 768px) {
   .contact-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
+    gap: var(--spacing-lg);
   }
 }
 
 @media screen and (width <= 600px) {
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
+    gap: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
     max-width: 100%;
     width: 100%;
     overflow-x: hidden;
@@ -72,7 +74,7 @@
 
 @media screen and (width <= 480px) {
   .contact-grid {
-    gap: 1.5rem;
+    gap: var(--spacing-lg);
     width: 100%;
     max-width: 100%;
     padding: 0;
@@ -81,7 +83,7 @@
 
 @media screen and (width <= 360px) {
   .contact-grid {
-    gap: 1.25rem;
+    gap: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
   }
 }
 

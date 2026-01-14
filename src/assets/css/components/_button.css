@@ -25,17 +25,20 @@
   display: inline-flex;
   position: relative;
   z-index: 1;
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: clamp(0.625rem, 1.5vw, 0.75rem) clamp(1rem, 2.5vw, 1.5rem);
   border: 2px solid transparent;
   background: transparent;
   color: var(--color-text-heading);
-  font-size: var(--font-size-base);
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
   text-align: center;
   transition:
-    all var(--transition-smooth),
-    transform var(--transition-fast);
+    transform var(--transition-fast),
+    box-shadow var(--transition-smooth),
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
@@ -47,6 +50,7 @@
   overflow: hidden;
   user-select: none;
   outline: none;
+  min-height: 2.75rem;
 }
 
 .btn::before {
@@ -92,8 +96,12 @@
 }
 
 .btn--primary:hover {
-  transform: translateY(-2px); /* Subtle hover */
-  box-shadow: 0 4px 12px var(--color-accent-alpha-30); /* Subtler shadow */
+  transform: translateY(-4px) scale(1.03) rotateX(1deg);
+  box-shadow:
+    0 12px 40px var(--color-accent-alpha-40),
+    0 8px 24px var(--color-accent-alpha-30),
+    0 4px 12px var(--color-accent-alpha-20),
+    0 0 0 2px var(--color-accent-alpha-25);
 }
 
 .btn--primary:active {
@@ -110,8 +118,12 @@
 .btn--secondary:hover {
   background: var(--color-bg-card-hover);
   border-color: var(--color-accent-primary);
-  transform: translateY(-1px); /* More subtle */
-  box-shadow: 0 2px 8px var(--color-black-alpha-10); /* Subtler shadow */
+  transform: translateY(-3px) scale(1.02) rotateX(0.5deg);
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-15),
+    0 4px 16px var(--color-black-alpha-10),
+    0 2px 8px var(--color-black-alpha-06),
+    0 0 0 2px var(--color-accent-alpha-20);
 }
 
 .btn--secondary:active {
@@ -130,8 +142,12 @@
 }
 
 .btn--danger:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px) scale(1.03) rotateX(1deg);
+  box-shadow:
+    0 12px 40px var(--color-error-alpha-40),
+    0 8px 24px var(--color-error-alpha-30),
+    0 4px 12px var(--color-error-alpha-20),
+    0 0 0 2px var(--color-error-alpha-25);
 }
 
 .btn--danger:active {
@@ -147,6 +163,11 @@
 .btn--outline:hover {
   background: var(--color-bg-content-hover);
   border-color: var(--color-accent-primary);
+  transform: translateY(-3px) scale(1.02) rotateX(0.5deg);
+  box-shadow:
+    0 8px 32px var(--color-accent-alpha-20),
+    0 4px 16px var(--color-accent-alpha-15),
+    0 0 0 2px var(--color-accent-alpha-25);
 }
 
 .btn--outline:active {
@@ -161,6 +182,8 @@
 
 .btn--ghost:hover {
   background: var(--color-bg-content-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--color-black-alpha-08);
 }
 
 .btn--ghost:active {
@@ -214,11 +237,14 @@
 
 .btn:focus-visible {
   outline: 3px solid var(--color-accent-primary);
-  outline-offset: var(--spacing-xs);
+  outline-offset: clamp(3px, 0.5vw, 5px);
   box-shadow:
     var(--shadow-focus),
-    0 0 0 1px var(--color-accent-primary);
+    0 8px 24px var(--color-accent-alpha-30),
+    0 0 0 1px var(--color-accent-primary),
+    0 0 20px var(--color-accent-alpha-20);
   z-index: 1;
+  transform: scale(1.02);
 }
 
 .btn:disabled,

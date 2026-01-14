@@ -133,16 +133,24 @@
   justify-content: center;
   border-radius: var(--radius-lg);
   box-shadow:
-    0 4px 12px var(--color-accent-alpha-20),
-    inset 0 1px 0 var(--color-white-alpha-50);
+    0 8px 32px var(--color-accent-alpha-25),
+    0 4px 16px var(--color-black-alpha-10),
+    0 2px 8px var(--color-black-alpha-08),
+    inset 0 2px 4px var(--color-white-alpha-60),
+    inset 0 -1px 2px var(--color-black-alpha-05);
 }
 
 .flow-item:hover .flow-icon {
   transform: scale(1.1) rotate(5deg);
   border-color: var(--color-accent-alpha-50);
   box-shadow:
-    0 8px 24px var(--color-accent-alpha-30),
-    inset 0 1px 0 var(--color-white-alpha-60);
+    0 16px 48px var(--color-accent-alpha-40),
+    0 8px 32px var(--color-accent-alpha-30),
+    0 4px 16px var(--color-black-alpha-15),
+    0 2px 8px var(--color-black-alpha-12),
+    inset 0 2px 4px var(--color-white-alpha-70),
+    inset 0 -1px 2px var(--color-accent-alpha-15),
+    0 0 0 2px var(--color-accent-alpha-20);
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-20),
