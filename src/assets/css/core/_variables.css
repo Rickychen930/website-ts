@@ -78,62 +78,62 @@
   --overlay-alpha-20: var(--color-white-alpha-20);
   --overlay-alpha-30: var(--color-white-alpha-30);
 
-  /* Dark Background Alpha Variants */
-  --color-bg-dark-alpha-70: rgb(26 32 44 / 70%);
-  --color-bg-dark-light-alpha-75: rgb(30 37 50 / 75%);
-  --color-bg-dark-overlay: rgb(15 20 40 / 80%);
+  /* Dark Background Alpha Variants - Updated to match new dark colors */
+  --color-bg-dark-alpha-70: rgb(17 24 39 / 70%);
+  --color-bg-dark-light-alpha-75: rgb(31 41 55 / 75%);
+  --color-bg-dark-overlay: rgb(17 24 39 / 80%);
 
-  /* Accent Alpha Variants - Modern Tech Cyan */
-  --color-accent-alpha-015: rgb(0 217 255 / 1.5%);
-  --color-accent-alpha-03: rgb(0 217 255 / 3%);
-  --color-accent-alpha-04: rgb(0 217 255 / 4%);
-  --color-accent-alpha-05: rgb(0 217 255 / 5%);
-  --color-accent-alpha-06: rgb(0 217 255 / 6%);
-  --color-accent-alpha-08: rgb(0 217 255 / 8%);
-  --color-accent-alpha-10: rgb(0 217 255 / 10%);
-  --color-accent-alpha-12: rgb(0 217 255 / 12%);
-  --color-accent-alpha-15: rgb(0 217 255 / 15%);
-  --color-accent-alpha-18: rgb(0 217 255 / 18%);
-  --color-accent-alpha-20: rgb(0 217 255 / 20%);
-  --color-accent-alpha-25: rgb(0 217 255 / 25%);
-  --color-accent-alpha-30: rgb(0 217 255 / 30%);
-  --color-accent-alpha-35: rgb(0 217 255 / 35%);
-  --color-accent-alpha-40: rgb(0 217 255 / 40%);
-  --color-accent-alpha-50: rgb(0 217 255 / 50%);
-  --color-accent-alpha-60: rgb(0 217 255 / 60%);
-  --color-accent-alpha-80: rgb(0 217 255 / 80%);
-  --color-accent-alpha-100: rgb(0 217 255 / 100%);
+  /* Accent Alpha Variants - Professional Blue */
+  --color-accent-alpha-015: rgb(59 130 246 / 1.5%);
+  --color-accent-alpha-03: rgb(59 130 246 / 3%);
+  --color-accent-alpha-04: rgb(59 130 246 / 4%);
+  --color-accent-alpha-05: rgb(59 130 246 / 5%);
+  --color-accent-alpha-06: rgb(59 130 246 / 6%);
+  --color-accent-alpha-08: rgb(59 130 246 / 8%);
+  --color-accent-alpha-10: rgb(59 130 246 / 10%);
+  --color-accent-alpha-12: rgb(59 130 246 / 12%);
+  --color-accent-alpha-15: rgb(59 130 246 / 15%);
+  --color-accent-alpha-18: rgb(59 130 246 / 18%);
+  --color-accent-alpha-20: rgb(59 130 246 / 20%);
+  --color-accent-alpha-25: rgb(59 130 246 / 25%);
+  --color-accent-alpha-30: rgb(59 130 246 / 30%);
+  --color-accent-alpha-35: rgb(59 130 246 / 35%);
+  --color-accent-alpha-40: rgb(59 130 246 / 40%);
+  --color-accent-alpha-50: rgb(59 130 246 / 50%);
+  --color-accent-alpha-60: rgb(59 130 246 / 60%);
+  --color-accent-alpha-80: rgb(59 130 246 / 80%);
+  --color-accent-alpha-100: rgb(59 130 246 / 100%);
 
-  /* Accent Alt Alpha Variants - Modern Tech Blue */
-  --color-accent-alt-alpha-03: rgb(0 145 234 / 3%);
-  --color-accent-alt-alpha-06: rgb(0 145 234 / 6%);
-  --color-accent-alt-alpha-08: rgb(0 145 234 / 8%);
-  --color-accent-alt-alpha-10: rgb(0 145 234 / 10%);
-  --color-accent-alt-alpha-12: rgb(0 145 234 / 12%);
-  --color-accent-alt-alpha-15: rgb(0 145 234 / 15%);
-  --color-accent-alt-alpha-18: rgb(0 145 234 / 18%);
-  --color-accent-alt-alpha-20: rgb(0 145 234 / 20%);
-  --color-accent-alt-alpha-25: rgb(0 145 234 / 25%);
-  --color-accent-alt-alpha-30: rgb(0 145 234 / 30%);
-  --color-accent-alt-alpha-40: rgb(0 145 234 / 40%);
-  --color-accent-alt-alpha-50: rgb(0 145 234 / 50%);
-  --color-accent-alt-alpha-60: rgb(0 145 234 / 60%);
-  --color-accent-alt-alpha-80: rgb(0 145 234 / 80%);
-  --color-accent-alt-alpha-90: rgb(0 145 234 / 90%);
+  /* Accent Alt Alpha Variants - Deep Blue */
+  --color-accent-alt-alpha-03: rgb(37 99 235 / 3%);
+  --color-accent-alt-alpha-06: rgb(37 99 235 / 6%);
+  --color-accent-alt-alpha-08: rgb(37 99 235 / 8%);
+  --color-accent-alt-alpha-10: rgb(37 99 235 / 10%);
+  --color-accent-alt-alpha-12: rgb(37 99 235 / 12%);
+  --color-accent-alt-alpha-15: rgb(37 99 235 / 15%);
+  --color-accent-alt-alpha-18: rgb(37 99 235 / 18%);
+  --color-accent-alt-alpha-20: rgb(37 99 235 / 20%);
+  --color-accent-alt-alpha-25: rgb(37 99 235 / 25%);
+  --color-accent-alt-alpha-30: rgb(37 99 235 / 30%);
+  --color-accent-alt-alpha-40: rgb(37 99 235 / 40%);
+  --color-accent-alt-alpha-50: rgb(37 99 235 / 50%);
+  --color-accent-alt-alpha-60: rgb(37 99 235 / 60%);
+  --color-accent-alt-alpha-80: rgb(37 99 235 / 80%);
+  --color-accent-alt-alpha-90: rgb(37 99 235 / 90%);
 
-  /* Accent Tertiary Alpha Variants */
-  --color-accent-tertiary-alpha-10: rgb(79 172 254 / 10%);
-  --color-accent-tertiary-alpha-15: rgb(79 172 254 / 15%);
-  --color-accent-tertiary-alpha-20: rgb(79 172 254 / 20%);
+  /* Accent Tertiary Alpha Variants - Updated to match new purple accent */
+  --color-accent-tertiary-alpha-10: rgb(167 139 250 / 10%);
+  --color-accent-tertiary-alpha-15: rgb(167 139 250 / 15%);
+  --color-accent-tertiary-alpha-20: rgb(167 139 250 / 20%);
 
-  /* Accent Secondary Alpha Variants - Modern Tech Purple */
-  --color-accent-secondary-alpha-10: rgb(124 58 237 / 10%);
-  --color-accent-secondary-alpha-15: rgb(124 58 237 / 15%);
-  --color-accent-secondary-alpha-18: rgb(124 58 237 / 18%);
-  --color-accent-secondary-alpha-20: rgb(124 58 237 / 20%);
-  --color-accent-secondary-alpha-30: rgb(124 58 237 / 30%);
-  --color-accent-secondary-alpha-50: rgb(124 58 237 / 50%);
-  --color-accent-secondary-alpha-90: rgb(124 58 237 / 90%);
+  /* Accent Secondary Alpha Variants - Professional Purple */
+  --color-accent-secondary-alpha-10: rgb(139 92 246 / 10%);
+  --color-accent-secondary-alpha-15: rgb(139 92 246 / 15%);
+  --color-accent-secondary-alpha-18: rgb(139 92 246 / 18%);
+  --color-accent-secondary-alpha-20: rgb(139 92 246 / 20%);
+  --color-accent-secondary-alpha-30: rgb(139 92 246 / 30%);
+  --color-accent-secondary-alpha-50: rgb(139 92 246 / 50%);
+  --color-accent-secondary-alpha-90: rgb(139 92 246 / 90%);
 
   /* Info Alpha Variants */
   --color-info-alpha-03: rgb(59 130 246 / 3%);
@@ -160,113 +160,118 @@
   --color-warning-alpha-40: rgb(245 158 11 / 40%);
   --color-warning-alpha-50: rgb(245 158 11 / 50%);
 
-  /* Accent Purple Alpha Variants - Modern Tech */
-  --color-accent-purple-alpha-15: rgb(167 139 250 / 15%);
-  --color-accent-purple-alpha-20: rgb(167 139 250 / 20%);
-  --color-accent-purple-alpha-30: rgb(167 139 250 / 30%);
+  /* Accent Purple Alpha Variants - Professional Purple */
+  --color-accent-purple-alpha-15: rgb(192 132 252 / 15%);
+  --color-accent-purple-alpha-20: rgb(192 132 252 / 20%);
+  --color-accent-purple-alpha-30: rgb(192 132 252 / 30%);
 
-  /* Muted/Gray Alpha Variants */
+  /* Muted/Gray Alpha Variants - Updated to match new gray scale */
   --color-muted-alpha-30: rgb(107 114 128 / 30%);
 
-  /* Border Alpha Variants */
-  --color-border-alpha-30: rgb(220 227 234 / 30%);
-  --color-border-alpha-40: rgb(220 227 234 / 40%);
-  --color-border-alpha-50: rgb(220 227 234 / 50%);
-  --color-border-alpha-60: rgb(220 227 234 / 60%);
+  /* Border Alpha Variants - Updated to match new color system */
+  --color-border-alpha-30: rgb(229 231 235 / 30%);
+  --color-border-alpha-40: rgb(229 231 235 / 40%);
+  --color-border-alpha-50: rgb(229 231 235 / 50%);
+  --color-border-alpha-60: rgb(229 231 235 / 60%);
 
-  /* Border Medium Alpha Variants */
-  --color-border-medium-alpha-50: rgb(203 213 224 / 50%);
+  /* Border Medium Alpha Variants - Updated to match new color system */
+  --color-border-medium-alpha-50: rgb(209 213 219 / 50%);
 
-  /* Border Link Alpha Variants - Modern Tech Cyan */
-  --color-border-link-alpha-10: rgb(0 217 255 / 10%);
-  --color-border-link-alpha-15: rgb(0 217 255 / 15%);
-  --color-border-link-alpha-20: rgb(0 217 255 / 20%);
+  /* Border Link Alpha Variants - Professional Blue */
+  --color-border-link-alpha-10: rgb(59 130 246 / 10%);
+  --color-border-link-alpha-15: rgb(59 130 246 / 15%);
+  --color-border-link-alpha-20: rgb(59 130 246 / 20%);
 
   /* ============================================
      Accent Colors - Primary Brand Colors
-     Modern Tech: Cyan-Blue-Purple
+     Professional UI/UX: Blue-Purple
+     Clear, accessible, and modern design system
      ============================================ */
-  --color-accent-primary: #00d9ff;
-  --color-accent-alt: #0091ea;
-  --color-accent-hover: #00b8d4;
-  --color-accent-light: #40e0d0;
-  --color-accent-dark: #06c;
-  --color-accent-secondary: #7c3aed;
-  --color-accent-tertiary: #8b5cf6;
-  --color-accent-purple: #a78bfa;
+  --color-accent-primary: #3b82f6;
+  --color-accent-alt: #2563eb;
+  --color-accent-hover: #2563eb;
+  --color-accent-light: #60a5fa;
+  --color-accent-dark: #1d4ed8;
+  --color-accent-secondary: #8b5cf6;
+  --color-accent-tertiary: #a78bfa;
+  --color-accent-purple: #c084fc;
   --color-accent-purple-dark: #7c3aed;
-  --color-accent-glow: rgb(0 217 255 / 35%);
-  --color-accent-glow-strong: rgb(0 145 234 / 40%);
+  --color-accent-glow: rgb(59 130 246 / 25%);
+  --color-accent-glow-strong: rgb(37 99 235 / 35%);
 
   /* Accent Colors - Light Mode Specific (for better contrast) */
-  --color-accent-primary-light-mode: #00d9ff;
-  --color-accent-hover-light-mode: #00b8d4;
+  --color-accent-primary-light-mode: #3b82f6;
+  --color-accent-hover-light-mode: #2563eb;
 
   /* ============================================
      Background Colors - Light Theme
-     Modern Tech: Subtle blue-gray tints
+     Clean, neutral backgrounds with subtle gray tints
+     Optimized for readability and visual hierarchy
      ============================================ */
   --color-bg-primary: #fff;
-  --color-bg-secondary: #f8fafc;
-  --color-bg-tertiary: #f1f5f9;
-  --color-bg-quaternary: #e8f0f7;
-  --color-bg-light: #f8fafc;
-  --color-bg-lighter: #f1f5f9;
-  --color-bg-lightest: #e8f0f7;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+  --color-bg-quaternary: #e5e7eb;
+  --color-bg-light: #f9fafb;
+  --color-bg-lighter: #f3f4f6;
+  --color-bg-lightest: #e5e7eb;
   --color-bg-card: #fff;
-  --color-bg-card-alt: #f8fafc;
+  --color-bg-card-alt: #f9fafb;
   --color-bg-card-hover: #fefefe;
-  --color-bg-footer: #f1f5f9;
-  --color-bg-footer-alt: #e8f0f7;
-  --color-bg-timeline: #e8f0f7;
-  --color-bg-content-hover: #f1f5f9;
-  --color-bg-stat: #f1f5f9;
-  --color-bg-navbar: rgb(255 255 255 / 90%);
+  --color-bg-footer: #f3f4f6;
+  --color-bg-footer-alt: #e5e7eb;
+  --color-bg-timeline: #e5e7eb;
+  --color-bg-content-hover: #f3f4f6;
+  --color-bg-stat: #f3f4f6;
+  --color-bg-navbar: rgb(255 255 255 / 95%);
   --color-bg-navbar-scrolled: rgb(255 255 255 / 98%);
-  --color-bg-overlay: rgb(0 0 0 / 45%);
-  --color-bg-dark: #0a1625;
-  --color-bg-dark-light: #0f1b2e;
+  --color-bg-overlay: rgb(0 0 0 / 50%);
+  --color-bg-dark: #111827;
+  --color-bg-dark-light: #1f2937;
 
   /* ============================================
      Text Colors - Light Theme
+     High contrast for accessibility and readability
+     Clear hierarchy with distinct color levels
      ============================================ */
-  --color-text-primary: #1a2332;
-  --color-text-secondary: #1f2d3d;
-  --color-text-tertiary: #2c3e50;
-  --color-text-quaternary: #5c6b7a;
-  --color-text-main: #1a2332;
-  --color-text-heading: #1f2d3d;
-  --color-text-heading-alt: #2c3e50;
-  --color-text-subtle: #5c6b7a;
-  --color-text-muted: #3b4a59;
-  --color-text-muted-alt: #7a8b9c;
+  --color-text-primary: #111827;
+  --color-text-secondary: #1f2937;
+  --color-text-tertiary: #374151;
+  --color-text-quaternary: #6b7280;
+  --color-text-main: #111827;
+  --color-text-heading: #111827;
+  --color-text-heading-alt: #1f2937;
+  --color-text-subtle: #6b7280;
+  --color-text-muted: #4b5563;
+  --color-text-muted-alt: #9ca3af;
   --color-text-light: #9ca3af;
-  --color-text-accent: #34495e;
+  --color-text-accent: #374151;
   --color-text-body: var(--color-text-main);
-  --color-text-hover: #00d9ff;
+  --color-text-hover: #3b82f6;
   --color-text-on-accent: #fff;
-  --color-text-link: #0091ea;
-  --color-text-link-hover: #00d9ff;
+  --color-text-link: #2563eb;
+  --color-text-link-hover: #1d4ed8;
 
   /* ============================================
      Border Colors - Light Theme
-     Improved contrast for better visibility
+     Clear, visible borders with good contrast
+     Subtle but noticeable for UI elements
      ============================================ */
-  --color-border-primary: rgb(176 188 200 / 65%);
-  --color-border-secondary: #b0bcc8;
-  --color-border-tertiary: #94a3b8;
-  --color-border-quaternary: #64748b;
-  --color-border-light: rgb(176 188 200 / 65%);
-  --color-border-default: #b0bcc8;
-  --color-border-medium: #94a3b8;
-  --color-border-dark: #64748b;
-  --color-border-navbar: rgb(176 188 200 / 55%);
-  --color-border-navbar-dropdown: rgb(176 188 200 / 65%);
-  --color-border-glow: rgb(0 217 255 / 20%);
-  --color-border-image: #cbd5e1;
-  --color-border-period: #cbd5e1;
-  --color-border-accent: rgb(0 217 255 / 30%);
-  --color-border-accent-hover: rgb(0 217 255 / 50%);
+  --color-border-primary: rgb(229 231 235 / 80%);
+  --color-border-secondary: #e5e7eb;
+  --color-border-tertiary: #d1d5db;
+  --color-border-quaternary: #9ca3af;
+  --color-border-light: rgb(229 231 235 / 80%);
+  --color-border-default: #e5e7eb;
+  --color-border-medium: #d1d5db;
+  --color-border-dark: #9ca3af;
+  --color-border-navbar: rgb(229 231 235 / 60%);
+  --color-border-navbar-dropdown: rgb(229 231 235 / 80%);
+  --color-border-glow: rgb(59 130 246 / 25%);
+  --color-border-image: #e5e7eb;
+  --color-border-period: #d1d5db;
+  --color-border-accent: rgb(59 130 246 / 40%);
+  --color-border-accent-hover: rgb(37 99 235 / 60%);
 
   /* ============================================
      Status Colors - Light Theme
@@ -288,10 +293,10 @@
   --color-warning-light: rgb(245 158 11 / 10%);
   --color-warning-dark: #d97706;
   --color-warning-text: #b45309;
-  --color-info: #0091ea;
-  --color-info-light: rgb(0 145 234 / 10%);
-  --color-info-dark: #06c;
-  --color-info-text: #0052a3;
+  --color-info: #3b82f6;
+  --color-info-light: rgb(59 130 246 / 10%);
+  --color-info-dark: #2563eb;
+  --color-info-text: #1d4ed8;
 
   /* ============================================
      Code Syntax Colors - Light Theme
@@ -380,42 +385,43 @@
 
   /* ============================================
      Gradients - Light Theme
-     Modern Tech: Cyan-Blue-Purple gradients
+     Professional: Blue-Purple gradients
+     Clear, harmonious, and visually appealing
      ============================================ */
-  --gradient-primary: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
-  --gradient-accent: linear-gradient(135deg, #00d9ff 0%, #0091ea 100%);
+  --gradient-primary: linear-gradient(135deg, #fff 0%, #f9fafb 100%);
+  --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   --gradient-accent-full: linear-gradient(
     135deg,
-    #00d9ff 0%,
-    #0091ea 50%,
-    #7c3aed 100%
+    #3b82f6 0%,
+    #2563eb 50%,
+    #8b5cf6 100%
   );
   --gradient-luxury: linear-gradient(
     135deg,
     #fff 0%,
-    #f8fafc 40%,
-    #f1f5f9 100%
+    #f9fafb 40%,
+    #f3f4f6 100%
   );
   --gradient-sublime: linear-gradient(
     135deg,
-    rgb(0 217 255 / 5%) 0%,
-    rgb(0 145 234 / 5%) 100%
+    rgb(59 130 246 / 5%) 0%,
+    rgb(37 99 235 / 5%) 100%
   );
   --gradient-primary-reverse: linear-gradient(
     135deg,
-    #7c3aed 0%,
-    #0091ea 50%,
-    #00d9ff 100%
+    #8b5cf6 0%,
+    #2563eb 50%,
+    #3b82f6 100%
   );
   --gradient-primary-radial: radial-gradient(
     ellipse at top,
-    rgb(0 217 255 / 15%),
+    rgb(59 130 246 / 12%),
     transparent 70%
   );
   --gradient-accent-subtle: linear-gradient(
     135deg,
-    rgb(0 217 255 / 10%) 0%,
-    rgb(0 145 234 / 10%) 100%
+    rgb(59 130 246 / 8%) 0%,
+    rgb(37 99 235 / 8%) 100%
   );
 
   /* ============================================
@@ -428,22 +434,22 @@
   --shadow-xl: 0 16px 32px rgb(0 0 0 / 10%), 0 32px 64px rgb(0 0 0 / 8%);
   --shadow-card:
     0 6px 20px rgb(0 0 0 / 5%), 0 16px 40px rgb(0 0 0 / 7%),
-    0 32px 80px rgb(0 217 255 / 6%);
+    0 32px 80px rgb(59 130 246 / 6%);
   --shadow-card-hover:
     0 16px 40px rgb(0 0 0 / 10%), 0 32px 80px rgb(0 0 0 / 12%),
-    0 48px 120px rgb(0 217 255 / 18%);
+    0 48px 120px rgb(59 130 246 / 18%);
   --shadow-card-alt: 0 10px 32px rgb(0 0 0 / 9%);
   --shadow-item: 0 6px 16px rgb(0 0 0 / 5%), 0 12px 32px rgb(0 0 0 / 7%);
   --shadow-item-hover:
     0 16px 40px rgb(0 0 0 / 10%), 0 32px 80px rgb(0 0 0 / 12%),
-    0 40px 100px rgb(0 217 255 / 15%);
+    0 40px 100px rgb(59 130 246 / 15%);
   --shadow-icon: 0 4px 10px rgb(0 0 0 / 6%);
   --shadow-icon-alt: 0 6px 16px rgb(0 0 0 / 6%);
-  --shadow-icon-hover: 0 12px 32px rgb(0 217 255 / 30%);
-  --shadow-focus: 0 0 0 4px rgb(0 217 255 / 25%);
-  --shadow-glow: 0 0 24px rgb(0 217 255 / 45%);
-  --shadow-glow-strong: 0 0 40px rgb(0 145 234 / 50%);
-  --shadow-accent: 0 0 16px rgb(0 217 255 / 35%);
+  --shadow-icon-hover: 0 12px 32px rgb(59 130 246 / 30%);
+  --shadow-focus: 0 0 0 4px rgb(59 130 246 / 25%);
+  --shadow-glow: 0 0 24px rgb(59 130 246 / 45%);
+  --shadow-glow-strong: 0 0 40px rgb(37 99 235 / 50%);
+  --shadow-accent: 0 0 16px rgb(59 130 246 / 35%);
   --shadow-footer: 0 -6px 20px rgb(0 0 0 / 5%);
   --shadow-navbar: 0 8px 24px rgb(0 0 0 / 7%);
   --shadow-navbar-scrolled: 0 12px 32px rgb(0 0 0 / 10%);
@@ -658,65 +664,66 @@
 [data-theme="dark"] {
   /* ============================================
      Background Colors - Dark Theme
-     Modern Tech: Dark blue-gray backgrounds
+     Professional dark gray backgrounds
+     Optimized for readability and visual comfort
      ============================================ */
-  --color-bg-primary: #0f1b2e;
-  --color-bg-secondary: #0a1625;
-  --color-bg-tertiary: #151f2e;
-  --color-bg-quaternary: #0a1625;
-  --color-bg-light: #0a1625;
-  --color-bg-lighter: #151f2e;
-  --color-bg-lightest: #0a1625;
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-bg-tertiary: #374151;
+  --color-bg-quaternary: #1f2937;
+  --color-bg-light: #1f2937;
+  --color-bg-lighter: #374151;
+  --color-bg-lightest: #1f2937;
 
   /* Background Light Alpha Variants - Dark Theme */
-  --color-bg-light-alpha-95: rgb(30 37 50 / 95%);
-  --color-bg-light-alpha-98: rgb(30 37 50 / 98%);
-  --color-bg-lighter-alpha-90: rgb(26 32 44 / 90%);
-  --color-bg-lighter-alpha-95: rgb(26 32 44 / 95%);
-  --color-bg-lightest-alpha-98: rgb(15 20 40 / 98%);
-  --color-bg-lightest-alpha-95: rgb(15 20 40 / 98%);
+  --color-bg-light-alpha-95: rgb(31 41 55 / 95%);
+  --color-bg-light-alpha-98: rgb(31 41 55 / 98%);
+  --color-bg-lighter-alpha-90: rgb(55 65 81 / 90%);
+  --color-bg-lighter-alpha-95: rgb(55 65 81 / 95%);
+  --color-bg-lightest-alpha-98: rgb(31 41 55 / 98%);
+  --color-bg-lightest-alpha-95: rgb(31 41 55 / 95%);
 
   /* Background Red/Pink Alpha Variants - Dark Theme */
-  --color-bg-red-alpha-95: rgb(30 37 50 / 95%);
-  --color-bg-pink-alpha-95: rgb(30 37 50 / 95%);
+  --color-bg-red-alpha-95: rgb(31 41 55 / 95%);
+  --color-bg-pink-alpha-95: rgb(31 41 55 / 95%);
 
-  /* Accent Alpha Variants - Dark Theme (Modern Tech Cyan) */
-  --color-accent-alpha-015: rgb(0 217 255 / 2%);
-  --color-accent-alpha-03: rgb(0 217 255 / 4%);
-  --color-accent-alpha-04: rgb(0 217 255 / 5%);
-  --color-accent-alpha-05: rgb(0 217 255 / 6%);
-  --color-accent-alpha-06: rgb(0 217 255 / 8%);
-  --color-accent-alpha-08: rgb(0 217 255 / 10%);
-  --color-accent-alpha-10: rgb(0 217 255 / 12%);
-  --color-accent-alpha-12: rgb(0 217 255 / 15%);
-  --color-accent-alpha-15: rgb(0 217 255 / 18%);
-  --color-accent-alpha-18: rgb(0 217 255 / 20%);
-  --color-accent-alpha-20: rgb(0 217 255 / 25%);
-  --color-accent-alpha-25: rgb(0 217 255 / 30%);
-  --color-accent-alpha-30: rgb(0 217 255 / 35%);
-  --color-accent-alpha-35: rgb(0 217 255 / 40%);
-  --color-accent-alpha-40: rgb(0 217 255 / 45%);
-  --color-accent-alpha-50: rgb(0 217 255 / 55%);
-  --color-accent-alpha-60: rgb(0 217 255 / 65%);
-  --color-accent-alpha-80: rgb(0 217 255 / 85%);
-  --color-accent-alpha-100: rgb(0 217 255 / 100%);
+  /* Accent Alpha Variants - Dark Theme (Professional Blue) */
+  --color-accent-alpha-015: rgb(59 130 246 / 2%);
+  --color-accent-alpha-03: rgb(59 130 246 / 4%);
+  --color-accent-alpha-04: rgb(59 130 246 / 5%);
+  --color-accent-alpha-05: rgb(59 130 246 / 6%);
+  --color-accent-alpha-06: rgb(59 130 246 / 8%);
+  --color-accent-alpha-08: rgb(59 130 246 / 10%);
+  --color-accent-alpha-10: rgb(59 130 246 / 12%);
+  --color-accent-alpha-12: rgb(59 130 246 / 15%);
+  --color-accent-alpha-15: rgb(59 130 246 / 18%);
+  --color-accent-alpha-18: rgb(59 130 246 / 20%);
+  --color-accent-alpha-20: rgb(59 130 246 / 25%);
+  --color-accent-alpha-25: rgb(59 130 246 / 30%);
+  --color-accent-alpha-30: rgb(59 130 246 / 35%);
+  --color-accent-alpha-35: rgb(59 130 246 / 40%);
+  --color-accent-alpha-40: rgb(59 130 246 / 45%);
+  --color-accent-alpha-50: rgb(59 130 246 / 55%);
+  --color-accent-alpha-60: rgb(59 130 246 / 65%);
+  --color-accent-alpha-80: rgb(59 130 246 / 85%);
+  --color-accent-alpha-100: rgb(59 130 246 / 100%);
 
-  /* Accent Alt Alpha Variants - Dark Theme (Modern Tech Blue) */
-  --color-accent-alt-alpha-03: rgb(0 145 234 / 4%);
-  --color-accent-alt-alpha-06: rgb(0 145 234 / 8%);
-  --color-accent-alt-alpha-08: rgb(0 145 234 / 10%);
-  --color-accent-alt-alpha-10: rgb(0 145 234 / 12%);
-  --color-accent-alt-alpha-12: rgb(0 145 234 / 15%);
-  --color-accent-alt-alpha-15: rgb(0 145 234 / 18%);
-  --color-accent-alt-alpha-18: rgb(0 145 234 / 20%);
-  --color-accent-alt-alpha-20: rgb(0 145 234 / 25%);
-  --color-accent-alt-alpha-25: rgb(0 145 234 / 30%);
-  --color-accent-alt-alpha-30: rgb(0 145 234 / 35%);
-  --color-accent-alt-alpha-40: rgb(0 145 234 / 45%);
-  --color-accent-alt-alpha-50: rgb(0 145 234 / 55%);
-  --color-accent-alt-alpha-60: rgb(0 145 234 / 65%);
-  --color-accent-alt-alpha-80: rgb(0 145 234 / 85%);
-  --color-accent-alt-alpha-90: rgb(0 145 234 / 95%);
+  /* Accent Alt Alpha Variants - Dark Theme (Deep Blue) */
+  --color-accent-alt-alpha-03: rgb(37 99 235 / 4%);
+  --color-accent-alt-alpha-06: rgb(37 99 235 / 8%);
+  --color-accent-alt-alpha-08: rgb(37 99 235 / 10%);
+  --color-accent-alt-alpha-10: rgb(37 99 235 / 12%);
+  --color-accent-alt-alpha-12: rgb(37 99 235 / 15%);
+  --color-accent-alt-alpha-15: rgb(37 99 235 / 18%);
+  --color-accent-alt-alpha-18: rgb(37 99 235 / 20%);
+  --color-accent-alt-alpha-20: rgb(37 99 235 / 25%);
+  --color-accent-alt-alpha-25: rgb(37 99 235 / 30%);
+  --color-accent-alt-alpha-30: rgb(37 99 235 / 35%);
+  --color-accent-alt-alpha-40: rgb(37 99 235 / 45%);
+  --color-accent-alt-alpha-50: rgb(37 99 235 / 55%);
+  --color-accent-alt-alpha-60: rgb(37 99 235 / 65%);
+  --color-accent-alt-alpha-80: rgb(37 99 235 / 85%);
+  --color-accent-alt-alpha-90: rgb(37 99 235 / 95%);
 
   /* Border Alpha Variants - Dark Theme */
   --color-border-alpha-30: rgb(51 65 85 / 40%);
@@ -771,22 +778,22 @@
   --overlay-alpha-20: var(--color-white-alpha-20);
   --overlay-alpha-30: var(--color-white-alpha-30);
 
-  /* Border Link Alpha Variants - Dark Theme (Modern Tech Cyan) */
-  --color-border-link-alpha-10: rgb(0 217 255 / 12%);
-  --color-border-link-alpha-15: rgb(0 217 255 / 18%);
-  --color-border-link-alpha-20: rgb(0 217 255 / 25%);
+  /* Border Link Alpha Variants - Dark Theme (Professional Blue) */
+  --color-border-link-alpha-10: rgb(59 130 246 / 12%);
+  --color-border-link-alpha-15: rgb(59 130 246 / 18%);
+  --color-border-link-alpha-20: rgb(59 130 246 / 25%);
 
-  /* Info Alpha Variants - Dark Theme (Modern Tech Cyan) */
-  --color-info-alpha-03: rgb(0 217 255 / 4%);
-  --color-info-alpha-10: rgb(0 217 255 / 12%);
-  --color-info-alpha-15: rgb(0 217 255 / 18%);
-  --color-info-alpha-20: rgb(0 217 255 / 25%);
-  --color-info-alpha-25: rgb(0 217 255 / 30%);
-  --color-info-alpha-30: rgb(0 217 255 / 35%);
-  --color-info-alpha-40: rgb(0 217 255 / 45%);
-  --color-info-alpha-50: rgb(0 217 255 / 55%);
-  --color-info-alpha-60: rgb(0 217 255 / 65%);
-  --color-info-alpha-80: rgb(0 217 255 / 85%);
+  /* Info Alpha Variants - Dark Theme (Professional Blue) */
+  --color-info-alpha-03: rgb(59 130 246 / 4%);
+  --color-info-alpha-10: rgb(59 130 246 / 12%);
+  --color-info-alpha-15: rgb(59 130 246 / 18%);
+  --color-info-alpha-20: rgb(59 130 246 / 25%);
+  --color-info-alpha-25: rgb(59 130 246 / 30%);
+  --color-info-alpha-30: rgb(59 130 246 / 35%);
+  --color-info-alpha-40: rgb(59 130 246 / 45%);
+  --color-info-alpha-50: rgb(59 130 246 / 55%);
+  --color-info-alpha-60: rgb(59 130 246 / 65%);
+  --color-info-alpha-80: rgb(59 130 246 / 85%);
 
   /* Success Alpha Variants - Dark Theme */
   --color-success-alpha-04: rgb(74 222 128 / 6%);
@@ -802,41 +809,41 @@
   --color-warning-alpha-50: rgb(251 191 36 / 50%);
 
   /* Accent Purple Alpha Variants - Dark Theme */
-  --color-accent-purple-alpha-15: rgb(167 139 250 / 18%);
-  --color-accent-purple-alpha-20: rgb(167 139 250 / 25%);
-  --color-accent-purple-alpha-30: rgb(167 139 250 / 35%);
+  --color-accent-purple-alpha-15: rgb(192 132 252 / 18%);
+  --color-accent-purple-alpha-20: rgb(192 132 252 / 25%);
+  --color-accent-purple-alpha-30: rgb(192 132 252 / 35%);
 
   /* Muted/Gray Alpha Variants - Dark Theme */
   --color-muted-alpha-30: rgb(203 213 225 / 40%);
 
   /* Accent Tertiary Alpha Variants - Dark Theme */
-  --color-accent-tertiary-alpha-10: rgb(79 172 254 / 12%);
-  --color-accent-tertiary-alpha-15: rgb(79 172 254 / 18%);
-  --color-accent-tertiary-alpha-20: rgb(79 172 254 / 25%);
+  --color-accent-tertiary-alpha-10: rgb(167 139 250 / 12%);
+  --color-accent-tertiary-alpha-15: rgb(167 139 250 / 18%);
+  --color-accent-tertiary-alpha-20: rgb(167 139 250 / 25%);
 
-  /* Accent Secondary Alpha Variants - Dark Theme (Modern Tech Purple) */
-  --color-accent-secondary-alpha-10: rgb(124 58 237 / 12%);
-  --color-accent-secondary-alpha-15: rgb(124 58 237 / 18%);
-  --color-accent-secondary-alpha-18: rgb(124 58 237 / 20%);
-  --color-accent-secondary-alpha-20: rgb(124 58 237 / 25%);
-  --color-accent-secondary-alpha-30: rgb(124 58 237 / 35%);
-  --color-accent-secondary-alpha-50: rgb(124 58 237 / 55%);
-  --color-accent-secondary-alpha-90: rgb(124 58 237 / 95%);
+  /* Accent Secondary Alpha Variants - Dark Theme (Professional Purple) */
+  --color-accent-secondary-alpha-10: rgb(139 92 246 / 12%);
+  --color-accent-secondary-alpha-15: rgb(139 92 246 / 18%);
+  --color-accent-secondary-alpha-18: rgb(139 92 246 / 20%);
+  --color-accent-secondary-alpha-20: rgb(139 92 246 / 25%);
+  --color-accent-secondary-alpha-30: rgb(139 92 246 / 35%);
+  --color-accent-secondary-alpha-50: rgb(139 92 246 / 55%);
+  --color-accent-secondary-alpha-90: rgb(139 92 246 / 95%);
 
   /* Background Card and Component Colors - Dark Theme */
-  --color-bg-card: #1a2538;
-  --color-bg-card-alt: #151f2e;
-  --color-bg-card-hover: #1f2a3f;
-  --color-bg-footer: #0a1625;
-  --color-bg-footer-alt: #0a1625;
-  --color-bg-timeline: #151f2e;
-  --color-bg-content-hover: #1f2a3f;
-  --color-bg-stat: #151f2e;
-  --color-bg-navbar: rgb(15 27 46 / 90%);
-  --color-bg-navbar-scrolled: rgb(15 27 46 / 98%);
+  --color-bg-card: #1f2937;
+  --color-bg-card-alt: #374151;
+  --color-bg-card-hover: #4b5563;
+  --color-bg-footer: #111827;
+  --color-bg-footer-alt: #1f2937;
+  --color-bg-timeline: #374151;
+  --color-bg-content-hover: #4b5563;
+  --color-bg-stat: #374151;
+  --color-bg-navbar: rgb(17 24 39 / 90%);
+  --color-bg-navbar-scrolled: rgb(17 24 39 / 98%);
   --color-bg-overlay: rgb(0 0 0 / 75%);
-  --color-bg-dark: #0a1625;
-  --color-bg-dark-light: #0f1b2e;
+  --color-bg-dark: #111827;
+  --color-bg-dark-light: #1f2937;
   --color-bg-card-dark: var(--color-bg-card);
 
   /* ============================================
@@ -858,10 +865,10 @@
   --color-text-body-dark: var(--color-text-main);
   --color-text-heading-dark: var(--color-text-heading);
   --color-text-subtle-dark: var(--color-text-subtle);
-  --color-text-hover: #40e0d0;
+  --color-text-hover: #60a5fa;
   --color-text-on-accent: #fff;
-  --color-text-link: #00d9ff;
-  --color-text-link-hover: #40e0d0;
+  --color-text-link: #3b82f6;
+  --color-text-link-hover: #60a5fa;
 
   /* ============================================
      Border Colors - Dark Theme
@@ -877,11 +884,11 @@
   --color-border-dark: #94a3b8;
   --color-border-navbar: rgb(71 85 105 / 55%);
   --color-border-navbar-dropdown: rgb(71 85 105 / 65%);
-  --color-border-glow: rgb(0 217 255 / 30%);
+  --color-border-glow: rgb(59 130 246 / 30%);
   --color-border-image: #475569;
   --color-border-period: #475569;
-  --color-border-accent: rgb(0 217 255 / 40%);
-  --color-border-accent-hover: rgb(0 217 255 / 60%);
+  --color-border-accent: rgb(59 130 246 / 40%);
+  --color-border-accent-hover: rgb(59 130 246 / 60%);
   --color-border-print: #64748b;
 
   /* ============================================
@@ -904,27 +911,27 @@
   --color-warning-light: rgb(251 191 36 / 15%);
   --color-warning-dark: #f59e0b;
   --color-warning-text: #fcd34d;
-  --color-info: #00d9ff;
-  --color-info-light: rgb(0 217 255 / 15%);
-  --color-info-dark: #00b8d4;
-  --color-info-text: #40e0d0;
+  --color-info: #3b82f6;
+  --color-info-light: rgb(59 130 246 / 15%);
+  --color-info-dark: #2563eb;
+  --color-info-text: #60a5fa;
 
   /* Note: Info colors kept as blue for status/notification purposes */
 
   /* ============================================
-     Accent Colors - Dark Theme (Modern Tech Cyan)
+     Accent Colors - Dark Theme (Professional Blue)
      ============================================ */
-  --color-accent-primary: #00d9ff;
-  --color-accent-alt: #0091ea;
-  --color-accent-hover: #40e0d0;
-  --color-accent-light: #40e0d0;
-  --color-accent-dark: #06c;
-  --color-accent-secondary: #7c3aed;
-  --color-accent-tertiary: #8b5cf6;
-  --color-accent-purple: #a78bfa;
+  --color-accent-primary: #3b82f6;
+  --color-accent-alt: #2563eb;
+  --color-accent-hover: #60a5fa;
+  --color-accent-light: #60a5fa;
+  --color-accent-dark: #1d4ed8;
+  --color-accent-secondary: #8b5cf6;
+  --color-accent-tertiary: #a78bfa;
+  --color-accent-purple: #c084fc;
   --color-accent-purple-dark: #7c3aed;
-  --color-accent-glow: rgb(0 217 255 / 40%);
-  --color-accent-glow-strong: rgb(0 145 234 / 45%);
+  --color-accent-glow: rgb(59 130 246 / 40%);
+  --color-accent-glow-strong: rgb(37 99 235 / 45%);
 
   /* Special Purpose Colors - Dark Theme */
   --color-purple: var(--color-accent-purple);
@@ -1015,12 +1022,12 @@
      Modern Tech: Cyan-Blue-Purple gradients
      ============================================ */
   --gradient-primary: linear-gradient(135deg, #0f1b2e 0%, #0a1625 100%);
-  --gradient-accent: linear-gradient(135deg, #00d9ff 0%, #0091ea 100%);
+  --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   --gradient-accent-full: linear-gradient(
     135deg,
-    #00d9ff 0%,
-    #0091ea 50%,
-    #7c3aed 100%
+    #3b82f6 0%,
+    #2563eb 50%,
+    #8b5cf6 100%
   );
   --gradient-luxury: linear-gradient(
     135deg,
@@ -1030,23 +1037,23 @@
   );
   --gradient-sublime: linear-gradient(
     135deg,
-    rgb(0 217 255 / 15%) 0%,
-    rgb(0 145 234 / 15%) 100%
+    rgb(59 130 246 / 15%) 0%,
+    rgb(37 99 235 / 15%) 100%
   );
   --gradient-primary-reverse: linear-gradient(
     135deg,
-    #7c3aed 0%,
-    #0091ea 50%,
-    #00d9ff 100%
+    #8b5cf6 0%,
+    #2563eb 50%,
+    #3b82f6 100%
   );
   --gradient-accent-subtle: linear-gradient(
     135deg,
-    rgb(0 217 255 / 15%) 0%,
-    rgb(0 145 234 / 15%) 100%
+    rgb(59 130 246 / 15%) 0%,
+    rgb(37 99 235 / 15%) 100%
   );
   --gradient-primary-radial: radial-gradient(
     ellipse at top,
-    rgb(0 217 255 / 20%),
+    rgb(59 130 246 / 20%),
     transparent 70%
   );
 
@@ -1060,22 +1067,22 @@
   --shadow-xl: 0 16px 32px rgb(0 0 0 / 70%), 0 32px 64px rgb(0 0 0 / 60%);
   --shadow-card:
     0 6px 20px rgb(0 0 0 / 50%), 0 16px 40px rgb(0 0 0 / 40%),
-    0 32px 80px rgb(0 217 255 / 20%);
+    0 32px 80px rgb(59 130 246 / 20%);
   --shadow-card-hover:
     0 16px 40px rgb(0 0 0 / 60%), 0 32px 80px rgb(0 0 0 / 50%),
-    0 48px 120px rgb(0 217 255 / 30%);
+    0 48px 120px rgb(59 130 246 / 30%);
   --shadow-card-alt: 0 10px 32px rgb(0 0 0 / 60%);
   --shadow-item: 0 6px 16px rgb(0 0 0 / 50%), 0 12px 32px rgb(0 0 0 / 60%);
   --shadow-item-hover:
     0 16px 40px rgb(0 0 0 / 70%), 0 32px 80px rgb(0 0 0 / 60%),
-    0 40px 100px rgb(0 217 255 / 25%);
+    0 40px 100px rgb(59 130 246 / 25%);
   --shadow-icon: 0 4px 10px rgb(0 0 0 / 50%);
   --shadow-icon-alt: 0 6px 16px rgb(0 0 0 / 50%);
-  --shadow-icon-hover: 0 12px 32px rgb(0 217 255 / 40%);
-  --shadow-focus: 0 0 0 4px rgb(0 217 255 / 30%);
-  --shadow-glow: 0 0 24px rgb(0 217 255 / 40%);
-  --shadow-glow-strong: 0 0 40px rgb(0 145 234 / 50%);
-  --shadow-accent: 0 0 16px rgb(0 217 255 / 40%);
+  --shadow-icon-hover: 0 12px 32px rgb(59 130 246 / 40%);
+  --shadow-focus: 0 0 0 4px rgb(59 130 246 / 30%);
+  --shadow-glow: 0 0 24px rgb(59 130 246 / 40%);
+  --shadow-glow-strong: 0 0 40px rgb(37 99 235 / 50%);
+  --shadow-accent: 0 0 16px rgb(59 130 246 / 40%);
   --shadow-footer: 0 -6px 20px rgb(0 0 0 / 50%);
   --shadow-navbar: 0 8px 24px rgb(0 0 0 / 50%);
   --shadow-navbar-scrolled: 0 12px 32px rgb(0 0 0 / 60%);
