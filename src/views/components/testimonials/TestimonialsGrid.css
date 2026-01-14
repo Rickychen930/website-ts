@@ -21,11 +21,18 @@
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: var(--spacing-2xl, 32px);
   margin-top: var(--spacing-2xl, 32px);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
 }
 
 .testimonial-card-wrapper {
   display: flex;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 /* ============================================
@@ -36,6 +43,8 @@
 @media screen and (width >= 1400px) {
   .testimonials-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl, 32px);
+    max-width: 100%;
   }
 }
 
@@ -44,6 +53,7 @@
   .testimonials-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-xl, 24px);
+    max-width: 100%;
   }
 }
 
@@ -52,14 +62,17 @@
   .testimonials-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-xl, 24px);
+    max-width: 100%;
   }
 }
 
 /* Tablet Portrait (768px - 1023px) */
 @media screen and (width <= 1023px) and (width >= 768px) {
   .testimonials-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: var(--spacing-lg, 20px);
+    margin-top: var(--spacing-xl, 24px);
+    max-width: 100%;
   }
 }
 
@@ -68,6 +81,8 @@
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg, 20px);
+    margin-top: var(--spacing-xl, 24px);
+    max-width: 100%;
   }
 }
 
@@ -76,20 +91,28 @@
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg, 20px);
+    margin-top: var(--spacing-xl, 24px);
+    max-width: 100%;
   }
 }
 
 /* Small Mobile (360px - 479px) */
 @media screen and (width <= 479px) and (width >= 360px) {
   .testimonials-grid {
+    grid-template-columns: 1fr;
     gap: var(--spacing-md, 16px);
+    margin-top: var(--spacing-lg, 20px);
+    max-width: 100%;
   }
 }
 
 /* Extra Small Mobile (below 360px) */
 @media screen and (width <= 359px) {
   .testimonials-grid {
+    grid-template-columns: 1fr;
     gap: var(--spacing-md, 16px);
+    margin-top: var(--spacing-lg, 20px);
+    max-width: 100%;
   }
 }
 
@@ -97,5 +120,6 @@
 @media screen and (orientation: landscape) and (height <= 600px) {
   .testimonials-grid {
     gap: var(--spacing-md, 16px);
+    margin-top: var(--spacing-lg, 20px);
   }
 }

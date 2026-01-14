@@ -3,21 +3,25 @@
  * Professional, Clean, Luxury, Responsive Testimonials & Recommendations Section
  *
  * Architecture:
- * - MVC: Separated Controller, Model, and View
- * - OOP: Class-based component with encapsulation
- * - Component-Based: Uses reusable sub-components
+ * - MVC: Strict separation of View, Controller, and Model
+ * - View: Only handles UI rendering
+ * - Controller: Handles all business logic (injected via DI)
+ * - Component-Based: Uses reusable parent-child components
  *
  * Principles Applied:
- * - MVC: Separated Controller, Model, and View
- * - OOP: Class-based component with encapsulation
- * - SOLID:
- *   - SRP: Each method has single responsibility
- *   - OCP: Extensible through composition
- *   - LSP: Proper inheritance/implementation
- *   - ISP: Interfaces are segregated
- *   - DIP: Depends on abstractions (controller, components)
- * - DRY: Reuses components and utilities
+ * - Single Responsibility Principle (SRP): View only renders UI
+ * - Dependency Inversion Principle (DIP): Depends on Controller abstraction
+ * - Open/Closed Principle (OCP): Extensible via composition
+ * - DRY: Uses reusable components (TestimonialsGrid, TestimonialCard)
  * - KISS: Simple, clear structure
+ * - Component-Based: Composed of smaller, focused components
+ *
+ * Features:
+ * - Clean separation of concerns
+ * - Proper error handling
+ * - Fully accessible (ARIA labels, keyboard navigation)
+ * - Responsive design
+ * - Professional, luxury, beautiful UI with glassmorphism
  */
 
 import React, { Component, ReactNode } from "react";
@@ -76,42 +80,26 @@ class TestimonialsSection extends Component<
   }
 
   /**
-   * Process testimonials data
+   * Process testimonials data through controller
+   * Centralized data processing for better maintainability
    * Handles data prop like other sections (consistent API)
    */
   private processData(): void {
     const { data } = this.props;
 
-    // Handle different data types
+    // Normalize data: handle null, undefined, or invalid arrays
     let testimonialsData: ITestimonial[] | undefined;
 
     if (data === null || data === undefined) {
-      // No data provided - use defaults
       testimonialsData = undefined;
-    } else if (Array.isArray(data)) {
-      // Data is an array - validate and use if valid
-      if (data.length > 0) {
-        // Validate that array contains ITestimonial objects
-        const isValid = data.every(
-          (item) =>
-            item &&
-            typeof item === "object" &&
-            "name" in item &&
-            "text" in item,
-        );
-
-        if (isValid) {
-          testimonialsData = data as ITestimonial[];
-        } else {
-          // Invalid array - use defaults
-          testimonialsData = undefined;
-        }
-      } else {
-        // Empty array - use defaults
-        testimonialsData = undefined;
-      }
+    } else if (Array.isArray(data) && data.length > 0) {
+      // Validate that array contains ITestimonial objects
+      const isValid = data.every(
+        (item) =>
+          item && typeof item === "object" && "name" in item && "text" in item,
+      );
+      testimonialsData = isValid ? (data as ITestimonial[]) : undefined;
     } else {
-      // Data is not an array - use defaults
       testimonialsData = undefined;
     }
 
@@ -122,10 +110,16 @@ class TestimonialsSection extends Component<
 
   /**
    * Render empty state
+   * Standardized empty state display with improved accessibility
    */
   private renderEmptyState(): ReactNode {
     return (
-      <div className="testimonials-empty" role="status" aria-live="polite">
+      <div
+        className="testimonials-empty"
+        role="status"
+        aria-live="polite"
+        aria-label="No testimonials available"
+      >
         <div className="testimonials-empty-icon" aria-hidden="true">
           <svg
             width="64"
@@ -150,7 +144,8 @@ class TestimonialsSection extends Component<
 
   /**
    * Render testimonials grid
-   * Uses parent component TestimonialsGrid for proper component hierarchy
+   * Delegates rendering to reusable TestimonialsGrid parent component
+   * TestimonialsGrid uses TestimonialCard child components
    */
   private renderTestimonials(): ReactNode {
     const { testimonials } = this.state;
@@ -162,15 +157,16 @@ class TestimonialsSection extends Component<
     return <TestimonialsGrid testimonials={testimonials} />;
   }
 
-  render(): ReactNode {
-    const { isVisible } = this.state;
-    const { testimonials } = this.state;
+  /**
+   * Main render method
+   * Follows Single Responsibility Principle (SRP)
+   */
+  public render(): ReactNode {
+    const { isVisible, testimonials } = this.state;
 
-    // Always show section if there are testimonials (including defaults from controller)
-    // Controller always returns default testimonials if no custom data provided
-    // This section should always be visible since defaults are always available
+    // Edge case: Hide section if no testimonials available
+    // Controller should always return defaults, but handle edge case gracefully
     if (testimonials.length === 0) {
-      // Edge case: Only hide if somehow no testimonials (shouldn't happen with defaults)
       return null;
     }
 
@@ -198,4 +194,3 @@ class TestimonialsSection extends Component<
 }
 
 export default TestimonialsSection;
-export type { ITestimonial };
