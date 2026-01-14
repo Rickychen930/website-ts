@@ -177,7 +177,7 @@ class BackToTopButton extends Component<{}, BackToTopButtonState> {
         aria-label="Scroll to top"
         title="Scroll to top"
         tabIndex={isVisible ? 0 : -1}
-        style={{ display: "block" }}
+        style={{ display: "flex" }}
       >
         <span className="back-to-top-icon" aria-hidden="true">
           ↑

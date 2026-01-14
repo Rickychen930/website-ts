@@ -18,12 +18,15 @@
 
 .testimonials-grid {
   display: grid;
+  position: relative;
+  width: 100%;
+  padding: 0;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: var(--spacing-2xl, 32px);
   margin-top: var(--spacing-2xl, 32px);
-  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
-  padding: 0;
+  overflow-x: hidden;
 }
 
 .testimonial-card-wrapper {
