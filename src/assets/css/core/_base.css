@@ -104,9 +104,10 @@ a:hover {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: 4px;
-  border-radius: 4px;
+  outline: 3px solid var(--color-accent-primary); /* Increased from 2px for better visibility */
+  outline-offset: 3px; /* Reduced from 4px */
+  border-radius: var(--radius-sm); /* Use consistent radius */
+  box-shadow: 0 0 0 1px var(--color-accent-alpha-20); /* Subtle glow */
 }
 
 /* ============================================
@@ -168,9 +169,10 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: 4px;
-  border-radius: 4px;
+  outline: 3px solid var(--color-accent-primary); /* Increased from 2px */
+  outline-offset: 3px; /* Reduced from 4px */
+  border-radius: var(--radius-sm); /* Use consistent radius */
+  box-shadow: var(--shadow-focus); /* Use shadow system */
 }
 
 button:disabled {
@@ -210,6 +212,7 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 3px solid var(--color-accent-primary);
   outline-offset: 2px;
+  border-radius: var(--radius-sm); /* Use consistent radius */
   box-shadow: var(--shadow-focus);
 }
 

@@ -68,8 +68,10 @@
   height: 0;
   background: var(--overlay-alpha-30);
   transition:
-    width 0.6s ease,
-    height 0.6s ease;
+    width var(--transition-slow, 400ms) ease,
+    /* Use variable instead of hardcoded */ height var(--transition-slow, 400ms)
+      ease; /* Use variable instead of hardcoded */
+
   content: "";
   border-radius: 50%;
   transform: translate(-50%, -50%);
@@ -90,8 +92,8 @@
 }
 
 .btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px); /* Subtle hover */
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); /* Subtler shadow */
 }
 
 .btn--primary:active {
@@ -108,8 +110,8 @@
 .btn--secondary:hover {
   background: var(--color-bg-card-hover);
   border-color: var(--color-accent-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px); /* More subtle */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtler shadow */
 }
 
 .btn--secondary:active {

@@ -58,7 +58,7 @@
   font-weight: 600;
   transition: all var(--transition-smooth)
     var(--easing-spring, var(--transition-bounce));
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   align-items: center;
   gap: 0.625rem;
   border-radius: 16px;

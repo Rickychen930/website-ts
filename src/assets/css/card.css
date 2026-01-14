@@ -149,7 +149,10 @@
   color: var(--color-text-heading);
   font-size: clamp(1.875rem, 4vw, 3rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: var(
+    --line-height-tight,
+    1.2
+  ); /* Use variable instead of hardcoded */
   transition: var(--transition-all);
   letter-spacing: -0.03em;
   font-family: var(--font-display, "Inter", system-ui, sans-serif);
@@ -175,7 +178,10 @@
   z-index: var(--z-base);
   color: var(--color-text-on-accent);
   font-size: clamp(1rem, 1.6vw, 1.125rem);
-  line-height: 1.8;
+  line-height: var(
+    --line-height-loose,
+    2
+  ); /* Use variable instead of hardcoded (closest match) */
   transition: var(--transition-color);
   font-family: var(--font-main, "Inter", system-ui, sans-serif);
   letter-spacing: 0.01em;
@@ -258,7 +264,7 @@
 
   .card-title {
     font-size: clamp(1.5rem, 3vw, 2rem);
-    letter-spacing: -0.6px;
+    letter-spacing: -0.04em; /* Standardized from -0.6px to em */
   }
 
   .card-body {
@@ -284,12 +290,15 @@
 
   .card-title {
     font-size: clamp(1.4rem, 2.5vw, 1.75rem);
-    letter-spacing: -0.5px;
+    letter-spacing: -0.03em; /* Standardized from -0.5px to em */
   }
 
   .card-body {
     font-size: clamp(0.9rem, 1.4vw, 1rem);
-    line-height: 1.7;
+    line-height: var(
+      --line-height-relaxed,
+      1.75
+    ); /* Use variable instead of hardcoded (closest match) */
   }
 
   .card-footer {
@@ -318,12 +327,15 @@
 
   .card-title {
     font-size: clamp(1.25rem, 2vw, 1.5rem);
-    letter-spacing: -0.4px;
+    letter-spacing: -0.025em; /* Standardized from -0.4px to em */
   }
 
   .card-body {
     font-size: clamp(0.875rem, 1.3vw, 0.95rem);
-    line-height: 1.65;
+    line-height: var(
+      --line-height-relaxed,
+      1.75
+    ); /* Use variable instead of hardcoded (closest match) */
   }
 
   .card-footer {

@@ -44,14 +44,17 @@
   color: var(--color-text-heading);
   font-size: var(--font-size-h3);
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em; /* Standardized from -0.5px to em */
 }
 
 .github-contributions-subtitle {
   margin: 0;
   color: var(--color-text-subtle);
   font-size: var(--font-size-base);
-  line-height: 1.6;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
 }
 
 /* Content */

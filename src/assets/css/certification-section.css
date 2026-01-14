@@ -76,7 +76,7 @@
   position: relative;
   width: 100%;
   padding: 0;
-  border: 1.5px solid var(--color-accent-alpha-15);
+  border: 1px solid var(--color-accent-alpha-15); /* Standardized from 1.5px */
   background: linear-gradient(
     145deg,
     var(--color-white-alpha-98) 0%,
@@ -85,7 +85,7 @@
   );
   opacity: 0;
   transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  min-height: 420px;
+  min-height: 380px; /* Reduced from 420px for better balance */
   backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
   border-radius: var(--radius-2xl);
   overflow: visible;
@@ -270,7 +270,7 @@
 
 #certification-section .certification-card:focus-visible {
   outline: 3px solid var(--cert-color-primary);
-  outline-offset: 4px;
+  outline-offset: 3px; /* Standardized from 4px to match core */
 }
 
 /* ─── Advanced Icon Styling ─── */
@@ -343,30 +343,32 @@
 
   50% {
     opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.05); /* Reduced from 1.1 */
   }
 }
 
 #certification-section .certification-card:hover .certification-icon-emoji {
-  transform: scale(1.1) rotate(5deg) translateZ(10px);
-  filter: drop-shadow(0 6px 12px var(--color-accent-alpha-30));
+  transform: scale(1.05) rotate(3deg) translateZ(8px); /* Reduced from 1.1, 5deg, 10px */
+  filter: drop-shadow(
+    0 4px 8px var(--color-accent-alpha-25)
+  ); /* Subtler shadow */
 }
 
 #certification-section .certification-card:hover .certification-icon-glow {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1.05);
+  transform: translate(-50%, -50%) scale(1.02); /* Reduced from 1.05 */
 }
 
 @keyframes cert-icon-pulse-fast {
   0%,
   100% {
     opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.05); /* Reduced from 1.1 */
   }
 
   50% {
     opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.05); /* Reduced from 1.1 */
   }
 }
 
@@ -395,7 +397,7 @@
   font-weight: 800;
   line-height: 1.35;
   transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em; /* Standardized from -0.5px to em for scalability */
   overflow-wrap: break-word;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -437,7 +439,7 @@
   line-height: 1.5;
   opacity: 0.85;
   transition: var(--transition-all);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
   text-transform: uppercase;
   border-radius: var(--radius-md);
 }
@@ -453,7 +455,7 @@
   color: var(--color-text-hover);
   opacity: 1;
   border-color: var(--color-accent-alpha-30);
-  transform: scale(1.05);
+  transform: scale(1.02); /* Reduced from 1.05 */
 }
 
 /* ─── Advanced Badges Styling ─── */
@@ -476,13 +478,13 @@
   gap: 0.5rem;
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.04em; /* Standardized from 0.4px to em */
   overflow: hidden;
   transform-style: preserve-3d;
 }
 
 #certification-section .certification-badge-default {
-  border: 1.5px solid var(--color-border-primary);
+  border: 1px solid var(--color-border-primary); /* Standardized from 1.5px */
   background: linear-gradient(
     135deg,
     var(--color-bg-lighter) 0%,
@@ -493,7 +495,7 @@
 }
 
 #certification-section .certification-badge-accent {
-  border: 1.5px solid var(--color-accent-alpha-30);
+  border: 1px solid var(--color-accent-alpha-30); /* Standardized from 1.5px */
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-15) 0%,
@@ -616,7 +618,7 @@
   color: var(--text-heading);
   font-size: 1.75rem;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em; /* Standardized from -0.5px to em for scalability */
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -1086,7 +1088,7 @@
   }
 
   #certification-section .certification-card:hover {
-    transform: translateY(-8px) scale(1.01);
+    transform: translateY(-4px) scale(1.01); /* Reduced from -8px */
   }
 
   #certification-section .certification-card::before,

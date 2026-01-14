@@ -53,8 +53,8 @@
 .tech-showcase-title {
   background: var(--gradient-primary);
   color: var(--tech-showcase-text);
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.375rem; /* Reduced from 1.5rem */
+  font-weight: 600; /* Reduced from 700 */
   text-align: center;
   margin-bottom: 2rem;
   -webkit-text-fill-color: transparent;
@@ -137,7 +137,10 @@
   padding: 1.5rem;
   background: var(--color-black-alpha-20);
   font-size: 0.95rem;
-  line-height: 1.8;
+  line-height: var(
+    --line-height-loose,
+    2
+  ); /* Use variable instead of hardcoded (closest match) */
   font-family: Monaco, Menlo, "Fira Code", monospace;
 }
 
@@ -199,7 +202,7 @@
   color: var(--color-text-on-accent);
   animation: cursor-blink var(--animation-duration-base) step-end infinite;
   margin-left: 0.25rem;
-  font-weight: 700;
+  font-weight: 600; /* Reduced from 700 */
 }
 
 @keyframes cursor-blink {
@@ -263,11 +266,11 @@
 }
 
 .tech-showcase-item:hover {
-  transform: translateY(-8px) scale(1.05);
+  transform: translateY(-4px) scale(1.02); /* Reduced from -8px and 1.05 */
   border-color: var(--color-accent-alpha-50);
   box-shadow:
-    0 12px 40px var(--color-accent-alpha-30),
-    0 0 0 1px var(--color-accent-alpha-30);
+    0 8px 24px var(--color-accent-alpha-25),
+    /* Subtler shadow */ 0 0 0 1px var(--color-accent-alpha-30);
 }
 
 .tech-showcase-item-active {
@@ -324,7 +327,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   transition: color var(--transition-base);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
 }
 
 .tech-showcase-item-active .tech-showcase-item-text {

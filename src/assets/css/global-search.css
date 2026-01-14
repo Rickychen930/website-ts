@@ -115,7 +115,10 @@
   padding: var(--spacing-xl);
   border-bottom: 1px solid var(--border-light);
   align-items: center;
-  gap: 12px;
+  gap: var(
+    --spacing-sm,
+    0.75rem
+  ); /* Standardized from 12px to use spacing variable */
 }
 
 .search-input-wrapper {
@@ -127,7 +130,10 @@
   transition: all var(--transition-base);
   flex: 1;
   align-items: center;
-  gap: 12px;
+  gap: var(
+    --spacing-sm,
+    0.75rem
+  ); /* Standardized from 12px to use spacing variable */
   border-radius: var(--btn-radius);
 }
 
@@ -253,7 +259,10 @@
 .search-result {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: var(
+    --spacing-sm,
+    0.75rem
+  ); /* Standardized from 12px to use spacing variable */
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--content-radius);
   cursor: pointer;
@@ -297,7 +306,7 @@
   font-size: var(--font-size-xs);
   margin-bottom: 4px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
 }
 
 .search-result-preview {
@@ -321,7 +330,10 @@
 .search-hints {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(
+    --spacing-md,
+    1rem
+  ); /* Standardized from 16px to use spacing variable */
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -331,7 +343,10 @@
   color: var(--text-muted);
   font-size: var(--font-size-xs);
   align-items: center;
-  gap: 4px;
+  gap: var(
+    --spacing-xs,
+    0.5rem
+  ); /* Standardized from 4px to use spacing variable */
 }
 
 .search-hint kbd {
@@ -375,7 +390,10 @@
 
   .search-hints {
     font-size: var(--font-size-xs);
-    gap: 12px;
+    gap: var(
+      --spacing-sm,
+      0.75rem
+    ); /* Standardized from 12px to use spacing variable */
   }
 }
 

@@ -62,14 +62,17 @@
   color: var(--color-text-heading);
   font-size: 1.875rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em; /* Standardized from -0.5px to em */
 }
 
 .error-boundary-message {
   margin: 0 0 2rem;
   color: var(--color-text-subtle);
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: var(
+    --line-height-relaxed,
+    1.75
+  ); /* Use variable instead of hardcoded */
 }
 
 .error-boundary-details {
@@ -93,12 +96,15 @@
   margin: 0;
   color: var(--color-text-subtle);
   font-size: 0.85rem;
-  line-height: 1.6;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
   overflow-x: auto;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-all;
-  font-family: "Courier New", monospace;
+  font-family: var(--font-mono); /* Use CSS variable instead of hardcoded */
 }
 
 .error-boundary-actions {
@@ -119,7 +125,7 @@
   border-radius: var(--component-radius-button);
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   min-width: 140px;
 }
 
@@ -161,7 +167,10 @@
   margin: 0 0 1.5rem;
   color: var(--color-text-subtle);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
 }
 
 .error-boundary-stack-trace {

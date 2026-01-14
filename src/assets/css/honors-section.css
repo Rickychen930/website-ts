@@ -123,12 +123,12 @@
 .honors-grid {
   display: grid;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base, 1); /* Use z-index variable */
   width: 100%;
   margin: 0;
   padding: 0.75rem 0;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
-  gap: 2rem;
+  gap: var(--spacing-xl, 2rem); /* Use spacing variable for consistency */
   max-width: 100%;
   perspective: 2000px;
 }
@@ -193,10 +193,12 @@
 .honors-empty-icon {
   position: relative;
   z-index: 1;
-  font-size: 5rem;
-  opacity: 0.7;
-  margin-bottom: 2rem;
-  filter: drop-shadow(0 8px 16px var(--color-black-alpha-10));
+  font-size: 4rem; /* Reduced from 5rem for consistency */
+  opacity: 0.6; /* Reduced from 0.7 */
+  margin-bottom: 1.5rem; /* Reduced from 2rem */
+  filter: drop-shadow(
+    0 4px 8px var(--color-black-alpha-08)
+  ); /* Subtler shadow */
 }
 
 .honors-empty-title {
@@ -212,7 +214,7 @@
   font-weight: 800;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.05em; /* Standardized from -0.8px to em for scalability */
 }
 
 .honors-empty-text {
@@ -265,7 +267,7 @@
   color: var(--color-error);
   font-size: 1.75rem;
   font-weight: 800;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.05em; /* Standardized from -0.8px to em for scalability */
 }
 
 .honors-error-message {
@@ -286,7 +288,7 @@
   }
 
   50% {
-    transform: translateY(-15px) rotate(5deg);
+    transform: translateY(-8px) rotate(3deg); /* Reduced from -15px and 5deg */
   }
 }
 
@@ -325,7 +327,7 @@
 @media screen and (width > 1400px) {
   .honors-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 450px), 1fr));
-    gap: 2.5rem;
+    gap: var(--spacing-2xl, 2.5rem); /* Use spacing variable */
   }
 }
 
@@ -333,7 +335,7 @@
 @media screen and (width <= 1400px) and (width > 1200px) {
   .honors-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
-    gap: 2rem;
+    gap: var(--spacing-xl, 2rem); /* Use spacing variable */
   }
 }
 
@@ -853,7 +855,7 @@
 /* ─── Focus Visible (Accessibility) ─── */
 #honors-section:focus-visible {
   outline: 3px solid var(--color-accent-primary);
-  outline-offset: 2px;
+  outline-offset: 3px; /* Standardized from 2px to match core */
 }
 
 /* ─── Selection Styles ─── */

@@ -32,7 +32,7 @@
   text-align: center;
   transition: transform var(--transition-smooth)
     var(--easing-spring, var(--transition-bounce));
-  letter-spacing: 0.2px;
+  letter-spacing: 0.02em; /* Standardized from 0.2px to em */
   box-shadow:
     0 4px 16px var(--color-black-alpha-20),
     0 2px 8px var(--color-black-alpha-12);
@@ -84,7 +84,10 @@
 
 .offline-indicator-text {
   flex: 1;
-  line-height: 1.5;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
 }
 
 /* Animation */

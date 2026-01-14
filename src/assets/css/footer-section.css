@@ -63,18 +63,13 @@
   background:
     radial-gradient(
       circle at 20% 30%,
-      var(--color-accent-alpha-15) 0%,
-      transparent 50%
+      var(--color-accent-alpha-08) 0%,
+      /* Reduced from 15% */ transparent 50%
     ),
     radial-gradient(
       circle at 80% 70%,
-      var(--color-accent-alt-alpha-15) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      var(--color-accent-secondary-alpha-30) 0%,
-      transparent 60%
+      var(--color-accent-alt-alpha-06) 0%,
+      /* Reduced from 15% */ transparent 50%
     ),
     linear-gradient(
       180deg,
@@ -82,6 +77,8 @@
       var(--footer-bg-primary) 10%,
       var(--footer-bg-secondary) 100%
     );
+
+  /* Removed third radial gradient for better performance */
   color: var(--footer-text-primary);
   backdrop-filter: blur(var(--blur-4xl)) saturate(180%);
   font-family: var(--font-main);
@@ -108,39 +105,26 @@
   );
   content: "";
   box-shadow:
-    0 0 20px var(--color-accent-alpha-50),
-    0 0 40px var(--color-accent-alt-alpha-30);
+    0 0 12px var(--color-accent-alpha-40),
+    /* Reduced from 20px and 50% */ 0 0 24px var(--color-accent-alt-alpha-25); /* Reduced from 40px and 30% */
 }
 
 @keyframes footer-border-glow {
   0%,
   100% {
-    opacity: 0.8;
+    opacity: 0.6; /* Reduced from 0.8 */
     transform: scaleX(1);
   }
 
   50% {
-    opacity: 1;
-    transform: scaleX(1.05);
+    opacity: 0.8; /* Reduced from 1 */
+    transform: scaleX(1.02); /* Reduced from 1.05 */
   }
 }
 
-/* Animated Background Gradient */
+/* Animated Background Gradient - Simplified */
 .footer::after {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  z-index: calc(var(--z-base) - 1);
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--overlay-alpha-10),
-    transparent
-  );
-  content: "";
-  pointer-events: none;
+  display: none; /* Removed for better performance */
 }
 
 @keyframes footer-shimmer {
@@ -209,7 +193,7 @@
   color: var(--footer-text-primary);
   font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
   text-transform: uppercase;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -505,7 +489,10 @@
   background: var(--color-bg-card-alt);
   color: var(--color-text-subtle);
   font-size: 0.9rem;
-  line-height: 1.8;
+  line-height: var(
+    --line-height-loose,
+    2
+  ); /* Use variable instead of hardcoded (closest match) */
   overflow-x: auto;
   font-family: "Fira Code", Consolas, Monaco, monospace;
 }
@@ -626,7 +613,10 @@
   color: var(--footer-text-primary);
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: var(
+    --line-height-tight,
+    1.2
+  ); /* Use variable instead of hardcoded */
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.25rem;
@@ -637,7 +627,7 @@
   font-size: 0.85rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
 }
 
 /* ============================================
@@ -756,7 +746,7 @@
   color: var(--footer-text-muted);
   font-size: 0.9rem;
   font-weight: 400;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
 }
 
 .footer-copyright-author {

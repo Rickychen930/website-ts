@@ -46,7 +46,7 @@
   opacity: 0;
   transition: all var(--transition-base)
     var(--easing-spring, var(--transition-bounce));
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   text-decoration: none;
   border-radius: var(--radius-md);
   box-shadow:

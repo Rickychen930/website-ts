@@ -91,7 +91,7 @@ export const TextColors = {
   SUBTLE: "#6b7280", // Subtle text - good contrast
   MUTED: "#4b5563", // Muted text
   MUTED_ALT: "#9ca3af", // Light muted text
-  LIGHT: "#9ca3af", // Light text for secondary info
+  LIGHT: "#6b7280", // Light text for secondary info (WCAG AA compliant - 4.6:1 contrast)
   ACCENT: "#374151", // Accent text color
   HOVER: "#3b82f6", // Blue hover - clear feedback
   ON_ACCENT: "#ffffff", // White text on colored backgrounds

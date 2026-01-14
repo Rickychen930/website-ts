@@ -49,8 +49,8 @@
 }
 
 .empty-state__icon:hover {
-  opacity: 1;
-  transform: scale(1.05);
+  opacity: 0.9; /* Reduced from 1 for subtler effect */
+  transform: scale(1.02); /* Reduced from 1.05 for subtler effect */
   filter: grayscale(0);
 }
 

@@ -14,25 +14,37 @@
 .contact-card {
   display: flex;
   position: relative;
-  padding: 2.75rem 2.25rem;
+  padding: var(
+    --spacing-card-padding,
+    2.5rem clamp(1.5rem, 4vw, 3rem)
+  ); /* Use spacing variable */
   border: 1px solid var(--color-white-alpha-30);
   background: var(--color-white-alpha-70);
   opacity: 0;
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
+
   flex-direction: column;
   -webkit-backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
   backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
   border-radius: var(--radius-2xl);
-  box-shadow:
-    0 8px 32px var(--color-black-alpha-06),
-    0 2px 8px var(--color-black-alpha-04),
-    inset 0 1px 0 var(--color-white-alpha-50);
+  box-shadow: var(
+    --shadow-card,
+    0 6px 20px rgba(0, 0, 0, 0.05),
+    0 16px 40px rgba(0, 0, 0, 0.07),
+    0 32px 80px rgba(59, 130, 246, 0.06)
+  ); /* Use shadow variable */
   cursor: pointer;
   overflow: hidden;
   transform: translateY(20px);
-  will-change: transform, opacity;
+  will-change: transform, opacity; /* Removed after animation via JS */
   animation: contact-card-entrance var(--animation-duration-base)
     var(--transition-smooth) forwards;
+
+  /* Ensure proper touch target on mobile */
+  min-height: 44px;
   contain: layout style paint;
   backface-visibility: hidden;
   isolation: isolate;
@@ -194,7 +206,10 @@
   border: 2px solid var(--color-accent-alpha-20);
   border-radius: 50%;
   opacity: 0;
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
 }
 
 @keyframes contact-ring-pulse {
@@ -225,11 +240,15 @@
   position: relative;
   margin: 0;
   color: var(--contact-text-primary, var(--color-text-main));
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.4;
-  transition: all var(--transition-smooth);
-  letter-spacing: 0.5px;
+  font-size: 0.875rem; /* Reduced from 0.95rem */
+  font-weight: 600; /* Reduced from 700 */
+  line-height: 1.5; /* Improved from 1.4 */
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
+
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em for scalability */
   text-transform: uppercase;
 }
 
@@ -243,7 +262,10 @@
   );
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
 }
 
 .contact-card-label-underline {
@@ -270,10 +292,15 @@
   display: block;
   position: relative;
   color: var(--contact-text-secondary, var(--color-text-subtle));
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.6;
-  transition: all var(--transition-smooth);
+  font-size: 1rem; /* Reduced from 1.05rem */
+  font-weight: 500; /* Reduced from 600 */
+  line-height: 1.75; /* Improved from 1.6 for better readability */
+  letter-spacing: 0.01em; /* Better spacing */
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
+
   overflow-wrap: break-word;
   max-width: 100%;
 }
@@ -289,7 +316,11 @@
     var(--color-text-light) 100%
   );
   color: var(--contact-text-secondary, var(--color-text-subtle));
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
+
   text-decoration: none;
   align-items: center;
   justify-content: center;
@@ -334,7 +365,10 @@
   display: inline-block;
   font-size: 0.875rem;
   opacity: 0.7;
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
 }
 
 .contact-card-link:hover .contact-card-link-icon,
@@ -349,7 +383,8 @@
   color: var(--contact-text-muted, var(--color-text-muted));
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.75; /* Improved from 1.6 for better readability */
+  letter-spacing: 0.01em; /* Better spacing */
   opacity: 0.85;
   transition: all var(--transition-fast);
 }
@@ -359,14 +394,20 @@
   display: flex;
   position: relative;
   z-index: calc(var(--z-base) + 4);
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.75rem; /* 44px - proper touch target */
+  height: 2.75rem; /* 44px - proper touch target */
+  min-width: 44px; /* Ensure minimum touch target */
+  min-height: 44px; /* Ensure minimum touch target */
   padding: 0;
-  border: 1.5px solid var(--color-accent-alpha-20);
+  border: 1px solid var(--color-accent-alpha-20); /* Standardized from 1.5px */
   background: var(--color-accent-alpha-08);
   color: var(--contact-primary, var(--color-accent-primary));
-  font-size: 1.1rem;
-  transition: all var(--transition-smooth);
+  font-size: 1rem; /* Reduced from 1.1rem */
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
+
   align-items: center;
   justify-content: center;
   -webkit-backdrop-filter: blur(var(--blur-md));
@@ -374,7 +415,11 @@
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 2px 8px var(--color-accent-alpha-10);
+  box-shadow: var(
+    --shadow-sm,
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    0 4px 10px rgba(0, 0, 0, 0.06)
+  ); /* Use shadow variable */
 }
 
 .contact-card-copy::before {
@@ -391,7 +436,10 @@
   );
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
 }
 
 .contact-card-copy:hover::before,
@@ -404,8 +452,12 @@
 .contact-card-copy:focus {
   background: var(--color-accent-alpha-15);
   border-color: var(--color-border-accent-hover);
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px var(--color-accent-alpha-20);
+  transform: scale(1.03); /* Reduced from 1.05 for subtler effect */
+  box-shadow: var(
+    --shadow-md,
+    0 4px 12px rgba(0, 0, 0, 0.07),
+    0 8px 20px rgba(0, 0, 0, 0.08)
+  ); /* Use shadow variable */
   outline: none;
 }
 
@@ -418,7 +470,10 @@
   position: relative;
   z-index: calc(var(--z-base) + 1);
   line-height: 1;
-  transition: all var(--transition-smooth);
+  transition:
+    opacity var(--transition-smooth),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth); /* Optimized: specific properties instead of 'all' */
 }
 
 .contact-card-copy-text {
@@ -438,7 +493,11 @@
   background: var(--color-success-alpha-30);
   border-color: var(--color-success-alpha-30);
   color: var(--color-success);
-  box-shadow: 0 4px 16px var(--color-success-alpha-30);
+  box-shadow: var(
+    --shadow-lg,
+    0 10px 24px rgba(0, 0, 0, 0.08),
+    0 20px 40px rgba(0, 0, 0, 0.06)
+  ); /* Use shadow variable */
 }
 
 .contact-card-copy--copied .contact-card-copy-icon {
@@ -593,11 +652,11 @@
 .contact-card--active {
   z-index: calc(var(--z-base) + 10);
   background: var(--color-white-alpha-85);
-  transform: translateY(-4px);
+  transform: translateY(-2px); /* Reduced from -4px for subtler effect */
   border-color: var(--color-accent-alpha-40);
   box-shadow:
-    0 8px 24px var(--color-accent-alpha-15),
-    0 4px 12px var(--color-black-alpha-08);
+    0 4px 16px var(--color-accent-alpha-12),
+    /* Subtler shadow */ 0 2px 8px var(--color-black-alpha-06);
 }
 
 .contact-card--active .contact-card-pattern {
@@ -627,7 +686,7 @@
   background: var(--gradient-accent-full);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transform: translateY(-2px);
+  transform: translateY(-1px); /* Reduced from -2px */
 }
 
 .contact-card--active .contact-card-label-underline {
@@ -638,7 +697,7 @@
   background: var(--gradient-accent-full);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transform: translateY(-2px);
+  transform: translateY(-1px); /* Reduced from -2px */
 }
 
 .contact-card--active .contact-card-link::before {
@@ -719,7 +778,7 @@
 /* ─── Responsive Design ─── */
 @media screen and (width <= 768px) {
   .contact-card {
-    padding: 2.25rem 1.75rem;
+    padding: var(--card-padding-alt, 2.25rem 2rem); /* Use spacing variable */
     border-radius: var(--radius-2xl);
   }
 
@@ -735,22 +794,30 @@
 @media screen and (width <= 480px) {
   .contact-card {
     width: 100%;
-    padding: 2rem 1.5rem;
+    padding: var(
+      --spacing-card-padding-mobile,
+      1.75rem 1.25rem
+    ); /* Use spacing variable */
     border-radius: var(--radius-xl);
     max-width: 100%;
     box-sizing: border-box;
   }
 
   .contact-card-copy {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem; /* Keep 44px minimum */
+    height: 2.75rem; /* Keep 44px minimum */
+    min-width: 44px; /* Ensure minimum touch target */
+    min-height: 44px; /* Ensure minimum touch target */
     font-size: 1rem;
   }
 }
 
 @media screen and (width <= 360px) {
   .contact-card {
-    padding: 1.75rem 1.25rem;
+    padding: var(
+      --spacing-card-padding-mobile,
+      1.75rem 1.25rem
+    ); /* Use spacing variable */
     border-radius: var(--radius-lg);
   }
 }
@@ -780,6 +847,6 @@
   }
 
   .contact-card--active {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-2px); /* Reduced for reduced motion */
   }
 }

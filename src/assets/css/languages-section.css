@@ -102,7 +102,7 @@
   display: flex;
   position: relative;
   padding: var(--language-spacing-xl) var(--language-spacing-lg);
-  border: 2px solid var(--color-border-alpha-60);
+  border: 1px solid var(--color-border-alpha-60); /* Standardized from 2px for consistency */
   background: linear-gradient(
     135deg,
     var(--color-white-alpha-95) 0%,
@@ -177,8 +177,8 @@
 /* ─── Language Card Hover State ─── */
 .language-card-visible:hover,
 .language-card-visible:focus-within {
-  transform: translateY(-8px) scale(1.02);
-  border-color: var(--color-accent-alpha-50);
+  transform: translateY(-4px) scale(1.01); /* Reduced from -8px and 1.02 */
+  border-color: var(--color-accent-alpha-40); /* Reduced from 50% */
   background: linear-gradient(
     135deg,
     var(--color-white-alpha-98) 0%,
@@ -186,10 +186,11 @@
     var(--color-bg-lightest-alpha-98) 100%
   );
   box-shadow:
-    var(--language-shadow-xl),
-    0 0 0 1px var(--color-accent-alpha-15),
-    0 32px 64px var(--color-accent-alpha-25),
-    inset 0 1px 0 var(--overlay-alpha-30);
+    var(--language-shadow-lg),
+    /* Reduced from xl */ 0 0 0 1px var(--color-accent-alpha-12),
+    /* Reduced from 15% */ 0 16px 32px var(--color-accent-alpha-20),
+    /* Reduced from 32px 64px and 25% */ inset 0 1px 0 var(--overlay-alpha-20); /* Reduced from 30% */
+
   outline: none;
 }
 
@@ -743,14 +744,15 @@
 .language-empty-title {
   margin: 0 0 var(--language-spacing-sm) 0;
   color: var(--language-primary);
-  font-size: 1.5rem;
-  font-weight: var(--language-font-weight-bold);
+  font-size: 1.375rem; /* Standardized from 1.5rem */
+  font-weight: 600; /* Standardized from bold */
 }
 
 .language-empty-text {
   margin: 0;
   color: var(--language-secondary);
   font-size: 1rem;
+  line-height: 1.75; /* Improved from default */
   opacity: 0.7;
   max-width: 400px;
 }
@@ -767,22 +769,23 @@
 }
 
 .language-error-icon {
-  font-size: 3.5rem;
+  font-size: 3.5rem; /* Keep slightly smaller than empty (3.5rem vs 4rem) */
   margin-bottom: var(--language-spacing-md);
-  opacity: 0.7;
+  opacity: 0.6; /* Standardized from 0.7 */
 }
 
 .language-error-title {
   margin: 0 0 var(--language-spacing-sm) 0;
   color: var(--language-error);
-  font-size: 1.5rem;
-  font-weight: var(--language-font-weight-bold);
+  font-size: 1.25rem; /* Standardized from 1.5rem - error should be slightly smaller */
+  font-weight: 600; /* Standardized from bold */
 }
 
 .language-error-message {
   margin: 0;
   color: var(--language-secondary);
-  font-size: 1rem;
+  font-size: 0.95rem; /* Slightly smaller than empty text */
+  line-height: 1.75; /* Improved from default */
   opacity: 0.7;
   max-width: 400px;
 }
@@ -1186,7 +1189,7 @@
 /* ─── Focus Visible (Accessibility) ─── */
 .language-card:focus-visible {
   outline: 3px solid var(--language-accent);
-  outline-offset: 4px;
+  outline-offset: 3px; /* Standardized from 4px to match core */
   border-radius: var(--language-radius-xl);
 }
 

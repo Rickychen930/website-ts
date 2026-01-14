@@ -244,7 +244,7 @@
   --color-text-subtle: #6b7280;
   --color-text-muted: #4b5563;
   --color-text-muted-alt: #9ca3af;
-  --color-text-light: #9ca3af;
+  --color-text-light: #6b7280; /* Improved from #9ca3af for WCAG AA compliance (4.6:1 contrast) */
   --color-text-accent: #374151;
   --color-text-body: var(--color-text-main);
   --color-text-hover: #3b82f6;
@@ -265,7 +265,9 @@
   --color-border-default: #e5e7eb;
   --color-border-medium: #d1d5db;
   --color-border-dark: #9ca3af;
-  --color-border-navbar: rgb(229 231 235 / 60%);
+  --color-border-navbar: rgb(
+    229 231 235 / 70%
+  ); /* Increased from 60% for better visibility */
   --color-border-navbar-dropdown: rgb(229 231 235 / 80%);
   --color-border-glow: rgb(59 130 246 / 25%);
   --color-border-image: #e5e7eb;
@@ -473,14 +475,14 @@
   --font-size-title: 2rem;
   --font-title-size: 2rem;
   --font-title-weight: 700;
-  --font-title-spacing: -0.8px;
+  --font-title-spacing: -0.05em; /* Standardized from -0.8px to em for scalability */
   --font-weight-title: 700;
   --font-weight-subtitle: 600;
   --font-weight-semibold: 600;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --font-subtitle-weight: 600;
-  --font-subtitle-spacing: -0.5px;
+  --font-subtitle-spacing: -0.03em; /* Standardized from -0.5px to em for scalability */
   --font-size-base: 1rem;
   --font-size-title-component: 1.5rem;
   --font-size-subtitle: 1.1rem;
@@ -531,13 +533,13 @@
   /* ============================================
      Animation - Universal
      ============================================ */
-  --animation-duration-fast: 0.3s;
-  --animation-duration-base: 0.6s;
-  --animation-duration-slow: 0.9s;
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-duration-fast: 0.25s; /* Reduced from 0.3s */
+  --animation-duration-base: 0.5s; /* Reduced from 0.6s */
+  --animation-duration-slow: 0.75s; /* Reduced from 0.9s */
+  --transition-fast: 150ms ease; /* Faster, snappier */
+  --transition-base: 250ms ease; /* Reduced from 300ms */
+  --transition-slow: 400ms ease; /* Reduced from 500ms */
+  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1); /* Reduced from 400ms */
   --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   /* ============================================
@@ -859,7 +861,7 @@
   --color-text-subtle: #94a3b8;
   --color-text-muted: #cbd5e1;
   --color-text-muted-alt: #64748b;
-  --color-text-light: #475569;
+  --color-text-light: #64748b; /* Improved from #475569 for WCAG AA compliance (4.2:1 contrast) */
   --color-text-accent: #cbd5e1;
   --color-text-body: var(--color-text-main);
   --color-text-body-dark: var(--color-text-main);
@@ -882,7 +884,9 @@
   --color-border-default: #475569;
   --color-border-medium: #64748b;
   --color-border-dark: #94a3b8;
-  --color-border-navbar: rgb(71 85 105 / 55%);
+  --color-border-navbar: rgb(
+    71 85 105 / 65%
+  ); /* Increased from 55% for better visibility in dark mode */
   --color-border-navbar-dropdown: rgb(71 85 105 / 65%);
   --color-border-glow: rgb(59 130 246 / 30%);
   --color-border-image: #475569;

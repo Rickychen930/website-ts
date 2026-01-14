@@ -87,7 +87,7 @@
   font-weight: 600;
   border-radius: var(--radius-xs);
   font-family: var(--font-mono);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
 }
 
 /* Mobile responsive */

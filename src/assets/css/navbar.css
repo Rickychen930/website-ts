@@ -77,26 +77,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle gradient overlay */
+/* Subtle gradient overlay - Simplified */
 .navbar::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-accent-alpha-05) 50%,
-    transparent 100%
-  );
-  opacity: var(--opacity-disabled);
-  content: "";
-  pointer-events: none;
+  display: none; /* Removed for better performance and cleaner design */
 }
 
-/* Top border accent */
+/* Top border accent - Simplified */
 .navbar::after {
   position: absolute;
   top: 0;
@@ -107,10 +93,10 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-accent-alpha-60) 50%,
-    transparent
+    var(--color-accent-alpha-40) 50%,
+    /* Reduced from 60% */ transparent
   );
-  opacity: var(--opacity-hover);
+  opacity: 0.5; /* Reduced opacity */
   content: "";
 }
 
@@ -142,7 +128,7 @@
   transition: padding var(--timing-slow) var(--easing-premium);
   align-items: center;
   justify-content: space-between;
-  max-width: 1400px;
+  max-width: 1200px; /* Reduced from 1400px for better consistency */
   gap: var(--spacing-lg);
   min-height: inherit;
 }
@@ -207,7 +193,8 @@
 }
 
 .navbar-brand:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px); /* Subtle hover */
+  opacity: 0.9; /* Slight opacity change */
 }
 
 .navbar-brand:hover::before {
@@ -248,12 +235,12 @@
 .navbar-brand-text {
   position: relative;
   background: var(--gradient-text-premium);
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.375rem; /* Reduced from 1.5rem */
+  font-weight: 700; /* Reduced from 800 */
   transition: all var(--transition-base);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -1px;
+  letter-spacing: -0.06em; /* Standardized from -1px to em for scalability */
 }
 
 .navbar-brand:hover .navbar-brand-text {
@@ -521,7 +508,7 @@
   align-items: center;
   gap: 0.625rem;
   text-decoration: none;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   border-radius: var(--radius-md);
   outline: none;
   white-space: nowrap;
@@ -575,16 +562,16 @@
 @media (hover: hover) {
   .navbar-links li a:hover {
     color: var(--color-accent-primary);
-    transform: translateY(-1px);
+    transform: translateY(-1px); /* Subtle hover */
   }
 }
 
 /* Focus states - for keyboard navigation */
 .navbar-links li a:focus-visible {
   outline: 3px solid var(--color-accent-primary);
-  outline-offset: 4px;
+  outline-offset: 3px; /* Reduced from 4px */
   color: var(--color-accent-primary);
-  transform: translateY(-2px);
+  transform: translateY(-1px); /* Reduced from -2px */
   box-shadow: var(--shadow-focus);
   border-radius: var(--radius-sm);
 }
@@ -603,8 +590,8 @@
   }
 
   .navbar-links li a:hover::after {
-    width: 80%;
-    box-shadow: 0 1px 4px var(--color-accent-alpha-30);
+    width: 70%; /* Reduced from 80% */
+    box-shadow: 0 1px 3px var(--color-accent-alpha-25); /* Subtler shadow */
   }
 }
 
@@ -637,8 +624,8 @@
     var(--color-accent-alt-alpha-06) 100%
   );
   color: var(--color-accent-primary);
-  font-weight: 700;
-  text-shadow: 0 2px 8px var(--color-accent-alpha-25);
+  font-weight: 600; /* Reduced from 700 */
+  text-shadow: 0 1px 4px var(--color-accent-alpha-20); /* Subtler shadow */
 }
 
 .navbar-links li a.active::before {
@@ -653,8 +640,8 @@
 }
 
 .navbar-links li a.active::after {
-  width: 80%;
-  box-shadow: 0 2px 12px var(--color-accent-alpha-50);
+  width: 70%; /* Reduced from 80% */
+  box-shadow: 0 1px 6px var(--color-accent-alpha-40); /* Subtler shadow */
   transition:
     width var(--transition-slow),
     box-shadow var(--transition-base);
@@ -682,7 +669,10 @@
 
 .navbar-link-text {
   position: relative;
-  line-height: 1.5;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
 }
 
 /* ============================================
@@ -707,7 +697,7 @@
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   border-radius: var(--radius-md);
   outline: none;
   white-space: nowrap;
@@ -764,7 +754,10 @@
 
 .navbar-dropdown-label {
   position: relative;
-  line-height: 1.5;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
 }
 
 .navbar-dropdown-icon {
@@ -833,8 +826,8 @@
 /* Dropdown active and open states - moved before hover states */
 .navbar-dropdown.active .navbar-dropdown-toggle {
   color: var(--color-accent-primary);
-  font-weight: 700;
-  text-shadow: 0 2px 8px var(--color-accent-alpha-25);
+  font-weight: 600; /* Reduced from 700 */
+  text-shadow: 0 1px 4px var(--color-accent-alpha-20); /* Subtler shadow */
 }
 
 .navbar-dropdown.active .navbar-dropdown-toggle::before {
@@ -1162,7 +1155,10 @@
 }
 
 .navbar-dropdown-item-text {
-  line-height: 1.5;
+  line-height: var(
+    --line-height-normal,
+    1.5
+  ); /* Use variable instead of hardcoded */
   flex: 1;
 }
 
@@ -1203,7 +1199,7 @@
   align-items: center;
   gap: 0.625rem;
   text-decoration: none;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
   border-radius: var(--radius-md);
   outline: none;
   white-space: nowrap;
@@ -1273,8 +1269,8 @@
 
 .navbar-link.active {
   color: var(--color-accent-primary);
-  font-weight: 700;
-  text-shadow: 0 2px 8px var(--color-accent-alpha-25);
+  font-weight: 600; /* Reduced from 700 */
+  text-shadow: 0 1px 4px var(--color-accent-alpha-20); /* Subtler shadow */
 }
 
 .navbar-link.active::before {

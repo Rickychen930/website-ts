@@ -141,7 +141,7 @@
 .technical-skills-container {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base, 1); /* Use z-index variable */
   width: 100%;
   padding: var(--skills-spacing-md, 1.5rem) 0;
   flex-direction: column;
@@ -154,7 +154,7 @@
 .technical-skills-statistics {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base, 1); /* Use z-index variable */
   width: 100%;
   padding: var(--skills-spacing-xl, 2.5rem) var(--skills-spacing-lg, 2rem);
   border: 1px solid var(--color-accent-alpha-20);
@@ -232,14 +232,14 @@
 .technical-skills-statistics__item {
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base, 1); /* Use z-index variable */
   padding: 0.5rem;
   transition: all var(--transition-base);
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   min-width: 100px;
-  border-radius: 12px;
+  border-radius: var(--radius-md, 12px); /* Use radius variable */
 }
 
 .technical-skills-statistics__item:hover {
@@ -255,15 +255,17 @@
     var(--color-accent-alt) 50%,
     var(--color-accent-tertiary) 100%
   );
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 1;
+  font-size: 2.5rem; /* Reduced from 3rem */
+  font-weight: 700; /* Reduced from 800 */
+  line-height: 1.1; /* Improved from 1 */
   font-family: var(--skills-font-main, "Inter", "Segoe UI", sans-serif);
   background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px var(--color-accent-alpha-30);
-  filter: drop-shadow(0 2px 4px var(--color-accent-alpha-20));
+  text-shadow: 0 0 20px var(--color-accent-alpha-25); /* Subtler shadow */
+  filter: drop-shadow(
+    0 1px 3px var(--color-accent-alpha-15)
+  ); /* Subtler filter */
 }
 
 @keyframes gradient-shift {
@@ -301,7 +303,10 @@
     var(--color-accent-primary),
     var(--color-accent-alt)
   );
-  border-radius: 2px;
+  border-radius: var(
+    --radius-xs,
+    4px
+  ); /* Use radius variable, min 4px for better appearance */
 }
 
 .technical-skills-statistics__divider {
@@ -315,7 +320,10 @@
     var(--color-accent-alt-alpha-30),
     transparent
   );
-  border-radius: 2px;
+  border-radius: var(
+    --radius-xs,
+    4px
+  ); /* Use radius variable, min 4px for better appearance */
   box-shadow: 0 0 10px var(--color-accent-alpha-20);
 }
 
@@ -323,7 +331,7 @@
 .technical-skills-grid {
   display: grid;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base, 1); /* Use z-index variable */
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   gap: var(--skills-spacing-lg, 2rem);
@@ -354,8 +362,8 @@
 .technical-skills-empty__title {
   margin: 0 0 var(--skills-spacing-sm, 1rem) 0;
   color: var(--color-text-heading);
-  font-size: var(--skills-font-size-title, 1.5rem);
-  font-weight: 700;
+  font-size: var(--skills-font-size-title, 1.375rem); /* Reduced from 1.5rem */
+  font-weight: 600; /* Reduced from 700 */
   font-family: var(--skills-font-main, "Inter", "Segoe UI", sans-serif);
 }
 
@@ -394,7 +402,7 @@
   }
 
   .technical-skills-statistics__value {
-    font-size: 2.5rem;
+    font-size: 2.25rem; /* Reduced from 2.5rem for better balance */
   }
 }
 

@@ -326,12 +326,14 @@
 
 .about-me-image-container:hover .image-component.about-me-image,
 .about-me-image-container:hover img.about-me-image {
-  transform: scale(1.05) translateY(-6px);
+  transform: scale(1.02) translateY(-3px); /* Reduced from 1.05 and -6px */
   box-shadow:
-    var(--about-me-shadow-xl),
-    var(--about-me-shadow-glow),
-    0 0 40px var(--color-accent-alpha-30),
-    inset 0 0 0 3px var(--about-me-color-primary);
+    var(--about-me-shadow-lg),
+    /* Reduced from xl */ var(--about-me-shadow-glow),
+    0 0 24px var(--color-accent-alpha-25),
+    /* Reduced from 40px and 30% */ inset 0 0 0 2px
+      var(--about-me-color-primary); /* Reduced from 3px */
+
   border-color: var(--about-me-color-primary);
 }
 
