@@ -75,7 +75,7 @@ interface ICarouselState {
  * Reusable horizontal scroll carousel following OOP, SOLID, DRY, KISS principles
  */
 export class Carousel extends Component<ICarouselProps, ICarouselState> {
-  private readonly containerRef: RefObject<HTMLDivElement>;
+  private readonly containerRef: RefObject<HTMLDivElement | null>;
   private readonly scrollThrottleDelay = 100;
   private scrollTimeoutId: number | null = null;
   private autoScrollIntervalId: number | null = null;

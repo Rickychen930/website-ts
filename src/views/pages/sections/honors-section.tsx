@@ -26,6 +26,10 @@ import { HonorsModel, IHonorItem } from "../../../models/honors-model";
 import { HonorCard } from "../../components/honors/HonorCard";
 import { EmptyState, Carousel, ICarouselItem } from "../../components/ui";
 import { logError, logWarn } from "../../../utils/logger";
+import {
+  ResponsiveStateManager,
+  isMobileOrTablet,
+} from "../../../utils/responsive-utils";
 
 /**
  * Honors Section Props Interface
@@ -138,7 +142,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     this.isMounted = true;
 
     // Initialize responsive state manager
-    this.responsiveManager.initialize((isMobile) => {
+    this.responsiveManager.initialize((isMobile: boolean) => {
       this.setState({ isMobileOrTablet: isMobile });
     });
 

@@ -6,7 +6,10 @@
  */
 
 import { useState, useEffect } from "react";
-import { ResponsiveStateManager, isMobileOrTablet } from "./responsive-utils";
+import {
+  ResponsiveStateManager,
+  isMobileOrTablet as checkIsMobileOrTablet,
+} from "./responsive-utils";
 
 /**
  * Custom hook for responsive behavior
@@ -26,7 +29,7 @@ import { ResponsiveStateManager, isMobileOrTablet } from "./responsive-utils";
  */
 export function useResponsive(): boolean {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(() =>
-    isMobileOrTablet(),
+    checkIsMobileOrTablet(),
   );
 
   useEffect(() => {
