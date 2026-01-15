@@ -31,6 +31,7 @@ import {
 } from "../../../controllers/testimonials-controller";
 import { SectionTitles } from "../../../constants";
 import { TestimonialsGrid } from "../../components/testimonials";
+import { Card } from "../../components/common";
 import "../../../assets/css/testimonials-section.css";
 
 /**
@@ -46,7 +47,6 @@ type TestimonialsProps = {
  */
 type TestimonialsState = {
   testimonials: ITestimonial[];
-  isVisible: boolean;
 };
 
 /**
@@ -62,14 +62,12 @@ class TestimonialsSection extends Component<
     super(props);
     this.state = {
       testimonials: [],
-      isVisible: false,
     };
     this.controller = new TestimonialsController();
   }
 
   componentDidMount(): void {
     this.processData();
-    this.setState({ isVisible: true });
   }
 
   componentDidUpdate(prevProps: TestimonialsProps): void {
@@ -162,7 +160,7 @@ class TestimonialsSection extends Component<
    * Follows Single Responsibility Principle (SRP)
    */
   public render(): ReactNode {
-    const { isVisible, testimonials } = this.state;
+    const { testimonials } = this.state;
 
     // Edge case: Hide section if no testimonials available
     // Controller should always return defaults, but handle edge case gracefully
@@ -171,24 +169,16 @@ class TestimonialsSection extends Component<
     }
 
     return (
-      <section
+      <Card
         id="testimonials"
-        className={`testimonials-section ${isVisible ? "visible" : ""}`}
-        aria-labelledby="testimonials-heading"
-        aria-label="Testimonials and Recommendations"
+        title={SectionTitles.TESTIMONIALS || "Testimonials & Recommendations"}
+        ariaLabel="Testimonials and Recommendations"
       >
-        <div className="section-container">
-          <header className="section-header">
-            <h2 id="testimonials-heading" className="section-title">
-              {SectionTitles.TESTIMONIALS || "Testimonials & Recommendations"}
-            </h2>
-            <p className="section-subtitle">
-              What colleagues and clients say about working with me
-            </p>
-          </header>
-          {this.renderTestimonials()}
-        </div>
-      </section>
+        <p className="testimonials-subtitle">
+          What colleagues and clients say about working with me
+        </p>
+        {this.renderTestimonials()}
+      </Card>
     );
   }
 }

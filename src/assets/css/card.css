@@ -120,12 +120,13 @@
 /* Hover & Focus States - Enhanced & Professional */
 @media (hover: hover) {
   .card:hover {
-    transform: translateY(-12px) scale(1.03) rotateX(2deg);
+    transform: translateY(-8px) scale(1.01); /* Refined: More subtle, professional hover */
     box-shadow:
-      0 20px 80px var(--color-black-alpha-15),
-      0 32px 128px var(--color-black-alpha-12),
-      0 48px 192px var(--color-accent-alpha-20),
-      0 0 0 2px var(--color-accent-alpha-50);
+      0 16px 64px var(--color-black-alpha-12),
+      0 24px 96px var(--color-black-alpha-10),
+      0 32px 128px var(--color-accent-alpha-15),
+      0 0 0 1px var(--color-accent-alpha-40); /* Refined: Thinner border glow */
+
     border-color: var(--color-accent-primary);
     background: var(--color-bg-card-hover);
   }
@@ -156,9 +157,17 @@
    ============================================ */
 .card-header {
   position: relative;
-  margin-bottom: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+  margin-bottom: clamp(
+    var(--spacing-lg),
+    4vw,
+    var(--spacing-2xl)
+  ); /* Refined: Better spacing */
   text-align: center;
-  padding-bottom: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  padding-bottom: clamp(
+    var(--spacing-md),
+    2.5vw,
+    var(--spacing-lg)
+  ); /* Refined: More balanced */
   box-sizing: border-box;
 }
 
@@ -177,18 +186,24 @@
   background-size: 300% 300%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.75rem, 4.5vw, 2.75rem); /* Larger, bolder */
-  font-weight: 800; /* Bolder */
-  line-height: 1.2; /* Tighter */
+  font-size: clamp(
+    1.5rem,
+    4vw,
+    2.5rem
+  ); /* Refined: Slightly smaller for better hierarchy */
+  font-weight: 700; /* Refined: Reduced from 800 for more elegant look */
+  line-height: 1.3; /* Refined: Better readability */
   transition:
     transform var(--transition-fast),
     filter var(--transition-smooth);
-  letter-spacing: -0.03em; /* Tighter */
+  letter-spacing: -0.02em; /* Refined: Slightly less tight */
   font-family: var(--font-display);
   user-select: none;
   outline: none;
-  filter: drop-shadow(0 4px 12px var(--color-black-alpha-20));
-  animation: gradient-shift 8s ease infinite;
+  filter: drop-shadow(
+    0 2px 8px var(--color-black-alpha-15)
+  ); /* Refined: More subtle shadow */
+  animation: gradient-shift 10s ease infinite; /* Refined: Slower animation for elegance */
 }
 
 .card-title:focus {
@@ -208,10 +223,10 @@
   z-index: var(--z-base);
   color: var(--color-text-body);
   font-size: var(--font-size-body-responsive);
-  line-height: var(--line-height-relaxed);
+  line-height: 1.7; /* Refined: Better readability (was var(--line-height-relaxed)) */
   transition: color var(--transition-base);
   font-family: var(--font-main);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em; /* Refined: Slightly better spacing */
   box-sizing: border-box;
 }
 

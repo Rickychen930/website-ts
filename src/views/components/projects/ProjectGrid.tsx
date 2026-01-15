@@ -13,10 +13,6 @@ import React, { PureComponent, ReactNode } from "react";
 import { IProject } from "../../../models/project-model";
 import { ProjectCard } from "./ProjectCard";
 import { Carousel, ICarouselItem } from "../ui/carousel";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
 
 /**
  * Project Grid Props
@@ -33,36 +29,13 @@ interface ProjectGridProps {
 /**
  * Project Grid Component
  * PureComponent for performance optimization
- * Uses Carousel component for horizontal scrolling on mobile/tablet
+ * Uses Carousel component for horizontal scrolling on all devices
  */
 export class ProjectGrid extends PureComponent<ProjectGridProps> {
-  private responsiveManager = new ResponsiveStateManager();
-  private isMobileState: boolean = false;
-
   static defaultProps: Partial<ProjectGridProps> = {
     className: "",
     layout: "carousel",
   };
-
-  /**
-   * Component Did Mount
-   * Initialize responsive state
-   */
-  componentDidMount(): void {
-    this.isMobileState = isMobileOrTablet();
-    this.responsiveManager.initialize((isMobile) => {
-      this.isMobileState = isMobile;
-      this.forceUpdate();
-    });
-  }
-
-  /**
-   * Component Will Unmount
-   * Cleanup responsive listener
-   */
-  componentWillUnmount(): void {
-    this.responsiveManager.cleanup();
-  }
 
   /**
    * Get grid class names
@@ -149,36 +122,16 @@ export class ProjectGrid extends PureComponent<ProjectGridProps> {
   }
 
   /**
-   * Render grid layout (desktop)
-   */
-  private renderGrid(): ReactNode {
-    const { projects } = this.props;
-
-    return (
-      <div className={this.getClassNames()} role="list" aria-label="Projects">
-        {projects.map((project, index) =>
-          this.renderProjectCard(project, index),
-        )}
-      </div>
-    );
-  }
-
-  /**
    * Main render method
    */
   public render(): ReactNode {
-    const { projects, layout = "carousel" } = this.props;
+    const { projects } = this.props;
 
     if (!projects || projects.length === 0) {
       return null;
     }
 
-    // Use carousel for mobile/tablet, grid for desktop
-    // Use responsive state manager for reactive updates
-    if (layout === "carousel" || this.isMobileState) {
-      return this.renderCarousel();
-    }
-
-    return this.renderGrid();
+    // Always use horizontal scroll carousel for all devices
+    return this.renderCarousel();
   }
 }

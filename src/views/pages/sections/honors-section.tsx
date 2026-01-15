@@ -26,10 +26,6 @@ import { HonorsModel, IHonorItem } from "../../../models/honors-model";
 import { HonorCard } from "../../components/honors/HonorCard";
 import { EmptyState, Carousel, ICarouselItem } from "../../components/ui";
 import { logError, logWarn } from "../../../utils/logger";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
 
 /**
  * Honors Section Props Interface
@@ -93,7 +89,6 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   private isMounted: boolean = false;
   private rafId: number | null = null;
   private containerRef: RefObject<HTMLDivElement | null> = createRef();
-  private responsiveManager = new ResponsiveStateManager();
 
   constructor(props: HonorsProps) {
     super(props);
@@ -103,7 +98,7 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
       isInitialized: false,
       error: null,
       viewMode: "grid",
-      isMobileOrTablet: isMobileOrTablet(),
+      isMobileOrTablet: false, // Not used anymore, but kept for compatibility
     };
 
     // Initialize controller (MVC Pattern)
@@ -141,11 +136,6 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
   componentDidMount(): void {
     this.isMounted = true;
 
-    // Initialize responsive state manager
-    this.responsiveManager.initialize((isMobile: boolean) => {
-      this.setState({ isMobileOrTablet: isMobile });
-    });
-
     try {
       this.setupIntersectionObserver();
       this.setupScrollListener();
@@ -166,7 +156,6 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
    */
   componentWillUnmount(): void {
     this.isMounted = false;
-    this.responsiveManager.cleanup();
     this.cleanup();
   }
 
@@ -542,38 +531,23 @@ class HonorsSection extends Component<HonorsProps, HonorsState> {
     // Use data directly (already sorted if needed, or sort here)
     const sortedItems = HonorsModel.sortByDate(data);
 
-    // Check if mobile/tablet for carousel layout
-    if (this.state.isMobileOrTablet) {
-      // Use Carousel for mobile/tablet
-      const carouselItems = this.convertToCarouselItems(sortedItems);
+    // Always use horizontal scroll carousel for all devices
+    const carouselItems = this.convertToCarouselItems(sortedItems);
 
-      return (
-        <div className="honors-container" ref={this.containerRef}>
-          <Carousel
-            items={carouselItems}
-            className="honors-carousel"
-            itemWidth={340}
-            gap={24}
-            showArrows={true}
-            showIndicators={true}
-            scrollSnap={true}
-            ariaLabel="Honors and achievements carousel"
-            emptyMessage="No honors available"
-            emptyIcon="🏆"
-          />
-        </div>
-      );
-    }
-
-    // Desktop: Use grid layout
     return (
-      <div
-        className="honors-grid"
-        role="list"
-        aria-label="Honors and achievements"
-        ref={this.containerRef}
-      >
-        {sortedItems.map((item, index) => this.renderItem(item, index))}
+      <div className="honors-container" ref={this.containerRef}>
+        <Carousel
+          items={carouselItems}
+          className="honors-carousel"
+          itemWidth={340}
+          gap={24}
+          showArrows={true}
+          showIndicators={true}
+          scrollSnap={true}
+          ariaLabel="Honors and achievements carousel"
+          emptyMessage="No honors available"
+          emptyIcon="🏆"
+        />
       </div>
     );
   }

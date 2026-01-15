@@ -39,6 +39,7 @@ import ContactSection from "./sections/contact-section";
 import HonorsSection from "./sections/honors-section";
 import LanguagesSection from "./sections/languages-section";
 import ProjectsSection from "./sections/projects-section";
+import SendMessageSection from "./sections/send-message-section";
 import SoftSkillsSection from "./sections/soft-skills-section";
 import TechnicalSkillsSection from "./sections/technical-skills-section";
 import TestimonialsSection from "./sections/testimonials-section";
@@ -192,6 +193,13 @@ class MainPage extends BasePage<{}, MainPageState> {
         title: SectionNames.CONTACT,
         component: ContactSection,
         dataKey: "contacts",
+      },
+      {
+        id: SectionIds.SEND_MESSAGE,
+        title: SectionNames.SEND_MESSAGE,
+        component: SendMessageSection,
+        dataKey: "name", // Use name as placeholder, but section doesn't use it
+        isVisible: () => true, // Always show send message section
       },
     ];
     this.controller.initializeSections(sections);
@@ -598,6 +606,11 @@ class MainPage extends BasePage<{}, MainPageState> {
     // This allows testimonials section to render empty state if needed
     if (id === "testimonials") {
       return data !== undefined ? data : null;
+    }
+
+    // Send Message section - doesn't need data, always show
+    if (id === SectionIds.SEND_MESSAGE) {
+      return null; // Section doesn't use data
     }
 
     // For sections with custom isVisible function, allow null data

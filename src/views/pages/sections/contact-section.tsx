@@ -30,7 +30,6 @@ import { Card } from "../../components/common";
 import { ContactController } from "../../../controllers/contact-controller";
 import { IContact } from "../../../models/contact-model";
 import { ContactGrid } from "../../components/contact";
-import ContactForm from "../../../components/contact/contact-form";
 import { LoadingComponent } from "../../components/ui";
 import { safeSlice } from "../../../utils/view-helpers";
 import "../../../assets/css/contact-section.css";
@@ -321,10 +320,6 @@ class ContactSection extends Component<
     return (
       <Card id="contact" title="Contact">
         {this.renderContactGrid()}
-        <div className="contact-form-wrapper">
-          <h3 className="contact-form-title">Send me a message</h3>
-          <ContactForm />
-        </div>
       </Card>
     );
   }

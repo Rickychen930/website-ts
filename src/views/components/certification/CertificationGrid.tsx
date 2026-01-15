@@ -12,10 +12,6 @@ import React, { PureComponent, ReactNode } from "react";
 import { ICertification } from "../../../models/certification-model";
 import { CertificationCard } from "./CertificationCard";
 import { Carousel, ICarouselItem } from "../ui/carousel";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
 
 /**
  * Certification Grid Props
@@ -33,35 +29,12 @@ interface CertificationGridProps {
 /**
  * Certification Grid Component
  * PureComponent for performance optimization
- * Uses Carousel component for horizontal scrolling on mobile/tablet
+ * Uses Carousel component for horizontal scrolling on all devices
  */
 export class CertificationGrid extends PureComponent<CertificationGridProps> {
-  private responsiveManager = new ResponsiveStateManager();
-  private isMobileState: boolean = false;
-
   static defaultProps: Partial<CertificationGridProps> = {
     layout: "carousel",
   };
-
-  /**
-   * Component Did Mount
-   * Initialize responsive state
-   */
-  componentDidMount(): void {
-    this.isMobileState = isMobileOrTablet();
-    this.responsiveManager.initialize((isMobile) => {
-      this.isMobileState = isMobile;
-      this.forceUpdate();
-    });
-  }
-
-  /**
-   * Component Will Unmount
-   * Cleanup responsive listener
-   */
-  componentWillUnmount(): void {
-    this.responsiveManager.cleanup();
-  }
 
   /**
    * Get grid class names
@@ -171,42 +144,16 @@ export class CertificationGrid extends PureComponent<CertificationGridProps> {
   }
 
   /**
-   * Render grid layout (desktop)
+   * Main render method
    */
-  private renderGrid(): ReactNode {
+  public render(): ReactNode {
     const { certifications } = this.props;
 
     if (certifications.length === 0) {
       return null;
     }
 
-    return (
-      <div
-        className={this.getClassNames()}
-        style={this.getGridStyle()}
-        role="list"
-        aria-label="Certifications"
-      >
-        {this.renderCertifications()}
-      </div>
-    );
-  }
-
-  /**
-   * Main render method
-   */
-  public render(): ReactNode {
-    const { certifications, layout = "carousel" } = this.props;
-
-    if (certifications.length === 0) {
-      return null;
-    }
-
-    // Use carousel for mobile/tablet, grid for desktop
-    if (layout === "carousel" || this.isMobileState) {
-      return this.renderCarousel();
-    }
-
-    return this.renderGrid();
+    // Always use horizontal scroll carousel for all devices
+    return this.renderCarousel();
   }
 }

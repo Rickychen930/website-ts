@@ -24,10 +24,6 @@ import { SkillCategoryCard } from "../../components/technical-skills";
 import { TechnicalSkillsController } from "../../../controllers/technical-skills-controller";
 import { UserProfile } from "../../../types/user";
 import { EmptyState, Carousel, ICarouselItem } from "../../components/ui";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
 import "../../../assets/css/technical-skills-section.css";
 
 /**
@@ -55,7 +51,7 @@ type TechnicalSkillsState = {
     categoryCount: number;
     averageSkillsPerCategory: number;
   } | null;
-  isMobileOrTablet: boolean;
+  isMobileOrTablet: boolean; // Not used anymore, but kept for compatibility
 };
 
 /**
@@ -77,14 +73,13 @@ class TechnicalSkillsSection extends Component<
   TechnicalSkillsState
 > {
   private readonly controller: TechnicalSkillsController;
-  private responsiveManager = new ResponsiveStateManager();
 
   constructor(props: TechnicalSkillsProps) {
     super(props);
     this.state = {
       enrichedCategories: null,
       statistics: null,
-      isMobileOrTablet: isMobileOrTablet(),
+      isMobileOrTablet: false, // Not used anymore, but kept for compatibility
     };
     this.controller = new TechnicalSkillsController();
   }
@@ -94,11 +89,6 @@ class TechnicalSkillsSection extends Component<
    * Initialize data when component mounts
    */
   componentDidMount(): void {
-    // Initialize responsive state manager
-    this.responsiveManager.initialize((isMobile) => {
-      this.setState({ isMobileOrTablet: isMobile });
-    });
-
     this.initializeData();
   }
 
@@ -241,7 +231,7 @@ class TechnicalSkillsSection extends Component<
    * Render skill category cards
    * Uses reusable SkillCategoryCard component
    * Follows DRY principle
-   * Uses Carousel for horizontal scrolling on mobile/tablet
+   * Uses Carousel for horizontal scrolling on all devices
    */
   private renderCategoryCards(): ReactNode {
     const { enrichedCategories } = this.state;
@@ -250,44 +240,22 @@ class TechnicalSkillsSection extends Component<
       return this.renderEmptyState();
     }
 
-    // Check if mobile/tablet for carousel layout
-    if (this.state.isMobileOrTablet) {
-      // Use Carousel for mobile/tablet
-      const carouselItems = this.convertToCarouselItems();
+    // Always use horizontal scroll carousel for all devices
+    const carouselItems = this.convertToCarouselItems();
 
-      return (
-        <Carousel
-          items={carouselItems}
-          className="technical-skills-carousel"
-          itemWidth={320}
-          gap={24}
-          showArrows={true}
-          showIndicators={true}
-          scrollSnap={true}
-          ariaLabel="Technical Skills Categories carousel"
-          emptyMessage="No technical skills available"
-          emptyIcon="💻"
-        />
-      );
-    }
-
-    // Desktop: Use grid layout
     return (
-      <div
-        className="technical-skills-grid"
-        role="region"
-        aria-label="Technical Skills Categories"
-      >
-        {enrichedCategories.map((category, index) => (
-          <SkillCategoryCard
-            key={`skill-category-${category.category}-${index}`}
-            category={category.category}
-            categoryIcon={category.categoryIcon}
-            items={category.items}
-            index={index}
-          />
-        ))}
-      </div>
+      <Carousel
+        items={carouselItems}
+        className="technical-skills-carousel"
+        itemWidth={320}
+        gap={24}
+        showArrows={true}
+        showIndicators={true}
+        scrollSnap={true}
+        ariaLabel="Technical Skills Categories carousel"
+        emptyMessage="No technical skills available"
+        emptyIcon="💻"
+      />
     );
   }
 

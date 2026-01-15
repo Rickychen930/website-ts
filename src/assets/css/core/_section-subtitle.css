@@ -1,0 +1,49 @@
+/**
+ * Section Subtitle - Shared Styling
+ * Professional, Consistent Subtitle Styling for All Sections
+ * 
+ * Architecture Principles:
+ * - DRY: Reusable subtitle styling
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - subtitle styles only
+ * 
+ * Usage:
+ * Add class "section-subtitle" to any subtitle element
+ * @import '@/assets/css/core/_section-subtitle.css';
+ */
+
+/* Import core system for constants and variables */
+@import url("./index.css");
+
+/* ─── Section Subtitle Base ─── */
+.section-subtitle {
+  margin: 0 auto var(--spacing-2xl) auto;
+  padding: 0 var(--spacing-md, 16px);
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9375rem, 2vw, var(--font-size-subtitle, 1.1rem));
+  font-weight: var(--font-weight-subtitle, 500);
+  line-height: var(--line-height-normal, 1.6);
+  max-width: 600px;
+  text-align: center;
+  font-family: var(--font-main);
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  transition: color var(--transition-base);
+}
+
+/* Responsive adjustments */
+@media screen and (width <= 768px) {
+  .section-subtitle {
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+@media screen and (width <= 480px) {
+  .section-subtitle {
+    padding: 0 var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+}

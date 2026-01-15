@@ -145,6 +145,22 @@
   overflow-wrap: break-word;
 }
 
+/* Testimonials Subtitle (for Card component) - Uses shared section-subtitle */
+.testimonials-subtitle {
+  /* Extends .section-subtitle from core/_section-subtitle.css */
+  margin: 0 auto var(--spacing-2xl) auto;
+  padding: 0 var(--spacing-md, 16px);
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9375rem, 2vw, var(--font-size-subtitle, 1.1rem));
+  font-weight: var(--font-weight-subtitle, 500);
+  line-height: var(--line-height-normal, 1.6);
+  max-width: 600px;
+  text-align: center;
+  font-family: var(--font-main);
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
 /* ============================================
    TESTIMONIALS GRID
    ============================================

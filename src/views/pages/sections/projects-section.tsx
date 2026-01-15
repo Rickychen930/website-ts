@@ -370,7 +370,7 @@ class ProjectsSection extends Component<ProjectsProps, ProjectsState> {
           visibleProjects={this.state.visibleProjects}
           onVisibilityChange={this.handleVisibilityChange}
           onLinkClick={this.handleLinkClick}
-          layout="grid"
+          layout="carousel"
         />
       </Card>
     );

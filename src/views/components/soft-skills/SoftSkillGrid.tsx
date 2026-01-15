@@ -14,10 +14,6 @@ import React, { PureComponent, ReactNode } from "react";
 import { SoftSkillItem } from "../../../models/soft-skills-model";
 import { SoftSkillCard } from "./SoftSkillCard";
 import { Carousel, ICarouselItem } from "../ui/carousel";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
 import "./SoftSkillGrid.css";
 
 export interface ISoftSkillGridProps {
@@ -29,31 +25,9 @@ export interface ISoftSkillGridProps {
 /**
  * SoftSkillGrid Component
  * PureComponent for performance optimization
- * Uses Carousel component for horizontal scrolling on mobile/tablet
+ * Uses Carousel component for horizontal scrolling on all devices
  */
 export class SoftSkillGrid extends PureComponent<ISoftSkillGridProps> {
-  private responsiveManager = new ResponsiveStateManager();
-  private isMobileState: boolean = false;
-
-  /**
-   * Component Did Mount
-   * Initialize responsive state
-   */
-  componentDidMount(): void {
-    this.isMobileState = isMobileOrTablet();
-    this.responsiveManager.initialize((isMobile) => {
-      this.isMobileState = isMobile;
-      this.forceUpdate();
-    });
-  }
-
-  /**
-   * Component Will Unmount
-   * Cleanup responsive listener
-   */
-  componentWillUnmount(): void {
-    this.responsiveManager.cleanup();
-  }
   /**
    * Convert skills to carousel items
    * Follows DRY principle
@@ -89,8 +63,8 @@ export class SoftSkillGrid extends PureComponent<ISoftSkillGridProps> {
         <Carousel
           items={items}
           className="soft-skills-carousel"
-          itemWidth={280}
-          gap={16}
+          itemWidth={320}
+          gap={24}
           showArrows={true}
           showIndicators={true}
           scrollSnap={true}
@@ -102,33 +76,6 @@ export class SoftSkillGrid extends PureComponent<ISoftSkillGridProps> {
     );
   }
 
-  /**
-   * Render grid layout (desktop)
-   */
-  private renderGrid(): ReactNode {
-    const { skills, visibleItems = new Set(), onItemIntersect } = this.props;
-
-    return (
-      <div
-        className="soft-skills-grid-container"
-        role="list"
-        aria-label="Soft skills"
-      >
-        <div className="soft-skills-grid">
-          {skills.map((skill, index) => (
-            <SoftSkillCard
-              key={skill.key}
-              skill={skill}
-              index={index}
-              isVisible={visibleItems.has(skill.key)}
-              onIntersect={onItemIntersect}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   public render(): ReactNode {
     const { skills } = this.props;
 
@@ -136,12 +83,8 @@ export class SoftSkillGrid extends PureComponent<ISoftSkillGridProps> {
       return this.renderEmptyState();
     }
 
-    // Use carousel for mobile/tablet, grid for desktop
-    if (this.isMobileState) {
-      return this.renderCarousel();
-    }
-
-    return this.renderGrid();
+    // Always use horizontal scroll carousel for all devices
+    return this.renderCarousel();
   }
 
   /**

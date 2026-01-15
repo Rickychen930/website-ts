@@ -23,6 +23,7 @@ export const SectionNames = {
   WORK_EXPERIENCE: "Work Experience",
   PROJECTS: "Projects",
   CONTACT: "Contact",
+  SEND_MESSAGE: "Send Message",
   EDUCATION: "Education",
   TESTIMONIALS: "Testimonials",
 } as const;
@@ -78,6 +79,7 @@ export const SectionIds = {
   EXPERIENCE: "experience",
   PROJECTS: "projects",
   CONTACT: "contact",
+  SEND_MESSAGE: "send-message",
   EDUCATION: "education",
 } as const;
 
@@ -96,6 +98,7 @@ export const SectionHrefs = {
   EXPERIENCE: "#experience",
   PROJECTS: "#projects",
   CONTACT: "#contact",
+  SEND_MESSAGE: "#send-message",
   EDUCATION: "#education",
 } as const;
 

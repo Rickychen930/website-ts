@@ -12,10 +12,6 @@ import React, { PureComponent, ReactNode } from "react";
 import { ILanguage } from "../../../models/language-model";
 import { LanguageCard } from "./LanguageCard";
 import { Carousel, ICarouselItem } from "../ui/carousel";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
 
 /**
  * Language Grid Props
@@ -33,35 +29,12 @@ interface LanguageGridProps {
 /**
  * Language Grid Component
  * PureComponent for performance optimization
- * Uses Carousel component for horizontal scrolling on mobile/tablet
+ * Uses Carousel component for horizontal scrolling on all devices
  */
 export class LanguageGrid extends PureComponent<LanguageGridProps> {
-  private responsiveManager = new ResponsiveStateManager();
-  private isMobileState: boolean = false;
-
   static defaultProps: Partial<LanguageGridProps> = {
     layout: "carousel",
   };
-
-  /**
-   * Component Did Mount
-   * Initialize responsive state
-   */
-  componentDidMount(): void {
-    this.isMobileState = isMobileOrTablet();
-    this.responsiveManager.initialize((isMobile) => {
-      this.isMobileState = isMobile;
-      this.forceUpdate();
-    });
-  }
-
-  /**
-   * Component Will Unmount
-   * Cleanup responsive listener
-   */
-  componentWillUnmount(): void {
-    this.responsiveManager.cleanup();
-  }
 
   /**
    * Get grid class names
@@ -166,7 +139,7 @@ export class LanguageGrid extends PureComponent<LanguageGridProps> {
       <Carousel
         items={items}
         className={this.getClassNames()}
-        itemWidth={300}
+        itemWidth={320}
         gap={24}
         showArrows={true}
         showIndicators={true}
@@ -179,42 +152,16 @@ export class LanguageGrid extends PureComponent<LanguageGridProps> {
   }
 
   /**
-   * Render grid layout (desktop)
+   * Main render method
    */
-  private renderGrid(): ReactNode {
+  public render(): ReactNode {
     const { languages } = this.props;
 
     if (languages.length === 0) {
       return null;
     }
 
-    return (
-      <div
-        className={this.getClassNames()}
-        style={this.getGridStyle()}
-        role="list"
-        aria-label="Languages"
-      >
-        {this.renderLanguages()}
-      </div>
-    );
-  }
-
-  /**
-   * Main render method
-   */
-  public render(): ReactNode {
-    const { languages, layout = "carousel" } = this.props;
-
-    if (languages.length === 0) {
-      return null;
-    }
-
-    // Use carousel for mobile/tablet, grid for desktop
-    if (layout === "carousel" || this.isMobileState) {
-      return this.renderCarousel();
-    }
-
-    return this.renderGrid();
+    // Always use horizontal scroll carousel for all devices
+    return this.renderCarousel();
   }
 }

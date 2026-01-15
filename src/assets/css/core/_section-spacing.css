@@ -1,0 +1,95 @@
+/**
+ * Section Spacing - Consistent Spacing Between Sections
+ * Professional, Harmonious Spacing System
+ * 
+ * Architecture Principles:
+ * - DRY: Reusable spacing system
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - spacing only
+ * 
+ * Usage:
+ * Sections wrapped in Card component will have consistent spacing
+ * @import '@/assets/css/core/_section-spacing.css';
+ */
+
+/* Import core system for constants and variables */
+@import url("./index.css");
+
+/* ─── Section Card Spacing ─── */
+
+/* Ensures consistent spacing between Card sections */
+.contents-section > article.card,
+.contents-section > section.card {
+  margin-bottom: clamp(var(--spacing-3xl), 6vw, var(--spacing-5xl));
+  scroll-margin-top: clamp(var(--spacing-5xl), 10vw, 7rem);
+}
+
+.contents-section > article.card:last-child,
+.contents-section > section.card:last-child {
+  margin-bottom: 0;
+}
+
+/* Section separator (visual divider between sections) - Refined & Elegant */
+.contents-section > article.card:not(:last-child)::after,
+.contents-section > section.card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: calc(-1 * clamp(var(--spacing-3xl), 6vw, var(--spacing-4xl)) / 2);
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(180px, 18vw, 280px);
+  height: 1.5px; /* Refined: Thinner for elegance */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-accent-primary) 25%,
+    var(--color-accent-alt) 50%,
+    var(--color-accent-primary) 75%,
+    transparent 100%
+  );
+  opacity: 0.25; /* Refined: More subtle */
+  transition: all var(--transition-smooth);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+.contents-section > article.card:not(:last-child):hover::after,
+.contents-section > section.card:not(:last-child):hover::after {
+  width: clamp(220px, 22vw, 320px);
+  height: 2px; /* Refined: Thinner hover state */
+  opacity: 0.5; /* Refined: More subtle hover */
+  box-shadow:
+    0 0 12px var(--color-accent-alpha-30),
+    0 0 24px var(--color-accent-alpha-20);
+}
+
+/* Responsive adjustments */
+@media screen and (width <= 1024px) {
+  .contents-section > article.card,
+  .contents-section > section.card {
+    margin-bottom: clamp(var(--spacing-2xl), 5vw, var(--spacing-4xl));
+    scroll-margin-top: var(--spacing-5xl);
+  }
+
+  .contents-section > article.card:not(:last-child)::after,
+  .contents-section > section.card:not(:last-child)::after {
+    bottom: calc(-1 * var(--spacing-3xl) / 2);
+    width: clamp(150px, 15vw, 250px);
+  }
+}
+
+@media screen and (width <= 768px) {
+  .contents-section > article.card,
+  .contents-section > section.card {
+    margin-bottom: var(--spacing-3xl);
+    scroll-margin-top: var(--spacing-4xl);
+  }
+
+  .contents-section > article.card:not(:last-child)::after,
+  .contents-section > section.card:not(:last-child)::after {
+    bottom: calc(-1 * var(--spacing-2xl) / 2);
+    width: clamp(100px, 20vw, 200px);
+    height: 1.5px;
+  }
+}
