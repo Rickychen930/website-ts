@@ -27,6 +27,7 @@
    ============================================ */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizelegibility;
@@ -56,7 +57,7 @@ body {
   overflow-x: hidden;
   background: var(--color-bg-light);
   color: var(--color-text-main);
-  line-height: 1.5;
+  line-height: var(--line-height-normal, 1.5);
 }
 
 /* ============================================
@@ -71,7 +72,7 @@ h6 {
   margin: 0;
   color: var(--color-text-heading);
   font-weight: var(--font-weight-title);
-  line-height: 1.2;
+  line-height: var(--line-height-tight, 1.2);
   font-family: var(--font-display);
 }
 
@@ -90,7 +91,7 @@ h3 {
 p {
   margin: 0;
   color: var(--color-text-main);
-  line-height: 1.75;
+  line-height: var(--line-height-relaxed, 1.75);
 }
 
 a {
@@ -104,29 +105,29 @@ a:hover {
 }
 
 a:focus-visible {
-  outline: 3px solid var(--color-accent-primary); /* Increased from 2px for better visibility */
-  outline-offset: 3px; /* Reduced from 4px */
-  border-radius: var(--radius-sm); /* Use consistent radius */
-  box-shadow: 0 0 0 1px var(--color-accent-alpha-20); /* Subtle glow */
+  outline: var(--spacing-1) solid var(--color-accent-primary);
+  outline-offset: var(--spacing-1);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 1px var(--color-accent-alpha-20);
 }
 
 /* ============================================
    Code Elements
    ============================================ */
 code {
-  padding: 0.2em 0.4em;
+  padding: var(--spacing-1) var(--spacing-2);
   background: var(--color-bg-lighter);
   font-size: 0.9em;
   font-family: var(--font-mono);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 pre {
-  padding: 1rem;
+  padding: var(--spacing-4);
   background: var(--color-bg-lighter);
   font-family: var(--font-mono);
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 pre code {
@@ -175,10 +176,10 @@ button {
 }
 
 button:focus-visible {
-  outline: 3px solid var(--color-accent-primary); /* Increased from 2px */
-  outline-offset: 3px; /* Reduced from 4px */
-  border-radius: var(--radius-sm); /* Use consistent radius */
-  box-shadow: var(--shadow-focus); /* Use shadow system */
+  outline: var(--spacing-1) solid var(--color-accent-primary);
+  outline-offset: var(--spacing-1);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-focus);
 }
 
 button:disabled {
@@ -192,7 +193,7 @@ button:disabled {
 input,
 textarea,
 select {
-  padding: 0.5rem 0.75rem;
+  padding: var(--spacing-2) var(--spacing-3);
   border: 1px solid var(--color-border-default);
   background: var(--color-bg-card);
   color: var(--color-text-main);
@@ -202,10 +203,9 @@ select {
     color var(--transition-base),
     background-color var(--transition-base),
     border-color var(--transition-base),
-    box-shadow var(--transition-base); /* Optimized: specific properties instead of 'all' */
-
+    box-shadow var(--transition-base);
   font-family: inherit;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 input:focus,
@@ -221,9 +221,9 @@ select:focus {
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 3px solid var(--color-accent-primary);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm); /* Use consistent radius */
+  outline: var(--spacing-1) solid var(--color-accent-primary);
+  outline-offset: var(--spacing-2);
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-focus);
 }
 
@@ -247,8 +247,8 @@ select:disabled {
    Scrollbar (Webkit)
    ============================================ */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: var(--spacing-3);
+  height: var(--spacing-3);
 }
 
 ::-webkit-scrollbar-track {
@@ -257,7 +257,7 @@ select:disabled {
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-border-medium);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {

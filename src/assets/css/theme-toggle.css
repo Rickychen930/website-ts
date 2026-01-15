@@ -17,7 +17,7 @@
 
 .theme-toggle {
   display: flex;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-2) var(--spacing-3);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
   color: var(--color-text-main);
@@ -25,7 +25,7 @@
   font-weight: var(--font-weight-medium);
   transition: var(--transition-all);
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-2);
   border-radius: var(--component-radius-button);
   cursor: pointer;
   box-shadow: var(--shadow-sm);
@@ -67,11 +67,11 @@
 
 /* Navbar integration */
 .navbar .theme-toggle {
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-2) var(--spacing-3);
   border: none;
   background: transparent;
   margin-left: auto;
-  margin-right: var(--spacing-sm);
+  margin-right: var(--spacing-3);
   box-shadow: none;
 }
 
@@ -81,13 +81,13 @@
 }
 
 .navbar.compact .theme-toggle {
-  margin-right: var(--spacing-xs);
+  margin-right: var(--spacing-2);
 }
 
 /* Mobile adjustments */
 @media (width <= 768px) {
   .theme-toggle {
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--spacing-2) var(--spacing-3);
   }
 
   .theme-toggle-icon {

@@ -20,11 +20,11 @@
    Uses core constants as base
    ============================================ */
 :root {
-  --about-me-comp-spacing-xs: var(--spacing-xs);
-  --about-me-comp-spacing-sm: var(--spacing-sm);
-  --about-me-comp-spacing-md: var(--spacing-md);
-  --about-me-comp-spacing-lg: var(--spacing-lg);
-  --about-me-comp-spacing-xl: var(--spacing-xl);
+  --about-me-comp-spacing-xs: var(--spacing-2);
+  --about-me-comp-spacing-sm: var(--spacing-3);
+  --about-me-comp-spacing-md: var(--spacing-4);
+  --about-me-comp-spacing-lg: var(--spacing-6);
+  --about-me-comp-spacing-xl: var(--spacing-8);
 }
 
 /* ============================================

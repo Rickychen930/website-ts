@@ -25,8 +25,8 @@
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.5rem, 1.5vw, 0.75rem);
-  margin-bottom: clamp(1.25rem, 3vw, 1.5rem);
+  gap: clamp(var(--spacing-2), 1.5vw, var(--spacing-3));
+  margin-bottom: clamp(var(--spacing-5), 3vw, var(--spacing-6));
 }
 
 /* ============================================
@@ -38,7 +38,7 @@
   font-size: clamp(0.9375rem, 1.5vw, 1rem);
   font-weight: var(--font-weight-semibold);
   font-family: var(--font-main);
-  margin-bottom: clamp(0.375rem, 1vw, 0.5rem);
+  margin-bottom: clamp(var(--spacing-1), 1vw, var(--spacing-2));
   line-height: var(--line-height-normal);
 }
 

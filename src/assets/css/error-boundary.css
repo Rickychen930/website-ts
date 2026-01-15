@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-8) var(--spacing-6);
   background: var(--color-bg-light);
 }
 
@@ -83,8 +83,8 @@
 }
 
 .error-boundary-details {
-  margin: var(--spacing-xl) 0;
-  padding: var(--spacing-lg);
+  margin: var(--spacing-8) 0;
+  padding: var(--spacing-6);
   border: 1px solid var(--color-border-default);
   background: var(--color-bg-lighter);
   text-align: left;
@@ -95,7 +95,7 @@
   color: var(--color-text-heading);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-4);
   user-select: none;
 }
 
@@ -113,7 +113,7 @@
 
 .error-boundary-actions {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-4);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -174,7 +174,7 @@
 }
 
 .error-boundary-help-text {
-  margin: 0 0 var(--spacing-lg);
+  margin: 0 0 var(--spacing-6);
   color: var(--color-text-subtle);
   font-size: var(--font-size-footer, 0.95rem);
   line-height: var(--line-height-normal);
@@ -182,14 +182,14 @@
 
 .error-boundary-stack-trace {
   display: block;
-  margin-top: var(--spacing-xs);
+  margin-top: var(--spacing-2);
   color: var(--color-text-muted);
 }
 
 /* Responsive Error Boundary */
 @media screen and (width <= 768px) {
   .error-boundary-content {
-    padding: var(--spacing-2xl) var(--spacing-xl);
+    padding: var(--spacing-10) var(--spacing-8);
   }
 
   .error-boundary-icon {
@@ -212,11 +212,11 @@
 
 @media screen and (width <= 480px) {
   .error-boundary {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-6) var(--spacing-4);
   }
 
   .error-boundary-content {
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-8) var(--spacing-6);
   }
 
   .error-boundary-icon {

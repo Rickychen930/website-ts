@@ -34,7 +34,7 @@
   height: 40px;
   background: var(--color-bg-lighter);
   border-radius: var(--component-radius-md);
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-8);
   animation: skeleton-pulse var(--animation-duration-base)
     var(--transition-base) infinite;
 }
@@ -42,7 +42,7 @@
 .lazy-section-skeleton-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-4);
 }
 
 .lazy-section-skeleton-line {

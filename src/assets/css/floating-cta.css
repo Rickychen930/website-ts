@@ -19,13 +19,13 @@
    Floating CTA Variables
    ============================================ */
 :root {
-  --floating-cta-right-desktop: var(--spacing-xl);
-  --floating-cta-right-tablet: var(--spacing-lg);
-  --floating-cta-right-mobile: var(--spacing-md);
-  --floating-cta-right-small: var(--spacing-md);
-  --floating-cta-bottom: 80px; /* Fixed position above back-to-top button */
-  --floating-cta-gap: var(--spacing-sm);
-  --floating-cta-gap-mobile: var(--spacing-xs);
+  --floating-cta-right-desktop: var(--spacing-8);
+  --floating-cta-right-tablet: var(--spacing-6);
+  --floating-cta-right-mobile: var(--spacing-4);
+  --floating-cta-right-small: var(--spacing-4);
+  --floating-cta-bottom: 80px;
+  --floating-cta-gap: var(--spacing-3);
+  --floating-cta-gap-mobile: var(--spacing-2);
   --floating-cta-z-index: var(--z-tooltip);
 }
 
@@ -65,21 +65,17 @@
 .floating-cta-button {
   display: flex;
   position: relative;
-  padding: var(--spacing-md) var(--spacing-xl);
+  padding: var(--spacing-4) var(--spacing-8);
   border: none;
   font-size: var(--font-size-footer, 0.95rem);
   font-weight: var(--font-weight-semibold);
-  transition: all var(--transition-smooth)
-    var(--easing-spring, var(--transition-bounce));
-  letter-spacing: 0.03em; /* Standardized from 0.3px to em */
+  transition: var(--transition-hover);
+  letter-spacing: 0.03em;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-2);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  box-shadow:
-    0 8px 24px var(--color-black-alpha-12),
-    0 4px 8px var(--color-black-alpha-08),
-    inset 0 1px 0 var(--color-white-alpha-10);
+  box-shadow: var(--shadow-md);
   -webkit-backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
   backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
   min-width: 150px;
@@ -121,11 +117,8 @@
 }
 
 .floating-cta-primary:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow:
-    0 12px 32px var(--color-black-alpha-12),
-    0 6px 12px var(--color-black-alpha-12),
-    inset 0 1px 0 var(--color-white-alpha-20);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
   background-position: 100% 0;
 }
 

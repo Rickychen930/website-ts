@@ -15,8 +15,8 @@
 @import url("./core/index.css");
 
 .breadcrumbs {
-  padding: var(--spacing-md) 0;
-  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-4) 0;
+  margin-bottom: var(--spacing-4);
 }
 
 .breadcrumbs-list {
@@ -26,17 +26,17 @@
   flex-wrap: wrap;
   align-items: center;
   list-style: none;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-2);
 }
 
 .breadcrumbs-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-2);
 }
 
 .breadcrumbs-link {
-  padding: var(--spacing-xs) var(--spacing-xs);
+  padding: var(--spacing-2) var(--spacing-2);
   color: var(--color-text-secondary);
   font-size: var(--font-size-small);
   transition: color var(--transition-fast);
@@ -56,7 +56,7 @@
 }
 
 .breadcrumbs-separator {
-  margin: 0 var(--spacing-xs);
+  margin: 0 var(--spacing-2);
   color: var(--color-text-subtle);
   font-size: var(--font-size-small);
   user-select: none;
@@ -65,17 +65,17 @@
 /* Responsive */
 @media (width <= 768px) {
   .breadcrumbs {
-    padding: var(--spacing-sm) 0;
-    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-3) 0;
+    margin-bottom: var(--spacing-3);
   }
 
   .breadcrumbs-link {
-    padding: calc(var(--spacing-xs) * 0.8);
+    padding: calc(var(--spacing-2) * 0.8);
     font-size: var(--font-size-small);
   }
 
   .breadcrumbs-separator {
-    margin: 0 calc(var(--spacing-xs) * 0.8);
+    margin: 0 calc(var(--spacing-2) * 0.8);
   }
 }
 

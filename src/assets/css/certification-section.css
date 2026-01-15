@@ -27,12 +27,12 @@
 #certification-section.card,
 .card#certification-section {
   /* Spacing - Uses core spacing system */
-  --cert-spacing-xs: var(--spacing-xs);
-  --cert-spacing-sm: var(--spacing-sm);
-  --cert-spacing-md: var(--spacing-md);
-  --cert-spacing-lg: var(--spacing-lg);
-  --cert-spacing-xl: var(--spacing-xl);
-  --cert-spacing-xxl: var(--spacing-3xl);
+  --cert-spacing-xs: var(--spacing-2);
+  --cert-spacing-sm: var(--spacing-3);
+  --cert-spacing-md: var(--spacing-4);
+  --cert-spacing-lg: var(--spacing-6);
+  --cert-spacing-xl: var(--spacing-8);
+  --cert-spacing-xxl: var(--spacing-12);
 
   /* Colors - Uses core color system */
   --cert-color-primary: var(--color-accent-primary);
@@ -469,7 +469,6 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  overflow-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
   box-sizing: border-box;

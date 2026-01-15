@@ -51,12 +51,12 @@
   --footer-shadow-glow: var(--shadow-glow);
 
   /* Spacing - Uses core spacing system */
-  --footer-spacing-xs: var(--spacing-xs);
-  --footer-spacing-sm: var(--spacing-sm);
-  --footer-spacing-md: var(--spacing-md);
-  --footer-spacing-lg: var(--spacing-lg);
-  --footer-spacing-xl: var(--spacing-xl);
-  --footer-spacing-xxl: var(--spacing-4xl);
+  --footer-spacing-xs: var(--spacing-2);
+  --footer-spacing-sm: var(--spacing-3);
+  --footer-spacing-md: var(--spacing-4);
+  --footer-spacing-lg: var(--spacing-6);
+  --footer-spacing-xl: var(--spacing-8);
+  --footer-spacing-xxl: var(--spacing-16);
 
   /* Transitions - Uses core transition system */
   --footer-transition-fast: var(--transition-fast);
@@ -124,7 +124,7 @@
   z-index: var(--z-base);
   width: 100%;
   margin: 0 auto;
-  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  padding: 0 clamp(var(--spacing-6), 4vw, var(--spacing-12));
   max-width: var(--spacing-card-max-width);
   box-sizing: border-box;
 }
@@ -137,7 +137,8 @@
    ============================================ */
 .footer-top {
   position: relative;
-  padding: clamp(2rem, 5vw, 3rem) 0 clamp(1.5rem, 4vw, 2rem);
+  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12)) 0
+    clamp(var(--spacing-6), 4vw, var(--spacing-8));
   border-bottom: 1px solid var(--footer-border-color);
 }
 

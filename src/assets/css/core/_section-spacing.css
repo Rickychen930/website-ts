@@ -23,8 +23,8 @@
 /* Ensures consistent spacing between Card sections */
 .contents-section > article.card,
 .contents-section > section.card {
-  margin-bottom: clamp(var(--spacing-3xl), 6vw, var(--spacing-5xl));
-  scroll-margin-top: clamp(var(--spacing-5xl), 10vw, 7rem);
+  margin-bottom: clamp(var(--spacing-12), 6vw, var(--spacing-20));
+  scroll-margin-top: clamp(var(--spacing-20), 10vw, 7rem);
 }
 
 .contents-section > article.card:last-child,
@@ -37,7 +37,7 @@
 .contents-section > section.card:not(:last-child)::after {
   content: "";
   position: absolute;
-  bottom: calc(-1 * clamp(var(--spacing-3xl), 6vw, var(--spacing-4xl)) / 2);
+  bottom: calc(-1 * clamp(var(--spacing-12), 6vw, var(--spacing-16)) / 2);
   left: 50%;
   transform: translateX(-50%);
   width: clamp(180px, 18vw, 280px);
@@ -69,13 +69,13 @@
 @media screen and (width <= 1024px) {
   .contents-section > article.card,
   .contents-section > section.card {
-    margin-bottom: clamp(var(--spacing-2xl), 5vw, var(--spacing-4xl));
-    scroll-margin-top: var(--spacing-5xl);
+    margin-bottom: clamp(var(--spacing-10), 5vw, var(--spacing-16));
+    scroll-margin-top: var(--spacing-20);
   }
 
   .contents-section > article.card:not(:last-child)::after,
   .contents-section > section.card:not(:last-child)::after {
-    bottom: calc(-1 * var(--spacing-3xl) / 2);
+    bottom: calc(-1 * var(--spacing-12) / 2);
     width: clamp(150px, 15vw, 250px);
   }
 }
@@ -83,13 +83,13 @@
 @media screen and (width <= 768px) {
   .contents-section > article.card,
   .contents-section > section.card {
-    margin-bottom: var(--spacing-3xl);
-    scroll-margin-top: var(--spacing-4xl);
+    margin-bottom: var(--spacing-12);
+    scroll-margin-top: var(--spacing-16);
   }
 
   .contents-section > article.card:not(:last-child)::after,
   .contents-section > section.card:not(:last-child)::after {
-    bottom: calc(-1 * var(--spacing-2xl) / 2);
+    bottom: calc(-1 * var(--spacing-10) / 2);
     width: clamp(100px, 20vw, 200px);
     height: 1.5px;
   }

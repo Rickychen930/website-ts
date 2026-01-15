@@ -15,7 +15,7 @@
 
 /* GitHub Contributions Container */
 .github-contributions {
-  padding: var(--spacing-xl);
+  padding: var(--spacing-8);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
   border-radius: 20px;
@@ -35,12 +35,12 @@
 
 /* Header */
 .github-contributions-header {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-6);
   text-align: center;
 }
 
 .github-contributions-title {
-  margin: 0 0 var(--spacing-sm);
+  margin: 0 0 var(--spacing-3);
   color: var(--color-text-heading);
   font-size: var(--font-size-h3);
   font-weight: 700;
@@ -61,13 +61,13 @@
 .github-contributions-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-6);
 }
 
 /* Graph */
 .github-contributions-graph {
   width: 100%;
-  padding: var(--spacing-md);
+  padding: var(--spacing-4);
   background: var(--color-bg-lighter);
   overflow-x: auto;
   border-radius: 12px;
@@ -90,7 +90,7 @@
 .github-contributions-button {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-3);
   padding: 0.75rem 1.5rem;
   border: 2px solid var(--color-accent);
   background: transparent;
@@ -155,7 +155,7 @@
 
 /* Error State */
 .github-contributions-error {
-  padding: var(--spacing-xl);
+  padding: var(--spacing-8);
   color: var(--color-text-subtle);
   text-align: center;
 }
@@ -163,7 +163,7 @@
 /* Responsive Design */
 @media screen and (width <= 768px) {
   .github-contributions {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-6);
     border-radius: 16px;
   }
 
@@ -176,13 +176,13 @@
   }
 
   .github-contributions-graph {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-3);
   }
 }
 
 @media screen and (width <= 480px) {
   .github-contributions {
-    padding: var(--spacing-md);
+    padding: var(--spacing-4);
     border-radius: 12px;
   }
 

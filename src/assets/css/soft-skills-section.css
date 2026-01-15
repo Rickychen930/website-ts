@@ -20,12 +20,12 @@
 /* Uses core constants as base */
 #soft-skills-section {
   /* Spacing - Uses core spacing system */
-  --soft-skills-spacing-xs: var(--spacing-xs);
-  --soft-skills-spacing-sm: var(--spacing-sm);
-  --soft-skills-spacing-md: var(--spacing-md);
-  --soft-skills-spacing-lg: var(--spacing-lg);
-  --soft-skills-spacing-xl: var(--spacing-xl);
-  --soft-skills-spacing-xxl: var(--spacing-3xl);
+  --soft-skills-spacing-xs: var(--spacing-2);
+  --soft-skills-spacing-sm: var(--spacing-3);
+  --soft-skills-spacing-md: var(--spacing-4);
+  --soft-skills-spacing-lg: var(--spacing-6);
+  --soft-skills-spacing-xl: var(--spacing-8);
+  --soft-skills-spacing-xxl: var(--spacing-12);
 
   /* Colors - Uses core color system */
   --soft-skills-color-primary: var(--color-accent-primary);

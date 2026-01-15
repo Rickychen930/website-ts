@@ -23,14 +23,14 @@ export interface ISkillBadgeProps {
 
 /**
  * Skill Badge Component
- * 
+ *
  * Features:
  * - Luxury & Professional Design
  * - Performance Optimized (PureComponent)
  * - Fully Responsive
  * - Accessible (ARIA labels)
  * - Reusable (DRY principle)
- * 
+ *
  * Principles Applied:
  * - SOLID (Single Responsibility)
  * - DRY (Don't Repeat Yourself)
@@ -51,11 +51,7 @@ export class SkillBadge extends PureComponent<ISkillBadgeProps> {
    */
   private getClassNames(): string {
     const { variant = "default", className = "" } = this.props;
-    const classes = [
-      "skill-badge",
-      `skill-badge--${variant}`,
-      className,
-    ];
+    const classes = ["skill-badge", `skill-badge--${variant}`, className];
 
     return classes.filter(Boolean).join(" ");
   }
@@ -89,11 +85,7 @@ export class SkillBadge extends PureComponent<ISkillBadgeProps> {
   private renderName(): ReactNode {
     const { name } = this.props;
 
-    return (
-      <span className="skill-badge__name">
-        {name}
-      </span>
-    );
+    return <span className="skill-badge__name">{name}</span>;
   }
 
   /**
@@ -103,7 +95,7 @@ export class SkillBadge extends PureComponent<ISkillBadgeProps> {
     const { name, index = 0, onClick } = this.props;
     const style = onClick
       ? { cursor: "pointer" }
-      : { animationDelay: `${index * 30}ms` };
+      : { animationDelay: `${index * 30}ms` }; // Dynamic delay based on index - keep inline
 
     return (
       <div
@@ -128,4 +120,3 @@ export class SkillBadge extends PureComponent<ISkillBadgeProps> {
 }
 
 export default SkillBadge;
-

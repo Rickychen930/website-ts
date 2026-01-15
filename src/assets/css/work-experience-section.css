@@ -29,12 +29,12 @@
    ============================================ */
 .work-experience-container {
   /* Spacing - Uses core spacing system */
-  --work-spacing-xs: var(--spacing-xs);
-  --work-spacing-sm: var(--spacing-sm);
-  --work-spacing-md: var(--spacing-md);
-  --work-spacing-lg: var(--spacing-lg);
-  --work-spacing-xl: var(--spacing-xl);
-  --work-spacing-xxl: var(--spacing-3xl);
+  --work-spacing-xs: var(--spacing-2);
+  --work-spacing-sm: var(--spacing-3);
+  --work-spacing-md: var(--spacing-4);
+  --work-spacing-lg: var(--spacing-6);
+  --work-spacing-xl: var(--spacing-8);
+  --work-spacing-xxl: var(--spacing-12);
 
   /* Colors - Uses core color system */
   --work-color-primary: var(--color-accent-primary);

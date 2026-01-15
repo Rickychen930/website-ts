@@ -18,7 +18,7 @@
 .table-of-contents {
   position: fixed;
   top: 50%;
-  right: var(--spacing-lg);
+  right: var(--spacing-6);
   z-index: var(--z-fixed);
   transition: var(--transition-all);
   transform: translateY(-50%);
@@ -55,7 +55,7 @@
 
 .toc-toggle:focus-visible {
   outline: 2px solid var(--color-accent-primary);
-  outline-offset: var(--spacing-xs);
+  outline-offset: var(--spacing-2);
   box-shadow: var(--shadow-focus);
 }
 
@@ -71,13 +71,13 @@
   max-height: calc(100vh - 120px);
   border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-lg);
-  transform: translateX(var(--spacing-lg));
+  transform: translateX(var(--spacing-6));
   pointer-events: none;
   overflow: hidden;
 }
 
 .toc-header {
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-4) var(--spacing-6);
   border-bottom: 1px solid var(--color-border-light);
   background: var(--color-bg-light);
 }
@@ -92,7 +92,7 @@
 .toc-list {
   list-style: none;
   margin: 0;
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-2) 0;
   overflow-y: auto;
   max-height: calc(100vh - 200px);
 }
@@ -105,14 +105,14 @@
   display: block;
   position: relative;
   width: 100%;
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: var(--spacing-3) var(--spacing-6);
   border: none;
   background: transparent;
   color: var(--color-text-subtle);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-medium);
   text-align: left;
-  transition: var(--transition-all);
+  transition: var(--transition-hover);
   cursor: pointer;
   font-family: var(--font-main);
 }
@@ -120,15 +120,15 @@
 .toc-link:hover {
   background: var(--color-bg-light);
   color: var(--color-text-main);
-  padding-left: var(--spacing-xl);
+  padding-left: var(--spacing-8);
 }
 
 .toc-link.active {
   background: var(--color-bg-light);
   color: var(--color-accent-primary);
   font-weight: var(--font-weight-semibold);
-  border-left: var(--spacing-xs) solid var(--color-accent-primary);
-  padding-left: calc(var(--spacing-lg) - var(--spacing-xs));
+  border-left: var(--spacing-2) solid var(--color-accent-primary);
+  padding-left: calc(var(--spacing-6) - var(--spacing-2));
 }
 
 .toc-link.active::before {
@@ -136,14 +136,14 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--spacing-xs);
+  width: var(--spacing-2);
   background: var(--color-accent-primary);
   content: "";
 }
 
 .toc-link:focus-visible {
   outline: 2px solid var(--color-accent-primary);
-  outline-offset: calc(-1 * var(--spacing-xs));
+  outline-offset: calc(-1 * var(--spacing-2));
   box-shadow: var(--shadow-focus);
 }
 

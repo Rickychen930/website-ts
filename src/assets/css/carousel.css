@@ -36,7 +36,7 @@
   display: flex;
   position: relative;
   width: 100%;
-  padding: var(--carousel-padding-vertical, var(--spacing-md)) 0;
+  padding: var(--carousel-padding-vertical, var(--spacing-4)) 0;
   flex-direction: row;
   align-items: stretch; /* Ensure all items have same height */
   overflow: auto hidden;

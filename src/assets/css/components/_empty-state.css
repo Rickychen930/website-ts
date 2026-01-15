@@ -22,9 +22,9 @@
    Empty State Variables
    ============================================ */
 :root {
-  --empty-state-padding-default: var(--spacing-3xl) var(--spacing-xl);
-  --empty-state-padding-small: var(--spacing-xl) var(--spacing-lg);
-  --empty-state-padding-large: var(--spacing-4xl) var(--spacing-2xl);
+  --empty-state-padding-default: var(--spacing-12) var(--spacing-8);
+  --empty-state-padding-small: var(--spacing-8) var(--spacing-6);
+  --empty-state-padding-large: var(--spacing-16) var(--spacing-10);
   --empty-state-min-height-default: 200px;
   --empty-state-min-height-small: 150px;
   --empty-state-min-height-large: 300px;
@@ -39,12 +39,13 @@
 .empty-state {
   display: flex;
   position: relative;
-  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.75rem, 5vw, 3rem); /* More spacious */
+  padding: clamp(var(--spacing-10), 6vw, var(--spacing-16))
+    clamp(var(--spacing-7), 5vw, var(--spacing-12));
   text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: clamp(200px, 30vw, 300px); /* Taller for better presence */
+  min-height: clamp(200px, 30vw, 300px);
 }
 
 /* ============================================
@@ -61,7 +62,7 @@
     filter var(--transition-smooth);
   align-items: center;
   justify-content: center;
-  margin-bottom: clamp(1.25rem, 3vw, 1.75rem); /* More spacing */
+  margin-bottom: clamp(var(--spacing-5), 3vw, var(--spacing-7));
   filter: grayscale(0.1) drop-shadow(0 4px 16px var(--color-black-alpha-15));
   animation: empty-state-float 4s ease-in-out infinite;
   will-change: transform;
@@ -89,7 +90,7 @@
    Element: Empty State Title
    ============================================ */
 .empty-state__title {
-  margin: 0 0 clamp(1rem, 2.5vw, 1.25rem); /* More spacing */
+  margin: 0 0 clamp(var(--spacing-4), 2.5vw, var(--spacing-5));
   background: linear-gradient(
     135deg,
     var(--color-text-heading) 0%,
@@ -129,9 +130,9 @@
    Element: Empty State Action
    ============================================ */
 .empty-state__action {
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-6);
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-4);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -150,12 +151,12 @@
 
 .empty-state--small .empty-state__icon {
   font-size: var(--empty-state-icon-size-small);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-4);
 }
 
 .empty-state--large .empty-state__icon {
   font-size: var(--empty-state-icon-size-large);
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-8);
 }
 
 .empty-state:hover .empty-state__icon {
@@ -165,7 +166,7 @@
 
 .empty-state--small .empty-state__title {
   font-size: var(--font-size-subtitle);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-3);
 }
 
 .empty-state--small .empty-state__message {
@@ -179,7 +180,7 @@
 
 .empty-state--large .empty-state__title {
   font-size: var(--font-size-title);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-4);
 }
 
 .empty-state--large .empty-state__message {
@@ -200,7 +201,7 @@
 
   .empty-state__icon {
     font-size: var(--empty-state-icon-size-small);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-4);
   }
 
   .empty-state__title {
@@ -212,13 +213,13 @@
   }
 
   .empty-state--large {
-    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding: var(--spacing-12) var(--spacing-8);
     min-height: 250px;
   }
 
   .empty-state--large .empty-state__icon {
     font-size: var(--empty-state-icon-size-default);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-6);
   }
 
   .empty-state--large .empty-state__title {
@@ -229,18 +230,18 @@
 /* Mobile devices (≤ 480px) */
 @media screen and (width <= 480px) {
   .empty-state {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-6) var(--spacing-4);
     min-height: 120px;
   }
 
   .empty-state__icon {
     font-size: calc(var(--empty-state-icon-size-small) * 0.83);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-3);
   }
 
   .empty-state__title {
     font-size: clamp(1rem, 4vw, 1.25rem);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-2);
   }
 
   .empty-state__message {
@@ -249,36 +250,36 @@
   }
 
   .empty-state--small {
-    padding: var(--spacing-md) var(--spacing-md);
+    padding: var(--spacing-4) var(--spacing-4);
     min-height: 100px;
   }
 
   .empty-state--small .empty-state__icon {
     font-size: calc(var(--empty-state-icon-size-small) * 0.67);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-2);
   }
 
   .empty-state--large {
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-8) var(--spacing-6);
     min-height: 200px;
   }
 
   .empty-state--large .empty-state__icon {
     font-size: var(--empty-state-icon-size-small);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-4);
   }
 }
 
 /* Extra small mobile (≤ 360px) */
 @media screen and (width <= 360px) {
   .empty-state {
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: var(--spacing-4) var(--spacing-3);
     min-height: 100px;
   }
 
   .empty-state__icon {
     font-size: calc(var(--empty-state-icon-size-small) * 0.67);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-2);
   }
 
   .empty-state__title {
@@ -290,7 +291,7 @@
   }
 
   .empty-state--small {
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: var(--spacing-4) var(--spacing-3);
     min-height: 80px;
   }
 
@@ -299,7 +300,7 @@
   }
 
   .empty-state--large {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-6) var(--spacing-4);
     min-height: 150px;
   }
 
@@ -312,12 +313,12 @@
 @media screen and (orientation: landscape) and (width <= 768px) {
   .empty-state {
     min-height: 120px;
-    padding: var(--spacing-lg) var(--spacing-xl);
+    padding: var(--spacing-6) var(--spacing-8);
   }
 
   .empty-state__icon {
     font-size: calc(var(--empty-state-icon-size-small) * 0.83);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-3);
   }
 }
 

@@ -1,7 +1,7 @@
 /**
  * LoadingSkeleton - Professional Skeleton Loader Component
  * Better UX during loading states
- * 
+ *
  * Features:
  * - Multiple skeleton variants (text, card, image, etc.)
  * - Smooth shimmer animation
@@ -37,7 +37,10 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
 
     if (children) {
       return (
-        <div className={`skeleton skeleton-custom ${className || ""}`} style={{ width, height }}>
+        <div
+          className={`skeleton skeleton-custom ${className || ""}`}
+          style={{ width, height }}
+        >
           {children}
         </div>
       );
@@ -68,19 +71,23 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
     width?: string | number,
     height?: string | number,
     lines?: number,
-    className?: string
+    className?: string,
   ): ReactNode {
     if (lines && lines > 1) {
       return (
-        <div className={`skeleton-text-group ${className || ""}`} aria-label="Loading text content" role="status">
+        <div
+          className={`skeleton-text-group ${className || ""}`}
+          aria-label="Loading text content"
+          role="status"
+        >
           {Array.from({ length: lines }).map((_, index) => (
             <div
               key={index}
               className="skeleton skeleton-text"
               style={{
                 width: index === lines - 1 ? "80%" : width || "100%",
-                height: height || "1rem",
-                marginBottom: index < lines - 1 ? "0.5rem" : "0",
+                height: height || "var(--spacing-4)",
+                marginBottom: index < lines - 1 ? "var(--spacing-2)" : "0",
               }}
             />
           ))}
@@ -101,7 +108,7 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
   private renderCardSkeleton(
     width?: string | number,
     height?: string | number,
-    className?: string
+    className?: string,
   ): ReactNode {
     return (
       <div
@@ -110,11 +117,31 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
         aria-label="Loading card content"
         role="status"
       >
-        <div className="skeleton skeleton-image" style={{ width: "100%", height: "200px" }} />
+        <div
+          className="skeleton skeleton-image"
+          style={{ width: "100%", height: "200px" }}
+        />
         <div className="skeleton-content">
-          <div className="skeleton skeleton-text" style={{ width: "80%", height: "1.5rem", marginBottom: "1rem" }} />
-          <div className="skeleton skeleton-text" style={{ width: "100%", height: "1rem", marginBottom: "0.5rem" }} />
-          <div className="skeleton skeleton-text" style={{ width: "90%", height: "1rem" }} />
+          <div
+            className="skeleton skeleton-text"
+            style={{
+              width: "80%",
+              height: "1.5rem",
+              marginBottom: "var(--spacing-4)",
+            }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{
+              width: "100%",
+              height: "1rem",
+              marginBottom: "var(--spacing-2)",
+            }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: "90%", height: "1rem" }}
+          />
         </div>
       </div>
     );
@@ -123,7 +150,7 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
   private renderImageSkeleton(
     width?: string | number,
     height?: string | number,
-    className?: string
+    className?: string,
   ): ReactNode {
     return (
       <div
@@ -138,7 +165,7 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
   private renderCircleSkeleton(
     width?: string | number,
     height?: string | number,
-    className?: string
+    className?: string,
   ): ReactNode {
     const size = width || height || "48px";
     return (
@@ -157,4 +184,3 @@ export class LoadingSkeleton extends React.PureComponent<LoadingSkeletonProps> {
 }
 
 export default LoadingSkeleton;
-

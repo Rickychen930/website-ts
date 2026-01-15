@@ -21,28 +21,20 @@
    Card Container - Extends Core Card Component
    ============================================ */
 .card {
-  /* Modern Bold Card Design */
+  /* Modern Professional Card Design */
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
-    clamp(var(--spacing-lg), 4vw, var(--spacing-2xl)); /* Optimized: More balanced padding for better UX */
-
-  border: 2px solid var(--color-border-light);
+  padding: clamp(var(--spacing-6), 5vw, var(--spacing-12))
+    clamp(var(--spacing-6), 4vw, var(--spacing-10));
+  border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
-  transition:
-    transform var(--transition-smooth),
-    box-shadow var(--transition-smooth),
-    border-color var(--transition-base),
-    background var(--transition-base);
+  transition: var(--transition-hover);
   max-width: 100%;
   backdrop-filter: blur(var(--blur-2xl));
-  border-radius: 32px; /* Larger, more modern radius */
+  border-radius: var(--radius-3xl);
   overflow: hidden;
-  box-shadow:
-    0 8px 32px var(--color-black-alpha-08),
-    0 16px 64px var(--color-black-alpha-06); /* Simplified: Removed third shadow layer for cleaner look */
-
+  box-shadow: var(--shadow-card);
   animation: fade-in-card var(--animation-duration-base)
     cubic-bezier(0.4, 0, 0.2, 1) forwards;
   outline: none;
@@ -59,19 +51,40 @@
   z-index: var(--z-base);
   background: radial-gradient(
     ellipse 150% 100% at 50% 50%,
-    var(--color-accent-alpha-12) 0%,
+    var(--color-accent-alpha-08) 0%,
     transparent 70%
-  ); /* Simplified: Single gradient for cleaner, more subtle effect */
-
+  );
   opacity: 0;
-  transition: opacity var(--transition-smooth);
+  transition: opacity var(--transition-hover);
   content: "";
   inset: 0;
   pointer-events: none;
-  border-radius: 32px;
+  border-radius: var(--radius-3xl);
+}
+
+.card::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent-primary),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--transition-hover);
+  content: "";
+  pointer-events: none;
 }
 
 .card:hover::before {
+  opacity: 1;
+}
+
+.card:hover::after {
   opacity: 1;
 }
 
@@ -111,13 +124,14 @@
 /* Hover & Focus States - Enhanced & Professional */
 @media (hover: hover) {
   .card:hover {
-    transform: translateY(-8px) scale(1.01); /* Refined: More subtle, professional hover */
-    box-shadow:
-      0 16px 64px var(--color-black-alpha-12),
-      0 24px 96px var(--color-black-alpha-10); /* Simplified: Removed extra shadow layers for cleaner look */
-
-    border-color: var(--color-accent-primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-border-accent);
     background: var(--color-bg-card-hover);
+  }
+
+  .card:hover .card-title {
+    transform: translateY(-1px);
   }
 }
 
@@ -177,26 +191,16 @@
   background-size: 300% 300%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(
-    1.5rem,
-    3.5vw,
-    2.25rem
-  ); /* Optimized: Better size balance for improved readability and hierarchy */
-
-  font-weight: 700; /* Refined: Reduced from 800 for more elegant look */
-  line-height: 1.3; /* Refined: Better readability */
-  transition:
-    transform var(--transition-fast),
-    filter var(--transition-smooth);
-  letter-spacing: -0.02em; /* Refined: Slightly less tight */
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.3;
+  transition: var(--transition-hover);
+  letter-spacing: -0.02em;
   font-family: var(--font-display);
   user-select: none;
   outline: none;
-  filter: drop-shadow(
-    0 2px 8px var(--color-black-alpha-15)
-  ); /* Refined: More subtle shadow */
-
-  animation: gradient-shift 15s ease infinite; /* Refined: Even slower for less distraction, better UX */
+  filter: drop-shadow(0 2px 8px var(--color-black-alpha-15));
+  animation: gradient-shift 15s ease infinite;
 }
 
 .card-title:focus {
@@ -215,15 +219,13 @@
   position: relative;
   z-index: var(--z-base);
   color: var(--color-text-body);
-  font-size: var(--font-size-body-responsive);
-  line-height: 1.7; /* Refined: Better readability (was var(--line-height-relaxed)) */
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.75;
   transition: color var(--transition-base);
   font-family: var(--font-main);
-  letter-spacing: 0.015em; /* Refined: Slightly better spacing */
+  letter-spacing: 0.01em;
   box-sizing: border-box;
-  padding-top: var(
-    --spacing-sm
-  ); /* Refined: Add subtle top padding for better spacing */
+  padding-top: var(--spacing-3);
 }
 
 .card:hover .card-body {
@@ -282,9 +284,8 @@
 @media screen and (width >= 1400px) {
   .card {
     max-width: 100%;
-    padding: var(--spacing-4xl)
-      clamp(var(--spacing-3xl), 6vw, var(--spacing-5xl));
-    border-radius: 36px; /* Larger on big screens */
+    padding: var(--spacing-16) clamp(var(--spacing-12), 6vw, var(--spacing-20));
+    border-radius: var(--radius-4xl);
   }
 
   .card-header {
@@ -309,9 +310,9 @@
 
 @media screen and (width <= 1024px) {
   .card {
-    padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
-      clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
-    border-radius: 28px; /* Slightly smaller on tablet */
+    padding: clamp(var(--spacing-10), 5vw, var(--spacing-12))
+      clamp(var(--spacing-8), 4vw, var(--spacing-10));
+    border-radius: var(--radius-3xl);
   }
 
   .card-header {
@@ -336,9 +337,9 @@
 
 @media screen and (width <= 768px) {
   .card {
-    padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
-      clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
-    border-radius: 24px; /* Modern mobile radius */
+    padding: clamp(var(--spacing-8), 4vw, var(--spacing-10))
+      clamp(var(--spacing-6), 3vw, var(--spacing-8));
+    border-radius: var(--radius-2xl);
   }
 
   .card-header {
@@ -372,9 +373,9 @@
    ============================================ */
 @media screen and (width <= 480px) {
   .card {
-    padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl))
-      clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
-    border-radius: 20px; /* Modern mobile radius */
+    padding: clamp(var(--spacing-6), 3vw, var(--spacing-8))
+      clamp(var(--spacing-4), 2.5vw, var(--spacing-6));
+    border-radius: var(--radius-xl);
   }
 
   .card-header {

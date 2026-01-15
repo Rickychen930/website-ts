@@ -65,11 +65,11 @@
   --contact-transition-bounce: var(--transition-bounce);
 
   /* Spacing - Uses core spacing system */
-  --contact-spacing-xs: var(--spacing-xs);
-  --contact-spacing-sm: var(--spacing-sm);
-  --contact-spacing-md: var(--spacing-md);
-  --contact-spacing-lg: var(--spacing-lg);
-  --contact-spacing-xl: var(--spacing-xl);
+  --contact-spacing-xs: var(--spacing-2);
+  --contact-spacing-sm: var(--spacing-3);
+  --contact-spacing-md: var(--spacing-4);
+  --contact-spacing-lg: var(--spacing-6);
+  --contact-spacing-xl: var(--spacing-8);
 
   /* Border Radius - Uses core radius system */
   --contact-radius-sm: var(--radius-md);

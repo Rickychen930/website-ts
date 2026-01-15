@@ -115,17 +115,12 @@
   z-index: var(--z-base);
   width: 100%;
   margin: 0 auto;
-  padding: clamp(var(--spacing-4xl), 7vw, var(--spacing-5xl))
-    clamp(var(--spacing-2xl), 5vw, var(--spacing-4xl));
+  padding: clamp(var(--spacing-16), 7vw, var(--spacing-20))
+    clamp(var(--spacing-10), 5vw, var(--spacing-16));
   flex: 1;
   flex-direction: column;
-  gap: clamp(
-    var(--spacing-4xl),
-    8vw,
-    6rem
-  ); /* Optimized: Reduced from 8rem to 6rem for better flow */
-
-  max-width: 1400px; /* Wider for modern layout */
+  gap: clamp(var(--spacing-16), 8vw, var(--spacing-24));
+  max-width: 1400px;
 }
 
 /* ============================================
@@ -137,21 +132,18 @@
   position: relative;
   width: 100%;
   opacity: 0;
-  scroll-margin-top: clamp(var(--spacing-5xl), 10vw, 7rem);
+  scroll-margin-top: clamp(var(--spacing-20), 10vw, 7rem);
   margin-bottom: 0;
-  transform: translateY(30px) scale(0.98); /* Refined: More subtle initial transform */
-  filter: blur(3px); /* Refined: Less blur for better UX */
-  transition:
-    opacity var(--transition-smooth),
-    transform var(--transition-smooth),
-    filter var(--transition-smooth);
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: var(--transition-reveal);
   will-change: opacity, transform, filter;
 }
 
 /* Revealed state - Smooth scroll animation */
 .section-block.revealed {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
   filter: blur(0);
   animation: section-reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   will-change: auto;
@@ -160,13 +152,13 @@
 @keyframes section-reveal {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.99); /* Refined: More subtle animation */
-    filter: blur(2px); /* Refined: Less blur */
+    transform: translateY(20px);
+    filter: blur(2px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     filter: blur(0);
   }
 }
@@ -185,10 +177,10 @@
 .section-header {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)) 0;
-  margin-bottom: clamp(var(--spacing-2xl), 6vw, var(--spacing-4xl));
-  padding-bottom: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
-  border-bottom: none; /* Removed border for cleaner look */
+  padding: clamp(var(--spacing-10), 5vw, var(--spacing-12)) 0;
+  margin-bottom: clamp(var(--spacing-10), 6vw, var(--spacing-16));
+  padding-bottom: clamp(var(--spacing-8), 4vw, var(--spacing-10));
+  border-bottom: none;
   text-align: center;
   box-sizing: border-box;
 }
@@ -197,7 +189,7 @@
   display: inline-block;
   position: relative;
   width: auto;
-  margin: 0 0 clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
+  margin: 0 0 clamp(var(--spacing-8), 4vw, var(--spacing-10));
   background: linear-gradient(
     135deg,
     var(--color-text-heading) 0%,
@@ -209,18 +201,15 @@
   background-size: 400% 400%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(2.5rem, 6vw, 4rem); /* Much larger, bold statement */
-  font-weight: 900; /* Ultra bold */
-  line-height: 1.1; /* Very tight for maximum impact */
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
   text-align: center;
-  letter-spacing: -0.04em; /* Tighter for modern bold look */
+  letter-spacing: -0.03em;
   font-family: var(--font-display);
-  filter: drop-shadow(0 6px 20px var(--color-black-alpha-20));
-  transition:
-    transform var(--transition-fast),
-    filter var(--transition-smooth);
-  animation: gradient-shift 10s ease infinite;
-  text-transform: uppercase; /* Bold modern statement */
+  filter: drop-shadow(0 4px 16px var(--color-black-alpha-15));
+  transition: var(--transition-hover);
+  animation: gradient-shift 12s ease infinite;
 }
 
 /* ============================================
@@ -348,7 +337,7 @@
 
 /* Reduced gap within groups */
 .section-group .section-block {
-  margin-bottom: clamp(var(--spacing-3xl), 6vw, var(--spacing-4xl));
+  margin-bottom: clamp(var(--spacing-12), 6vw, var(--spacing-16));
 }
 
 .section-group .section-block:last-child {
@@ -359,8 +348,8 @@
 .section-title-underline {
   position: relative;
   width: clamp(180px, 25vw, 280px);
-  height: 6px;
-  margin: clamp(var(--spacing-lg), 3vw, var(--spacing-xl)) auto 0;
+  height: 4px;
+  margin: clamp(var(--spacing-6), 3vw, var(--spacing-8)) auto 0;
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -399,8 +388,8 @@
   width: 100%;
   margin: 0 auto;
   max-width: 100%;
-  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
-    clamp(var(--spacing-xl), 5vw, var(--spacing-4xl));
+  padding: clamp(var(--spacing-10), 5vw, var(--spacing-12))
+    clamp(var(--spacing-8), 5vw, var(--spacing-16));
   box-sizing: border-box;
 }
 
@@ -408,26 +397,26 @@
 .section-content p {
   color: var(--color-text-main);
   font-size: clamp(1.05rem, 2vw, 1.15rem);
-  line-height: 1.85; /* More relaxed */
-  letter-spacing: 0.02em; /* Better spacing */
-  margin-bottom: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  margin-bottom: clamp(var(--spacing-4), 2.5vw, var(--spacing-6));
 }
 
 .section-content h2,
 .section-content h3,
 .section-content h4 {
   color: var(--color-text-heading);
-  font-size: clamp(1.5rem, 3.5vw, 2rem); /* Larger, bolder */
-  font-weight: 700; /* Bolder */
-  line-height: 1.3; /* Tighter */
-  letter-spacing: -0.02em; /* Tighter */
-  margin-top: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
-  margin-bottom: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-top: clamp(var(--spacing-8), 5vw, var(--spacing-10));
+  margin-bottom: clamp(var(--spacing-4), 2.5vw, var(--spacing-6));
 }
 
 @media screen and (width >= 1400px) {
   .section-block {
-    padding: var(--spacing-4xl); /* Standardized: uses spacing variable */
+    padding: var(--spacing-16);
   }
 }
 
@@ -820,10 +809,10 @@
    ============================================ */
 @media screen and (width >= 1400px) {
   .contents-section {
-    gap: clamp(var(--spacing-4xl), 8vw, 6rem); /* Optimized spacing */
-    padding: var(--spacing-5xl)
-      clamp(var(--spacing-3xl), 7vw, var(--spacing-5xl)) var(--spacing-5xl);
-    max-width: 1600px; /* Wider for modern layout */
+    gap: clamp(var(--spacing-16), 8vw, var(--spacing-24));
+    padding: var(--spacing-20) clamp(var(--spacing-12), 7vw, var(--spacing-20))
+      var(--spacing-20);
+    max-width: 1600px;
   }
 
   .section-block:not(:last-child)::after {
@@ -855,9 +844,9 @@
    ============================================ */
 @media screen and (width >= 993px) and (width <= 1399px) {
   .contents-section {
-    gap: var(--spacing-3xl); /* Standardized: 3.5rem → var(--spacing-3xl) */
-    padding: var(--spacing-5xl)
-      clamp(var(--spacing-xl), 4vw, var(--spacing-4xl)) var(--spacing-4xl); /* Standardized spacing */
+    gap: var(--spacing-12);
+    padding: var(--spacing-20) clamp(var(--spacing-8), 4vw, var(--spacing-16))
+      var(--spacing-16);
   }
 
   .section-block:not(:last-child)::after {
@@ -876,9 +865,9 @@
    ============================================ */
 @media screen and (width >= 769px) and (width <= 1024px) {
   .contents-section {
-    gap: var(--spacing-3xl); /* Standardized: 3rem → var(--spacing-3xl) */
-    padding: var(--spacing-5xl)
-      clamp(var(--spacing-lg), 3vw, var(--spacing-2xl)) var(--spacing-3xl); /* Standardized spacing */
+    gap: var(--spacing-12);
+    padding: var(--spacing-20) clamp(var(--spacing-6), 3vw, var(--spacing-10))
+      var(--spacing-12);
   }
 
   .section-block {
@@ -940,9 +929,9 @@
    ============================================ */
 @media screen and (width <= 768px) {
   .contents-section {
-    gap: var(--spacing-2xl); /* Standardized: 2.5rem → var(--spacing-2xl) */
-    padding: var(--spacing-4xl)
-      clamp(var(--spacing-md), 2.5vw, var(--spacing-xl)) var(--spacing-3xl); /* Standardized spacing */
+    gap: var(--spacing-10);
+    padding: var(--spacing-16) clamp(var(--spacing-4), 2.5vw, var(--spacing-8))
+      var(--spacing-12);
   }
 
   .section-block {
@@ -1093,8 +1082,8 @@
    ============================================ */
 @media screen and (width <= 480px) {
   .contents-section {
-    gap: var(--spacing-2xl); /* Standardized: 2.5rem → var(--spacing-2xl) */
-    padding: var(--spacing-4xl) var(--spacing-lg) var(--spacing-2xl); /* Standardized spacing */
+    gap: var(--spacing-10);
+    padding: var(--spacing-16) var(--spacing-6) var(--spacing-10);
   }
 
   .section-title {

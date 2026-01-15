@@ -19,15 +19,15 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-6) 0;
 }
 
 /* ─── Send Message Subtitle ─── */
 
 /* Uses shared section-subtitle styling from core/_section-subtitle.css */
 .send-message-subtitle {
-  margin: 0 auto var(--spacing-2xl) auto;
-  padding: 0 var(--spacing-md, 16px);
+  margin: 0 auto var(--spacing-10) auto;
+  padding: 0 var(--spacing-4);
   color: var(--color-text-secondary);
   font-size: clamp(0.9375rem, 2vw, var(--font-size-subtitle, 1.1rem));
   font-weight: var(--font-weight-subtitle, 500);
@@ -42,12 +42,12 @@
 /* Responsive adjustments */
 @media screen and (width <= 768px) {
   .send-message-wrapper {
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing-4) 0;
   }
 
   .send-message-subtitle {
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-4);
     font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-8);
   }
 }

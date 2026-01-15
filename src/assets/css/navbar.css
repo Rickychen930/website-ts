@@ -129,18 +129,19 @@
   position: relative;
   z-index: 2;
   margin: 0 auto;
-  padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(var(--spacing-5), 3vw, var(--spacing-7))
+    clamp(var(--spacing-6), 4vw, var(--spacing-12));
   transition: padding var(--transition-smooth);
   align-items: center;
   justify-content: space-between;
   max-width: var(--spacing-card-max-width);
-  gap: clamp(1rem, 3vw, 1.5rem);
+  gap: clamp(var(--spacing-4), 3vw, var(--spacing-6));
   min-height: inherit;
 }
 
 .navbar.scrolled .navbar-inner {
-  padding-top: clamp(0.875rem, 2vw, 1.125rem);
-  padding-bottom: clamp(0.875rem, 2vw, 1.125rem);
+  padding-top: clamp(var(--spacing-3), 2vw, var(--spacing-4));
+  padding-bottom: clamp(var(--spacing-3), 2vw, var(--spacing-4));
 }
 
 /* Subtle hover effect */

@@ -25,12 +25,12 @@
 #about.card,
 .card#about {
   /* Spacing - Uses core spacing system */
-  --about-me-spacing-xs: var(--spacing-xs);
-  --about-me-spacing-sm: var(--spacing-sm);
-  --about-me-spacing-md: var(--spacing-md);
-  --about-me-spacing-lg: var(--spacing-lg);
-  --about-me-spacing-xl: var(--spacing-xl);
-  --about-me-spacing-xxl: var(--spacing-4xl);
+  --about-me-spacing-xs: var(--spacing-2);
+  --about-me-spacing-sm: var(--spacing-3);
+  --about-me-spacing-md: var(--spacing-4);
+  --about-me-spacing-lg: var(--spacing-6);
+  --about-me-spacing-xl: var(--spacing-8);
+  --about-me-spacing-xxl: var(--spacing-16);
 
   /* Colors - Uses core color system */
   --about-me-color-primary: var(--color-accent-primary);
@@ -91,8 +91,8 @@
 .about-me-main-content {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-2xl), 6vw, var(--spacing-4xl))
-    clamp(var(--spacing-lg), 4vw, var(--spacing-3xl));
+  padding: clamp(var(--spacing-10), 6vw, var(--spacing-16))
+    clamp(var(--spacing-6), 4vw, var(--spacing-12));
   max-width: 100%;
   border-radius: var(--radius-2xl);
   overflow: hidden visible;

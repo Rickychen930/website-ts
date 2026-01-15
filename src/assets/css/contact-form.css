@@ -18,7 +18,7 @@
 .contact-form {
   max-width: 600px;
   margin: 0 auto;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-8);
 }
 
 .contact-form-group {
@@ -58,7 +58,7 @@
 .contact-form-input,
 .contact-form-textarea {
   width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-3) var(--spacing-4);
   border: 2px solid var(--color-border-light);
   background: var(--color-bg-card);
   color: var(--color-text-main);

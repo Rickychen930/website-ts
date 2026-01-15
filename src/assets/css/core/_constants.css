@@ -20,18 +20,35 @@
 
 :root {
   /* ============================================
-     Spacing System - Consistent Spacing Scale
+     Spacing System - Consistent 4px Grid System
      Based on LayoutConfig constant
+     Modern, professional spacing scale
      ============================================ */
-  --spacing-xs: 0.5rem; /* 8px */
-  --spacing-sm: 0.75rem; /* 12px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 2.5rem; /* 40px */
-  --spacing-3xl: 3rem; /* 48px */
-  --spacing-4xl: 4rem; /* 64px */
-  --spacing-5xl: 5rem; /* 80px */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-20: 5rem; /* 80px */
+  --spacing-24: 6rem; /* 96px */
+  --spacing-32: 8rem; /* 128px */
+
+  /* Legacy spacing aliases for backward compatibility */
+  --spacing-xs: var(--spacing-2); /* 8px */
+  --spacing-sm: var(--spacing-3); /* 12px */
+  --spacing-md: var(--spacing-4); /* 16px */
+  --spacing-lg: var(--spacing-6); /* 24px */
+  --spacing-xl: var(--spacing-8); /* 32px */
+  --spacing-2xl: var(--spacing-10); /* 40px */
+  --spacing-3xl: var(--spacing-12); /* 48px */
+  --spacing-4xl: var(--spacing-16); /* 64px */
+  --spacing-5xl: var(--spacing-20); /* 80px */
 
   /* ============================================
      Component Spacing - Reusable Patterns
@@ -49,14 +66,17 @@
 
   /* ============================================
      Border Radius System - Consistent Radius Scale
+     Modern, professional radius system
      ============================================ */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-3xl: 32px;
+  --radius-none: 0;
+  --radius-xs: 0.25rem; /* 4px */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius-md: 0.75rem; /* 12px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.25rem; /* 20px */
+  --radius-2xl: 1.5rem; /* 24px */
+  --radius-3xl: 2rem; /* 32px */
+  --radius-4xl: 2.5rem; /* 40px */
   --radius-full: 9999px;
 
   /* ============================================
@@ -169,6 +189,7 @@
 
   /* ============================================
      Component Transitions - Reusable Transition Patterns
+     Modern, smooth transitions for better UX
      ============================================ */
   --transition-color: color var(--duration-fast) var(--easing-smooth);
   --transition-background: background-color var(--duration-fast)
@@ -178,6 +199,16 @@
   --transition-opacity: opacity var(--duration-fast) var(--easing-smooth);
   --transition-shadow: box-shadow var(--duration-base) var(--easing-smooth);
   --transition-all: all var(--duration-base) var(--easing-smooth);
+
+  /* Micro-interaction transitions */
+  --transition-hover: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-focus: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-active: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Section reveal animations */
+  --transition-reveal:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* ============================================
      Component Classes - Reusable Component Patterns

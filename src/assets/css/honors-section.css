@@ -67,7 +67,7 @@
   --honors-border-radius: var(--radius-2xl);
 
   /* Spacing - Uses core spacing system */
-  --honors-spacing: var(--spacing-2xl);
+  --honors-spacing: var(--spacing-10);
 }
 
 /* ─── Global Reset ─── */

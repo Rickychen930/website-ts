@@ -162,9 +162,9 @@ class Image extends Component<ImageProps, ImageState> {
       width,
       height,
       objectFit: "cover",
-      borderRadius: rounded ? "8px" : "0px",
+      borderRadius: rounded ? "var(--radius-sm, 0.5rem)" : "0",
       display: "block",
-      transition: "opacity 0.3s ease, transform 0.3s ease",
+      transition: "var(--transition-opacity), var(--transition-transform)",
       opacity: this.state.loaded ? 1 : 0.7,
       ...style,
     };
@@ -181,7 +181,7 @@ class Image extends Component<ImageProps, ImageState> {
             alignItems: "center",
             justifyContent: "center",
             color: "var(--color-text-subtle)",
-            fontSize: "0.875rem",
+            fontSize: "var(--font-size-sm, 0.875rem)",
           }}
           role="img"
           aria-label={alt}

@@ -63,12 +63,12 @@
   box-sizing: border-box;
 
   /* Spacing - Uses core spacing system */
-  --skills-spacing-xs: var(--spacing-xs);
-  --skills-spacing-sm: var(--spacing-sm);
-  --skills-spacing-md: var(--spacing-md);
-  --skills-spacing-lg: var(--spacing-lg);
-  --skills-spacing-xl: var(--spacing-xl);
-  --skills-spacing-xxl: var(--spacing-3xl);
+  --skills-spacing-xs: var(--spacing-2);
+  --skills-spacing-sm: var(--spacing-3);
+  --skills-spacing-md: var(--spacing-4);
+  --skills-spacing-lg: var(--spacing-6);
+  --skills-spacing-xl: var(--spacing-8);
+  --skills-spacing-xxl: var(--spacing-12);
 
   /* Colors - Uses core color system */
   --skills-color-primary: var(--color-accent-primary);
@@ -141,12 +141,12 @@
 .technical-skills-container {
   display: flex;
   position: relative;
-  z-index: var(--z-base, 1); /* Use z-index variable */
+  z-index: var(--z-base, 1);
   width: 100%;
-  padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+  padding: clamp(var(--spacing-6), 4vw, var(--spacing-10)) 0;
   flex-direction: column;
-  gap: clamp(2rem, 5vw, 3.5rem);
-  padding-bottom: clamp(2.5rem, 6vw, 4rem);
+  gap: clamp(var(--spacing-8), 5vw, var(--spacing-14));
+  padding-bottom: clamp(var(--spacing-10), 6vw, var(--spacing-16));
   max-width: 100%;
 }
 

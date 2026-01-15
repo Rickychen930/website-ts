@@ -16,10 +16,10 @@
 @import url("./core/index.css");
 
 .project-filters {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-6);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-light);
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-8);
   border-radius: var(--spacing-card-radius);
 }
 
@@ -50,7 +50,7 @@
 }
 
 .project-filter-button {
-  padding: var(--spacing-xs) var(--spacing-md);
+  padding: var(--spacing-2) var(--spacing-4);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
   color: var(--color-text-main);
@@ -82,7 +82,7 @@
 }
 
 .project-filter-select {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-3) var(--spacing-4);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
   color: var(--color-text-main);

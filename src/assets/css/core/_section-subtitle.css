@@ -20,8 +20,8 @@
 
 /* ─── Section Subtitle Base ─── */
 .section-subtitle {
-  margin: 0 auto var(--spacing-2xl) auto;
-  padding: 0 var(--spacing-md, 16px);
+  margin: 0 auto var(--spacing-10) auto;
+  padding: 0 var(--spacing-4);
   color: var(--color-text-secondary);
   font-size: clamp(
     1rem,
@@ -42,15 +42,15 @@
 /* Responsive adjustments */
 @media screen and (width <= 768px) {
   .section-subtitle {
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-4);
     font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-8);
   }
 }
 
 @media screen and (width <= 480px) {
   .section-subtitle {
-    padding: 0 var(--spacing-sm);
+    padding: 0 var(--spacing-3);
     font-size: var(--font-size-sm);
   }
 }

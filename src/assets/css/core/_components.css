@@ -236,12 +236,12 @@
 }
 
 .section__header {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-8);
   text-align: center;
 }
 
 .section__title {
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 var(--spacing-4) 0;
   color: var(--color-text-heading);
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-title);
@@ -260,15 +260,15 @@
 
 /* Section Modifiers */
 .section--padded {
-  padding: var(--spacing-3xl) var(--spacing-lg);
+  padding: var(--spacing-12) var(--spacing-6);
 }
 
 .section--spacious {
-  padding: var(--spacing-4xl) var(--spacing-xl);
+  padding: var(--spacing-16) var(--spacing-8);
 }
 
 .section--minimal {
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-6) 0;
 }
 
 /* ============================================
@@ -278,7 +278,7 @@
   width: 100%;
   max-width: var(--spacing-card-max-width);
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-6);
 }
 
 .container--fluid {
@@ -298,9 +298,7 @@
    ============================================ */
 .grid {
   display: grid;
-  gap: var(
-    --spacing-lg
-  ); /* Standardized: using spacing-lg for default grid gap */
+  gap: var(--spacing-6);
 }
 
 .grid--cols-1 {
@@ -320,19 +318,19 @@
 }
 
 .grid--gap-sm {
-  gap: var(--spacing-sm); /* Standardized: using spacing-sm */
+  gap: var(--spacing-3);
 }
 
 .grid--gap-md {
-  gap: var(--spacing-md); /* Standardized: using spacing-md */
+  gap: var(--spacing-4);
 }
 
 .grid--gap-lg {
-  gap: var(--spacing-lg); /* Standardized: using spacing-lg */
+  gap: var(--spacing-6);
 }
 
 .grid--gap-xl {
-  gap: var(--spacing-xl); /* Standardized: using spacing-xl */
+  gap: var(--spacing-8);
 }
 
 /* ============================================

@@ -63,23 +63,23 @@
 }
 
 .flex-gap-xs {
-  gap: var(--spacing-xs); /* Standardized: using spacing-xs */
+  gap: var(--spacing-2);
 }
 
 .flex-gap-sm {
-  gap: var(--spacing-sm); /* Standardized: using spacing-sm */
+  gap: var(--spacing-3);
 }
 
 .flex-gap-md {
-  gap: var(--spacing-md); /* Standardized: using spacing-md */
+  gap: var(--spacing-4);
 }
 
 .flex-gap-lg {
-  gap: var(--spacing-lg); /* Standardized: using spacing-lg */
+  gap: var(--spacing-6);
 }
 
 .flex-gap-xl {
-  gap: var(--spacing-xl); /* Standardized: using spacing-xl */
+  gap: var(--spacing-8);
 }
 
 .grid {
@@ -209,19 +209,19 @@
 }
 
 .mt-sm {
-  margin-top: var(--spacing-sm); /* Standardized: using spacing-sm */
+  margin-top: var(--spacing-3);
 }
 
 .mt-md {
-  margin-top: var(--spacing-md); /* Standardized: using spacing-md */
+  margin-top: var(--spacing-4);
 }
 
 .mt-lg {
-  margin-top: var(--spacing-lg); /* Standardized: using spacing-lg */
+  margin-top: var(--spacing-6);
 }
 
 .mt-xl {
-  margin-top: var(--spacing-xl); /* Standardized: using spacing-xl */
+  margin-top: var(--spacing-8);
 }
 
 .mb-0 {
@@ -229,19 +229,19 @@
 }
 
 .mb-sm {
-  margin-bottom: var(--spacing-sm); /* Standardized: using spacing-sm */
+  margin-bottom: var(--spacing-3);
 }
 
 .mb-md {
-  margin-bottom: var(--spacing-md); /* Standardized: using spacing-md */
+  margin-bottom: var(--spacing-4);
 }
 
 .mb-lg {
-  margin-bottom: var(--spacing-lg); /* Standardized: using spacing-lg */
+  margin-bottom: var(--spacing-6);
 }
 
 .mb-xl {
-  margin-bottom: var(--spacing-xl); /* Standardized: using spacing-xl */
+  margin-bottom: var(--spacing-8);
 }
 
 .p-0 {
@@ -249,19 +249,19 @@
 }
 
 .p-sm {
-  padding: var(--spacing-sm); /* Standardized: using spacing-sm */
+  padding: var(--spacing-3);
 }
 
 .p-md {
-  padding: var(--spacing-md); /* Standardized: using spacing-md */
+  padding: var(--spacing-4);
 }
 
 .p-lg {
-  padding: var(--spacing-lg); /* Standardized: using spacing-lg */
+  padding: var(--spacing-6);
 }
 
 .p-xl {
-  padding: var(--spacing-xl); /* Standardized: using spacing-xl */
+  padding: var(--spacing-8);
 }
 
 /* ============================================
@@ -293,6 +293,66 @@
 
 .bg-gradient-accent {
   background: var(--gradient-accent);
+}
+
+/* ============================================
+   Animation Utilities
+   ============================================ */
+.animation-delay-0 {
+  animation-delay: 0ms;
+}
+
+.animation-delay-50 {
+  animation-delay: 50ms;
+}
+
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-250 {
+  animation-delay: 250ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-350 {
+  animation-delay: 350ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-450 {
+  animation-delay: 450ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Cursor utilities */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
 }
 
 .bg-gradient-accent-full {
@@ -436,21 +496,6 @@
 
 .overflow-visible {
   overflow: visible;
-}
-
-/* ============================================
-   Cursor Utilities
-   ============================================ */
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.cursor-default {
-  cursor: default;
-}
-
-.cursor-not-allowed {
-  cursor: not-allowed;
 }
 
 /* ============================================

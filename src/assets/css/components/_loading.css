@@ -21,11 +21,11 @@
    Loading Variables
    ============================================ */
 :root {
-  --loading-gap-default: var(--spacing-md);
-  --loading-gap-mobile: var(--spacing-sm);
-  --loading-padding-default: var(--spacing-xl);
-  --loading-padding-mobile: var(--spacing-lg);
-  --loading-padding-small: var(--spacing-sm);
+  --loading-gap-default: var(--spacing-4);
+  --loading-gap-mobile: var(--spacing-3);
+  --loading-padding-default: var(--spacing-8);
+  --loading-padding-mobile: var(--spacing-6);
+  --loading-padding-small: var(--spacing-3);
   --loading-min-height-default: 200px;
   --loading-min-height-mobile: 150px;
   --loading-spinner-size-default: 3rem;
@@ -42,8 +42,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.75rem, 2vw, 1rem);
-  padding: clamp(2rem, 5vw, 3rem);
+  gap: clamp(var(--spacing-3), 2vw, var(--spacing-4));
+  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12));
   min-height: clamp(150px, 25vw, 200px);
 }
 
@@ -139,7 +139,7 @@
   flex-direction: row;
   padding: var(--loading-padding-small);
   min-height: auto;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-3);
 }
 
 .loading--inline .loading__spinner {
