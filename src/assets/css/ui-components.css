@@ -41,7 +41,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: clamp(1rem, 3vw, 1.5rem);
-  animation: empty-state-float 3s ease-in-out infinite;
+  animation: empty-state-float 4s ease-in-out infinite; /* Slower for less distraction */
   filter: grayscale(0.2);
 }
 
@@ -52,26 +52,15 @@
   }
 
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-6px); /* Reduced movement for subtler animation */
   }
 }
 
 .empty-state-icon:hover {
   opacity: 1;
-  transform: scale(1.08) translateY(-4px);
-  filter: grayscale(0) drop-shadow(0 4px 12px var(--color-accent-alpha-25));
+  transform: scale(1.05) translateY(-2px); /* More subtle hover effect */
+  filter: grayscale(0) drop-shadow(0 2px 8px var(--color-accent-alpha-20)); /* Lighter shadow */
   animation-play-state: paused;
-}
-
-@keyframes empty-state-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
 }
 
 @keyframes gradient-shift {

@@ -21,7 +21,11 @@
   margin: 0 auto var(--spacing-2xl) auto;
   padding: 0 var(--spacing-md, 16px);
   color: var(--color-text-secondary);
-  font-size: clamp(0.9375rem, 2vw, var(--font-size-subtitle, 1.1rem));
+  font-size: clamp(
+    1rem,
+    2vw,
+    var(--font-size-subtitle, 1.1rem)
+  ); /* Improved: Minimum 1rem (16px) for better readability */
   font-weight: var(--font-weight-subtitle, 500);
   line-height: var(--line-height-normal, 1.6);
   max-width: 600px;

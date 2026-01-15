@@ -59,9 +59,8 @@
   width: clamp(220px, 22vw, 320px);
   height: 2px; /* Refined: Thinner hover state */
   opacity: 0.5; /* Refined: More subtle hover */
-  box-shadow:
-    0 0 12px var(--color-accent-alpha-30),
-    0 0 24px var(--color-accent-alpha-20);
+
+  /* Simplified: Removed box-shadow for cleaner, more elegant separator */
 }
 
 /* Responsive adjustments */

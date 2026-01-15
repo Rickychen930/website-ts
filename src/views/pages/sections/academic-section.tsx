@@ -24,12 +24,9 @@ import { Card } from "../../components/common";
 import { AcademicController } from "../../../controllers/academic-controller";
 import { AcademicModel, IAcademicItem } from "../../../models/academic-model";
 import { AcademicCard } from "../../components/academic/AcademicCard";
-import { AcademicTimeline } from "../../components/academic/AcademicTimeline";
+// AcademicTimeline removed - not needed for carousel layout (cleaner UI/UX)
 import { EmptyState, Carousel, ICarouselItem } from "../../components/ui";
-import {
-  ResponsiveStateManager,
-  isMobileOrTablet,
-} from "../../../utils/responsive-utils";
+// Removed ResponsiveStateManager - always use carousel per guideline
 import { logWarn, logError } from "../../../utils/logger";
 
 /**
@@ -48,7 +45,6 @@ type AcademicState = {
   scrollDirection: "up" | "down";
   isInitialized: boolean;
   currentVisibleIndex: number;
-  isMobileOrTablet: boolean;
 };
 
 /**
@@ -92,7 +88,6 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   private scrollTimeoutId: number | null = null;
   private isMounted: boolean = false;
   private containerRef: RefObject<HTMLDivElement | null> = createRef();
-  private responsiveManager = new ResponsiveStateManager();
 
   constructor(props: AcademicProps) {
     super(props);
@@ -101,7 +96,6 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
       scrollDirection: "down",
       isInitialized: false,
       currentVisibleIndex: -1,
-      isMobileOrTablet: isMobileOrTablet(),
     };
 
     // Initialize controller (MVC Pattern)
@@ -136,11 +130,6 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   componentDidMount(): void {
     this.isMounted = true;
 
-    // Initialize responsive state manager
-    this.responsiveManager.initialize((isMobile) => {
-      this.setState({ isMobileOrTablet: isMobile });
-    });
-
     // Edge case: Validate data exists before initializing
     if (
       !this.props.data ||
@@ -166,7 +155,6 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
    */
   componentWillUnmount(): void {
     this.isMounted = false;
-    this.responsiveManager.cleanup();
     this.cleanup();
   }
 
@@ -523,7 +511,7 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
   /**
    * Render All Items
    * Main render logic with filtering for null items
-   * Uses Carousel for horizontal scrolling
+   * Always uses Carousel for horizontal scrolling (per guideline)
    */
   private renderItems(): ReactNode {
     const { data } = this.props;
@@ -542,57 +530,24 @@ class AcademicSection extends Component<AcademicProps, AcademicState> {
     // Get sorted items from model (MVC Pattern - using Model directly for data transformation)
     const sortedItems = AcademicModel.sortByPeriod(validItems);
 
-    // Check if mobile/tablet for carousel layout
-    if (this.state.isMobileOrTablet) {
-      // Use Carousel for mobile/tablet
-      const carouselItems = this.convertToCarouselItems(sortedItems);
-
-      return (
-        <div className="academic-items-container" ref={this.containerRef}>
-          <AcademicTimeline
-            itemCount={sortedItems.length}
-            currentIndex={this.state.currentVisibleIndex}
-            isVisible={this.state.isInitialized}
-          />
-          <Carousel
-            items={carouselItems}
-            className="academic-items-carousel"
-            itemWidth={360}
-            gap={24}
-            showArrows={true}
-            showIndicators={true}
-            scrollSnap={true}
-            ariaLabel="Academic background carousel"
-            emptyMessage="No academic information available"
-            emptyIcon="🎓"
-          />
-        </div>
-      );
-    }
-
-    // Desktop: Use grid layout
-    const renderedItems = sortedItems
-      .map((item, index) => this.renderItem(item, index))
-      .filter((item): item is ReactNode => item !== null);
-
-    // Edge case: No valid items after filtering
-    if (renderedItems.length === 0) {
-      return this.renderEmptyState();
-    }
+    // Always use Carousel for horizontal scrolling (per guideline)
+    const carouselItems = this.convertToCarouselItems(sortedItems);
 
     return (
-      <div
-        className="academic-items-grid"
-        ref={this.containerRef}
-        role="list"
-        aria-label="Academic background timeline"
-      >
-        <AcademicTimeline
-          itemCount={renderedItems.length}
-          currentIndex={this.state.currentVisibleIndex}
-          isVisible={this.state.isInitialized}
+      <div className="academic-items-container" ref={this.containerRef}>
+        {/* Timeline hidden in carousel layout for cleaner UI/UX */}
+        <Carousel
+          items={carouselItems}
+          className="academic-items-carousel"
+          itemWidth={360}
+          gap={24}
+          showArrows={true}
+          showIndicators={true}
+          scrollSnap={true}
+          ariaLabel="Academic background carousel"
+          emptyMessage="No academic information available"
+          emptyIcon="🎓"
         />
-        {renderedItems}
       </div>
     );
   }
