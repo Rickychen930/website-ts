@@ -6,6 +6,7 @@ type ProfileActionProps = {
   href: string;
   variant?: ButtonVariant;
   download?: boolean;
+  className?: string;
 };
 
 class ProfileAction extends Component<ProfileActionProps> {
@@ -22,7 +23,13 @@ class ProfileAction extends Component<ProfileActionProps> {
       href,
       variant = ButtonVariant.PRIMARY,
       download,
+      className,
     } = this.props;
+
+    const baseClassName = `profile-btn ${variant === ButtonVariant.SECONDARY ? "secondary" : "primary"}`;
+    const finalClassName = className
+      ? `${baseClassName} ${className}`
+      : baseClassName;
 
     return (
       <a
@@ -30,10 +37,7 @@ class ProfileAction extends Component<ProfileActionProps> {
         style={{ textDecoration: "none" }}
         {...(download ? { download: true } : {})}
       >
-        <button
-          type="button"
-          className={`profile-btn ${variant === ButtonVariant.SECONDARY ? "secondary" : "primary"}`}
-        >
+        <button type="button" className={finalClassName}>
           {label}
         </button>
       </a>
@@ -44,7 +48,8 @@ class ProfileAction extends Component<ProfileActionProps> {
     if (
       prevProps.label !== this.props.label ||
       prevProps.href !== this.props.href ||
-      prevProps.variant !== this.props.variant
+      prevProps.variant !== this.props.variant ||
+      prevProps.className !== this.props.className
     ) {
       this._component = this._createComponent();
     }
