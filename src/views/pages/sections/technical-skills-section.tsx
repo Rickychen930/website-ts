@@ -231,7 +231,7 @@ class TechnicalSkillsSection extends Component<
    * Render skill category cards
    * Uses reusable SkillCategoryCard component
    * Follows DRY principle
-   * Uses Carousel for horizontal scrolling on all devices
+   * Uses Carousel for horizontal scrolling on ALL devices (desktop, tablet, mobile)
    */
   private renderCategoryCards(): ReactNode {
     const { enrichedCategories } = this.state;
@@ -240,14 +240,14 @@ class TechnicalSkillsSection extends Component<
       return this.renderEmptyState();
     }
 
-    // Always use horizontal scroll carousel for all devices
+    // Always use horizontal scroll carousel for ALL devices
     const carouselItems = this.convertToCarouselItems();
 
     return (
       <Carousel
         items={carouselItems}
         className="technical-skills-carousel"
-        itemWidth={320}
+        itemWidth={360}
         gap={24}
         showArrows={true}
         showIndicators={true}
