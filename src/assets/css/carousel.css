@@ -159,6 +159,15 @@
   width: 100%;
   box-sizing: border-box;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Equal height for all cards in carousel */
+.carousel-item {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
 }
 
 .carousel-item:hover {

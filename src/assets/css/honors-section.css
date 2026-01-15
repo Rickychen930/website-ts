@@ -73,7 +73,7 @@
   gap: var(--honors-space-xl);
   list-style: none;
   max-width: 100%;
-  align-items: start;
+  align-items: stretch;
   box-sizing: border-box;
 }
 
@@ -94,14 +94,17 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-medium);
   overflow: visible;
-  opacity: 0;
-  transform: translateY(30px) scale(0.98);
+  opacity: 1;
+  transform: translateY(0) scale(1);
   transition:
     transform 0.6s var(--honors-ease-spring),
     box-shadow 0.6s var(--honors-ease-smooth),
     border-color 0.4s var(--honors-ease-smooth),
     opacity 0.6s var(--honors-ease-smooth);
+  height: 100%;
   min-height: 360px;
+  display: flex;
+  flex-direction: column;
   will-change: transform, opacity;
   box-sizing: border-box;
 }

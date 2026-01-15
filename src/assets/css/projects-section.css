@@ -119,19 +119,20 @@
     var(--color-bg-card) 0%,
     var(--color-bg-card-alt) 100%
   );
-  opacity: 0;
+  opacity: 1;
   transition:
     transform 0.6s var(--projects-ease-spring),
     box-shadow 0.6s var(--projects-ease-smooth),
     border-color 0.4s var(--projects-ease-smooth),
     opacity 0.6s var(--projects-ease-smooth);
   flex-direction: column;
+  height: 100%;
   min-height: clamp(450px, 50vh, 520px);
   backdrop-filter: blur(20px) saturate(190%);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-medium);
   overflow: hidden;
-  transform: translateY(30px) scale(0.98);
+  transform: translateY(0) scale(1);
   will-change: transform, opacity;
   box-sizing: border-box;
 }

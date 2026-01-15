@@ -82,6 +82,13 @@
   box-sizing: border-box;
 }
 
+/* Equal height for skill category cards */
+.carousel-item .skill-category-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ============================================
    STATISTICS - New Design
    ============================================ */

@@ -73,6 +73,7 @@
   gap: var(--contact-space-xl);
   max-width: 100%;
   box-sizing: border-box;
+  margin-top: var(--contact-space-lg);
 }
 
 /* ============================================

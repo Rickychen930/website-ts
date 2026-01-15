@@ -125,6 +125,8 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 /* ============================================

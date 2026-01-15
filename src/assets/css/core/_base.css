@@ -61,6 +61,23 @@ body {
 }
 
 /* ============================================
+   Page Container & Content
+   ============================================ */
+.page-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  padding-top: var(--navbar-height);
+  width: 100%;
+}
+
+/* ============================================
    Typography Base
    ============================================ */
 h1,

@@ -22,12 +22,16 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
+  height: 100%;
+  min-height: 400px;
+  opacity: 1;
+  transform: translateY(0) scale(1);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   overflow: hidden;
   perspective: 1000px;
+  display: flex;
+  flex-direction: column;
   will-change: transform, opacity;
 }
 
