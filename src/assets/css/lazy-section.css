@@ -1,197 +1,141 @@
 /**
- * Lazy Section - Professional, Code-Based Architecture
+ * Lazy Section - COMPLETE REBUILD
+ * New Modern Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - lazy loading styles only
- * - Reusable: Uses core components and utilities
- * 
- * Usage:
- * @import '@/assets/css/lazy-section.css';
+ * Architecture:
+ * - Aligned with new design system
+ * - Modern skeleton loading
+ * - Smooth reveal animations
+ * - Performance optimized
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
+/* ============================================
+   PLACEHOLDER - New Design
+   ============================================ */
 .lazy-section-placeholder {
+  position: relative;
   min-height: 300px;
-  padding: var(--spacing-section-padding);
-  margin-bottom: var(--spacing-section-margin);
-  opacity: var(--opacity-muted);
-  transition: var(--transition-opacity);
+  padding: var(--space-fluid-xl);
+  margin-bottom: var(--space-fluid-lg);
+  opacity: 0.6;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 
+/* ============================================
+   SKELETON - New Design
+   ============================================ */
 .lazy-section-skeleton {
   width: 100%;
-  max-width: var(--spacing-card-max-width);
+  max-width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .lazy-section-skeleton-header {
-  width: 200px;
-  height: 40px;
-  background: var(--color-bg-lighter);
-  border-radius: var(--component-radius-md);
-  margin-bottom: var(--spacing-8);
-  animation: skeleton-pulse var(--animation-duration-base)
-    var(--transition-base) infinite;
+  width: clamp(200px, 30vw, 300px);
+  height: clamp(32px, 4vw, 40px);
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-lighter) 0%,
+    var(--color-bg-lightest) 50%,
+    var(--color-bg-lighter) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-fluid-md);
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
 .lazy-section-skeleton-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--space-fluid-sm);
 }
 
 .lazy-section-skeleton-line {
   width: 100%;
-  height: 20px;
-  background: var(--color-bg-lighter);
-  border-radius: var(--component-radius-md);
-  animation: skeleton-pulse var(--animation-duration-base)
-    var(--transition-base) infinite;
+  height: clamp(16px, 2vw, 20px);
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-lighter) 0%,
+    var(--color-bg-lightest) 50%,
+    var(--color-bg-lighter) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-md);
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
 .lazy-section-skeleton-line.short {
   width: 60%;
 }
 
-@keyframes skeleton-pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-
-  50% {
-    opacity: var(--opacity-subtle);
-  }
-}
-
-.lazy-section {
-  opacity: 0;
-  transition:
-    opacity var(--transition-smooth),
-    transform var(--transition-smooth),
-    filter var(--transition-smooth);
-  transform: translateY(30px) scale(0.98);
-  filter: blur(3px);
-  will-change: opacity, transform, filter;
-}
-
-.lazy-section.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-  animation: lazy-section-reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: auto; /* Remove will-change after animation */
-  contain: layout style paint;
-}
-
-@keyframes lazy-section-reveal {
+@keyframes skeleton-shimmer {
   0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.98);
-    filter: blur(3px);
-  }
-
-  60% {
-    opacity: 0.8;
-    transform: translateY(-2px) scale(1.01);
-    filter: blur(1px);
+    background-position: -200% 0;
   }
 
   100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
+    background-position: 200% 0;
   }
 }
 
 /* ============================================
-   Responsive Design
+   LAZY SECTION - Aligned with New System
    ============================================ */
+.lazy-section {
+  /* Styles are now handled by .section-block in main-page.css */
 
-/* Mobile devices (≤ 768px) */
+  /* This class is kept for compatibility */
+}
+
+/* Revealed state is handled by .section-block.revealed in main-page.css */
+
+/* The lazy-section component now uses the revealed class */
+
+/* ============================================
+   EMPTY & ERROR STATES
+   ============================================ */
+.section-empty-state,
+.section-error-state {
+  display: flex;
+  padding: var(--space-fluid-xl);
+  color: var(--color-text-subtle);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  box-sizing: border-box;
+}
+
+.section-error-state {
+  color: var(--color-error);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media screen and (width <= 768px) {
   .lazy-section-placeholder {
-    min-height: 200px;
-    padding: var(--spacing-section-padding-mobile);
-    margin-bottom: var(--spacing-section-margin-mobile);
+    min-height: 250px;
+    padding: var(--space-fluid-lg);
   }
 
-  .lazy-section-skeleton-header {
-    width: 150px;
-    height: 32px;
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .lazy-section-skeleton-line {
-    height: 16px;
-  }
-}
-
-/* Small mobile devices (≤ 480px) */
-@media screen and (width <= 480px) {
-  .lazy-section-placeholder {
+  .section-empty-state,
+  .section-error-state {
     min-height: 150px;
-    padding: var(--spacing-md);
-  }
-
-  .lazy-section-skeleton-header {
-    width: 120px;
-    height: 28px;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .lazy-section-skeleton-line {
-    height: 14px;
-  }
-
-  .lazy-section-skeleton-line.short {
-    width: 50%;
+    padding: var(--space-fluid-lg);
   }
 }
 
-/* Extra small mobile devices (≤ 360px) */
-@media screen and (width <= 360px) {
-  .lazy-section-placeholder {
-    min-height: 120px;
-    padding: var(--spacing-sm);
-  }
-
-  .lazy-section-skeleton-header {
-    width: 100px;
-    height: 24px;
-  }
-
-  .lazy-section-skeleton-line {
-    height: 12px;
-  }
-}
-
-/* Landscape orientation (≤ 768px) */
-@media screen and (orientation: landscape) and (width <= 768px) {
-  .lazy-section-placeholder {
-    min-height: 180px;
-    padding: var(--spacing-lg) var(--spacing-md);
-  }
-}
-
-/* ============================================
-   Reduced Motion - Accessibility
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .lazy-section,
   .lazy-section-skeleton-header,
   .lazy-section-skeleton-line {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .lazy-section {
-    opacity: 1;
-    transform: none;
+    animation: none;
+    background: var(--color-bg-lighter);
   }
 }

@@ -1,111 +1,101 @@
 /**
- * Contact Section - Professional, Code-Based Architecture
+ * Contact Section - COMPLETE REBUILD
+ * New Modern Grid & Card Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - section-specific styles only
- * - Reusable: Uses core components and utilities
- * 
- * Usage:
- * @import '@/assets/css/contact-section.css';
+ * Architecture:
+ * - Advanced grid layouts
+ * - Interactive card designs
+ * - Modern glassmorphism
+ * - Smooth animations
+ * - Responsive system
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
-/* ─── Component-Specific Variables (DRY) ─── */
-
-/* Uses core constants as base */
+/* ============================================
+   NEW DESIGN TOKENS
+   ============================================ */
 #contact-section {
-  /* Colors - Uses core color system */
-  --contact-primary: var(--color-accent-primary);
-  --contact-primary-hover: var(--color-accent-hover);
-  --contact-primary-light: var(--color-accent-glow);
-  --contact-primary-lighter: var(--color-accent-alpha-05);
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 
-  /* Gradient Colors - Uses core gradients */
-  --contact-gradient-start: var(--color-accent-primary);
-  --contact-gradient-mid: var(--color-accent-alt);
-  --contact-gradient-end: var(--color-accent-secondary);
-  --contact-gradient-hover: var(--gradient-accent-full);
-  --contact-gradient-subtle: var(--gradient-sublime);
-
-  /* Text Colors - Uses core text colors */
-  --contact-text-primary: var(--color-text-heading);
-  --contact-text-secondary: var(--color-text-muted);
-  --contact-text-muted: var(--color-text-subtle);
-  --contact-text-light: var(--color-text-light);
-
-  /* Background Colors - Uses core background colors */
-  --contact-bg-card: var(--color-bg-card);
-  --contact-bg-hover: var(--color-bg-card-hover);
-  --contact-bg-subtle: var(--color-bg-lighter);
-  --contact-bg-gradient: var(--gradient-primary);
-
-  /* Border Colors - Uses core border colors */
-  --contact-border: var(--color-border-default);
-  --contact-border-hover: var(--color-border-accent);
-  --contact-border-light: var(--color-border-light);
-
-  /* Shadow System - Uses core shadow system */
-  --contact-shadow-xs: var(--shadow-xs);
-  --contact-shadow-sm: var(--shadow-sm);
-  --contact-shadow-md: var(--shadow-md);
-  --contact-shadow-lg: var(--shadow-lg);
-  --contact-shadow-xl: var(--shadow-xl);
-  --contact-shadow-2xl: var(--shadow-xl);
-  --contact-shadow-glow: var(--shadow-glow);
-
-  /* Transitions - Uses core transition system */
-  --contact-transition-fast: var(--transition-fast);
-  --contact-transition: var(--transition-base);
-  --contact-transition-slow: var(--transition-slow);
-  --contact-transition-bounce: var(--transition-bounce);
-
-  /* Spacing - Uses core spacing system */
-  --contact-spacing-xs: var(--spacing-2);
-  --contact-spacing-sm: var(--spacing-3);
-  --contact-spacing-md: var(--spacing-4);
-  --contact-spacing-lg: var(--spacing-6);
-  --contact-spacing-xl: var(--spacing-8);
-
-  /* Border Radius - Uses core radius system */
-  --contact-radius-sm: var(--radius-md);
-  --contact-radius-md: var(--radius-lg);
-  --contact-radius-lg: var(--radius-xl);
-  --contact-radius-xl: var(--radius-2xl);
-  --contact-radius-full: var(--radius-full);
+  --contact-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --contact-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --contact-space-md: clamp(1rem, 3vw, 1.5rem);
+  --contact-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --contact-space-xl: clamp(2rem, 5vw, 3.5rem);
+  --contact-space-2xl: clamp(3rem, 7vw, 5rem);
+  --contact-color-primary: var(--color-accent-primary);
+  --contact-color-secondary: var(--color-accent-secondary);
+  --contact-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --contact-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── Section Wrapper - REMOVED (not needed, Card component handles styling) ─── */
+#contact-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 40% 40%,
+      var(--color-accent-alpha-05) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 60% 60%,
+      var(--color-accent-secondary-alpha-04) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  opacity: 0.5;
+}
 
-/* ─── Enhanced Contact Grid ─── */
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
+#contact-section * {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   GRID - New Design
+   ============================================ */
 .contact-grid {
   display: grid;
   position: relative;
+  z-index: 1;
   width: 100%;
-  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8)) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8));
+  padding: var(--contact-space-xl) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--contact-space-xl);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-/* ─── Enhanced Contact Card ─── */
+/* ============================================
+   CONTACT CARD - New Design
+   ============================================ */
 .contact-card {
   position: relative;
-  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8));
-  border: 1px solid var(--contact-border);
+  padding: var(--contact-space-lg);
+  border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
-    var(--contact-bg-card) 0%,
-    var(--contact-bg-subtle) 100%
+    var(--color-bg-card) 0%,
+    var(--color-bg-card-alt) 100%
   );
-  border-radius: var(--contact-radius-lg);
-  box-shadow: var(--contact-shadow-sm);
-  transition: all var(--contact-transition-slow);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px) saturate(190%);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-medium);
+  transition:
+    transform 0.5s var(--contact-ease-spring),
+    box-shadow 0.5s var(--contact-ease-smooth),
+    border-color 0.4s var(--contact-ease-smooth);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .contact-card::before {
@@ -113,388 +103,43 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 3px;
-  background: var(--contact-gradient-hover);
+  height: 4px;
+  background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity var(--contact-transition-base);
+  transition: opacity 0.4s var(--contact-ease-smooth);
   content: "";
-  border-radius: var(--contact-radius-lg) var(--contact-radius-lg) 0 0;
 }
 
 .contact-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow:
-    var(--contact-shadow-md),
-    0 0 24px var(--color-accent-alpha-15);
-  border-color: var(--contact-border-hover);
-  background: linear-gradient(
-    135deg,
-    var(--contact-bg-hover) 0%,
-    var(--contact-bg-subtle) 100%
-  );
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
+  border-color: var(--color-border-accent);
 }
 
 .contact-card:hover::before {
   opacity: 1;
 }
 
-/* ─── Empty State ─── */
-#contact-section .contact-section-empty {
-  display: flex;
-  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
-  color: var(--contact-text-muted);
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-}
-
-#contact-section .contact-section-empty-icon {
-  font-size: var(--font-size-title-large);
-  margin-bottom: var(--contact-spacing-md);
-  opacity: 0.6;
-}
-
-@keyframes contact-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media screen and (width <= 768px) {
+  .contact-grid {
+    gap: var(--contact-space-lg);
+    padding: var(--contact-space-lg) 0;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   }
 }
 
-#contact-section .contact-section-empty-title {
-  margin: 0 0 var(--contact-spacing-sm) 0;
-  color: var(--contact-text-primary);
-  font-size: var(--font-size-subtitle);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-#contact-section .contact-section-empty-message {
-  margin: 0;
-  color: var(--contact-text-secondary);
-  font-size: var(--font-size-base);
-  line-height: 1.75; /* Improved from 1.6 */
-  max-width: 400px;
-}
-
-/* ─── Error State ─── */
-#contact-section .contact-section-error {
-  display: flex;
-  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
-  color: var(--contact-text-muted);
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-}
-
-#contact-section .contact-section-error-icon {
-  font-size: clamp(2.75rem, 5.5vw, 3.5rem);
-  margin-bottom: var(--contact-spacing-md);
-  opacity: 0.6; /* Standardized from 0.7 */
-}
-
-#contact-section .contact-section-error-title {
-  margin: 0 0 var(--contact-spacing-sm) 0;
-  color: var(--contact-text-primary);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-#contact-section .contact-section-error-message {
-  margin: 0;
-  color: var(--contact-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.75; /* Improved from 1.6 */
-  max-width: 400px;
-}
-
-/* ─── Loading State ─── */
-#contact-section .contact-section-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--contact-spacing-xl) var(--contact-spacing-md);
-  min-height: 300px;
-}
-
-#contact-section .contact-section-loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid var(--contact-border-light);
-  border-top-color: var(--contact-primary);
-  border-radius: var(--radius-full);
-  animation: contact-spin 1s linear infinite;
-  margin-bottom: var(--contact-spacing-md);
-}
-
-@keyframes contact-spin {
-  to {
-    transform: rotate(360deg);
+@media screen and (width <= 480px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--contact-space-md);
   }
 }
 
-#contact-section .contact-section-loading-message {
-  margin: 0;
-  color: var(--contact-text-secondary);
-  font-size: var(--font-size-base);
-  font-weight: 500;
-}
-
-/* ─── Responsive Design ─── */
-
-/* Large Desktops (1400px+) */
-@media screen and (width >= 1400px) {
-  /* Container removed - Card component handles styling */
-}
-
-/* Large Tablets & Small Desktops (1200px - 1399px) */
-@media screen and (width <= 1399px) {
-  #contact-section {
-    --contact-spacing-lg: 1.75rem;
-    --contact-spacing-xl: 2.5rem;
-  }
-}
-
-/* Tablets (992px - 1199px) */
-@media screen and (width <= 1199px) {
-  #contact-section {
-    --contact-spacing-md: 1.25rem;
-    --contact-spacing-lg: 1.5rem;
-    --contact-spacing-xl: 2rem;
-  }
-
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-error-icon {
-    font-size: clamp(2.75rem, 5.5vw, 3.5rem);
-  }
-
-  #contact-section .contact-section-empty-title,
-  #contact-section .contact-section-error-title {
-    font-size: var(--font-size-subtitle);
-  }
-}
-
-/* Small Tablets (768px - 991px) */
-@media screen and (width <= 991px) {
-  #contact-section {
-    --contact-spacing-md: 1rem;
-    --contact-spacing-lg: 1.25rem;
-    --contact-spacing-xl: 1.75rem;
-  }
-
-  #contact-section .contact-section-empty,
-  #contact-section .contact-section-error,
-  #contact-section .contact-section-loading {
-    min-height: 250px;
-    padding: var(--contact-spacing-lg) var(--contact-spacing-md);
-  }
-
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-error-icon {
-    font-size: 3rem;
-  }
-
-  #contact-section .contact-section-empty-title,
-  #contact-section .contact-section-error-title {
-    font-size: 1.25rem;
-  }
-}
-
-/* Mobile Devices (600px - 767px) */
-@media screen and (width <= 767px) {
-  #contact-section {
-    --contact-spacing-sm: 0.875rem;
-    --contact-spacing-md: 1rem;
-    --contact-spacing-lg: 1.25rem;
-    --contact-spacing-xl: 1.5rem;
-  }
-
-  #contact-section .contact-section-empty,
-  #contact-section .contact-section-error,
-  #contact-section .contact-section-loading {
-    min-height: 200px;
-    padding: var(--contact-spacing-lg) var(--contact-spacing-sm);
-  }
-
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-error-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--contact-spacing-sm);
-  }
-
-  #contact-section .contact-section-empty-title,
-  #contact-section .contact-section-error-title {
-    font-size: 1.125rem;
-    margin-bottom: var(--contact-spacing-xs);
-  }
-
-  #contact-section .contact-section-empty-message,
-  #contact-section .contact-section-error-message {
-    font-size: 0.9rem;
-  }
-
-  #contact-section .contact-section-loading-spinner {
-    width: 40px;
-    height: 40px;
-    border-width: 3px;
-  }
-}
-
-/* Small Mobile Devices (480px - 599px) */
-@media screen and (width <= 599px) {
-  #contact-section .contact-section-empty,
-  #contact-section .contact-section-error,
-  #contact-section .contact-section-loading {
-    padding: var(--contact-spacing-md) var(--contact-spacing-sm);
-  }
-
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-error-icon {
-    font-size: 2.25rem;
-  }
-
-  #contact-section .contact-section-empty-title,
-  #contact-section .contact-section-error-title {
-    font-size: var(--font-size-base);
-  }
-
-  #contact-section .contact-section-empty-message,
-  #contact-section .contact-section-error-message {
-    font-size: 0.875rem;
-  }
-}
-
-/* Extra Small Mobile Devices (360px - 479px) */
-@media screen and (width <= 479px) {
-  /* Container removed - Card component handles styling */
-
-  #contact-section .contact-section-empty,
-  #contact-section .contact-section-error,
-  #contact-section .contact-section-loading {
-    width: 100%;
-    padding: var(--contact-spacing-md) var(--contact-spacing-xs);
-    min-height: 180px;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-error-icon {
-    font-size: 2rem;
-  }
-
-  #contact-section .contact-section-empty-title,
-  #contact-section .contact-section-error-title {
-    font-size: 0.95rem;
-  }
-
-  #contact-section .contact-section-empty-message,
-  #contact-section .contact-section-error-message {
-    padding: 0 var(--contact-spacing-xs);
-    font-size: 0.85rem;
-    max-width: 100%;
-  }
-}
-
-/* ─── Landscape Orientation ─── */
-@media screen and (orientation: landscape) and (width <= 991px) {
-  #contact-section .contact-section-empty,
-  #contact-section .contact-section-error,
-  #contact-section .contact-section-loading {
-    min-height: 200px;
-    padding: var(--contact-spacing-md) var(--contact-spacing-sm);
-  }
-}
-
-/* ─── High DPI Displays ─── */
-@media screen and (min-device-pixel-ratio: 2),
-  screen and (resolution >= 192dpi) {
-  #contact-section {
-    --contact-shadow-sm: 0 1px 4px var(--color-black-alpha-03);
-    --contact-shadow-md: 0 2px 8px var(--color-black-alpha-05);
-  }
-}
-
-/* ─── Reduced Motion (Accessibility) ─── */
 @media (prefers-reduced-motion: reduce) {
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-loading-spinner {
-    animation: none !important;
+  .contact-card {
+    transition: none;
   }
-
-  #contact-section * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-/* ─── Dark Mode Support ─── */
-@media (prefers-color-scheme: dark) {
-  #contact-section {
-    --contact-bg-card: var(--contact-bg-card);
-    --contact-bg-hover: var(--contact-bg-hover);
-    --contact-bg-subtle: var(--contact-bg-subtle);
-    --contact-bg-gradient: linear-gradient(
-      135deg,
-      var(--contact-bg-card) 0%,
-      var(--contact-bg-subtle) 100%
-    );
-    --contact-text-primary: var(--contact-text-primary);
-    --contact-text-secondary: var(--contact-text-secondary);
-    --contact-text-muted: var(--contact-text-muted);
-    --contact-text-light: var(--contact-text-light);
-    --contact-border: var(--contact-border);
-    --contact-border-hover: var(--contact-border-hover);
-    --contact-border-light: var(--contact-border-light);
-    --contact-shadow-sm: 0 2px 8px var(--color-black-alpha-30);
-    --contact-shadow-md: 0 4px 16px var(--color-black-alpha-40);
-    --contact-shadow-lg: 0 8px 32px var(--color-black-alpha-50);
-    --contact-shadow-xl: 0 16px 48px var(--color-black-alpha-60);
-  }
-}
-
-/* ─── Print Styles ─── */
-@media print {
-  #contact-section .contact-section-empty,
-  #contact-section .contact-section-error,
-  #contact-section .contact-section-loading {
-    min-height: auto;
-    padding: 1rem;
-  }
-
-  #contact-section .contact-section-empty-icon,
-  #contact-section .contact-section-error-icon,
-  #contact-section .contact-section-loading-spinner {
-    display: none;
-  }
-
-  #contact-section * {
-    box-shadow: none !important;
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-/* ─── Focus Visible (Keyboard Navigation) ─── */
-#contact-section * {
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#contact-section *:focus-visible {
-  outline: 3px solid var(--contact-primary);
-  outline-offset: 3px; /* Standardized from 2px to match core */
-  border-radius: var(--contact-radius-sm);
 }

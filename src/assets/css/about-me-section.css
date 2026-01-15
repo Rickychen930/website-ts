@@ -1,204 +1,164 @@
 /**
- * About Me Section - Professional, Code-Based Architecture
+ * About Me Section - COMPLETE REBUILD
+ * New Modern Visual Identity & Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - section-specific styles only
- * - Reusable: Uses core components and utilities
- * 
- * Usage:
- * @import '@/assets/css/about-me-section.css';
+ * Architecture:
+ * - Asymmetric grid layouts
+ * - Advanced glassmorphism effects
+ * - Dynamic gradient animations
+ * - Modern card-based components
+ * - Fluid responsive design
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
-/* Import component styles */
-@import url("./about-me-components.css");
-
 /* ============================================
-   Component-Specific Variables (DRY)
-   Uses core constants as base
+   NEW DESIGN TOKENS - Section Specific
    ============================================ */
 #about.card,
 .card#about {
-  /* Spacing - Uses core spacing system */
-  --about-me-spacing-xs: var(--spacing-2);
-  --about-me-spacing-sm: var(--spacing-3);
-  --about-me-spacing-md: var(--spacing-4);
-  --about-me-spacing-lg: var(--spacing-6);
-  --about-me-spacing-xl: var(--spacing-8);
-  --about-me-spacing-xxl: var(--spacing-16);
-
-  /* Colors - Uses core color system */
-  --about-me-color-primary: var(--color-accent-primary);
-  --about-me-color-primary-hover: var(--color-accent-hover);
-  --about-me-color-text-heading: var(--color-text-heading);
-  --about-me-color-text-body: var(--color-text-muted);
-  --about-me-color-text-subtle: var(--color-text-subtle);
-  --about-me-color-text-muted: var(--color-text-muted-alt);
-  --about-me-color-bg-glow: var(--color-accent-glow);
-  --about-me-color-border: var(--color-border-light);
-
-  /* Shadows - Uses core shadow system */
-  --about-me-shadow-sm: var(--shadow-sm);
-  --about-me-shadow-md: var(--shadow-md);
-  --about-me-shadow-lg: var(--shadow-lg);
-  --about-me-shadow-xl: var(--shadow-xl);
-  --about-me-shadow-glow: var(--shadow-glow);
-
-  /* Transitions - Uses core transition system */
-  --about-me-transition-fast: var(--transition-fast);
-  --about-me-transition-base: var(--transition-base);
-  --about-me-transition-slow: var(--transition-slow);
-  --about-me-transition-smooth: var(--transition-smooth);
+  --about-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --about-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --about-space-md: clamp(1rem, 3vw, 1.5rem);
+  --about-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --about-space-xl: clamp(2rem, 5vw, 3.5rem);
+  --about-space-2xl: clamp(3rem, 7vw, 5rem);
+  --about-color-primary: var(--color-accent-primary);
+  --about-color-secondary: var(--color-accent-secondary);
+  --about-color-glow: var(--color-accent-glow);
+  --about-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --about-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
-   Main Container & Layout (Modern Minimalistic)
+   MAIN CONTAINER - New Layout Architecture
    ============================================ */
 .about-me-content {
-  /* Extends .flex component */
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--spacing-6), 4vw, var(--spacing-10));
+  gap: var(--about-space-xl);
   width: 100%;
   max-width: 100%;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(30px) scale(0.98);
   transition:
-    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden visible; /* Prevent horizontal scroll */
+    opacity 0.8s var(--about-ease-smooth),
+    transform 0.8s var(--about-ease-smooth);
   box-sizing: border-box;
 }
 
 .about-me-content.about-me-visible {
   opacity: 1;
-  transform: translateY(0);
-}
-
-/* GitHub Contributions in About Me */
-.about-me-github-contributions {
-  width: 100%;
+  transform: translateY(0) scale(1);
 }
 
 /* ============================================
-   Hero Section Layout - Redesigned for Better Visual Hierarchy
+   HERO SECTION - Complete Redesign
    ============================================ */
 .about-me-main-content {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12))
-    clamp(var(--spacing-4), 3vw, var(--spacing-8));
+  padding: var(--about-space-2xl) var(--about-space-lg);
+  border: 2px solid var(--color-border-light);
+
+  /* New Glassmorphism Design */
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-card-alt) 50%,
+    var(--color-bg-card) 100%
+  );
   max-width: 100%;
-  border-radius: var(--radius-2xl);
-  overflow: hidden visible;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
   box-sizing: border-box;
-  background: var(--color-bg-primary);
+  backdrop-filter: blur(28px) saturate(200%);
+  box-shadow:
+    var(--shadow-strong),
+    0 0 0 1px var(--color-border-accent-alpha-20),
+    inset 0 1px 0 var(--color-white-alpha-20);
+}
+
+.about-me-main-content::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 6px;
+  background: var(--gradient-accent-full);
+  opacity: 0.8;
+  content: "";
+  box-shadow:
+    0 0 20px var(--color-accent-alpha-50),
+    0 0 40px var(--color-accent-alpha-30);
 }
 
 .about-me-hero-background {
   position: absolute;
-  z-index: var(--z-base);
-  background: var(--color-bg-secondary);
+  z-index: 0;
   inset: 0;
-  border-radius: var(--radius-2xl);
+  background: radial-gradient(
+    ellipse 150% 100% at 50% 0%,
+    var(--color-accent-alpha-08) 0%,
+    transparent 70%
+  );
   pointer-events: none;
-  overflow: hidden;
-  backdrop-filter: blur(12px);
-  opacity: 0.6;
-}
-
-.about-me-hero-background::before {
-  content: "";
-  position: absolute;
-  top: -30%;
-  right: -15%;
-  width: min(400px, 60vw);
-  height: min(400px, 60vw);
-  background: radial-gradient(
-    circle,
-    var(--color-accent-alpha-05) 0%,
-    transparent 60%
-  );
-  border-radius: 50%;
-  opacity: 0.6;
-}
-
-.about-me-hero-background::after {
-  content: "";
-  position: absolute;
-  bottom: -20%;
-  left: -10%;
-  width: min(350px, 55vw);
-  height: min(350px, 55vw);
-  background: radial-gradient(
-    circle,
-    var(--color-accent-secondary-alpha-04) 0%,
-    transparent 60%
-  );
-  border-radius: 50%;
   opacity: 0.5;
+  animation: background-pulse 8s ease-in-out infinite;
 }
 
-@keyframes hero-background-float {
+@keyframes background-pulse {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+    transform: scale(1);
   }
 
   50% {
-    transform: translate(30px, -30px) scale(1.1);
+    opacity: 0.7;
+    transform: scale(1.05);
   }
 }
 
 .about-me-hero-section {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(var(--spacing-8), 6vw, var(--spacing-12)); /* Modern spacing */
-  align-items: center;
-  margin-bottom: clamp(var(--spacing-6), 4vw, var(--spacing-8));
   position: relative;
   z-index: 1;
   width: 100%;
+  grid-template-columns: 1fr;
+  gap: var(--about-space-xl);
+  align-items: center;
   max-width: 100%;
-  overflow-x: hidden;
   box-sizing: border-box;
 }
 
 .about-me-hero-left {
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--spacing-md), 3vw, var(--spacing-lg));
-  min-width: 0;
+  gap: var(--about-space-md);
+  order: 2;
   width: 100%;
   max-width: 100%;
-  overflow: visible;
-  order: 2;
   box-sizing: border-box;
 }
 
 .about-me-hero-right {
-  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   order: 1;
+  width: 100%;
 }
 
 /* ============================================
-   Profile Image - Luxury Design (Optimized)
+   PROFILE IMAGE - New Design System
    ============================================ */
 .about-me-image-container {
   display: flex;
   position: relative;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -206,24 +166,25 @@
 .about-me-image-wrapper {
   display: flex;
   position: relative;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  width: 100%;
   max-width: 100%;
 }
 
 .about-me-image-particles {
   position: absolute;
-  inset: -60px;
+  inset: -80px;
   z-index: 1;
   pointer-events: none;
 }
 
 .about-me-image-particles .particle {
   position: absolute;
-  font-size: 2rem;
+  font-size: 2.5rem;
   opacity: 0;
-  filter: drop-shadow(0 2px 4px var(--color-black-alpha-10));
+  filter: drop-shadow(0 4px 8px var(--color-accent-alpha-30));
+  animation: particle-float 4s ease-in-out infinite;
 }
 
 .about-me-image-particles .particle:nth-child(1) {
@@ -235,19 +196,19 @@
 .about-me-image-particles .particle:nth-child(2) {
   top: 20%;
   right: 15%;
-  animation-delay: 1.5s;
+  animation-delay: 1s;
 }
 
 .about-me-image-particles .particle:nth-child(3) {
   bottom: 15%;
   left: 20%;
-  animation-delay: 3s;
+  animation-delay: 2s;
 }
 
 .about-me-image-particles .particle:nth-child(4) {
   right: 10%;
   bottom: 25%;
-  animation-delay: 4.5s;
+  animation-delay: 3s;
 }
 
 @keyframes particle-float {
@@ -258,138 +219,164 @@
   }
 
   50% {
-    opacity: 0.7;
-    transform: translateY(-20px) scale(1) rotate(180deg);
+    opacity: 0.8;
+    transform: translateY(-30px) scale(1.1) rotate(180deg);
   }
 }
 
 .about-me-image-glow {
   position: absolute;
   z-index: 0;
+  inset: -40px;
   background: radial-gradient(
     circle,
-    var(--about-me-color-bg-glow),
+    var(--about-color-glow) 0%,
+    var(--color-accent-secondary-alpha-30) 40%,
     transparent 70%
   );
-  opacity: 0;
-  transition: opacity var(--about-me-transition-slow);
-  inset: -20px;
   border-radius: 50%;
   pointer-events: none;
+  filter: blur(24px);
+  opacity: 0.7;
+  animation: image-glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes image-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 
 .about-me-image-container:hover .about-me-image-glow {
   opacity: 1;
+  transform: scale(1.2);
 }
 
 .about-me-image-border {
   position: absolute;
   z-index: 1;
-  border: 3px solid transparent;
-  background: linear-gradient(
-      135deg,
-      var(--about-me-color-primary),
-      var(--accent-alt)
-    )
-    border-box;
-  opacity: 0;
-  transition: opacity var(--about-me-transition-base);
-  inset: -8px;
+  inset: -12px;
+  border: 4px solid transparent;
+  background: var(--gradient-accent-full);
   border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s var(--about-ease-smooth);
   mask:
     linear-gradient(var(--color-white) 0 0) padding-box,
     linear-gradient(var(--color-white) 0 0);
-  mask-composite: destination-out;
   mask-composite: exclude;
   pointer-events: none;
 }
 
 .about-me-image-container:hover .about-me-image-border {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .about-me-image-container .image-component.about-me-image,
 .about-me-image-container img.about-me-image {
   position: relative;
   z-index: 2;
-  width: min(320px, 75vw);
-  height: min(320px, 75vw);
+  width: min(360px, 75vw);
+  height: min(360px, 75vw);
   max-width: 100%;
   aspect-ratio: 1 / 1;
-  border: clamp(5px, 1.5vw, 10px) solid var(--color-border-light);
-  background: var(--gradient-primary);
-  transition:
-    transform var(--about-me-transition-smooth),
-    box-shadow var(--about-me-transition-smooth),
-    border-color var(--about-me-transition-base);
+  border: clamp(8px, 2vw, 14px) solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-card-alt) 100%
+  );
   object-fit: cover;
   border-radius: 50%;
   box-shadow:
-    var(--about-me-shadow-lg),
-    var(--about-me-shadow-glow),
-    0 0 40px var(--color-accent-alpha-20),
-    0 0 80px var(--color-accent-alt-alpha-12),
-    inset 0 0 0 2px var(--about-me-color-border);
-  animation: about-me-image-enter 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    var(--shadow-strong),
+    0 0 60px var(--color-accent-alpha-30),
+    0 0 120px var(--color-accent-secondary-alpha-20),
+    inset 0 0 0 4px var(--color-border-accent);
+  transition:
+    transform 0.5s var(--about-ease-spring),
+    box-shadow 0.5s var(--about-ease-smooth),
+    border-color 0.3s var(--about-ease-smooth);
+  filter: drop-shadow(0 12px 40px var(--color-accent-alpha-40));
+  animation: image-enter 1s var(--about-ease-smooth) forwards;
+}
+
+@keyframes image-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(40px);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
 }
 
 .about-me-image-container:hover .image-component.about-me-image,
 .about-me-image-container:hover img.about-me-image {
-  transform: scale(1.03) translateY(-4px);
+  transform: scale(1.08) translateY(-8px) rotate(3deg);
   box-shadow:
-    var(--about-me-shadow-xl),
-    var(--about-me-shadow-glow),
-    0 0 50px var(--color-accent-alpha-30),
-    0 0 100px var(--color-accent-alt-alpha-18),
-    inset 0 0 0 2px var(--about-me-color-primary);
-  border-color: var(--about-me-color-primary);
+    var(--shadow-strong),
+    0 0 80px var(--color-accent-alpha-50),
+    0 0 160px var(--color-accent-secondary-alpha-35),
+    inset 0 0 0 3px var(--about-color-primary);
+  border-color: var(--about-color-primary);
 }
 
 /* ============================================
-   Bio Section (Optimized)
+   BIO SECTION - New Typography
    ============================================ */
 .about-me-bio-section {
-  margin-top: 0;
   width: 100%;
   max-width: 100%;
+  margin-top: 0;
   box-sizing: border-box;
 }
 
 .about-me-bio {
   width: 100%;
   margin: 0;
-  padding: 0 clamp(var(--spacing-2), 2vw, var(--spacing-6));
+  padding: 0 var(--about-space-sm);
   color: var(--color-text-secondary);
-  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-size: clamp(1.1rem, 2.8vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.8;
   text-align: center;
   max-width: 100%;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
   overflow-wrap: break-word;
   hyphens: auto;
   box-sizing: border-box;
 }
 
 /* ============================================
-   Featured Tech Stack Section (Modern Minimalistic)
+   FEATURED TECH - New Card Design
    ============================================ */
 .about-me-featured-tech {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-5), 3.5vw, var(--spacing-7));
-  border: 1px solid var(--color-border-light);
+  padding: var(--about-space-lg);
+  margin-top: var(--about-space-md);
+  border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
     var(--color-bg-card) 0%,
-    var(--color-bg-secondary) 100%
+    var(--color-bg-card-alt) 100%
   );
-  transition: all var(--transition-smooth);
-  margin-top: var(--spacing-5);
-  border-radius: var(--radius-xl);
-  box-shadow:
-    var(--shadow-sm),
-    0 0 0 1px var(--color-accent-alpha-03);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-medium);
+  transition: all 0.4s var(--about-ease-smooth);
   max-width: 100%;
   overflow: visible;
   box-sizing: border-box;
@@ -400,24 +387,24 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 3px;
-  background: var(--gradient-accent);
-  opacity: 0;
-  transition: opacity var(--transition-base);
+  height: 4px;
   content: "";
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: var(--gradient-accent-full);
+  opacity: 0;
+  transition: opacity 0.4s var(--about-ease-smooth);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
 .about-me-featured-tech:hover {
+  transform: translateY(-4px);
   border-color: var(--color-border-accent);
   box-shadow:
-    var(--shadow-md),
-    0 0 0 1px var(--color-accent-alpha-08);
-  transform: translateY(-3px);
+    var(--shadow-strong),
+    0 0 0 2px var(--color-accent-alpha-10);
   background: linear-gradient(
     135deg,
     var(--color-bg-card-hover) 0%,
-    var(--color-bg-secondary) 100%
+    var(--color-bg-card-alt) 100%
   );
 }
 
@@ -426,52 +413,51 @@
 }
 
 /* ============================================
-   Actions Section (Optimized)
+   ACTIONS - New Button Design
    ============================================ */
 .about-me-actions {
   display: flex;
-  gap: clamp(0.75rem, 2vw, 1.25rem);
+  gap: var(--about-space-sm);
   flex-wrap: wrap;
-  margin-top: clamp(1rem, 3vw, 1.75rem);
+  margin-top: var(--about-space-lg);
   justify-content: center;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-/* Enhanced Profile Button Styles */
 #about.card .profile-btn,
 .card#about .profile-btn {
   display: inline-flex;
   position: relative;
   z-index: 1;
-  padding: 1rem 2.5rem;
+  padding: var(--about-space-md) var(--about-space-xl);
   border: none;
-  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
   font-weight: 600;
-  transition: all var(--about-me-transition-smooth);
+  transition: all 0.4s var(--about-ease-spring);
   letter-spacing: 0.02em;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: var(--about-me-shadow-sm);
+  box-shadow: var(--shadow-medium);
   font-family: var(--font-main);
-  min-height: 44px; /* Touch target minimum */
-  min-width: 120px; /* Touch target minimum */
+  min-height: 48px;
+  min-width: 140px;
   align-items: center;
   justify-content: center;
-  touch-action: manipulation; /* Prevent double-tap zoom */
+  touch-action: manipulation;
 }
 
 #about.card .profile-btn::before {
   position: absolute;
   z-index: -1;
+  inset: 0;
   background: linear-gradient(135deg, var(--overlay-alpha-20), transparent);
   opacity: 0;
-  transition: opacity var(--about-me-transition-fast);
+  transition: opacity 0.3s var(--about-ease-smooth);
   content: "";
-  inset: 0;
 }
 
 #about.card .profile-btn::after {
@@ -483,70 +469,74 @@
   height: 0;
   background: var(--overlay-alpha-30);
   transition:
-    width 0.6s ease,
-    height 0.6s ease;
+    width 0.6s var(--about-ease-smooth),
+    height 0.6s var(--about-ease-smooth);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   content: "";
 }
 
 #about.card .profile-btn:hover::after {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 #about.card .profile-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: var(--about-me-shadow-md);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: var(--shadow-strong);
 }
 
 #about.card .profile-btn:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(-2px) scale(1.01);
 }
 
 #about.card .profile-btn.primary {
   border: 2px solid transparent;
-  background: var(--accent-gradient);
-  color: var(--text-on-accent);
+  background: var(--gradient-accent-full);
+  color: var(--color-text-on-accent);
 }
 
 #about.card .profile-btn.primary:hover {
   background: linear-gradient(
     135deg,
-    var(--about-me-color-primary-hover),
-    var(--accent-alt)
+    var(--about-color-primary),
+    var(--about-color-secondary)
   );
-  box-shadow: var(--about-me-shadow-md), var(--about-me-shadow-glow);
+  box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
 }
 
 #about.card .profile-btn.secondary {
-  border: 2px solid var(--about-me-color-primary);
+  border: 2px solid var(--about-color-primary);
   background: transparent;
-  color: var(--about-me-color-primary);
-  backdrop-filter: blur(var(--blur-md));
+  color: var(--about-color-primary);
+  backdrop-filter: blur(12px);
 }
 
 #about.card .profile-btn.secondary:hover {
-  background: var(--about-me-color-primary);
-  color: var(--text-on-accent);
-  box-shadow: var(--about-me-shadow-md), var(--about-me-shadow-glow);
+  background: var(--about-color-primary);
+  color: var(--color-text-on-accent);
+  box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
 }
 
 /* ============================================
-   Additional Content Section (Optimized)
+   ADDITIONAL CONTENT
    ============================================ */
 .about-me-additional-content {
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-lg);
-  margin-top: var(--about-me-spacing-md);
+  gap: var(--about-space-lg);
+  margin-top: var(--about-space-md);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
+.about-me-github-contributions {
+  width: 100%;
+}
+
 /* ============================================
-   Professional Highlights Section (Optimized)
+   HIGHLIGHTS - New Grid Design
    ============================================ */
 .about-me-highlights {
   width: 100%;
@@ -556,14 +546,13 @@
 
 .about-me-highlights-title {
   position: relative;
-  margin: 0 0 var(--about-me-spacing-md) 0;
-  color: var(--color-text-on-accent);
-  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+  margin: 0 0 var(--about-space-md);
+  color: var(--color-text-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  padding-bottom: var(--about-me-spacing-sm);
-  text-shadow: 0 2px 15px var(--color-black-alpha-30);
+  padding-bottom: var(--about-space-sm);
   text-align: center;
 }
 
@@ -573,60 +562,31 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(60px, 15vw);
+  width: min(80px, 20vw);
   height: 4px;
-  background: var(--accent-gradient);
+  background: var(--gradient-accent-full);
   border-radius: var(--radius-xs);
 }
 
 .about-me-highlights-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: clamp(1rem, 3vw, 1.5rem);
+  gap: var(--about-space-md);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 /* ============================================
-   Tech Stack Code Section
-   ============================================ */
-.about-me-tech-stack-code {
-  width: 100%;
-}
-
-.about-me-tech-stack-title {
-  position: relative;
-  margin: 0 0 var(--about-me-spacing-lg) 0;
-  color: var(--about-me-color-text-heading);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  padding-bottom: var(--about-me-spacing-sm);
-}
-
-.about-me-tech-stack-title::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 4px;
-  background: var(--accent-gradient);
-  border-radius: var(--radius-xs);
-}
-
-/* ============================================
-   Statistics Section (Optimized)
+   STATISTICS - New Card Design
    ============================================ */
 .about-me-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
-  gap: clamp(1rem, 3vw, 1.5rem);
-  margin-top: clamp(1.5rem, 4vw, 2.5rem);
-  padding-top: clamp(1.5rem, 4vw, 2.5rem);
-  border-top: 2px solid var(--border-light);
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: var(--about-space-md);
+  margin-top: var(--about-space-xl);
+  padding-top: var(--about-space-xl);
+  border-top: 2px solid var(--color-border-light);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -636,22 +596,22 @@
 .card#about .profile-stat {
   position: relative;
   width: 100%;
-  padding: var(--about-me-spacing-lg) var(--about-me-spacing-md);
-  border: 1px solid var(--about-me-color-border);
+  padding: var(--about-space-lg) var(--about-space-md);
+  border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
     var(--color-bg-card) 0%,
-    var(--color-bg-secondary) 100%
+    var(--color-bg-card-alt) 100%
   );
   text-align: center;
-  transition: all var(--about-me-transition-smooth);
-  border-radius: var(--item-radius);
+  transition: all 0.4s var(--about-ease-spring);
+  border-radius: var(--radius-xl);
   min-width: 0;
-  box-shadow: var(--about-me-shadow-sm);
+  box-shadow: var(--shadow-medium);
   overflow: hidden;
   max-width: 100%;
   box-sizing: border-box;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
 }
 
 #about.card .profile-stat::before {
@@ -660,23 +620,21 @@
   right: 0;
   left: 0;
   height: 4px;
-  background: var(--accent-gradient);
-  transition: transform var(--about-me-transition-base);
   content: "";
+  background: var(--gradient-accent-full);
+  transition: transform 0.4s var(--about-ease-smooth);
   transform: scaleX(0);
   transform-origin: left;
 }
 
 #about.card .profile-stat:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    var(--about-me-shadow-md),
-    0 0 24px var(--color-accent-alpha-15);
-  border-color: var(--about-me-color-primary);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--about-color-primary);
   background: linear-gradient(
     135deg,
     var(--color-bg-card-hover) 0%,
-    var(--color-bg-secondary) 100%
+    var(--color-bg-card-alt) 100%
   );
 }
 
@@ -686,32 +644,27 @@
 
 #about.card .profile-stat strong {
   display: block;
-  background: var(--accent-gradient);
+  background: var(--gradient-accent-full);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 700;
+  font-size: clamp(1.75rem, 4.5vw, 2.25rem);
+  font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   letter-spacing: -0.03em;
   filter: drop-shadow(0 2px 8px var(--color-accent-alpha-30));
   overflow-wrap: break-word;
-  transition: filter var(--about-me-transition-base);
-}
-
-#about.card .profile-stat:hover strong {
-  filter: drop-shadow(0 2px 12px var(--color-accent-alpha-40));
 }
 
 #about.card .profile-stat span {
   display: block;
   color: var(--color-text-subtle);
-  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0.01em;
   overflow-wrap: break-word;
-  transition: color var(--about-me-transition-base);
+  transition: color 0.3s var(--about-ease-smooth);
 }
 
 #about.card .profile-stat:hover span {
@@ -719,58 +672,12 @@
 }
 
 /* ============================================
-   Animations
-   ============================================ */
-@keyframes about-me-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes about-me-image-enter {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(30px);
-    filter: blur(var(--blur-sm));
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes about-me-glow-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.6;
-    transform: scale(1.08);
-  }
-}
-
-/* ============================================
-   Responsive Design - Desktop Large (Optimized)
+   RESPONSIVE DESIGN
    ============================================ */
 @media screen and (width >= 1200px) {
-  .about-me-main-content {
-    padding: var(--about-me-spacing-xxl) var(--about-me-spacing-xl);
-  }
-
   .about-me-hero-section {
-    gap: clamp(3rem, 6vw, 4.5rem);
-    grid-template-columns: 1.3fr 1fr;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--about-space-2xl);
     align-items: start;
   }
 
@@ -795,28 +702,20 @@
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: min(380px, 28vw);
-    height: min(380px, 28vw);
+    width: min(400px, 30vw);
+    height: min(400px, 30vw);
   }
 }
 
-/* ============================================
-   Responsive Design - Tablet (Optimized)
-   ============================================ */
 @media screen and (width >= 768px) and (width < 1200px) {
-  .about-me-main-content {
-    padding: var(--about-me-spacing-xl) var(--about-me-spacing-lg);
-  }
-
   .about-me-hero-section {
-    gap: var(--about-me-spacing-xl);
+    gap: var(--about-space-xl);
     grid-template-columns: 1fr;
     justify-items: center;
   }
 
   .about-me-hero-left {
     width: 100%;
-    max-width: 100%;
     align-items: center;
     text-align: center;
     order: 2;
@@ -830,330 +729,86 @@
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: min(280px, 50vw);
-    height: min(280px, 50vw);
-  }
-
-  .about-me-highlights-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--about-me-spacing-md);
-  }
-
-  .about-me-bio {
-    padding: 0 var(--about-me-spacing-md);
-    text-align: center;
-    max-width: 100%;
-  }
-
-  .about-me-featured-tech {
-    padding: var(--about-me-spacing-md) var(--about-me-spacing-lg);
+    width: min(300px, 50vw);
+    height: min(300px, 50vw);
   }
 }
 
-/* ============================================
-   Responsive Design - Mobile Tablet (Optimized)
-   ============================================ */
 @media screen and (width < 768px) {
   .about-me-main-content {
-    padding: var(--about-me-spacing-lg) var(--about-me-spacing-md);
+    padding: var(--about-space-lg) var(--about-space-md);
   }
 
   .about-me-content {
-    gap: var(--about-me-spacing-lg);
+    gap: var(--about-space-lg);
   }
 
   .about-me-hero-section {
     grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-lg);
-    justify-items: center;
-    text-align: center;
-  }
-
-  .about-me-hero-left {
-    align-items: center;
-    text-align: center;
-    gap: var(--about-me-spacing-sm);
-    order: 2;
-  }
-
-  .about-me-hero-right {
-    order: 1;
-    justify-self: center;
-    width: 100%;
+    gap: var(--about-space-lg);
   }
 
   .about-me-image-particles {
     display: none;
   }
 
-  .about-me-featured-tech {
-    padding: var(--about-me-spacing-md);
-    margin-top: var(--about-me-spacing-sm);
-  }
-
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: min(240px, 60vw);
-    height: min(240px, 60vw);
-    border-width: clamp(4px, 1.5vw, 6px);
+    width: min(260px, 65vw);
+    height: min(260px, 65vw);
+    border-width: clamp(6px, 1.5vw, 8px);
   }
 
   .about-me-bio {
-    width: 100%;
-    padding: 0 var(--about-me-spacing-sm);
-    font-size: clamp(0.9rem, 3.5vw, 1rem);
-    line-height: 1.7;
-    text-align: center;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .about-me-actions {
-    justify-content: center;
-    width: 100%;
-    max-width: 100%;
-    gap: var(--about-me-spacing-sm);
-    box-sizing: border-box;
-  }
-
-  #about.card .profile-btn,
-  .card#about .profile-btn {
-    flex: 1 1 auto;
-    min-width: 140px;
-    min-height: 44px; /* Touch target minimum */
-    max-width: 100%;
-    touch-action: manipulation;
-  }
-
-  .about-me-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--about-me-spacing-sm);
-  }
-
-  #about.card .profile-stat,
-  .card#about .profile-stat {
-    width: 100%;
-    padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
-    min-width: 0;
-  }
-
-  .about-me-highlights-grid {
-    grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-sm);
-  }
-}
-
-/* ============================================
-   Responsive Design - Mobile (Optimized)
-   ============================================ */
-@media screen and (width <= 480px) {
-  .about-me-main-content {
-    padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
-  }
-
-  .about-me-content {
-    gap: var(--about-me-spacing-md);
-    padding: 0;
-  }
-
-  .about-me-hero-section {
-    gap: var(--about-me-spacing-md);
-    padding: 0;
-  }
-
-  .about-me-image-container .image-component.about-me-image,
-  .about-me-image-container img.about-me-image {
-    width: min(180px, 50vw);
-    height: min(180px, 50vw);
-    border-width: clamp(3px, 1vw, 4px);
-    max-width: 100%;
+    padding: 0 var(--about-space-sm);
+    font-size: clamp(1rem, 3.5vw, 1.1rem);
   }
 
   .about-me-actions {
     flex-direction: column;
     width: 100%;
-    gap: var(--about-me-spacing-sm);
-  }
-
-  .about-me-featured-tech {
-    width: 100%;
-    padding: var(--about-me-spacing-sm);
-    overflow-x: visible;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .about-me-hero-background::before,
-  .about-me-hero-background::after {
-    width: min(250px, 70vw);
-    height: min(250px, 70vw);
   }
 
   #about.card .profile-btn,
   .card#about .profile-btn {
     width: 100%;
     max-width: 100%;
-    min-width: auto;
-    min-height: 48px; /* Larger touch target for mobile */
-    padding: 0.875rem 1.5rem;
-    font-size: clamp(0.9rem, 3.5vw, 1rem);
-    touch-action: manipulation;
   }
 
   .about-me-stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--about-me-spacing-xs);
-    padding-top: var(--about-me-spacing-md);
-    width: 100%;
-    max-width: 100%;
-    overflow-x: visible;
-    -webkit-overflow-scrolling: touch;
-    box-sizing: border-box;
-  }
-
-  #about.card .profile-stat,
-  .card#about .profile-stat {
-    width: 100%;
-    padding: var(--about-me-spacing-sm);
-    min-width: auto;
   }
 
   .about-me-highlights-grid {
     grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-xs);
-  }
-
-  .about-me-bio {
-    padding: 0 var(--about-me-spacing-xs);
-    font-size: clamp(0.875rem, 3.5vw, 0.95rem);
-    line-height: 1.65;
   }
 }
 
-/* ============================================
-   Responsive Design - Extra Small Mobile (Optimized)
-   ============================================ */
-@media screen and (width <= 360px) {
+@media screen and (width <= 480px) {
   .about-me-main-content {
-    padding: var(--about-me-spacing-sm);
-  }
-
-  .about-me-content {
-    gap: var(--about-me-spacing-sm);
-    padding: 0;
+    padding: var(--about-space-md) var(--about-space-sm);
   }
 
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image {
-    width: min(150px, 45vw);
-    height: min(150px, 45vw);
-    border-width: clamp(2px, 0.8vw, 3px);
+    width: min(200px, 55vw);
+    height: min(200px, 55vw);
   }
 
   .about-me-stats {
     grid-template-columns: 1fr;
-    gap: var(--about-me-spacing-xs);
-  }
-
-  .about-me-hero-background::before,
-  .about-me-hero-background::after {
-    width: min(200px, 60vw);
-    height: min(200px, 60vw);
-  }
-
-  .about-me-bio {
-    font-size: clamp(0.85rem, 4vw, 0.9rem);
-    line-height: 1.6;
-  }
-
-  #about.card .profile-btn,
-  .card#about .profile-btn {
-    padding: 0.75rem 1.25rem;
-    font-size: clamp(0.85rem, 4vw, 0.95rem);
-    min-height: 44px; /* Touch target minimum */
-    touch-action: manipulation;
   }
 }
 
-/* ============================================
-   Landscape Orientation - Mobile/Tablet (Optimized)
-   ============================================ */
-@media screen and (orientation: landscape) and (width <= 768px) {
-  .about-me-hero-section {
-    grid-template-columns: 1fr auto;
-    gap: var(--about-me-spacing-md);
-    text-align: left;
-    align-items: center;
-  }
-
-  .about-me-hero-left {
-    align-items: flex-start;
-    text-align: left;
-    order: 1;
-  }
-
-  .about-me-hero-right {
-    order: 2;
-    justify-content: flex-end;
-  }
-
-  .about-me-image-container .image-component.about-me-image,
-  .about-me-image-container img.about-me-image {
-    width: min(180px, 25vh);
-    height: min(180px, 25vh);
-  }
-
-  .about-me-bio {
-    text-align: left;
-  }
-
-  .about-me-actions {
-    justify-content: flex-start;
-  }
-
-  .about-me-main-content {
-    padding: var(--about-me-spacing-md) var(--about-me-spacing-lg);
-  }
-}
-
-/* ============================================
-   Reduced Motion - Accessibility
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .about-me-content,
   .about-me-image-container .image-component.about-me-image,
   .about-me-image-container img.about-me-image,
-  .about-me-hero-background::before,
-  .about-me-hero-background::after,
-  .about-me-image-particles .particle {
+  .about-me-image-glow,
+  .about-me-image-particles .particle,
+  .about-me-hero-background {
     animation: none;
     transition: none;
-  }
-
-  #about.card .profile-btn:hover,
-  .card#about .profile-btn:hover,
-  #about.card .profile-stat:hover,
-  .card#about .profile-stat:hover,
-  .about-me-image-container:hover .image-component.about-me-image,
-  .about-me-image-container:hover img.about-me-image {
-    transform: none;
-  }
-}
-
-/* ============================================
-   Print Styles
-   ============================================ */
-@media print {
-  .about-me-image-container,
-  .about-me-actions,
-  .about-me-tech-stack {
-    display: none;
-  }
-
-  #about.card .profile-stat,
-  .card#about .profile-stat {
-    break-inside: avoid;
   }
 
   .about-me-content {

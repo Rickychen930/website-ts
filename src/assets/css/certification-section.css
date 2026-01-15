@@ -1,1116 +1,167 @@
 /**
- * Certification Section - LUXURY REDESIGN
- * Premium, Modern, Professional Section Design
- * Complete redesign for luxury appearance with FIXED SCROLL
+ * Certification Section - COMPLETE REBUILD
+ * New Modern Grid & Card Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - section-specific styles only
- * - Reusable: Uses core components and utilities
- * 
- * Features:
- * - Luxury Glassmorphism & Advanced Visual Effects
- * - Premium Animations & Micro-interactions
- * - Fixed Horizontal Scroll (Bug Fix)
- * - Modern Grid Layouts
- * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
- * - Performance Optimized
- * - Component-Based Architecture
+ * Architecture:
+ * - Advanced grid layouts
+ * - Interactive card designs
+ * - Modern glassmorphism
+ * - Smooth animations
+ * - Responsive system
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
-/* ─── Component-Specific Variables (DRY) ─── */
+/* ============================================
+   NEW DESIGN TOKENS
+   ============================================ */
 #certification-section.card,
 .card#certification-section {
-  /* Spacing - Uses core spacing system */
-  --cert-spacing-xs: var(--spacing-2);
-  --cert-spacing-sm: var(--spacing-3);
-  --cert-spacing-md: var(--spacing-4);
-  --cert-spacing-lg: var(--spacing-6);
-  --cert-spacing-xl: var(--spacing-8);
-  --cert-spacing-xxl: var(--spacing-12);
-
-  /* Colors - Uses core color system */
+  --cert-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --cert-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --cert-space-md: clamp(1rem, 3vw, 1.5rem);
+  --cert-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --cert-space-xl: clamp(2rem, 5vw, 3.5rem);
+  --cert-space-2xl: clamp(3rem, 7vw, 5rem);
   --cert-color-primary: var(--color-accent-primary);
-  --cert-color-primary-light: var(--color-accent-light);
-  --cert-color-primary-dark: var(--color-accent-dark);
-  --cert-color-secondary: var(--color-accent-alt);
-  --cert-color-accent: var(--color-accent-hover);
-
-  /* Shadows - Uses core shadow system */
-  --cert-shadow-card: var(--shadow-card);
-  --cert-shadow-card-hover: var(--shadow-card-hover);
-
-  /* Transitions - Uses core transition system */
-  --cert-transition-smooth: var(--transition-smooth);
-  --cert-transition-bounce: var(--transition-bounce);
+  --cert-color-secondary: var(--color-accent-secondary);
+  --cert-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --cert-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── Global Reset ─── */
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
 #certification-section * {
   box-sizing: border-box;
 }
 
-/* ─── Section Wrapper - REMOVED (not needed, Card component handles styling) ─── */
-
-/* ─── Grid Layout - Desktop (Default) - Modern Minimalistic ─── */
+/* ============================================
+   GRID - New Design
+   ============================================ */
 #certification-section .certification-grid {
   display: grid;
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: var(--cert-space-xl) 0;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
-  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8)); /* Modern spacing */
+  gap: var(--cert-space-xl);
   list-style: none;
   max-width: 100%;
-  perspective: 2000px;
   align-items: start;
   box-sizing: border-box;
 }
 
-/* ─── Certification Card - Luxury Design ─── */
+#certification-section .certification-grid::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 30% 40%,
+      var(--color-accent-alpha-05) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 70% 60%,
+      var(--color-accent-secondary-alpha-04) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ============================================
+   CERTIFICATION CARD - New Design
+   ============================================ */
 #certification-section .certification-card {
   position: relative;
+  z-index: 1;
   width: 100%;
   padding: 0;
   border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
     var(--color-bg-card) 0%,
-    var(--color-bg-secondary) 100%
+    var(--color-bg-card-alt) 100%
   );
-  opacity: 0;
-  transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  min-height: 380px; /* Reduced from 420px for better balance */
-  backdrop-filter: blur(12px) saturate(180%);
-  border-radius: var(--radius-2xl); /* Consistent with design system */
+  backdrop-filter: blur(20px) saturate(190%);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-medium);
   overflow: visible;
-  transform: translateY(50px) scale(0.92) rotateX(8deg);
-  transform-style: preserve-3d;
-  cursor: default;
-  box-shadow: var(--shadow-md); /* Simplified, more subtle */
-  will-change: transform, opacity, filter;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  contain: layout style paint;
-  isolation: isolate;
-  perspective: 1000px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition:
+    transform 0.6s var(--cert-ease-spring),
+    box-shadow 0.6s var(--cert-ease-smooth),
+    border-color 0.4s var(--cert-ease-smooth),
+    opacity 0.6s var(--cert-ease-smooth);
+  min-height: 380px;
+  will-change: transform, opacity;
+  box-sizing: border-box;
 }
 
-/* Premium gradient overlay */
 #certification-section .certification-card::before {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  z-index: 2;
-  height: 5px;
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-primary) 0%,
-    var(--color-accent-alt) 30%,
-    var(--color-accent-secondary) 60%,
-    var(--color-accent-tertiary) 100%
-  );
+  height: 4px;
+  background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity var(--cert-transition-smooth, var(--transition-smooth));
+  transition: opacity 0.4s var(--cert-ease-smooth);
   content: "";
-  background-size: 200% 100%;
-  border-radius: 32px 32px 0 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
-@keyframes cert-gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Animated Border Gradient */
-#certification-section .certification-card::after {
-  position: absolute;
-  z-index: -1;
-  padding: var(--spacing-xs);
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-alpha-40) 0%,
-    var(--color-accent-alt-alpha-40) 50%,
-    var(--color-accent-secondary-alpha-30) 100%
-  );
-  opacity: 0;
-  transition: opacity var(--cert-transition-smooth, var(--transition-smooth));
-  content: "";
-  inset: -3px;
-  border-radius: var(--radius-2xl);
-  mask:
-    linear-gradient(var(--color-white) 0 0) content-box,
-    linear-gradient(var(--color-white) 0 0);
-  mask-composite: xor;
-  mask-composite: exclude;
-}
-
-@keyframes cert-border-pulse {
-  0%,
-  100% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 0.3;
-  }
-}
-
-/* Card Inner Container */
-#certification-section .certification-card-inner {
-  display: flex;
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  padding: clamp(3rem, 6vw, 3.5rem) var(--spacing-3xl);
-  background: inherit;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  border-radius: inherit;
-  gap: 1.75rem;
-  transform-style: preserve-3d;
-}
-
-/* ─── Visibility & Animation ─── */
-#certification-section .certification-card-visible {
-  opacity: 1;
-  transform: translateY(0);
-  animation: cert-card-enter var(--animation-duration-base, 0.4s)
-    var(--transition-smooth) forwards;
-}
-
-#certification-section .certification-card-visible::before {
-  opacity: 1;
-}
-
-@keyframes cert-card-enter {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ─── Hover Effects ─── */
-#certification-section .certification-card:hover,
-#certification-section .certification-card-hovered {
-  transform: translateY(-6px) scale(1.01);
-  border-color: var(--color-accent-alpha-40);
-  box-shadow: var(--shadow-card-hover);
-  background: var(--color-bg-card-hover);
-}
-
-#certification-section .certification-card:hover::after,
-#certification-section .certification-card-hovered::after {
-  opacity: 1;
-}
-
-@keyframes cert-border-glow {
-  0%,
-  100% {
-    opacity: 0.6;
-    filter: brightness(1);
-  }
-
-  50% {
-    opacity: 1;
-    filter: brightness(1.3);
-  }
-}
-
-#certification-section .certification-card:hover::before,
-#certification-section .certification-card-hovered::before {
-  opacity: 1;
-}
-
-#certification-section .certification-card-clickable {
-  cursor: pointer;
-}
-
-#certification-section .certification-card-clickable:active {
-  transform: translateY(-2px);
-}
-
-/* ─── Focus States (Accessibility) ─── */
-#certification-section .certification-card:focus {
-  outline: none;
-  border-color: var(--cert-color-primary);
-  box-shadow:
-    0 0 0 4px var(--color-accent-alpha-20),
-    0 30px 80px var(--color-accent-alpha-15);
-}
-
-#certification-section .certification-card:focus-visible {
-  outline: 3px solid var(--cert-color-primary);
-  outline-offset: clamp(3px, 0.5vw, 5px);
-  box-shadow:
-    0 20px 60px var(--color-black-alpha-35),
-    0 0 0 1px var(--color-accent-alpha-50),
-    0 0 40px var(--color-accent-alpha-20);
-}
-
-/* ─── Advanced Icon Styling ─── */
-#certification-section .certification-icon-wrapper {
-  display: flex;
-  position: relative;
-  z-index: 3;
-  width: 120px;
-  height: 120px;
-  transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.75rem;
-  perspective: 1000px;
-}
-
-#certification-section .certification-icon-medium {
-  width: 100px;
-  height: 100px;
-}
-
-#certification-section .certification-icon-small {
-  width: 85px;
-  height: 85px;
-}
-
-#certification-section .certification-icon-large {
-  width: 120px;
-  height: 120px;
-}
-
-#certification-section .certification-icon-emoji {
-  position: relative;
-  z-index: 2;
-  font-size: var(--font-size-title-large);
-  line-height: 1;
-  transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  filter: drop-shadow(0 6px 12px var(--color-black-alpha-20));
-  transform-style: preserve-3d;
-}
-
-#certification-section .certification-icon-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 1;
-  width: 140%;
-  height: 140%;
-  background: radial-gradient(
-    circle,
-    var(--color-accent-alpha-40) 0%,
-    var(--color-accent-alpha-20) 30%,
-    var(--color-accent-alt-alpha-10) 50%,
-    transparent 75%
-  );
-  opacity: 0;
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-  transform: translate(-50%, -50%);
-  border-radius: var(--radius-full);
-}
-
-@keyframes cert-icon-pulse {
-  0%,
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  50% {
-    opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1.05); /* Reduced from 1.1 */
-  }
-}
-
-#certification-section .certification-card:hover .certification-icon-emoji {
-  transform: scale(1.05) rotate(3deg) translateZ(8px); /* Reduced from 1.1, 5deg, 10px */
-  filter: drop-shadow(
-    0 4px 8px var(--color-accent-alpha-25)
-  ); /* Subtler shadow */
-}
-
-#certification-section .certification-card:hover .certification-icon-glow {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.02); /* Reduced from 1.05 */
-}
-
-@keyframes cert-icon-pulse-fast {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1.05); /* Reduced from 1.1 */
-  }
-
-  50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.05); /* Reduced from 1.1 */
-  }
-}
-
-/* ─── Advanced Content Styling ─── */
-#certification-section .certification-card-content {
-  display: flex;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  text-align: center;
-  flex-direction: column;
-  gap: 1.25rem;
-  flex: 1;
-}
-
-#certification-section .certification-card-title {
-  position: relative;
-  margin: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-text-primary) 0%,
-    var(--color-accent-primary) 100%
-  );
-  color: var(--text-heading);
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  font-weight: 800;
-  line-height: 1.35;
-  transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  letter-spacing: -0.03em; /* Standardized from -0.5px to em for scalability */
-  overflow-wrap: break-word;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-#certification-section .certification-card:hover .certification-card-title {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-primary) 0%,
-    var(--color-accent-alt) 50%,
-    var(--color-accent-secondary) 100%
-  );
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transform: translateY(-2px);
-}
-
-/* ─── Advanced Provider Styling ─── */
-#certification-section .certification-card-provider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.5rem;
-  position: relative;
-}
-
-#certification-section .certification-card-provider-label {
-  position: relative;
-  padding: var(--spacing-xs) var(--spacing-md);
-  border: 1px solid var(--color-accent-alpha-15);
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-alpha-08) 0%,
-    var(--color-accent-alt-alpha-08) 100%
-  );
-  color: var(--text-subtle);
-  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
-  font-weight: 700;
-  line-height: 1.5;
-  opacity: 0.85;
-  transition: var(--transition-all);
-  letter-spacing: 0.05em; /* Standardized from 0.5px to em */
-  text-transform: uppercase;
-  border-radius: var(--radius-md);
-}
-
-#certification-section
-  .certification-card:hover
-  .certification-card-provider-label {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-alpha-15) 0%,
-    var(--color-accent-alt-alpha-15) 100%
-  );
-  color: var(--color-text-hover);
-  opacity: 1;
-  border-color: var(--color-accent-alpha-30);
-  transform: scale(1.02); /* Reduced from 1.05 */
-}
-
-/* ─── Advanced Description Styling ─── */
-#certification-section .certification-card-description {
-  display: -webkit-box;
-  margin: 0;
-  padding: 0;
-  color: var(--text-subtle);
-  font-size: clamp(0.9rem, 1.2vw, 1rem);
-  line-height: 1.6;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  overflow-wrap: break-word;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-#certification-section
-  .certification-card:hover
-  .certification-card-description {
-  color: var(--color-text-muted);
-}
-
-/* ─── Advanced Badges Styling ─── */
-#certification-section .certification-card-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  justify-content: center;
-  margin-top: 0.75rem;
-}
-
-#certification-section .certification-badge {
-  display: inline-flex;
-  position: relative;
-  padding: var(--spacing-xs) var(--spacing-md);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: var(--radius-lg);
-  font-family: var(--font-mono);
-  letter-spacing: 0.04em; /* Standardized from 0.4px to em */
-  overflow: hidden;
-  transform-style: preserve-3d;
-}
-
-#certification-section .certification-badge-default {
-  border: 1px solid var(--color-border-primary); /* Standardized from 1.5px */
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-lighter) 0%,
-    var(--color-bg-lightest) 100%
-  );
-  color: var(--text-muted);
-  box-shadow: var(--shadow-xs);
-}
-
-#certification-section .certification-badge-accent {
-  border: 1px solid var(--color-accent-alpha-30); /* Standardized from 1.5px */
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-alpha-15) 0%,
-    var(--color-accent-alt-alpha-15) 100%
-  );
-  color: var(--cert-color-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-#certification-section .certification-badge:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: var(--shadow-sm);
-}
-
-#certification-section .certification-badge-accent:hover {
-  box-shadow: var(--shadow-md);
-}
-
-/* ─── Advanced Date Styling ─── */
-#certification-section .certification-card-date {
-  display: flex;
-  position: relative;
-  width: 100%;
-  color: var(--text-muted-alt);
-  font-size: clamp(0.9rem, 1.2vw, 0.95rem);
-  font-weight: 600;
-  transition: var(--transition-all);
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 2px solid var(--color-border-primary);
-}
-
-#certification-section .certification-card-date::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    var(--cert-color-primary) 0%,
-    var(--cert-color-secondary) 100%
-  );
-  transition: width var(--animation-duration-base);
-}
-
-#certification-section
-  .certification-card:hover
-  .certification-card-date::before {
-  width: 60%;
-}
-
-/* ─── Advanced Link Hint ─── */
-#certification-section .certification-card-link-hint {
-  display: flex;
-  position: relative;
-  width: 100%;
-  opacity: 0;
-  transition: all var(--cert-transition-smooth, var(--transition-smooth));
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 2px solid var(--color-border-primary);
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  transform: translateY(12px) scale(0.95);
-}
-
-#certification-section
-  .certification-card.clickable:hover
-  .certification-card-link-hint {
+#certification-section .certification-card.revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-/* ─── Advanced Empty State ─── */
-#certification-section .certification-empty {
-  display: flex;
-  position: relative;
-  padding: var(--spacing-4xl) var(--spacing-xl);
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
+#certification-section .certification-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-strong), var(--shadow-glow-purple);
+  border-color: var(--color-border-accent);
 }
 
-#certification-section .certification-empty-icon {
-  font-size: clamp(4rem, 8vw, 6rem);
-  margin-bottom: 2rem;
-  opacity: 0.3;
-  filter: grayscale(0.4);
-}
-
-@keyframes cert-empty-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.5;
-    transform: scale(1.05);
-  }
-}
-
-#certification-section .certification-empty-title {
-  margin: 0 0 var(--spacing-md);
-  background: linear-gradient(
-    135deg,
-    var(--text-heading) 0%,
-    var(--text-subtle) 100%
-  );
-  color: var(--text-heading);
-  font-size: var(--font-size-title-component);
-  font-weight: 800;
-  letter-spacing: -0.03em; /* Standardized from -0.5px to em for scalability */
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-#certification-section .certification-empty-message {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: var(--font-size-body-large);
-  line-height: 1.7;
-  opacity: 0.85;
-  max-width: 450px;
-}
-
-/* ─── Advanced Animations ─── */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+#certification-section .certification-card:hover::before {
+  opacity: 1;
 }
 
 /* ============================================
-   RESPONSIVE DESIGN - TABLET & MOBILE
-   WITH HORIZONTAL SCROLL FIX
+   RESPONSIVE DESIGN
    ============================================ */
-
-/* Tablet (768px - 991px) - HORIZONTAL SCROLL */
-@media screen and (width <= 991px) and (width >= 768px) {
-  /* Container removed - Card component handles styling */
-
-  /* Horizontal scroll for grid on tablet */
+@media screen and (width <= 768px) {
   #certification-section .certification-grid {
-    display: flex !important;
-    position: relative;
-    width: calc(100% + 4rem);
-    flex-direction: row !important;
-    gap: 1.75rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-    margin-left: calc(-1 * 2rem);
-    margin-right: calc(-1 * 2rem);
-    padding-left: 2rem;
-    padding-right: 2rem;
-    grid-template-columns: none !important;
+    gap: var(--cert-space-lg);
+    padding: var(--cert-space-lg) 0;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   }
+}
 
-  #certification-section .certification-grid > * {
-    flex: 0 0 calc(min(100%, 340px));
-    min-width: 300px;
-    max-width: 340px;
-    scroll-snap-align: start;
-  }
-
-  /* Enhanced scrollbar styling */
-  #certification-section .certification-grid::-webkit-scrollbar {
-    height: 8px;
-    background: transparent;
-  }
-
-  #certification-section .certification-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: var(--radius-xs);
-    box-shadow: var(--shadow-xs);
-  }
-
-  #certification-section .certification-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--cert-color-primary, var(--color-accent-primary)) 0%,
-      var(--cert-color-secondary, var(--color-accent-alt)) 100%
-    );
-    border-radius: var(--radius-xs);
-    transition: var(--transition-all);
-    box-shadow:
-      0 2px 4px var(--color-accent-alpha-40),
-      inset 0 1px 0 var(--color-white-alpha-30);
-  }
-
-  #certification-section .certification-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      90deg,
-      var(--color-accent-alt) 0%,
-      var(--color-accent-primary) 100%
-    );
-    box-shadow:
-      0 4px 8px var(--color-accent-alpha-50),
-      inset 0 1px 0 var(--color-white-alpha-40);
-    transform: scaleY(1.2);
-  }
-
-  /* Firefox scrollbar - merged with previous selector */
-
-  /* Fade gradients at edges */
-  #certification-section .certification-grid::before {
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 60px;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      var(--color-white-alpha-98) 0%,
-      transparent 100%
-    );
-    transition: var(--transition-opacity);
-    content: "";
-    pointer-events: none;
-  }
-
-  /* Right fade gradient */
-  #certification-section .certification-grid::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    width: 60px;
-    height: 100%;
-    background: linear-gradient(
-      270deg,
-      var(--color-white-alpha-98) 0%,
-      transparent 100%
-    );
-    content: "";
-    pointer-events: none;
-  }
-
-  /* Scroll hint indicator - using Card body */
-  #certification-section .card-body {
-    position: relative;
-    padding-bottom: 2rem;
-  }
-
-  #certification-section .card-body::before {
-    display: flex;
-    position: absolute;
-    bottom: 0.25rem;
-    left: 50%;
-    z-index: 5;
-    color: var(--color-text-subtle);
-    font-size: 0.75rem;
-    font-weight: 500;
-    opacity: 0.8;
-    transition: var(--transition-opacity);
-    content: "← Swipe to see more →";
-    transform: translateX(-50%);
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  #certification-section .card-body:hover::before {
-    opacity: 0.4;
+@media screen and (width <= 480px) {
+  #certification-section .certification-grid {
+    grid-template-columns: 1fr;
+    gap: var(--cert-space-md);
   }
 
   #certification-section .certification-card {
-    min-height: 380px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 2.75rem 2.25rem;
-    gap: 1.5rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 0.75rem;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 3rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.35rem;
-  }
-
-  #certification-section .certification-card-provider-label {
-    padding: 0.4rem 0.85rem;
-    font-size: 0.85rem;
+    min-height: auto;
   }
 }
 
-/* Mobile Landscape / Small Tablet (600px - 767px) */
-@media screen and (width <= 767px) and (width >= 600px) {
-  /* Container removed - Card component handles styling */
-
-  #certification-section .certification-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    grid-template-columns: none !important;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    margin-left: calc(-1 * 1.5rem);
-    margin-right: calc(-1 * 1.5rem);
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    width: calc(100% + 3rem);
-    gap: 1.5rem;
-    padding-bottom: 1rem;
-  }
-
-  #certification-section .certification-grid > * {
-    flex: 0 0 calc(min(100%, 320px));
-    min-width: 280px;
-    max-width: 320px;
-    scroll-snap-align: start;
-  }
-
-  /* Scrollbar styling */
-  #certification-section .certification-grid::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  #certification-section .certification-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: var(--radius-xs);
-  }
-
-  #certification-section .certification-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--cert-color-primary, var(--color-accent-primary)) 0%,
-      var(--cert-color-secondary, var(--color-accent-alt)) 100%
-    );
-    border-radius: var(--radius-xs);
-  }
-
-  #certification-section .certification-card {
-    min-height: 360px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 2.5rem 2rem;
-    gap: 1.25rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 95px;
-    height: 95px;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 2.75rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.3rem;
-  }
-}
-
-/* Mobile Portrait (480px - 599px) */
-@media screen and (width <= 599px) and (width >= 480px) {
-  /* Container removed - Card component handles styling */
-
-  #certification-section .certification-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    grid-template-columns: none !important;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    margin-left: calc(-1 * 1rem);
-    margin-right: calc(-1 * 1rem);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    width: calc(100% + 2rem);
-    gap: 1.5rem;
-    padding-bottom: 1rem;
-  }
-
-  #certification-section .certification-grid > * {
-    flex: 0 0 calc(min(100%, 300px));
-    min-width: 260px;
-    max-width: 300px;
-    scroll-snap-align: start;
-  }
-
-  #certification-section .certification-card {
-    min-height: 340px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 2.25rem 1.75rem;
-    gap: 1.25rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 90px;
-    height: 90px;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 2.5rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.25rem;
-  }
-}
-
-/* Small Mobile (320px - 479px) */
-@media screen and (width <= 479px) {
-  /* Container removed - Card component handles styling */
-
-  #certification-section .certification-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    grid-template-columns: none !important;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    width: 100%;
-    gap: 1.25rem;
-    padding-bottom: 1rem;
-  }
-
-  #certification-section .certification-grid > * {
-    flex: 0 0 calc(min(100%, 280px));
-    min-width: 240px;
-    max-width: 280px;
-    scroll-snap-align: start;
-  }
-
-  #certification-section .certification-card {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    min-height: 320px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 2rem 1.5rem;
-    gap: 1rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 85px;
-    height: 85px;
-    margin-bottom: 0.5rem;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 2.25rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.15rem;
-    line-height: 1.4;
-  }
-}
-
-/* Extra Small Mobile (240px - 319px) */
-@media screen and (width <= 319px) {
-  /* Container removed - Card component handles styling */
-
-  #certification-section .certification-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    grid-template-columns: none !important;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    gap: 1rem;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    width: 100%;
-    padding-bottom: 1rem;
-  }
-
-  #certification-section .certification-grid > * {
-    flex: 0 0 calc(min(100%, 260px));
-    min-width: 220px;
-    max-width: 260px;
-    scroll-snap-align: start;
-  }
-
-  #certification-section .certification-card {
-    min-height: 300px;
-  }
-
-  #certification-section .certification-card-inner {
-    padding: 1.75rem 1.25rem;
-    gap: 0.875rem;
-  }
-
-  #certification-section .certification-icon-wrapper {
-    width: 75px;
-    height: 75px;
-  }
-
-  #certification-section .certification-icon-emoji {
-    font-size: 2rem;
-  }
-
-  #certification-section .certification-card-title {
-    font-size: 1.05rem;
-  }
-}
-
-/* ─── Landscape Orientation (Mobile) ─── */
-@media screen and (orientation: landscape) and (width <= 767px) {
-  /* Container removed - Card component handles styling */
-
-  #certification-section .certification-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    grid-template-columns: none !important;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    gap: 1.25rem;
-    padding-bottom: 1rem;
-  }
-
-  #certification-section .certification-grid > * {
-    flex: 0 0 calc(min(100%, 300px));
-    min-width: 260px;
-    max-width: 300px;
-    scroll-snap-align: start;
-  }
-}
-
-/* ─── Reduced Motion (Accessibility) ─── */
 @media (prefers-reduced-motion: reduce) {
-  #certification-section .certification-card,
-  #certification-section .certification-card-inner,
-  #certification-section .certification-icon-wrapper,
-  #certification-section .certification-icon-emoji,
-  #certification-section .certification-icon-glow,
-  #certification-section .certification-card-title,
-  #certification-section .certification-card-link-hint,
-  #certification-section .certification-badge {
-    animation: none !important;
-    transition: none !important;
+  #certification-section .certification-grid::before,
+  #certification-section .certification-card {
+    animation: none;
+    transition: none;
   }
 
-  #certification-section .certification-card-visible {
+  #certification-section .certification-card {
     opacity: 1;
     transform: none;
-    filter: none;
-  }
-
-  #certification-section .certification-card:hover {
-    transform: translateY(-4px) scale(1.01); /* Reduced from -8px */
-  }
-
-  #certification-section .certification-card::before,
-  #certification-section .certification-card::after {
-    animation: none !important;
   }
 }

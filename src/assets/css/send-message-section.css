@@ -1,37 +1,65 @@
 /**
- * Send Message Section - Professional, Clean Design
+ * Send Message Section - COMPLETE REBUILD
+ * New Modern Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - section-specific styles only
- * 
- * Usage:
- * @import '@/assets/css/send-message-section.css';
+ * Architecture:
+ * - Modern form design
+ * - Enhanced interactions
+ * - Responsive system
+ * - Aligned with new design system
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
-/* ─── Send Message Wrapper ─── */
+/* ============================================
+   NEW DESIGN TOKENS
+   ============================================ */
+:root {
+  --send-message-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --send-message-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --send-message-space-md: clamp(1rem, 3vw, 1.5rem);
+  --send-message-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --send-message-space-xl: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* ============================================
+   WRAPPER - New Design
+   ============================================ */
 .send-message-wrapper {
+  position: relative;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-6) 0;
+  padding: var(--send-message-space-xl) 0;
+  box-sizing: border-box;
 }
 
-/* ─── Send Message Subtitle ─── */
+.send-message-wrapper::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: radial-gradient(
+    ellipse 100% 60% at 50% 50%,
+    var(--color-accent-alpha-05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  opacity: 0.4;
+}
 
-/* Uses shared section-subtitle styling from core/_section-subtitle.css */
+/* ============================================
+   SUBTITLE - New Design
+   ============================================ */
 .send-message-subtitle {
-  margin: 0 auto var(--spacing-10) auto;
-  padding: 0 var(--spacing-4);
-  color: var(--color-text-secondary);
-  font-size: clamp(0.9375rem, 2vw, var(--font-size-subtitle, 1.1rem));
-  font-weight: var(--font-weight-subtitle, 500);
-  line-height: var(--line-height-normal, 1.6);
+  position: relative;
+  z-index: 1;
+  margin: 0 auto var(--send-message-space-xl) auto;
+  padding: 0 var(--send-message-space-md);
+  color: var(--color-text-subtle);
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  font-weight: 500;
+  line-height: 1.6;
   max-width: 600px;
   text-align: center;
   font-family: var(--font-main);
@@ -39,15 +67,23 @@
   overflow-wrap: break-word;
 }
 
-/* Responsive adjustments */
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media screen and (width <= 768px) {
   .send-message-wrapper {
-    padding: var(--spacing-4) 0;
+    padding: var(--send-message-space-lg) 0;
   }
 
   .send-message-subtitle {
-    padding: 0 var(--spacing-4);
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-8);
+    padding: 0 var(--send-message-space-sm);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    margin-bottom: var(--send-message-space-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .send-message-wrapper::before {
+    animation: none;
   }
 }

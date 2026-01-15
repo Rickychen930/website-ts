@@ -18,6 +18,7 @@
 /* ============================================
    Navbar-Specific Variables (DRY)
    Uses core constants as base, extends with navbar-specific values
+   Enhanced with new design system tokens
    ============================================ */
 :root {
   /* Navbar dimensions - Uses NavbarConfig constant */
@@ -29,6 +30,12 @@
   --navbar-backdrop-z: calc(var(--navbar-z-index) - 1);
   --navbar-menu-z: var(--navbar-z-index);
 
+  /* New Fluid Spacing - Aligned with new design system */
+  --navbar-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --navbar-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --navbar-space-md: clamp(1rem, 3vw, 1.5rem);
+  --navbar-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+
   /* Advanced Gradient System - Extends core gradients */
   --gradient-primary: var(--gradient-accent-full);
   --gradient-primary-reverse: var(--gradient-primary-reverse);
@@ -37,26 +44,26 @@
   --gradient-surface-scrolled: var(--gradient-luxury);
   --gradient-text-premium: var(--gradient-accent-full);
 
-  /* Advanced Shadow System - Extends core shadows */
-  --shadow-navbar-default: var(--shadow-sm);
-  --shadow-navbar-scrolled: var(--shadow-card-hover);
-  --shadow-menu-premium: var(--shadow-xl);
+  /* Advanced Shadow System - Enhanced with new design system */
+  --shadow-navbar-default: var(--shadow-soft);
+  --shadow-navbar-scrolled: var(--shadow-medium), var(--shadow-glow-accent);
+  --shadow-menu-premium: var(--shadow-strong);
 
-  /* Animation Timing - Uses core animation system */
+  /* Animation Timing - Enhanced with spring physics */
   --timing-instant: var(--duration-instant);
   --timing-fast: var(--duration-fast);
   --timing-normal: var(--duration-base);
   --timing-slow: var(--duration-slow);
   --timing-slower: 0.8s;
-  --easing-smooth: var(--easing-smooth);
-  --easing-bounce: var(--easing-bounce);
-  --easing-elastic: var(--easing-spring);
+  --easing-smooth: var(--ease-smooth);
+  --easing-bounce: var(--ease-bounce);
+  --easing-elastic: var(--ease-spring);
   --easing-premium: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* ============================================
-   Base Navbar Container - Modern & Clean Design
-   Professional, Luxury, Clean Header
+   Base Navbar Container - Enhanced Modern Design
+   Professional, Luxury, Clean Header with New Design System
    ============================================ */
 .navbar {
   position: fixed;
@@ -71,39 +78,47 @@
     var(--color-bg-secondary) 100%
   );
   transition:
-    background var(--transition-smooth),
-    box-shadow var(--transition-smooth),
-    border-color var(--transition-base);
+    background 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.3s var(--ease-smooth);
   min-height: var(--navbar-height);
-  backdrop-filter: blur(12px) saturate(180%);
-  border-bottom: 1px solid var(--color-border-light);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(20px) saturate(190%);
+  border-bottom: 2px solid var(--color-border-light);
+  box-shadow: var(--shadow-navbar-default);
   overflow: visible;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle gradient overlay - Simplified */
+/* Enhanced gradient overlay with new design system */
 .navbar::before {
-  display: none; /* Removed for better performance and cleaner design */
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: radial-gradient(
+    ellipse 120% 80% at 50% 0%,
+    var(--color-accent-alpha-05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  opacity: 0.4;
 }
 
-/* Subtle top border accent - Minimalistic */
+/* Enhanced top border accent with gradient */
 .navbar::after {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   z-index: 2;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-accent-primary) 50%,
-    transparent
-  );
-  opacity: 0.3;
+  height: 3px;
+  background: var(--gradient-accent-full);
+  opacity: 0.5;
   content: "";
+  box-shadow:
+    0 0 20px var(--color-accent-alpha-30),
+    0 0 40px var(--color-accent-alpha-20);
 }
 
 .navbar.scrolled {
@@ -113,55 +128,59 @@
     var(--color-bg-secondary) 100%
   );
   min-height: var(--navbar-height-scrolled);
-  backdrop-filter: blur(16px) saturate(180%);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 0 16px var(--color-accent-alpha-05);
-  border-bottom-color: var(--color-border-medium);
+  backdrop-filter: blur(24px) saturate(200%);
+  box-shadow: var(--shadow-navbar-scrolled);
+  border-bottom-color: var(--color-border-accent);
+}
+
+.navbar.scrolled::before {
+  opacity: 0.6;
 }
 
 .navbar.scrolled::after {
-  opacity: var(--opacity-muted);
-  animation-duration: 6s;
+  opacity: 0.8;
+  box-shadow:
+    0 0 30px var(--color-accent-alpha-40),
+    0 0 60px var(--color-accent-alpha-30);
 }
 
 /* ============================================
-   Navbar Inner Container - Premium Spacing
-   Advanced Flexbox Layout with Performance Optimization
+   Navbar Inner Container - Enhanced Premium Spacing
+   Advanced Flexbox Layout with New Design System
    ============================================ */
 .navbar-inner {
   display: flex;
   position: relative;
   z-index: 2;
   margin: 0 auto;
-  padding: clamp(var(--spacing-5), 3vw, var(--spacing-7))
-    clamp(var(--spacing-6), 4vw, var(--spacing-12));
-  transition: padding var(--transition-smooth);
+  padding: var(--navbar-space-lg) var(--navbar-space-xl);
+  transition: padding 0.4s var(--ease-smooth);
   align-items: center;
   justify-content: space-between;
   max-width: var(--spacing-card-max-width);
-  gap: clamp(var(--spacing-4), 3vw, var(--spacing-6));
+  gap: var(--navbar-space-md);
   min-height: inherit;
 }
 
 .navbar.scrolled .navbar-inner {
-  padding-top: clamp(var(--spacing-3), 2vw, var(--spacing-4));
-  padding-bottom: clamp(var(--spacing-3), 2vw, var(--spacing-4));
+  padding-top: var(--navbar-space-sm);
+  padding-bottom: var(--navbar-space-sm);
 }
 
-/* Subtle hover effect */
+/* Enhanced hover effect with new design system */
 .navbar:hover {
-  background: var(--color-bg-navbar);
-  border-bottom-color: var(--color-border-navbar);
-  box-shadow:
-    0 1px 0 var(--overlay-alpha-20) inset,
-    0 2px 12px var(--shadow-alpha-10),
-    0 4px 20px var(--shadow-alpha-10);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-navbar) 0%,
+    var(--color-bg-secondary) 100%
+  );
+  border-bottom-color: var(--color-border-accent);
+  box-shadow: var(--shadow-medium);
 }
 
 .navbar.scrolled:hover {
-  backdrop-filter: blur(calc(var(--navbar-blur-strong) * 1.1)) saturate(200%)
-    brightness(1.02);
+  backdrop-filter: blur(28px) saturate(210%) brightness(1.03);
+  box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
 }
 
 /* ============================================
@@ -206,8 +225,8 @@
 }
 
 .navbar-brand:hover {
-  transform: translateY(-1px); /* Subtle hover */
-  opacity: 0.9; /* Slight opacity change */
+  transform: translateY(-2px) scale(1.02);
+  transition: transform 0.3s var(--ease-spring);
 }
 
 .navbar-brand:hover::before {
@@ -607,8 +626,11 @@
 @media (hover: hover) {
   .navbar-links li a:hover {
     color: var(--color-accent-primary);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 12px var(--color-accent-alpha-15);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: var(--shadow-medium), var(--shadow-glow-accent);
+    transition:
+      transform 0.3s var(--ease-spring),
+      box-shadow 0.4s var(--ease-smooth);
   }
 }
 
@@ -833,7 +855,8 @@
 @media (hover: hover) {
   .navbar-dropdown-toggle:hover {
     color: var(--color-accent-primary);
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.02);
+    transition: transform 0.3s var(--ease-spring);
   }
 
   .navbar-dropdown-toggle:hover::before {

@@ -1,98 +1,101 @@
 /**
- * Soft Skills Section - Professional, Code-Based Architecture
+ * Soft Skills Section - COMPLETE REBUILD
+ * New Modern Grid & Card Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - section-specific styles only
- * - Reusable: Uses core components and utilities
- * 
- * Usage:
- * @import '@/assets/css/soft-skills-section.css';
+ * Architecture:
+ * - Advanced grid layouts
+ * - Interactive card designs
+ * - Modern glassmorphism
+ * - Smooth animations
+ * - Responsive system
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
-/* ─── Component-Specific Variables (DRY) ─── */
-
-/* Uses core constants as base */
+/* ============================================
+   NEW DESIGN TOKENS
+   ============================================ */
 #soft-skills-section {
-  /* Spacing - Uses core spacing system */
-  --soft-skills-spacing-xs: var(--spacing-2);
-  --soft-skills-spacing-sm: var(--spacing-3);
-  --soft-skills-spacing-md: var(--spacing-4);
-  --soft-skills-spacing-lg: var(--spacing-6);
-  --soft-skills-spacing-xl: var(--spacing-8);
-  --soft-skills-spacing-xxl: var(--spacing-12);
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 
-  /* Colors - Uses core color system */
+  --soft-skills-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --soft-skills-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --soft-skills-space-md: clamp(1rem, 3vw, 1.5rem);
+  --soft-skills-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --soft-skills-space-xl: clamp(2rem, 5vw, 3.5rem);
+  --soft-skills-space-2xl: clamp(3rem, 7vw, 5rem);
   --soft-skills-color-primary: var(--color-accent-primary);
-  --soft-skills-color-primary-light: var(--color-accent-light);
-  --soft-skills-color-primary-dark: var(--color-accent-dark);
-  --soft-skills-color-secondary: var(--color-accent-alt);
-  --soft-skills-color-accent: var(--color-accent-hover);
-  --soft-skills-color-text-heading: var(--color-text-heading);
-  --soft-skills-color-text-primary: var(--color-text-heading-alt);
-  --soft-skills-color-text-secondary: var(--color-text-subtle);
-  --soft-skills-color-text-muted: var(--color-text-muted);
-  --soft-skills-color-text-light: var(--color-text-light);
-  --soft-skills-color-bg-card: var(--color-bg-card);
-  --soft-skills-color-bg-card-hover: var(--color-bg-card-hover);
-  --soft-skills-color-bg-gradient: var(--gradient-luxury);
-  --soft-skills-color-border: var(--color-border-light);
-  --soft-skills-color-border-hover: var(--color-border-accent-hover);
-
-  /* Shadows - Uses core shadow system */
-  --soft-skills-shadow-card: var(--shadow-card);
-  --soft-skills-shadow-card-hover: var(--shadow-card-hover);
-
-  /* Transitions - Uses core transition system */
-  --soft-skills-transition-fast: var(--transition-fast);
-  --soft-skills-transition-base: var(--transition-base);
-  --soft-skills-transition-slow: var(--transition-slow);
-  --soft-skills-transition-smooth: var(--transition-smooth);
-
-  /* Typography - Uses core typography system */
-  --soft-skills-font-main: var(--font-main);
-  --soft-skills-font-size-base: var(--font-size-base);
-  --soft-skills-font-size-title: var(--font-size-title-component);
-  --soft-skills-font-size-subtitle: var(--font-size-subtitle);
-  --soft-skills-line-height-normal: 1.5;
-  --soft-skills-line-height-relaxed: 1.75;
+  --soft-skills-color-secondary: var(--color-accent-secondary);
+  --soft-skills-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --soft-skills-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── Global Reset ─── */
+#soft-skills-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 35% 35%,
+      var(--color-accent-alpha-05) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 65% 65%,
+      var(--color-accent-secondary-alpha-04) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
 #soft-skills-section * {
   box-sizing: border-box;
 }
 
-/* ─── Enhanced Grid Layout ─── */
+/* ============================================
+   GRID - New Design
+   ============================================ */
 .soft-skills-grid {
   display: grid;
   position: relative;
+  z-index: 1;
   width: 100%;
-  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8)) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8));
+  padding: var(--soft-skills-space-xl) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--soft-skills-space-xl);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-/* ─── Enhanced Skill Card ─── */
+/* ============================================
+   SKILL CARD - New Design
+   ============================================ */
 .soft-skill-card {
   position: relative;
-  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8));
-  border: 1px solid var(--color-border-light);
+  padding: var(--soft-skills-space-lg);
+  border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
     var(--color-bg-card) 0%,
-    var(--color-bg-secondary) 100%
+    var(--color-bg-card-alt) 100%
   );
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--soft-skills-transition-smooth);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px) saturate(190%);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-medium);
+  transition:
+    transform 0.5s var(--soft-skills-ease-spring),
+    box-shadow 0.5s var(--soft-skills-ease-smooth),
+    border-color 0.4s var(--soft-skills-ease-smooth);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .soft-skill-card::before {
@@ -100,462 +103,43 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 3px;
-  background: var(--gradient-accent);
+  height: 4px;
+  background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity var(--soft-skills-transition-base);
+  transition: opacity 0.4s var(--soft-skills-ease-smooth);
   content: "";
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .soft-skill-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow:
-    var(--shadow-md),
-    0 0 20px var(--color-accent-alpha-15);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   border-color: var(--color-border-accent);
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-card-hover) 0%,
-    var(--color-bg-secondary) 100%
-  );
 }
 
 .soft-skill-card:hover::before {
   opacity: 1;
 }
 
-/* ─── Loading State ─── */
-.soft-skills-loading {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(var(--soft-skills-spacing-xxl), 6vw, 4rem)
-    clamp(var(--soft-skills-spacing-lg), 4vw, var(--soft-skills-spacing-xl));
-  text-align: center;
-  min-height: clamp(300px, 40vw, 400px);
-  gap: var(--soft-skills-spacing-lg);
-}
-
-.soft-skills-loading-spinner {
-  position: relative;
-  width: clamp(56px, 8vw, 72px);
-  height: clamp(56px, 8vw, 72px);
-  background: radial-gradient(
-    circle,
-    var(--soft-skills-color-primary-alpha-80) 0%,
-    var(--soft-skills-color-secondary-alpha-60) 100%
-  );
-  border-radius: 50%;
-  box-shadow:
-    0 0 20px var(--soft-skills-color-primary-alpha-50),
-    0 0 40px var(--soft-skills-color-secondary-alpha-30),
-    inset 0 0 10px var(--color-white-alpha-20);
-}
-
-/* Multi-ring spinner for modern bold design */
-.soft-skills-loading-spinner::before,
-.soft-skills-loading-spinner::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  border: 4px solid transparent;
-  animation: spin 2s linear infinite;
-}
-
-.soft-skills-loading-spinner::before {
-  inset: 0;
-  border-top-color: var(--soft-skills-color-primary);
-  border-right-color: var(--soft-skills-color-primary-light);
-  box-shadow: 0 0 16px var(--soft-skills-color-primary-alpha-30);
-}
-
-.soft-skills-loading-spinner::after {
-  inset: 20%;
-  border-top-color: var(--soft-skills-color-secondary);
-  border-right-color: var(--soft-skills-color-secondary-alpha-20);
-  border-width: 3px;
-  animation-duration: 1.5s;
-  animation-direction: reverse;
-  box-shadow: 0 0 12px var(--soft-skills-color-secondary-alpha-25);
-}
-
-.soft-skills-loading-text {
-  margin: 0;
-  color: var(--soft-skills-color-text-primary);
-  font-size: clamp(1rem, 2.5vw, 1.125rem);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-family: var(--soft-skills-font-main);
-  opacity: 0.8;
-  filter: drop-shadow(0 1px 3px var(--color-black-alpha-10));
-  animation: text-glow 2s ease-in-out infinite;
-}
-
-@keyframes text-glow {
-  0%,
-  100% {
-    opacity: 0.7;
-    text-shadow: 0 0 8px var(--soft-skills-color-primary-alpha-40);
-  }
-
-  50% {
-    opacity: 1;
-    text-shadow:
-      0 0 16px var(--soft-skills-color-primary),
-      0 0 24px var(--soft-skills-color-secondary-alpha-50);
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media screen and (width <= 768px) {
+  .soft-skills-grid {
+    gap: var(--soft-skills-space-lg);
+    padding: var(--soft-skills-space-lg) 0;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   }
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
+@media screen and (width <= 480px) {
+  .soft-skills-grid {
+    grid-template-columns: 1fr;
+    gap: var(--soft-skills-space-md);
   }
 }
 
-/* ─── Error State ─── */
-.soft-skills-error {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(var(--soft-skills-spacing-xxl), 6vw, 4rem)
-    clamp(var(--soft-skills-spacing-lg), 4vw, var(--soft-skills-spacing-xl));
-  text-align: center;
-  min-height: clamp(300px, 40vw, 400px);
-  gap: var(--soft-skills-spacing-md);
-}
-
-.soft-skills-error-icon {
-  font-size: clamp(3.5rem, 7vw, 5rem);
-  margin-bottom: clamp(
-    var(--soft-skills-spacing-md),
-    3vw,
-    var(--soft-skills-spacing-lg)
-  );
-  opacity: 0.75;
-  filter: drop-shadow(0 4px 16px var(--color-error-alpha-40)) grayscale(0.05);
-  transition:
-    transform var(--soft-skills-transition-base),
-    opacity var(--soft-skills-transition-base),
-    filter var(--soft-skills-transition-base);
-  animation: error-shake 0.8s ease-in-out;
-  will-change: transform;
-}
-
-@keyframes error-shake {
-  0%,
-  100% {
-    transform: translateX(0) rotate(0deg);
-  }
-
-  25% {
-    transform: translateX(-8px) rotate(-3deg);
-  }
-
-  75% {
-    transform: translateX(8px) rotate(3deg);
-  }
-}
-
-.soft-skills-error-title {
-  margin: 0 0
-    clamp(var(--soft-skills-spacing-sm), 2vw, var(--soft-skills-spacing-md));
-  background: linear-gradient(
-    135deg,
-    var(--color-error) 0%,
-    var(--color-error-light) 50%,
-    var(--color-error) 100%
-  );
-  background-size: 200% 200%;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  font-family: var(--font-display);
-  filter: drop-shadow(0 2px 8px var(--color-error-alpha-30));
-  animation: gradient-shift 6s ease infinite;
-}
-
-.soft-skills-error-text {
-  margin: 0;
-  color: var(--soft-skills-color-text-secondary);
-  font-size: clamp(0.95rem, 2.5vw, 1.0625rem);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.8;
-  max-width: clamp(400px, 80vw, 550px);
-  font-family: var(--soft-skills-font-main);
-  letter-spacing: 0.01em;
-  opacity: 0.75;
-}
-
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* ─── Empty State (Section Level) ─── */
-#soft-skills-section .soft-skills-empty {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(var(--soft-skills-spacing-xxl), 6vw, 4rem)
-    clamp(var(--soft-skills-spacing-lg), 4vw, var(--soft-skills-spacing-xl));
-  text-align: center;
-  min-height: clamp(300px, 40vw, 400px);
-}
-
-#soft-skills-section .soft-skills-empty-icon {
-  font-size: clamp(4rem, 8vw, 6rem); /* Larger, bolder */
-  margin-bottom: clamp(
-    var(--soft-skills-spacing-md),
-    3vw,
-    var(--soft-skills-spacing-lg)
-  );
-  opacity: 0.7; /* More visible */
-  filter: drop-shadow(0 4px 12px var(--color-black-alpha-15)) grayscale(0.1);
-  transition:
-    transform var(--soft-skills-transition-base),
-    opacity var(--soft-skills-transition-base),
-    filter var(--soft-skills-transition-base);
-  animation: empty-state-float 4s ease-in-out infinite;
-  will-change: transform;
-}
-
-@keyframes empty-state-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-#soft-skills-section .soft-skills-empty-title {
-  margin: 0 0
-    clamp(var(--soft-skills-spacing-sm), 2vw, var(--soft-skills-spacing-md));
-  background: linear-gradient(
-    135deg,
-    var(--soft-skills-color-text-heading) 0%,
-    var(--soft-skills-color-primary) 35%,
-    var(--soft-skills-color-secondary) 50%,
-    var(--soft-skills-color-accent) 65%,
-    var(--soft-skills-color-text-heading) 100%
-  );
-  background-size: 300% 300%;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: clamp(1.5rem, 4.5vw, 2rem);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-family: var(--font-display);
-  filter: drop-shadow(0 2px 8px var(--color-black-alpha-15));
-  animation: gradient-shift 8s ease infinite;
-}
-
-#soft-skills-section .soft-skills-empty-text {
-  margin: 0;
-  color: var(--soft-skills-color-text-secondary);
-  font-size: clamp(1rem, 2.5vw, 1.125rem); /* Larger */
-  font-weight: var(--font-weight-medium);
-  line-height: 1.8; /* More relaxed */
-  max-width: clamp(400px, 80vw, 600px);
-  font-family: var(--soft-skills-font-main);
-  letter-spacing: 0.01em;
-  opacity: 0.75; /* More visible */
-}
-
-/* ─── Responsive Design - Large Desktop (1400px+) ─── */
-@media screen and (width >= 1400px) {
-  #soft-skills-section {
-    --soft-skills-spacing-xl: 3rem;
-    --soft-skills-spacing-xxl: 4rem;
-  }
-}
-
-/* ─── Responsive Design - Desktop (1200px - 1399px) ─── */
-@media screen and (width <= 1399px) and (width >= 1200px) {
-  #soft-skills-section {
-    --soft-skills-spacing-lg: 2rem;
-    --soft-skills-spacing-xl: 2.5rem;
-    --soft-skills-spacing-xxl: 3.5rem;
-  }
-}
-
-/* ─── Responsive Design - Large Tablets (992px - 1199px) ─── */
-@media screen and (width <= 1199px) and (width >= 1024px) {
-  #soft-skills-section {
-    --soft-skills-spacing-lg: 1.75rem;
-    --soft-skills-spacing-xl: 2rem;
-    --soft-skills-spacing-xxl: 3rem;
-  }
-}
-
-/* ─── Responsive Design - Tablets (768px - 991px) ─── */
-@media screen and (width <= 991px) and (width >= 768px) {
-  #soft-skills-section {
-    --soft-skills-spacing-md: 1.5rem;
-    --soft-skills-spacing-lg: 1.75rem;
-    --soft-skills-spacing-xl: 2rem;
-  }
-
-  #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-xl, 2rem)
-      var(--soft-skills-spacing-md, 1.5rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-icon {
-    font-size: clamp(3rem, 6vw, 3.75rem);
-    margin-bottom: var(--soft-skills-spacing-md, 1.5rem);
-  }
-}
-
-/* ─── Responsive Design - Small Tablets (600px - 767px) ─── */
-@media screen and (width <= 767px) and (width >= 600px) {
-  #soft-skills-section {
-    --soft-skills-spacing-md: 1.25rem;
-    --soft-skills-spacing-lg: 1.5rem;
-    --soft-skills-spacing-xl: 1.75rem;
-  }
-
-  #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-xl, 1.75rem)
-      var(--soft-skills-spacing-md, 1.25rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-icon {
-    font-size: clamp(2.75rem, 5.5vw, 3.5rem);
-    margin-bottom: var(--soft-skills-spacing-sm, 1rem);
-  }
-}
-
-/* ─── Responsive Design - Mobile (480px - 599px) ─── */
-@media screen and (width <= 599px) and (width >= 480px) {
-  #soft-skills-section {
-    --soft-skills-spacing-md: 1.25rem;
-    --soft-skills-spacing-lg: 1.5rem;
-  }
-
-  #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.5rem)
-      var(--soft-skills-spacing-sm, 1rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-icon {
-    font-size: clamp(2.5rem, 5vw, 3rem);
-    margin-bottom: var(--soft-skills-spacing-sm, 1rem);
-  }
-}
-
-/* ─── Responsive Design - Small Mobile (≤ 479px) ─── */
-@media screen and (width <= 479px) {
-  #soft-skills-section {
-    --soft-skills-spacing-sm: 0.875rem;
-    --soft-skills-spacing-md: 1rem;
-    --soft-skills-spacing-lg: 1.25rem;
-    --soft-skills-spacing-xl: 1.5rem;
-  }
-
-  #soft-skills-section .soft-skills-empty {
-    width: 100%;
-    padding: var(--soft-skills-spacing-lg, 1.25rem)
-      var(--soft-skills-spacing-sm, 0.875rem);
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  #soft-skills-section .soft-skills-empty-icon {
-    font-size: clamp(2.25rem, 4.5vw, 2.75rem);
-    margin-bottom: var(--soft-skills-spacing-xs, 0.5rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-text {
-    font-size: var(--font-size-small);
-  }
-}
-
-/* ─── Responsive Design - Extra Small Mobile (≤ 360px) ─── */
-@media screen and (width <= 360px) {
-  #soft-skills-section {
-    --soft-skills-spacing-xs: 0.5rem;
-    --soft-skills-spacing-sm: 0.75rem;
-    --soft-skills-spacing-md: 1rem;
-    --soft-skills-spacing-lg: 1.25rem;
-  }
-
-  #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.25rem)
-      var(--soft-skills-spacing-xs, 0.5rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-icon {
-    font-size: clamp(2rem, 4vw, 2.5rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-text {
-    font-size: var(--font-size-small);
-  }
-}
-
-/* ─── Landscape Orientation - Mobile/Tablet ─── */
-@media screen and (orientation: landscape) and (width <= 991px) {
-  #soft-skills-section {
-    --soft-skills-spacing-md: 1.25rem;
-    --soft-skills-spacing-lg: 1.5rem;
-  }
-
-  #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 1.5rem)
-      var(--soft-skills-spacing-md, 1.25rem);
-    min-height: 200px;
-  }
-}
-
-/* ─── Reduced Motion (Accessibility) ─── */
 @media (prefers-reduced-motion: reduce) {
-  #soft-skills-section * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ─── High Contrast Mode (Accessibility) ─── */
-@media (prefers-contrast: more) {
-  #soft-skills-section {
-    --soft-skills-color-border: var(--color-text-heading);
-    --soft-skills-color-border-hover: var(--color-text-heading);
-  }
-}
-
-/* ─── Print Styles ─── */
-@media print {
-  #soft-skills-section .soft-skills-empty {
-    padding: var(--soft-skills-spacing-lg, 2rem);
-  }
-
-  #soft-skills-section .soft-skills-empty-icon {
-    display: none;
+  .soft-skill-card {
+    transition: none;
   }
 }

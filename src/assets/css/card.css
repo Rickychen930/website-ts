@@ -1,83 +1,102 @@
 /**
- * Card Component - Professional, Code-Based Architecture
+ * Card Component - COMPLETE REBUILD
+ * New Modern Architecture & Visual Identity
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - card-specific styles only
- * - Reusable: Uses core components and utilities
- * 
- * Note: This file extends the core card component from core/_components.css
- * 
- * Usage:
- * @import '@/assets/css/card.css';
+ * Architecture:
+ * - Advanced glassmorphism effects
+ * - Modern gradient systems
+ * - Enhanced animations
+ * - Responsive fluid design
+ * - Aligned with new design system
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
 /* ============================================
-   Card Container - Extends Core Card Component
+   NEW DESIGN TOKENS
+   ============================================ */
+:root {
+  --card-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --card-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --card-space-md: clamp(1rem, 3vw, 1.5rem);
+  --card-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --card-space-xl: clamp(2rem, 5vw, 3.5rem);
+  --card-space-2xl: clamp(3rem, 7vw, 5rem);
+  --card-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --card-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   CARD CONTAINER - New Design
    ============================================ */
 .card {
-  /* Modern Professional Card Design */
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(var(--spacing-6), 5vw, var(--spacing-12))
-    clamp(var(--spacing-6), 4vw, var(--spacing-10));
-  border: 1px solid var(--color-border-light);
-  background: var(--color-bg-card);
-  transition: var(--transition-hover);
-  max-width: 100%;
-  backdrop-filter: blur(var(--blur-2xl));
+  padding: var(--card-space-2xl) var(--card-space-lg);
+  border: 2px solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-card-alt) 100%
+  );
+  opacity: 0;
+  transition:
+    transform 0.5s var(--card-ease-spring),
+    box-shadow 0.5s var(--card-ease-smooth),
+    border-color 0.4s var(--card-ease-smooth),
+    background 0.4s var(--card-ease-smooth);
+  backdrop-filter: blur(24px) saturate(200%);
   border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-medium);
   overflow: hidden;
-  box-shadow: var(--shadow-card);
-  animation: fade-in-card var(--animation-duration-base)
-    cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  outline: none;
+  max-width: 100%;
   font-family: var(--font-main);
   isolation: isolate;
-  will-change: transform, opacity, box-shadow;
-  contain: layout style paint;
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  box-sizing: border-box;
+  animation: card-enter 0.8s var(--card-ease-smooth) forwards;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .card::before {
   position: absolute;
-  z-index: var(--z-base);
-  background: radial-gradient(
-    ellipse 150% 100% at 50% 50%,
-    var(--color-accent-alpha-08) 0%,
-    transparent 70%
-  );
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity var(--transition-hover);
+  transition: opacity 0.4s var(--card-ease-smooth);
   content: "";
-  inset: 0;
-  pointer-events: none;
-  border-radius: var(--radius-3xl);
+  border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;
 }
 
 .card::after {
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-accent-primary),
-    transparent
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: radial-gradient(
+    ellipse 150% 100% at 50% 50%,
+    var(--color-accent-alpha-06) 0%,
+    transparent 70%
   );
   opacity: 0;
-  transition: opacity var(--transition-hover);
-  content: "";
+  transition: opacity 0.4s var(--card-ease-smooth);
   pointer-events: none;
+  border-radius: var(--radius-3xl);
 }
 
 .card:hover::before {
@@ -85,349 +104,259 @@
 }
 
 .card:hover::after {
-  opacity: 1;
+  opacity: 0.5;
 }
 
-/* Card Variants */
+/* ============================================
+   CARD VARIANTS - Enhanced
+   ============================================ */
 .card-variant-default {
   /* Default styling already applied */
 }
 
 .card-variant-elevated {
+  border: 2px solid var(--color-border-accent);
   box-shadow:
-    0 12px 48px var(--color-black-alpha-12),
-    0 24px 96px var(--color-black-alpha-10),
-    0 48px 192px var(--color-accent-alpha-15);
-  border: 2px solid var(--color-accent-primary);
+    var(--shadow-strong),
+    0 0 40px var(--color-accent-alpha-20),
+    0 0 80px var(--color-accent-alpha-10);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-card-alt) 50%,
+    var(--color-bg-card) 100%
+  );
+}
+
+.card-variant-elevated::before {
+  height: 6px;
+  opacity: 0.8;
+  box-shadow: 0 0 20px var(--color-accent-alpha-50);
 }
 
 .card-variant-outlined {
-  border: 3px solid var(--color-border-default);
+  border: 3px solid var(--color-border-light);
   background: transparent;
+  backdrop-filter: blur(16px) saturate(180%);
   box-shadow: none;
 }
 
 .card-variant-outlined:hover {
-  border-color: var(--color-accent-primary);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-4px) scale(1.005);
+  border-color: var(--color-border-accent);
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-4px) scale(1.01);
+  background: var(--color-bg-card);
 }
 
 .card-variant-minimal {
-  padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
-    clamp(var(--spacing-lg), 4vw, var(--spacing-3xl));
-  border: 1px solid var(--color-border-alpha-20);
+  padding: var(--card-space-xl) var(--card-space-lg);
+  border: 1px solid var(--color-border-light);
   background: var(--color-bg-card);
-  box-shadow: var(--shadow-xs);
+  backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: var(--shadow-soft);
 }
 
-/* Hover & Focus States - Enhanced & Professional */
+/* ============================================
+   HOVER & FOCUS STATES - Enhanced
+   ============================================ */
 @media (hover: hover) {
   .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow:
+      var(--shadow-strong),
+      0 0 40px var(--color-accent-alpha-25),
+      0 0 80px var(--color-accent-alpha-15);
     border-color: var(--color-border-accent);
-    background: var(--color-bg-card-hover);
-  }
-
-  .card:hover .card-title {
-    transform: translateY(-1px);
+    background: linear-gradient(
+      135deg,
+      var(--color-bg-card-hover) 0%,
+      var(--color-bg-card-alt) 100%
+    );
   }
 }
 
 .card:focus-within,
 .card:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: clamp(var(--spacing-xs), 0.4vw, var(--spacing-xs));
-  box-shadow: var(--shadow-focus);
+  outline: 3px solid var(--color-accent-primary);
+  outline-offset: var(--card-space-xs);
+  box-shadow: var(--shadow-focus), var(--shadow-glow-accent);
   border-color: var(--color-accent-primary);
   transform: translateY(-4px) scale(1.005);
 }
 
 .card-variant-elevated:hover {
-  box-shadow: var(--shadow-card-hover);
-  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+    var(--shadow-strong),
+    0 0 60px var(--color-accent-alpha-30),
+    0 0 120px var(--color-accent-alpha-20);
+  transform: translateY(-8px) scale(1.02);
 }
 
 .card-variant-minimal:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-sm);
-  background: var(--color-bg-card);
+  box-shadow: var(--shadow-medium);
+  background: var(--color-bg-card-hover);
 }
 
 /* ============================================
-   Card Header & Title
+   CARD HEADER & TITLE - New Design
    ============================================ */
 .card-header {
   position: relative;
-  margin-bottom: clamp(
-    var(--spacing-lg),
-    4vw,
-    var(--spacing-2xl)
-  ); /* Refined: Better spacing */
-
+  margin-bottom: var(--card-space-lg);
   text-align: center;
-  padding-bottom: clamp(
-    var(--spacing-md),
-    2.5vw,
-    var(--spacing-lg)
-  ); /* Refined: More balanced */
-
+  padding-bottom: var(--card-space-md);
   box-sizing: border-box;
 }
 
 .card-title {
   display: inline-block;
   position: relative;
-  z-index: var(--z-base);
+  z-index: 1;
   margin: 0;
   background: linear-gradient(
     135deg,
     var(--color-text-heading) 0%,
-    var(--color-accent-primary) 40%,
-    var(--color-accent-alt) 60%,
+    var(--color-accent-primary) 30%,
+    var(--color-accent-secondary) 60%,
     var(--color-text-heading) 100%
   );
-  background-size: 300% 300%;
+  background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-  font-weight: 700;
-  line-height: 1.3;
-  transition: var(--transition-hover);
-  letter-spacing: -0.02em;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
   font-family: var(--font-display);
+  transition: filter 0.4s var(--card-ease-smooth);
+  filter: drop-shadow(0 2px 8px var(--color-accent-alpha-20));
+  animation: gradient-flow 8s ease infinite;
   user-select: none;
-  outline: none;
-  filter: drop-shadow(0 2px 8px var(--color-black-alpha-15));
-  animation: gradient-shift 15s ease infinite;
 }
 
-.card-title:focus {
-  color: var(--color-text-on-accent);
-  outline: none;
-}
-
-.card:hover .card-title {
-  color: var(--color-text-on-accent);
-}
-
-/* ============================================
-   Card Body
-   ============================================ */
-.card-body {
-  position: relative;
-  z-index: var(--z-base);
-  color: var(--color-text-body);
-  font-size: clamp(1rem, 2vw, 1.125rem);
-  line-height: 1.75;
-  transition: color var(--transition-base);
-  font-family: var(--font-main);
-  letter-spacing: 0.01em;
-  box-sizing: border-box;
-  padding-top: var(--spacing-3);
-}
-
-.card:hover .card-body {
-  color: var(--color-text-on-accent);
-}
-
-/* ============================================
-   Card Footer
-   ============================================ */
-.card-footer {
-  position: relative;
-  margin-top: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
-  padding-top: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
-  border-top: 2px solid var(--color-border-alpha-30); /* Thicker border */
-  color: var(--color-text-subtle);
-  font-size: clamp(0.9rem, 1.8vw, 1rem); /* Slightly larger */
-  transition:
-    border-color var(--transition-base),
-    color var(--transition-base);
-  box-sizing: border-box;
-}
-
-.card:hover .card-footer {
-  border-top-color: var(--color-border-accent);
-}
-
-/* ============================================
-   Animations
-   ============================================ */
-@keyframes fade-in-card {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes gradient-shift {
+@keyframes gradient-flow {
   0%,
   100% {
     background-position: 0% 50%;
   }
-
   50% {
     background-position: 100% 50%;
   }
 }
 
+.card:hover .card-title {
+  filter: drop-shadow(0 4px 12px var(--color-accent-alpha-30));
+}
+
 /* ============================================
-   Responsive Design - Large Screens
+   CARD BODY - Enhanced
+   ============================================ */
+.card-body {
+  position: relative;
+  z-index: 1;
+  color: var(--color-text-main);
+  font-size: clamp(1.05rem, 2.5vw, 1.15rem);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  font-family: var(--font-main);
+  box-sizing: border-box;
+  padding-top: var(--card-space-sm);
+}
+
+/* ============================================
+   CARD FOOTER - Enhanced
+   ============================================ */
+.card-footer {
+  position: relative;
+  margin-top: var(--card-space-xl);
+  padding-top: var(--card-space-xl);
+  border-top: 2px solid var(--color-border-light);
+  color: var(--color-text-subtle);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  transition:
+    border-color 0.4s var(--card-ease-smooth),
+    color 0.4s var(--card-ease-smooth);
+  box-sizing: border-box;
+}
+
+.card:hover .card-footer {
+  border-top-color: var(--color-border-accent);
+  color: var(--color-text-main);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
    ============================================ */
 @media screen and (width >= 1400px) {
   .card {
-    max-width: 100%;
-    padding: var(--spacing-16) clamp(var(--spacing-12), 6vw, var(--spacing-20));
+    padding: var(--card-space-2xl) var(--card-space-xl);
     border-radius: var(--radius-4xl);
   }
 
   .card-header {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--card-space-xl);
   }
 
   .card-title {
-    font-size: var(--font-size-title-large);
-  }
-}
-
-/* ============================================
-   Responsive Design - Tablet
-   ============================================ */
-@media screen and (width <= 1200px) {
-  .card {
-    max-width: 100%;
-    padding: var(--spacing-2xl)
-      clamp(var(--spacing-lg), 3.5vw, var(--spacing-3xl));
+    font-size: clamp(2rem, 4.5vw, 2.75rem);
   }
 }
 
 @media screen and (width <= 1024px) {
   .card {
-    padding: clamp(var(--spacing-10), 5vw, var(--spacing-12))
-      clamp(var(--spacing-8), 4vw, var(--spacing-10));
-    border-radius: var(--radius-3xl);
+    padding: var(--card-space-xl) var(--card-space-md);
+    border-radius: var(--radius-2xl);
   }
 
   .card-header {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--card-space-md);
   }
 
   .card-title {
-    font-size: var(--font-size-title-responsive);
-    letter-spacing: var(--font-title-spacing);
-  }
-
-  .card-body {
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-relaxed);
-  }
-
-  .card-footer {
-    margin-top: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
   }
 }
 
 @media screen and (width <= 768px) {
   .card {
-    padding: clamp(var(--spacing-8), 4vw, var(--spacing-10))
-      clamp(var(--spacing-6), 3vw, var(--spacing-8));
+    padding: var(--card-space-lg) var(--card-space-md);
     border-radius: var(--radius-2xl);
   }
 
   .card-header {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--card-space-md);
+    padding-bottom: var(--card-space-sm);
   }
 
   .card-title {
-    font-size: var(--font-size-title);
-    letter-spacing: var(--font-title-spacing);
+    font-size: clamp(1.5rem, 4vw, 1.75rem);
   }
 
   .card-body {
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-normal);
-  }
-
-  .card-footer {
-    margin-top: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
-    font-size: var(--font-size-small);
-  }
-
-  .card-variant-minimal {
-    padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl))
-      clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
   }
 }
 
-/* ============================================
-   Responsive Design - Mobile
-   ============================================ */
 @media screen and (width <= 480px) {
   .card {
-    padding: clamp(var(--spacing-6), 3vw, var(--spacing-8))
-      clamp(var(--spacing-4), 2.5vw, var(--spacing-6));
+    padding: var(--card-space-md) var(--card-space-sm);
     border-radius: var(--radius-xl);
   }
 
-  .card-header {
-    margin-bottom: clamp(1rem, 2.5vw, 1.25rem);
-  }
-
   .card-title {
-    font-size: var(--font-size-title-component);
-    letter-spacing: var(--font-title-spacing);
-  }
-
-  .card-body {
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-normal);
-  }
-
-  .card-footer {
-    margin-top: clamp(1rem, 2.5vw, 1.25rem);
-    padding-top: clamp(1rem, 2.5vw, 1.25rem);
-    font-size: var(--font-size-small);
-  }
-
-  .card-variant-minimal {
-    padding: var(--spacing-lg) clamp(var(--spacing-md), 2vw, var(--spacing-lg));
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
   }
 }
 
 /* ============================================
-   Landscape Orientation
-   ============================================ */
-@media screen and (orientation: landscape) and (width <= 768px) {
-  .card {
-    padding: var(--spacing-card-padding-mobile);
-    border-radius: var(--spacing-card-radius-mobile);
-  }
-
-  .card-title {
-    font-size: var(--font-size-title-component);
-  }
-
-  .card-body {
-    font-size: var(--font-size-body);
-  }
-}
-
-/* ============================================
-   Reduced Motion (Accessibility)
+   ACCESSIBILITY & PERFORMANCE
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .card {
+    opacity: 1;
+    transition: none;
     animation: none;
-    transition: var(--transition-opacity);
   }
 
   .card:hover,
@@ -435,25 +364,26 @@
     transform: none;
   }
 
-  .card-title:focus {
-    transform: none;
-  }
-
-  .card:hover .card-title {
-    transform: none;
-  }
-
-  .card-variant-minimal:hover {
-    transform: none;
+  .card-title {
+    animation: none;
+    background-position: 0% 50%;
   }
 }
 
-/* ============================================
-   Print Styles
-   ============================================ */
+@media (prefers-contrast: more) {
+  .card {
+    border: 2px solid var(--color-text-heading);
+  }
+
+  .card-title {
+    -webkit-text-fill-color: var(--color-text-heading);
+    color: var(--color-text-heading);
+  }
+}
+
 @media print {
   .card {
-    padding: var(--spacing-lg);
+    padding: var(--card-space-lg);
     border: 1px solid var(--color-border-default);
     break-inside: avoid;
     box-shadow: none;
@@ -467,23 +397,5 @@
   .card:hover {
     transform: none;
     box-shadow: none;
-  }
-}
-
-/* ============================================
-   High Contrast Mode (Accessibility)
-   ============================================ */
-@media (prefers-contrast: more) {
-  .card {
-    border: 2px solid var(--color-text-heading);
-  }
-
-  .card-title {
-    -webkit-text-fill-color: var(--color-text-heading);
-    color: var(--color-text-heading);
-  }
-
-  .card-footer {
-    border-top-color: var(--color-text-heading);
   }
 }

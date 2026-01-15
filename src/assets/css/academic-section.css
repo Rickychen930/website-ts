@@ -1,534 +1,120 @@
 /**
- * Academic Section - Professional Redesign
- * Efficient, Responsive, Professional Layout
+ * Academic Section - COMPLETE REBUILD
+ * New Modern Timeline & Card Architecture
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - section-specific styles only
- * 
- * Features:
- * - Efficient Grid Layout
- * - Fully Responsive (Mobile, Tablet, Desktop, Landscape)
- * - Professional Design
- * - Performance Optimized
- * - Clean Timeline Integration
- * 
- * Integration:
- * - Imports core CSS system (variables, constants, utilities)
- * - Defines component-specific variables scoped to #academic-section.card
- * - Variables cascade to all child components:
- *   - .academic-items-grid
- *   - .academic-item-wrapper
- *   - .academic-card (AcademicCard component)
- *   - .academic-timeline (AcademicTimeline component)
- * - All child components inherit variables automatically
- * 
- * Color Integration:
- * - ALL colors use variables from _variables.css (NO hardcoded colors)
- * - Academic colors map to core color system:
- *   - --academic-color-primary → --color-accent-primary
- *   - --academic-color-secondary → --color-accent-alt
- *   - --academic-color-graduate → --color-accent-purple
- *   - --academic-color-certificate → --color-accent-secondary
- *   - --academic-color-tertiary → --color-accent-tertiary
- * - All alpha variants use core system (--color-accent-alpha-*)
- * - All background/text/border colors use core system
- * 
- * Component Structure:
- * - AcademicSection (main container with Card wrapper)
- *   - AcademicItemsGrid (grid container)
- *     - AcademicTimeline (timeline visualization)
- *     - AcademicItemWrapper (wrapper for each item)
- *       - AcademicCard (card component)
+ * Architecture:
+ * - Modern timeline design
+ * - Advanced card layouts
+ * - Glassmorphism effects
+ * - Smooth animations
+ * - Responsive system
  */
 
-/* Import core system for constants and variables */
 @import url("./core/index.css");
 
 /* ============================================
-   Component-Specific Variables (DRY)
+   NEW DESIGN TOKENS
    ============================================ */
 #academic-section.card,
 .card#academic-section {
-  /* Spacing - Uses core spacing system */
-  --academic-spacing-xs: var(--spacing-xs);
-  --academic-spacing-sm: var(--spacing-sm);
-  --academic-spacing-md: var(--spacing-md);
-  --academic-spacing-lg: var(--spacing-lg);
-  --academic-spacing-xl: var(--spacing-xl);
-  --academic-spacing-xxl: var(--spacing-3xl);
-
-  /* Colors - Uses core color system */
+  --academic-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --academic-space-sm: clamp(0.75rem, 2vw, 1rem);
+  --academic-space-md: clamp(1rem, 3vw, 1.5rem);
+  --academic-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --academic-space-xl: clamp(2rem, 5vw, 3.5rem);
+  --academic-space-2xl: clamp(3rem, 7vw, 5rem);
   --academic-color-primary: var(--color-accent-primary);
-  --academic-color-primary-light: var(--color-accent-light);
-  --academic-color-primary-dark: var(--color-accent-dark);
-  --academic-color-secondary: var(--color-accent-alt);
-  --academic-color-tertiary: var(--color-accent-tertiary);
-  --academic-color-accent: var(--color-accent-hover);
-  --academic-color-graduate: var(--color-accent-purple);
-  --academic-color-certificate: var(--color-accent-secondary);
-
-  /* Border Radius - Uses core radius system */
-  --academic-radius-sm: var(--radius-sm);
-  --academic-radius-md: var(--radius-md);
-  --academic-radius-lg: var(--radius-lg);
-  --academic-radius-xl: var(--radius-xl);
-  --academic-radius-xxl: var(--radius-lg);
-
-  /* Icon Sizes - Reusable */
-  --academic-icon-size-xs: 2.75rem;
-  --academic-icon-size-sm: 3rem;
-  --academic-icon-size-md: 3.25rem;
-  --academic-icon-size-lg: 3.5rem;
-  --academic-icon-emoji-size-xs: 1.25rem;
-  --academic-icon-emoji-size-sm: 1.35rem;
-  --academic-icon-emoji-size-md: 1.4rem;
-  --academic-icon-emoji-size-lg: 1.5rem;
-
-  /* Timeline Sizes - Reusable */
-  --academic-timeline-width-xs: 2px;
-  --academic-timeline-width-sm: 2.5px;
-  --academic-timeline-width-md: 3px;
-  --academic-timeline-width-lg: 4px;
-  --academic-timeline-dot-size-xs: 10px;
-  --academic-timeline-dot-size-sm: 12px;
-  --academic-timeline-dot-size-md: 13px;
-  --academic-timeline-dot-size-lg: 14px;
-  --academic-timeline-dot-border-xs: 2px;
-  --academic-timeline-dot-border-sm: 2.5px;
-  --academic-timeline-dot-border-md: 2.5px;
-  --academic-timeline-dot-border-lg: 3px;
-
-  /* Padding - Reusable */
-  --academic-padding-xs: var(--academic-spacing-xs);
-  --academic-padding-sm: var(--academic-spacing-sm);
-  --academic-padding-md: var(--academic-spacing-md);
-  --academic-padding-lg: var(--academic-spacing-lg);
-  --academic-padding-xl: var(--academic-spacing-xl);
-  --academic-card-padding-xs: 1rem;
-  --academic-card-padding-sm: 1.25rem;
-  --academic-card-padding-md: 1.5rem;
-  --academic-card-padding-lg: 1.75rem;
-  --academic-card-padding-xl: 2rem;
-
-  /* Wrapper Padding - Reusable */
-  --academic-wrapper-padding-xs: 0;
-  --academic-wrapper-padding-sm: 0;
-  --academic-wrapper-padding-md: 3rem;
-  --academic-wrapper-padding-lg: 3.5rem;
-  --academic-wrapper-padding-xl: 4rem;
-  --academic-wrapper-padding-xxl: 4.5rem;
-  --academic-wrapper-padding-xxxl: 5rem;
-
-  /* Timeline Position - Reusable */
-  --academic-timeline-left-xs: 0.5rem;
-  --academic-timeline-left-sm: 0.75rem;
-  --academic-timeline-left-md: 1rem;
-  --academic-timeline-left-lg: 1.25rem;
-
-  /* Font Sizes - Reusable */
-  --academic-font-size-xs: 0.65rem;
-  --academic-font-size-sm: 0.7rem;
-  --academic-font-size-md: 0.85rem;
-  --academic-font-size-lg: 0.9rem;
-  --academic-font-size-xl: 0.95rem;
-  --academic-font-size-xxl: 1rem;
-  --academic-font-size-title-xs: 1.1rem;
-  --academic-font-size-title-sm: 1.15rem;
-  --academic-font-size-title-md: clamp(1.25rem, 2vw, 1.5rem);
-  --academic-font-size-institution-sm: 0.9rem;
-  --academic-font-size-institution-md: clamp(1rem, 1.4vw, 1.15rem);
-  --academic-font-size-description-xs: 0.85rem;
-  --academic-font-size-description-sm: 0.9rem;
-  --academic-font-size-description-md: clamp(0.95rem, 1.3vw, 1.05rem);
-  --academic-font-size-period-xs: 0.8rem;
-  --academic-font-size-period-md: clamp(0.85rem, 1.1vw, 0.95rem);
-  --academic-font-size-empty-xs: 0.875rem;
-  --academic-font-size-empty-sm: 0.95rem;
-  --academic-font-size-empty-md: clamp(1rem, 1.5vw, 1.2rem);
-
-  /* Icon Sizes - Reusable */
-  --academic-icon-empty-xs: 2rem;
-  --academic-icon-empty-sm: 2.5rem;
-  --academic-icon-empty-md: 3rem;
-  --academic-icon-empty-lg: 4rem;
-
-  /* Empty State - Reusable */
-  --academic-empty-min-height-xs: 150px;
-  --academic-empty-min-height-sm: 180px;
-  --academic-empty-min-height-md: 200px;
-  --academic-empty-min-height-lg: 300px;
-
-  /* Gaps - Reusable */
-  --academic-gap-xs: var(--academic-spacing-sm);
-  --academic-gap-sm: var(--academic-spacing-md);
-  --academic-gap-md: var(--academic-spacing-lg);
-  --academic-gap-lg: var(--academic-spacing-xl);
-  --academic-gap-xl: var(--academic-spacing-xxl);
-  --academic-card-gap-xs: 1rem;
-  --academic-card-gap-md: 1.25rem;
-  --academic-card-gap-lg: 1.5rem;
-  --academic-header-gap-sm: 0.75rem;
-  --academic-header-gap-md: 1rem;
-
-  /* Shadows - Uses core shadow system */
-  --academic-shadow-card: var(--shadow-card);
-  --academic-shadow-card-hover: var(--shadow-card-hover);
-
-  /* Transitions - Uses core transition system */
-  --academic-transition-smooth: var(--transition-smooth);
-  --academic-transition-bounce: var(--transition-bounce);
-  --academic-transition-fast: 0.3s ease;
-  --academic-transition-base: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --academic-transition-slow: 0.6s ease;
-  --academic-transition-timeline: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Z-Index - Reusable */
-  --academic-z-base: 1;
-  --academic-z-content: 2;
-  --academic-z-icon: 10;
-  --academic-z-timeline: 3;
-
-  /* Opacity - Reusable */
-  --academic-opacity-hidden: 0;
-  --academic-opacity-visible: 1;
-  --academic-opacity-icon: 0.7;
-  --academic-opacity-glow: 0.6;
-  --academic-opacity-glow-hover: 1;
-
-  /* Transform - Reusable */
-  --academic-transform-hover-y: -4px;
-  --academic-transform-hover-y-mobile: -2px;
-  --academic-transform-hidden-y: 20px;
-  --academic-transform-scale-hover: 1.1;
-  --academic-transform-scale-period: translateY(-2px);
-
-  /* Animation Delays - Reusable */
-  --academic-animation-delay-1: 0ms;
-  --academic-animation-delay-2: 100ms;
-  --academic-animation-delay-3: 200ms;
-  --academic-animation-delay-4: 300ms;
-  --academic-animation-delay-5: 400ms;
-  --academic-animation-duration: 0.6s;
-
-  /* Horizontal Scroll - Reusable */
-  --academic-scrollbar-height-sm: 6px;
-  --academic-scrollbar-height-md: 8px;
-  --academic-horizontal-gap-sm: var(--spacing-5);
-  --academic-horizontal-gap-md: var(--spacing-6);
-  --academic-horizontal-padding-sm: var(--spacing-4);
-  --academic-horizontal-padding-md: var(--spacing-6);
-  --academic-horizontal-margin-sm: var(--spacing-4);
-  --academic-horizontal-margin-md: var(--spacing-6);
-  --academic-section-padding-bottom: var(--spacing-8);
-}
-
-/* ─── Global Reset ─── */
-#academic-section *,
-#academic-section.card *,
-.card#academic-section * {
-  box-sizing: border-box;
-}
-
-/* ─── Variables Inheritance ─── */
-
-/* Ensure all child components can access academic variables */
-
-/* Variables cascade from #academic-section.card to all children */
-#academic-section,
-#academic-section.card,
-.card#academic-section {
-  /* All variables are defined above in the component-specific variables section */
-
-  /* They will cascade to all children: .academic-items-grid, .academic-card, .academic-timeline, etc. */
+  --academic-color-secondary: var(--color-accent-secondary);
+  --academic-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --academic-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
-   Main Container - Modern Layout
+   CONTAINER - New Layout
    ============================================ */
 .academic-items-container {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12)) 0;
-  box-sizing: border-box;
-}
-
-/* ============================================
-   Carousel Container - Modern Design
-   ============================================ */
-.academic-items-carousel {
-  position: relative;
-  width: 100%;
-  padding: clamp(var(--spacing-4), 3vw, var(--spacing-8)) 0;
-}
-
-.academic-item-wrapper {
-  position: relative;
-  width: 100%;
+  padding: var(--academic-space-xl) 0;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
-  animation: academic-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: transform, opacity;
+}
+
+.academic-items-container::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background:
+    radial-gradient(
+      ellipse 100% 60% at 40% 30%,
+      var(--color-accent-alpha-05) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 100% 60% at 60% 70%,
+      var(--color-accent-secondary-alpha-04) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 /* ============================================
-   Responsive Design - Mobile First
+   GRID - New Design
    ============================================ */
-
-/* Extra Small Devices (320px - 480px) */
-@media screen and (width <= 480px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-md, 1.5rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-sm, 1rem) 0;
-  }
-
-  .academic-item-wrapper {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* Small Mobile (481px - 575px) */
-@media screen and (width >= 481px) and (width <= 575px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-lg, 2rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-md, 1.5rem) 0;
-  }
-}
-
-/* Mobile (576px - 767px) */
-@media screen and (width >= 576px) and (width <= 767px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-xl, 3rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-lg, 2rem) 0;
-  }
-}
-
-/* Tablet Portrait (768px - 991px) */
-@media screen and (width >= 768px) and (width <= 991px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-xl, 3rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-xl, 3rem) 0;
-  }
-}
-
-/* Tablet Landscape & Small Desktop (992px - 1199px) */
-@media screen and (width >= 992px) and (width <= 1199px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-2xl, 4rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-xl, 3rem) 0;
-  }
-}
-
-/* Desktop (1200px - 1399px) */
-@media screen and (width >= 1200px) and (width <= 1399px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-3xl, 5rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-2xl, 4rem) 0;
-  }
-}
-
-/* Large Desktop (1400px+) */
-@media screen and (width >= 1400px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-3xl, 5rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-2xl, 4rem) 0;
-  }
-}
-
-/* Landscape Orientation - Mobile/Tablet */
-@media screen and (orientation: landscape) and (width <= 991px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-lg, 2rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-md, 1.5rem) 0;
-  }
-}
-
-/* Landscape Orientation - Tablet */
-@media screen and (orientation: landscape) and (width >= 992px) and (width <= 1199px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-xl, 3rem) 0;
-  }
+.academic-items-grid {
+  display: grid;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: var(--academic-space-lg) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+  gap: var(--academic-space-xl);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ============================================
-   Empty State
+   TIMELINE - New Design
    ============================================ */
-.academic-empty-state {
+.academic-timeline {
   display: flex;
-  padding: var(--academic-spacing-xl, 3rem) var(--academic-spacing-lg, 2rem);
-  border: 1px solid var(--color-accent-alpha-10);
-  background: var(--color-bg-card-alt);
-  text-align: center;
+  position: relative;
+  width: 100%;
+  padding: var(--academic-space-lg) 0;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--academic-empty-min-height-lg, 300px);
-  border-radius: var(--academic-radius-xxl, 16px);
+  gap: var(--academic-space-xl);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.academic-empty-icon {
-  font-size: var(--academic-icon-empty-lg, 4rem);
-  margin-bottom: var(--academic-spacing-md, 1.5rem);
-  opacity: var(--academic-opacity-icon, 0.7);
-}
-
-.academic-empty-text {
-  margin: 0;
-  color: var(--color-text-subtle);
-  font-size: var(--academic-font-size-empty-md, clamp(1rem, 1.5vw, 1.2rem));
-}
-
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media screen and (width <= 768px) {
-  .academic-empty-state {
-    width: 100%;
-    padding: var(--academic-spacing-lg, 2rem) var(--academic-spacing-md, 1.5rem);
-    min-height: var(--academic-empty-min-height-md, 200px);
-    max-width: 100%;
-    box-sizing: border-box;
+  .academic-items-container {
+    padding: var(--academic-space-lg) 0;
   }
 
-  .academic-empty-icon {
-    font-size: var(--academic-icon-empty-md, 3rem);
+  .academic-items-grid {
+    gap: var(--academic-space-lg);
+    grid-template-columns: 1fr;
+  }
+
+  .academic-timeline {
+    gap: var(--academic-space-md);
   }
 }
 
 @media screen and (width <= 480px) {
-  .academic-empty-state {
-    padding: var(--academic-spacing-md, 1.5rem) var(--academic-spacing-sm, 1rem);
-    min-height: var(--academic-empty-min-height-sm, 180px);
-  }
-
-  .academic-empty-icon {
-    font-size: var(--academic-icon-empty-sm, 2.5rem);
-  }
-
-  .academic-empty-text {
-    font-size: var(--academic-font-size-empty-sm, 0.95rem);
+  .academic-items-grid {
+    gap: var(--academic-space-md);
   }
 }
 
-/* ============================================
-   Modern Animations
-   ============================================ */
-@keyframes academic-fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.academic-item-wrapper:nth-child(1) {
-  animation-delay: var(--academic-animation-delay-1, 0ms);
-}
-
-.academic-item-wrapper:nth-child(2) {
-  animation-delay: var(--academic-animation-delay-2, 100ms);
-}
-
-.academic-item-wrapper:nth-child(3) {
-  animation-delay: var(--academic-animation-delay-3, 200ms);
-}
-
-.academic-item-wrapper:nth-child(4) {
-  animation-delay: var(--academic-animation-delay-4, 300ms);
-}
-
-.academic-item-wrapper:nth-child(n + 5) {
-  animation-delay: var(--academic-animation-delay-5, 400ms);
-}
-
-/* ============================================
-   Reduced Motion (Accessibility)
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .academic-item-wrapper {
+  .academic-items-container::before {
     animation: none;
-  }
-}
-
-/* ============================================
-   Very Small Devices (320px - 360px)
-   ============================================ */
-@media screen and (width <= 360px) {
-  .academic-items-container {
-    padding: var(--academic-spacing-sm, 1rem) 0;
-  }
-
-  .academic-items-carousel {
-    padding: var(--academic-spacing-xs, 0.75rem) 0;
-  }
-
-  .academic-empty-state {
-    padding: var(--academic-spacing-md, 1.5rem)
-      var(--academic-spacing-xs, 0.75rem);
-    min-height: var(--academic-empty-min-height-xs, 150px);
-  }
-
-  .academic-empty-icon {
-    font-size: var(--academic-icon-empty-xs, 2rem);
-  }
-
-  .academic-empty-text {
-    font-size: var(--academic-font-size-empty-xs, 0.875rem);
-  }
-}
-
-/* ============================================
-   High DPI / Retina Displays
-   ============================================ */
-@media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
-  .academic-card-content {
-    border-width: 0.5px;
-  }
-}
-
-/* ============================================
-   Print Styles
-   ============================================ */
-@media print {
-  .academic-items-container {
-    padding: var(--spacing-md) 0;
-  }
-
-  .academic-item-wrapper {
-    break-inside: avoid;
-  }
-
-  .academic-card-content {
-    box-shadow: none;
-    border: 1px solid var(--color-border-alpha-50);
   }
 }
