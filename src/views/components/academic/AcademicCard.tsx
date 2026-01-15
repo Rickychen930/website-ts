@@ -1,6 +1,6 @@
 /**
- * AcademicCard Component
- * Reusable card component for displaying academic achievements
+ * AcademicCard Component - Modern Redesign
+ * Professional, Luxury, Glassmorphism Design
  *
  * Principles Applied:
  * - Single Responsibility: Displays single academic item
@@ -27,7 +27,7 @@ export interface IAcademicCardProps {
 
 /**
  * AcademicCard Component
- * Displays a single academic achievement in a luxury card design
+ * Modern redesign with glassmorphism, 3D effects, and sophisticated animations
  */
 export class AcademicCard extends PureComponent<IAcademicCardProps> {
   /**
@@ -53,28 +53,46 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
   }
 
   /**
-   * Render icon
+   * Render animated background pattern
+   */
+  private renderBackgroundPattern(): ReactNode {
+    return (
+      <>
+        <div className="academic-card-pattern" aria-hidden="true"></div>
+        <div className="academic-card-glass" aria-hidden="true"></div>
+        <div className="academic-card-gradient" aria-hidden="true"></div>
+      </>
+    );
+  }
+
+  /**
+   * Render icon with modern design
    */
   private renderIcon(): ReactNode {
     const { item } = this.props;
     return (
       <div className="academic-card-icon" aria-hidden="true">
-        <div className="academic-card-icon-inner">
-          <span className="academic-card-icon-emoji">{item.icon || "🎓"}</span>
+        <div className="academic-card-icon-outer">
+          <div className="academic-card-icon-inner">
+            <span className="academic-card-icon-emoji">
+              {item.icon || "🎓"}
+            </span>
+          </div>
+          <div className="academic-card-icon-glow"></div>
+          <div className="academic-card-icon-ring"></div>
         </div>
-        <div className="academic-card-icon-glow"></div>
       </div>
     );
   }
 
   /**
-   * Render header section
+   * Render header section with modern typography
    */
   private renderHeader(): ReactNode {
     const { item } = this.props;
     return (
       <div className="academic-card-header">
-        <div className="academic-card-title-wrapper">
+        <div className="academic-card-title-section">
           <h3 className="academic-card-title">
             {item.title || "Academic Achievement"}
           </h3>
@@ -83,14 +101,19 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
           </span>
         </div>
         {item.institution && (
-          <div className="academic-card-institution">{item.institution}</div>
+          <div className="academic-card-institution">
+            <span className="academic-card-institution-icon">🏛️</span>
+            <span className="academic-card-institution-text">
+              {item.institution}
+            </span>
+          </div>
         )}
       </div>
     );
   }
 
   /**
-   * Render period badge
+   * Render period badge with modern design
    */
   private renderPeriod(): ReactNode {
     const { item } = this.props;
@@ -100,6 +123,7 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
 
     return (
       <div className="academic-card-period">
+        <div className="academic-card-period-icon">📅</div>
         <time dateTime={item.period} className="academic-card-period-text">
           {item.period}
         </time>
@@ -108,7 +132,7 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
   }
 
   /**
-   * Render description
+   * Render description with modern styling
    */
   private renderDescription(): ReactNode {
     const { item } = this.props;
@@ -138,8 +162,8 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
       .join(" ");
 
     const style = {
-      animationDelay: `${index * 150}ms`,
-      transitionDelay: `${index * 150}ms`,
+      animationDelay: `${index * 120}ms`,
+      transitionDelay: `${index * 120}ms`,
     } as React.CSSProperties;
 
     return (
@@ -150,6 +174,7 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
         data-index={index}
         aria-label={`Academic achievement: ${item.title} at ${item.institution}`}
       >
+        {this.renderBackgroundPattern()}
         <div className="academic-card-content">
           {this.renderIcon()}
           <div className="academic-card-body">
@@ -158,6 +183,7 @@ export class AcademicCard extends PureComponent<IAcademicCardProps> {
             {this.renderDescription()}
           </div>
         </div>
+        <div className="academic-card-shine" aria-hidden="true"></div>
         <div className="academic-card-glow"></div>
       </article>
     );

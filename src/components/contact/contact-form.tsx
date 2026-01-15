@@ -198,7 +198,23 @@ export class ContactForm extends Component<{}, ContactFormState> {
   private submitForm = async (
     data: ContactFormState["formData"],
   ): Promise<void> => {
-    const apiUrl = process.env.REACT_APP_API_URL || "";
+    // Get API URL with fallback options
+    let apiUrl = process.env.REACT_APP_API_URL || "";
+
+    // Fallback: If no API URL is set, try to use current origin
+    if (!apiUrl) {
+      if (typeof window !== "undefined") {
+        // In browser, use current origin
+        apiUrl = window.location.origin;
+      } else {
+        // Fallback for SSR or development
+        apiUrl = "http://localhost:4000";
+      }
+    }
+
+    // Remove trailing slash from API URL
+    apiUrl = apiUrl.replace(/\/$/, "");
+
     const endpoint = `${apiUrl}/api/contact`;
 
     // Edge case: Add timeout to prevent hanging requests
@@ -206,6 +222,11 @@ export class ContactForm extends Component<{}, ContactFormState> {
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
     try {
+      // Log API endpoint in development for debugging
+      if (process.env.NODE_ENV === "development") {
+        console.log("[ContactForm] Submitting to:", endpoint);
+      }
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -213,6 +234,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
         },
         body: JSON.stringify(data),
         signal: controller.signal,
+        credentials: "include", // Include cookies for CORS
       });
 
       clearTimeout(timeoutId);
@@ -221,10 +243,23 @@ export class ContactForm extends Component<{}, ContactFormState> {
         const errorData = await response.json().catch(() => ({
           error: `Server error: ${response.status}`,
         }));
-        throw new Error(
+
+        // Better error messages based on status code
+        let errorMessage =
           errorData.error ||
-            `HTTP ${response.status}: Failed to submit contact form`,
-        );
+          `HTTP ${response.status}: Failed to submit contact form`;
+
+        if (response.status === 400) {
+          errorMessage =
+            errorData.error || "Please check your form data and try again.";
+        } else if (response.status === 429) {
+          errorMessage =
+            "Too many requests. Please wait a moment and try again.";
+        } else if (response.status >= 500) {
+          errorMessage = "Server error. Please try again later.";
+        }
+
+        throw new Error(errorMessage);
       }
 
       const result = await response.json().catch(() => ({ success: true }));
@@ -243,10 +278,11 @@ export class ContactForm extends Component<{}, ContactFormState> {
         }
         if (
           error.message.includes("Failed to fetch") ||
-          error.message.includes("NetworkError")
+          error.message.includes("NetworkError") ||
+          error.message.includes("CORS")
         ) {
           throw new Error(
-            "Network error. Please check your connection and try again.",
+            "Unable to connect to server. Please check your connection and try again.",
           );
         }
         throw error;

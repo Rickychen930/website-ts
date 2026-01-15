@@ -93,7 +93,11 @@ app.use(
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         scriptSrc: ["'self'"],
         imgSrc: ["'self'", "data:", "https:"],
-        connectSrc: ["'self'"],
+        // Allow API connections from same origin and configured origins
+        connectSrc: [
+          "'self'",
+          ...(allowedOrigins.length > 0 ? allowedOrigins : []),
+        ],
         frameSrc: ["'none'"],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: NODE_ENV === "production" ? [] : null,

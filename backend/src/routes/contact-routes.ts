@@ -64,10 +64,26 @@ router.post(
   contactFormValidation,
   async (req: express.Request, res: express.Response) => {
     try {
+      // Log incoming request for debugging
+      logger.info(
+        "Contact form submission received",
+        {
+          origin: req.get("origin"),
+          ip: req.ip || req.socket.remoteAddress,
+        },
+        "ContactRoutes",
+      );
+
       // Check validation errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        logger.warn(
+          "Contact form validation failed",
+          { errors: errors.array() },
+          "ContactRoutes",
+        );
         return res.status(400).json({
+          success: false,
           error: "Validation failed",
           errors: errors.array(),
         });
@@ -83,6 +99,12 @@ router.post(
         message: message.trim(),
       });
 
+      logger.info(
+        "Contact message created successfully",
+        { id: contactMessage._id, email: contactMessage.email },
+        "ContactRoutes",
+      );
+
       res.status(201).json({
         success: true,
         message: "Contact message submitted successfully",
@@ -97,11 +119,15 @@ router.post(
           error.message.includes("required") ||
           error.message.includes("Invalid")
         ) {
-          return res.status(400).json({ error: error.message });
+          return res.status(400).json({
+            success: false,
+            error: error.message,
+          });
         }
       }
 
       res.status(500).json({
+        success: false,
         error: "Failed to submit contact message. Please try again later.",
       });
     }

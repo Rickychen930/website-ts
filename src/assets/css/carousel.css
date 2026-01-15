@@ -38,6 +38,7 @@
   width: 100%;
   padding: var(--carousel-padding-vertical, var(--spacing-md)) 0;
   flex-direction: row;
+  align-items: stretch; /* Ensure all items have same height */
   overflow: auto hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -123,17 +124,23 @@
 
 /* ─── Carousel Items ─── */
 .carousel-item {
+  display: flex;
   flex: 0 0 auto;
+  height: 100%;
   scroll-snap-align: start;
-  transition: transform var(--transition-base);
+  align-items: stretch; /* Ensure all items have same height */
   box-sizing: border-box;
   overflow: hidden; /* Prevent content from expanding beyond item width */
+  transition: transform var(--transition-base);
 }
 
 /* Ensure all direct children of carousel items respect width constraints */
 .carousel-item > * {
-  max-width: 100%;
+  display: flex;
   width: 100%;
+  max-width: 100%;
+  height: 100%;
+  flex-direction: column;
   box-sizing: border-box;
   overflow: hidden; /* Prevent content from expanding beyond item width */
 }
@@ -146,10 +153,12 @@
 .carousel-item .work-experience-card,
 .carousel-item .honor-card,
 .carousel-item .language-card,
-.carousel-item .soft-skill-card {
+.carousel-item .soft-skill-card,
+.carousel-item .skill-category-card {
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .carousel-item:hover {

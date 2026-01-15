@@ -10,6 +10,8 @@
   width: 100%;
   min-width: 320px;
   max-width: 400px;
+  height: 100%;
+  min-height: 420px;
   padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
     clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
   border: 2px solid var(--color-border-light);
@@ -20,6 +22,7 @@
     border-color var(--transition-base),
     background var(--transition-base);
   flex-direction: column;
+  justify-content: flex-start;
   border-radius: var(--radius-xl, 20px);
   box-shadow:
     0 8px 32px var(--color-black-alpha-08),
@@ -75,6 +78,7 @@
   margin-bottom: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
   padding-bottom: var(--spacing-md);
   text-align: center;
+  flex-shrink: 0;
 }
 
 .skill-category-card__icon-wrapper {
@@ -162,7 +166,8 @@
   max-width: 100%;
   box-sizing: border-box;
   overflow: visible;
-  justify-content: center;
+  place-content: flex-start center;
+  flex: 1;
 }
 
 .skill-category-card__empty {
@@ -178,6 +183,7 @@
   .skill-category-card {
     min-width: 300px;
     max-width: 360px;
+    min-height: 400px;
     padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl))
       clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
   }
@@ -200,6 +206,7 @@
   .skill-category-card {
     min-width: 280px;
     max-width: 340px;
+    min-height: 380px;
     padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl))
       clamp(var(--spacing-md), 2vw, var(--spacing-lg));
   }
@@ -227,6 +234,7 @@
   .skill-category-card {
     min-width: 260px;
     max-width: 320px;
+    min-height: 360px;
     padding: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg))
       clamp(var(--spacing-sm), 2vw, var(--spacing-md));
   }
@@ -268,6 +276,7 @@
   .skill-category-card {
     min-width: 240px;
     max-width: 300px;
+    min-height: 340px;
     padding: var(--spacing-md) var(--spacing-sm);
   }
 
