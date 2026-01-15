@@ -42,11 +42,7 @@ export class ProjectGrid extends PureComponent<ProjectGridProps> {
    */
   private getClassNames(): string {
     const { className = "", layout = "carousel" } = this.props;
-    const classes = [
-      "project-grid",
-      `project-grid-layout-${layout}`,
-      className,
-    ];
+    const classes = ["project", `project-layout-${layout}`, className];
     return classes.filter(Boolean).join(" ");
   }
 

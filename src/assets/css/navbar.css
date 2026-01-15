@@ -523,6 +523,7 @@
   margin: 0;
   padding: 0;
   white-space: nowrap;
+  overflow: visible;
 }
 
 .navbar-links li {
@@ -1077,7 +1078,7 @@
   position: absolute;
   top: calc(100% + 0.75rem);
   left: 50%;
-  z-index: 1000;
+  z-index: 10000;
   border: 1px solid var(--color-border-alpha-60);
   background: linear-gradient(
     180deg,
@@ -1103,7 +1104,7 @@
   backdrop-filter: blur(var(--navbar-blur-strong)) saturate(220%)
     brightness(1.05);
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
   will-change: transform, opacity;
   filter: blur(4px);
 }
@@ -1181,8 +1182,6 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   transform: translateX(-10px);
-  animation: dropdown-item-slide-in var(--transition-smooth)
-    cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes dropdown-item-slide-in {
@@ -1217,7 +1216,9 @@
   box-shadow: 0 2px 8px var(--color-black-alpha-08);
 }
 
-.navbar-dropdown.open .navbar-dropdown-item {
+.navbar-dropdown.open .navbar-dropdown-menu .navbar-dropdown-item {
+  opacity: var(--opacity-1) !important;
+  transform: translateX(0);
   animation: dropdown-item-slide-in var(--transition-fast) var(--easing-bounce)
     forwards;
 }
