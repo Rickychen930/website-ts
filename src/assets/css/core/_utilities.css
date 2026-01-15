@@ -233,7 +233,7 @@
 }
 
 .hover-lift:hover {
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(-4px) scale(1.01); /* Improved: Consistent with other hover effects */
   box-shadow:
     var(--shadow-md),
     0 0 24px var(--color-accent-alpha-15);

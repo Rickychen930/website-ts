@@ -90,7 +90,7 @@
    Element: Empty State Title
    ============================================ */
 .empty-state__title {
-  margin: 0 0 clamp(var(--spacing-4), 2.5vw, var(--spacing-5));
+  margin: 0 0 var(--spacing-md, 1rem); /* Improved: Consistent spacing */
   background: linear-gradient(
     135deg,
     var(--color-text-heading) 0%,
@@ -99,16 +99,16 @@
     var(--color-accent-secondary) 65%,
     var(--color-text-heading) 100%
   );
-  background-size: 300% 300%; /* More dynamic */
+  background-size: 200% 200%; /* Improved: Standard gradient size */
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.5rem, 4.5vw, 2rem); /* Larger, bolder */
-  font-weight: var(--font-weight-bold); /* Bolder */
-  line-height: 1.15; /* Tighter for bold look */
+  font-size: clamp(1.25rem, 3.5vw, 1.875rem); /* Improved: More balanced sizing */
+  font-weight: 700; /* Improved: Less heavy */
+  line-height: var(--line-height-tight, 1.2); /* Improved: Use system variable */
   font-family: var(--font-display);
   filter: drop-shadow(0 2px 8px var(--color-black-alpha-15));
-  animation: gradient-shift 8s ease infinite;
-  letter-spacing: -0.02em; /* Tighter spacing */
+  animation: gradient-flow 8s ease infinite; /* Improved: Use standard animation */
+  letter-spacing: var(--letter-spacing-tight, -0.02em); /* Improved: Use system variable */
 }
 
 /* ============================================
@@ -117,13 +117,13 @@
 .empty-state__message {
   margin: 0;
   color: var(--color-text-subtle);
-  font-size: clamp(1rem, 2.5vw, 1.125rem); /* Larger */
-  font-weight: var(--font-weight-medium);
-  line-height: 1.8; /* More relaxed */
-  max-width: clamp(400px, 80vw, 600px);
+  font-size: var(--font-responsive-base, clamp(1rem, 2vw, 1.125rem)); /* Improved: Use system variable */
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
+  max-width: 65ch; /* Improved: Optimal reading width */
   font-family: var(--font-main);
-  letter-spacing: 0.01em; /* Slight spacing */
-  opacity: 0.85; /* More visible */
+  letter-spacing: 0;
+  opacity: 0.9; /* Improved: Better visibility */
 }
 
 /* ============================================

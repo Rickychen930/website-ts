@@ -187,7 +187,7 @@
 
 /* Card Hover State */
 .card-modern-base:hover {
-  transform: translateY(var(--card-hover-translate-y)) scale(var(--card-hover-scale));
+  transform: translateY(-6px) scale(1.01); /* Improved: Subtler, more professional hover */
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   border-color: var(--color-border-accent);
 }

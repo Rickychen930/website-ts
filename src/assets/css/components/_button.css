@@ -80,10 +80,11 @@
    Button Variants
    ============================================ */
 .btn--primary {
-  background: var(--color-accent-primary);
+  background: var(--gradient-accent); /* Improved: Use gradient for depth */
   color: var(--color-text-on-accent);
   border-color: transparent;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md); /* Improved: Better depth */
+  font-weight: var(--font-weight-semibold, 600);
 }
 
 .btn--primary::before {
@@ -92,10 +93,10 @@
 
 .btn--primary:hover {
   background: var(--gradient-accent-full);
-  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale-subtle));
+  transform: translateY(-2px) scale(1.02); /* Improved: Subtler, more professional */
   box-shadow:
-    var(--shadow-md),
-    0 0 20px var(--color-accent-alpha-25);
+    var(--shadow-lg),
+    0 0 24px var(--color-accent-alpha-30); /* Improved: Better glow */
 }
 
 .btn--primary:active {
@@ -233,7 +234,7 @@
     0 0 0 1px var(--color-accent-primary),
     0 0 20px var(--color-accent-alpha-20);
   z-index: 1;
-  transform: scale(1.02);
+  transform: scale(1.01); /* Improved: Subtler focus state */
 }
 
 .btn:disabled,

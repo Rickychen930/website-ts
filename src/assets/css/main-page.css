@@ -152,10 +152,11 @@
   margin: 0 auto;
   padding: var(--space-fluid-3xl) var(--space-fluid-lg);
   padding-top: calc(var(--navbar-height) + var(--space-fluid-3xl));
-  max-width: 1600px;
+  max-width: 1280px; /* Improved: Better reading width */
   flex-direction: column;
   gap: var(--space-fluid-4xl);
   flex: 1;
+  box-sizing: border-box;
 }
 
 /* ============================================
@@ -182,9 +183,10 @@
   margin-bottom: 0;
   will-change: opacity, transform;
   backdrop-filter: blur(24px) saturate(190%);
-  border-radius: var(--radius-3xl);
+  border-radius: var(--radius-2xl); /* Improved: More consistent radius */
   box-shadow: var(--shadow-medium);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .section-block::before {
@@ -262,7 +264,7 @@
 .section-title {
   display: inline-block;
   position: relative;
-  margin: 0 0 var(--space-fluid-md);
+  margin: 0 0 var(--space-fluid-lg); /* Improved: Better spacing */
 
   /* New Gradient Text Effect */
   background: linear-gradient(
@@ -273,10 +275,10 @@
     var(--color-text-heading) 100%
   );
   color: var(--color-text-heading);
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.25rem, 5.5vw, 3.5rem); /* Improved: More balanced sizing */
+  font-weight: 700; /* Improved: Less heavy, more professional */
+  line-height: 1.2; /* Improved: Better line-height */
+  letter-spacing: -0.02em; /* Improved: Less tight */
   font-family: var(--font-display);
   background-size: 200% 200%;
   background-clip: text;
@@ -296,12 +298,12 @@
 }
 
 .section-block--primary .section-title {
-  font-size: clamp(3rem, 7vw, 4.5rem);
-  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 3.5rem); /* Improved: More balanced sizing */
+  font-weight: 700; /* Improved: Less heavy, more professional */
 }
 
 .section-block--secondary .section-title {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.875rem, 4.5vw, 2.5rem); /* Improved: More balanced sizing */
   font-weight: 700;
 }
 
@@ -356,10 +358,11 @@
 
 .section-content p {
   color: var(--color-text-main);
-  font-size: clamp(1.05rem, 2.5vw, 1.2rem);
-  line-height: 1.75;
-  letter-spacing: 0.01em;
-  margin-bottom: var(--space-fluid-md);
+  font-size: var(--font-responsive-base); /* Improved: Use system variable */
+  line-height: var(--line-height-relaxed, 1.75);
+  letter-spacing: 0;
+  margin-bottom: var(--spacing-md, 1rem);
+  max-width: 65ch; /* Improved: Optimal reading width */
 }
 
 .section-content h2,
@@ -401,16 +404,16 @@
 .section-group-title {
   position: relative;
   width: 100%;
-  margin: 0 0 var(--space-fluid-2xl);
-  padding: var(--space-fluid-lg) 0;
+  margin: 0 0 var(--spacing-xl, 2rem); /* Improved: Consistent spacing */
+  padding: var(--spacing-lg, 1.5rem) 0;
   background: var(--gradient-accent-full);
   background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 800;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem); /* Improved: More balanced sizing */
+  font-weight: 700; /* Improved: Less heavy */
   text-align: center;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide, 0.025em); /* Improved: Use system variable */
   text-transform: uppercase;
   font-family: var(--font-display);
   animation: gradient-flow 8s ease infinite;
@@ -626,43 +629,50 @@
 }
 
 .error-title {
-  margin: 0 0 var(--space-fluid-lg);
+  margin: 0 0 var(--spacing-md, 1rem); /* Improved: Consistent spacing */
   color: var(--color-text-heading);
-  font-size: var(--font-size-title-large);
-  font-weight: var(--font-weight-title);
-  letter-spacing: var(--font-title-spacing);
+  font-size: var(--font-responsive-2xl, clamp(1.875rem, 4vw, 2.5rem)); /* Improved: Use system variable */
+  font-weight: var(--font-weight-title, 700);
+  letter-spacing: var(--letter-spacing-tight, -0.02em); /* Improved: Use system variable */
   font-family: var(--font-display);
 }
 
 .error-message {
-  margin: 0 0 var(--space-fluid-2xl);
+  margin: 0 0 var(--spacing-lg, 1.5rem); /* Improved: Consistent spacing */
   color: var(--color-text-main);
-  font-size: var(--font-size-body-large);
-  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-base, 1rem); /* Improved: Use system variable */
+  line-height: var(--line-height-relaxed, 1.75);
   font-family: var(--font-main);
+  max-width: 65ch; /* Improved: Optimal reading width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .error-retry-button {
   position: relative;
-  padding: var(--space-fluid-md) var(--space-fluid-2xl);
+  padding: var(--spacing-sm, 0.75rem) var(--spacing-xl, 2rem); /* Improved: Consistent spacing */
   border: none;
   background: var(--gradient-accent-full);
   color: var(--color-text-on-accent);
-  font-size: var(--font-size-small);
-  font-weight: 700;
-  transition: var(--transition-all);
-  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base, 1rem); /* Improved: Better readability */
+  font-weight: var(--font-weight-semibold, 600);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-smooth),
+    background var(--transition-base);
+  border-radius: var(--radius-md, 0.75rem); /* Improved: Consistent radius */
   cursor: pointer;
-  box-shadow: var(--shadow-glow-accent);
+  box-shadow: var(--shadow-md), 0 0 24px var(--color-accent-alpha-30); /* Improved: Better glow */
   font-family: var(--font-main);
   overflow: hidden;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  text-transform: none; /* Improved: More professional */
+  letter-spacing: 0.025em; /* Improved: Subtle spacing */
+  min-height: 2.75rem; /* Improved: Consistent touch target */
 }
 
 .error-retry-button:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: var(--shadow-glow-accent), var(--shadow-medium);
+  transform: translateY(-2px) scale(1.02); /* Improved: Subtler, more professional */
+  box-shadow: var(--shadow-lg), 0 0 24px var(--color-accent-alpha-30); /* Improved: Better glow */
 }
 
 /* ============================================
@@ -671,13 +681,15 @@
 @media screen and (width <= 768px) {
   .contents-section {
     gap: var(--space-fluid-2xl);
-    padding: var(--space-fluid-xl) var(--space-fluid-md);
+    padding: var(--space-fluid-xl) var(--spacing-md, 1rem); /* Improved: Consistent spacing */
     padding-top: calc(var(--navbar-height) + var(--space-fluid-xl));
+    max-width: 100%;
   }
 
   .section-block {
     padding: var(--space-fluid-lg);
     scroll-margin-top: clamp(5rem, 8vw, 6rem);
+    border-radius: var(--radius-xl, 1.25rem); /* Improved: Consistent radius */
   }
 
   .section-block--primary {
@@ -685,32 +697,39 @@
   }
 
   .section-title {
-    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-size: clamp(1.875rem, 5vw, 2.5rem); /* Improved: Better mobile sizing */
+    margin-bottom: var(--spacing-md, 1rem);
   }
 
   .section-block--primary .section-title {
-    font-size: clamp(2.5rem, 7vw, 3rem);
+    font-size: clamp(2.25rem, 6vw, 3rem);
   }
 
   .section-block--secondary .section-title {
-    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-size: clamp(1.625rem, 4.5vw, 2rem);
   }
 }
 
 @media screen and (width <= 480px) {
   .contents-section {
     gap: var(--space-fluid-xl);
-    padding: var(--space-fluid-lg) var(--space-fluid-sm);
+    padding: var(--space-fluid-lg) var(--spacing-sm, 0.75rem); /* Improved: Consistent spacing */
     padding-top: calc(var(--navbar-height) + var(--space-fluid-lg));
+    max-width: 100%;
   }
 
   .section-block {
-    padding: var(--space-fluid-md);
-    border-radius: var(--radius-2xl);
+    padding: var(--spacing-lg, 1.5rem); /* Improved: Consistent spacing */
+    border-radius: var(--radius-lg, 1rem);
   }
 
   .section-title {
-    font-size: clamp(1.75rem, 6vw, 2rem);
+    font-size: clamp(1.625rem, 5.5vw, 2rem); /* Improved: Better mobile sizing */
+    margin-bottom: var(--spacing-sm, 0.75rem);
+  }
+
+  .section-content p {
+    font-size: var(--font-size-base, 1rem); /* Improved: Readable on mobile */
   }
 }
 

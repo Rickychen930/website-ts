@@ -75,7 +75,7 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--space-fluid-md);
-  max-width: min(1400px, 100%);
+  max-width: 1280px; /* Improved: Consistent with main content width */
   box-sizing: border-box;
 }
 
@@ -127,10 +127,10 @@
   margin: 0 auto;
   padding: 0 var(--space-fluid-md);
   color: var(--color-text-subtle);
-  font-size: var(--font-responsive-md);
+  font-size: var(--font-responsive-base, clamp(1rem, 2vw, 1.125rem)); /* Improved: Use system variable */
   font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-normal);
-  max-width: 600px;
+  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
+  max-width: 65ch; /* Improved: Optimal reading width */
   font-family: var(--font-main);
   box-sizing: border-box;
 }
@@ -213,7 +213,7 @@
 }
 
 .testimonial-card:hover {
-  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale));
+  transform: translateY(-6px) scale(1.01); /* Improved: Consistent with other cards */
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   border-color: var(--color-border-accent);
 }

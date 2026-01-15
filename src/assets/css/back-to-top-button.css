@@ -113,7 +113,7 @@
    Button Hover Effects
    ============================================ */
 .back-to-top-button:hover {
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(-3px) scale(1.03); /* Improved: Subtler, more professional */
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   background: linear-gradient(
     135deg,

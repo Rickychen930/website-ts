@@ -140,10 +140,10 @@
   background: var(--gradient-accent-full);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.875rem, 4.5vw, 2.75rem); /* Improved: More balanced sizing */
+  font-weight: 700; /* Improved: Less heavy */
+  line-height: var(--line-height-tight, 1.2);
+  letter-spacing: var(--letter-spacing-tight, -0.02em);
   font-family: var(--font-display);
   filter: drop-shadow(0 2px 8px var(--color-accent-alpha-30));
 }

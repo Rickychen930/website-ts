@@ -57,7 +57,8 @@ body {
   overflow-x: hidden;
   background: var(--color-bg-light);
   color: var(--color-text-main);
-  line-height: var(--line-height-normal, 1.5);
+  line-height: var(--line-height-relaxed, 1.75);
+  font-size: var(--font-size-base, 1rem);
 }
 
 /* ============================================
@@ -77,6 +78,21 @@ body {
   width: 100%;
   position: relative;
   z-index: var(--z-base);
+}
+
+/* Content Container - Max width for readability */
+.content-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg, 1.5rem);
+  box-sizing: border-box;
+}
+
+@media screen and (width <= 768px) {
+  .content-container {
+    padding: 0 var(--spacing-md, 1rem);
+  }
 }
 
 /* ============================================
@@ -108,26 +124,35 @@ h3 {
 }
 
 p {
-  margin: 0;
+  margin: 0 0 var(--spacing-md, 1rem) 0;
   color: var(--color-text-main);
   line-height: var(--line-height-relaxed, 1.75);
+  font-size: var(--font-size-base, 1rem);
+  max-width: 65ch; /* Optimal reading width */
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 a {
   color: var(--color-text-link);
   text-decoration: none;
   transition: color var(--transition-base);
+  font-weight: var(--font-weight-medium, 500); /* Improved: Better readability */
 }
 
 a:hover {
   color: var(--color-text-link-hover);
+  text-decoration: underline; /* Improved: Clear hover feedback */
+  text-underline-offset: 2px;
 }
 
 a:focus-visible {
-  outline: var(--spacing-1) solid var(--color-accent-primary);
-  outline-offset: var(--spacing-1);
+  outline: 2px solid var(--color-accent-primary); /* Improved: Better visibility */
+  outline-offset: 2px;
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 0 1px var(--color-accent-alpha-20);
+  box-shadow: 0 0 0 2px var(--color-accent-alpha-20);
 }
 
 /* ============================================

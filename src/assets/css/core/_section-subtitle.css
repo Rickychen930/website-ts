@@ -20,18 +20,13 @@
 
 /* ─── Section Subtitle Base ─── */
 .section-subtitle {
-  margin: 0 auto var(--spacing-10) auto;
+  margin: 0 auto var(--spacing-lg, 1.5rem) auto; /* Improved: Consistent spacing */
   padding: 0 var(--spacing-4);
-  color: var(--color-text-secondary);
-  font-size: clamp(
-    1rem,
-    2vw,
-    var(--font-size-subtitle, 1.1rem)
-  ); /* Improved: Minimum 1rem (16px) for better readability */
-
-  font-weight: var(--font-weight-subtitle, 500);
-  line-height: var(--line-height-normal, 1.6);
-  max-width: 600px;
+  color: var(--color-text-subtle); /* Improved: Better semantic color */
+  font-size: var(--font-responsive-base, clamp(1rem, 2vw, 1.125rem)); /* Improved: Use system variable */
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
+  max-width: 65ch; /* Improved: Optimal reading width */
   text-align: center;
   font-family: var(--font-main);
   box-sizing: border-box;

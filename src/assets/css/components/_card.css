@@ -97,7 +97,7 @@
    ============================================ */
 .card:hover,
 .card:focus-within {
-  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale-subtle));
+  transform: translateY(-4px) scale(1.01); /* Improved: Subtler, more professional */
   box-shadow:
     var(--shadow-md),
     0 0 24px var(--color-accent-alpha-15);
@@ -143,7 +143,7 @@
   display: inline-block;
   position: relative;
   z-index: var(--z-base);
-  margin: 0;
+  margin: 0 0 var(--spacing-md, 1rem) 0; /* Improved: Consistent spacing */
   color: var(--color-text-heading);
   font-size: var(--font-responsive-2xl);
   font-weight: var(--font-weight-semibold);

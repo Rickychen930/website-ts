@@ -27,7 +27,7 @@
 
 .error-boundary-content {
   width: 100%;
-  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+  padding: var(--spacing-xl, 2rem) var(--spacing-lg, 1.5rem); /* Improved: Consistent spacing */
   border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
@@ -35,10 +35,11 @@
     var(--color-bg-card-alt) 100%
   );
   text-align: center;
-  max-width: clamp(500px, 90vw, 600px);
+  max-width: 600px; /* Improved: Optimal reading width */
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-strong);
   backdrop-filter: blur(20px) saturate(190%);
+  box-sizing: border-box;
 }
 
 .error-boundary-icon {
@@ -75,11 +76,14 @@
 }
 
 .error-boundary-message {
-  margin: 0 0 clamp(1.5rem, 4vw, 2rem);
+  margin: 0 0 var(--spacing-lg, 1.5rem); /* Improved: Consistent spacing */
   color: var(--color-text-subtle);
-  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
-  line-height: var(--line-height-normal);
-  letter-spacing: 0.01em;
+  font-size: var(--font-size-base, 1rem); /* Improved: Use system variable */
+  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
+  letter-spacing: 0;
+  max-width: 65ch; /* Improved: Optimal reading width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .error-boundary-details {
@@ -119,30 +123,30 @@
 }
 
 .error-boundary-button {
-  padding: clamp(0.625rem, 1.5vw, 0.75rem) clamp(1.25rem, 3vw, 1.75rem);
+  padding: var(--spacing-sm, 0.75rem) var(--spacing-xl, 2rem); /* Improved: Consistent spacing */
   border: none;
-  background: var(--color-accent-primary);
+  background: var(--gradient-accent); /* Improved: Use gradient for depth */
   color: var(--color-text-on-accent);
-  font-size: clamp(0.9375rem, 1.5vw, 1rem);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base, 1rem); /* Improved: Use system variable */
+  font-weight: var(--font-weight-semibold, 600);
   transition:
-    transform var(--transition-fast),
+    transform var(--transition-base),
     box-shadow var(--transition-smooth),
     background var(--transition-base);
-  border-radius: var(--component-radius-button);
+  border-radius: var(--radius-md, 0.75rem); /* Improved: Consistent radius */
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  letter-spacing: 0.01em;
-  min-width: clamp(120px, 25vw, 140px);
+  box-shadow: var(--shadow-md); /* Improved: Better depth */
+  letter-spacing: 0;
+  min-width: 120px;
   min-height: 2.75rem;
 }
 
 .error-boundary-button:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px) scale(1.01);
+  background: var(--gradient-accent-full); /* Improved: Use full gradient */
+  transform: translateY(-2px) scale(1.01); /* Improved: Subtle hover */
   box-shadow:
-    0 6px 20px var(--color-accent-alpha-30),
-    0 4px 12px var(--color-accent-alpha-20);
+    var(--shadow-lg),
+    0 0 24px var(--color-accent-alpha-30); /* Improved: Better glow */
 }
 
 .error-boundary-button:active {

@@ -41,7 +41,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: clamp(180px, 18vw, 280px);
-  height: 1.5px; /* Refined: Thinner for elegance */
+  height: 1px; /* Improved: Even more subtle */
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -50,7 +50,7 @@
     var(--color-accent-primary) 75%,
     transparent 100%
   );
-  opacity: 0.25; /* Refined: More subtle */
+  opacity: 0.2; /* Improved: More subtle */
   transition: all var(--transition-smooth);
   border-radius: var(--radius-full);
   pointer-events: none;
@@ -59,8 +59,8 @@
 .contents-section > article.card:not(:last-child):hover::after,
 .contents-section > section.card:not(:last-child):hover::after {
   width: clamp(220px, 22vw, 320px);
-  height: 2px; /* Refined: Thinner hover state */
-  opacity: 0.5; /* Refined: More subtle hover */
+  height: 1.5px; /* Improved: Subtler hover state */
+  opacity: 0.4; /* Improved: More subtle hover */
 
   /* Simplified: Removed box-shadow for cleaner, more elegant separator */
 }

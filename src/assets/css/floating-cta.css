@@ -119,7 +119,7 @@
 }
 
 .floating-cta-primary:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-3px) scale(1.01); /* Improved: Subtler, more professional */
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   background-position: 100% 0;
   transition:

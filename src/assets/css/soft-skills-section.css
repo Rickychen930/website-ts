@@ -110,7 +110,7 @@
 }
 
 .soft-skill-card:hover {
-  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale));
+  transform: translateY(-6px) scale(1.01); /* Improved: Consistent with other cards */
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   border-color: var(--color-border-accent);
 }

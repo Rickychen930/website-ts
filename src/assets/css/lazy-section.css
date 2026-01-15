@@ -102,14 +102,17 @@
 .section-empty-state,
 .section-error-state {
   display: flex;
-  padding: var(--space-fluid-xl);
+  padding: var(--spacing-xl, 2rem); /* Improved: Consistent spacing */
   color: var(--color-text-subtle);
-  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-size: var(--font-size-base, 1rem); /* Improved: Use system variable */
+  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
   text-align: center;
   align-items: center;
   justify-content: center;
   min-height: 200px;
   box-sizing: border-box;
+  max-width: 65ch; /* Improved: Optimal reading width */
+  margin: 0 auto;
 }
 
 .section-error-state {

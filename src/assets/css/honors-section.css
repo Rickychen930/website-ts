@@ -122,7 +122,7 @@
 }
 
 #honors-section .honor-card:hover {
-  transform: translateY(var(--card-hover-translate-y)) scale(var(--card-hover-scale));
+  transform: translateY(-6px) scale(1.01); /* Improved: Consistent with other cards */
   box-shadow: var(--shadow-strong), var(--shadow-glow-gold);
   border-color: var(--honors-gold);
 }

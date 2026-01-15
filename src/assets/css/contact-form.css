@@ -58,15 +58,20 @@
 .contact-form-input,
 .contact-form-textarea {
   width: 100%;
-  padding: var(--spacing-3) var(--spacing-4);
-  border: 2px solid var(--color-border-light);
+  padding: var(--spacing-sm, 0.75rem) var(--spacing-md, 1rem); /* Improved: Consistent spacing */
+  border: 1.5px solid var(--color-border-default); /* Improved: Consistent border */
   background: var(--color-bg-card);
   color: var(--color-text-main);
-  font-size: var(--font-size-base);
-  transition: var(--transition-all);
+  font-size: var(--font-size-base, 1rem);
+  line-height: var(--line-height-normal, 1.5); /* Improved: Better readability */
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-smooth),
+    background var(--transition-base);
   font-family: var(--font-main);
-  border-radius: var(--component-radius-button);
+  border-radius: var(--radius-md, 0.75rem); /* Improved: Consistent radius */
   box-sizing: border-box;
+  min-height: 2.75rem; /* Improved: Consistent touch target */
 }
 
 .contact-form-textarea {
@@ -167,19 +172,23 @@
 
 .contact-form-submit {
   display: flex;
-  padding: var(--spacing-sm) var(--spacing-2xl);
+  padding: var(--spacing-sm, 0.75rem) var(--spacing-xl, 2rem); /* Improved: Consistent spacing */
   border: none;
-  background: var(--color-accent-primary);
+  background: var(--gradient-accent); /* Improved: Use gradient for depth */
   color: var(--color-text-on-accent);
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  transition: var(--transition-all);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: var(--font-weight-semibold, 600);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-smooth),
+    background var(--transition-base);
   align-items: center;
-  gap: var(--spacing-2);
-  border-radius: var(--component-radius-button);
+  gap: var(--spacing-sm, 0.75rem);
+  border-radius: var(--radius-md, 0.75rem); /* Improved: Consistent radius */
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md); /* Improved: Better depth */
   font-family: var(--font-main);
+  min-height: 2.75rem; /* Improved: Consistent touch target */
 }
 
 .contact-form-submit:disabled {
@@ -198,9 +207,9 @@
 
 @media (hover: hover) {
   .contact-form-submit:hover:not(:disabled) {
-    background: var(--color-accent-hover);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    background: var(--gradient-accent-full); /* Improved: Use full gradient */
+    box-shadow: var(--shadow-lg), 0 0 24px var(--color-accent-alpha-30); /* Improved: Better glow */
+    transform: translateY(-2px) scale(1.01); /* Improved: Subtle scale */
   }
 }
 

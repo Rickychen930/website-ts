@@ -62,7 +62,7 @@
     var(--color-bg-card) 100%
   );
   max-width: 100%;
-  border-radius: var(--radius-3xl);
+  border-radius: var(--radius-2xl); /* Improved: Consistent with other cards */
   overflow: hidden;
   box-sizing: border-box;
   backdrop-filter: blur(28px) saturate(200%);
@@ -339,14 +339,16 @@
 .about-me-bio {
   width: 100%;
   margin: 0;
-  padding: 0 var(--space-fluid-sm);
-  color: var(--color-text-secondary);
-  font-size: clamp(1.1rem, 2.8vw, 1.25rem);
-  font-weight: 400;
-  line-height: 1.8;
+  padding: 0 var(--spacing-md, 1rem); /* Improved: Consistent spacing */
+  color: var(--color-text-main); /* Improved: Better semantic color */
+  font-size: var(--font-responsive-base, clamp(1rem, 2vw, 1.125rem)); /* Improved: Use system variable */
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
   text-align: center;
-  max-width: 100%;
-  letter-spacing: 0.015em;
+  max-width: 65ch; /* Improved: Optimal reading width */
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: 0;
   overflow-wrap: break-word;
   hyphens: auto;
   box-sizing: border-box;
@@ -389,7 +391,7 @@
 }
 
 .about-me-featured-tech:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.01); /* Improved: Subtle scale for polish */
   border-color: var(--color-border-accent);
   box-shadow:
     var(--shadow-strong),
@@ -641,7 +643,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-size: clamp(1.75rem, 4.5vw, 2.25rem);
-  font-weight: 800;
+  font-weight: 700; /* Improved: Less heavy, more professional */
   line-height: 1.2;
   margin-bottom: 0.5rem;
   letter-spacing: -0.03em;
