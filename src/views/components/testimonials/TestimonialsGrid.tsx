@@ -57,13 +57,13 @@ export class TestimonialsGrid extends PureComponent<TestimonialsGridProps> {
 
     return (
       <div className="testimonials-grid-container">
-        <div
+        <article
           className={`testimonials-grid ${className}`.trim()}
           role="list"
           aria-label="Testimonials and recommendations"
         >
           {this.renderTestimonialCards()}
-        </div>
+        </article>
       </div>
     );
   }
