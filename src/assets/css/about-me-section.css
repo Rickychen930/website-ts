@@ -337,21 +337,39 @@
 }
 
 .about-me-bio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 0.75rem);
   width: 100%;
   margin: 0;
-  padding: 0 var(--spacing-md, 1rem); /* Improved: Consistent spacing */
-  color: var(--color-text-main); /* Improved: Better semantic color */
-  font-size: var(--font-responsive-base, clamp(1rem, 2vw, 1.125rem)); /* Improved: Use system variable */
-  font-weight: var(--font-weight-normal, 400);
-  line-height: var(--line-height-relaxed, 1.75); /* Improved: Better readability */
+  padding: 0 var(--spacing-md, 1rem);
+  color: var(--color-text-main);
   text-align: center;
-  max-width: 65ch; /* Improved: Optimal reading width */
+  max-width: 65ch;
   margin-left: auto;
   margin-right: auto;
+  box-sizing: border-box;
+}
+
+.about-me-bio-sentence {
+  margin: 0;
+  color: var(--color-text-main);
+  font-size: var(--font-responsive-base, clamp(1rem, 2vw, 1.125rem));
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-relaxed, 1.7);
   letter-spacing: 0;
   overflow-wrap: break-word;
   hyphens: auto;
-  box-sizing: border-box;
+}
+
+.about-me-bio-more {
+  margin: 0;
+  margin-top: var(--spacing-xs, 0.5rem);
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  opacity: 0.7;
 }
 
 /* ============================================
@@ -565,11 +583,28 @@
 
 .about-me-highlights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: var(--space-fluid-md);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* Improve highlight cards for better scannability */
+.about-me-highlights-grid .professional-highlight {
+  min-height: auto;
+  padding: var(--space-fluid-md);
+}
+
+.about-me-highlights-grid .professional-highlight-title {
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-xs, 0.5rem);
+}
+
+.about-me-highlights-grid .professional-highlight-description {
+  font-size: clamp(0.875rem, 2vw, 0.9375rem);
+  line-height: 1.5;
 }
 
 /* ============================================

@@ -164,6 +164,7 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
 
   /**
    * Render bio/description section
+   * UI/UX Improvement: More concise, scannable format
    * Follows Single Responsibility Principle (SRP)
    * Performance: Uses memoized data from state
    */
@@ -174,11 +175,41 @@ class AboutMeSection extends Component<AboutMeProps, AboutMeState> {
       return null;
     }
 
+    const bio = aboutMeData.bio.trim();
+
+    // Split bio into sentences for better readability
+    const sentences = bio
+      .split(/[.!?]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+
+    // If bio is short (1-2 sentences), display as-is
+    // If longer, show first 2-3 sentences with option to expand
+    const displaySentences = sentences.slice(0, 3);
+    const hasMore = sentences.length > 3;
+
     return (
       <div className="about-me-bio-section">
-        <p className="about-me-bio" aria-label="Biography">
-          {aboutMeData.bio}
-        </p>
+        <div className="about-me-bio" aria-label="Biography">
+          {displaySentences.map((sentence, index) => (
+            <p key={`bio-sentence-${index}`} className="about-me-bio-sentence">
+              {sentence}
+              {index < displaySentences.length - 1
+                ? "."
+                : hasMore
+                  ? "..."
+                  : "."}
+            </p>
+          ))}
+          {hasMore && (
+            <p
+              className="about-me-bio-more"
+              aria-label="Full biography available in profile"
+            >
+              {/* Full bio available in detailed sections below */}
+            </p>
+          )}
+        </div>
       </div>
     );
   }

@@ -44,6 +44,7 @@ import SoftSkillsSection from "./sections/soft-skills-section";
 import TechnicalSkillsSection from "./sections/technical-skills-section";
 import TestimonialsSection from "./sections/testimonials-section";
 import WorkExperienceSection from "./sections/work-experience-section";
+import { HeroSection } from "../components/hero";
 
 /**
  * MainPageState - Extended state interface
@@ -113,17 +114,18 @@ class MainPage extends BasePage<{}, MainPageState> {
   /**
    * Initialize section configurations
    * Follows DRY principle - Centralized configuration
-   * UI Optimization: Reordered sections for better flow:
-   * 1. About Me (introduction)
-   * 2. Technical Skills (core competencies - most important for portfolio)
-   * 3. Work Experience (professional background)
-   * 4. Projects (portfolio showcase)
-   * 5. Academic (educational background)
+   * UI/UX Optimization: Optimal section order for portfolio:
+   * 1. Hero (full viewport introduction - NEW)
+   * 2. About Me (short & impactful introduction)
+   * 3. Technical Skills (core competencies - most important for portfolio)
+   * 4. Work Experience (professional background)
+   * 5. Projects (portfolio showcase - highlighted)
    * 6. Certifications (credentials)
-   * 7. Honors (achievements)
-   * 8. Soft Skills (interpersonal skills)
-   * 9. Languages (language proficiency)
-   * 10. Contact (contact information)
+   * 7. Soft Skills (interpersonal skills)
+   * 8. Academic (educational background - moved down)
+   * 9. Honors (achievements - moved down)
+   * 10. Languages (language proficiency - moved down)
+   * 11. Contact (contact information & CTA)
    */
   private initializeSections(): void {
     const sections: ISectionConfig[] = [
@@ -152,28 +154,28 @@ class MainPage extends BasePage<{}, MainPageState> {
         dataKey: "projects",
       },
       {
-        id: SectionIds.ACADEMIC,
-        title: SectionNames.ACADEMIC,
-        component: AcademicSection,
-        dataKey: "academics",
-      },
-      {
         id: SectionIds.CERTIFICATIONS,
         title: SectionNames.CERTIFICATIONS,
         component: CertificationSection,
         dataKey: "certifications",
       },
       {
-        id: SectionIds.HONORS,
-        title: SectionNames.HONORS,
-        component: HonorsSection,
-        dataKey: "honors",
-      },
-      {
         id: SectionIds.SOFT_SKILLS,
         title: SectionNames.SOFT_SKILLS,
         component: SoftSkillsSection,
         dataKey: "softSkills",
+      },
+      {
+        id: SectionIds.ACADEMIC,
+        title: SectionNames.ACADEMIC,
+        component: AcademicSection,
+        dataKey: "academics",
+      },
+      {
+        id: SectionIds.HONORS,
+        title: SectionNames.HONORS,
+        component: HonorsSection,
+        dataKey: "honors",
       },
       {
         id: SectionIds.LANGUAGES,
@@ -757,6 +759,7 @@ class MainPage extends BasePage<{}, MainPageState> {
         <SkipLinks />
         <Breadcrumbs items={breadcrumbs} />
         <main id="main-content" role="main">
+          <HeroSection profile={profile} />
           {this.renderSections()}
         </main>
         <BackToTopButton />

@@ -281,15 +281,23 @@
 }
 
 .professional-highlight-description {
+  /* Limit to 2-3 lines for better scannability */
+  display: -webkit-box;
   width: 100%;
   margin: 0;
   color: var(--color-text-subtle);
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  line-height: 1.6;
+  font-size: clamp(0.875rem, 2vw, 0.9375rem);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 1.5;
+  transition: color var(--transition-base);
+  margin-top: var(--spacing-xs, 0.5rem);
   max-width: 100%;
   overflow-wrap: break-word;
   hyphens: auto;
-  transition: color var(--transition-base);
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ============================================
