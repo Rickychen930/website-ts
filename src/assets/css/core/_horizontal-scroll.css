@@ -176,7 +176,7 @@
   transition: var(--transition-opacity);
   transform: translateX(-50%);
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-2);
   font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
   pointer-events: none;
   white-space: nowrap;
@@ -235,7 +235,7 @@
     var(--color-accent-alt) 100%
   );
   transition: width var(--transition-fast);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   box-shadow: 0 2px 4px var(--color-accent-alpha-30);
 }
 

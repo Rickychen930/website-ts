@@ -25,12 +25,11 @@
   display: inline-flex;
   position: relative;
   z-index: 1;
-  padding: clamp(var(--spacing-3), 1.5vw, var(--spacing-4))
-    clamp(var(--spacing-4), 2.5vw, var(--spacing-6));
+  padding: var(--space-fluid-sm) var(--space-fluid-md);
   border: 1px solid transparent;
   background: transparent;
   color: var(--color-text-heading);
-  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  font-size: var(--font-responsive-base);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
   text-align: center;
@@ -93,7 +92,7 @@
 
 .btn--primary:hover {
   background: var(--gradient-accent-full);
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale-subtle));
   box-shadow:
     var(--shadow-md),
     0 0 20px var(--color-accent-alpha-25);
@@ -117,7 +116,7 @@
     var(--color-bg-secondary) 100%
   );
   border-color: var(--color-accent-primary);
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale-subtle));
   box-shadow:
     var(--shadow-sm),
     0 0 16px var(--color-accent-alpha-15);

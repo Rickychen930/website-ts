@@ -13,7 +13,7 @@
 @import url("./core/index.css");
 
 /* ============================================
-   NEW DESIGN TOKENS
+   DESIGN TOKENS - Using Unified Core System
    ============================================ */
 #contact-section {
   position: relative;
@@ -21,16 +21,9 @@
   max-width: 100%;
   box-sizing: border-box;
 
-  --contact-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --contact-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --contact-space-md: clamp(1rem, 3vw, 1.5rem);
-  --contact-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --contact-space-xl: clamp(2rem, 5vw, 3.5rem);
-  --contact-space-2xl: clamp(3rem, 7vw, 5rem);
-  --contact-color-primary: var(--color-accent-primary);
-  --contact-color-secondary: var(--color-accent-secondary);
-  --contact-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --contact-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Using unified tokens from core system */
+  --contact-color-primary: var(--section-color-primary);
+  --contact-color-secondary: var(--section-color-secondary);
 }
 
 #contact-section::before {
@@ -61,27 +54,27 @@
 }
 
 /* ============================================
-   GRID - New Design
+   GRID - Using Unified Layout System
    ============================================ */
 .contact-grid {
   display: grid;
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: var(--contact-space-xl) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: var(--contact-space-xl);
+  padding: var(--space-fluid-xl) 0;
+  grid-template-columns: var(--grid-cols-auto-fill-md);
+  gap: var(--grid-gap-xl);
   max-width: 100%;
   box-sizing: border-box;
-  margin-top: var(--contact-space-lg);
+  margin-top: var(--space-fluid-lg);
 }
 
 /* ============================================
-   CONTACT CARD - New Design
+   CONTACT CARD - Using Unified Card Pattern
    ============================================ */
 .contact-card {
   position: relative;
-  padding: var(--contact-space-lg);
+  padding: var(--space-fluid-lg);
   border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
@@ -92,11 +85,12 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-medium);
   transition:
-    transform 0.5s var(--contact-ease-spring),
-    box-shadow 0.5s var(--contact-ease-smooth),
-    border-color 0.4s var(--contact-ease-smooth);
+    transform 0.5s var(--ease-spring),
+    box-shadow 0.5s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
   overflow: hidden;
   box-sizing: border-box;
+  will-change: var(--will-change-transform-opacity);
 }
 
 .contact-card::before {
@@ -107,12 +101,12 @@
   height: 4px;
   background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity 0.4s var(--contact-ease-smooth);
+  transition: opacity 0.4s var(--ease-smooth);
   content: "";
 }
 
 .contact-card:hover {
-  transform: translateY(-6px) scale(1.02);
+  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale));
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   border-color: var(--color-border-accent);
 }
@@ -121,26 +115,35 @@
   opacity: 1;
 }
 
+/* Accessibility: Focus state */
+.contact-card:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-focus);
+}
+
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - Using Unified Tokens
    ============================================ */
 @media screen and (width <= 768px) {
   .contact-grid {
-    gap: var(--contact-space-lg);
-    padding: var(--contact-space-lg) 0;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--grid-gap-lg);
+    padding: var(--space-fluid-lg) 0;
+    grid-template-columns: var(--grid-cols-auto-fill-sm);
   }
 }
 
 @media screen and (width <= 480px) {
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: var(--contact-space-md);
+    gap: var(--grid-gap-md);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .contact-card {
     transition: none;
+    transform: none;
   }
 }

@@ -307,7 +307,7 @@
     opacity var(--transition-base),
     box-shadow var(--transition-base),
     border-color var(--transition-base);
-  border-radius: 20px; /* Modern rounded */
+  border-radius: var(--card-radius-lg);
   letter-spacing: 0.03em; /* Better spacing */
   box-shadow:
     0 4px 16px var(--color-black-alpha-08),

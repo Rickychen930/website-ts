@@ -1,0 +1,292 @@
+/**
+ * Unified Typography System - Enhanced Visual Hierarchy
+ * Professional, Code-Based, DRY, KISS, OOP Architecture
+ * 
+ * Architecture Principles:
+ * - Consistent Typography Scale
+ * - Clear Visual Hierarchy
+ * - Responsive Fluid Typography
+ * - Optimal Readability
+ * - Accessibility Compliance
+ * 
+ * Usage:
+ * @import '@/assets/css/core/typography-system.css';
+ * 
+ * Provides unified typography system with enhanced visual hierarchy.
+ */
+
+/* Import core system */
+@import url("./_variables.css");
+@import url("./_constants.css");
+
+/* ============================================
+   ENHANCED TYPOGRAPHY SCALE - Modular Scale
+   ============================================ */
+
+:root {
+  /* Typography Scale - Major Third (1.25 ratio) */
+  /* Base: 16px */
+  --font-scale-xs: 0.75rem;      /* 12px - Level -2 */
+  --font-scale-sm: 0.875rem;      /* 14px - Level -1 */
+  --font-scale-base: 1rem;        /* 16px - Level 0 */
+  --font-scale-md: 1.125rem;      /* 18px - Level +1 */
+  --font-scale-lg: 1.25rem;       /* 20px - Level +2 */
+  --font-scale-xl: 1.5rem;        /* 24px - Level +3 */
+  --font-scale-2xl: 1.875rem;     /* 30px - Level +4 */
+  --font-scale-3xl: 2.25rem;      /* 36px - Level +5 */
+  --font-scale-4xl: 2.8125rem;    /* 45px - Level +6 */
+  --font-scale-5xl: 3.5rem;       /* 56px - Level +7 */
+
+  /* Responsive Typography - Fluid Clamp System */
+  --font-responsive-xs: clamp(0.75rem, 1.5vw, 0.875rem);
+  --font-responsive-sm: clamp(0.875rem, 2vw, 1rem);
+  --font-responsive-base: clamp(1rem, 2.5vw, 1.125rem);
+  --font-responsive-md: clamp(1.125rem, 3vw, 1.25rem);
+  --font-responsive-lg: clamp(1.25rem, 3.5vw, 1.5rem);
+  --font-responsive-xl: clamp(1.5rem, 4vw, 2rem);
+  --font-responsive-2xl: clamp(1.875rem, 5vw, 2.5rem);
+  --font-responsive-3xl: clamp(2.25rem, 6vw, 3.5rem);
+  --font-responsive-4xl: clamp(2.8125rem, 7vw, 4.5rem);
+  --font-responsive-5xl: clamp(3.5rem, 8vw, 5.5rem);
+
+  /* Line Height Scale - Optimal Readability */
+  --line-height-tight: 1.2;       /* Headings */
+  --line-height-normal: 1.5;      /* Body text */
+  --line-height-relaxed: 1.75;    /* Long-form content */
+  --line-height-loose: 2;         /* Emphasis/Quotes */
+
+  /* Letter Spacing - Optical Adjustments */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+}
+
+/* ============================================
+   HEADING SYSTEM - Enhanced Visual Hierarchy
+   ============================================ */
+
+h1,
+.h1 {
+  font-size: var(--font-responsive-4xl);
+  font-weight: var(--font-weight-title);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+h2,
+.h2 {
+  font-size: var(--font-responsive-3xl);
+  font-weight: var(--font-weight-title);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+h3,
+.h3 {
+  font-size: var(--font-responsive-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+h4,
+.h4 {
+  font-size: var(--font-responsive-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+h5,
+.h5 {
+  font-size: var(--font-responsive-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-heading);
+  font-family: var(--font-main);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+h6,
+.h6 {
+  font-size: var(--font-responsive-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text-heading);
+  font-family: var(--font-main);
+  margin: 0 0 var(--spacing-xs) 0;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   BODY TEXT SYSTEM - Optimal Readability
+   ============================================ */
+
+p,
+.body-text {
+  font-size: var(--font-responsive-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-main);
+  font-family: var(--font-main);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.body-text--large {
+  font-size: var(--font-responsive-md);
+  line-height: var(--line-height-relaxed);
+}
+
+.body-text--small {
+  font-size: var(--font-responsive-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================
+   TEXT UTILITY CLASSES - Semantic Typography
+   ============================================ */
+
+.text-lead {
+  font-size: var(--font-responsive-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-main);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-subtitle {
+  font-size: var(--font-responsive-md);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-subtle);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-caption {
+  font-size: var(--font-responsive-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-normal);
+}
+
+.text-label {
+  font-size: var(--font-responsive-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-heading);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+/* ============================================
+   GRADIENT TEXT - Enhanced Gradient Text
+   ============================================ */
+
+.text-gradient-primary {
+  background: var(--gradient-accent-full);
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-flow 8s var(--ease-smooth) infinite;
+}
+
+.text-gradient-accent {
+  background: var(--gradient-accent);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   SECTION TITLE SYSTEM - Unified Section Titles
+   ============================================ */
+
+.section-title {
+  font-size: var(--font-responsive-3xl);
+  font-weight: var(--font-weight-title);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  margin: 0 0 var(--spacing-md) 0;
+  text-align: center;
+}
+
+.section-title--gradient {
+  background: var(--gradient-accent-full);
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-flow 8s var(--ease-smooth) infinite;
+  filter: drop-shadow(0 2px 8px var(--color-accent-alpha-20));
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY ADJUSTMENTS
+   ============================================ */
+
+@media screen and (width <= 768px) {
+  h1,
+  .h1 {
+    font-size: var(--font-responsive-3xl);
+  }
+
+  h2,
+  .h2 {
+    font-size: var(--font-responsive-2xl);
+  }
+
+  h3,
+  .h3 {
+    font-size: var(--font-responsive-xl);
+  }
+
+  .section-title {
+    font-size: var(--font-responsive-2xl);
+  }
+}
+
+@media screen and (width <= 480px) {
+  h1,
+  .h1 {
+    font-size: var(--font-responsive-2xl);
+  }
+
+  h2,
+  .h2 {
+    font-size: var(--font-responsive-xl);
+  }
+
+  h3,
+  .h3 {
+    font-size: var(--font-responsive-lg);
+  }
+
+  .section-title {
+    font-size: var(--font-responsive-xl);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION - Typography Animations
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient-primary {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}

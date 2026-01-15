@@ -21,16 +21,9 @@
   max-width: 100%;
   box-sizing: border-box;
 
-  --work-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --work-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --work-space-md: clamp(1rem, 3vw, 1.5rem);
-  --work-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --work-space-xl: clamp(2rem, 5vw, 3.5rem);
-  --work-space-2xl: clamp(3rem, 7vw, 5rem);
-  --work-color-primary: var(--color-accent-primary);
-  --work-color-secondary: var(--color-accent-secondary);
-  --work-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --work-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Using unified tokens from core system */
+  --work-color-primary: var(--section-color-primary);
+  --work-color-secondary: var(--section-color-secondary);
 }
 
 .work-experience-container::before {
@@ -60,9 +53,9 @@
   display: flex;
   position: relative;
   width: 100%;
-  padding: var(--work-space-xl) 0;
+  padding: var(--space-fluid-xl) 0;
   flex-direction: column;
-  gap: var(--work-space-2xl);
+  gap: var(--space-fluid-2xl);
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -72,12 +65,12 @@
    ============================================ */
 @media screen and (width <= 768px) {
   .work-experience-container {
-    padding: var(--work-space-lg) 0;
+    padding: var(--space-fluid-lg) 0;
   }
 
   .work-experience-timeline {
-    gap: var(--work-space-xl);
-    padding: var(--work-space-lg) 0;
+    gap: var(--space-fluid-xl);
+    padding: var(--space-fluid-lg) 0;
   }
 }
 

@@ -23,16 +23,16 @@
   width: 100%;
   max-width: 100%;
   height: 100%;
-  min-height: 400px;
+  min-height: var(--card-min-height-xl);
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.6s var(--ease-smooth);
   box-sizing: border-box;
   overflow: hidden;
-  perspective: 1000px;
+  perspective: var(--perspective);
   display: flex;
   flex-direction: column;
-  will-change: transform, opacity;
+  will-change: var(--will-change-transform-opacity);
 }
 
 .academic-card-visible {
@@ -75,28 +75,11 @@
     );
   background-size: 200% 200%;
   background-position: 0% 0%;
-  animation: academic-pattern-move 25s ease-in-out infinite;
+  animation: gradient-shift 25s var(--ease-smooth) infinite;
   pointer-events: none;
 }
 
-@keyframes academic-pattern-move {
-  0%,
-  100% {
-    background-position: 0% 0%;
-  }
-
-  25% {
-    background-position: 100% 0%;
-  }
-
-  50% {
-    background-position: 100% 100%;
-  }
-
-  75% {
-    background-position: 0% 100%;
-  }
-}
+/* Using unified gradient-shift animation from core/_animations.css */
 
 /* ============================================
    Glassmorphism Overlay
@@ -233,15 +216,15 @@
   height: 100%;
   background: linear-gradient(
     135deg,
-    var(--academic-color-primary) 0%,
-    var(--academic-color-secondary) 50%,
-    var(--academic-color-primary) 100%
+    var(--section-color-primary) 0%,
+    var(--section-color-secondary) 50%,
+    var(--section-color-primary) 100%
   );
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s var(--ease-smooth);
   align-items: center;
   justify-content: center;
   background-size: 200% 200%;
-  border-radius: 20px;
+  border-radius: var(--card-radius-lg);
   box-shadow:
     0 12px 32px var(--color-accent-alpha-35),
     0 0 0 3px var(--color-white-alpha-60) inset,
@@ -312,7 +295,7 @@
   border: 3px solid var(--color-accent-alpha-30);
   border-radius: 50%;
   opacity: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s var(--ease-smooth);
   transform: translate(-50%, -50%) scale(0.8);
   pointer-events: none;
 }
@@ -391,8 +374,8 @@
 .academic-card:focus-within .academic-card-title {
   background: linear-gradient(
     135deg,
-    var(--academic-color-primary) 0%,
-    var(--academic-color-secondary) 100%
+    var(--section-color-primary) 0%,
+    var(--section-color-secondary) 100%
   );
   background-clip: text;
   background-clip: text;
@@ -412,8 +395,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-radius: 12px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--card-radius-sm);
+  transition: all 0.4s var(--ease-smooth);
   white-space: nowrap;
   box-shadow: 0 4px 12px var(--color-black-alpha-10);
 }
@@ -425,7 +408,7 @@
     var(--color-accent-alpha-15) 0%,
     var(--color-accent-alpha-10) 100%
   );
-  color: var(--academic-color-primary);
+  color: var(--section-color-primary);
 }
 
 .academic-level-graduate {
@@ -435,7 +418,7 @@
     var(--color-accent-purple-alpha-20) 0%,
     var(--color-accent-purple-alpha-15) 100%
   );
-  color: var(--academic-color-graduate);
+  color: var(--color-accent-purple);
 }
 
 .academic-level-certificate {
@@ -445,7 +428,7 @@
     var(--color-accent-secondary-alpha-20) 0%,
     var(--color-accent-secondary-alpha-15) 100%
   );
-  color: var(--academic-color-certificate);
+  color: var(--section-color-secondary);
 }
 
 .academic-level-other {
@@ -455,7 +438,7 @@
     var(--color-accent-tertiary-alpha-20) 0%,
     var(--color-accent-tertiary-alpha-15) 100%
   );
-  color: var(--academic-color-tertiary);
+  color: var(--section-color-tertiary);
 }
 
 .academic-card:hover .academic-level-badge {
@@ -474,8 +457,8 @@
   padding: 0.75rem 1rem;
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-timeline);
-  border-radius: 16px;
-  transition: all 0.4s ease;
+  border-radius: var(--card-radius-md);
+  transition: all 0.4s var(--ease-smooth);
 }
 
 .academic-card-institution-icon {
@@ -520,8 +503,8 @@
     var(--color-bg-timeline) 0%,
     var(--color-accent-alpha-05) 100%
   );
-  border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--card-radius-md);
+  transition: all 0.4s var(--ease-smooth);
   box-shadow: 0 4px 12px var(--color-black-alpha-08);
 }
 
@@ -678,7 +661,7 @@
 @media screen and (width <= 480px) {
   .academic-card-content {
     padding: 1.5rem;
-    border-radius: 24px;
+    border-radius: var(--card-radius-lg);
     gap: 1.25rem;
   }
 
@@ -704,7 +687,7 @@
 @media screen and (width >= 481px) and (width <= 575px) {
   .academic-card-content {
     padding: 1.75rem;
-    border-radius: 28px;
+    border-radius: var(--card-radius-lg);
   }
 
   .academic-card-icon {
@@ -717,7 +700,7 @@
 @media screen and (width >= 576px) and (width <= 767px) {
   .academic-card-content {
     padding: 2rem;
-    border-radius: 32px;
+    border-radius: var(--card-radius-lg);
   }
 
   .academic-card-icon {
@@ -734,7 +717,7 @@
 @media screen and (width >= 768px) and (width <= 991px) {
   .academic-card-content {
     padding: 2.25rem;
-    border-radius: 34px;
+    border-radius: var(--card-radius-lg);
   }
 
   .academic-card-icon {

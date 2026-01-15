@@ -13,7 +13,7 @@
 @import url("./core/index.css");
 
 /* ============================================
-   NEW DESIGN TOKENS
+   DESIGN TOKENS - Using Unified Core System
    ============================================ */
 #technical-skills-section {
   position: relative;
@@ -21,16 +21,9 @@
   max-width: 100%;
   box-sizing: border-box;
 
-  --skills-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --skills-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --skills-space-md: clamp(1rem, 3vw, 1.5rem);
-  --skills-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --skills-space-xl: clamp(2rem, 5vw, 3.5rem);
-  --skills-space-2xl: clamp(3rem, 7vw, 5rem);
-  --skills-color-primary: var(--color-accent-primary);
-  --skills-color-secondary: var(--color-accent-secondary);
-  --skills-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --skills-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Using unified tokens from core system */
+  --skills-color-primary: var(--section-color-primary);
+  --skills-color-secondary: var(--section-color-secondary);
 }
 
 #technical-skills-section::before {
@@ -75,9 +68,9 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: var(--skills-space-xl) 0;
+  padding: var(--space-fluid-xl) 0;
   flex-direction: column;
-  gap: var(--skills-space-2xl);
+  gap: var(--space-fluid-2xl);
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -96,7 +89,7 @@
   display: flex;
   position: relative;
   width: 100%;
-  padding: var(--skills-space-lg);
+  padding: var(--space-fluid-lg);
   border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
@@ -106,7 +99,7 @@
   backdrop-filter: blur(20px) saturate(190%);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-medium);
-  gap: var(--skills-space-lg);
+  gap: var(--space-fluid-lg);
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -129,8 +122,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--skills-space-xs);
-  padding: var(--skills-space-md);
+  gap: var(--space-fluid-xs);
+  padding: var(--space-fluid-md);
   min-width: 120px;
   text-align: center;
 }
@@ -175,17 +168,17 @@
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - Using Unified Tokens
    ============================================ */
 @media screen and (width <= 768px) {
   .technical-skills-container {
-    padding: var(--skills-space-lg) 0;
-    gap: var(--skills-space-xl);
+    padding: var(--space-fluid-lg) 0;
+    gap: var(--space-fluid-xl);
   }
 
   .technical-skills-statistics {
-    padding: var(--skills-space-md);
-    gap: var(--skills-space-md);
+    padding: var(--space-fluid-md);
+    gap: var(--space-fluid-md);
   }
 
   .technical-skills-statistics__divider {
@@ -194,14 +187,14 @@
 
   .technical-skills-statistics__item {
     min-width: 100px;
-    padding: var(--skills-space-sm);
+    padding: var(--space-fluid-sm);
   }
 }
 
 @media screen and (width <= 480px) {
   .technical-skills-statistics {
     flex-direction: column;
-    gap: var(--skills-space-sm);
+    gap: var(--space-fluid-sm);
   }
 
   .technical-skills-statistics__item {

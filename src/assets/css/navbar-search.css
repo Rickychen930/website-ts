@@ -82,7 +82,7 @@
 }
 
 .navbar-search-shortcut {
-  padding: 0.125rem 0.5rem;
+  padding: var(--spacing-1) var(--spacing-2);
   border: 1px solid var(--color-border-light);
   background: var(--color-bg-lighter);
   color: var(--color-text-muted);

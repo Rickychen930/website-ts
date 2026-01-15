@@ -14,7 +14,7 @@
   min-height: 420px;
   padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
     clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
-  border: 2px solid var(--color-border-light);
+  border: var(--card-border-width) solid var(--color-border-light);
   background: var(--color-bg-card);
   transition:
     transform var(--transition-smooth),
@@ -23,7 +23,7 @@
     background var(--transition-base);
   flex-direction: column;
   justify-content: flex-start;
-  border-radius: var(--radius-xl, 20px);
+  border-radius: var(--card-radius-default);
   box-shadow:
     0 8px 32px var(--color-black-alpha-08),
     0 16px 64px var(--color-black-alpha-06);
@@ -51,7 +51,7 @@
   z-index: calc(var(--z-base) + 2);
   height: 2rem;
   padding: 0 0.75rem;
-  border: 1.5px solid var(--color-accent-alpha-30);
+  border: var(--card-border-width-thin) solid var(--color-accent-alpha-30);
   background: var(--color-bg-card);
   color: var(--color-accent-primary);
   font-size: 0.875rem;
@@ -60,7 +60,7 @@
   align-items: center;
   justify-content: center;
   min-width: 2rem;
-  border-radius: var(--radius-md, 12px);
+  border-radius: var(--card-radius-sm);
   font-family: var(--font-main, "Inter", "Segoe UI", sans-serif);
   box-shadow: 0 2px 8px var(--color-black-alpha-10);
 }
@@ -162,7 +162,7 @@
   margin: 0;
   padding: 0;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--spacing-3);
   max-width: 100%;
   box-sizing: border-box;
   overflow: visible;
@@ -226,7 +226,7 @@
   }
 
   .skill-category-card__skills {
-    gap: 0.625rem;
+    gap: var(--spacing-2);
   }
 }
 
@@ -268,7 +268,7 @@
   }
 
   .skill-category-card__skills {
-    gap: 0.5rem;
+    gap: var(--spacing-2);
   }
 }
 

@@ -16,7 +16,7 @@
   position: relative;
   padding: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl))
     clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
-  border: 2px solid var(--color-border-light);
+  border: var(--card-border-width) solid var(--color-border-light);
   background: var(--color-bg-card);
   opacity: 0;
   transition:
@@ -26,7 +26,7 @@
     background var(--transition-base);
   flex-direction: column;
   backdrop-filter: blur(var(--blur-2xl));
-  border-radius: 32px; /* Modern bold radius */
+  border-radius: var(--card-radius-default);
   box-shadow:
     0 8px 32px var(--color-black-alpha-08),
     0 16px 64px var(--color-black-alpha-06),
@@ -317,7 +317,7 @@
   text-decoration: none;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--spacing-2);
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -392,7 +392,7 @@
   min-width: 44px; /* Ensure minimum touch target */
   min-height: 44px; /* Ensure minimum touch target */
   padding: 0;
-  border: 1px solid var(--color-accent-alpha-20); /* Standardized from 1.5px */
+  border: var(--card-border-width-thin) solid var(--color-accent-alpha-20);
   background: var(--color-accent-alpha-08);
   color: var(--contact-primary, var(--color-accent-primary));
   font-size: 1rem; /* Reduced from 1.1rem */
@@ -769,14 +769,14 @@
 .contact-card:focus-visible {
   outline: 3px solid var(--contact-primary, var(--color-accent-primary));
   outline-offset: 4px;
-  border-radius: var(--radius-3xl);
+    border-radius: var(--card-radius-default);
 }
 
 /* ─── Responsive Design ─── */
 @media screen and (width <= 768px) {
   .contact-card {
     padding: var(--card-padding-alt, 2.25rem 2rem); /* Use spacing variable */
-    border-radius: var(--radius-2xl);
+    border-radius: var(--card-radius-lg);
   }
 
   .contact-card-content {
@@ -796,7 +796,7 @@
       1.75rem 1.25rem
     ); /* Use spacing variable */
 
-    border-radius: var(--radius-xl);
+    border-radius: var(--card-radius-md);
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -817,7 +817,7 @@
       1.75rem 1.25rem
     ); /* Use spacing variable */
 
-    border-radius: var(--radius-lg);
+    border-radius: var(--card-radius-md);
   }
 }
 

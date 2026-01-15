@@ -30,16 +30,17 @@
 }
 
 /* ============================================
-   GRID - New Design
+   GRID - Using Unified Layout System
    ============================================ */
 #certification-section .certification-grid {
+  /* Using unified card-grid pattern */
   display: grid;
   position: relative;
   width: 100%;
   margin: 0;
-  padding: var(--cert-space-xl) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
-  gap: var(--cert-space-xl);
+  padding: var(--space-fluid-xl) 0;
+  grid-template-columns: var(--grid-cols-auto-fill-xl);
+  gap: var(--grid-gap-xl);
   list-style: none;
   max-width: 100%;
   align-items: stretch;
@@ -47,6 +48,7 @@
 }
 
 #certification-section .certification-grid::before {
+  /* Background pattern handled by unified layout system if needed */
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -70,6 +72,7 @@
    CERTIFICATION CARD - New Design
    ============================================ */
 #certification-section .certification-card {
+  /* Using unified card-modern-base pattern with enhancements */
   position: relative;
   z-index: 1;
   width: 100%;
@@ -87,15 +90,15 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   transition:
-    transform 0.6s var(--cert-ease-spring),
-    box-shadow 0.6s var(--cert-ease-smooth),
-    border-color 0.4s var(--cert-ease-smooth),
-    opacity 0.6s var(--cert-ease-smooth);
+    transform 0.6s var(--ease-spring),
+    box-shadow 0.6s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
+    opacity 0.6s var(--ease-smooth);
   height: 100%;
-  min-height: 380px;
+  min-height: var(--card-min-height-lg);
   display: flex;
   flex-direction: column;
-  will-change: transform, opacity;
+  will-change: var(--will-change-transform-opacity);
   box-sizing: border-box;
 }
 
@@ -107,7 +110,7 @@
   height: 4px;
   background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity 0.4s var(--cert-ease-smooth);
+  transition: opacity 0.4s var(--ease-smooth);
   content: "";
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
@@ -118,7 +121,7 @@
 }
 
 #certification-section .certification-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(var(--card-hover-translate-y)) scale(var(--card-hover-scale));
   box-shadow: var(--shadow-strong), var(--shadow-glow-purple);
   border-color: var(--color-border-accent);
 }
@@ -127,21 +130,29 @@
   opacity: 1;
 }
 
+/* Accessibility: Focus state */
+#certification-section .certification-card:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-focus);
+}
+
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - Using Unified Tokens
    ============================================ */
 @media screen and (width <= 768px) {
   #certification-section .certification-grid {
-    gap: var(--cert-space-lg);
-    padding: var(--cert-space-lg) 0;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--grid-gap-lg);
+    padding: var(--space-fluid-lg) 0;
+    grid-template-columns: var(--grid-cols-auto-fill-md);
   }
 }
 
 @media screen and (width <= 480px) {
   #certification-section .certification-grid {
     grid-template-columns: 1fr;
-    gap: var(--cert-space-md);
+    gap: var(--grid-gap-md);
   }
 
   #certification-section .certification-card {

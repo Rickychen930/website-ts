@@ -16,14 +16,7 @@
    NEW DESIGN TOKENS
    ============================================ */
 :root {
-  --card-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --card-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --card-space-md: clamp(1rem, 3vw, 1.5rem);
-  --card-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --card-space-xl: clamp(2rem, 5vw, 3.5rem);
-  --card-space-2xl: clamp(3rem, 7vw, 5rem);
-  --card-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --card-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Using unified tokens from core system */
 }
 
 /* ============================================
@@ -33,8 +26,8 @@
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: var(--card-space-2xl) var(--card-space-lg);
-  border: 2px solid var(--color-border-light);
+  padding: var(--card-padding-xl) var(--card-padding-md);
+  border: var(--card-border-width) solid var(--color-border-light);
   background: linear-gradient(
     135deg,
     var(--color-bg-card) 0%,
@@ -42,10 +35,10 @@
   );
   opacity: 0;
   transition:
-    transform 0.5s var(--card-ease-spring),
-    box-shadow 0.5s var(--card-ease-smooth),
-    border-color 0.4s var(--card-ease-smooth),
-    background 0.4s var(--card-ease-smooth);
+    transform 0.5s var(--ease-spring),
+    box-shadow 0.5s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
+    background 0.4s var(--ease-smooth);
   backdrop-filter: blur(24px) saturate(200%);
   border-radius: var(--radius-3xl);
   box-shadow: var(--shadow-medium);
@@ -55,7 +48,7 @@
   isolation: isolate;
   will-change: transform, box-shadow;
   box-sizing: border-box;
-  animation: card-enter 0.8s var(--card-ease-smooth) forwards;
+  animation: card-enter 0.8s var(--ease-smooth) forwards;
 }
 
 @keyframes card-enter {
@@ -75,12 +68,12 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 4px;
+  height: var(--card-accent-bar-height);
   background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity 0.4s var(--card-ease-smooth);
+  transition: opacity 0.4s var(--ease-smooth);
   content: "";
-  border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;
+  border-radius: var(--card-radius-default) var(--card-radius-default) 0 0;
 }
 
 .card::after {
@@ -94,7 +87,7 @@
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.4s var(--card-ease-smooth);
+  transition: opacity 0.4s var(--ease-smooth);
   pointer-events: none;
   border-radius: var(--radius-3xl);
 }
@@ -129,13 +122,13 @@
 }
 
 .card-variant-elevated::before {
-  height: 6px;
+    height: var(--card-accent-bar-height-thick);
   opacity: 0.8;
   box-shadow: 0 0 20px var(--color-accent-alpha-50);
 }
 
 .card-variant-outlined {
-  border: 3px solid var(--color-border-light);
+  border: var(--card-border-width-thick) solid var(--color-border-light);
   background: transparent;
   backdrop-filter: blur(16px) saturate(180%);
   box-shadow: none;
@@ -149,8 +142,8 @@
 }
 
 .card-variant-minimal {
-  padding: var(--card-space-xl) var(--card-space-lg);
-  border: 1px solid var(--color-border-light);
+  padding: var(--space-fluid-xl) var(--space-fluid-lg);
+  border: var(--card-border-width-thin) solid var(--color-border-light);
   background: var(--color-bg-card);
   backdrop-filter: blur(12px) saturate(160%);
   box-shadow: var(--shadow-soft);
@@ -178,7 +171,7 @@
 .card:focus-within,
 .card:focus-visible {
   outline: 3px solid var(--color-accent-primary);
-  outline-offset: var(--card-space-xs);
+  outline-offset: var(--space-fluid-xs);
   box-shadow: var(--shadow-focus), var(--shadow-glow-accent);
   border-color: var(--color-accent-primary);
   transform: translateY(-4px) scale(1.005);
@@ -203,9 +196,9 @@
    ============================================ */
 .card-header {
   position: relative;
-  margin-bottom: var(--card-space-lg);
+  margin-bottom: var(--space-fluid-lg);
   text-align: center;
-  padding-bottom: var(--card-space-md);
+  padding-bottom: var(--space-fluid-md);
   box-sizing: border-box;
 }
 
@@ -229,7 +222,7 @@
   line-height: 1.2;
   letter-spacing: -0.03em;
   font-family: var(--font-display);
-  transition: filter 0.4s var(--card-ease-smooth);
+  transition: filter 0.4s var(--ease-smooth);
   filter: drop-shadow(0 2px 8px var(--color-accent-alpha-20));
   animation: gradient-flow 8s ease infinite;
   user-select: none;
@@ -261,7 +254,7 @@
   letter-spacing: 0.01em;
   font-family: var(--font-main);
   box-sizing: border-box;
-  padding-top: var(--card-space-sm);
+  padding-top: var(--space-fluid-sm);
 }
 
 /* ============================================
@@ -269,14 +262,14 @@
    ============================================ */
 .card-footer {
   position: relative;
-  margin-top: var(--card-space-xl);
-  padding-top: var(--card-space-xl);
+  margin-top: var(--space-fluid-xl);
+  padding-top: var(--space-fluid-xl);
   border-top: 2px solid var(--color-border-light);
   color: var(--color-text-subtle);
   font-size: clamp(0.95rem, 2vw, 1.05rem);
   transition:
-    border-color 0.4s var(--card-ease-smooth),
-    color 0.4s var(--card-ease-smooth);
+    border-color 0.4s var(--ease-smooth),
+    color 0.4s var(--ease-smooth);
   box-sizing: border-box;
 }
 
@@ -290,12 +283,12 @@
    ============================================ */
 @media screen and (width >= 1400px) {
   .card {
-    padding: var(--card-space-2xl) var(--card-space-xl);
-    border-radius: var(--radius-4xl);
+    padding: var(--card-padding-xl) var(--card-padding-lg);
+    border-radius: var(--card-radius-default);
   }
 
   .card-header {
-    margin-bottom: var(--card-space-xl);
+    margin-bottom: var(--space-fluid-xl);
   }
 
   .card-title {
@@ -305,12 +298,12 @@
 
 @media screen and (width <= 1024px) {
   .card {
-    padding: var(--card-space-xl) var(--card-space-md);
-    border-radius: var(--radius-2xl);
+    padding: var(--card-padding-lg) var(--card-padding-sm);
+    border-radius: var(--card-radius-lg);
   }
 
   .card-header {
-    margin-bottom: var(--card-space-md);
+    margin-bottom: var(--space-fluid-md);
   }
 
   .card-title {
@@ -320,13 +313,13 @@
 
 @media screen and (width <= 768px) {
   .card {
-    padding: var(--card-space-lg) var(--card-space-md);
+    padding: var(--space-fluid-lg) var(--space-fluid-md);
     border-radius: var(--radius-2xl);
   }
 
   .card-header {
-    margin-bottom: var(--card-space-md);
-    padding-bottom: var(--card-space-sm);
+    margin-bottom: var(--space-fluid-md);
+    padding-bottom: var(--space-fluid-sm);
   }
 
   .card-title {
@@ -340,8 +333,8 @@
 
 @media screen and (width <= 480px) {
   .card {
-    padding: var(--card-space-md) var(--card-space-sm);
-    border-radius: var(--radius-xl);
+    padding: var(--card-padding-sm) var(--card-padding-xs);
+    border-radius: var(--card-radius-md);
   }
 
   .card-title {
@@ -383,7 +376,7 @@
 
 @media print {
   .card {
-    padding: var(--card-space-lg);
+    padding: var(--space-fluid-lg);
     border: 1px solid var(--color-border-default);
     break-inside: avoid;
     box-shadow: none;

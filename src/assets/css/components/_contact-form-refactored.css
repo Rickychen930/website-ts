@@ -183,7 +183,7 @@
 
 @media screen and (width <= 768px) {
   .contact-form {
-    padding: 1.5rem;
+    padding: var(--spacing-6);
   }
 
   .contact-form__actions {
@@ -196,7 +196,7 @@
   }
 
   .contact-form__success {
-    padding: 2rem 1.5rem;
+    padding: var(--spacing-8) var(--spacing-6);
   }
 
   .contact-form__success-icon {
@@ -208,15 +208,15 @@
 
 @media screen and (width <= 480px) {
   .contact-form {
-    padding: 1rem;
+    padding: var(--spacing-4);
   }
 
   .contact-form__group {
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--spacing-5);
   }
 
   .contact-form__success {
-    padding: 1.5rem 1rem;
+    padding: var(--spacing-6) var(--spacing-4);
   }
 
   .contact-form__success-icon {

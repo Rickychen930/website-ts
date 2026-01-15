@@ -8,7 +8,7 @@
   position: relative;
   padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl))
     clamp(var(--spacing-xl), 4vw, var(--spacing-2xl));
-  border: 2px solid var(--color-border-light);
+  border: var(--card-border-width) solid var(--color-border-light);
   background: var(--color-bg-card);
   text-align: center;
   opacity: 0;
@@ -19,7 +19,7 @@
     background var(--transition-base);
   flex-direction: column;
   align-items: center;
-  border-radius: 32px; /* Modern bold radius */
+  border-radius: var(--card-radius-default);
   box-shadow:
     0 8px 32px var(--color-black-alpha-08),
     0 16px 64px var(--color-black-alpha-06),
@@ -302,7 +302,7 @@
 .soft-skill-card-badge {
   display: inline-flex;
   padding: 0.4rem 1rem;
-  border: 1px solid var(--color-accent-alpha-30);
+  border: var(--card-border-width-thin) solid var(--color-accent-alpha-30);
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-15),
@@ -325,7 +325,7 @@
 }
 
 .soft-skill-card-description {
-  margin: 0 0 2rem;
+  margin: 0 0 var(--spacing-8);
   color: var(--text-subtle);
   font-size: clamp(1rem, 1.6vw, 1.15rem);
   font-weight: 400;
@@ -336,7 +336,7 @@
 
 /* Skill Level Indicator */
 .soft-skill-card-level {
-  margin-top: 1.5rem;
+  margin-top: var(--spacing-6);
   width: 100%;
 }
 
@@ -344,7 +344,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--spacing-3);
 }
 
 .soft-skill-card-level-label {
@@ -641,14 +641,14 @@
 @media screen and (width >= 1400px) {
   .soft-skill-card {
     padding: 4rem clamp(3rem, 5vw, 3.5rem);
-    border-radius: var(--radius-3xl);
+    border-radius: var(--card-radius-default);
   }
 }
 
 @media screen and (width <= 992px) {
   .soft-skill-card {
     padding: 3rem clamp(2rem, 3vw, 2.5rem);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--card-radius-lg);
   }
 
   .soft-skill-card-icon-wrapper {
@@ -659,19 +659,19 @@
 @media screen and (width <= 768px) {
   .soft-skill-card {
     padding: 2.5rem clamp(1.75rem, 2.5vw, 2.25rem);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--card-radius-lg);
   }
 
   .soft-skill-card-header {
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--spacing-3);
   }
 }
 
 @media screen and (width <= 480px) {
   .soft-skill-card {
     padding: 2rem clamp(1.5rem, 2vw, 2rem);
-    border-radius: var(--radius-xl);
+    border-radius: var(--card-radius-md);
   }
 }
 
@@ -696,7 +696,7 @@
 /* High Contrast */
 @media (prefers-contrast: more) {
   .soft-skill-card {
-    border: 3px solid var(--text-heading, var(--color-text-heading));
+    border: var(--card-border-width-thick) solid var(--text-heading, var(--color-text-heading));
   }
 
   .soft-skill-card-title {

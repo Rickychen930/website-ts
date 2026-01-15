@@ -75,7 +75,7 @@
     border-color var(--transition-base),
     background var(--transition-base);
   grid-column: 2;
-  border-radius: 32px; /* Modern bold radius */
+  border-radius: var(--card-radius-default);
   box-shadow:
     0 8px 32px var(--color-black-alpha-08),
     0 16px 64px var(--color-black-alpha-06),
@@ -443,7 +443,7 @@
 
   .work-experience-card-content {
     padding: var(--work-spacing-md, 1.25rem);
-    border-radius: var(--radius-md);
+    border-radius: var(--card-radius-md);
   }
 
   .work-experience-icon {
@@ -469,7 +469,7 @@
   .work-experience-card-content {
     grid-column: 1;
     padding: var(--work-spacing-md, 1.125rem);
-    border-radius: var(--radius-md);
+    border-radius: var(--card-radius-md);
   }
 
   .work-experience-icon {
@@ -521,7 +521,7 @@
 
   .work-experience-card-content {
     padding: var(--work-spacing-sm, 1rem);
-    border-radius: var(--radius-md);
+    border-radius: var(--card-radius-md);
   }
 
   .work-experience-icon {

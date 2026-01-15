@@ -123,13 +123,13 @@
    ============================================ */
 .form__error {
   display: block;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-3) var(--spacing-4);
   border: 1px solid var(--color-error);
   background: var(--color-error-light);
   color: var(--color-error);
   font-size: var(--font-size-small);
   margin-bottom: 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-main);
 }
 
@@ -142,13 +142,13 @@
    ============================================ */
 .form__success {
   display: block;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-3) var(--spacing-4);
   border: 1px solid var(--color-success);
   background: var(--color-success-light);
   color: var(--color-success);
   font-size: var(--font-size-small);
   margin-bottom: 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-main);
 }
 

@@ -37,7 +37,7 @@
   display: flex;
   position: relative;
   padding: clamp(var(--spacing-xl), 5vw, var(--spacing-3xl));
-  border: 2px solid var(--color-border-light);
+  border: var(--card-border-width) solid var(--color-border-light);
   background: var(--color-bg-card);
   opacity: 0;
   transition:
@@ -47,7 +47,7 @@
     background var(--transition-base);
   flex-direction: column;
   backdrop-filter: blur(var(--blur-2xl));
-  border-radius: 32px; /* Modern bold radius */
+  border-radius: var(--card-radius-default);
   box-shadow:
     0 8px 32px var(--color-black-alpha-08),
     0 16px 64px var(--color-black-alpha-06),
@@ -206,7 +206,7 @@
   position: relative;
   z-index: calc(var(--z-base) + 3);
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--spacing-6);
 }
 
 /* ─── Icon Styles (3D Enhanced) ─── */
@@ -218,7 +218,7 @@
   height: 5rem;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-2);
   flex-shrink: 0;
   perspective: 1000px;
 }
@@ -334,7 +334,7 @@
 .honor-card__date {
   display: inline-flex;
   padding: 0.6rem 1.2rem;
-  border: 1px solid var(--color-border-medium-alpha-50);
+  border: var(--card-border-width-thin) solid var(--color-border-medium-alpha-50);
   background: var(--gradient-primary);
   color: var(--color-text-heading-alt);
   font-size: 0.9rem;
@@ -536,7 +536,7 @@
 @media screen and (width > 1400px) {
   .honor-card {
     padding: 3rem;
-    border-radius: var(--radius-3xl);
+    border-radius: var(--card-radius-default);
   }
 
   .honor-card__icon {
@@ -557,7 +557,7 @@
 @media screen and (width <= 992px) {
   .honor-card {
     padding: 2rem;
-    border-radius: var(--radius-2xl);
+    border-radius: var(--card-radius-lg);
   }
 
   .honor-card__icon {
@@ -591,7 +591,7 @@
 @media screen and (width <= 768px) {
   .honor-card {
     padding: 1.75rem;
-    border-radius: var(--radius-xl);
+    border-radius: var(--card-radius-md);
     transform: translateY(30px);
   }
 
@@ -633,7 +633,7 @@
 @media screen and (width <= 480px) {
   .honor-card {
     padding: 1.5rem;
-    border-radius: var(--radius-lg);
+    border-radius: var(--card-radius-md);
   }
 
   .honor-card__icon {

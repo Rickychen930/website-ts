@@ -154,7 +154,7 @@
 
 .not-found-search-form {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-2);
   max-width: 400px;
   margin: 0 auto;
 }

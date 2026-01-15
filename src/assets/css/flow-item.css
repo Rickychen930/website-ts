@@ -224,7 +224,7 @@
 
 @media screen and (width <= 768px) {
   .flow-item {
-    padding: 1.5rem clamp(1.25rem, 2vw, 1.75rem);
+    padding: var(--spacing-6) clamp(var(--spacing-5), 2vw, var(--spacing-7));
     border-radius: var(--radius-lg);
     margin-bottom: var(--spacing-lg);
   }

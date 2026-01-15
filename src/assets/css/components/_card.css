@@ -32,8 +32,8 @@
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid var(--color-border-light);
+  padding: var(--spacing-card-padding);
+  border: var(--card-border-width-thin) solid var(--color-border-light);
   background: linear-gradient(
     135deg,
     var(--color-bg-card) 0%,
@@ -63,7 +63,7 @@
   opacity: 0;
   transition: opacity var(--transition-base);
   content: "";
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-radius: var(--card-radius-default) var(--card-radius-default) 0 0;
 }
 
 /* ============================================
@@ -75,7 +75,7 @@
 }
 
 .card--outlined {
-  border: 2px solid var(--color-border-default);
+  border: var(--card-border-width) solid var(--color-border-default);
   background: transparent;
   box-shadow: none;
 }
@@ -97,7 +97,7 @@
    ============================================ */
 .card:hover,
 .card:focus-within {
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale-subtle));
   box-shadow:
     var(--shadow-md),
     0 0 24px var(--color-accent-alpha-15);
@@ -107,6 +107,14 @@
     var(--color-bg-card-hover) 0%,
     var(--color-bg-secondary) 100%
   );
+}
+
+/* Accessibility: Enhanced focus state */
+.card:focus-visible {
+  outline: 3px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-focus);
 }
 
 .card:hover::before,
@@ -137,11 +145,11 @@
   z-index: var(--z-base);
   margin: 0;
   color: var(--color-text-heading);
-  font-size: clamp(1.5rem, 3.5vw, 2.25rem); /* Reduced from 3rem */
-  font-weight: 600; /* Reduced from 700 */
-  line-height: 1.3; /* Improved from 1.2 */
+  font-size: var(--font-responsive-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
   transition: color var(--transition-base);
-  letter-spacing: -0.02em; /* Slightly tighter */
+  letter-spacing: var(--letter-spacing-tight);
   font-family: var(--font-display);
   user-select: none;
 }
@@ -161,9 +169,9 @@
   position: relative;
   z-index: var(--z-base);
   color: var(--color-text-main);
-  font-size: clamp(1rem, 1.6vw, 1.125rem);
-  line-height: 1.75; /* Improved readability */
-  letter-spacing: 0.01em; /* Better spacing */
+  font-size: var(--font-responsive-base);
+  line-height: var(--line-height-relaxed);
+  letter-spacing: var(--letter-spacing-normal);
   transition: color var(--transition-base);
   font-family: var(--font-main);
 }
@@ -179,9 +187,9 @@
   position: relative;
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--color-border-light);
+  border-top: var(--card-border-width-thin) solid var(--color-border-light);
   color: var(--color-text-subtle);
-  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  font-size: var(--font-responsive-sm);
   transition: border-color var(--transition-base);
 }
 
@@ -203,11 +211,11 @@
   }
 
   .card__title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: var(--font-responsive-xl);
   }
 
   .card__body {
-    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-size: var(--font-responsive-base);
   }
 
   .card__footer {
@@ -220,15 +228,15 @@
   .card {
     padding: var(--spacing-xl)
       clamp(var(--spacing-lg), 2.5vw, var(--spacing-xl));
-    border-radius: 20px;
+    border-radius: var(--card-radius-lg);
   }
 
   .card__title {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-size: var(--font-responsive-lg);
   }
 
   .card__body {
-    font-size: clamp(0.875rem, 1.3vw, 0.95rem);
+    font-size: var(--font-responsive-sm);
   }
 }
 
@@ -243,6 +251,11 @@
   .card:hover,
   .card:focus-within {
     transform: none;
+  }
+
+  .card:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
   }
 }
 

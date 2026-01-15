@@ -184,7 +184,7 @@
 
 @media (width <= 480px) {
   .empty-state {
-    padding: 1.5rem 1rem;
+    padding: var(--spacing-6) var(--spacing-4);
     min-height: 150px;
   }
 

@@ -15,11 +15,7 @@
    NEW DESIGN TOKENS
    ============================================ */
 :root {
-  --send-message-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --send-message-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --send-message-space-md: clamp(1rem, 3vw, 1.5rem);
-  --send-message-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --send-message-space-xl: clamp(2rem, 5vw, 3.5rem);
+  /* Using unified tokens from core system */
 }
 
 /* ============================================
@@ -30,7 +26,7 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: var(--send-message-space-xl) 0;
+  padding: var(--space-fluid-xl) 0;
   box-sizing: border-box;
 }
 
@@ -54,12 +50,12 @@
 .send-message-subtitle {
   position: relative;
   z-index: 1;
-  margin: 0 auto var(--send-message-space-xl) auto;
-  padding: 0 var(--send-message-space-md);
+  margin: 0 auto var(--space-fluid-xl) auto;
+  padding: 0 var(--space-fluid-md);
   color: var(--color-text-subtle);
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
-  font-weight: 500;
-  line-height: 1.6;
+  font-size: var(--font-responsive-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   max-width: 600px;
   text-align: center;
   font-family: var(--font-main);
@@ -72,13 +68,13 @@
    ============================================ */
 @media screen and (width <= 768px) {
   .send-message-wrapper {
-    padding: var(--send-message-space-lg) 0;
+    padding: var(--space-fluid-lg) 0;
   }
 
   .send-message-subtitle {
-    padding: 0 var(--send-message-space-sm);
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    margin-bottom: var(--send-message-space-lg);
+    padding: 0 var(--space-fluid-sm);
+    font-size: var(--font-responsive-base);
+    margin-bottom: var(--space-fluid-lg);
   }
 }
 

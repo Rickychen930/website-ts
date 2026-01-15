@@ -13,7 +13,7 @@
 @import url("./core/index.css");
 
 /* ============================================
-   NEW DESIGN TOKENS
+   DESIGN TOKENS - Using Unified Core System
    ============================================ */
 #soft-skills-section {
   position: relative;
@@ -21,16 +21,9 @@
   max-width: 100%;
   box-sizing: border-box;
 
-  --soft-skills-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --soft-skills-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --soft-skills-space-md: clamp(1rem, 3vw, 1.5rem);
-  --soft-skills-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --soft-skills-space-xl: clamp(2rem, 5vw, 3.5rem);
-  --soft-skills-space-2xl: clamp(3rem, 7vw, 5rem);
-  --soft-skills-color-primary: var(--color-accent-primary);
-  --soft-skills-color-secondary: var(--color-accent-secondary);
-  --soft-skills-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --soft-skills-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Using unified tokens from core system */
+  --soft-skills-color-primary: var(--section-color-primary);
+  --soft-skills-color-secondary: var(--section-color-secondary);
 }
 
 #soft-skills-section::before {
@@ -68,9 +61,9 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: var(--soft-skills-space-xl) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: var(--soft-skills-space-xl);
+  padding: var(--space-fluid-xl) 0;
+  grid-template-columns: var(--grid-cols-auto-fill-lg);
+  gap: var(--grid-gap-xl);
   max-width: 100%;
   align-items: stretch;
   box-sizing: border-box;
@@ -81,7 +74,7 @@
    ============================================ */
 .soft-skill-card {
   position: relative;
-  padding: var(--soft-skills-space-lg);
+  padding: var(--space-fluid-lg);
   border: 2px solid var(--color-border-light);
   background: linear-gradient(
     135deg,
@@ -92,15 +85,16 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-medium);
   transition:
-    transform 0.5s var(--soft-skills-ease-spring),
-    box-shadow 0.5s var(--soft-skills-ease-smooth),
-    border-color 0.4s var(--soft-skills-ease-smooth);
+    transform 0.5s var(--ease-spring),
+    box-shadow 0.5s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
   overflow: hidden;
   height: 100%;
-  min-height: 320px;
+  min-height: var(--card-min-height-md);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  will-change: var(--will-change-transform-opacity);
 }
 
 .soft-skill-card::before {
@@ -111,12 +105,12 @@
   height: 4px;
   background: var(--gradient-accent-full);
   opacity: 0;
-  transition: opacity 0.4s var(--soft-skills-ease-smooth);
+  transition: opacity 0.4s var(--ease-smooth);
   content: "";
 }
 
 .soft-skill-card:hover {
-  transform: translateY(-6px) scale(1.02);
+  transform: translateY(var(--card-hover-translate-y-subtle)) scale(var(--card-hover-scale));
   box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
   border-color: var(--color-border-accent);
 }
@@ -125,26 +119,35 @@
   opacity: 1;
 }
 
+/* Accessibility: Focus state */
+.soft-skill-card:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-focus);
+}
+
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - Using Unified Tokens
    ============================================ */
 @media screen and (width <= 768px) {
   .soft-skills-grid {
-    gap: var(--soft-skills-space-lg);
-    padding: var(--soft-skills-space-lg) 0;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--grid-gap-lg);
+    padding: var(--space-fluid-lg) 0;
+    grid-template-columns: var(--grid-cols-auto-fill-sm);
   }
 }
 
 @media screen and (width <= 480px) {
   .soft-skills-grid {
     grid-template-columns: 1fr;
-    gap: var(--soft-skills-space-md);
+    gap: var(--grid-gap-md);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .soft-skill-card {
     transition: none;
+    transform: none;
   }
 }

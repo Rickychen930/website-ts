@@ -25,8 +25,8 @@
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--spacing-2), 1.5vw, var(--spacing-3));
-  margin-bottom: clamp(var(--spacing-5), 3vw, var(--spacing-6));
+  gap: var(--space-fluid-xs);
+  margin-bottom: var(--space-fluid-md);
 }
 
 /* ============================================
@@ -35,10 +35,10 @@
 .input-label {
   display: block;
   color: var(--color-text-heading);
-  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  font-size: var(--font-responsive-base);
   font-weight: var(--font-weight-semibold);
   font-family: var(--font-main);
-  margin-bottom: clamp(var(--spacing-1), 1vw, var(--spacing-2));
+  margin-bottom: var(--spacing-xs);
   line-height: var(--line-height-normal);
 }
 
@@ -53,11 +53,11 @@
    ============================================ */
 .input {
   width: 100%;
-  padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1rem, 2.5vw, 1.125rem);
+  padding: var(--space-fluid-sm) var(--space-fluid-md);
   border: 1.5px solid var(--color-border-default);
   background: var(--color-bg-card);
   color: var(--color-text-main);
-  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  font-size: var(--font-responsive-base);
   line-height: var(--line-height-normal);
   transition:
     border-color var(--transition-base),
@@ -302,13 +302,13 @@
   }
 
   .input--large {
-    padding: 0.875rem 1.125rem;
+    padding: var(--spacing-3) var(--spacing-4);
     font-size: var(--font-size-base);
     min-height: 48px;
   }
 
   .input--small {
-    padding: 0.5rem 0.875rem;
+    padding: var(--spacing-2) var(--spacing-3);
     font-size: var(--font-size-small);
     min-height: 36px;
   }
@@ -336,13 +336,13 @@
   }
 
   .input--large {
-    padding: 0.875rem 1.125rem;
+    padding: var(--spacing-3) var(--spacing-4);
     font-size: clamp(1rem, 3.5vw, 1.0625rem);
     min-height: 48px;
   }
 
   .input--small {
-    padding: 0.5rem 0.875rem;
+    padding: var(--spacing-2) var(--spacing-3);
     font-size: clamp(0.75rem, 2.5vw, 0.8125rem);
     min-height: 36px;
   }
@@ -377,7 +377,7 @@
 @media screen and (width <= 360px) {
   .input,
   .textarea {
-    padding: 0.5625rem 0.875rem;
+    padding: var(--spacing-2) var(--spacing-3);
     font-size: clamp(0.8125rem, 4vw, 0.875rem);
   }
 
@@ -387,7 +387,7 @@
   }
 
   .input--small {
-    padding: 0.4375rem 0.75rem;
+    padding: var(--spacing-2) var(--spacing-3);
     font-size: clamp(0.6875rem, 3vw, 0.75rem);
   }
 }

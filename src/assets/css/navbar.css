@@ -30,13 +30,15 @@
   --navbar-backdrop-z: calc(var(--navbar-z-index) - 1);
   --navbar-menu-z: var(--navbar-z-index);
 
-  /* New Fluid Spacing - Aligned with new design system */
-  --navbar-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --navbar-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --navbar-space-md: clamp(1rem, 3vw, 1.5rem);
-  --navbar-space-lg: clamp(1.5rem, 4vw, 2.5rem);
+  /*
+   * New Fluid Spacing - Aligned with new design system
+   * Using unified tokens from core system
+   * Navbar-specific spacing can use --space-fluid-* or --spacing-*
+   */
 
-  /* Advanced Gradient System - Extends core gradients */
+  /*
+   * Advanced Gradient System - Extends core gradients
+   */
   --gradient-primary: var(--gradient-accent-full);
   --gradient-primary-reverse: var(--gradient-primary-reverse);
   --gradient-primary-radial: var(--gradient-primary-radial);
@@ -77,6 +79,10 @@
     var(--color-bg-navbar) 0%,
     var(--color-bg-secondary) 100%
   );
+  visibility: visible;
+  opacity: 1;
+  transform: var(--transform-gpu);
+  will-change: var(--will-change-transform);
   transition:
     background 0.4s var(--ease-smooth),
     box-shadow 0.4s var(--ease-smooth),
@@ -153,18 +159,18 @@
   position: relative;
   z-index: 2;
   margin: 0 auto;
-  padding: var(--navbar-space-lg) var(--navbar-space-xl);
+  padding: var(--space-fluid-lg) var(--space-fluid-xl);
   transition: padding 0.4s var(--ease-smooth);
   align-items: center;
   justify-content: space-between;
   max-width: var(--spacing-card-max-width);
-  gap: var(--navbar-space-md);
+  gap: var(--space-fluid-md);
   min-height: inherit;
 }
 
 .navbar.scrolled .navbar-inner {
-  padding-top: var(--navbar-space-sm);
-  padding-bottom: var(--navbar-space-sm);
+  padding-top: var(--space-fluid-sm);
+  padding-bottom: var(--space-fluid-sm);
 }
 
 /* Enhanced hover effect with new design system */
@@ -328,7 +334,7 @@
   inset: -8px;
   border-radius: var(--radius-lg);
   filter: blur(var(--blur-xl));
-  transform: translateZ(0);
+  transform: var(--transform-gpu);
 }
 
 /* Logo container with premium backdrop */
@@ -1134,7 +1140,7 @@
     brightness(1.05);
   pointer-events: none;
   overflow: visible;
-  will-change: transform, opacity;
+  will-change: var(--will-change-transform-opacity);
   filter: blur(4px);
 }
 
@@ -1181,10 +1187,10 @@
 .navbar-dropdown-list {
   display: flex;
   margin: 0;
-  padding: 0.5rem;
+  padding: var(--spacing-2);
   list-style: none;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--spacing-1);
 }
 
 .navbar-dropdown-list li {
@@ -1436,7 +1442,7 @@
   animation: backdrop-fade-in var(--timing-normal) var(--easing-smooth);
 
   /* GPU acceleration untuk better mobile performance */
-  transform: translateZ(0);
+  transform: var(--transform-gpu);
   will-change: opacity, backdrop-filter;
 }
 
@@ -1459,9 +1465,9 @@
     .navbar-links.mobile.open,
     .navbar-menu-backdrop {
       /* Reduce animation complexity on mobile */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      perspective: 1000px;
+      transform: var(--transform-gpu);
+      backface-visibility: var(--backface-visibility);
+      perspective: var(--perspective);
     }
   }
 }
@@ -1537,7 +1543,7 @@
     pointer-events: none;
     transform: translateY(-10px);
     white-space: normal;
-    will-change: transform, opacity, visibility;
+    will-change: var(--will-change-transform-opacity), visibility;
   }
 
   .navbar-links::before {

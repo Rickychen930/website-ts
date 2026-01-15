@@ -218,6 +218,122 @@
   --component-gap-md: var(--spacing-md);
   --component-gap-lg: var(--spacing-lg);
   --component-gap-xl: var(--spacing-xl);
+
+  /* ============================================
+     Unified Section Design Tokens - Consolidated from all sections
+     Single source of truth for section-specific spacing and animations
+     ============================================ */
+  
+  /* Fluid Spacing System - Responsive clamp-based spacing */
+  --space-fluid-xs: clamp(0.5rem, 1.5vw, 0.75rem);
+  --space-fluid-sm: clamp(0.75rem, 2vw, 1rem);
+  --space-fluid-md: clamp(1rem, 3vw, 1.5rem);
+  --space-fluid-lg: clamp(1.5rem, 4vw, 2.5rem);
+  --space-fluid-xl: clamp(2rem, 5vw, 3.5rem);
+  --space-fluid-2xl: clamp(3rem, 7vw, 5rem);
+  --space-fluid-3xl: clamp(4rem, 9vw, 7rem);
+  --space-fluid-4xl: clamp(5rem, 11vw, 9rem);
+
+  /* Unified Animation Easing Functions */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
+  /* Unified Shadow System - Enhanced Depth */
+  --shadow-soft: 0 2px 8px rgb(0 0 0 / 4%), 0 4px 16px rgb(0 0 0 / 6%);
+  --shadow-medium: 0 4px 16px rgb(0 0 0 / 8%), 0 8px 32px rgb(0 0 0 / 10%);
+  --shadow-strong: 0 8px 32px rgb(0 0 0 / 12%), 0 16px 64px rgb(0 0 0 / 15%);
+  --shadow-glow-accent: 0 0 40px rgb(59 130 246 / 20%), 0 0 80px rgb(59 130 246 / 10%);
+  --shadow-glow-purple: 0 0 40px rgb(139 92 246 / 20%), 0 0 80px rgb(139 92 246 / 10%);
+  --shadow-glow-gold: 0 0 40px rgb(212 175 55 / 25%), 0 0 80px rgb(212 175 55 / 15%);
+
+  /* Section-Specific Color Tokens - Consolidated */
+  --section-color-primary: var(--color-accent-primary);
+  --section-color-secondary: var(--color-accent-secondary);
+  --section-color-tertiary: var(--color-accent-tertiary);
+
+  /* Honors Section - Gold Theme */
+  --honors-gold: #d4af37;
+  --honors-gold-light: #f4e4bc;
+  --honors-gold-dark: #b8941f;
+
+  /* ============================================
+     Unified Grid System - Modern Responsive Grid
+     ============================================ */
+  --grid-gap-xs: var(--space-fluid-xs);
+  --grid-gap-sm: var(--space-fluid-sm);
+  --grid-gap-md: var(--space-fluid-md);
+  --grid-gap-lg: var(--space-fluid-lg);
+  --grid-gap-xl: var(--space-fluid-xl);
+  --grid-gap-2xl: var(--space-fluid-2xl);
+
+  /* Grid Column Templates - Responsive */
+  --grid-cols-auto-fill-sm: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  --grid-cols-auto-fill-md: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  --grid-cols-auto-fill-lg: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  --grid-cols-auto-fill-xl: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+
+  /* ============================================
+     Card System - Unified Card Tokens
+     Single source of truth for all card styling
+     ============================================ */
+  
+  /* Card Padding - Consistent across all cards */
+  --card-padding-xs: var(--spacing-3); /* 12px */
+  --card-padding-sm: var(--spacing-4); /* 16px */
+  --card-padding-md: var(--space-fluid-lg); /* Responsive: 1.5rem - 2.5rem */
+  --card-padding-lg: var(--space-fluid-xl); /* Responsive: 2rem - 3.5rem */
+  --card-padding-xl: var(--space-fluid-2xl); /* Responsive: 3rem - 5rem */
+  
+  /* Card Border Radius - Consistent across all cards */
+  --card-radius-xs: var(--radius-sm); /* 8px */
+  --card-radius-sm: var(--radius-md); /* 12px */
+  --card-radius-md: var(--radius-lg); /* 16px */
+  --card-radius-lg: var(--radius-2xl); /* 24px - DEFAULT */
+  --card-radius-xl: var(--radius-3xl); /* 32px */
+  --card-radius-default: var(--card-radius-lg); /* 24px - Most common */
+  
+  /* Card Border Width - Consistent across all cards */
+  --card-border-width: 2px;
+  --card-border-width-thin: 1px;
+  --card-border-width-thick: 3px;
+  
+  /* Card Min Heights - Consistent sizing */
+  --card-min-height-sm: 280px;
+  --card-min-height-md: 320px;
+  --card-min-height-lg: 360px;
+  --card-min-height-xl: 400px;
+  --card-min-height-2xl: 450px;
+  
+  /* Card Shadows - Consistent depth */
+  --card-shadow-default: var(--shadow-medium);
+  --card-shadow-hover: var(--shadow-strong);
+  --card-shadow-elevated: var(--shadow-strong), var(--shadow-glow-accent);
+  
+  /* Card Hover Transform - Consistent animations */
+  --card-hover-translate-y: -8px;
+  --card-hover-scale: 1.02;
+  --card-hover-translate-y-subtle: -4px;
+  --card-hover-scale-subtle: 1.01;
+  
+  /* Card Top Accent Bar - Consistent styling */
+  --card-accent-bar-height: 4px;
+  --card-accent-bar-height-thick: 6px;
+
+  /* ============================================
+     Performance Optimization Tokens
+     ============================================ */
+  --will-change-transform: transform;
+  --will-change-opacity: opacity;
+  --will-change-transform-opacity: transform, opacity;
+  --will-change-scroll: scroll-position;
+  --will-change-contents: contents;
+
+  /* GPU Acceleration Hints */
+  --transform-gpu: translateZ(0);
+  --backface-visibility: hidden;
+  --perspective: 1000px;
 }
 
 /* ============================================
@@ -227,6 +343,11 @@
   --opacity-overlay: 0.75;
   --opacity-muted: 0.7;
   --opacity-subtle: 0.5;
+
+  /* Honors Section - Dark Theme (brighter for visibility) */
+  --honors-gold: #f4d03f;
+  --honors-gold-light: #fef5d4;
+  --honors-gold-dark: #d4af37;
 }
 
 /* ============================================

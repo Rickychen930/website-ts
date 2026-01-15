@@ -21,14 +21,14 @@
   position: relative;
   width: 100%;
   flex-direction: row;
-  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  gap: var(--grid-gap-lg);
   overflow: auto hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
-  scroll-padding: 0 clamp(1.25rem, 2.5vw, 2rem);
-  padding: clamp(0.5rem, 1vw, 1rem) 0 clamp(1rem, 2vw, 1.5rem);
-  margin-top: clamp(1.5rem, 3vw, 2rem);
+  scroll-padding: 0 var(--space-fluid-lg);
+  padding: var(--space-fluid-sm) 0 var(--space-fluid-lg);
+  margin-top: var(--space-fluid-lg);
   box-sizing: border-box;
   overscroll-behavior: contain;
   overscroll-behavior-x: contain;
@@ -43,7 +43,7 @@
 .testimonials-grid::after {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: var(--z-tooltip);
   width: clamp(40px, 5vw, 80px);
   height: 100%;
   background: linear-gradient(90deg, var(--color-bg-card) 0%, transparent 100%);
@@ -92,9 +92,9 @@
 }
 
 .testimonials-grid::-webkit-scrollbar-track {
-  margin: 0 clamp(1.25rem, 2.5vw, 2rem);
+  margin: 0 var(--space-fluid-lg);
   background: var(--color-border-light);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .testimonials-grid::-webkit-scrollbar-thumb {
@@ -103,7 +103,7 @@
     var(--color-accent-primary),
     var(--color-accent-alt)
   );
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   transition: background var(--transition-base);
 }
 
@@ -127,6 +127,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  will-change: var(--will-change-scroll);
 }
 
 /* ============================================
@@ -333,13 +334,13 @@
 .testimonials-grid-container::after {
   display: none;
   position: absolute;
-  bottom: 0.5rem;
+  bottom: var(--spacing-sm);
   left: 50%;
-  z-index: 5;
+  z-index: var(--z-base);
   color: var(--color-text-subtle);
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-  font-weight: 500;
-  opacity: 0.6;
+  font-size: var(--font-responsive-sm);
+  font-weight: var(--font-weight-medium);
+  opacity: var(--opacity-muted);
   transition: opacity var(--transition-base);
   content: "← Swipe to see more →";
   transform: translateX(-50%);

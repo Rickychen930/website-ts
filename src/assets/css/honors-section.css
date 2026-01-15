@@ -13,21 +13,10 @@
 @import url("./core/index.css");
 
 /* ============================================
-   NEW DESIGN TOKENS
+   DESIGN TOKENS - Using Unified Core System
    ============================================ */
-:root {
-  --honors-space-xs: clamp(0.5rem, 1.5vw, 0.75rem);
-  --honors-space-sm: clamp(0.75rem, 2vw, 1rem);
-  --honors-space-md: clamp(1rem, 3vw, 1.5rem);
-  --honors-space-lg: clamp(1.5rem, 4vw, 2.5rem);
-  --honors-space-xl: clamp(2rem, 5vw, 3.5rem);
-  --honors-space-2xl: clamp(3rem, 7vw, 5rem);
-  --honors-gold: #d4af37;
-  --honors-gold-light: #f4e4bc;
-  --honors-gold-dark: #b8941f;
-  --honors-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --honors-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* Gold colors are defined in core/_constants.css */
+/* Using unified tokens from core system */
 
 /* ============================================
    GLOBAL RESET
@@ -68,9 +57,9 @@
   z-index: 1;
   width: 100%;
   margin: 0;
-  padding: var(--honors-space-xl) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
-  gap: var(--honors-space-xl);
+  padding: var(--space-fluid-xl) 0;
+  grid-template-columns: var(--grid-cols-auto-fill-xl);
+  gap: var(--grid-gap-xl);
   list-style: none;
   max-width: 100%;
   align-items: stretch;
@@ -97,15 +86,15 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   transition:
-    transform 0.6s var(--honors-ease-spring),
-    box-shadow 0.6s var(--honors-ease-smooth),
-    border-color 0.4s var(--honors-ease-smooth),
-    opacity 0.6s var(--honors-ease-smooth);
+    transform 0.6s var(--ease-spring),
+    box-shadow 0.6s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
+    opacity 0.6s var(--ease-smooth);
   height: 100%;
-  min-height: 360px;
+  min-height: var(--card-min-height-lg);
   display: flex;
   flex-direction: column;
-  will-change: transform, opacity;
+  will-change: var(--will-change-transform-opacity);
   box-sizing: border-box;
 }
 
@@ -122,7 +111,7 @@
     var(--honors-gold-dark) 100%
   );
   opacity: 0;
-  transition: opacity 0.4s var(--honors-ease-smooth);
+  transition: opacity 0.4s var(--ease-smooth);
   content: "";
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
@@ -133,12 +122,17 @@
 }
 
 #honors-section .honor-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    var(--shadow-strong),
-    0 0 40px rgb(212 175 55 / 25%),
-    0 0 80px rgb(212 175 55 / 15%);
+  transform: translateY(var(--card-hover-translate-y)) scale(var(--card-hover-scale));
+  box-shadow: var(--shadow-strong), var(--shadow-glow-gold);
   border-color: var(--honors-gold);
+}
+
+/* Accessibility: Focus state */
+#honors-section .honor-card:focus-visible {
+  outline: 2px solid var(--honors-gold);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-focus);
 }
 
 #honors-section .honor-card:hover::before {
@@ -146,20 +140,20 @@
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - Using Unified Tokens
    ============================================ */
 @media screen and (width <= 768px) {
   #honors-section .honors-grid {
-    gap: var(--honors-space-lg);
-    padding: var(--honors-space-lg) 0;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--grid-gap-lg);
+    padding: var(--space-fluid-lg) 0;
+    grid-template-columns: var(--grid-cols-auto-fill-md);
   }
 }
 
 @media screen and (width <= 480px) {
   #honors-section .honors-grid {
     grid-template-columns: 1fr;
-    gap: var(--honors-space-md);
+    gap: var(--grid-gap-md);
   }
 
   #honors-section .honor-card {

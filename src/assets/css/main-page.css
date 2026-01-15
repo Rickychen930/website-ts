@@ -82,6 +82,10 @@
   flex-direction: column;
   overflow-x: hidden;
   isolation: isolate;
+  /* Ensure main page content doesn't overlap with navbar */
+  padding-top: 0;
+  margin-top: 0;
+  z-index: var(--z-base);
 }
 
 [data-theme="dark"] .main-page {
@@ -124,6 +128,8 @@
     radial-gradient(ellipse 150% 100% at 0% 0%, black 0%, transparent 60%),
     radial-gradient(ellipse 150% 100% at 100% 100%, black 0%, transparent 60%);
   animation: grid-drift 20s linear infinite;
+  /* Ensure grid pattern stays behind navbar */
+  z-index: -1;
 }
 
 @keyframes grid-drift {
@@ -145,6 +151,7 @@
   width: 100%;
   margin: 0 auto;
   padding: var(--space-fluid-3xl) var(--space-fluid-lg);
+  padding-top: calc(var(--navbar-height) + var(--space-fluid-3xl));
   max-width: 1600px;
   flex-direction: column;
   gap: var(--space-fluid-4xl);
@@ -665,6 +672,7 @@
   .contents-section {
     gap: var(--space-fluid-2xl);
     padding: var(--space-fluid-xl) var(--space-fluid-md);
+    padding-top: calc(var(--navbar-height) + var(--space-fluid-xl));
   }
 
   .section-block {
@@ -693,6 +701,7 @@
   .contents-section {
     gap: var(--space-fluid-xl);
     padding: var(--space-fluid-lg) var(--space-fluid-sm);
+    padding-top: calc(var(--navbar-height) + var(--space-fluid-lg));
   }
 
   .section-block {

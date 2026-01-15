@@ -1,0 +1,317 @@
+/**
+ * Unified Layout System - Modern Grid & Layout Architecture
+ * Professional, Code-Based, DRY, KISS, OOP Architecture
+ * 
+ * Architecture Principles:
+ * - Single Source of Truth: All layout patterns in one place
+ * - DRY: Reusable layout components
+ * - KISS: Simple, clear structure
+ * - OOP: Component-based organization
+ * - SOLID: Single Responsibility - layout only
+ * 
+ * Usage:
+ * @import '@/assets/css/core/layout-system.css';
+ * 
+ * This provides unified grid, flex, and container systems
+ * for consistent layouts across all sections.
+ */
+
+/* Import core system */
+@import url("./_variables.css");
+@import url("./_constants.css");
+
+/* ============================================
+   UNIFIED GRID SYSTEM - Modern Responsive Grid
+   ============================================ */
+
+/* Base Grid Container */
+.grid-unified {
+  display: grid;
+  position: relative;
+  width: 100%;
+  gap: var(--grid-gap-xl);
+  box-sizing: border-box;
+}
+
+/* Grid Column Variants - Responsive Auto-Fill */
+.grid-unified--auto-fill-sm {
+  grid-template-columns: var(--grid-cols-auto-fill-sm);
+}
+
+.grid-unified--auto-fill-md {
+  grid-template-columns: var(--grid-cols-auto-fill-md);
+}
+
+.grid-unified--auto-fill-lg {
+  grid-template-columns: var(--grid-cols-auto-fill-lg);
+}
+
+.grid-unified--auto-fill-xl {
+  grid-template-columns: var(--grid-cols-auto-fill-xl);
+}
+
+/* Grid Gap Variants */
+.grid-unified--gap-xs {
+  gap: var(--grid-gap-xs);
+}
+
+.grid-unified--gap-sm {
+  gap: var(--grid-gap-sm);
+}
+
+.grid-unified--gap-md {
+  gap: var(--grid-gap-md);
+}
+
+.grid-unified--gap-lg {
+  gap: var(--grid-gap-lg);
+}
+
+.grid-unified--gap-xl {
+  gap: var(--grid-gap-xl);
+}
+
+.grid-unified--gap-2xl {
+  gap: var(--grid-gap-2xl);
+}
+
+/* Grid Alignment */
+.grid-unified--align-stretch {
+  align-items: stretch;
+}
+
+.grid-unified--align-start {
+  align-items: start;
+}
+
+.grid-unified--align-center {
+  align-items: center;
+}
+
+/* ============================================
+   UNIFIED CARD GRID - Standardized Card Layouts
+   ============================================ */
+
+.card-grid {
+  display: grid;
+  position: relative;
+  width: 100%;
+  padding: var(--space-fluid-xl) 0;
+  gap: var(--grid-gap-xl);
+  grid-template-columns: var(--grid-cols-auto-fill-xl);
+  align-items: stretch;
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+}
+
+/* Card Grid Background Pattern */
+.card-grid::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 30% 40%,
+      var(--color-accent-alpha-05) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 70% 60%,
+      var(--color-accent-secondary-alpha-04) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Card Grid Items */
+.card-grid > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   UNIFIED CARD BASE - Standardized Card Component
+   ============================================ */
+
+.card-modern-base {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  border: 2px solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-card-alt) 100%
+  );
+  backdrop-filter: blur(20px) saturate(190%);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-medium);
+  overflow: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    transform 0.6s var(--ease-spring),
+    box-shadow 0.6s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
+    opacity 0.6s var(--ease-smooth);
+  height: 100%;
+  min-height: var(--card-min-height-lg);
+  display: flex;
+  flex-direction: column;
+  will-change: var(--will-change-transform-opacity);
+  box-sizing: border-box;
+}
+
+/* Card Top Accent Bar */
+.card-modern-base::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: var(--gradient-accent-full);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-smooth);
+  content: "";
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+}
+
+/* Card Revealed State */
+.card-modern-base.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Card Hover State */
+.card-modern-base:hover {
+  transform: translateY(var(--card-hover-translate-y)) scale(var(--card-hover-scale));
+  box-shadow: var(--shadow-strong), var(--shadow-glow-accent);
+  border-color: var(--color-border-accent);
+}
+
+.card-modern-base:hover::before {
+  opacity: 1;
+}
+
+/* Card Focus State - Accessibility */
+.card-modern-base:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-focus);
+}
+
+/* ============================================
+   UNIFIED CONTAINER SYSTEM
+   ============================================ */
+
+.container-unified {
+  position: relative;
+  width: 100%;
+  padding: var(--space-fluid-xl) 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.container-unified--with-background::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 30% 40%,
+      var(--color-accent-alpha-05) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 70% 60%,
+      var(--color-accent-secondary-alpha-04) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.container-unified > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - Mobile First
+   ============================================ */
+
+@media screen and (width <= 768px) {
+  .card-grid {
+    gap: var(--grid-gap-lg);
+    padding: var(--space-fluid-lg) 0;
+    grid-template-columns: var(--grid-cols-auto-fill-md);
+  }
+
+  .card-modern-base {
+    min-height: var(--card-min-height-md);
+  }
+}
+
+@media screen and (width <= 480px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--grid-gap-md);
+  }
+
+  .card-modern-base {
+    min-height: auto;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION - Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .card-grid::before,
+  .container-unified--with-background::before,
+  .card-modern-base {
+    animation: none;
+    transition: none;
+  }
+
+  .card-modern-base {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU Acceleration for Animations */
+.card-modern-base,
+.card-grid {
+  transform: var(--transform-gpu);
+  backface-visibility: var(--backface-visibility);
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
+
+[data-theme="dark"] .card-grid::before,
+[data-theme="dark"] .container-unified--with-background::before {
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 30% 40%,
+      var(--color-accent-alpha-08) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 70% 60%,
+      var(--color-accent-secondary-alpha-06) 0%,
+      transparent 60%
+    );
+}
