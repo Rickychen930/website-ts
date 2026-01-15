@@ -127,6 +127,7 @@ export class LanguageGrid extends PureComponent<LanguageGridProps> {
 
   /**
    * Render carousel layout
+   * Optimized for horizontal scroll with proper spacing and sizing
    */
   private renderCarousel(): ReactNode {
     const items = this.convertToCarouselItems();
@@ -139,7 +140,7 @@ export class LanguageGrid extends PureComponent<LanguageGridProps> {
       <Carousel
         items={items}
         className={this.getClassNames()}
-        itemWidth={320}
+        itemWidth="clamp(280px, 25vw, 340px)"
         gap={24}
         showArrows={true}
         showIndicators={true}
