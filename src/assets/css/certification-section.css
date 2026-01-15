@@ -456,6 +456,31 @@
   transform: scale(1.02); /* Reduced from 1.05 */
 }
 
+/* ─── Advanced Description Styling ─── */
+#certification-section .certification-card-description {
+  display: -webkit-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-subtle);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  line-height: 1.6;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#certification-section
+  .certification-card:hover
+  .certification-card-description {
+  color: var(--color-text-muted);
+}
+
 /* ─── Advanced Badges Styling ─── */
 #certification-section .certification-card-badges {
   display: flex;

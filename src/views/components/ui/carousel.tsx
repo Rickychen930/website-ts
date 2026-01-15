@@ -372,13 +372,19 @@ export class Carousel extends Component<ICarouselProps, ICarouselState> {
   /**
    * Get Item Style
    * Calculate item width and gap
+   * Fixed width to prevent expansion when content is long
    */
   private getItemStyle(): React.CSSProperties {
     const { itemWidth = 320, gap = 16 } = this.props;
+    const width = typeof itemWidth === "number" ? `${itemWidth}px` : itemWidth;
 
     return {
-      minWidth: typeof itemWidth === "number" ? `${itemWidth}px` : itemWidth,
+      width: width,
+      minWidth: width,
+      maxWidth: width,
       marginRight: `${gap}px`,
+      flexShrink: 0,
+      flexGrow: 0,
     };
   }
 

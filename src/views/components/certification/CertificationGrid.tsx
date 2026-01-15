@@ -41,7 +41,7 @@ export class CertificationGrid extends PureComponent<CertificationGridProps> {
    */
   private getClassNames(): string {
     const { className = "", columns } = this.props;
-    const classes = ["certification-grid"];
+    const classes = ["certification-flex-container"];
 
     if (columns) {
       classes.push(`certification-grid-cols-${columns}`);

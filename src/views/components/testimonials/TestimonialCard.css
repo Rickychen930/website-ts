@@ -189,18 +189,24 @@
 }
 
 .testimonial-card-text p {
+  display: -webkit-box;
   margin: 0;
   padding: 0;
   color: var(--color-text-main);
   font-size: clamp(0.9375rem, 1.8vw, 1rem);
   line-height: 1.7;
+  transition: color var(--transition-smooth);
   font-style: normal;
   letter-spacing: -0.01em;
   overflow-wrap: break-word;
   hyphens: auto;
   max-width: 100%;
   box-sizing: border-box;
-  transition: color var(--transition-smooth);
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .testimonial-card--active .testimonial-card-text p,

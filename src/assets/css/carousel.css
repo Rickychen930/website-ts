@@ -126,6 +126,30 @@
   flex: 0 0 auto;
   scroll-snap-align: start;
   transition: transform var(--transition-base);
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent content from expanding beyond item width */
+}
+
+/* Ensure all direct children of carousel items respect width constraints */
+.carousel-item > * {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent content from expanding beyond item width */
+}
+
+/* Ensure nested cards and content respect width */
+.carousel-item .certification-card,
+.carousel-item .testimonial-card,
+.carousel-item .project-card,
+.carousel-item .academic-card,
+.carousel-item .work-experience-card,
+.carousel-item .honor-card,
+.carousel-item .language-card,
+.carousel-item .soft-skill-card {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .carousel-item:hover {
