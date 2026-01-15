@@ -1,13 +1,19 @@
 /**
  * TestimonialCard Component
- * Reusable component for displaying individual testimonial cards
+ * Professional testimonial card component following modern design guidelines
+ *
+ * Design Principles:
+ * - Clean, minimal aesthetic
+ * - Clear visual hierarchy
+ * - Professional typography
+ * - Subtle, purposeful animations
+ * - Accessible and responsive
  *
  * Principles Applied:
  * - Single Responsibility Principle (SRP): Only handles card display
  * - DRY: Reusable across testimonials section
  * - KISS: Simple, focused component
  * - Component-Based: Composed of smaller components
- * - Glassmorphism: Modern, professional design matching theme
  */
 
 import React, { PureComponent, ReactNode } from "react";
@@ -39,23 +45,12 @@ export class TestimonialCard extends PureComponent<
   TestimonialCardProps,
   TestimonialCardState
 > {
-  private mouseMoveThrottle: number | null = null;
-  private lastMouseMoveTime: number = 0;
-
   constructor(props: TestimonialCardProps) {
     super(props);
     this.state = {
       isHovered: false,
       isFocused: false,
     };
-  }
-
-  componentWillUnmount(): void {
-    // Cleanup throttle
-    if (this.mouseMoveThrottle !== null) {
-      cancelAnimationFrame(this.mouseMoveThrottle);
-      this.mouseMoveThrottle = null;
-    }
   }
 
   private handleMouseEnter = (): void => {
@@ -70,60 +65,8 @@ export class TestimonialCard extends PureComponent<
     this.setState({ isFocused: false });
   };
 
-  private handleMouseMove = (e: React.MouseEvent<HTMLElement>): void => {
-    // Throttle mouse move for performance (max 60fps)
-    const now = Date.now();
-    if (now - this.lastMouseMoveTime < 16) {
-      // Cancel previous frame if exists
-      if (this.mouseMoveThrottle !== null) {
-        cancelAnimationFrame(this.mouseMoveThrottle);
-      }
-
-      // Schedule for next frame
-      this.mouseMoveThrottle = requestAnimationFrame(() => {
-        this.processMouseMove(e);
-        this.mouseMoveThrottle = null;
-      });
-      return;
-    }
-
-    this.lastMouseMoveTime = now;
-    this.processMouseMove(e);
-  };
-
-  /**
-   * Process mouse move calculations (throttled)
-   */
-  private processMouseMove = (e: React.MouseEvent<HTMLElement>): void => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-
-    // Guard against zero dimensions
-    if (rect.width === 0 || rect.height === 0) {
-      return;
-    }
-
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-    card.style.setProperty("--rotate-x", `${rotateX}deg`);
-    card.style.setProperty("--rotate-y", `${rotateY}deg`);
-  };
-
-  private handleMouseLeave = (e: React.MouseEvent<HTMLElement>): void => {
+  private handleMouseLeave = (): void => {
     this.setState({ isHovered: false });
-    // Reset transform
-    const card = e.currentTarget;
-    card.style.setProperty("--rotate-x", "0deg");
-    card.style.setProperty("--rotate-y", "0deg");
   };
 
   /**
@@ -192,22 +135,22 @@ export class TestimonialCard extends PureComponent<
   }
 
   /**
-   * Render quote icon
+   * Render quote icon - simplified professional design
    */
   private renderQuoteIcon(): ReactNode {
     return (
       <div className="testimonial-card-quote-icon" aria-hidden="true">
         <svg
-          width="40"
-          height="40"
+          width="32"
+          height="32"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M6 17H9L11 13V7H5V13H8M13 17H16L18 13V7H12V13H15"
+            d="M3 21C3 17.4 5.4 15 9 15C12.6 15 15 17.4 15 21M15 10C15 6.4 17.4 4 21 4M21 4C21 7.6 18.6 10 15 10M21 4V10H15"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -302,7 +245,6 @@ export class TestimonialCard extends PureComponent<
 
   public render(): ReactNode {
     const { testimonial, index } = this.props;
-    const { isHovered, isFocused } = this.state;
 
     // Guard against missing testimonial
     if (!testimonial) {
@@ -319,31 +261,21 @@ export class TestimonialCard extends PureComponent<
         className={this.getCardClass()}
         style={
           {
-            animationDelay: `${safeIndex * 0.1}s`,
+            animationDelay: `${safeIndex * 0.08}s`,
             "--index": safeIndex,
           } as React.CSSProperties
         }
         data-testimonial-key={testimonialKey}
         aria-labelledby={`testimonial-${safeIndex}-name`}
         onMouseEnter={this.handleMouseEnter}
-        onMouseMove={this.handleMouseMove}
         onMouseLeave={this.handleMouseLeave}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onKeyDown={this.handleKeyDown}
         tabIndex={0}
       >
-        {/* Animated Background Pattern */}
-        <div className="testimonial-card-pattern" aria-hidden="true" />
-
-        {/* Glassmorphism Overlay */}
-        <div className="testimonial-card-glass" aria-hidden="true" />
-
-        {/* Gradient Background */}
+        {/* Subtle Background Accent */}
         <div className="testimonial-card-background" aria-hidden="true" />
-
-        {/* Shine Effect */}
-        <div className="testimonial-card-shine" aria-hidden="true" />
 
         {/* Quote Icon */}
         {this.renderQuoteIcon()}
@@ -383,32 +315,6 @@ export class TestimonialCard extends PureComponent<
           </div>
           {this.renderLink()}
         </footer>
-
-        {/* Glow Effects */}
-        {(isHovered || isFocused) && (
-          <>
-            <div
-              className="testimonial-card-glow testimonial-card-glow--primary"
-              aria-hidden="true"
-            />
-            <div
-              className="testimonial-card-glow testimonial-card-glow--secondary"
-              aria-hidden="true"
-            />
-            <div className="testimonial-card-particles" aria-hidden="true">
-              {[...Array(6)].map((_, i) => (
-                <div
-                  key={i}
-                  className="testimonial-card-particle"
-                  style={{ "--particle-index": i } as React.CSSProperties}
-                />
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* Border Gradient */}
-        <div className="testimonial-card-border-gradient" aria-hidden="true" />
       </article>
     );
   }

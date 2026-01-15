@@ -1,41 +1,130 @@
 /**
  * TestimonialsGrid Component Styles
- * Parent component styles for testimonials grid layout
+ * Horizontal scroll layout for all devices
  * 
- * Architecture Principles:
- * - DRY: Uses CSS constants and variables from core system
- * - KISS: Simple, clear structure
- * - OOP: Component-based organization
- * - SOLID: Single Responsibility - grid layout only
+ * Design Principles:
+ * - Smooth horizontal scrolling
+ * - Scroll snap for better UX
+ * - Professional presentation
+ * - Responsive card sizing
  */
 
 /* Import core system for constants and variables */
 @import url("../../../assets/css/core/index.css");
 
 /* ============================================
-   TESTIMONIALS GRID
+   TESTIMONIALS GRID - HORIZONTAL SCROLL
    ============================================ */
 
 .testimonials-grid {
-  display: grid;
+  display: flex;
   position: relative;
   width: 100%;
-  padding: 0;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)); /* More spacious */
-  margin-top: clamp(1.5rem, 4vw, 2.5rem);
-  max-width: 100%;
+  flex-direction: row;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  overflow: auto hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 clamp(1.25rem, 2.5vw, 2rem);
+  padding: clamp(0.5rem, 1vw, 1rem) 0 clamp(1rem, 2vw, 1.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2rem);
   box-sizing: border-box;
-  overflow-x: hidden;
+  overscroll-behavior: contain;
+  overscroll-behavior-x: contain;
+
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-primary) var(--color-border-light);
 }
 
+/* ─── Fade Gradients at Edges ─── */
+.testimonials-grid::before,
+.testimonials-grid::after {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: clamp(40px, 5vw, 80px);
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-bg-card) 0%, transparent 100%);
+  transition: opacity var(--transition-smooth);
+  content: "";
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.testimonials-grid::before {
+  left: 0;
+  border-radius: 0;
+}
+
+.testimonials-grid::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--color-bg-card) 0%,
+    transparent 100%
+  );
+  border-radius: 0;
+}
+
+/* Hide left gradient when scrolled to start */
+.testimonials-grid.scrolled-to-start::before {
+  opacity: 0;
+}
+
+/* Hide right gradient when scrolled to end */
+.testimonials-grid.scrolled-to-end::after {
+  opacity: 0;
+}
+
+/* Show scrollbar on hover for desktop */
+@media (hover: hover) and (pointer: fine) {
+  .testimonials-grid:hover {
+    scrollbar-width: thin;
+  }
+}
+
+/* Webkit scrollbar styling */
+.testimonials-grid::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.testimonials-grid::-webkit-scrollbar-track {
+  margin: 0 clamp(1.25rem, 2.5vw, 2rem);
+  background: var(--color-border-light);
+  border-radius: 4px;
+}
+
+.testimonials-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-primary),
+    var(--color-accent-alt)
+  );
+  border-radius: 4px;
+  transition: background var(--transition-base);
+}
+
+.testimonials-grid::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-alt),
+    var(--color-accent-primary)
+  );
+}
+
+/* Card wrapper for scroll snap */
 .testimonial-card-wrapper {
   display: flex;
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
+  flex: 0 0 auto;
+  width: clamp(320px, 30vw, 420px);
+  min-width: 320px;
+  max-width: 420px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   box-sizing: border-box;
-  overflow: visible;
 }
 
 /* ============================================
@@ -45,328 +134,234 @@
 /* Large Desktop (1400px and up) */
 @media screen and (width >= 1400px) {
   .testimonials-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-2xl, 32px);
-    max-width: 100%;
+    gap: 2rem;
+    scroll-padding: 0 2rem;
+  }
+
+  .testimonial-card-wrapper {
+    width: 420px;
+    min-width: 420px;
+    max-width: 420px;
   }
 }
 
 /* Desktop (1200px - 1399px) */
 @media screen and (width <= 1399px) and (width >= 1200px) {
   .testimonials-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--spacing-xl, 24px);
-    max-width: 100%;
+    gap: 1.75rem;
+    scroll-padding: 0 1.75rem;
+  }
+
+  .testimonial-card-wrapper {
+    width: 380px;
+    min-width: 380px;
+    max-width: 380px;
   }
 }
 
 /* Tablet Landscape (1024px - 1199px) */
 @media screen and (width <= 1199px) and (width >= 1024px) {
   .testimonials-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl, 24px);
-    max-width: 100%;
-  }
-}
-
-/* Tablet Portrait (768px - 1023px) - HORIZONTAL SCROLL */
-@media screen and (width <= 1023px) and (width >= 768px) {
-  /* Horizontal scroll for grid on tablet */
-  .testimonials-grid {
-    display: flex;
-    position: relative;
-    width: calc(100% + 3rem);
-    flex-direction: row;
     gap: 1.5rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-    margin-left: calc(-1 * 1.5rem);
-    margin-right: calc(-1 * 1.5rem);
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    grid-template-columns: none;
-    scrollbar-width: thin;
-    scrollbar-color: var(--testimonials-color-primary)
-      var(--color-black-alpha-08);
-    margin-top: var(--spacing-xl, 24px);
+    scroll-padding: 0 1.5rem;
   }
 
-  .testimonials-grid > * {
-    flex: 0 0 calc(min(100%, 360px));
-    min-width: 320px;
+  .testimonial-card-wrapper {
+    width: 360px;
+    min-width: 360px;
     max-width: 360px;
-    scroll-snap-align: start;
-  }
-
-  /* Enhanced scrollbar styling */
-  .testimonials-grid::-webkit-scrollbar {
-    height: 8px;
-    background: transparent;
-  }
-
-  .testimonials-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: var(--radius-xs);
-    box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-primary) 0%,
-      var(--testimonials-color-secondary) 100%
-    );
-    border-radius: var(--radius-xs);
-    transition: var(--transition-all);
-    box-shadow:
-      0 2px 4px var(--color-accent-alpha-40),
-      inset 0 1px 0 var(--color-white-alpha-30);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-secondary) 0%,
-      var(--testimonials-color-primary) 100%
-    );
-    box-shadow:
-      0 4px 8px var(--color-accent-alpha-50),
-      inset 0 1px 0 var(--color-white-alpha-40);
-    transform: scaleY(1.2);
   }
 }
 
-/* Mobile Landscape (640px - 767px) - HORIZONTAL SCROLL */
+/* Tablet Portrait (768px - 1023px) */
+@media screen and (width <= 1023px) and (width >= 768px) {
+  .testimonials-grid {
+    gap: 1.5rem;
+    scroll-padding: 0 1.5rem;
+  }
+
+  .testimonial-card-wrapper {
+    width: clamp(340px, 45vw, 360px);
+    min-width: 340px;
+    max-width: 360px;
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+}
+
+/* Mobile Landscape (640px - 767px) */
 @media screen and (width <= 767px) and (width >= 640px) {
-  /* Horizontal scroll for grid on mobile landscape */
   .testimonials-grid {
-    display: flex;
-    position: relative;
-    width: calc(100% + 2rem);
-    flex-direction: row;
     gap: 1.25rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-    margin-left: calc(-1 * 1rem);
-    margin-right: calc(-1 * 1rem);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    grid-template-columns: none;
-    scrollbar-width: thin;
-    scrollbar-color: var(--testimonials-color-primary)
-      var(--color-black-alpha-08);
-    margin-top: var(--spacing-xl, 24px);
+    scroll-padding: 0 1.25rem;
   }
 
-  .testimonials-grid > * {
-    flex: 0 0 calc(min(100%, 340px));
-    min-width: 300px;
+  .testimonial-card-wrapper {
+    width: clamp(320px, 80vw, 340px);
+    min-width: 320px;
     max-width: 340px;
-    scroll-snap-align: start;
   }
 
-  /* Enhanced scrollbar styling */
   .testimonials-grid::-webkit-scrollbar {
     height: 6px;
-    background: transparent;
-  }
-
-  .testimonials-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: var(--radius-xs);
-    box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-primary) 0%,
-      var(--testimonials-color-secondary) 100%
-    );
-    border-radius: var(--radius-xs);
-    transition: var(--transition-all);
-    box-shadow:
-      0 2px 4px var(--color-accent-alpha-40),
-      inset 0 1px 0 var(--color-white-alpha-30);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-secondary) 0%,
-      var(--testimonials-color-primary) 100%
-    );
-    box-shadow:
-      0 4px 8px var(--color-accent-alpha-50),
-      inset 0 1px 0 var(--color-white-alpha-40);
-    transform: scaleY(1.2);
   }
 }
 
-/* Mobile Portrait (480px - 639px) - HORIZONTAL SCROLL */
+/* Mobile Portrait (480px - 639px) */
 @media screen and (width <= 639px) and (width >= 480px) {
-  /* Horizontal scroll for grid on mobile portrait */
   .testimonials-grid {
-    display: flex;
-    position: relative;
-    width: calc(100% + 2rem);
-    flex-direction: row;
     gap: 1.25rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-    margin-left: calc(-1 * 1rem);
-    margin-right: calc(-1 * 1rem);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    grid-template-columns: none;
-    scrollbar-width: thin;
-    scrollbar-color: var(--testimonials-color-primary)
-      var(--color-black-alpha-08);
-    margin-top: var(--spacing-xl, 24px);
+    scroll-padding: 0 1rem;
+    margin-top: 1.25rem;
   }
 
-  .testimonials-grid > * {
-    flex: 0 0 calc(min(100%, 320px));
-    min-width: 280px;
+  .testimonial-card-wrapper {
+    width: clamp(300px, 85vw, 320px);
+    min-width: 300px;
     max-width: 320px;
-    scroll-snap-align: start;
   }
 
-  /* Enhanced scrollbar styling */
   .testimonials-grid::-webkit-scrollbar {
-    height: 6px;
-    background: transparent;
-  }
-
-  .testimonials-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: var(--radius-xs);
-    box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-primary) 0%,
-      var(--testimonials-color-secondary) 100%
-    );
-    border-radius: var(--radius-xs);
-    transition: var(--transition-all);
-    box-shadow:
-      0 2px 4px var(--color-accent-alpha-40),
-      inset 0 1px 0 var(--color-white-alpha-30);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-secondary) 0%,
-      var(--testimonials-color-primary) 100%
-    );
-    box-shadow:
-      0 4px 8px var(--color-accent-alpha-50),
-      inset 0 1px 0 var(--color-white-alpha-40);
-    transform: scaleY(1.2);
+    height: 5px;
   }
 }
 
-/* Small Mobile (360px - 479px) - HORIZONTAL SCROLL */
+/* Small Mobile (360px - 479px) */
 @media screen and (width <= 479px) and (width >= 360px) {
-  /* Horizontal scroll for grid on small mobile */
   .testimonials-grid {
-    display: flex;
-    position: relative;
-    width: calc(100% + 1.5rem);
-    flex-direction: row;
     gap: 1rem;
-    overflow: auto hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-    margin-left: calc(-1 * 0.75rem);
-    margin-right: calc(-1 * 0.75rem);
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    grid-template-columns: none;
-    scrollbar-width: thin;
-    scrollbar-color: var(--testimonials-color-primary)
-      var(--color-black-alpha-08);
-    margin-top: var(--spacing-lg, 20px);
+    scroll-padding: 0 1rem;
+    margin-top: 1.25rem;
   }
 
-  .testimonials-grid > * {
-    flex: 0 0 calc(min(100%, 300px));
-    min-width: 260px;
+  .testimonial-card-wrapper {
+    width: clamp(280px, 88vw, 300px);
+    min-width: 280px;
     max-width: 300px;
-    scroll-snap-align: start;
   }
 
-  /* Enhanced scrollbar styling */
   .testimonials-grid::-webkit-scrollbar {
-    height: 6px;
-    background: transparent;
-  }
-
-  .testimonials-grid::-webkit-scrollbar-track {
-    margin: 0 1rem;
-    background: var(--color-black-alpha-08);
-    border-radius: var(--radius-xs);
-    box-shadow: inset 0 1px 2px var(--shadow-alpha-10);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-primary) 0%,
-      var(--testimonials-color-secondary) 100%
-    );
-    border-radius: var(--radius-xs);
-    transition: var(--transition-all);
-    box-shadow:
-      0 2px 4px var(--color-accent-alpha-40),
-      inset 0 1px 0 var(--color-white-alpha-30);
-  }
-
-  .testimonials-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      90deg,
-      var(--testimonials-color-secondary) 0%,
-      var(--testimonials-color-primary) 100%
-    );
-    box-shadow:
-      0 4px 8px var(--color-accent-alpha-50),
-      inset 0 1px 0 var(--color-white-alpha-40);
-    transform: scaleY(1.2);
+    height: 4px;
   }
 }
 
 /* Extra Small Mobile (below 360px) */
 @media screen and (width <= 359px) {
   .testimonials-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md, 16px);
-    margin-top: var(--spacing-lg, 20px);
-    max-width: 100%;
+    gap: 0.875rem;
+    scroll-padding: 0 0.875rem;
+    margin-top: 1rem;
+  }
+
+  .testimonial-card-wrapper {
+    width: 260px;
+    min-width: 260px;
+    max-width: 260px;
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    height: 4px;
   }
 }
 
 /* Landscape Orientation (height <= 600px) */
 @media screen and (orientation: landscape) and (height <= 600px) {
   .testimonials-grid {
-    gap: var(--spacing-md, 16px);
-    margin-top: var(--spacing-lg, 20px);
+    gap: 1rem;
+    margin-top: 1rem;
+    scroll-padding: 0 1rem;
+  }
+
+  .testimonial-card-wrapper {
+    width: clamp(300px, 40vw, 340px);
+    min-width: 300px;
+    max-width: 340px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY & UX ENHANCEMENTS
+   ============================================ */
+
+/* Smooth scrolling preference */
+@media (prefers-reduced-motion: no-preference) {
+  .testimonials-grid {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-grid {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================
+   EDGE CASES & POLYFILLS
+   ============================================ */
+
+/* Fallback for browsers without scroll-snap support */
+@supports not (scroll-snap-type: x mandatory) {
+  .testimonials-grid {
+    scroll-snap-type: none;
+  }
+
+  .testimonial-card-wrapper {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+.testimonials-grid:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* ─── Scroll Hint Indicator ─── */
+.testimonials-grid-container {
+  position: relative;
+  width: 100%;
+}
+
+.testimonials-grid-container::after {
+  display: none;
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  z-index: 5;
+  color: var(--color-text-subtle);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-weight: 500;
+  opacity: 0.6;
+  transition: opacity var(--transition-base);
+  content: "← Swipe to see more →";
+  transform: translateX(-50%);
+  font-family: var(--font-main);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Show hint on mobile/tablet only */
+@media screen and (width <= 1023px) {
+  .testimonials-grid-container::after {
+    display: block;
+  }
+
+  /* Hide hint when scrolling */
+  .testimonials-grid:active + .testimonials-grid-container::after,
+  .testimonials-grid-container:has(.testimonials-grid:active)::after {
+    opacity: 0;
+  }
+}
+
+/* Desktop - subtle fade */
+@media screen and (width >= 1024px) {
+  .testimonials-grid-container::after {
+    display: none;
   }
 }

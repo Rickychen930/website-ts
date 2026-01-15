@@ -10,11 +10,13 @@
  * 
  * Usage:
  * Add class "section-subtitle" to any subtitle element
- * @import '@/assets/css/core/_section-subtitle.css';
+ * Note: This file is imported by core/index.css, don't import index.css here
+ * to avoid circular dependency
  */
 
-/* Import core system for constants and variables */
-@import url("./index.css");
+/* Import only necessary base files (variables and constants) */
+@import url("./_variables.css");
+@import url("./_constants.css");
 
 /* ─── Section Subtitle Base ─── */
 .section-subtitle {
@@ -26,6 +28,7 @@
     2vw,
     var(--font-size-subtitle, 1.1rem)
   ); /* Improved: Minimum 1rem (16px) for better readability */
+
   font-weight: var(--font-weight-subtitle, 500);
   line-height: var(--line-height-normal, 1.6);
   max-width: 600px;

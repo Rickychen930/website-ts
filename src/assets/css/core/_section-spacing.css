@@ -10,11 +10,13 @@
  * 
  * Usage:
  * Sections wrapped in Card component will have consistent spacing
- * @import '@/assets/css/core/_section-spacing.css';
+ * Note: This file is imported by core/index.css, don't import index.css here
+ * to avoid circular dependency
  */
 
-/* Import core system for constants and variables */
-@import url("./index.css");
+/* Import only necessary base files (variables and constants) */
+@import url("./_variables.css");
+@import url("./_constants.css");
 
 /* ─── Section Card Spacing ─── */
 

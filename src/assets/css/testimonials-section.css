@@ -1,5 +1,6 @@
 /**
- * Testimonials & Recommendations Section - Professional, Clean, Responsive Design
+ * Testimonials & Recommendations Section
+ * Professional, clean design following modern UI guidelines
  * 
  * Architecture Principles:
  * - DRY: Uses CSS constants and variables from core system
@@ -13,9 +14,6 @@
  * - Smooth animations and transitions
  * - Accessibility support
  * - Modern card-based layout
- * 
- * Usage:
- * @import '@/assets/css/testimonials-section.css';
  */
 
 /* Import core system for constants and variables */
@@ -26,33 +24,16 @@
    ============================================ */
 
 .testimonials-section {
-  /* Component-Specific Variables (DRY) - Uses core constants as base */
-
-  /* Colors - Uses core color system */
+  /* Component-Specific Variables (DRY) - Uses core color system */
   --testimonials-color-primary: var(--color-accent-primary);
   --testimonials-color-primary-hover: var(--color-accent-hover);
   --testimonials-color-secondary: var(--color-accent-alt);
-  --testimonials-color-accent: var(--color-accent-hover);
   --testimonials-color-text-heading: var(--color-text-heading);
   --testimonials-color-text-primary: var(--color-text-main);
   --testimonials-color-text-secondary: var(--color-text-subtle);
   --testimonials-color-text-muted: var(--color-text-muted);
-  --testimonials-color-text-light: var(--color-text-light);
   --testimonials-color-bg-card: var(--color-bg-card);
-  --testimonials-color-bg-card-hover: var(--color-bg-card-hover);
   --testimonials-color-border: var(--color-border-light);
-  --testimonials-color-border-default: var(--color-border-default);
-  --testimonials-color-border-medium: var(--color-border-medium);
-  --testimonials-color-border-accent: var(--color-border-accent);
-
-  /* Shadows - Uses core shadow system */
-  --testimonials-shadow-card: var(--shadow-card);
-  --testimonials-shadow-card-hover: var(--shadow-card-hover);
-
-  /* Transitions - Uses core transition system */
-  --testimonials-transition-fast: var(--transition-fast);
-  --testimonials-transition-base: var(--transition-base);
-  --testimonials-transition-smooth: var(--transition-smooth);
 
   /* Layout styles */
   position: relative;
@@ -95,40 +76,14 @@
 /* Section Title */
 .testimonials-section .section-title {
   position: relative;
-  margin: 0 0 clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
-  background: linear-gradient(
-    135deg,
-    var(--testimonials-color-text-heading) 0%,
-    var(--testimonials-color-primary) 40%,
-    var(--testimonials-color-secondary) 60%,
-    var(--testimonials-color-text-heading) 100%
-  );
-  background-size: 300% 300%;
+  margin: 0 0 clamp(var(--spacing-md), 2vw, var(--spacing-lg));
   color: var(--testimonials-color-text-heading);
-  font-size: clamp(2.5rem, 6vw, 4rem); /* Much larger, bold */
-  font-weight: 900; /* Ultra bold */
-  line-height: 1.1; /* Very tight */
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
   transition: all var(--transition-smooth);
-  letter-spacing: -0.04em; /* Tighter */
+  letter-spacing: -0.02em;
   font-family: var(--font-display);
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-transform: uppercase; /* Bold modern statement */
-}
-
-.testimonials-section.visible .section-title {
-  animation: testimonial-title-glow 3s ease-in-out infinite;
-}
-
-@keyframes testimonial-title-glow {
-  0%,
-  100% {
-    filter: drop-shadow(0 0 8px var(--color-accent-alpha-20));
-  }
-
-  50% {
-    filter: drop-shadow(0 0 16px var(--color-accent-alpha-30));
-  }
 }
 
 /* Section Subtitle */
@@ -145,9 +100,8 @@
   overflow-wrap: break-word;
 }
 
-/* Testimonials Subtitle (for Card component) - Uses shared section-subtitle */
+/* Testimonials Subtitle (for Card component) */
 .testimonials-subtitle {
-  /* Extends .section-subtitle from core/_section-subtitle.css */
   margin: 0 auto var(--spacing-2xl) auto;
   padding: 0 var(--spacing-md, 16px);
   color: var(--color-text-secondary);
@@ -160,13 +114,6 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
 }
-
-/* ============================================
-   TESTIMONIALS GRID
-   ============================================
-   Note: Grid styles moved to TestimonialsGrid.css
-   This file now only contains section-level styles
-   ============================================ */
 
 /* ============================================
    EMPTY STATE
@@ -207,10 +154,7 @@
 }
 
 /* ============================================
-   RESPONSIVE DESIGN - SECTION LEVEL ONLY
-   ============================================
-   Note: Grid and card responsive styles moved to
-   TestimonialsGrid.css and TestimonialCard.css
+   RESPONSIVE DESIGN
    ============================================ */
 
 /* Tablet Portrait (768px - 1023px) */
@@ -229,7 +173,7 @@
   }
 
   .testimonials-section .section-title {
-    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
     margin-bottom: clamp(var(--spacing-sm), 1.5vw, var(--spacing-md));
   }
 
@@ -399,45 +343,6 @@
   }
 }
 
-/* Advanced Section Background Animation */
-.testimonials-section::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    var(--color-accent-alpha-05) 0%,
-    transparent 50%
-  );
-  opacity: 0;
-  transition: opacity var(--transition-slow);
-  content: "";
-  pointer-events: none;
-}
-
-.testimonials-section.visible::before {
-  opacity: 1;
-  animation: testimonial-section-glow 8s ease-in-out infinite;
-}
-
-@keyframes testimonial-section-glow {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.6;
-    transform: scale(1.1);
-  }
-}
-
-/* Stagger animation for cards - handled by TestimonialCard component */
-
 /* ============================================
    ACCESSIBILITY
    ============================================ */
@@ -447,16 +352,4 @@
   .testimonials-section.visible {
     animation: none;
   }
-
-  .testimonials-section.visible::before {
-    animation: none;
-    opacity: 0.3;
-  }
-
-  .testimonials-section.visible .section-title {
-    animation: none;
-    filter: none;
-  }
 }
-
-/* High contrast mode - handled by TestimonialCard component */
