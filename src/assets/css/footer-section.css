@@ -74,13 +74,12 @@
   width: 100%;
   max-width: 100vw;
   background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--footer-bg-primary) 5%,
+    135deg,
+    var(--footer-bg-primary) 0%,
     var(--footer-bg-secondary) 100%
   );
   color: var(--footer-text-primary);
-  backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
+  backdrop-filter: blur(8px);
   font-family: var(--font-main);
   margin-top: auto;
   overflow: hidden visible;
@@ -89,7 +88,7 @@
   box-sizing: border-box;
 }
 
-/* Professional Top Border */
+/* Subtle Top Border */
 .footer::before {
   position: absolute;
   top: 0;
@@ -99,11 +98,11 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--footer-accent-primary) 50%,
+    var(--color-accent-primary) 50%,
     transparent
   );
   content: "";
-  opacity: 0.6;
+  opacity: 0.3;
 }
 
 @keyframes footer-shimmer {

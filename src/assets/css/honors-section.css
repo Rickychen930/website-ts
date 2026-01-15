@@ -119,16 +119,16 @@
   }
 }
 
-/* ─── Honors Grid Container (Advanced Layout) ─── */
+/* ─── Honors Grid Container (Modern Minimalistic) ─── */
 .honors-grid {
   display: grid;
   position: relative;
   z-index: var(--z-base, 1);
   width: 100%;
   margin: 0;
-  padding: clamp(var(--spacing-xl), 3vw, var(--spacing-2xl)) 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
-  gap: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)); /* More spacious */
+  padding: clamp(var(--spacing-7), 3.5vw, var(--spacing-9)) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: clamp(var(--spacing-7), 4.5vw, var(--spacing-9)); /* Enhanced spacing */
   max-width: 100%;
   perspective: 2000px;
   align-items: start;

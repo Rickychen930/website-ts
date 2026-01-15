@@ -17,7 +17,7 @@
 /* Import core system for constants and variables */
 @import url("./core/index.css");
 
-/* ─── Animated Background Pattern ─── */
+/* ─── Subtle Background Pattern ─── */
 #technical-skills-section::before {
   position: absolute;
   inset: 0;
@@ -25,21 +25,17 @@
   background:
     radial-gradient(
       circle at 20% 50%,
-      var(--color-accent-alpha-08) 0%,
+      var(--color-accent-alpha-04) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 80%,
-      var(--color-accent-alt-alpha-08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 20%,
-      var(--color-accent-tertiary-alpha-06) 0%,
+      var(--color-accent-alt-alpha-04) 0%,
       transparent 50%
     );
   content: "";
   pointer-events: none;
+  opacity: 0.5;
 }
 
 @keyframes background-pulse {
@@ -150,35 +146,56 @@
   max-width: 100%;
 }
 
-/* ─── Statistics Header - Simplified & Clean ─── */
+/* ─── Statistics Header - Modern Minimalistic ─── */
 .technical-skills-statistics {
   display: flex;
   position: relative;
   z-index: var(--z-base, 1);
   width: 100%;
-  padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
-    clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  padding: clamp(var(--spacing-7), 4.5vw, var(--spacing-9))
+    clamp(var(--spacing-5), 3.5vw, var(--spacing-7));
   border: 1px solid var(--color-border-light);
-  background: var(--color-bg-card);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
   align-items: center;
   justify-content: center;
-  gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
-  border-radius: var(--radius-xl, 20px);
-  box-shadow:
-    0 8px 32px var(--color-black-alpha-08),
-    0 16px 64px var(--color-black-alpha-06);
+  gap: clamp(var(--spacing-6), 4vw, var(--spacing-10));
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
   overflow: visible;
   max-width: 100%;
   box-sizing: border-box;
   flex-wrap: wrap;
   transition: all var(--transition-smooth);
+  backdrop-filter: blur(8px);
+}
+
+.technical-skills-statistics::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .technical-skills-statistics:hover {
-  border-color: var(--color-accent-alpha-30);
+  border-color: var(--color-border-accent);
   box-shadow:
-    0 12px 48px var(--color-black-alpha-10),
-    0 20px 80px var(--color-black-alpha-08);
+    var(--shadow-md),
+    0 0 24px var(--color-accent-alpha-10);
+  transform: translateY(-3px);
+}
+
+.technical-skills-statistics:hover::before {
+  opacity: 1;
 }
 
 .technical-skills-statistics__item {
@@ -195,8 +212,13 @@
 }
 
 .technical-skills-statistics__item:hover {
-  background: var(--color-accent-alpha-10);
-  transform: translateY(-2px);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-alpha-10) 0%,
+    var(--color-accent-alpha-05) 100%
+  );
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 4px 12px var(--color-accent-alpha-15);
 }
 
 .technical-skills-statistics__value {

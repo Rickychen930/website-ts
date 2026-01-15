@@ -57,20 +57,20 @@
 }
 
 /* ============================================
-   Main Container & Layout (Optimized)
+   Main Container & Layout (Modern Minimalistic)
    ============================================ */
 .about-me-content {
   /* Extends .flex component */
   display: flex;
   flex-direction: column;
-  gap: var(--about-me-spacing-lg);
+  gap: clamp(var(--spacing-6), 4vw, var(--spacing-10));
   width: 100%;
   max-width: 100%;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
   transition:
-    opacity var(--animation-duration-base) var(--transition-smooth),
-    transform var(--animation-duration-base) var(--transition-smooth);
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden visible; /* Prevent horizontal scroll */
   box-sizing: border-box;
 }
@@ -91,53 +91,57 @@
 .about-me-main-content {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-10), 6vw, var(--spacing-16))
-    clamp(var(--spacing-6), 4vw, var(--spacing-12));
+  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12))
+    clamp(var(--spacing-4), 3vw, var(--spacing-8));
   max-width: 100%;
   border-radius: var(--radius-2xl);
   overflow: hidden visible;
   box-sizing: border-box;
+  background: var(--color-bg-primary);
 }
 
 .about-me-hero-background {
   position: absolute;
   z-index: var(--z-base);
-  background: var(--gradient-sublime);
+  background: var(--color-bg-secondary);
   inset: 0;
   border-radius: var(--radius-2xl);
   pointer-events: none;
   overflow: hidden;
-  backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(12px);
+  opacity: 0.6;
 }
 
 .about-me-hero-background::before {
   content: "";
   position: absolute;
-  top: -50%;
-  right: -20%;
-  width: min(600px, 80vw);
-  height: min(600px, 80vw);
+  top: -30%;
+  right: -15%;
+  width: min(400px, 60vw);
+  height: min(400px, 60vw);
   background: radial-gradient(
     circle,
-    var(--color-accent-alpha-08) 0%,
-    transparent 70%
+    var(--color-accent-alpha-05) 0%,
+    transparent 60%
   );
   border-radius: 50%;
+  opacity: 0.6;
 }
 
 .about-me-hero-background::after {
   content: "";
   position: absolute;
-  bottom: -30%;
+  bottom: -20%;
   left: -10%;
-  width: min(500px, 70vw);
-  height: min(500px, 70vw);
+  width: min(350px, 55vw);
+  height: min(350px, 55vw);
   background: radial-gradient(
     circle,
-    var(--color-accent-alt-alpha-06) 0%,
-    transparent 70%
+    var(--color-accent-secondary-alpha-04) 0%,
+    transparent 60%
   );
   border-radius: 50%;
+  opacity: 0.5;
 }
 
 @keyframes hero-background-float {
@@ -154,9 +158,9 @@
 .about-me-hero-section {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(var(--spacing-2xl), 6vw, var(--spacing-4xl)); /* More spacious */
+  gap: clamp(var(--spacing-8), 6vw, var(--spacing-12)); /* Modern spacing */
   align-items: center;
-  margin-bottom: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+  margin-bottom: clamp(var(--spacing-6), 4vw, var(--spacing-8));
   position: relative;
   z-index: 1;
   width: 100%;
@@ -354,34 +358,71 @@
 .about-me-bio {
   width: 100%;
   margin: 0;
-  padding: 0 clamp(0.5rem, 2vw, 1.5rem);
-  color: var(--color-text-main);
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  padding: 0 clamp(var(--spacing-2), 2vw, var(--spacing-6));
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.75;
   text-align: center;
   max-width: 100%;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 10px var(--color-black-alpha-20);
+  letter-spacing: 0.01em;
   overflow-wrap: break-word;
   hyphens: auto;
   box-sizing: border-box;
 }
 
 /* ============================================
-   Featured Tech Stack Section (Optimized)
+   Featured Tech Stack Section (Modern Minimalistic)
    ============================================ */
 .about-me-featured-tech {
+  position: relative;
   width: 100%;
-  padding: var(--about-me-spacing-md) var(--about-me-spacing-lg);
-  border: 1px solid var(--border-light);
-  background: var(--bg-gradient-luxury);
-  margin-top: var(--about-me-spacing-sm);
-  border-radius: var(--item-radius);
-  box-shadow: var(--shadow-sm);
+  padding: clamp(var(--spacing-5), 3.5vw, var(--spacing-7));
+  border: 1px solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
+  transition: all var(--transition-smooth);
+  margin-top: var(--spacing-5);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    var(--shadow-sm),
+    0 0 0 1px var(--color-accent-alpha-03);
   max-width: 100%;
   overflow: visible;
   box-sizing: border-box;
+}
+
+.about-me-featured-tech::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.about-me-featured-tech:hover {
+  border-color: var(--color-border-accent);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 1px var(--color-accent-alpha-08);
+  transform: translateY(-3px);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.about-me-featured-tech:hover::before {
+  opacity: 1;
 }
 
 /* ============================================
@@ -595,9 +636,13 @@
 .card#about .profile-stat {
   position: relative;
   width: 100%;
-  padding: var(--about-me-spacing-md) var(--about-me-spacing-sm);
+  padding: var(--about-me-spacing-lg) var(--about-me-spacing-md);
   border: 1px solid var(--about-me-color-border);
-  background: var(--bg-gradient-luxury);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
   text-align: center;
   transition: all var(--about-me-transition-smooth);
   border-radius: var(--item-radius);
@@ -606,6 +651,7 @@
   overflow: hidden;
   max-width: 100%;
   box-sizing: border-box;
+  backdrop-filter: blur(8px);
 }
 
 #about.card .profile-stat::before {
@@ -622,9 +668,16 @@
 }
 
 #about.card .profile-stat:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--about-me-shadow-md);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    var(--about-me-shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
   border-color: var(--about-me-color-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
 }
 
 #about.card .profile-stat:hover::before {

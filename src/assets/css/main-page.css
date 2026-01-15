@@ -37,43 +37,59 @@
    ============================================ */
 
 /* ============================================
-   Main Page Container - Professional & Modern Design
-   Clean, Sophisticated Background
+   Main Page Container - Modern Minimalistic Design
+   Clean, Professional Background with Subtle Accents
    ============================================ */
 .main-page {
   display: flex;
   position: relative;
   width: 100%;
-  background: var(--color-bg-dark);
+  background: var(--color-bg-primary);
   min-height: 100vh;
   flex-direction: column;
 
-  /* Modern Bold Background System */
+  /* Modern Minimalistic Background System */
   background-image:
     radial-gradient(
-      ellipse 120% 80% at 10% 20%,
-      var(--color-accent-alpha-15) 0%,
-      transparent 60%
+      ellipse 100% 60% at 0% 0%,
+      var(--color-accent-alpha-08) 0%,
+      transparent 50%
     ),
     radial-gradient(
-      ellipse 100% 100% at 90% 80%,
-      var(--color-accent-alt-alpha-12) 0%,
-      transparent 60%
+      ellipse 100% 60% at 100% 100%,
+      var(--color-accent-secondary-alpha-06) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-bg-primary) 0%,
+      var(--color-bg-secondary) 50%,
+      var(--color-bg-primary) 100%
+    );
+  overflow-x: hidden;
+  isolation: isolate;
+}
+
+/* Dark theme background */
+[data-theme="dark"] .main-page {
+  background: var(--color-bg-dark);
+  background-image:
+    radial-gradient(
+      ellipse 100% 60% at 0% 0%,
+      var(--color-accent-alpha-10) 0%,
+      transparent 50%
     ),
     radial-gradient(
-      circle at 50% 50%,
+      ellipse 100% 60% at 100% 100%,
       var(--color-accent-secondary-alpha-08) 0%,
-      transparent 70%
+      transparent 50%
     ),
     linear-gradient(
       180deg,
       var(--color-bg-dark) 0%,
-      var(--color-bg-dark-light) 30%,
-      var(--color-bg-dark-light) 70%,
+      var(--color-bg-dark-light) 50%,
       var(--color-bg-dark) 100%
     );
-  overflow-x: hidden;
-  isolation: isolate;
 }
 
 /* Subtle Background Overlay - Performance Optimized */
@@ -83,7 +99,7 @@
   display: none; /* Removed for better performance */
 }
 
-/* Modern Dynamic Grid Pattern */
+/* Subtle Grid Pattern - More Minimalistic */
 .main-page::after {
   position: fixed;
   top: 0;
@@ -91,23 +107,24 @@
   z-index: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.04;
+  opacity: 0.02;
   content: "";
   background-image:
-    linear-gradient(var(--color-accent-alpha-015) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-accent-alpha-015) 1px, transparent 1px);
-  background-size: 120px 120px;
+    linear-gradient(var(--color-accent-alpha-010) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent-alpha-010) 1px, transparent 1px);
+  background-size: 80px 80px;
   pointer-events: none;
   mask-image:
-    radial-gradient(ellipse 150% 100% at 0% 0%, black 0%, transparent 60%),
-    radial-gradient(ellipse 150% 100% at 100% 100%, black 0%, transparent 60%);
+    radial-gradient(ellipse 120% 80% at 0% 0%, black 0%, transparent 50%),
+    radial-gradient(ellipse 120% 80% at 100% 100%, black 0%, transparent 50%);
   will-change: opacity;
 }
 
 /* Removed gridPulse animation untuk better performance */
 
 /* ============================================
-   Contents Section - Clean & Spacious Layout
+   Contents Section - Modern Minimalistic Layout
+   Enhanced with Better Spacing and Max-Width
    ============================================ */
 .contents-section {
   display: flex;
@@ -115,12 +132,15 @@
   z-index: var(--z-base);
   width: 100%;
   margin: 0 auto;
-  padding: clamp(var(--spacing-16), 7vw, var(--spacing-20))
-    clamp(var(--spacing-10), 5vw, var(--spacing-16));
+  padding: clamp(2.5rem, 6.5vw, 4.5rem) clamp(1.5rem, 4vw, 2.5rem);
   flex: 1;
   flex-direction: column;
-  gap: clamp(var(--spacing-16), 8vw, var(--spacing-24));
-  max-width: 1400px;
+  gap: clamp(
+    3.5rem,
+    8.5vw,
+    5.5rem
+  ); /* Enhanced spacing for better visual flow */
+  max-width: 1280px;
 }
 
 /* ============================================
@@ -132,34 +152,32 @@
   position: relative;
   width: 100%;
   opacity: 0;
-  scroll-margin-top: clamp(var(--spacing-20), 10vw, 7rem);
+  scroll-margin-top: clamp(4rem, 8vw, 6rem);
   margin-bottom: 0;
   transform: translateY(20px);
-  filter: blur(2px);
-  transition: var(--transition-reveal);
-  will-change: opacity, transform, filter;
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 /* Revealed state - Smooth scroll animation */
 .section-block.revealed {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
-  animation: section-reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   will-change: auto;
 }
 
+/* Subtle fade-in animation - Modern minimalistic */
 @keyframes section-reveal {
   0% {
     opacity: 0;
     transform: translateY(20px);
-    filter: blur(2px);
   }
 
   100% {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 
@@ -173,13 +191,14 @@
 
 /* ============================================
    Section Header - Clean & Professional Typography
+   Modern Minimalistic Design
    ============================================ */
 .section-header {
   position: relative;
   width: 100%;
-  padding: clamp(var(--spacing-10), 5vw, var(--spacing-12)) 0;
-  margin-bottom: clamp(var(--spacing-10), 6vw, var(--spacing-16));
-  padding-bottom: clamp(var(--spacing-8), 4vw, var(--spacing-10));
+  padding: clamp(2rem, 5vw, 3rem) 0;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  padding-bottom: clamp(1.5rem, 4vw, 2rem);
   border-bottom: none;
   text-align: center;
   box-sizing: border-box;
@@ -189,27 +208,15 @@
   display: inline-block;
   position: relative;
   width: auto;
-  margin: 0 0 clamp(var(--spacing-8), 4vw, var(--spacing-10));
-  background: linear-gradient(
-    135deg,
-    var(--color-text-heading) 0%,
-    var(--color-accent-primary) 35%,
-    var(--color-accent-alt) 50%,
-    var(--color-accent-secondary) 65%,
-    var(--color-text-heading) 100%
-  );
-  background-size: 400% 400%;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
+  margin: 0 0 clamp(1rem, 3vw, 1.5rem);
+  color: var(--color-text-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-family: var(--font-display);
-  filter: drop-shadow(0 4px 16px var(--color-black-alpha-15));
-  transition: var(--transition-hover);
-  animation: gradient-shift 12s ease infinite;
+  transition: color var(--transition-base);
 }
 
 /* ============================================
@@ -218,16 +225,27 @@
 
 /* Primary Sections - More Prominent (About, Skills, Projects, Experience) */
 .section-block--primary {
-  padding: clamp(var(--spacing-3xl), 6vw, var(--spacing-4xl)) 0;
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
 }
 
 .section-block--primary .section-header {
-  margin-bottom: clamp(var(--spacing-3xl), 7vw, var(--spacing-5xl));
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
 }
 
+/* Optional: Subtle gradient for primary sections */
 .section-block--primary .section-title {
-  font-size: clamp(2.75rem, 6.5vw, 4.25rem); /* Larger for primary sections */
-  font-weight: 900; /* Ultra bold */
+  background: linear-gradient(
+    135deg,
+    var(--color-text-heading) 0%,
+    var(--color-accent-primary) 50%,
+    var(--color-text-heading) 100%
+  );
+  font-size: clamp(2.5rem, 6vw, 3.5rem); /* Larger for primary sections */
+  font-weight: 800; /* Bold but not ultra bold for modern look */
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 8s ease infinite;
 }
 
 .section-block--primary::after {
@@ -252,18 +270,17 @@
 
 /* Secondary Sections - Reduced Visual Weight (Languages, Soft Skills, etc.) */
 .section-block--secondary {
-  padding: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)) 0;
-  opacity: 0.98; /* Slightly reduced for hierarchy */
+  padding: clamp(2rem, 4vw, 3rem) 0;
 }
 
 .section-block--secondary .section-header {
-  margin-bottom: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .section-block--secondary .section-title {
-  font-size: clamp(2.25rem, 5.5vw, 3.5rem); /* Slightly smaller */
-  font-weight: 800; /* Still bold but less than primary */
-  opacity: 0.95; /* Subtle reduction */
+  color: var(--color-text-heading);
+  font-size: clamp(1.875rem, 5vw, 2.75rem); /* Slightly smaller */
+  font-weight: 700; /* Still bold but less than primary */
 }
 
 .section-block--secondary::after {
@@ -388,8 +405,7 @@
   width: 100%;
   margin: 0 auto;
   max-width: 100%;
-  padding: clamp(var(--spacing-10), 5vw, var(--spacing-12))
-    clamp(var(--spacing-8), 5vw, var(--spacing-16));
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem);
   box-sizing: border-box;
 }
 

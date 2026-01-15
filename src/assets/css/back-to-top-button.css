@@ -65,9 +65,7 @@
   gap: var(--back-to-top-gap);
   border-radius: var(--radius-full);
   cursor: pointer;
-  box-shadow:
-    0 4px 16px var(--color-accent-alpha-40),
-    0 8px 32px var(--color-accent-alt-alpha-30);
+  box-shadow: var(--shadow-md);
   font-family: var(--font-main);
   outline: none;
   will-change: transform, opacity, box-shadow;

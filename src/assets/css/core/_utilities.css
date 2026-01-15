@@ -194,6 +194,68 @@
 }
 
 /* ============================================
+   Modern Card Pattern Utilities
+   ============================================ */
+.card-modern {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.card-modern::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.card-modern:hover::before {
+  opacity: 1;
+}
+
+.hover-lift {
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    var(--shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
+}
+
+.gradient-bg {
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.gradient-bg-hover:hover {
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+/* ============================================
    Spacing Utilities
    ============================================ */
 .m-0 {

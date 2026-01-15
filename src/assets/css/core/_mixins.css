@@ -34,19 +34,52 @@
 }
 
 /* ============================================
-   Card Hover Effect - Reusable Pattern
+   Card Hover Effect - Modern Minimalistic Pattern (Enhanced)
    ============================================ */
 .card-hover-effect {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
+  backdrop-filter: blur(8px);
   transition:
     transform var(--transition-smooth),
     box-shadow var(--transition-smooth),
-    border-color var(--transition-smooth);
+    border-color var(--transition-base),
+    background var(--transition-base);
+}
+
+.card-hover-effect::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: inherit;
 }
 
 .card-hover-effect:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    var(--shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
   border-color: var(--color-border-accent);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.card-hover-effect:hover::before {
+  opacity: 1;
 }
 
 /* ============================================
@@ -103,16 +136,40 @@
 }
 
 /* ============================================
-   Card Base - Reusable Component Pattern
+   Card Base - Reusable Component Pattern (Enhanced)
    ============================================ */
 .card-base {
   position: relative;
   width: 100%;
   padding: var(--spacing-card-padding);
-  background: var(--color-bg-card);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
   border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-card);
   transition: all var(--transition-smooth);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.card-base::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: var(--spacing-card-radius) var(--spacing-card-radius) 0 0;
+}
+
+.card-base:hover::before {
+  opacity: 1;
 }
 
 /* ============================================

@@ -81,6 +81,63 @@
 
 /* ─── Section Wrapper - REMOVED (not needed, Card component handles styling) ─── */
 
+/* ─── Enhanced Contact Grid ─── */
+.contact-grid {
+  display: grid;
+  position: relative;
+  width: 100%;
+  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8)) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8));
+}
+
+/* ─── Enhanced Contact Card ─── */
+.contact-card {
+  position: relative;
+  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8));
+  border: 1px solid var(--contact-border);
+  background: linear-gradient(
+    135deg,
+    var(--contact-bg-card) 0%,
+    var(--contact-bg-subtle) 100%
+  );
+  border-radius: var(--contact-radius-lg);
+  box-shadow: var(--contact-shadow-sm);
+  transition: all var(--contact-transition-slow);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.contact-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--contact-gradient-hover);
+  opacity: 0;
+  transition: opacity var(--contact-transition-base);
+  content: "";
+  border-radius: var(--contact-radius-lg) var(--contact-radius-lg) 0 0;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    var(--contact-shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
+  border-color: var(--contact-border-hover);
+  background: linear-gradient(
+    135deg,
+    var(--contact-bg-hover) 0%,
+    var(--contact-bg-subtle) 100%
+  );
+}
+
+.contact-card:hover::before {
+  opacity: 1;
+}
+
 /* ─── Empty State ─── */
 #contact-section .contact-section-empty {
   display: flex;

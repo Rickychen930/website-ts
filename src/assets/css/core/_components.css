@@ -25,15 +25,34 @@
   width: 100%;
   padding: var(--spacing-card-padding);
   border: 1px solid var(--color-border-light);
-  background: var(--color-bg-card);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
   transition:
-    transform var(--transition-base),
-    box-shadow var(--transition-base),
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
     border-color var(--transition-base),
     background var(--transition-base); /* Optimized: specific properties instead of 'all' */
 
   border-radius: var(--spacing-card-radius);
   box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+}
+
+.card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: var(--spacing-card-radius) var(--spacing-card-radius) 0 0;
 }
 
 /* Card Modifiers */
@@ -47,9 +66,20 @@
 }
 
 .card--hover:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--color-border-accent-hover);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    var(--shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
+  border-color: var(--color-border-accent);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.card--hover:hover::before {
+  opacity: 1;
 }
 
 .card--minimal {

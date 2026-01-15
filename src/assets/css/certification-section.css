@@ -57,7 +57,7 @@
 
 /* ─── Section Wrapper - REMOVED (not needed, Card component handles styling) ─── */
 
-/* ─── Grid Layout - Desktop (Default) ─── */
+/* ─── Grid Layout - Desktop (Default) - Modern Minimalistic ─── */
 #certification-section .certification-grid {
   display: grid;
   position: relative;
@@ -65,7 +65,7 @@
   margin: 0;
   padding: 0;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
-  gap: clamp(var(--spacing-2xl), 5vw, var(--spacing-3xl)); /* More spacious */
+  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8)); /* Modern spacing */
   list-style: none;
   max-width: 100%;
   perspective: 2000px;
@@ -80,24 +80,20 @@
   padding: 0;
   border: 2px solid var(--color-border-light);
   background: linear-gradient(
-    145deg,
-    var(--color-white-alpha-98) 0%,
-    var(--color-bg-card-alt) 50%,
-    var(--color-white-alpha-98) 100%
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
   );
   opacity: 0;
   transition: all var(--cert-transition-smooth, var(--transition-smooth));
   min-height: 380px; /* Reduced from 420px for better balance */
-  backdrop-filter: blur(var(--blur-2xl)) saturate(180%);
-  border-radius: 32px; /* Modern bold radius */
+  backdrop-filter: blur(12px) saturate(180%);
+  border-radius: var(--radius-2xl); /* Consistent with design system */
   overflow: visible;
   transform: translateY(50px) scale(0.92) rotateX(8deg);
   transform-style: preserve-3d;
   cursor: default;
-  box-shadow:
-    0 8px 32px var(--color-black-alpha-08),
-    0 16px 64px var(--color-black-alpha-06),
-    0 32px 128px var(--color-accent-alpha-08);
+  box-shadow: var(--shadow-md); /* Simplified, more subtle */
   will-change: transform, opacity, filter;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;

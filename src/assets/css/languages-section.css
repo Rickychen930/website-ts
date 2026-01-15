@@ -110,6 +110,80 @@
   min-width: clamp(280px, 25vw, 340px);
   max-width: clamp(280px, 25vw, 340px);
   scroll-snap-align: start;
+  position: relative;
+}
+
+/* Enhanced Language Card */
+.language-card {
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
+    clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  border: 2px solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-white-alpha-95) 0%,
+    var(--color-bg-lighter-alpha-90) 50%,
+    var(--color-bg-lighter-alpha-95) 100%
+  );
+  text-align: center;
+  opacity: 0;
+  transition:
+    opacity var(--language-transition-base),
+    transform var(--language-transition-bounce),
+    filter var(--language-transition-base),
+    box-shadow var(--language-transition-base),
+    border-color var(--language-transition-base),
+    background var(--language-transition-base);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(var(--blur-2xl));
+  border-radius: var(--radius-3xl); /* Uses core radius system */
+  box-shadow:
+    0 8px 32px var(--color-black-alpha-08),
+    0 16px 64px var(--color-black-alpha-06),
+    0 32px 128px var(--color-accent-alpha-08);
+  transform: translateY(20px);
+  will-change: transform, opacity;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 320px;
+  box-sizing: border-box;
+}
+
+.language-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--language-transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.language-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    var(--shadow-md),
+    0 0 20px var(--color-accent-alpha-15);
+  border-color: var(--color-border-accent);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.language-card:hover::before {
+  opacity: 1;
 }
 
 /* Enhanced scrollbar styling for language grid */
@@ -194,47 +268,8 @@
 }
 
 /* ─── Language Card ─── */
-.language-card {
-  display: flex;
-  position: relative;
-  width: 100%;
-  padding: clamp(var(--spacing-xl), 4vw, var(--spacing-2xl))
-    clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
-  border: 2px solid var(--color-border-light);
-  background: linear-gradient(
-    135deg,
-    var(--color-white-alpha-95) 0%,
-    var(--color-bg-lighter-alpha-90) 50%,
-    var(--color-bg-lighter-alpha-95) 100%
-  );
-  text-align: center;
-  opacity: 0;
-  transition:
-    opacity var(--language-transition-base),
-    transform var(--language-transition-bounce),
-    filter var(--language-transition-base),
-    box-shadow var(--language-transition-base),
-    border-color var(--language-transition-base),
-    background var(--language-transition-base);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(var(--blur-2xl));
-  border-radius: var(--radius-3xl); /* Uses core radius system */
-  box-shadow:
-    0 8px 32px var(--color-black-alpha-08),
-    0 16px 64px var(--color-black-alpha-06),
-    0 32px 128px var(--color-accent-alpha-08);
-  transform: translateY(20px);
-  will-change: transform, opacity;
-  overflow: hidden;
-  cursor: default;
-  user-select: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 320px;
-  box-sizing: border-box;
-}
+
+/* Note: Base .language-card styles are defined above */
 
 /* ─── Language Card Visible State ─── */
 .language-card-visible {

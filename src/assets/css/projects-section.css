@@ -81,15 +81,15 @@
 
 /* ─── Projects Section Container - REMOVED (not needed, Card component handles styling) ─── */
 
-/* ─── Project Grid ─── */
+/* ─── Project Grid - Modern Spacing ─── */
 .project-grid {
   display: grid;
   position: relative;
   width: 100%;
   margin: 0;
   padding: 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
-  gap: clamp(var(--spacing-10), 5vw, var(--spacing-12));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8));
   box-sizing: border-box;
   align-items: start;
 }
@@ -108,45 +108,86 @@
   grid-template-columns: 1fr;
 }
 
-/* ─── Project Card ─── */
+/* ─── Project Card - Modern Minimalistic ─── */
 .project-card {
   display: flex;
   position: relative;
-  border: 2px solid var(--color-border-light);
-  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
   opacity: 0;
   transition:
     transform var(--projects-transition-smooth),
     box-shadow var(--projects-transition-smooth),
-    border-color var(--projects-transition-smooth),
-    background var(--projects-transition-smooth),
-    opacity var(--projects-transition-smooth),
-    filter var(--projects-transition-smooth);
+    border-color var(--projects-transition-base),
+    background var(--projects-transition-base),
+    opacity var(--projects-transition-base);
   flex-direction: column;
-  border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   transform: translateY(20px);
-  filter: blur(2px);
-  will-change: transform, opacity, filter;
-  min-height: clamp(500px, 55vh, 560px);
+  will-change: transform, opacity;
+  min-height: clamp(450px, 50vh, 520px);
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.project-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--projects-transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.project-card:hover {
+  border-color: var(--color-border-accent);
+  box-shadow:
+    var(--shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
+  transform: translateY(-6px) scale(1.01);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 .project-card-visible {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
-  animation: project-card-entrance var(--animation-duration-base, 0.5s)
-    var(--easing-smooth, var(--transition-smooth)) forwards;
+  animation: project-card-entrance var(--animation-duration-base, 0.4s)
+    cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .project-card-featured {
   border: 2px solid var(--projects-accent);
-  box-shadow: var(--projects-shadow-lg);
+  box-shadow:
+    var(--projects-shadow-lg),
+    0 0 32px var(--color-accent-alpha-20);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-accent-alpha-05) 50%,
+    var(--color-bg-card) 100%
+  );
 }
 
 .project-card-featured::before {

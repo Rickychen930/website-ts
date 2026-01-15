@@ -60,23 +60,24 @@
    ============================================ */
 .navbar {
   position: fixed;
-  position: relative;
   top: 0;
   right: 0;
   left: 0;
   z-index: var(--navbar-z-index);
   width: 100%;
-  background: var(--color-bg-navbar);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-navbar) 0%,
+    var(--color-bg-secondary) 100%
+  );
   transition:
-    transform var(--transition-fast),
-    opacity var(--transition-base),
-    box-shadow var(--transition-smooth);
+    background var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-base);
   min-height: var(--navbar-height);
-  backdrop-filter: blur(var(--navbar-blur)) saturate(200%);
-  border-bottom: 1px solid var(--color-border-navbar);
-  box-shadow:
-    var(--shadow-navbar-default),
-    0 1px 0 var(--color-white-alpha-20);
+  backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   overflow: visible;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -87,32 +88,36 @@
   display: none; /* Removed for better performance and cleaner design */
 }
 
-/* Top border accent - Simplified */
+/* Subtle top border accent - Minimalistic */
 .navbar::after {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   z-index: 2;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-accent-alpha-50) 50%,
+    var(--color-accent-primary) 50%,
     transparent
   );
-  opacity: 0.7; /* Enhanced for better visibility */
+  opacity: 0.3;
   content: "";
 }
 
 .navbar.scrolled {
-  background: var(--gradient-surface-scrolled);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-navbar-scrolled) 0%,
+    var(--color-bg-secondary) 100%
+  );
   min-height: var(--navbar-height-scrolled);
-  backdrop-filter: blur(var(--navbar-blur-strong)) saturate(240%)
-    brightness(1.03);
-  box-shadow: var(--shadow-navbar-scrolled);
-  border-bottom-color: var(--color-border-alpha-40);
-  transform: translateY(0);
+  backdrop-filter: blur(16px) saturate(180%);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 0 16px var(--color-accent-alpha-05);
+  border-bottom-color: var(--color-border-medium);
 }
 
 .navbar.scrolled::after {

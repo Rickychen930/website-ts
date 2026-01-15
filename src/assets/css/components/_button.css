@@ -81,7 +81,7 @@
    Button Variants
    ============================================ */
 .btn--primary {
-  background: var(--gradient-accent);
+  background: var(--color-accent-primary);
   color: var(--color-text-on-accent);
   border-color: transparent;
   box-shadow: var(--shadow-sm);
@@ -92,8 +92,11 @@
 }
 
 .btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: var(--gradient-accent-full);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    var(--shadow-md),
+    0 0 20px var(--color-accent-alpha-25);
 }
 
 .btn--primary:active {
@@ -108,10 +111,16 @@
 }
 
 .btn--secondary:hover {
-  background: var(--color-bg-card-hover);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
   border-color: var(--color-accent-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    var(--shadow-sm),
+    0 0 16px var(--color-accent-alpha-15);
 }
 
 .btn--secondary:active {

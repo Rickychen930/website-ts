@@ -32,20 +32,38 @@
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-card-padding);
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border-light);
-  background: var(--color-bg-card);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
   transition:
     transform var(--transition-smooth),
     box-shadow var(--transition-smooth),
-    border-color var(--transition-smooth),
-    background var(--transition-smooth);
+    border-color var(--transition-base),
+    background var(--transition-base);
   max-width: var(--spacing-card-max-width);
-  backdrop-filter: blur(var(--blur-3xl));
-  border-radius: var(--spacing-card-radius);
-  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   isolation: isolate;
+  backdrop-filter: blur(8px);
+}
+
+.card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 /* ============================================
@@ -79,13 +97,21 @@
    ============================================ */
 .card:hover,
 .card:focus-within {
-  transform: translateY(-4px); /* Reduced from -6px for subtler effect */
+  transform: translateY(-4px) scale(1.01);
   box-shadow:
-    0 12px 24px var(--color-black-alpha-10),
-    0 0 0 1px var(--color-border-accent); /* Subtler shadow */
-
+    var(--shadow-md),
+    0 0 24px var(--color-accent-alpha-15);
   border-color: var(--color-border-accent);
-  background: var(--color-bg-card-hover);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.card:hover::before,
+.card:focus-within::before {
+  opacity: 1;
 }
 
 .card--minimal:hover {

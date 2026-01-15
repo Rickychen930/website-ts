@@ -68,6 +68,63 @@
   box-sizing: border-box;
 }
 
+/* ─── Enhanced Grid Layout ─── */
+.soft-skills-grid {
+  display: grid;
+  position: relative;
+  width: 100%;
+  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8)) 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: clamp(var(--spacing-6), 4vw, var(--spacing-8));
+}
+
+/* ─── Enhanced Skill Card ─── */
+.soft-skill-card {
+  position: relative;
+  padding: clamp(var(--spacing-6), 4vw, var(--spacing-8));
+  border: 1px solid var(--color-border-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card) 0%,
+    var(--color-bg-secondary) 100%
+  );
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--soft-skills-transition-smooth);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.soft-skill-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--soft-skills-transition-base);
+  content: "";
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.soft-skill-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    var(--shadow-md),
+    0 0 20px var(--color-accent-alpha-15);
+  border-color: var(--color-border-accent);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-card-hover) 0%,
+    var(--color-bg-secondary) 100%
+  );
+}
+
+.soft-skill-card:hover::before {
+  opacity: 1;
+}
+
 /* ─── Loading State ─── */
 .soft-skills-loading {
   display: flex;
