@@ -11,7 +11,6 @@
 import { Colors } from './colors';
 import { Strings } from './strings';
 import { Config } from './config';
-import { ImportPaths } from './import-paths';
 
 // Colors
 export * from './colors';
@@ -25,10 +24,6 @@ export { Strings, SectionNames, NavLabels, NavIds, SectionIds, SectionHrefs, Mes
 export * from './config';
 export { Config, ApiConfig, RetryConfig, ScrollConfig, NavbarConfig, AnimationConfig, LayoutConfig, TypographyConfig, ZIndex, Breakpoints, IconSizes, ZIndexEnum, BreakpointEnum } from './config';
 
-// Import utilities
-export * from './import-paths';
-export { ImportPaths, importPath } from './import-paths';
-
 /**
  * Re-export commonly used constants for convenience
  */
@@ -36,6 +31,5 @@ export const Constants = {
   Colors,
   Strings,
   Config,
-  ImportPaths,
 } as const;
 

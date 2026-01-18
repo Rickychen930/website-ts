@@ -40,91 +40,13 @@
 /* ============================================
    WILL-CHANGE OPTIMIZATION
    ============================================ */
-
-/* Optimize will-change for common animations */
-.will-change-transform {
-  will-change: var(--will-change-transform);
-}
-
-.will-change-opacity {
-  will-change: var(--will-change-opacity);
-}
-
-.will-change-transform-opacity {
-  will-change: var(--will-change-transform-opacity);
-}
-
-.will-change-scroll {
-  will-change: var(--will-change-scroll);
-}
-
-/* Remove will-change after animation completes */
-.will-change-transform:not(:hover):not(:focus),
-.will-change-opacity:not(:hover):not(:focus),
-.will-change-transform-opacity:not(:hover):not(:focus) {
-  will-change: auto;
-}
-
-/* ============================================
-   TRANSITION OPTIMIZATION
-   ============================================ */
-
-/* Use specific properties instead of "all" */
-.transition-optimized {
-  transition:
-    transform var(--transition-base),
-    opacity var(--transition-base),
-    box-shadow var(--transition-base);
-}
-
-/* Avoid expensive properties */
-.transition-avoid-expensive {
-  /* Avoid: filter, backdrop-filter, box-shadow on large elements */
-  transition:
-    transform var(--transition-base),
-    opacity var(--transition-base);
-}
-
-/* ============================================
-   CONTAINMENT - Layout Optimization
-   ============================================ */
-
-/* Contain layout calculations */
-.contain-layout {
-  contain: layout;
-}
-
-.contain-paint {
-  contain: paint;
-}
-
-.contain-strict {
-  contain: strict;
-}
-
-/* ============================================
-   LAYER PROMOTION - Compositing
-   ============================================ */
-
-/* Promote to compositing layer */
-.compositing-layer {
-  transform: var(--transform-gpu);
-  will-change: var(--will-change-transform);
-}
+/* Note: Will-change utilities are applied via CSS variables in other files */
 
 /* ============================================
    REDUCED MOTION - Performance
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  /* Remove will-change when motion is reduced */
-  .will-change-transform,
-  .will-change-opacity,
-  .will-change-transform-opacity,
-  .will-change-scroll {
-    will-change: auto;
-  }
-
   /* Remove GPU acceleration hints */
   .gpu-accelerated {
     transform: none;

@@ -14,15 +14,11 @@ Folder ini berisi semua dokumentasi proyek.
 
 ### Development & Features
 - **[FEATURES_IMPLEMENTATION.md](./FEATURES_IMPLEMENTATION.md)** - Dokumentasi fitur yang telah diimplementasikan
-- **[DESIGN_ENHANCEMENT_SUMMARY.md](./DESIGN_ENHANCEMENT_SUMMARY.md)** - Ringkasan peningkatan desain
 
 ### Quality Assurance
 - **[QC_REPORT.md](./QC_REPORT.md)** - Laporan Quality Control lengkap
 - **[QC_SUMMARY.md](./QC_SUMMARY.md)** - Ringkasan Quality Control
-
-### Troubleshooting
-- **[FIX_NPM_CI_ERROR.md](./FIX_NPM_CI_ERROR.md)** - Solusi untuk error NPM CI
-- **[NEXT_STEPS_AFTER_FIX.md](./NEXT_STEPS_AFTER_FIX.md)** - Langkah-langkah setelah perbaikan
+- **[QC_USER_TESTING_REPORT.md](./QC_USER_TESTING_REPORT.md)** - Laporan user testing
 
 ### Changelog
 - **[CHANGELOG.md](./CHANGELOG.md)** - Riwayat perubahan dan versi aplikasi
