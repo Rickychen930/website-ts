@@ -1,0 +1,94 @@
+/**
+ * Viewport Utilities
+ * Professional viewport-based responsive utilities
+ */
+
+/* ============================================
+   Viewport Units for Responsive Design
+   ============================================ */
+
+/* Prevent horizontal scroll on all elements */
+* {
+  max-width: 100%;
+}
+
+/* Ensure images scale with viewport */
+img, video, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Viewport-based container */
+.viewport-container {
+  width: 100vw;
+  max-width: 100%;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+/* Full viewport height sections */
+.full-height {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height */
+}
+
+/* Safe area insets for mobile devices */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(env(safe-area-inset-top), var(--spacing-md));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), var(--spacing-md));
+  }
+  
+  .safe-area-left {
+    padding-left: max(env(safe-area-inset-left), var(--container-padding-mobile));
+  }
+  
+  .safe-area-right {
+    padding-right: max(env(safe-area-inset-right), var(--container-padding-mobile));
+  }
+}
+
+/* Viewport-based responsive text */
+.viewport-text {
+  font-size: clamp(1rem, 4vw, 1.5rem);
+}
+
+.viewport-heading {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* Viewport-based spacing */
+.viewport-spacing {
+  padding: clamp(1rem, 4vw, 2rem);
+  margin: clamp(1rem, 3vw, 1.5rem);
+}
+
+/* Responsive aspect ratios using viewport */
+.aspect-video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: min(100vw, 1280px);
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: min(100vw, 800px);
+}
+
+/* Viewport-aware scroll snap */
+.scroll-snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  min-height: 100dvh;
+}

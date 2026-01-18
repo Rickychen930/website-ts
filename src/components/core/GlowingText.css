@@ -1,0 +1,43 @@
+/**
+ * GlowingText Styles
+ * Styling for glowing text effect
+ */
+
+.glowing-text {
+  display: inline-block;
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  transition: text-shadow 0.3s ease;
+}
+
+.glowing-text--low {
+  text-shadow: 0 0 5px var(--glow-color, currentColor),
+               0 0 10px var(--glow-color, currentColor);
+}
+
+.glowing-text--medium {
+  text-shadow: 0 0 10px var(--glow-color, currentColor),
+               0 0 20px var(--glow-color, currentColor),
+               0 0 30px var(--glow-color, currentColor);
+}
+
+.glowing-text--high {
+  text-shadow: 0 0 15px var(--glow-color, currentColor),
+               0 0 30px var(--glow-color, currentColor),
+               0 0 45px var(--glow-color, currentColor),
+               0 0 60px var(--glow-color, currentColor);
+}
+
+/* Use primary color if no custom color */
+.glowing-text {
+  color: var(--color-primary, #2563eb);
+}
+
+.glowing-text:hover {
+  text-shadow: 0 0 20px var(--glow-color, currentColor),
+               0 0 40px var(--glow-color, currentColor),
+               0 0 60px var(--glow-color, currentColor);
+}
+
+.glowing-text:not([style*="--glow-color"]) {
+  --glow-color: var(--color-primary, #2563eb);
+}

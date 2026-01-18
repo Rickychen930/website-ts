@@ -1,0 +1,73 @@
+/**
+ * GradientAnimation Styles
+ * Styling for animated gradient background
+ */
+
+.gradient-animation {
+  position: relative;
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.gradient-animation--slow {
+  animation-duration: 12s;
+}
+
+.gradient-animation--normal {
+  animation-duration: 8s;
+}
+
+.gradient-animation--fast {
+  animation-duration: 4s;
+}
+
+.gradient-animation--horizontal {
+  animation: gradient-shift-horizontal 8s ease infinite;
+  background-size: 200% 100%;
+}
+
+.gradient-animation--vertical {
+  animation: gradient-shift-vertical 8s ease infinite;
+  background-size: 100% 200%;
+}
+
+.gradient-animation--diagonal {
+  animation: gradient-shift 8s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-shift-horizontal {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes gradient-shift-vertical {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}

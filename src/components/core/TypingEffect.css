@@ -1,0 +1,31 @@
+/**
+ * TypingEffect Styles
+ * Styling for typing animation effect
+ */
+
+.typing-effect {
+  display: inline-block;
+  position: relative;
+}
+
+.typing-effect__cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: cursor-blink 1s infinite;
+  color: var(--color-primary, #2563eb);
+  font-weight: 300;
+}
+
+@keyframes cursor-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Dark mode support */
+[data-theme='dark'] .typing-effect__cursor {
+  color: var(--color-primary-light, #60a5fa);
+}

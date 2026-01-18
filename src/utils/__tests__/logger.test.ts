@@ -31,14 +31,22 @@ describe('Logger', () => {
   describe('Log Levels', () => {
     it('should log debug messages in development', () => {
       const originalEnv = process.env.NODE_ENV;
-      process.env.NODE_ENV = 'development';
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: 'development',
+        writable: true,
+        configurable: true,
+      });
 
       logger.setLevel(LogLevel.DEBUG);
       logger.debug('Debug message');
 
       expect(console.debug).toHaveBeenCalled();
 
-      process.env.NODE_ENV = originalEnv;
+      Object.defineProperty(process.env, 'NODE_ENV', {
+        value: originalEnv,
+        writable: true,
+        configurable: true,
+      });
     });
 
     it('should not log debug messages when level is INFO', () => {

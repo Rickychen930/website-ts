@@ -1,6 +1,6 @@
 import { UserProfile } from "../types/user";
 import { apiClient, ApiError } from "./api";
-import { logError } from "../utils/logger";
+import { logError, logDebug, logInfo } from "../utils/logger";
 import { ApiConfig } from "../constants";
 import { ErrorMessages } from "../constants/strings";
 
@@ -23,97 +23,50 @@ export class UserService {
   async getUserProfile(
     userName: string = this.DEFAULT_USER_NAME,
   ): Promise<UserProfile | null> {
-    console.log(
-      "[UserService.getUserProfile] ==========================================",
-    );
-    console.log("[UserService.getUserProfile] Starting...");
-    console.log("[UserService.getUserProfile] User name:", userName);
-    console.log(
-      "[UserService.getUserProfile] Default user name:",
-      this.DEFAULT_USER_NAME,
-    );
-    console.log(
-      "[UserService.getUserProfile] Cache time:",
-      this.CACHE_TIME,
-      "ms",
-    );
+    logDebug("Starting getUserProfile", { userName, cacheTime: this.CACHE_TIME }, "UserService");
 
     try {
       const endpoint = `/api/${encodeURIComponent(userName)}`;
-      console.log("[UserService.getUserProfile] Endpoint:", endpoint);
-      console.log(
-        "[UserService.getUserProfile] Encoded user name:",
-        encodeURIComponent(userName),
-      );
+      logDebug("Fetching user profile", { endpoint }, "UserService");
 
-      console.log("[UserService.getUserProfile] Calling apiClient.get...");
       const response = await apiClient.get<UserProfile>(endpoint, {
         cacheTime: this.CACHE_TIME,
         retries: ApiConfig.RETRIES,
         timeout: ApiConfig.TIMEOUT,
       });
 
-      console.log("[UserService.getUserProfile] ✅ API response received");
-      console.log(
-        "[UserService.getUserProfile] Response status:",
-        response.status,
-      );
-      console.log(
-        "[UserService.getUserProfile] Response data type:",
-        typeof response.data,
-      );
-      console.log(
-        "[UserService.getUserProfile] Response data:",
-        response.data ? "exists" : "null/undefined",
-      );
+      logDebug("API response received", { 
+        status: response.status,
+        hasData: !!response.data 
+      }, "UserService");
 
       const data = response.data;
 
-      console.log("[UserService.getUserProfile] Validating profile data...");
+      logDebug("Validating profile data", undefined, "UserService");
       const isValid = this.isValidProfile(data);
-      console.log(
-        "[UserService.getUserProfile] Profile validation result:",
-        isValid,
-      );
 
       if (!isValid) {
-        console.error(
-          "[UserService.getUserProfile] ❌ Profile validation failed",
-        );
-        console.error("[UserService.getUserProfile] Data:", data);
         logError(ErrorMessages.LOAD_DATA_FAILED, { data }, "UserService");
         return null;
       }
 
-      console.log(
-        "[UserService.getUserProfile] ✅ Profile validated successfully",
-      );
-      console.log("[UserService.getUserProfile] Profile name:", data.name);
-      console.log("[UserService.getUserProfile] Profile title:", data.title);
-      console.log(
-        "[UserService.getUserProfile] ==========================================",
-      );
+      logInfo("Profile loaded successfully", { 
+        name: data.name, 
+        title: data.title 
+      }, "UserService");
+      
       return data;
     } catch (error) {
-      console.error("[UserService.getUserProfile] ❌ Error occurred");
       const apiError = error as ApiError;
-      console.error("[UserService.getUserProfile] Error details:", {
-        message: apiError.message,
-        status: apiError.status,
-        code: apiError.code,
-        originalError: apiError.originalError,
-      });
       logError(
         ErrorMessages.LOAD_PROFILE_FAILED,
         {
           message: apiError.message,
           status: apiError.status,
+          code: apiError.code,
           originalError: apiError.originalError,
         },
         "UserService",
-      );
-      console.log(
-        "[UserService.getUserProfile] ==========================================",
       );
       throw error;
     }

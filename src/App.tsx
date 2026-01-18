@@ -1,31 +1,68 @@
+/**
+ * App - Root Component
+ * Main application entry point
+ */
+
 import { BrowserRouter } from "react-router-dom";
+import React from "react";
 import AppRoutes from "./routes/app-routes";
-import { ErrorBoundary } from "./views/components/ui";
-import ToastProvider from "./components/toast-provider";
-import OfflineIndicator from "./components/offline-indicator";
-import GoogleAnalytics from "./components/analytics/google-analytics";
-import PlausibleAnalytics from "./components/analytics/plausible-analytics";
+import { ErrorDisplay } from "./components/core/ErrorDisplay";
+import { logError } from "./utils/logger";
 
+/**
+ * ErrorBoundary Component
+ * Simple error boundary for the app
+ */
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    logError("App Error:", error, "ErrorBoundary");
+  }
+
+  private handleRetry = (): void => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="app-error-boundary">
+          <ErrorDisplay
+            title="Application Error"
+            message={this.state.error?.message || "An unexpected error occurred"}
+            error={this.state.error}
+            onRetry={this.handleRetry}
+            retryLabel="Reset Application"
+            reloadLabel="Reload Page"
+          />
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+/**
+ * App Component
+ * Root application component
+ */
 export default function App() {
-  // Get analytics configuration from environment
-  const analyticsEnabled = process.env.REACT_APP_ANALYTICS_ENABLED === "true";
-  const analyticsType = process.env.REACT_APP_ANALYTICS_TYPE;
-  const gaMeasurementId = process.env.REACT_APP_GA_MEASUREMENT_ID;
-  const plausibleDomain = process.env.REACT_APP_PLAUSIBLE_DOMAIN;
-
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        {/* Analytics Integration */}
-        {analyticsEnabled && analyticsType === "google" && gaMeasurementId && (
-          <GoogleAnalytics measurementId={gaMeasurementId} />
-        )}
-        {analyticsEnabled &&
-          analyticsType === "plausible" &&
-          plausibleDomain && <PlausibleAnalytics domain={plausibleDomain} />}
-        <OfflineIndicator />
         <AppRoutes />
-        <ToastProvider />
       </BrowserRouter>
     </ErrorBoundary>
   );

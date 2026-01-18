@@ -147,7 +147,7 @@ describe('SEO Utilities', () => {
     });
 
     it('should include sameAs links from contacts', () => {
-      const data = generateStructuredData(mockProfile);
+      const data = generateStructuredData(mockProfile) as any;
 
       expect(data).toHaveProperty('sameAs');
       expect(Array.isArray(data.sameAs)).toBe(true);
@@ -156,7 +156,7 @@ describe('SEO Utilities', () => {
     });
 
     it('should include technical skills as knowsAbout', () => {
-      const data = generateStructuredData(mockProfile);
+      const data = generateStructuredData(mockProfile) as any;
 
       expect(data).toHaveProperty('knowsAbout');
       expect(Array.isArray(data.knowsAbout)).toBe(true);
@@ -166,7 +166,7 @@ describe('SEO Utilities', () => {
     });
 
     it('should include work experience', () => {
-      const data = generateStructuredData(mockProfile);
+      const data = generateStructuredData(mockProfile) as any;
 
       expect(data).toHaveProperty('worksFor');
       expect(Array.isArray(data.worksFor)).toBe(true);
@@ -214,7 +214,7 @@ describe('SEO Utilities', () => {
         ],
       };
 
-      const data = generateStructuredData(profileWithNoLinks);
+      const data = generateStructuredData(profileWithNoLinks) as any;
 
       expect(data.sameAs).toEqual([]);
     });
