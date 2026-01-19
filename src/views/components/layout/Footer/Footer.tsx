@@ -4,11 +4,13 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useProfile } from "@/contexts/ProfileContext";
 import { Typography } from "@/views/components/ui/Typography";
 import { SocialLinks } from "@/components/SocialLinks";
 import styles from "./Footer.module.css";
 
 export const Footer: React.FC = () => {
+  const { profile } = useProfile();
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState<
@@ -43,21 +45,21 @@ export const Footer: React.FC = () => {
                 weight="bold"
                 className={styles.footerBrand}
               >
-                Ricky Chen
+                {profile?.name || "Ricky Chen"}
               </Typography>
               <Typography
                 variant="body"
                 color="secondary"
                 className={styles.footerTagline}
               >
-                Software Engineer & AI Researcher
+                {profile?.title || "Software Engineer & AI Researcher"}
               </Typography>
               <Typography
                 variant="small"
                 color="tertiary"
                 className={styles.footerLocation}
               >
-                📍 Sydney, Australia
+                📍 {profile?.location || "Sydney, Australia"}
               </Typography>
               <div className={styles.socialLinksWrapper}>
                 <SocialLinks />
@@ -138,7 +140,8 @@ export const Footer: React.FC = () => {
       <div className={styles.footerBottom}>
         <div className={styles.container}>
           <Typography variant="small" color="tertiary" as="p">
-            © {currentYear} Ricky Chen. All rights reserved.
+            © {currentYear} {profile?.name || "Portfolio"}. All rights
+            reserved.
           </Typography>
           <div className={styles.footerBottomLinks}>
             <a href="/privacy" className={styles.footerBottomLink}>

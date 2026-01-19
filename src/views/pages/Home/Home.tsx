@@ -80,14 +80,16 @@ export const Home: React.FC = () => {
             {profile.bio}
           </Typography>
 
-          <ScrollReveal direction="fade" delay={200}>
-            <div className={styles.codeSnippet}>
-              <CodeTyping
-                code="const developer = new SoftwareEngineer('Ricky Chen');"
-                speed={60}
-              />
-            </div>
-          </ScrollReveal>
+          {profile.name && (
+            <ScrollReveal direction="fade" delay={200}>
+              <div className={styles.codeSnippet}>
+                <CodeTyping
+                  code={`const developer = new SoftwareEngineer('${profile.name}');`}
+                  speed={60}
+                />
+              </div>
+            </ScrollReveal>
+          )}
 
           <ScrollReveal direction="up" delay={300}>
             <div className={styles.socialLinksWrapper}>

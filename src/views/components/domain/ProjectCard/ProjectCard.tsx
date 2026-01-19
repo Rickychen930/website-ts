@@ -3,7 +3,7 @@
  * Displays project information in a card format
  */
 
-import React from "react";
+import React, { useState } from "react";
 import type { Project } from "@/types/domain";
 import { Card } from "@/views/components/ui/Card";
 import { Typography } from "@/views/components/ui/Typography";
@@ -20,10 +20,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onViewDetails,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const handleViewDetails = () => {
     if (onViewDetails) {
       onViewDetails(project.id);
     }
+  };
+
+  const hasDetails = project.longDescription || project.architecture;
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
   };
 
   return (
@@ -70,6 +78,37 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.description}
         </Typography>
 
+        {isExpanded && project.longDescription && (
+          <div className={styles.expandedContent}>
+            <Typography
+              variant="body"
+              color="secondary"
+              className={styles.longDescription}
+            >
+              {project.longDescription}
+            </Typography>
+          </div>
+        )}
+
+        {isExpanded && project.architecture && (
+          <div className={styles.expandedContent}>
+            <Typography
+              variant="h6"
+              weight="semibold"
+              className={styles.sectionTitle}
+            >
+              Architecture
+            </Typography>
+            <Typography
+              variant="body"
+              color="secondary"
+              className={styles.architecture}
+            >
+              {project.architecture}
+            </Typography>
+          </div>
+        )}
+
         {project.technologies.length > 0 && (
           <div className={styles.technologies}>
             {project.technologies.slice(0, 5).map((tech, index) => (
@@ -87,7 +126,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {project.achievements.length > 0 && (
           <ul className={styles.achievements}>
-            {project.achievements.slice(0, 2).map((achievement, index) => (
+            {(isExpanded
+              ? project.achievements
+              : project.achievements.slice(0, 2)
+            ).map((achievement, index) => (
               <li key={index}>
                 <Typography variant="small" color="secondary">
                   {achievement}
@@ -95,6 +137,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               </li>
             ))}
           </ul>
+        )}
+
+        {hasDetails && (
+          <button
+            type="button"
+            onClick={toggleExpand}
+            className={styles.expandButton}
+            aria-expanded={isExpanded}
+            aria-label={isExpanded ? "Show less details" : "Show more details"}
+          >
+            {isExpanded ? "Show Less" : "Show More Details"}
+            <span className={styles.expandIcon}>{isExpanded ? "▲" : "▼"}</span>
+          </button>
         )}
       </div>
 

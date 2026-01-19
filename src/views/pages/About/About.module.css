@@ -133,6 +133,27 @@
   gap: 2rem;
 }
 
+.softSkillsSection {
+  background-color: var(--bg-secondary);
+}
+
+.softSkillsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.softSkillCategory {
+  width: 100%;
+}
+
+.softSkillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
 @media (width <= 768px) {
   .skillsGrid {
     grid-template-columns: 1fr;
@@ -141,5 +162,9 @@
   .certificationsGrid,
   .honorsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .softSkillsGrid {
+    gap: 0.75rem;
   }
 }

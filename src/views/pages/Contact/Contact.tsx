@@ -132,7 +132,26 @@ export const Contact: React.FC = () => {
                   {primaryContact.label}
                 </Typography>
                 <a
-                  href={`${primaryContact.type === "email" ? "mailto:" : ""}${primaryContact.value}`}
+                  href={
+                    primaryContact.type === "email"
+                      ? `mailto:${primaryContact.value}`
+                      : primaryContact.type === "phone"
+                        ? `tel:${primaryContact.value}`
+                        : primaryContact.value
+                  }
+                  target={
+                    primaryContact.type === "email" ||
+                    primaryContact.type === "phone"
+                      ? undefined
+                      : "_blank"
+                  }
+                  rel={
+                    primaryContact.type === "email" ||
+                    primaryContact.type === "phone"
+                      ? undefined
+                      : "noopener noreferrer"
+                  }
+                  className={styles.contactLink}
                 >
                   {primaryContact.value}
                 </a>
@@ -140,17 +159,34 @@ export const Contact: React.FC = () => {
             )}
             {contacts.length > 0 && (
               <div className={styles.socialLinks}>
-                {contacts.map((contact) => (
-                  <a
-                    key={contact.id}
-                    href={contact.value}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialLink}
-                  >
-                    {contact.label}
-                  </a>
-                ))}
+                {contacts.map((contact) => {
+                  const href =
+                    contact.type === "email"
+                      ? `mailto:${contact.value}`
+                      : contact.type === "phone"
+                        ? `tel:${contact.value}`
+                        : contact.value;
+
+                  return (
+                    <a
+                      key={contact.id}
+                      href={href}
+                      target={
+                        contact.type === "email" || contact.type === "phone"
+                          ? undefined
+                          : "_blank"
+                      }
+                      rel={
+                        contact.type === "email" || contact.type === "phone"
+                          ? undefined
+                          : "noopener noreferrer"
+                      }
+                      className={styles.socialLink}
+                    >
+                      {contact.label}
+                    </a>
+                  );
+                })}
               </div>
             )}
           </Card>

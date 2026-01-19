@@ -183,3 +183,66 @@
   gap: 0.75rem;
   flex-wrap: wrap;
 }
+
+.expandedContent {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.longDescription {
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  margin-bottom: 0.75rem;
+  color: var(--color-primary);
+}
+
+.architecture {
+  padding: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(241, 245, 249, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  font-family: "Courier New", monospace;
+  border-radius: 0.5rem;
+}
+
+.expandButton {
+  display: flex;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: transparent;
+  color: #2563eb;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.expandButton:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-1px);
+}
+
+.expandButton:active {
+  transform: translateY(0);
+}
+
+.expandIcon {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.expandButton[aria-expanded="true"] .expandIcon {
+  transform: rotate(180deg);
+}

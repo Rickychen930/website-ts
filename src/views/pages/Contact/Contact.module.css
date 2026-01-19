@@ -32,17 +32,43 @@
   margin-bottom: 1.5rem;
 }
 
+.contactLink {
+  display: inline-block;
+  position: relative;
+  padding: 0.5rem 0;
+  color: var(--color-primary-500);
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.contactLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contactLink:hover {
+  color: var(--color-primary-600);
+  transform: translateX(4px);
+}
+
+.contactLink:hover::after {
+  width: 100%;
+}
+
 .contactItem a {
   color: var(--color-primary-500);
   text-decoration: none;
   word-break: break-all;
   font-weight: 500;
-  transition: color 0.2s ease-in-out;
-}
-
-.contactItem a:hover {
-  color: var(--color-primary-600);
-  text-decoration: underline;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .socialLinks {

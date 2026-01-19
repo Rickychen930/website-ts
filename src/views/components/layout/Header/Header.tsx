@@ -5,11 +5,13 @@
 
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useProfile } from "@/contexts/ProfileContext";
 import { Typography } from "@/views/components/ui/Typography";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import styles from "./Header.module.css";
 
 export const Header: React.FC = () => {
+  const { profile } = useProfile();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -28,9 +30,13 @@ export const Header: React.FC = () => {
   return (
     <header className={styles.header} role="banner">
       <div className={styles.container}>
-        <Link to="/" className={styles.logo} aria-label="Ricky Chen - Home">
+        <Link
+          to="/"
+          className={styles.logo}
+          aria-label={`${profile?.name || "Home"} - Home`}
+        >
           <Typography variant="h5" weight="bold" as="span">
-            Ricky Chen
+            {profile?.name || "Portfolio"}
           </Typography>
         </Link>
 
