@@ -1,0 +1,165 @@
+.skillChart {
+  display: grid;
+  gap: 2rem;
+}
+
+/* Circular Variant */
+.skillChart.circular {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  justify-items: center;
+}
+
+.circularSkill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.circularContainer {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.circularSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.circularBackground {
+  stroke: rgba(226, 232, 240, 0.5);
+}
+
+.dark .circularBackground {
+  stroke: rgba(148, 163, 184, 0.2);
+}
+
+.circularProgress {
+  stroke: var(--skill-color, #3b82f6);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 4px var(--skill-color, #3b82f6));
+}
+
+.circularContent {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.skillIcon {
+  font-size: 1.5rem;
+}
+
+.skillPercentage {
+  color: var(--skill-color, #3b82f6);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.skillName {
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.dark .skillName {
+  color: #cbd5e1;
+}
+
+/* Bar Variant */
+.skillChart.bar {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.barSkill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.barHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.barContainer {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  background: rgba(226, 232, 240, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.dark .barContainer {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.barProgress {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--skill-color, #3b82f6) 0%,
+    var(--skill-color, #2563eb) 100%
+  );
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px;
+  box-shadow:
+    0 0 10px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.barGlow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Responsive */
+@media (width <= 768px) {
+  .skillChart.circular {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .circularContainer {
+    width: 100px;
+    height: 100px;
+  }
+}

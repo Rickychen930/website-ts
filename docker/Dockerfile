@@ -6,7 +6,6 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 COPY backend/tsconfig.backend.json ./backend/
-COPY tsconfig.json ./
 
 # Install dependencies
 RUN npm ci --only=production --legacy-peer-deps
@@ -36,9 +35,6 @@ COPY --from=builder /app/backend/dist ./backend/dist
 
 # Copy PM2 config
 COPY backend/ecosystem.config.js ./backend/
-
-# Copy React build (if exists, for serving static files)
-COPY build ./build
 
 # Create logs directory
 RUN mkdir -p /app/backend/logs

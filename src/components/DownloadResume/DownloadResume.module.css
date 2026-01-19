@@ -1,0 +1,48 @@
+.downloadButton {
+  position: relative;
+  overflow: hidden;
+}
+
+.downloadButton::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s ease,
+    height 0.6s ease;
+}
+
+.downloadButton:hover::before {
+  width: 400px;
+  height: 400px;
+}
+
+.icon {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.downloadButton:hover .icon {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  margin-left: 0.5rem;
+}
+
+.downloadButton:hover .arrow {
+  transform: translateY(4px);
+}
+
+.downloadButton:active .arrow {
+  transform: translateY(6px);
+}

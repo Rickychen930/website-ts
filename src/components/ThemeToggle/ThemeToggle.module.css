@@ -1,0 +1,94 @@
+.themeToggle {
+  position: relative;
+  width: 56px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  background: rgba(226, 232, 240, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2rem;
+  cursor: pointer;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.themeToggle:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+  transform: scale(1.05);
+}
+
+.themeToggle:active {
+  transform: scale(0.95);
+}
+
+.toggleContainer {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  position: relative;
+  z-index: 2;
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sunIcon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.moonIcon {
+  opacity: 0.3;
+  transform: scale(0.8) rotate(180deg);
+}
+
+.slider {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-50%);
+  border-radius: 50%;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.sliderDark {
+  left: calc(100% - 28px);
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(148, 163, 184, 0.3);
+}
+
+.dark .themeToggle {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.dark .themeToggle:hover {
+  border-color: rgba(148, 163, 184, 0.5);
+  box-shadow: 0 0 20px rgba(148, 163, 184, 0.2);
+}
+
+.dark .sunIcon {
+  opacity: 0.3;
+  transform: scale(0.8) rotate(-180deg);
+}
+
+.dark .moonIcon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}

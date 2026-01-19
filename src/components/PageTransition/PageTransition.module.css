@@ -1,0 +1,29 @@
+.pageTransition {
+  width: 100%;
+  min-height: 100%;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.pageTransition.entering {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.pageTransition.entered {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .pageTransition {
+    transition: none;
+  }
+
+  .pageTransition.entering {
+    opacity: 1;
+    transform: none;
+  }
+}

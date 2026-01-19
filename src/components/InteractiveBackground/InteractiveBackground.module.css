@@ -1,0 +1,121 @@
+.interactiveBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.dark .interactiveBackground {
+  opacity: 0.2;
+}
+
+/* Grid Pattern */
+.interactiveBackground.grid {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+.grid.medium {
+  background-size: 40px 40px;
+}
+
+.grid.high {
+  background-size: 30px 30px;
+}
+
+/* Dots Pattern */
+.interactiveBackground.dots {
+  background-image: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+  animation: dotsMove 15s linear infinite;
+}
+
+@keyframes dotsMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 30px 30px;
+  }
+}
+
+.dots.medium {
+  background-size: 25px 25px;
+}
+
+.dots.high {
+  background-size: 20px 20px;
+}
+
+/* Waves Pattern */
+.interactiveBackground.waves {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.05) 0%,
+    rgba(34, 197, 94, 0.05) 50%,
+    rgba(59, 130, 246, 0.05) 100%
+  );
+  background-size: 200% 200%;
+  animation: waveMove 10s ease infinite;
+}
+
+@keyframes waveMove {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.waves.medium {
+  background-size: 150% 150%;
+}
+
+.waves.high {
+  background-size: 100% 100%;
+}
+
+/* Mesh Pattern */
+.interactiveBackground.mesh {
+  opacity: 0.3;
+}
+
+.mesh.medium {
+  opacity: 0.4;
+}
+
+.mesh.high {
+  opacity: 0.5;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .interactiveBackground {
+    animation: none !important;
+  }
+}

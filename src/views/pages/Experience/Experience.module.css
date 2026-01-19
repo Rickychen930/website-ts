@@ -1,0 +1,31 @@
+.timeline {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.empty {
+  display: flex;
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-height: 300px;
+  justify-content: center;
+}
+
+.loading,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 50vh;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.retryButton {
+  margin-top: var(--spacing-md);
+}

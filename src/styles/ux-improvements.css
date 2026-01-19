@@ -1,0 +1,191 @@
+/**
+ * UX Improvements - Best practices for user experience
+ */
+
+/* Improved spacing for better readability */
+section {
+  scroll-margin-top: 2rem;
+}
+
+/* Better link styling */
+a:not(.button, .navLink) {
+  color: var(--color-primary-500);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition-fast) var(--transition-ease);
+}
+
+a:not(.button, .navLink):hover {
+  color: var(--color-primary-600);
+  text-decoration-thickness: 2px;
+}
+
+a:not(.button, .navLink):focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Better list styling - Support dark/light mode */
+ul,
+ol {
+  padding-left: 1.5rem;
+  color: var(--text-primary);
+}
+
+li {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Improved form field spacing */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+  margin-top: 0.5rem;
+}
+
+/* Loading skeleton for better perceived performance - Support dark/light mode */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 0,
+    var(--border-primary) 40px,
+    var(--bg-tertiary) 80px
+  );
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+/* Empty states */
+.empty-state {
+  padding: var(--spacing-3xl) var(--spacing-md);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Error states with better visibility */
+.error-state {
+  padding: var(--spacing-lg);
+  background-color: var(--color-error-50);
+  border: 2px solid var(--color-error-500);
+  border-radius: var(--radius-md);
+  color: var(--color-error-600);
+}
+
+/* Success states */
+.success-state {
+  padding: var(--spacing-lg);
+  background-color: var(--color-success-50);
+  border: 2px solid var(--color-success-500);
+  border-radius: var(--radius-md);
+  color: var(--color-success-700);
+}
+
+/* Better button spacing */
+.button + .button {
+  margin-left: var(--spacing-md);
+}
+
+/* Improved card spacing */
+.card + .card {
+  margin-top: var(--spacing-lg);
+}
+
+/* Better focus indicators for interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Improved contrast for disabled states */
+button:disabled,
+input:disabled,
+textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Better mobile touch targets */
+@media (width <= 768px) {
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Improved text selection - Support dark/light mode */
+::selection {
+  background-color: var(--color-primary-alpha-30);
+  color: var(--text-primary);
+}
+
+::selection {
+  background-color: var(--color-primary-alpha-30);
+  color: var(--text-primary);
+}
+
+.dark ::selection {
+  background-color: var(--color-primary-alpha-40);
+  color: var(--text-inverse);
+}
+
+.dark ::selection {
+  background-color: var(--color-primary-alpha-40);
+  color: var(--text-inverse);
+}
+
+/* Better scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

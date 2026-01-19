@@ -1,0 +1,145 @@
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.bio {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+.skillsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.skillCategory {
+  width: 100%;
+}
+
+.categoryTitle {
+  margin-bottom: 1.5rem;
+}
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (width >= 1024px) {
+  .skillsGrid {
+    gap: 2rem;
+  }
+}
+
+.languagesSection {
+  background-color: var(--bg-secondary);
+}
+
+.languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.languageItem {
+  position: relative;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-lg);
+  min-width: 150px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.languageItem::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-primary-accent);
+  transition: transform 0.3s ease;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.languageItem:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+  border-color: var(--color-primary-alpha-30);
+}
+
+.languageItem:hover::before {
+  transform: scaleX(1);
+}
+
+.empty {
+  display: flex;
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-height: 300px;
+  justify-content: center;
+}
+
+.loading,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 50vh;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.retryButton {
+  margin-top: var(--spacing-md);
+}
+
+.academicsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.certificationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.honorsSection {
+  background-color: var(--bg-secondary);
+}
+
+.honorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+@media (width <= 768px) {
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .certificationsGrid,
+  .honorsGrid {
+    grid-template-columns: 1fr;
+  }
+}

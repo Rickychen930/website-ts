@@ -1,0 +1,14 @@
+.errorBoundary {
+  display: flex;
+  padding: 2rem;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+}
+
+.resetButton {
+  margin-top: 1rem;
+}

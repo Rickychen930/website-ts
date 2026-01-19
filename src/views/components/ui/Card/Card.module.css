@@ -1,0 +1,96 @@
+.card {
+  position: relative;
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
+  transition: all var(--transition-slow) var(--transition-ease);
+  border-radius: var(--radius-xl);
+  animation: fadeIn 0.6s ease-out both;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  overflow: hidden;
+}
+
+.card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-primary-accent);
+  transition: transform var(--transition-slow) var(--transition-ease);
+  content: "";
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  box-shadow: var(--shadow-glow);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+  animation: gradientShift 2s ease infinite;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(59, 130, 246, 0.05) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-slow) var(--transition-ease);
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.card--default {
+  box-shadow: var(--shadow-sm);
+}
+
+.card--elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--color-primary-500);
+}
+
+.card--outlined {
+  border: 1px solid var(--border-primary);
+  box-shadow: none;
+}
+
+/* Padding variants */
+.card--padding-none {
+  padding: 0;
+}
+
+.card--padding-sm {
+  padding: var(--spacing-md);
+}
+
+.card--padding-md {
+  padding: var(--spacing-lg);
+}
+
+.card--padding-lg {
+  padding: var(--spacing-xl);
+}

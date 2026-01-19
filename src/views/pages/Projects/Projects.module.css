@@ -1,0 +1,85 @@
+.filters {
+  display: flex;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-overlay);
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-4xl);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+}
+
+.filterButton {
+  padding: 0.625rem 1.75rem;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(10px);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.filterButton:hover {
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.filterButtonActive {
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+  border-color: var(--color-primary-600);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2.5rem;
+  padding: 0 1rem;
+}
+
+.empty {
+  display: flex;
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-height: 300px;
+  justify-content: center;
+}
+
+.viewAllButton {
+  margin-top: var(--spacing-md);
+}
+
+.loading,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 50vh;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.retryButton {
+  margin-top: var(--spacing-md);
+}
+
+@media (width <= 768px) {
+  .projectsGrid {
+    grid-template-columns: 1fr;
+  }
+}

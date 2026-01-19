@@ -1,12 +1,9 @@
 /**
- * Custom Hooks Index
- * Centralized exports for all custom hooks
+ * Hooks - Custom React hooks
  */
 
-export { usePerformanceMonitor, useAsyncPerformance } from './usePerformanceMonitor';
-export type { PerformanceMetrics, UsePerformanceMonitorOptions } from './usePerformanceMonitor';
+export { useScrollReveal } from "./useScrollReveal";
+export type { UseScrollRevealOptions } from "./useScrollReveal";
 
-export { useIntersectionObserver } from './useIntersectionObserver';
-export type { UseIntersectionObserverOptions, UseIntersectionObserverReturn } from './useIntersectionObserver';
-
-export { useDebounce, useDebouncedCallback } from './useDebounce';
+export { useCounter } from "./useCounter";
+export type { UseCounterOptions } from "./useCounter";

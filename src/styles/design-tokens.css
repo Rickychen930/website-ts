@@ -1,0 +1,268 @@
+/**
+ * Design Tokens CSS Variables
+ * Single source of truth untuk semua colors, spacing, typography, dll
+ * Semua komponen harus menggunakan variables ini untuk konsistensi
+ */
+
+:root {
+  /* Primary Colors */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+
+  /* Accent Colors */
+  --color-accent-50: #f0fdf4;
+  --color-accent-100: #dcfce7;
+  --color-accent-200: #bbf7d0;
+  --color-accent-300: #86efac;
+  --color-accent-400: #4ade80;
+  --color-accent-500: #22c55e;
+  --color-accent-600: #16a34a;
+  --color-accent-700: #15803d;
+
+  /* Neutral Colors */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+
+  /* Semantic Colors */
+  --color-success: var(--color-accent-500);
+  --color-success-50: #f0fdf4;
+  --color-success-light: #dcfce7;
+  --color-success-dark: #15803d;
+  --color-error: #ef4444;
+  --color-error-50: #fef2f2;
+  --color-error-light: #fef2f2;
+  --color-error-dark: #dc2626;
+  --color-warning: #f59e0b;
+  --color-warning-50: #fffbeb;
+  --color-warning-light: #fffbeb;
+  --color-warning-dark: #d97706;
+
+  /* Background Colors - Light Mode */
+  --bg-primary: #fff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #fff;
+  --bg-overlay: rgba(255, 255, 255, 0.9);
+
+  /* Text Colors - Light Mode */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-inverse: #fff;
+  --text-muted: #94a3b8;
+
+  /* Border Colors - Light Mode */
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --border-focus: #3b82f6;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+  --spacing-4xl: 6rem; /* 96px */
+  --spacing-5xl: 8rem; /* 128px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-2xl: 1.5rem; /* 24px */
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+  --shadow-glow-strong: 0 0 30px rgba(59, 130, 246, 0.5);
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-cursor: 9998;
+  --z-progress: 9999;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary-500) 0%,
+    var(--color-primary-600) 50%,
+    var(--color-primary-700) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent-500) 0%,
+    var(--color-accent-600) 100%
+  );
+  --gradient-primary-accent: linear-gradient(
+    135deg,
+    var(--color-primary-500) 0%,
+    var(--color-accent-500) 100%
+  );
+  --gradient-text: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--color-primary-500) 50%,
+    var(--color-accent-500) 100%
+  );
+  --gradient-card: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 100%
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--color-primary-50) 0%,
+    var(--color-primary-100) 25%,
+    var(--bg-primary) 50%,
+    var(--color-primary-50) 75%,
+    var(--color-primary-100) 100%
+  );
+
+  /* Additional color utilities for gradients and effects */
+  --color-primary-rgb: 59, 130, 246;
+  --color-accent-rgb: 34, 197, 94;
+  --color-primary-alpha-10: rgba(var(--color-primary-rgb), 0.1);
+  --color-primary-alpha-20: rgba(var(--color-primary-rgb), 0.2);
+  --color-primary-alpha-30: rgba(var(--color-primary-rgb), 0.3);
+  --color-primary-alpha-40: rgba(var(--color-primary-rgb), 0.4);
+  --color-primary-alpha-50: rgba(var(--color-primary-rgb), 0.5);
+  --color-accent-alpha-10: rgba(var(--color-accent-rgb), 0.1);
+  --color-accent-alpha-20: rgba(var(--color-accent-rgb), 0.2);
+}
+
+/* Dark Mode Variables */
+.dark {
+  /* Background Colors - Dark Mode */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-overlay: rgba(30, 41, 59, 0.9);
+
+  /* Text Colors - Dark Mode */
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #0f172a;
+  --text-muted: #64748b;
+
+  /* Border Colors - Dark Mode */
+  --border-primary: rgba(148, 163, 184, 0.2);
+  --border-secondary: rgba(148, 163, 184, 0.3);
+  --border-focus: #60a5fa;
+
+  /* Primary Colors - Adjusted for Dark Mode */
+  --color-primary-500: #60a5fa;
+  --color-primary-600: #3b82f6;
+  --color-primary-700: #2563eb;
+
+  /* Accent Colors - Adjusted for Dark Mode */
+  --color-accent-500: #4ade80;
+  --color-accent-600: #22c55e;
+  --color-accent-700: #16a34a;
+
+  /* Gradients - Dark Mode */
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 25%,
+    var(--bg-primary) 50%,
+    var(--bg-secondary) 75%,
+    var(--bg-primary) 100%
+  );
+  --gradient-card: linear-gradient(
+    135deg,
+    var(--bg-secondary) 0%,
+    var(--bg-primary) 100%
+  );
+  --gradient-text: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--color-primary-500) 50%,
+    var(--color-accent-500) 100%
+  );
+}
+
+/* Container Max Widths and Typography Scale */
+:root {
+  /* Container Max Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+
+  /* Font Families - Support dark/light mode (fonts work in both modes) */
+  --font-family-sans:
+    "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  --font-family-mono:
+    "JetBrains Mono", "Fira Code", "Menlo", "Monaco", "Consolas",
+    "Liberation Mono", "Courier New", monospace;
+  --font-family-display:
+    "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", "Roboto", sans-serif;
+
+  /* Typography Scale */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
+  --font-size-6xl: 3.75rem; /* 60px */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+}

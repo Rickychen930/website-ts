@@ -1,0 +1,278 @@
+/**
+ * Dark Mode Styles - Comprehensive dark theme support
+ */
+
+/* Dark mode color overrides */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background: var(--gradient-hero);
+  background-attachment: fixed;
+  color: var(--text-primary);
+}
+
+.dark .app {
+  background: transparent;
+}
+
+/* Header dark mode */
+.dark .header {
+  background: var(--bg-overlay);
+  border-bottom-color: var(--border-primary);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+}
+
+/* Hero section dark mode */
+.dark .hero {
+  background: var(--gradient-hero);
+}
+
+.dark .heroTitle {
+  background: var(--gradient-text);
+  background-size: 200% 200%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .heroSubtitle {
+  color: var(--text-secondary);
+}
+
+.dark .heroLocation {
+  background: var(--bg-overlay);
+  border-color: var(--border-secondary);
+  color: var(--text-secondary);
+}
+
+.dark .heroBio {
+  color: var(--text-secondary);
+}
+
+/* Cards dark mode */
+.dark .card {
+  background: var(--gradient-card);
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
+.dark .card--elevated {
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px var(--color-primary-alpha-10);
+}
+
+.dark .card--elevated:hover {
+  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
+  border-color: var(--color-primary-alpha-30);
+}
+
+/* Buttons dark mode */
+.dark .button--primary {
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+}
+
+.dark .button--outline {
+  background: var(--bg-overlay);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-400);
+}
+
+.dark .button--outline:hover {
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+}
+
+/* Navigation dark mode */
+.dark .navLink {
+  color: var(--text-secondary);
+}
+
+.dark .navLink:hover {
+  color: var(--color-primary-400);
+}
+
+.dark .navLinkActive {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-alpha-20) 0%,
+    var(--color-accent-alpha-10) 100%
+  );
+  color: var(--color-primary-400);
+}
+
+/* Section dark mode */
+.dark .section {
+  background: transparent;
+}
+
+.dark .testimonialsSection {
+  background: var(--gradient-card);
+}
+
+.dark .currentRole {
+  background: var(--gradient-card);
+}
+
+/* Typography dark mode */
+.dark .typography--color-primary {
+  color: var(--text-primary);
+}
+
+.dark .typography--color-secondary {
+  color: var(--text-secondary);
+}
+
+.dark .typography--color-tertiary {
+  color: var(--text-tertiary);
+}
+
+/* Input fields dark mode */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="tel"],
+.dark input[type="url"],
+.dark textarea {
+  background: var(--bg-overlay);
+  border-color: var(--border-secondary);
+  color: var(--text-primary);
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="tel"]:focus,
+.dark input[type="url"]:focus,
+.dark textarea:focus {
+  border-color: var(--color-primary-500);
+  box-shadow:
+    0 0 0 3px var(--color-primary-alpha-20),
+    var(--shadow-md);
+}
+
+/* Scrollbar dark mode */
+.dark ::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  border: 2px solid var(--bg-primary);
+  background: var(--gradient-primary);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--gradient-primary);
+  filter: brightness(1.2);
+}
+
+/* Selection dark mode */
+.dark ::selection {
+  background: var(--color-primary-alpha-30);
+  color: var(--text-inverse);
+}
+
+.dark ::selection {
+  background: var(--color-primary-alpha-30);
+  color: var(--text-inverse);
+}
+
+/* Code blocks dark mode */
+.dark code {
+  background-color: var(--bg-secondary);
+  color: var(--color-primary-400);
+}
+
+.dark pre {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--color-primary-alpha-30);
+}
+
+/* Links dark mode */
+.dark a:not(.button, .navLink) {
+  color: var(--color-primary-400);
+}
+
+.dark a:not(.button, .navLink):hover {
+  color: var(--color-primary-300);
+}
+
+/* Project Card dark mode */
+.dark .projectCard {
+  background: var(--gradient-card);
+  border-color: var(--border-primary);
+}
+
+.dark .categoryBadge {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-alpha-20) 0%,
+    var(--color-primary-alpha-20) 100%
+  );
+  border-color: var(--color-primary-alpha-30);
+  color: var(--color-primary-400);
+}
+
+.dark .techTag {
+  background: var(--gradient-card);
+  border-color: var(--border-primary);
+  color: var(--text-secondary);
+}
+
+.dark .techTag:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--color-primary-alpha-30);
+  color: var(--color-primary-400);
+}
+
+/* Footer dark mode */
+.dark .footer {
+  background: var(--gradient-hero);
+  border-top-color: var(--border-primary);
+}
+
+/* Section divider dark mode */
+.dark .section::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-primary-400) 50%,
+    var(--color-accent-500) 50%,
+    transparent 100%
+  );
+  box-shadow: var(--shadow-glow);
+}
+
+/* Back to top dark mode */
+.dark .backToTop {
+  background: var(--gradient-card);
+  border-color: var(--border-secondary);
+  color: var(--color-primary-400);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.dark .backToTop:hover {
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
+}
+
+/* Loading dark mode */
+.dark .loading {
+  color: var(--text-secondary);
+}
+
+/* Error state dark mode */
+.dark .error-state {
+  background-color: var(--color-error-50);
+  border-color: var(--color-error-500);
+  color: var(--color-error-600);
+}
+
+/* Success state dark mode */
+.dark .success-state {
+  background-color: var(--color-success-50);
+  border-color: var(--color-success-500);
+  color: var(--color-success-600);
+}

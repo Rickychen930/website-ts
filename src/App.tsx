@@ -1,69 +1,89 @@
 /**
- * App - Root Component
- * Main application entry point
+ * App Component - Root application component
+ * Version 3: Added code splitting with React.lazy
  */
 
-import { BrowserRouter } from "react-router-dom";
-import React from "react";
-import AppRoutes from "./routes/app-routes";
-import { ErrorDisplay } from "./components/core";
-import { logError } from "./utils/logger";
+import React, { Suspense } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ProfileProvider, ThemeProvider } from "@/contexts";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Header } from "@/views/components/layout/Header";
+import { Footer } from "@/views/components/layout/Footer";
+import { Loading } from "@/views/components/ui/Loading";
+import { BackToTop } from "@/components/BackToTop";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { ParticleBackground } from "@/components/ParticleBackground";
+import { CursorEffect } from "@/components/CursorEffect";
+import { PageTransition } from "@/components/PageTransition";
+import { Analytics } from "@/components/Analytics";
+import { PerformanceMonitor } from "@/components/PerformanceMonitor";
+import "./App.css";
 
-/**
- * ErrorBoundary Component
- * Simple error boundary for the app
- */
-class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
-  { hasError: boolean; error: Error | null }
-> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
+// Lazy load pages for code splitting
+const Home = React.lazy(() =>
+  import("@/views/pages/Home").then((module) => ({ default: module.Home })),
+);
+const About = React.lazy(() =>
+  import("@/views/pages/About").then((module) => ({ default: module.About })),
+);
+const Projects = React.lazy(() =>
+  import("@/views/pages/Projects").then((module) => ({
+    default: module.Projects,
+  })),
+);
+const Experience = React.lazy(() =>
+  import("@/views/pages/Experience").then((module) => ({
+    default: module.Experience,
+  })),
+);
+const Contact = React.lazy(() =>
+  import("@/views/pages/Contact").then((module) => ({
+    default: module.Contact,
+  })),
+);
 
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    logError("App Error:", error, "ErrorBoundary");
-  }
-
-  private handleRetry = (): void => {
-    this.setState({ hasError: false, error: null });
-  };
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="app-error-boundary">
-          <ErrorDisplay
-            title="Application Error"
-            message={this.state.error?.message || "An unexpected error occurred"}
-            error={this.state.error}
-            onRetry={this.handleRetry}
-            retryLabel="Reset Application"
-            reloadLabel="Reload Page"
-          />
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
-
-/**
- * App Component
- * Root application component
- */
-export default function App() {
+export const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <ThemeProvider>
+        <ProfileProvider>
+          <BrowserRouter>
+            <Analytics />
+            <PerformanceMonitor />
+            <div className="app">
+              <ParticleBackground />
+              <ScrollProgress />
+              <CursorEffect />
+              <a href="#main-content" className="skip-to-content">
+                Skip to main content
+              </a>
+              <Header />
+              <main
+                id="main-content"
+                className="app-main"
+                role="main"
+                tabIndex={-1}
+              >
+                <Suspense
+                  fallback={<Loading fullScreen message="Loading page..." />}
+                >
+                  <PageTransition>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/projects" element={<Projects />} />
+                      <Route path="/experience" element={<Experience />} />
+                      <Route path="/contact" element={<Contact />} />
+                    </Routes>
+                  </PageTransition>
+                </Suspense>
+              </main>
+              <Footer />
+              <BackToTop />
+            </div>
+          </BrowserRouter>
+        </ProfileProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
-}
+};
