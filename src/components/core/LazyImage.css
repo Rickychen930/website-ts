@@ -55,12 +55,12 @@
   width: 100%;
   height: 100%;
   border: 3px solid var(--color-border-default, #e5e7eb);
-  border-top-color: var(--color-accent-primary, #3b82f6);
+  border-top-color: var(--color-accent-primary, #06b6d4);
   border-radius: 50%;
-  animation: lazyImageSpin 1s linear infinite;
+  animation: lazy-image-spin 1s linear infinite;
 }
 
-@keyframes lazyImageSpin {
+@keyframes lazy-image-spin {
   to {
     transform: rotate(360deg);
   }

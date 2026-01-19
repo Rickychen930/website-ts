@@ -3,7 +3,7 @@
  * Creates animated particles in the background
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, memo, useState } from 'react';
 import './ParticleBackground.css';
 
 export interface IParticleBackgroundProps {
@@ -12,100 +12,198 @@ export interface IParticleBackgroundProps {
   size?: number;
   color?: string;
   className?: string;
+  interactive?: boolean;
+  maxConnections?: number;
+  connectionDistance?: number;
+}
+
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
 }
 
 /**
  * ParticleBackground Component
  * Creates animated particle background effect
+ * Optimized with performance improvements and reduced motion support
  */
-export const ParticleBackground: React.FC<IParticleBackgroundProps> = ({
+const ParticleBackgroundComponent: React.FC<IParticleBackgroundProps> = ({
   particleCount = 50,
   speed = 0.5,
   size = 2,
-  color = 'rgba(37, 99, 235, 0.3)',
+  color = 'rgba(6, 182, 212, 0.3)',
   className = '',
+  interactive = false,
+  maxConnections = 5,
+  connectionDistance = 150,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const particlesRef = useRef<Particle[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
+  // Check for reduced motion preference
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setIsReducedMotion(mediaQuery.matches);
+    
+    const handleChange = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // Optimized resize handler
+  const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
+    
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Create particles
-    interface Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
+    if (ctx) {
+      ctx.scale(dpr, dpr);
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
     }
+  }, []);
 
+  // Initialize particles
+  const initializeParticles = useCallback((canvas: HTMLCanvasElement): Particle[] => {
     const particles: Particle[] = [];
+    const width = canvas.offsetWidth || canvas.width;
+    const height = canvas.offsetHeight || canvas.height;
+    
     for (let i = 0; i < particleCount; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * width,
+        y: Math.random() * height,
         vx: (Math.random() - 0.5) * speed,
         vy: (Math.random() - 0.5) * speed,
         radius: Math.random() * size + size / 2,
       });
     }
+    return particles;
+  }, [particleCount, speed, size]);
 
-    // Animation loop
+  // Mouse interaction handler
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!interactive || !canvasRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    mouseRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  }, [interactive]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
+
+    // Check for reduced motion
+    if (isReducedMotion) {
+      return; // Don't animate if user prefers reduced motion
+    }
+
+    // Set canvas size with high DPI support
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    if (interactive) {
+      canvas.addEventListener('mousemove', handleMouseMove);
+    }
+
+    // Initialize particles
+    particlesRef.current = initializeParticles(canvas);
+
+    // Optimized animation loop with performance improvements
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const width = canvas.offsetWidth || canvas.width;
+      const height = canvas.offsetHeight || canvas.height;
+      
+      ctx.clearRect(0, 0, width, height);
 
-      // Update and draw particles
-      particles.forEach((particle) => {
+      const particles = particlesRef.current;
+      const mouse = mouseRef.current;
+
+      // Update and draw particles with optimizations
+      for (let i = 0; i < particles.length; i++) {
+        const particle = particles[i];
+        
+        // Interactive mouse attraction
+        if (interactive && mouse.x && mouse.y) {
+          const dx = mouse.x - particle.x;
+          const dy = mouse.y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 100) {
+            const force = (100 - distance) / 100;
+            particle.vx += (dx / distance) * force * 0.01;
+            particle.vy += (dy / distance) * force * 0.01;
+          }
+        }
+
+        // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Bounce off edges
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        // Bounce off edges with damping
+        if (particle.x < 0 || particle.x > width) {
+          particle.vx *= -0.9;
+          particle.x = Math.max(0, Math.min(width, particle.x));
+        }
+        if (particle.y < 0 || particle.y > height) {
+          particle.vy *= -0.9;
+          particle.y = Math.max(0, Math.min(height, particle.y));
+        }
 
-        // Keep particles in bounds
-        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
-
-        // Draw particle
+        // Draw particle with gradient for better visual
+        const gradient = ctx.createRadialGradient(
+          particle.x, particle.y, 0,
+          particle.x, particle.y, particle.radius
+        );
+        gradient.addColorStop(0, color.replace('0.3', '0.6'));
+        gradient.addColorStop(1, color);
+        
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = color;
+        ctx.fillStyle = gradient;
         ctx.fill();
-      });
+      }
 
-      // Draw connections between nearby particles
-      const maxDistance = 150;
-      particles.forEach((particle, i) => {
-        particles.slice(i + 1).forEach((otherParticle) => {
+      // Optimized connection drawing with max connections limit
+      for (let i = 0; i < particles.length; i++) {
+        const particle = particles[i];
+        let connectionCount = 0;
+        
+        for (let j = i + 1; j < particles.length && connectionCount < maxConnections; j++) {
+          const otherParticle = particles[j];
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < maxDistance) {
-            const opacity = 1 - distance / maxDistance;
+          if (distance < connectionDistance) {
+            const opacity = (1 - distance / connectionDistance) * 0.3;
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
             ctx.strokeStyle = color.replace('0.3', opacity.toString());
             ctx.lineWidth = 0.5;
             ctx.stroke();
+            connectionCount++;
           }
-        });
-      });
+        }
+      }
 
       animationFrameRef.current = requestAnimationFrame(animate);
     };
@@ -114,17 +212,24 @@ export const ParticleBackground: React.FC<IParticleBackgroundProps> = ({
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      if (interactive && canvas) {
+        canvas.removeEventListener('mousemove', handleMouseMove);
+      }
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [particleCount, speed, size, color]);
+  }, [particleCount, speed, size, color, interactive, maxConnections, connectionDistance, isReducedMotion, resizeCanvas, initializeParticles, handleMouseMove]);
 
   return (
     <canvas
       ref={canvasRef}
       className={`particle-background ${className}`}
       aria-hidden="true"
+      role="presentation"
     />
   );
 };
+
+// Memoize component to prevent unnecessary re-renders
+export const ParticleBackground = memo(ParticleBackgroundComponent);

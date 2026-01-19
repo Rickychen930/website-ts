@@ -3,7 +3,7 @@
  * Adds glowing effect to text
  */
 
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import './GlowingText.css';
 
 export interface IGlowingTextProps {
@@ -11,24 +11,38 @@ export interface IGlowingTextProps {
   intensity?: 'low' | 'medium' | 'high';
   color?: string;
   className?: string;
+  'aria-label'?: string;
 }
 
 /**
  * GlowingText Component
  * Displays text with glowing effect
+ * Optimized with memo and useMemo for performance
  */
-export const GlowingText: React.FC<IGlowingTextProps> = ({
+const GlowingTextComponent: React.FC<IGlowingTextProps> = ({
   children,
   intensity = 'medium',
   color,
   className = '',
+  'aria-label': ariaLabel,
 }) => {
-  const intensityClass = `glowing-text--${intensity}`;
-  const style = color ? { '--glow-color': color } : undefined;
+  // Memoize class names and styles
+  const intensityClass = useMemo(() => `glowing-text--${intensity}`, [intensity]);
+  const style = useMemo(
+    () => (color ? { '--glow-color': color } as React.CSSProperties : undefined),
+    [color]
+  );
 
   return (
-    <span className={`glowing-text ${intensityClass} ${className}`} style={style as React.CSSProperties}>
+    <span 
+      className={`glowing-text ${intensityClass} ${className}`}
+      style={style}
+      aria-label={ariaLabel}
+    >
       {children}
     </span>
   );
 };
+
+// Memoize to prevent unnecessary re-renders
+export const GlowingText = memo(GlowingTextComponent);

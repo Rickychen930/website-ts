@@ -11,6 +11,7 @@
 @import "./styles/css/core/viewport.css";
 @import "./styles/css/core/animations.css";
 @import "./styles/css/core/enhancements.css";
+@import "./styles/css/core/user-friendly.css";
 @import "./styles/css/core/utilities.css";
 @import "./styles/css/core/print.css";
 

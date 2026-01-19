@@ -39,8 +39,11 @@ export class ScrollProgress extends Component<IScrollProgressProps, IScrollProgr
   }
 
   componentDidMount(): void {
+    // Throttle scroll handler
+    this.handleScroll = this.throttle(this.handleScroll, 16); // ~60fps
     window.addEventListener('scroll', this.handleScroll, { passive: true });
-    this.handleScroll(); // Initial calculation
+    // Initial calculation
+    this.handleScroll();
   }
 
   componentWillUnmount(): void {
@@ -50,26 +53,41 @@ export class ScrollProgress extends Component<IScrollProgressProps, IScrollProgr
     }
   }
 
-  private handleScroll = (): void => {
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-    }
+  // Throttle scroll handler for better performance
+  private throttle = <T extends (...args: any[]) => void>(
+    func: T,
+    limit: number
+  ): T => {
+    let inThrottle: boolean;
+    return ((...args: Parameters<T>) => {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    }) as T;
+  };
 
-    this.scrollTimeout = setTimeout(() => {
+  private handleScroll = (): void => {
+    // Use requestAnimationFrame for smoother updates
+    requestAnimationFrame(() => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
       const scrollableHeight = documentHeight - windowHeight;
       const progress = scrollableHeight > 0 
-        ? Math.min(100, (scrollTop / scrollableHeight) * 100)
+        ? Math.min(100, Math.round((scrollTop / scrollableHeight) * 100))
         : 0;
 
       const { showOnScroll = true } = this.props;
       const isVisible = showOnScroll ? progress > 0 : true;
 
-      this.setState({ progress, isVisible });
-    }, 10);
+      // Only update if progress changed significantly (avoid unnecessary re-renders)
+      if (Math.abs(this.state.progress - progress) > 0.5 || this.state.isVisible !== isVisible) {
+        this.setState({ progress, isVisible });
+      }
+    });
   };
 
   render(): React.ReactNode {
@@ -81,7 +99,7 @@ export class ScrollProgress extends Component<IScrollProgressProps, IScrollProgr
     const style: React.CSSProperties = {
       width: `${progress}%`,
       height,
-      backgroundColor: color || 'var(--color-accent-primary, #3b82f6)',
+      backgroundColor: color || 'var(--color-accent-primary, #06b6d4)',
     };
 
     return (

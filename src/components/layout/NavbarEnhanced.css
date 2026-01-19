@@ -133,15 +133,12 @@
 .navbar__link--active {
   color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 .navbar__link--active::after {
   width: 80%;
   box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
-}
-
-.navbar__link--active {
-  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {

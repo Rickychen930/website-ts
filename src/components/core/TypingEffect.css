@@ -12,7 +12,7 @@
   display: inline-block;
   margin-left: 2px;
   animation: cursor-blink 1s infinite;
-  color: var(--color-primary, #2563eb);
+  color: var(--color-primary, #06b6d4);
   font-weight: 300;
 }
 
@@ -27,5 +27,5 @@
 
 /* Dark mode support */
 [data-theme='dark'] .typing-effect__cursor {
-  color: var(--color-primary-light, #60a5fa);
+  color: var(--color-primary-light, #22d3ee);
 }

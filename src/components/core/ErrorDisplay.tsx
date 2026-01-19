@@ -19,6 +19,8 @@ export interface IErrorDisplayProps {
   retryLabel?: string;
   reloadLabel?: string;
   className?: string;
+  errorId?: string;
+  showDetails?: boolean;
 }
 
 interface IErrorDisplayState {
@@ -116,10 +118,18 @@ export class ErrorDisplay extends React.Component<IErrorDisplayProps, IErrorDisp
           <h2 className="error-display__title">{title}</h2>
           <p className="error-display__message">{actionableMessage}</p>
           
-          {error && process.env.NODE_ENV === 'development' && (
+          {error && (this.props.showDetails || process.env.NODE_ENV === 'development') && (
             <details className="error-display__details">
-              <summary className="error-display__summary">Technical Details</summary>
-              <pre className="error-display__stack">{error.stack || error.message}</pre>
+              <summary className="error-display__summary">
+                Technical Details {this.props.errorId && `(ID: ${this.props.errorId})`}
+              </summary>
+              <div className="error-display__stack">
+                <div><strong>Error:</strong> {error.name}</div>
+                <div><strong>Message:</strong> {error.message}</div>
+                {error.stack && (
+                  <pre>{error.stack}</pre>
+                )}
+              </div>
             </details>
           )}
 

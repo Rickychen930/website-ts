@@ -20,12 +20,20 @@ export interface ILazyImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement
   rootMargin?: string;
   onLoad?: () => void;
   onError?: () => void;
+  srcSet?: string;
+  sizes?: string;
+  fetchPriority?: 'high' | 'low' | 'auto';
+  decoding?: 'async' | 'auto' | 'sync';
+  retryCount?: number;
+  fallbackSrc?: string;
 }
 
 interface ILazyImageState {
   isLoaded: boolean;
   isInView: boolean;
   hasError: boolean;
+  retryAttempts: number;
+  currentSrc: string;
 }
 
 /**
@@ -42,6 +50,8 @@ export class LazyImage extends Component<ILazyImageProps, ILazyImageState> {
       isLoaded: false,
       isInView: false,
       hasError: false,
+      retryAttempts: 0,
+      currentSrc: props.src,
     };
   }
 
@@ -91,6 +101,19 @@ export class LazyImage extends Component<ILazyImageProps, ILazyImageState> {
   };
 
   private handleError = (): void => {
+    const { retryCount = 0, fallbackSrc } = this.props;
+    const { retryAttempts, currentSrc } = this.state;
+
+    // Retry with fallback if available
+    if (retryAttempts < retryCount && fallbackSrc && currentSrc === this.props.src) {
+      this.setState({
+        retryAttempts: retryAttempts + 1,
+        currentSrc: fallbackSrc,
+      });
+      return;
+    }
+
+    // Final error state
     this.setState({ hasError: true });
     if (this.props.onError) {
       this.props.onError();
@@ -131,12 +154,17 @@ export class LazyImage extends Component<ILazyImageProps, ILazyImageState> {
         {isInView && (
           <img
             ref={this.imgRef}
-            src={src}
+            src={this.state.currentSrc}
             alt={alt}
+            srcSet={this.props.srcSet}
+            sizes={this.props.sizes}
+            fetchPriority={this.props.fetchPriority || 'auto'}
+            decoding={this.props.decoding || 'async'}
             className={`lazy-image__img ${isLoaded ? 'lazy-image__img--loaded' : ''}`}
             onLoad={this.handleLoad}
             onError={this.handleError}
             loading="lazy"
+            aria-label={alt}
             {...restProps}
           />
         )}

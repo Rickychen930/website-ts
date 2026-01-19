@@ -28,16 +28,40 @@ export class ScrollToTop extends Component<{}, IScrollToTopState> {
   }
 
   componentDidMount(): void {
+    // Use throttled scroll handler for better performance
+    this.handleScroll = this.throttle(this.handleScroll, 100);
     window.addEventListener('scroll', this.handleScroll, { passive: true });
+    // Initial check
+    this.handleScroll();
   }
 
   componentWillUnmount(): void {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  // Throttle function for scroll events
+  private throttle = <T extends (...args: any[]) => void>(
+    func: T,
+    limit: number
+  ): T => {
+    let inThrottle: boolean;
+    return ((...args: Parameters<T>) => {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    }) as T;
+  };
+
   private handleScroll = (): void => {
     const scrollY = window.scrollY || document.documentElement.scrollTop;
-    this.setState({ isVisible: scrollY > this.scrollThreshold });
+    const isVisible = scrollY > this.scrollThreshold;
+    
+    // Only update state if visibility changed
+    if (this.state.isVisible !== isVisible) {
+      this.setState({ isVisible });
+    }
   };
 
   private scrollToTop = (): void => {

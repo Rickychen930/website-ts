@@ -20,18 +20,18 @@
   transition: top var(--transition-fast);
 }
 
-.skip-to-content:focus {
+.skip-to-content:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.skip-to-content:focus-visible {
   top: 0;
   outline: 3px solid var(--color-primary-dark);
   outline-offset: -3px;
 }
 
-.skip-to-content:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Ensure focus is always visible when keyboard navigating */
-.skip-to-content:focus-visible {
+.skip-to-content:focus {
+  top: 0;
   outline: 3px solid var(--color-primary-dark);
   outline-offset: -3px;
 }

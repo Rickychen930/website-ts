@@ -54,3 +54,28 @@ export type { IScrollProgressProps } from './ScrollProgress';
 
 export { LazyImage } from './LazyImage';
 export type { ILazyImageProps } from './LazyImage';
+
+// Optimized and Advanced Components
+export { OptimizedImage } from './OptimizedImage';
+export type { IOptimizedImageProps } from './OptimizedImage';
+
+export { ErrorBoundary } from './ErrorBoundary';
+export type { IErrorBoundaryProps } from './ErrorBoundary';
+
+export { VirtualizedList } from './VirtualizedList';
+export type { IVirtualizedListProps } from './VirtualizedList';
+
+export { SEOHead } from './SEOHead';
+export type { ISEOHeadProps } from './SEOHead';
+
+export { PerformanceMonitor } from './PerformanceMonitor';
+export type { IPerformanceMonitorProps, PerformanceMetrics } from './PerformanceMonitor';
+
+export { SuspenseBoundary } from './SuspenseBoundary';
+export type { ISuspenseBoundaryProps } from './SuspenseBoundary';
+
+export { ImageOptimizer } from './ImageOptimizer';
+export type { IImageOptimizerProps } from './ImageOptimizer';
+
+export { KeyboardShortcuts } from './KeyboardShortcuts';
+export type { KeyboardShortcut, IKeyboardShortcutsProps } from './KeyboardShortcuts';

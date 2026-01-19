@@ -29,7 +29,7 @@
 
 /* Use primary color if no custom color */
 .glowing-text {
-  color: var(--color-primary, #2563eb);
+  color: var(--color-primary, #06b6d4);
 }
 
 .glowing-text:hover {
@@ -39,5 +39,5 @@
 }
 
 .glowing-text:not([style*="--glow-color"]) {
-  --glow-color: var(--color-primary, #2563eb);
+  --glow-color: var(--color-primary, #06b6d4);
 }

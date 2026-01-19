@@ -52,7 +52,7 @@
 }
 
 .theme-toggle__button--animating {
-  animation: themeTogglePulse 0.3s ease;
+  animation: theme-toggle-pulse 0.3s ease;
 }
 
 .theme-toggle__icon {
@@ -60,10 +60,6 @@
   line-height: 1;
   display: inline-block;
   transition: transform var(--transition-base, 0.3s ease);
-}
-
-.theme-toggle__button:hover .theme-toggle__icon {
-  transform: scale(1.1) rotate(15deg);
 }
 
 .theme-toggle__label {
@@ -93,6 +89,10 @@
 
 .theme-toggle--large .theme-toggle__icon {
   font-size: 1.5rem;
+}
+
+.theme-toggle__button:hover .theme-toggle__icon {
+  transform: scale(1.1) rotate(15deg);
 }
 
 /* Dropdown menu - Click to toggle (mobile-friendly) */
@@ -159,17 +159,17 @@
   outline: 2px solid var(--color-primary);
   outline-offset: -2px;
   background: var(--color-bg-content-hover, #f3f4f6);
-  box-shadow: inset 0 0 0 1px var(--color-accent-primary, #3b82f6);
+  box-shadow: inset 0 0 0 1px var(--color-accent-primary, #06b6d4);
 }
 
 .theme-toggle__option--active {
-  background: var(--color-accent-primary, #3b82f6);
+  background: var(--color-accent-primary, #06b6d4);
   color: var(--color-text-on-accent, #ffffff);
   font-weight: 500;
 }
 
 .theme-toggle__option--active:hover {
-  background: var(--color-accent-hover, #2563eb);
+  background: var(--color-accent-hover, #0891b2);
 }
 
 /* Dark mode adjustments */
@@ -198,7 +198,7 @@
 }
 
 /* Animations */
-@keyframes themeTogglePulse {
+@keyframes theme-toggle-pulse {
   0%, 100% {
     transform: scale(1);
   }

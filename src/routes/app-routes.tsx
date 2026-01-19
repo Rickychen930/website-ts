@@ -6,7 +6,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-const MainPage = lazy(() => import('../pages/MainPage').then(module => ({ default: module.default })));
+const MainPage = lazy(() => import('../pages/MainPage'));
 
 /**
  * Loading fallback

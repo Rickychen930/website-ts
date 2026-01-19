@@ -117,14 +117,14 @@
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.4),
-                0 0 40px rgba(37, 99, 235, 0.2),
-                0 0 60px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.4),
+                0 0 40px rgba(6, 182, 212, 0.2),
+                0 0 60px rgba(6, 182, 212, 0.1);
   }
   50% {
-    box-shadow: 0 0 30px rgba(37, 99, 235, 0.6),
-                0 0 60px rgba(37, 99, 235, 0.3),
-                0 0 90px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.6),
+                0 0 60px rgba(6, 182, 212, 0.3),
+                0 0 90px rgba(6, 182, 212, 0.15);
   }
 }
 
@@ -258,7 +258,7 @@
    Fade In Animation Variants
    ============================================ */
 
-@keyframes fadeInUp {
+@keyframes fade-in-up {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -269,7 +269,7 @@
   }
 }
 
-@keyframes fadeInDown {
+@keyframes fade-in-down {
   from {
     opacity: 0;
     transform: translateY(-30px);
@@ -280,7 +280,7 @@
   }
 }
 
-@keyframes fadeInLeft {
+@keyframes fade-in-left {
   from {
     opacity: 0;
     transform: translateX(-30px);
@@ -291,7 +291,7 @@
   }
 }
 
-@keyframes fadeInRight {
+@keyframes fade-in-right {
   from {
     opacity: 0;
     transform: translateX(30px);
@@ -302,7 +302,7 @@
   }
 }
 
-@keyframes fadeInScale {
+@keyframes fade-in-scale {
   from {
     opacity: 0;
     transform: scale(0.9);
@@ -314,30 +314,30 @@
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fade-in-up 0.6s ease-out forwards;
 }
 
 .animate-fade-in-down {
-  animation: fadeInDown 0.6s ease-out forwards;
+  animation: fade-in-down 0.6s ease-out forwards;
 }
 
 .animate-fade-in-left {
-  animation: fadeInLeft 0.6s ease-out forwards;
+  animation: fade-in-left 0.6s ease-out forwards;
 }
 
 .animate-fade-in-right {
-  animation: fadeInRight 0.6s ease-out forwards;
+  animation: fade-in-right 0.6s ease-out forwards;
 }
 
 .animate-fade-in-scale {
-  animation: fadeInScale 0.6s ease-out forwards;
+  animation: fade-in-scale 0.6s ease-out forwards;
 }
 
 /* ============================================
    Slide Animation Variants
    ============================================ */
 
-@keyframes slideInFromLeft {
+@keyframes slide-in-from-left {
   from {
     transform: translateX(-100%);
     opacity: 0;
@@ -348,7 +348,7 @@
   }
 }
 
-@keyframes slideInFromRight {
+@keyframes slide-in-from-right {
   from {
     transform: translateX(100%);
     opacity: 0;
@@ -359,7 +359,7 @@
   }
 }
 
-@keyframes slideInFromTop {
+@keyframes slide-in-from-top {
   from {
     transform: translateY(-100%);
     opacity: 0;
@@ -370,7 +370,7 @@
   }
 }
 
-@keyframes slideInFromBottom {
+@keyframes slide-in-from-bottom {
   from {
     transform: translateY(100%);
     opacity: 0;
@@ -382,26 +382,26 @@
 }
 
 .animate-slide-in-left {
-  animation: slideInFromLeft 0.6s ease-out forwards;
+  animation: slide-in-from-left 0.6s ease-out forwards;
 }
 
 .animate-slide-in-right {
-  animation: slideInFromRight 0.6s ease-out forwards;
+  animation: slide-in-from-right 0.6s ease-out forwards;
 }
 
 .animate-slide-in-top {
-  animation: slideInFromTop 0.6s ease-out forwards;
+  animation: slide-in-from-top 0.6s ease-out forwards;
 }
 
 .animate-slide-in-bottom {
-  animation: slideInFromBottom 0.6s ease-out forwards;
+  animation: slide-in-from-bottom 0.6s ease-out forwards;
 }
 
 /* ============================================
    Text Reveal Animations
    ============================================ */
 
-@keyframes textReveal {
+@keyframes text-reveal {
   from {
     clip-path: inset(0 100% 0 0);
     opacity: 0;
@@ -431,7 +431,7 @@
 }
 
 .animate-text-reveal {
-  animation: textReveal 1s ease-out forwards;
+  animation: text-reveal 1s ease-out forwards;
 }
 
 /* ============================================
@@ -550,7 +550,7 @@
    Background Pattern Animations
    ============================================ */
 
-@keyframes moveBackground {
+@keyframes move-background {
   0% {
     background-position: 0 0;
   }
@@ -561,7 +561,7 @@
 
 .animate-background {
   background-size: 200% 200%;
-  animation: moveBackground 20s linear infinite;
+  animation: move-background 20s linear infinite;
 }
 
 /* ============================================
@@ -598,4 +598,403 @@
 
 .duration-slow {
   animation-duration: 1s;
+}
+
+/* ============================================
+   Tech Glow Effects - Enhanced
+   ============================================ */
+
+@keyframes tech-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(6, 182, 212, 0.3),
+      0 0 10px rgba(6, 182, 212, 0.2),
+      0 0 15px rgba(6, 182, 212, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.5),
+      0 0 20px rgba(6, 182, 212, 0.3),
+      0 0 30px rgba(6, 182, 212, 0.2);
+  }
+}
+
+@keyframes tech-glow-strong {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.4),
+      0 0 20px rgba(6, 182, 212, 0.3),
+      0 0 40px rgba(6, 182, 212, 0.2),
+      inset 0 0 20px rgba(6, 182, 212, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(6, 182, 212, 0.6),
+      0 0 40px rgba(6, 182, 212, 0.4),
+      0 0 60px rgba(6, 182, 212, 0.3),
+      inset 0 0 30px rgba(6, 182, 212, 0.15);
+  }
+}
+
+.tech-glow {
+  animation: tech-glow 4s ease-in-out infinite;
+}
+
+.tech-glow-strong {
+  animation: tech-glow-strong 3s ease-in-out infinite;
+}
+
+/* Respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tech-glow,
+  .tech-glow-strong {
+    animation: none;
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.3),
+      0 0 20px rgba(6, 182, 212, 0.2);
+  }
+}
+
+/* ============================================
+   Glass Morphism Effect
+   ============================================ */
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect-strong {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   Neon Border Effect
+   ============================================ */
+
+@keyframes neon-border {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(6, 182, 212, 0.5),
+      inset 0 0 5px rgba(6, 182, 212, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.8),
+      0 0 20px rgba(6, 182, 212, 0.4),
+      inset 0 0 10px rgba(6, 182, 212, 0.5);
+  }
+}
+
+.neon-border {
+  border: 2px solid rgba(6, 182, 212, 0.5);
+  animation: neon-border 3s ease-in-out infinite;
+}
+
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .neon-border {
+    animation: none;
+  }
+}
+
+.neon-border-static {
+  border: 2px solid rgba(6, 182, 212, 0.5);
+  box-shadow: 
+    0 0 10px rgba(6, 182, 212, 0.3),
+    inset 0 0 10px rgba(6, 182, 212, 0.1);
+}
+
+/* ============================================
+   Ripple Effect
+   ============================================ */
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(6, 182, 212, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:active::after {
+  width: 300px;
+  height: 300px;
+  animation: ripple 0.6s ease-out;
+}
+
+/* ============================================
+   Smooth Scale on Hover
+   ============================================ */
+
+.hover-scale {
+  transition: transform var(--transition-smooth), 
+              box-shadow var(--transition-smooth);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-scale-strong {
+  transition: transform var(--transition-smooth), 
+              box-shadow var(--transition-smooth);
+}
+
+.hover-scale-strong:hover {
+  transform: scale(1.03); /* More subtle for friendlier feel */
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(6, 182, 212, 0.25); /* Reduced intensity */
+}
+
+/* ============================================
+   Gradient Text Effect
+   ============================================ */
+
+.gradient-text {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+/* ============================================
+   Shimmer Text Effect
+   ============================================ */
+
+@keyframes shimmer-text {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--color-text-primary) 0%,
+    rgba(6, 182, 212, 0.8) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-text 3s linear infinite;
+}
+
+/* ============================================
+   Card Hover Effects - Enhanced
+   ============================================ */
+
+.card-hover-effect {
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(6, 182, 212, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-card-hover), 0 0 40px rgba(6, 182, 212, 0.2);
+}
+
+.card-hover-effect:hover::before {
+  left: 100%;
+}
+
+/* ============================================
+   Button Pulse Effect
+   ============================================ */
+
+@keyframes button-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 0 0 rgba(6, 182, 212, 0.4),
+      var(--shadow-md);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 10px rgba(6, 182, 212, 0),
+      var(--shadow-lg);
+  }
+}
+
+.button-pulse {
+  animation: button-pulse 3s ease-in-out infinite;
+}
+
+/* Disable pulse for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .button-pulse {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Loading Dots Animation
+   ============================================ */
+
+@keyframes loading-dots {
+  0%, 20% {
+    content: '.';
+  }
+  40% {
+    content: '..';
+  }
+  60%, 100% {
+    content: '...';
+  }
+}
+
+.loading-dots::after {
+  content: '...';
+  animation: loading-dots 1.5s steps(4, end) infinite;
+}
+
+/* ============================================
+   Tech Grid Background
+   ============================================ */
+
+@keyframes grid-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+.tech-grid-bg {
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-move 20s linear infinite;
+}
+
+/* ============================================
+   Smooth Fade In with Scale
+   ============================================ */
+
+@keyframes fade-in-scale-smooth {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in-scale-smooth {
+  animation: fade-in-scale-smooth 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ============================================
+   Magnetic Hover Effect
+   ============================================ */
+
+.magnetic-hover {
+  transition: transform var(--transition-smooth);
+}
+
+.magnetic-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* ============================================
+   Tech Scan Line Effect
+   ============================================ */
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.scan-line-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(6, 182, 212, 0.3),
+    transparent
+  );
+  animation: scan-line 5s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+/* Disable scan line for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scan-line-effect::before {
+    display: none;
+  }
 }

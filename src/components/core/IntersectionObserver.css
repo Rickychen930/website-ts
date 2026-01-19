@@ -8,46 +8,46 @@
 }
 
 /* Animation Variants */
-.animate--fadeIn.animate--hidden {
+.animate--fade-in.animate--hidden {
   opacity: 0;
 }
 
-.animate--fadeIn.animate--visible {
+.animate--fade-in.animate--visible {
   opacity: 1;
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fade-in 0.6s ease-out forwards;
 }
 
-.animate--slideUp.animate--hidden {
+.animate--slide-up.animate--hidden {
   opacity: 0;
   transform: translateY(30px);
 }
 
-.animate--slideUp.animate--visible {
+.animate--slide-up.animate--visible {
   opacity: 1;
   transform: translateY(0);
-  animation: slideUp 0.6s ease-out forwards;
+  animation: slide-up 0.6s ease-out forwards;
 }
 
-.animate--slideLeft.animate--hidden {
+.animate--slide-left.animate--hidden {
   opacity: 0;
   transform: translateX(-30px);
 }
 
-.animate--slideLeft.animate--visible {
+.animate--slide-left.animate--visible {
   opacity: 1;
   transform: translateX(0);
-  animation: slideLeft 0.6s ease-out forwards;
+  animation: slide-left 0.6s ease-out forwards;
 }
 
-.animate--slideRight.animate--hidden {
+.animate--slide-right.animate--hidden {
   opacity: 0;
   transform: translateX(30px);
 }
 
-.animate--slideRight.animate--visible {
+.animate--slide-right.animate--visible {
   opacity: 1;
   transform: translateX(0);
-  animation: slideRight 0.6s ease-out forwards;
+  animation: slide-right 0.6s ease-out forwards;
 }
 
 .animate--scale.animate--hidden {
@@ -58,57 +58,62 @@
 .animate--scale.animate--visible {
   opacity: 1;
   transform: scale(1);
-  animation: scaleIn 0.6s ease-out forwards;
+  animation: scale-in 0.6s ease-out forwards;
 }
 
 /* Keyframes */
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   from {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes slideLeft {
+@keyframes slide-left {
   from {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-@keyframes slideRight {
+@keyframes slide-right {
   from {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-@keyframes scaleIn {
+@keyframes scale-in {
   from {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -116,66 +121,69 @@
 }
 
 /* Enhanced Animation Variants */
-.animate--zoomIn.animate--hidden {
+.animate--zoom-in.animate--hidden {
   opacity: 0;
   transform: scale(0.8);
 }
 
-.animate--zoomIn.animate--visible {
+.animate--zoom-in.animate--visible {
   opacity: 1;
   transform: scale(1);
-  animation: zoomIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: zoom-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.animate--rotateIn.animate--hidden {
+.animate--rotate-in.animate--hidden {
   opacity: 0;
   transform: rotate(-10deg) scale(0.9);
 }
 
-.animate--rotateIn.animate--visible {
+.animate--rotate-in.animate--visible {
   opacity: 1;
   transform: rotate(0deg) scale(1);
-  animation: rotateIn 0.6s ease-out forwards;
+  animation: rotate-in 0.6s ease-out forwards;
 }
 
-.animate--flipIn.animate--hidden {
+.animate--flip-in.animate--hidden {
   opacity: 0;
   transform: rotateY(90deg);
 }
 
-.animate--flipIn.animate--visible {
+.animate--flip-in.animate--visible {
   opacity: 1;
   transform: rotateY(0deg);
-  animation: flipIn 0.8s ease-out forwards;
+  animation: flip-in 0.8s ease-out forwards;
 }
 
-@keyframes zoomIn {
+@keyframes zoom-in {
   from {
     opacity: 0;
     transform: scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-@keyframes rotateIn {
+@keyframes rotate-in {
   from {
     opacity: 0;
     transform: rotate(-10deg) scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: rotate(0deg) scale(1);
   }
 }
 
-@keyframes flipIn {
+@keyframes flip-in {
   from {
     opacity: 0;
     transform: perspective(400px) rotateY(90deg);
   }
+
   to {
     opacity: 1;
     transform: perspective(400px) rotateY(0deg);

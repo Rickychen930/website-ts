@@ -3,7 +3,7 @@
  * Creates a typing effect for text display
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import './TypingEffect.css';
 
 export interface ITypingEffectProps {
@@ -14,13 +14,16 @@ export interface ITypingEffectProps {
   loop?: boolean;
   showCursor?: boolean;
   className?: string;
+  onComplete?: () => void;
+  'aria-label'?: string;
 }
 
 /**
  * TypingEffect Component
  * Displays text with typing animation effect
+ * Optimized with React.memo and useCallback for performance
  */
-export const TypingEffect: React.FC<ITypingEffectProps> = ({
+const TypingEffectComponent: React.FC<ITypingEffectProps> = ({
   text,
   speed = 100,
   deleteSpeed = 50,
@@ -28,6 +31,8 @@ export const TypingEffect: React.FC<ITypingEffectProps> = ({
   loop = true,
   showCursor = true,
   className = '',
+  onComplete,
+  'aria-label': ariaLabel,
 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -76,10 +81,37 @@ export const TypingEffect: React.FC<ITypingEffectProps> = ({
     return () => clearTimeout(timeout);
   }, [displayedText, currentIndex, isDeleting, isPausing, texts, speed, deleteSpeed, delay, loop]);
 
+  // Memoize the complete callback
+  const handleComplete = useCallback(() => {
+    if (onComplete && !loop && currentIndex === texts.length - 1 && displayedText === texts[currentIndex]) {
+      onComplete();
+    }
+  }, [onComplete, loop, currentIndex, displayedText, texts]);
+
+  useEffect(() => {
+    if (!loop && currentIndex === texts.length - 1 && displayedText === texts[currentIndex] && !isDeleting && !isPausing) {
+      handleComplete();
+    }
+  }, [displayedText, currentIndex, texts, loop, isDeleting, isPausing, handleComplete]);
+
   return (
-    <span className={`typing-effect ${className}`}>
+    <span 
+      className={`typing-effect ${className}`}
+      aria-label={ariaLabel || `Typing: ${displayedText}`}
+      aria-live="polite"
+    >
       {displayedText}
-      {showCursor && <span className="typing-effect__cursor">|</span>}
+      {showCursor && (
+        <span 
+          className="typing-effect__cursor" 
+          aria-hidden="true"
+        >
+          |
+        </span>
+      )}
     </span>
   );
 };
+
+// Memoize component to prevent unnecessary re-renders
+export const TypingEffect = memo(TypingEffectComponent);

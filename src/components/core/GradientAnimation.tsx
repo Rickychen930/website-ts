@@ -19,7 +19,7 @@ export interface IGradientAnimationProps {
  * Creates animated gradient background
  */
 export const GradientAnimation: React.FC<IGradientAnimationProps> = ({
-  colors = ['#2563eb', '#7c3aed', '#db2777'],
+  colors = ['#06b6d4', '#0891b2', '#a855f7'],
   speed = 'normal',
   direction = 'diagonal',
   className = '',

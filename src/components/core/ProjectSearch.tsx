@@ -12,6 +12,7 @@
 
 import React, { Component } from 'react';
 import { IProject } from '../../models/project-model';
+import { debounce } from '../../utils/common-utils';
 import './ProjectSearch.css';
 
 export interface IProjectSearchProps {
@@ -35,6 +36,7 @@ interface IProjectSearchState {
 export class ProjectSearch extends Component<IProjectSearchProps, IProjectSearchState> {
   private searchInputRef: React.RefObject<HTMLInputElement | null> = React.createRef();
   private allTechnologies: Set<string> = new Set();
+  private debouncedApplyFilters: () => void;
 
   constructor(props: IProjectSearchProps) {
     super(props);
@@ -58,6 +60,9 @@ export class ProjectSearch extends Component<IProjectSearchProps, IProjectSearch
       sortOrder: 'desc',
       isSearchFocused: false,
     };
+
+    // Debounce filter application for better performance
+    this.debouncedApplyFilters = debounce(this.applyFilters, 300);
   }
 
   componentDidMount(): void {
@@ -67,13 +72,17 @@ export class ProjectSearch extends Component<IProjectSearchProps, IProjectSearch
   }
 
   componentDidUpdate(prevProps: IProjectSearchProps, prevState: IProjectSearchState): void {
-    if (
-      prevState.searchQuery !== this.state.searchQuery ||
+    // Only debounce search query changes, apply others immediately
+    const searchQueryChanged = prevState.searchQuery !== this.state.searchQuery;
+    const otherFiltersChanged = 
       prevState.selectedTechnologies !== this.state.selectedTechnologies ||
       prevState.sortBy !== this.state.sortBy ||
       prevState.sortOrder !== this.state.sortOrder ||
-      prevProps.projects !== this.props.projects
-    ) {
+      prevProps.projects !== this.props.projects;
+
+    if (searchQueryChanged) {
+      this.debouncedApplyFilters();
+    } else if (otherFiltersChanged) {
       this.applyFilters();
     }
   }

@@ -3,8 +3,8 @@
  * Provides smooth animations for sections using framer-motion
  */
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { memo } from 'react';
+import { motion, MotionProps } from 'framer-motion';
 
 export interface IAnimatedSectionProps {
   children: React.ReactNode;
@@ -12,6 +12,9 @@ export interface IAnimatedSectionProps {
   duration?: number;
   className?: string;
   animation?: 'fadeIn' | 'slideUp' | 'slideDown' | 'slideLeft' | 'slideRight' | 'scale';
+  triggerOnce?: boolean;
+  threshold?: number;
+  'aria-label'?: string;
 }
 
 const animationVariants = {
@@ -44,30 +47,54 @@ const animationVariants = {
 /**
  * AnimatedSection Component
  * Wraps content with framer-motion animations
+ * Optimized with memo and reduced motion support
  */
-export const AnimatedSection: React.FC<IAnimatedSectionProps> = ({
+const AnimatedSectionComponent: React.FC<IAnimatedSectionProps> = ({
   children,
   delay = 0,
   duration = 0.6,
   className = '',
   animation = 'fadeIn',
+  triggerOnce = true,
+  threshold = 0.1,
+  'aria-label': ariaLabel,
 }) => {
   const variants = animationVariants[animation];
 
+  // Check for reduced motion preference
+  const prefersReducedMotion = 
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Motion props with reduced motion support
+  const motionProps: MotionProps = prefersReducedMotion
+    ? {
+        initial: false,
+        animate: 'visible',
+        variants: { visible: { opacity: 1 } },
+      }
+    : {
+        initial: 'hidden',
+        whileInView: 'visible',
+        viewport: { once: triggerOnce, margin: '-100px', amount: threshold },
+        transition: {
+          duration,
+          delay,
+          ease: [0.4, 0, 0.2, 1], // Custom easing for smoother feel
+        },
+        variants,
+      };
+
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{
-        duration,
-        delay,
-        ease: 'easeOut',
-      }}
-      variants={variants}
+      {...motionProps}
       className={className}
+      aria-label={ariaLabel}
     >
       {children}
     </motion.div>
   );
 };
+
+// Memoize to prevent unnecessary re-renders
+export const AnimatedSection = memo(AnimatedSectionComponent);

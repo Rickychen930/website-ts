@@ -51,7 +51,7 @@
 .scroll-to-top:hover {
   background: var(--color-primary-dark);
   transform: translateY(-8px) scale(1.15) rotate(5deg);
-  box-shadow: var(--shadow-xl), 0 0 30px rgba(37, 99, 235, 0.6);
+  box-shadow: var(--shadow-xl), 0 0 30px rgba(6, 182, 212, 0.6);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -60,14 +60,13 @@
   height: 100%;
 }
 
-.scroll-to-top:active {
-  transform: translateY(-4px) scale(1.1) rotate(0deg);
-}
-
 .scroll-to-top__icon {
   position: relative;
   z-index: 1;
   transition: transform var(--transition-fast);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
 }
 
 .scroll-to-top:hover .scroll-to-top__icon {
@@ -77,17 +76,11 @@
 .scroll-to-top:focus-visible {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
-  box-shadow: var(--shadow-lg), 0 0 0 3px rgba(37, 99, 235, 0.25);
+  box-shadow: var(--shadow-lg), 0 0 0 3px rgba(6, 182, 212, 0.25);
 }
 
 .scroll-to-top:active {
-  transform: translateY(-2px) scale(1);
-}
-
-.scroll-to-top__icon {
-  font-size: 1.5rem;
-  font-weight: var(--font-weight-bold);
-  line-height: 1;
+  transform: translateY(-4px) scale(1.1) rotate(0deg);
 }
 
 /* Responsive */

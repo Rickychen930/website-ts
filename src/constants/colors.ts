@@ -23,112 +23,112 @@ export const BaseColors = {
 
 /**
  * Accent Colors - Primary Brand Colors
- * Professional UI/UX friendly color scheme: Blue-Purple gradient
- * Clear, accessible, and modern design system
+ * Tech-Casual-Elegant color scheme: Cyan-Teal with soft purple accents
+ * Modern, approachable, and refined design system
  */
 export const AccentColors = {
-  PRIMARY: "#3b82f6", // Professional Blue - main brand color (clear & accessible)
-  ALT: "#2563eb", // Deep Blue - secondary brand color
-  HOVER: "#2563eb", // Blue - hover state (darker for feedback)
-  LIGHT: "#60a5fa", // Light Blue - light variant
-  DARK: "#1d4ed8", // Deep Blue - dark variant
-  SECONDARY: "#8b5cf6", // Purple - tertiary accent (soft & harmonious)
-  TERTIARY: "#a78bfa", // Light Purple - complementary accent
-  PURPLE: "#c084fc", // Soft Purple - proficiency/special use
-  PURPLE_DARK: "#7c3aed", // Dark Purple - for consistency
-  GLOW: "rgba(59, 130, 246, 0.25)", // Blue glow with better visibility
-  GLOW_STRONG: "rgba(37, 99, 235, 0.35)", // Stronger blue glow
+  PRIMARY: "#06b6d4", // Tech Cyan - main brand color (modern & tech-forward)
+  ALT: "#0891b2", // Deep Cyan - secondary brand color
+  HOVER: "#0e7490", // Darker Cyan - hover state (clear feedback)
+  LIGHT: "#22d3ee", // Light Cyan - light variant (casual & friendly)
+  DARK: "#155e75", // Deep Teal - dark variant (elegant depth)
+  SECONDARY: "#a855f7", // Soft Purple - tertiary accent (elegant & refined)
+  TERTIARY: "#c084fc", // Light Purple - complementary accent (casual touch)
+  PURPLE: "#d8b4fe", // Very Light Purple - proficiency/special use
+  PURPLE_DARK: "#9333ea", // Rich Purple - for consistency
+  GLOW: "rgba(6, 182, 212, 0.3)", // Cyan glow with tech feel
+  GLOW_STRONG: "rgba(8, 145, 178, 0.4)", // Stronger cyan glow
 } as const;
 
 /**
  * Background Colors - Light Theme
- * Clean, neutral backgrounds with subtle gray tints
- * Optimized for readability and visual hierarchy
+ * Warm, casual backgrounds with tech-inspired subtle tints
+ * Optimized for readability and modern visual hierarchy
  */
 export const BackgroundColors = {
   PRIMARY: "#ffffff",
-  SECONDARY: "#f9fafb", // Neutral gray - clean and subtle
-  TERTIARY: "#f3f4f6", // Light gray - for depth
-  QUATERNARY: "#e5e7eb", // Medium gray - for contrast
+  SECONDARY: "#fafbfc", // Warm neutral gray - casual and approachable
+  TERTIARY: "#f4f6f8", // Soft gray - for elegant depth
+  QUATERNARY: "#e8ecf0", // Medium warm gray - for subtle contrast
 
-  LIGHT: "#f9fafb",
-  LIGHTER: "#f3f4f6",
-  LIGHTEST: "#e5e7eb",
+  LIGHT: "#fafbfc",
+  LIGHTER: "#f4f6f8",
+  LIGHTEST: "#e8ecf0",
 
   CARD: "#ffffff",
-  CARD_ALT: "#f9fafb",
+  CARD_ALT: "#fafbfc",
   CARD_HOVER: "#fefefe",
 
-  FOOTER: "#f3f4f6",
-  FOOTER_ALT: "#e5e7eb",
+  FOOTER: "#f4f6f8",
+  FOOTER_ALT: "#e8ecf0",
 
-  TIMELINE: "#e5e7eb",
-  CONTENT_HOVER: "#f3f4f6",
-  STAT: "#f3f4f6",
+  TIMELINE: "#e8ecf0",
+  CONTENT_HOVER: "#f4f6f8",
+  STAT: "#f4f6f8",
 
   NAVBAR: "rgba(255, 255, 255, 0.95)",
   NAVBAR_SCROLLED: "rgba(255, 255, 255, 0.98)",
 
   OVERLAY: "rgba(0, 0, 0, 0.5)",
-  DARK: "#111827", // Dark gray-black
-  DARK_LIGHT: "#1f2937", // Dark gray
+  DARK: "#0f172a", // Tech dark - elegant deep blue-gray
+  DARK_LIGHT: "#1e293b", // Dark gray with tech feel
 } as const;
 
 /**
  * Text Colors - Light Theme
- * High contrast for accessibility and readability
+ * High contrast for accessibility with casual, elegant warmth
  * Clear hierarchy with distinct color levels
  */
 export const TextColors = {
-  PRIMARY: "#111827", // Dark gray - maximum contrast
-  SECONDARY: "#1f2937", // Dark gray - secondary text
-  TERTIARY: "#374151", // Medium gray - tertiary text
-  QUATERNARY: "#6b7280", // Light gray - quaternary text
+  PRIMARY: "#0f172a", // Tech dark - elegant deep blue-gray
+  SECONDARY: "#1e293b", // Dark gray - secondary text
+  TERTIARY: "#334155", // Medium gray - tertiary text
+  QUATERNARY: "#64748b", // Light gray - quaternary text
 
-  MAIN: "#111827",
-  HEADING: "#111827", // Bold headings with max contrast
-  HEADING_ALT: "#1f2937",
-  SUBTLE: "#4b5563", // Subtle text - improved contrast (was #6b7280, now better readability)
-  MUTED: "#4b5563", // Muted text
-  MUTED_ALT: "#6b7280", // Light muted text - improved contrast (was #9ca3af, now better visibility)
-  LIGHT: "#4b5563", // Light text for secondary info (WCAG AA+ compliant - 5.2:1 contrast, improved from 4.6:1)
-  ACCENT: "#374151", // Accent text color
-  HOVER: "#3b82f6", // Blue hover - clear feedback
+  MAIN: "#0f172a",
+  HEADING: "#0f172a", // Bold headings with elegant contrast
+  HEADING_ALT: "#1e293b",
+  SUBTLE: "#475569", // Subtle text - casual and readable
+  MUTED: "#475569", // Muted text
+  MUTED_ALT: "#64748b", // Light muted text - approachable
+  LIGHT: "#475569", // Light text for secondary info (WCAG AA+ compliant)
+  ACCENT: "#334155", // Accent text color
+  HOVER: "#06b6d4", // Cyan hover - tech feel with clear feedback
   ON_ACCENT: "#ffffff", // White text on colored backgrounds
-  LINK: "#2563eb", // Blue link - clear and accessible
-  LINK_HOVER: "#1d4ed8", // Darker blue on hover
+  LINK: "#0891b2", // Cyan link - tech and accessible
+  LINK_HOVER: "#0e7490", // Darker cyan on hover
 
   // Text Colors for Dark Backgrounds - Light Theme
-  ON_DARK: "#f9fafb", // Light text for dark backgrounds - excellent contrast
+  ON_DARK: "#f1f5f9", // Light text for dark backgrounds - excellent contrast
   ON_DARK_HEADING: "#ffffff", // White headings on dark backgrounds
-  ON_DARK_SUBTLE: "#d1d5db", // Light gray for subtle text on dark
-  ON_DARK_MUTED: "#9ca3af", // Muted text on dark backgrounds
+  ON_DARK_SUBTLE: "#cbd5e1", // Light gray for subtle text on dark
+  ON_DARK_MUTED: "#94a3b8", // Muted text on dark backgrounds
 } as const;
 
 /**
  * Border Colors - Light Theme
- * Clear, visible borders with good contrast
- * Subtle but noticeable for UI elements
+ * Elegant borders with tech-inspired subtle glows
+ * Refined but noticeable for modern UI elements
  */
 export const BorderColors = {
-  PRIMARY: "rgba(229, 231, 235, 0.8)", // Light gray with good visibility
-  SECONDARY: "#e5e7eb", // Standard gray border
-  TERTIARY: "#d1d5db", // Medium gray border
-  QUATERNARY: "#9ca3af", // Dark gray border
+  PRIMARY: "rgba(232, 236, 240, 0.8)", // Warm light gray with good visibility
+  SECONDARY: "#e8ecf0", // Standard warm gray border
+  TERTIARY: "#cbd5e1", // Medium gray border
+  QUATERNARY: "#94a3b8", // Dark gray border
 
-  LIGHT: "rgba(229, 231, 235, 0.8)",
-  DEFAULT: "#e5e7eb",
-  MEDIUM: "#d1d5db",
-  DARK: "#9ca3af",
+  LIGHT: "rgba(232, 236, 240, 0.8)",
+  DEFAULT: "#e8ecf0",
+  MEDIUM: "#cbd5e1",
+  DARK: "#94a3b8",
 
-  NAVBAR: "rgba(229, 231, 235, 0.6)",
-  NAVBAR_DROPDOWN: "rgba(229, 231, 235, 0.8)",
+  NAVBAR: "rgba(232, 236, 240, 0.6)",
+  NAVBAR_DROPDOWN: "rgba(232, 236, 240, 0.8)",
 
-  GLOW: "rgba(59, 130, 246, 0.25)", // Blue glow - clear and visible
-  IMAGE: "#e5e7eb",
-  PERIOD: "#d1d5db",
-  ACCENT: "rgba(59, 130, 246, 0.4)", // Blue accent border
-  ACCENT_HOVER: "rgba(37, 99, 235, 0.6)", // Stronger blue on hover
+  GLOW: "rgba(6, 182, 212, 0.3)", // Cyan glow - tech feel
+  IMAGE: "#e8ecf0",
+  PERIOD: "#cbd5e1",
+  ACCENT: "rgba(6, 182, 212, 0.4)", // Cyan accent border - modern tech
+  ACCENT_HOVER: "rgba(8, 145, 178, 0.6)", // Stronger cyan on hover
 } as const;
 
 /**
@@ -152,10 +152,10 @@ export const StatusColors = {
   WARNING_DARK: "#d97706",
   WARNING_TEXT: "#b45309",
 
-  INFO: "#3b82f6", // Professional blue - info state
-  INFO_LIGHT: "rgba(59, 130, 246, 0.1)",
-  INFO_DARK: "#2563eb",
-  INFO_TEXT: "#1d4ed8",
+  INFO: "#06b6d4", // Tech cyan - info state
+  INFO_LIGHT: "rgba(6, 182, 212, 0.1)",
+  INFO_DARK: "#0891b2",
+  INFO_TEXT: "#155e75",
 } as const;
 
 /**
@@ -182,7 +182,7 @@ export const SocialColors = {
   INSTAGRAM: "#e4405f",
   FACEBOOK: "#1877f2",
   EMAIL: "#ea4335",
-  DEFAULT: "#3b82f6", // Fallback to accent primary (professional blue)
+  DEFAULT: "#06b6d4", // Fallback to accent primary (tech cyan)
 } as const;
 
 /**
@@ -199,47 +199,48 @@ export const SpecialColors = {
 
 /**
  * Gradient Definitions - Light Theme
- * Professional gradients: Blue-Purple
- * Clear, harmonious, and visually appealing
+ * Tech-Casual-Elegant gradients: Cyan-Teal with soft purple
+ * Modern, harmonious, and visually refined
  */
 export const Gradients = {
-  PRIMARY: "linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)",
-  ACCENT: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
-  ACCENT_FULL: "linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #8b5cf6 100%)",
-  LUXURY: "linear-gradient(135deg, #ffffff 0%, #f9fafb 40%, #f3f4f6 100%)",
+  PRIMARY: "linear-gradient(135deg, #ffffff 0%, #fafbfc 100%)",
+  ACCENT: "linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)",
+  ACCENT_FULL: "linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #a855f7 100%)",
+  LUXURY: "linear-gradient(135deg, #ffffff 0%, #fafbfc 40%, #f4f6f8 100%)",
   SUBLIME:
-    "linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(37, 99, 235, 0.05) 100%)",
+    "linear-gradient(135deg, rgba(6, 182, 212, 0.06) 0%, rgba(8, 145, 178, 0.04) 100%)",
   PRIMARY_REVERSE:
-    "linear-gradient(135deg, #8b5cf6 0%, #2563eb 50%, #3b82f6 100%)",
+    "linear-gradient(135deg, #a855f7 0%, #0891b2 50%, #06b6d4 100%)",
   PRIMARY_RADIAL:
-    "radial-gradient(ellipse at top, rgba(59, 130, 246, 0.12), transparent 70%)",
+    "radial-gradient(ellipse at top, rgba(6, 182, 212, 0.1), transparent 70%)",
   ACCENT_SUBTLE:
-    "linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%)",
+    "linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(8, 145, 178, 0.06) 100%)",
 } as const;
 
 /**
  * Dark Theme Colors - For reference only
  * Use CSS variables for theme-aware colors: var(--color-*)
+ * Tech-Casual-Elegant dark theme
  */
 export const DarkThemeColors = {
   BACKGROUND: {
-    PRIMARY: "#111827", // Dark gray
-    SECONDARY: "#1f2937", // Darker gray
-    TERTIARY: "#374151", // Medium dark gray
-    CARD: "#1f2937", // Card background
-    CARD_HOVER: "#4b5563", // Hover state
+    PRIMARY: "#0f172a", // Tech dark - elegant deep blue-gray
+    SECONDARY: "#1e293b", // Darker gray with tech feel
+    TERTIARY: "#334155", // Medium dark gray
+    CARD: "#1e293b", // Card background
+    CARD_HOVER: "#334155", // Hover state
   },
   TEXT: {
-    PRIMARY: "#e2e8f0",
-    SECONDARY: "#f1f5f9",
-    HEADING: "#f1f5f9",
-    SUBTLE: "#94a3b8",
+    PRIMARY: "#f1f5f9",
+    SECONDARY: "#e2e8f0",
+    HEADING: "#ffffff",
+    SUBTLE: "#cbd5e1",
   },
   STATUS: {
     SUCCESS: "#10b981", // Modern green
     ERROR: "#f87171",
     WARNING: "#fbbf24",
-    INFO: "#3b82f6", // Professional blue for info in dark mode
+    INFO: "#06b6d4", // Tech cyan for info in dark mode
   },
 } as const;
 
@@ -270,26 +271,26 @@ export enum ColorEnum {
   TRANSPARENT = "transparent",
 
   // Accent
-  ACCENT_PRIMARY = "#3b82f6",
-  ACCENT_ALT = "#2563eb",
-  ACCENT_HOVER = "#2563eb",
-  ACCENT_LIGHT = "#60a5fa",
-  ACCENT_DARK = "#1d4ed8",
-  ACCENT_SECONDARY = "#8b5cf6",
-  ACCENT_TERTIARY = "#a78bfa",
-  ACCENT_PURPLE = "#c084fc",
+  ACCENT_PRIMARY = "#06b6d4",
+  ACCENT_ALT = "#0891b2",
+  ACCENT_HOVER = "#0891b2",
+  ACCENT_LIGHT = "#22d3ee",
+  ACCENT_DARK = "#155e75",
+  ACCENT_SECONDARY = "#a855f7",
+  ACCENT_TERTIARY = "#c084fc",
+  ACCENT_PURPLE = "#d8b4fe",
 
   // Text
-  TEXT_MAIN = "#111827",
-  TEXT_HEADING = "#111827",
-  TEXT_SUBTLE = "#6b7280",
-  TEXT_LINK = "#2563eb", // Professional blue
+  TEXT_MAIN = "#0f172a",
+  TEXT_HEADING = "#0f172a",
+  TEXT_SUBTLE = "#64748b",
+  TEXT_LINK = "#0891b2", // Tech cyan
 
   // Status
   SUCCESS = "#10b981",
   ERROR = "#ef4444",
   WARNING = "#f59e0b",
-  INFO = "#3b82f6",
+  INFO = "#06b6d4",
 }
 
 /**

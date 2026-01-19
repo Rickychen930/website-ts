@@ -97,7 +97,9 @@ export class IntersectionObserver extends Component<
     } = this.props;
     const { isVisible } = this.state;
 
-    const animationClass = `animate--${animation}`;
+    // Convert camelCase animation names to kebab-case for CSS class names
+    const animationKebab = animation.replace(/([A-Z])/g, '-$1').toLowerCase();
+    const animationClass = `animate--${animationKebab}`;
     const visibleClass = isVisible ? 'animate--visible' : 'animate--hidden';
 
     return (

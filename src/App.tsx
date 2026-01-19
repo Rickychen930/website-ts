@@ -6,7 +6,7 @@
 import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import AppRoutes from "./routes/app-routes";
-import { ErrorDisplay } from "./components/core/ErrorDisplay";
+import { ErrorDisplay } from "./components/core";
 import { logError } from "./utils/logger";
 
 /**
