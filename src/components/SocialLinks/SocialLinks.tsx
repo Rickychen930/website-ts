@@ -26,15 +26,16 @@ const getContactIcon = (type: Contact["type"]): string => {
 };
 
 const getContactColor = (type: Contact["type"]): string => {
+  // Use CSS variables for consistent theming
   const colors: Record<Contact["type"], string> = {
-    email: "#ea4335",
-    phone: "#34c759",
-    linkedin: "#0077b5",
-    github: "#333",
-    website: "#6366f1",
-    other: "#64748b",
+    email: "var(--color-error-500)",
+    phone: "var(--color-accent-500)",
+    linkedin: "var(--color-primary-600)",
+    github: "var(--text-primary)",
+    website: "var(--color-primary-500)",
+    other: "var(--text-tertiary)",
   };
-  return colors[type] || "#64748b";
+  return colors[type] || "var(--text-tertiary)";
 };
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({

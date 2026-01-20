@@ -21,9 +21,18 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     <div className={`${styles.codeBlock} ${className}`}>
       <div className={styles.header}>
         <div className={styles.dots}>
-          <span className={styles.dot} style={{ backgroundColor: "#ef4444" }} />
-          <span className={styles.dot} style={{ backgroundColor: "#f59e0b" }} />
-          <span className={styles.dot} style={{ backgroundColor: "#22c55e" }} />
+          <span
+            className={styles.dot}
+            style={{ backgroundColor: "var(--color-error-500)" }}
+          />
+          <span
+            className={styles.dot}
+            style={{ backgroundColor: "var(--color-warning-500)" }}
+          />
+          <span
+            className={styles.dot}
+            style={{ backgroundColor: "var(--color-accent-500)" }}
+          />
         </div>
         <span className={styles.language}>{language}</span>
       </div>

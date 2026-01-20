@@ -61,23 +61,23 @@
 
 /* Weights */
 .typography--weight-light {
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
 }
 
 .typography--weight-normal {
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
 }
 
 .typography--weight-medium {
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .typography--weight-semibold {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .typography--weight-bold {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 /* Colors - WCAG AA compliant - Support dark/light mode */

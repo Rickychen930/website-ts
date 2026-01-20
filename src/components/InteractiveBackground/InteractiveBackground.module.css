@@ -18,8 +18,8 @@
   background-image:
     linear-gradient(var(--color-primary-alpha-5) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-primary-alpha-5) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
+  background-size: 3.125rem 3.125rem;
+  animation: gridMove calc(var(--transition-slow) * 40) linear infinite;
 }
 
 @keyframes gridMove {
@@ -28,16 +28,16 @@
   }
 
   100% {
-    background-position: 50px 50px;
+    background-position: 3.125rem 3.125rem;
   }
 }
 
 .grid.medium {
-  background-size: 40px 40px;
+  background-size: 2.5rem 2.5rem;
 }
 
 .grid.high {
-  background-size: 30px 30px;
+  background-size: 1.875rem 1.875rem;
 }
 
 /* Dots Pattern */
@@ -47,8 +47,8 @@
     var(--color-primary-alpha-20) 1px,
     transparent 1px
   );
-  background-size: 30px 30px;
-  animation: dotsMove 15s linear infinite;
+  background-size: 1.875rem 1.875rem;
+  animation: dotsMove calc(var(--transition-slow) * 30) linear infinite;
 }
 
 @keyframes dotsMove {
@@ -57,16 +57,16 @@
   }
 
   100% {
-    background-position: 30px 30px;
+    background-position: 1.875rem 1.875rem;
   }
 }
 
 .dots.medium {
-  background-size: 25px 25px;
+  background-size: 1.5625rem 1.5625rem;
 }
 
 .dots.high {
-  background-size: 20px 20px;
+  background-size: 1.25rem 1.25rem;
 }
 
 /* Waves Pattern */
@@ -78,7 +78,8 @@
     var(--color-primary-alpha-10) 100%
   );
   background-size: 200% 200%;
-  animation: waveMove 10s ease infinite;
+  animation: waveMove calc(var(--transition-slow) * 20) var(--transition-ease)
+    infinite;
 }
 
 @keyframes waveMove {

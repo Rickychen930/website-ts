@@ -7,7 +7,7 @@
 }
 
 .honorCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(var(--spacing-xs) * -4));
 }
 
 .header {

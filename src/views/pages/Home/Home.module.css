@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn var(--transition-slow) var(--transition-ease);
 }
 
 .hero::before {
@@ -31,7 +31,7 @@
       transparent 50%
     );
   pointer-events: none;
-  animation: float 8s ease-in-out infinite;
+  animation: float calc(var(--transition-slow) * 16) ease-in-out infinite;
 }
 
 .hero::after {
@@ -46,7 +46,7 @@
     var(--color-primary-alpha-10) 0%,
     transparent 70%
   );
-  animation: rotate 20s linear infinite;
+  animation: rotate calc(var(--transition-slow) * 40) linear infinite;
   pointer-events: none;
 }
 
@@ -54,12 +54,13 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: var(--container-lg);
   margin: 0 auto;
   padding: var(--spacing-xl);
   box-sizing: border-box;
   text-align: center;
-  animation: fadeInUp 1s ease-out 0.2s both;
+  animation: fadeInUp var(--transition-slow) var(--transition-ease)
+    calc(var(--transition-fast) * 1.33) both;
 }
 
 .heroContent::before {
@@ -75,7 +76,7 @@
     transparent 70%
   );
   content: "";
-  animation: pulse 4s ease-in-out infinite;
+  animation: pulse calc(var(--transition-slow) * 8) ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -89,8 +90,10 @@
   background-clip: text;
   background-size: 200% 200%;
   animation:
-    fadeInUp 0.8s ease-out 0.3s both,
-    gradientShift 4s ease infinite;
+    fadeInUp var(--transition-normal) var(--transition-ease)
+      calc(var(--transition-fast) * 2) both,
+    gradientShift calc(var(--transition-slow) * 8) var(--transition-ease)
+      infinite;
   letter-spacing: var(--letter-spacing-tight);
   text-shadow: var(--shadow-glow);
 }
@@ -100,7 +103,8 @@
   font-size: clamp(1.25rem, 4vw, 1.875rem);
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--spacing-md);
-  animation: fadeInUp 0.8s ease-out 0.4s both;
+  animation: fadeInUp var(--transition-normal) var(--transition-ease)
+    calc(var(--transition-fast) * 2.67) both;
 }
 
 .heroLocation {
@@ -118,11 +122,12 @@
   backdrop-filter: blur(20px) saturate(180%);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-md), var(--shadow-glow);
-  animation: fadeInUp 0.8s ease-out 0.5s both;
+  animation: fadeInUp var(--transition-normal) var(--transition-ease)
+    calc(var(--transition-fast) * 3.33) both;
 }
 
 .heroLocation:hover {
-  transform: translateY(-2px);
+  transform: translateY(calc(var(--spacing-xs) * -2));
   box-shadow: var(--shadow-lg), var(--shadow-glow);
   border-color: var(--color-primary-500);
 }
@@ -133,10 +138,11 @@
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-2xl);
-  max-width: 700px;
+  max-width: var(--container-md);
   margin-left: auto;
   margin-right: auto;
-  animation: fadeInUp 0.8s ease-out 0.6s both;
+  animation: fadeInUp var(--transition-normal) var(--transition-ease)
+    calc(var(--transition-fast) * 4) both;
 }
 
 .heroActions {
@@ -150,20 +156,21 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  animation: fadeInUp 0.8s ease-out 0.7s both;
+  animation: fadeInUp var(--transition-normal) var(--transition-ease)
+    calc(var(--transition-fast) * 4.67) both;
 }
 
 .heroActions a {
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal) var(--transition-ease);
 }
 
 .heroActions a:hover {
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.02);
 }
 
 .heroActions a:active {
-  transform: translateY(-1px) scale(1);
+  transform: translateY(calc(var(--spacing-xs) * -1)) scale(1);
 }
 
 .codeSnippet {
@@ -194,30 +201,30 @@
 
 .projectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(21.25rem, 1fr));
   gap: var(--spacing-2xl);
   margin-bottom: var(--spacing-3xl);
   padding: 0 var(--spacing-md);
 }
 
 .projectsGrid > * {
-  animation: fadeInUp 0.6s ease-out both;
+  animation: fadeInUp var(--transition-slow) var(--transition-ease) both;
 }
 
 .projectsGrid > *:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: var(--transition-fast);
 }
 
 .projectsGrid > *:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: calc(var(--transition-fast) * 2);
 }
 
 .projectsGrid > *:nth-child(3) {
-  animation-delay: 0.3s;
+  animation-delay: calc(var(--transition-fast) * 3);
 }
 
 .projectsGrid > *:nth-child(n + 4) {
-  animation-delay: 0.4s;
+  animation-delay: calc(var(--transition-fast) * 4);
 }
 
 .viewAll {
@@ -226,26 +233,26 @@
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
   gap: var(--spacing-2xl);
   margin-bottom: var(--spacing-3xl);
   padding: 0 var(--spacing-md);
 }
 
 .statsGrid > * {
-  animation: scaleIn 0.6s ease-out both;
+  animation: scaleIn var(--transition-slow) var(--transition-ease) both;
 }
 
 .statsGrid > *:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: var(--transition-fast);
 }
 
 .statsGrid > *:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: calc(var(--transition-fast) * 2);
 }
 
 .statsGrid > *:nth-child(3) {
-  animation-delay: 0.3s;
+  animation-delay: calc(var(--transition-fast) * 3);
 }
 
 .testimonialsSection {
@@ -268,7 +275,7 @@
 
 .testimonialsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   gap: var(--spacing-2xl);
   position: relative;
   z-index: 1;
@@ -276,19 +283,19 @@
 }
 
 .testimonialsGrid > * {
-  animation: fadeInUp 0.6s ease-out both;
+  animation: fadeInUp var(--transition-slow) var(--transition-ease) both;
 }
 
 .testimonialsGrid > *:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: var(--transition-fast);
 }
 
 .testimonialsGrid > *:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: calc(var(--transition-fast) * 2);
 }
 
 .testimonialsGrid > *:nth-child(n + 3) {
-  animation-delay: 0.3s;
+  animation-delay: calc(var(--transition-fast) * 3);
 }
 
 .currentRole {
@@ -312,7 +319,7 @@
   margin: 0 auto;
   padding: var(--spacing-2xl) var(--spacing-xl);
   text-align: center;
-  max-width: 700px;
+  max-width: var(--container-md);
 }
 
 .currentRoleContent::before {
@@ -320,8 +327,8 @@
   top: 50%;
   left: 50%;
   z-index: 0;
-  width: 200px;
-  height: 200px;
+  width: 12.5rem;
+  height: 12.5rem;
   background: radial-gradient(
     circle,
     var(--color-primary-alpha-20) 0%,
@@ -464,15 +471,15 @@
 
 @media (width >= 1025px) {
   .projectsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(21.25rem, 1fr));
   }
 
   .statsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
   }
 
   .testimonialsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   }
 }
 

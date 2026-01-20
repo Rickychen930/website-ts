@@ -5,12 +5,12 @@
 
 import { Request, Response } from "express";
 import { ContactMessageModel } from "../models/ContactMessage";
-import { body, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 
 export class ContactController {
   public async submitContact(req: Request, res: Response): Promise<void> {
     try {
-      // Validation errors
+      // Validation is now handled by middleware, but keep as fallback
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({

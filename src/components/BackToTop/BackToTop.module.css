@@ -4,8 +4,8 @@
   right: var(--spacing-xl);
   bottom: var(--spacing-xl);
   z-index: var(--z-fixed);
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border: none;
   background: var(--gradient-primary);
   color: var(--text-inverse);
@@ -15,14 +15,15 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-lg), var(--shadow-glow);
-  animation: fadeInUp 0.3s ease-out;
+  animation: fadeInUp var(--transition-fast) var(--transition-ease);
 }
 
 .backToTop:hover {
   background: var(--gradient-primary);
   background-size: 200% 200%;
-  animation: gradientShift 2s ease infinite;
-  transform: translateY(-4px) scale(1.1);
+  animation: gradientShift var(--transition-slow) var(--transition-ease)
+    infinite;
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.1);
   box-shadow: var(--shadow-xl), var(--shadow-glow-strong);
 }
 
@@ -39,11 +40,11 @@
 
 .backToTop:focus-visible {
   outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline-offset: var(--spacing-xs);
 }
 
 .backToTop:active {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.05);
 }
 
 /* Responsive Design */
@@ -51,8 +52,8 @@
   .backToTop {
     right: var(--spacing-md);
     bottom: var(--spacing-md);
-    width: 44px;
-    height: 44px;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 

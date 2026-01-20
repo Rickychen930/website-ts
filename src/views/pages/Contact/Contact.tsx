@@ -215,14 +215,7 @@ export const Contact: React.FC = () => {
       <div className={styles.container}>
         <div className={styles.contactInfo}>
           <Card variant="elevated" className={styles.contactCard}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "2rem",
-              }}
-            >
+            <div className={styles.cardHeader}>
               <Typography
                 variant="h4"
                 weight="semibold"
@@ -275,14 +268,8 @@ export const Contact: React.FC = () => {
               <div className={styles.form}>
                 {displayContacts.map((contact, index) => (
                   <div key={contact.id || index} className={styles.formGroup}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "1rem",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <div style={{ flex: 1 }}>
+                    <div className={styles.formRow}>
+                      <div className={styles.formField}>
                         <label htmlFor={`contact-type-${index}`}>
                           Type <span aria-label="required">*</span>
                         </label>
@@ -296,21 +283,11 @@ export const Contact: React.FC = () => {
                               e.target.value as ContactType["type"],
                             )
                           }
-                          className={
+                          className={`${styles.selectInput} ${
                             contactUpdateErrors[`${index}-type`]
                               ? styles.inputError
                               : ""
-                          }
-                          style={{
-                            width: "100%",
-                            padding: "0.875rem 1.25rem",
-                            border: "2px solid var(--border-primary)",
-                            background: "var(--bg-overlay)",
-                            color: "var(--text-primary)",
-                            fontSize: "1rem",
-                            borderRadius: "var(--radius-lg)",
-                            fontFamily: "inherit",
-                          }}
+                          }`}
                         >
                           <option value="email">Email</option>
                           <option value="phone">Phone</option>
@@ -320,7 +297,7 @@ export const Contact: React.FC = () => {
                           <option value="other">Other</option>
                         </select>
                       </div>
-                      <div style={{ flex: 1 }}>
+                      <div className={styles.formField}>
                         <label htmlFor={`contact-label-${index}`}>
                           Label <span aria-label="required">*</span>
                         </label>
@@ -367,13 +344,7 @@ export const Contact: React.FC = () => {
                         </span>
                       )}
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                      }}
-                    >
+                    <div className={styles.checkboxRow}>
                       <input
                         type="checkbox"
                         id={`contact-primary-${index}`}
@@ -388,20 +359,14 @@ export const Contact: React.FC = () => {
                       />
                       <label
                         htmlFor={`contact-primary-${index}`}
-                        style={{ margin: 0, fontWeight: "normal" }}
+                        className={styles.checkboxLabel}
                       >
                         Primary Contact
                       </label>
                     </div>
                   </div>
                 ))}
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "1rem",
-                    marginTop: "1rem",
-                  }}
-                >
+                <div className={styles.formActions}>
                   <Button
                     variant="primary"
                     onClick={handleSaveContacts}

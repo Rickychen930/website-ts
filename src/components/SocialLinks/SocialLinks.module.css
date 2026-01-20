@@ -1,6 +1,6 @@
 .socialLinks {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-md);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -28,7 +28,7 @@
   z-index: 0;
   background: var(--link-color);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-normal) var(--transition-ease);
   content: "";
   inset: 0;
 }
@@ -38,14 +38,14 @@
 }
 
 .socialLink:hover {
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.05);
   border-color: var(--link-color);
   box-shadow: var(--shadow-xl), var(--shadow-glow);
   color: var(--link-color);
 }
 
 .socialLink:active {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
 }
 
 .icon {

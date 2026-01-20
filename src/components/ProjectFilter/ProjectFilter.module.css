@@ -1,18 +1,19 @@
 .projectFilter {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-3xl);
 }
 
 .searchContainer {
   position: relative;
-  max-width: 500px;
+  max-width: 31.25rem;
 }
 
 .searchInput {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 3rem;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md)
+    var(--spacing-3xl);
   border: 2px solid var(--border-primary);
   background: var(--bg-overlay);
   color: var(--text-primary);
@@ -37,8 +38,8 @@
 .searchIcon {
   position: absolute;
   top: 50%;
-  left: 1rem;
-  font-size: 1.25rem;
+  left: var(--spacing-md);
+  font-size: var(--font-size-xl);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -46,7 +47,7 @@
 .filterButtons {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .filterButton {
@@ -68,7 +69,7 @@
 .filterButton:hover {
   border-color: var(--color-primary-500);
   color: var(--color-primary-500);
-  transform: translateY(-2px);
+  transform: translateY(calc(var(--spacing-xs) * -2));
   box-shadow: var(--shadow-md);
 }
 
@@ -80,13 +81,13 @@
 }
 
 .filterIcon {
-  font-size: 1.125rem;
+  font-size: var(--font-size-lg);
 }
 
 .sortContainer {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .sortLabel {
@@ -139,7 +140,8 @@
   }
 
   .searchInput {
-    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 2.5rem;
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm)
+      var(--spacing-2xl);
     font-size: var(--font-size-sm);
   }
 

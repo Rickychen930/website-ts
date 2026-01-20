@@ -1,9 +1,9 @@
 .animatedSection {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(var(--spacing-2xl));
   transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
+    opacity var(--transition-normal) var(--transition-ease),
+    transform var(--transition-normal) var(--transition-ease);
 }
 
 .animatedSection.visible {

@@ -18,7 +18,7 @@ export const getContrastRatio = (color1: string, color2: string): number => {
  */
 export const focusStyles = {
   outline: "2px solid var(--color-primary-500)",
-  outlineOffset: "2px",
+  outlineOffset: "var(--spacing-xs)",
   borderRadius: "var(--radius-sm)",
   boxShadow: "0 0 0 3px var(--color-primary-alpha-10)",
 };
@@ -33,7 +33,7 @@ export const SkipToContent: React.FC = () => {
       className="skip-to-content"
       style={{
         position: "absolute",
-        top: "-40px",
+        top: "calc(var(--spacing-xl) * -1)",
         left: "0",
         background: "var(--color-primary-500)",
         color: "var(--text-inverse)",
@@ -47,7 +47,7 @@ export const SkipToContent: React.FC = () => {
         e.currentTarget.style.top = "0";
       }}
       onBlur={(e) => {
-        e.currentTarget.style.top = "-40px";
+        e.currentTarget.style.top = "calc(var(--spacing-xl) * -1)";
       }}
     >
       Skip to main content

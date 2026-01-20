@@ -25,7 +25,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 200%;
-  animation: gradientShift 3s ease infinite;
+  animation: gradientShift calc(var(--transition-slow) * 6)
+    var(--transition-ease) infinite;
 }
 
 @keyframes gradientShift {
@@ -58,7 +59,7 @@
     rgba(255, 255, 255, 0.3),
     transparent
   );
-  transition: left 0.5s ease;
+  transition: left var(--transition-slow) var(--transition-ease);
 }
 
 .card-modern:hover::after {
@@ -73,12 +74,12 @@
   }
 
   50% {
-    transform: translateY(-20px);
+    transform: translateY(calc(var(--spacing-xl) * -1.25));
   }
 }
 
 .float {
-  animation: float 3s ease-in-out infinite;
+  animation: float calc(var(--transition-slow) * 6) ease-in-out infinite;
 }
 
 /* Pulse Glow Effect */
@@ -94,20 +95,20 @@
 }
 
 .pulse-glow {
-  animation: pulseGlow 2s ease-in-out infinite;
+  animation: pulseGlow calc(var(--transition-slow) * 4) ease-in-out infinite;
 }
 
 /* Modern Section Divider */
 .section-divider {
   position: relative;
   height: 1px;
-  margin: 4rem 0;
+  margin: var(--spacing-4xl) 0;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(59, 130, 246, 0.3) 20%,
-    rgba(59, 130, 246, 0.5) 50%,
-    rgba(59, 130, 246, 0.3) 80%,
+    var(--color-primary-alpha-30) 20%,
+    var(--color-primary-alpha-50) 50%,
+    var(--color-primary-alpha-30) 80%,
     transparent 100%
   );
 }
@@ -145,7 +146,7 @@
 
 /* Smooth Scale on Hover */
 .scale-hover {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-normal) var(--transition-ease);
 }
 
 .scale-hover:hover {
@@ -180,7 +181,8 @@
     var(--bg-tertiary) 75%
   );
   background-size: 200% 100%;
-  animation: skeletonLoading 1.5s ease-in-out infinite;
+  animation: skeletonLoading calc(var(--transition-slow) * 3) ease-in-out
+    infinite;
   border-radius: var(--radius-md);
 }
 
@@ -196,8 +198,8 @@
 
 /* Modern Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 0.625rem;
+  height: 0.625rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -257,19 +259,19 @@
   position: absolute;
   bottom: 100%;
   left: 50%;
-  z-index: 1000;
-  padding: 0.5rem 0.75rem;
+  z-index: var(--z-tooltip);
+  padding: var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--border-primary);
   background: var(--bg-secondary);
   color: var(--text-primary);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   opacity: 0;
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    opacity var(--transition-normal) var(--transition-ease),
+    transform var(--transition-normal) var(--transition-ease);
   content: attr(data-tooltip);
-  transform: translateX(-50%) translateY(-8px);
-  border-radius: 0.5rem;
+  transform: translateX(-50%) translateY(calc(var(--spacing-sm) * -1));
+  border-radius: var(--radius-md);
   white-space: nowrap;
   pointer-events: none;
   box-shadow: var(--shadow-md);
@@ -277,7 +279,7 @@
 
 .tooltip-modern:hover::before {
   opacity: 1;
-  transform: translateX(-50%) translateY(-12px);
+  transform: translateX(-50%) translateY(calc(var(--spacing-md) * -1));
 }
 
 /* Responsive Typography Scale */
@@ -295,11 +297,11 @@
 @media (width <= 640px) {
   .hero {
     min-height: 85vh;
-    padding: 2rem 1rem;
+    padding: var(--spacing-xl) var(--spacing-md);
   }
 
   .heroContent {
-    padding: 1rem;
+    padding: var(--spacing-md);
   }
 
   .heroActions {
@@ -316,12 +318,12 @@
 @media (width >= 641px) and (width <= 1024px) {
   .hero {
     min-height: 88vh;
-    padding: 3rem 2rem;
+    padding: var(--spacing-3xl) var(--spacing-xl);
   }
 
   .projectsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+    gap: var(--spacing-xl);
   }
 }
 
@@ -443,7 +445,7 @@ textarea:focus {
 .loading-shimmer {
   background: linear-gradient(90deg, #f0f0f0 0, #f8f8f8 40px, #f0f0f0 80px);
   background-size: 1000px 100%;
-  animation: shimmer 2s infinite;
+  animation: shimmer calc(var(--transition-slow) * 4) infinite;
 }
 
 /* Enhanced Typography - Support dark/light mode */
@@ -473,13 +475,13 @@ h6 {
 
 /* Smooth Page Transitions */
 .page-transition {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn var(--transition-slow) var(--transition-ease);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(var(--spacing-xl));
   }
 
   to {
@@ -516,11 +518,11 @@ h6 {
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.375rem 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal) var(--transition-ease);
 }
 
 .badge-primary {

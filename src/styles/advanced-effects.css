@@ -5,11 +5,11 @@
 /* 3D Card Hover Effect */
 .card-3d {
   transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-slow) var(--transition-ease);
 }
 
 .card-3d:hover {
-  transform: perspective(1000px) rotateY(5deg) rotateX(-5deg) scale(1.02);
+  transform: perspective(62.5rem) rotateY(5deg) rotateX(-5deg) scale(1.02);
 }
 
 /* Parallax Effect */
@@ -19,17 +19,17 @@
 }
 
 .parallax-slow {
-  transition: transform 0.3s ease-out;
+  transition: transform var(--transition-normal) ease-out;
 }
 
 /* Glass Morphism Enhanced */
 .glass-enhanced {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.1);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--spacing-xl)) saturate(180%);
+  backdrop-filter: blur(var(--spacing-xl)) saturate(180%);
   box-shadow:
-    0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    0 var(--spacing-sm) var(--spacing-2xl) 0 rgba(31, 38, 135, 0.37),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
 }
 
@@ -40,7 +40,7 @@
 
 /* Magnetic Hover Effect */
 .magnetic {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-normal) var(--transition-ease);
 }
 
 .magnetic:hover {
@@ -51,25 +51,36 @@
 .gradient-border {
   position: relative;
   padding: 2px;
-  background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
-  border-radius: 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--text-inverse) 0%,
+    var(--bg-secondary) 100%
+  );
+  border-radius: var(--radius-xl);
 }
 
 .gradient-border::before {
   position: absolute;
   z-index: -1;
   padding: 2px;
-  background: linear-gradient(135deg, #3b82f6, #22c55e, #3b82f6);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-500),
+    var(--color-accent-500),
+    var(--color-primary-500)
+  );
   content: "";
   inset: -2px;
-  border-radius: 1rem;
+  border-radius: var(--radius-xl);
   background-size: 200% 200%;
+  /* stylelint-disable declaration-property-value-no-unknown */
   mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  /* stylelint-enable declaration-property-value-no-unknown */
   mask-composite: xor;
   mask-composite: exclude;
-  animation: gradientRotate 3s linear infinite;
+  animation: gradientRotate calc(var(--transition-slow) * 6) linear infinite;
 }
 
 @keyframes gradientRotate {
@@ -106,7 +117,7 @@
     transparent 70%
   );
   transform: rotate(45deg);
-  animation: shine 3s infinite;
+  animation: shine calc(var(--transition-slow) * 6) infinite;
 }
 
 @keyframes shine {
@@ -127,16 +138,17 @@
   }
 
   33% {
-    transform: translateY(-20px) rotate(2deg);
+    transform: translateY(calc(var(--spacing-xl) * -1.25)) rotate(2deg);
   }
 
   66% {
-    transform: translateY(-10px) rotate(-2deg);
+    transform: translateY(calc(var(--spacing-sm) * -1.25)) rotate(-2deg);
   }
 }
 
 .float-enhanced {
-  animation: floatEnhanced 6s ease-in-out infinite;
+  animation: floatEnhanced calc(var(--transition-slow) * 12) ease-in-out
+    infinite;
 }
 
 /* Glow Pulse Enhanced */
@@ -144,21 +156,21 @@
   0%,
   100% {
     box-shadow:
-      0 0 20px rgba(59, 130, 246, 0.4),
-      0 0 40px rgba(59, 130, 246, 0.2),
-      0 0 60px rgba(59, 130, 246, 0.1);
+      0 0 var(--spacing-xl) var(--color-primary-alpha-40),
+      0 0 var(--spacing-2xl) var(--color-primary-alpha-20),
+      0 0 var(--spacing-3xl) var(--color-primary-alpha-10);
   }
 
   50% {
     box-shadow:
-      0 0 30px rgba(59, 130, 246, 0.6),
-      0 0 60px rgba(59, 130, 246, 0.4),
-      0 0 90px rgba(59, 130, 246, 0.2);
+      0 0 var(--spacing-2xl) var(--color-primary-alpha-60),
+      0 0 var(--spacing-3xl) var(--color-primary-alpha-40),
+      0 0 var(--spacing-4xl) var(--color-primary-alpha-20);
   }
 }
 
 .glow-pulse {
-  animation: glowPulse 2s ease-in-out infinite;
+  animation: glowPulse calc(var(--transition-slow) * 4) ease-in-out infinite;
 }
 
 /* Text Reveal Animation */
@@ -174,9 +186,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, #fff, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--text-inverse),
+    transparent
+  );
   transform: translateX(-100%);
-  animation: textReveal 2s ease-in-out;
+  animation: textReveal calc(var(--transition-slow) * 4) ease-in-out;
 }
 
 @keyframes textReveal {
@@ -190,7 +207,12 @@
 }
 
 .dark .text-reveal::after {
-  background: linear-gradient(90deg, transparent, #0f172a, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--bg-primary),
+    transparent
+  );
 }
 
 /* Reduced motion support */

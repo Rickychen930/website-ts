@@ -2,13 +2,13 @@
   width: 100%;
   min-height: 100%;
   transition:
-    opacity 0.3s ease-in-out,
-    transform 0.3s ease-in-out;
+    opacity var(--transition-normal) var(--transition-ease),
+    transform var(--transition-normal) var(--transition-ease);
 }
 
 .pageTransition.entering {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(var(--spacing-xl));
 }
 
 .pageTransition.entered {

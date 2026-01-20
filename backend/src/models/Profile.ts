@@ -136,8 +136,8 @@ const ProfileSchema = new Schema<IProfile>(
   {
     timestamps: true,
     toJSON: {
-      transform: (doc: any, ret: any) => {
-        ret.id = ret._id?.toString() || ret._id;
+      transform: (doc: mongoose.Document, ret: Record<string, unknown>) => {
+        ret.id = (ret._id as mongoose.Types.ObjectId)?.toString() || ret._id;
         delete ret._id;
         delete ret.__v;
         return ret;

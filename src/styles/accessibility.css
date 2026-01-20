@@ -5,7 +5,7 @@
 /* Focus styles for keyboard navigation - Using design tokens */
 *:focus-visible {
   outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline-offset: var(--spacing-xs);
   border-radius: var(--radius-sm);
   box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
 }
@@ -70,11 +70,11 @@
 .skip-to-content:focus {
   top: 0;
   outline: 3px solid var(--text-inverse);
-  outline-offset: 2px;
+  outline-offset: var(--spacing-xs);
   box-shadow: var(--shadow-lg);
 }
 
-/* Minimum touch target size (44x44px) */
+/* Minimum touch target size (44x44px = 2.75rem) */
 button,
 a,
 input[type="button"],
@@ -82,8 +82,8 @@ input[type="submit"],
 input[type="checkbox"],
 input[type="radio"],
 .navLink {
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -150,14 +150,14 @@ input[type="radio"],
 
 /* Better error messages visibility */
 [role="alert"] {
-  animation: slideInDown 0.3s ease-out;
+  animation: slideInDown var(--transition-fast) var(--transition-ease);
   margin-top: var(--spacing-sm);
 }
 
 @keyframes slideInDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(calc(var(--spacing-sm) * -1.25));
   }
 
   to {

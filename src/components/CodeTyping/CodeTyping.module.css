@@ -52,7 +52,7 @@
   height: 1em;
   background: var(--color-primary-500);
   margin-left: 2px;
-  animation: blink 1s infinite;
+  animation: blink var(--transition-fast) infinite;
   vertical-align: baseline;
 }
 

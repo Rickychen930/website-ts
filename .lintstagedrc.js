@@ -2,9 +2,9 @@ module.exports = {
   "*.{ts,tsx}": (filenames) => {
     const filtered = filenames.filter((f) => !f.includes("backend/dist/"));
     if (filtered.length === 0) return [];
-    
-    // Process files in batches to avoid memory issues
-    const batchSize = 10;
+
+    // Process files in smaller batches to avoid memory issues and timeouts
+    const batchSize = 5;
     const commands = [];
     for (let i = 0; i < filtered.length; i += batchSize) {
       const batch = filtered.slice(i, i + batchSize);

@@ -59,10 +59,10 @@ h4,
 h5,
 h6 {
   color: var(--text-primary);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
-  margin-bottom: 0.5em;
+  margin-bottom: var(--spacing-sm);
 }
 
 h1 {
@@ -99,7 +99,7 @@ h6 {
 p {
   color: var(--text-primary);
   line-height: var(--line-height-relaxed);
-  margin-bottom: 1em;
+  margin-bottom: var(--spacing-md);
   max-width: 65ch;
 }
 
@@ -107,9 +107,9 @@ p {
 code {
   color: var(--color-primary-500);
   font-size: 0.9em;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-family: var(--font-family-mono);
-  letter-spacing: 0.025em;
+  letter-spacing: var(--letter-spacing-wide);
   background-color: var(--bg-tertiary);
 }
 
@@ -133,7 +133,7 @@ pre {
 /* Link Typography - Support dark/light mode */
 a {
   color: var(--color-primary-500);
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast) var(--transition-ease);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
@@ -155,18 +155,18 @@ ul,
 ol {
   color: var(--text-primary);
   line-height: var(--line-height-relaxed);
-  padding-left: 1.5em;
+  padding-left: var(--spacing-xl);
 }
 
 li {
-  margin-bottom: 0.5em;
+  margin-bottom: var(--spacing-sm);
   color: var(--text-primary);
 }
 
 /* Blockquote - Support dark/light mode */
 blockquote {
-  border-left: 4px solid var(--color-primary-500);
-  padding-left: 1.5rem;
+  border-left: var(--spacing-xs) solid var(--color-primary-500);
+  padding-left: var(--spacing-xl);
   margin-left: 0;
   font-style: italic;
   color: var(--text-tertiary);

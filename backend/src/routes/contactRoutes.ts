@@ -2,9 +2,10 @@
  * Contact Routes - API route definitions
  */
 
-import { Router, Request, Response } from "express";
-import { body } from "express-validator";
+import { Router, Request, Response, NextFunction } from "express";
+import { body, validationResult } from "express-validator";
 import { ContactController } from "../controllers/ContactController";
+import { contactLimiter } from "../middleware/rateLimiter";
 
 const router = Router();
 const contactController = new ContactController();
@@ -32,8 +33,30 @@ const validateContactForm = [
     .withMessage("Message must be between 10 and 2000 characters"),
 ];
 
-router.post("/", validateContactForm, (req: Request, res: Response) =>
-  contactController.submitContact(req, res),
+// Validation error handler middleware
+const handleValidationErrors = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({
+      success: false,
+      error: "Validation failed",
+      errors: errors.array(),
+    });
+    return;
+  }
+  next();
+};
+
+router.post(
+  "/",
+  contactLimiter, // Apply strict rate limiting to contact form
+  validateContactForm,
+  handleValidationErrors, // Handle validation errors
+  (req: Request, res: Response) => contactController.submitContact(req, res),
 );
 
 export default router;

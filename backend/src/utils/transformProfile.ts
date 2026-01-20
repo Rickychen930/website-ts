@@ -4,8 +4,12 @@
  */
 
 import type { IProfile } from "../models/Profile";
+import type { Profile } from "../../../src/types/domain";
 
-export const transformProfile = (profile: IProfile): any => {
+// Helper type for Mongoose document with _id
+type MongooseDoc = { _id?: { toString(): string } | string | number };
+
+export const transformProfile = (profile: IProfile): Profile => {
   // Ensure arrays exist (handle undefined/null)
   const academics = Array.isArray(profile.academics) ? profile.academics : [];
   const certifications = Array.isArray(profile.certifications)
@@ -39,14 +43,28 @@ export const transformProfile = (profile: IProfile): any => {
       ? profile.updatedAt.toISOString()
       : new Date(profile.updatedAt || Date.now()).toISOString();
 
-  const transformed: any = {
-    id: (profile._id as any)?.toString() || String(profile._id || ""),
+  // Helper function to extract ID from Mongoose document
+  const extractId = (doc: unknown, fallback: string): string => {
+    if (doc && typeof doc === "object" && "_id" in doc) {
+      const id = (doc as MongooseDoc)._id;
+      if (id && typeof id === "object" && "toString" in id) {
+        return id.toString();
+      }
+      if (typeof id === "string" || typeof id === "number") {
+        return String(id);
+      }
+    }
+    return fallback;
+  };
+
+  const transformed: Profile = {
+    id: extractId(profile, String(profile._id || "")),
     name: profile.name || "",
     title: profile.title || "",
     location: profile.location || "",
     bio: profile.bio || "",
     academics: academics.map((academic, index) => ({
-      id: (academic as any)?._id?.toString() || `academic-${index}`,
+      id: extractId(academic, `academic-${index}`),
       institution: academic.institution || "",
       degree: academic.degree || "",
       field: academic.field || "",
@@ -55,7 +73,7 @@ export const transformProfile = (profile: IProfile): any => {
       description: academic.description,
     })),
     certifications: certifications.map((cert, index) => ({
-      id: (cert as any)?._id?.toString() || `cert-${index}`,
+      id: extractId(cert, `cert-${index}`),
       name: cert.name || "",
       issuer: cert.issuer || "",
       issueDate: cert.issueDate || "",
@@ -64,14 +82,14 @@ export const transformProfile = (profile: IProfile): any => {
       credentialUrl: cert.credentialUrl,
     })),
     contacts: contacts.map((contact, index) => ({
-      id: (contact as any)?._id?.toString() || `contact-${index}`,
+      id: extractId(contact, `contact-${index}`),
       type: contact.type || "other",
       value: contact.value || "",
       label: contact.label || "",
       isPrimary: contact.isPrimary || false,
     })),
     experiences: experiences.map((exp, index) => ({
-      id: (exp as any)?._id?.toString() || `exp-${index}`,
+      id: extractId(exp, `exp-${index}`),
       company: exp.company || "",
       position: exp.position || "",
       location: exp.location || "",
@@ -81,12 +99,10 @@ export const transformProfile = (profile: IProfile): any => {
       description: exp.description || "",
       achievements: Array.isArray(exp.achievements) ? exp.achievements : [],
       technologies: Array.isArray(exp.technologies) ? exp.technologies : [],
-      skillIds: Array.isArray((exp as any).skillIds)
-        ? (exp as any).skillIds
-        : [],
+      skillIds: Array.isArray(exp.skillIds) ? exp.skillIds : [],
     })),
     honors: honors.map((honor, index) => ({
-      id: (honor as any)?._id?.toString() || `honor-${index}`,
+      id: extractId(honor, `honor-${index}`),
       title: honor.title || "",
       issuer: honor.issuer || "",
       date: honor.date || "",
@@ -94,12 +110,12 @@ export const transformProfile = (profile: IProfile): any => {
       url: honor.url,
     })),
     languages: languages.map((lang, index) => ({
-      id: (lang as any)?._id?.toString() || `lang-${index}`,
+      id: extractId(lang, `lang-${index}`),
       name: lang.name || "",
       proficiency: lang.proficiency || "basic",
     })),
     projects: projects.map((project, index) => ({
-      id: (project as any)?._id?.toString() || `project-${index}`,
+      id: extractId(project, `project-${index}`),
       title: project.title || "",
       description: project.description || "",
       longDescription: project.longDescription,
@@ -119,26 +135,26 @@ export const transformProfile = (profile: IProfile): any => {
       architecture: project.architecture,
     })),
     softSkills: softSkills.map((skill, index) => ({
-      id: (skill as any)?._id?.toString() || `softskill-${index}`,
+      id: extractId(skill, `softskill-${index}`),
       name: skill.name || "",
       category: skill.category || "other",
     })),
     stats: stats.map((stat, index) => ({
-      id: (stat as any)?._id?.toString() || `stat-${index}`,
+      id: extractId(stat, `stat-${index}`),
       label: stat.label || "",
       value: stat.value ?? "",
       unit: stat.unit,
       description: stat.description,
     })),
     technicalSkills: technicalSkills.map((skill, index) => ({
-      id: (skill as any)?._id?.toString() || `skill-${index}`,
+      id: extractId(skill, `skill-${index}`),
       name: skill.name || "",
       category: skill.category || "other",
       proficiency: skill.proficiency || "beginner",
       yearsOfExperience: skill.yearsOfExperience,
     })),
     testimonials: testimonials.map((testimonial, index) => ({
-      id: (testimonial as any)?._id?.toString() || `testimonial-${index}`,
+      id: extractId(testimonial, `testimonial-${index}`),
       author: testimonial.author || "",
       role: testimonial.role || "",
       company: testimonial.company || "",

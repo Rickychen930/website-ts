@@ -20,7 +20,7 @@ export const calculateSkillExperience = (
 
   const relatedExperiences = experiences.filter(
     (exp) =>
-      (exp as any).skillIds?.includes(skillName) ||
+      exp.skillIds?.includes(skillName) ||
       exp.technologies.some(
         (tech) => tech.toLowerCase() === skillName.toLowerCase(),
       ),

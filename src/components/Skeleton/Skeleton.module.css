@@ -3,12 +3,13 @@
   background: linear-gradient(
     90deg,
     var(--bg-tertiary) 0,
-    var(--bg-secondary) 40px,
-    var(--bg-tertiary) 80px
+    var(--bg-secondary) 2.5rem,
+    var(--bg-tertiary) 5rem
   );
-  background-size: 200px 100%;
+  background-size: 12.5rem 100%;
   border-radius: var(--radius-sm);
-  animation: skeleton-loading 1.5s ease-in-out infinite;
+  animation: skeleton-loading calc(var(--transition-slow) * 3) ease-in-out
+    infinite;
 }
 
 /* Dark mode - handled automatically via CSS variables */
@@ -31,22 +32,24 @@
 .skeleton.card {
   border-radius: var(--radius-2xl);
   padding: var(--spacing-lg);
-  min-height: 200px;
+  min-height: 12.5rem;
 }
 
 .skeleton.avatar {
   border-radius: 50%;
   aspect-ratio: 1;
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
 }
 
 .skeleton.pulse {
-  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation: skeleton-pulse calc(var(--transition-slow) * 3) ease-in-out
+    infinite;
 }
 
 .skeleton.wave {
-  animation: skeleton-loading 1.5s ease-in-out infinite;
+  animation: skeleton-loading calc(var(--transition-slow) * 3) ease-in-out
+    infinite;
 }
 
 .skeleton.none {
@@ -55,11 +58,11 @@
 
 @keyframes skeleton-loading {
   0% {
-    background-position: -200px 0;
+    background-position: -12.5rem 0;
   }
 
   100% {
-    background-position: calc(200px + 100%) 0;
+    background-position: calc(12.5rem + 100%) 0;
   }
 }
 

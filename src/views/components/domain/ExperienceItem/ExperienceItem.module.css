@@ -1,13 +1,13 @@
 .experienceItem {
   display: flex;
-  gap: 2rem;
+  gap: var(--spacing-xl);
   position: relative;
-  padding-bottom: 3rem;
-  transition: all 0.3s ease;
+  padding-bottom: var(--spacing-3xl);
+  transition: all var(--transition-normal) var(--transition-ease);
 }
 
 .experienceItem:hover {
-  transform: translateX(8px);
+  transform: translateX(var(--spacing-sm));
 }
 
 .timeline {
@@ -20,15 +20,15 @@
 .timelineDot {
   position: relative;
   z-index: 1;
-  width: 12px;
-  height: 12px;
+  width: 0.75rem;
+  height: 0.75rem;
   border: 3px solid var(--bg-primary);
   background-color: var(--color-primary-500);
   border-radius: var(--radius-full);
   box-shadow:
     0 0 0 2px var(--color-primary-500),
     0 0 0 4px var(--color-primary-alpha-10);
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse calc(var(--transition-slow) * 4) ease-in-out infinite;
 }
 
 .timelineDot::before {
@@ -41,17 +41,17 @@
   height: 100%;
   border-radius: var(--radius-full);
   background-color: var(--color-primary-500);
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse calc(var(--transition-slow) * 4) ease-in-out infinite;
   opacity: 0.5;
 }
 
 .timelineLine {
   position: absolute;
-  top: 12px;
+  top: 0.75rem;
   left: 50%;
   transform: translateX(-50%);
   width: 2px;
-  height: calc(100% - 12px);
+  height: calc(100% - 0.75rem);
   background-color: var(--border-primary);
 }
 
@@ -63,8 +63,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
   flex-wrap: wrap;
 }
 
@@ -72,7 +72,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.25rem;
+  gap: var(--spacing-xs);
   text-align: right;
 }
 
@@ -88,19 +88,19 @@
 }
 
 .description {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .achievements {
-  margin: 1rem 0;
+  margin: var(--spacing-md) 0;
   padding: 0;
   list-style: none;
 }
 
 .achievements li {
   position: relative;
-  padding-left: 1.25rem;
-  margin-bottom: 0.5rem;
+  padding-left: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
 }
 
 .achievements li::before {

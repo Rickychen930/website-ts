@@ -13,7 +13,7 @@
 .softSkillBadge:hover {
   background: var(--bg-tertiary);
   border-color: var(--color-primary-500);
-  transform: translateY(-1px);
+  transform: translateY(calc(var(--spacing-xs) * -1));
   box-shadow: var(--shadow-sm);
 }
 

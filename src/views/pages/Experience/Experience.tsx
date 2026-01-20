@@ -29,22 +29,10 @@ export const Experience: React.FC = () => {
           {error?.message || "Please try again later"}
         </Typography>
         {isProfileNotFound && (
-          <Typography
-            variant="small"
-            color="tertiary"
-            style={{ marginTop: "1rem" }}
-          >
+          <Typography variant="small" color="tertiary" className={styles.tip}>
             💡 Tip: Make sure the database is seeded. Run{" "}
-            <code
-              style={{
-                background: "var(--bg-tertiary)",
-                padding: "0.2rem 0.4rem",
-                borderRadius: "4px",
-              }}
-            >
-              npm run seed
-            </code>{" "}
-            in the backend directory.
+            <code className={styles.codeInline}>npm run seed</code> in the
+            backend directory.
           </Typography>
         )}
         <Button

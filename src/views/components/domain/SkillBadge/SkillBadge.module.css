@@ -8,7 +8,7 @@
   flex-direction: column;
   gap: var(--spacing-md);
   border-radius: var(--radius-lg);
-  animation: scaleIn 0.5s ease-out both;
+  animation: scaleIn var(--transition-slow) var(--transition-ease) both;
   overflow: hidden;
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
@@ -34,7 +34,7 @@
 .skillBadge:hover {
   border-color: var(--color-primary-500);
   box-shadow: var(--shadow-xl), var(--shadow-glow);
-  transform: translateY(-5px) scale(1.03);
+  transform: translateY(calc(var(--spacing-sm) * -1.25)) scale(1.03);
 }
 
 .skillBadge > * {
@@ -75,7 +75,7 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   text-transform: capitalize;
-  min-width: 80px;
+  min-width: 5rem;
 }
 
 .experience {

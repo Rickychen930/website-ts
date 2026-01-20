@@ -1,18 +1,18 @@
 .content {
-  max-width: 800px;
+  max-width: var(--container-lg);
   margin: 0 auto;
 }
 
 .bio {
-  font-size: 1.125rem;
-  line-height: 1.75;
-  margin-bottom: 2rem;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-xl);
 }
 
 .skillsContainer {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: var(--spacing-3xl);
 }
 
 .skillCategory {
@@ -20,18 +20,18 @@
 }
 
 .categoryTitle {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .skillsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(16.25rem, 1fr));
+  gap: var(--spacing-lg);
 }
 
 @media (width >= 1024px) {
   .skillsGrid {
-    gap: 2rem;
+    gap: var(--spacing-xl);
   }
 }
 
@@ -42,7 +42,7 @@
 .languages {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: var(--spacing-xl);
   justify-content: center;
 }
 
@@ -52,9 +52,9 @@
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-lg);
-  min-width: 150px;
+  min-width: 9.375rem;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
@@ -66,14 +66,14 @@
   left: 0;
   height: 3px;
   background: var(--gradient-primary-accent);
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-normal) var(--transition-ease);
   content: "";
   transform: scaleX(0);
   transform-origin: left;
 }
 
 .languageItem:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.02);
   box-shadow: var(--shadow-xl), var(--shadow-glow);
   border-color: var(--color-primary-alpha-30);
 }
@@ -89,7 +89,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
-  min-height: 300px;
+  min-height: 18.75rem;
   justify-content: center;
 }
 
@@ -112,15 +112,15 @@
 .academicsList {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  max-width: 800px;
+  gap: var(--spacing-lg);
+  max-width: var(--container-lg);
   margin: 0 auto;
 }
 
 .certificationsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+  gap: var(--spacing-xl);
 }
 
 .honorsSection {
@@ -129,8 +129,8 @@
 
 .honorsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+  gap: var(--spacing-xl);
 }
 
 .softSkillsSection {
@@ -140,7 +140,7 @@
 .softSkillsContainer {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: var(--spacing-3xl);
 }
 
 .softSkillCategory {
@@ -150,8 +150,8 @@
 .softSkillsGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
 }
 
 /* Responsive Design */
@@ -190,7 +190,7 @@
   }
 
   .languageItem {
-    min-width: 120px;
+    min-width: 7.5rem;
     padding: var(--spacing-md);
   }
 }

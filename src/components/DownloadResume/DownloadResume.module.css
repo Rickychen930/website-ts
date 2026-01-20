@@ -15,19 +15,19 @@
   opacity: 0.3;
   transform: translate(-50%, -50%);
   transition:
-    width 0.6s ease,
-    height 0.6s ease;
+    width var(--transition-slow) var(--transition-ease),
+    height var(--transition-slow) var(--transition-ease);
 }
 
 .downloadButton:hover::before {
-  width: 400px;
-  height: 400px;
+  width: 25rem;
+  height: 25rem;
 }
 
 .icon {
-  font-size: 1.25rem;
-  margin-right: 0.5rem;
-  transition: transform 0.3s ease;
+  font-size: var(--font-size-xl);
+  margin-right: var(--spacing-sm);
+  transition: transform var(--transition-normal) var(--transition-ease);
 }
 
 .downloadButton:hover .icon {
@@ -36,14 +36,14 @@
 
 .arrow {
   display: inline-block;
-  transition: transform 0.3s ease;
-  margin-left: 0.5rem;
+  transition: transform var(--transition-normal) var(--transition-ease);
+  margin-left: var(--spacing-sm);
 }
 
 .downloadButton:hover .arrow {
-  transform: translateY(4px);
+  transform: translateY(var(--spacing-xs));
 }
 
 .downloadButton:active .arrow {
-  transform: translateY(6px);
+  transform: translateY(var(--spacing-sm));
 }

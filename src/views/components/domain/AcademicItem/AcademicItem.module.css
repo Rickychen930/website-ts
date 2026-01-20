@@ -30,7 +30,7 @@
 .academicItem:hover {
   border-color: var(--color-primary-500);
   box-shadow: var(--shadow-xl), var(--shadow-glow);
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.01);
 }
 
 .header {

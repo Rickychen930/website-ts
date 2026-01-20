@@ -14,9 +14,10 @@
   height: 100%;
   background: var(--gradient-primary-accent);
   background-size: 200% 100%;
-  animation: gradientShift 2s ease infinite;
+  animation: gradientShift var(--transition-slow) var(--transition-ease)
+    infinite;
   box-shadow: var(--shadow-glow-strong);
-  transition: width 0.1s ease-out;
+  transition: width var(--transition-fast) ease-out;
 }
 
 @keyframes gradientShift {
@@ -31,14 +32,3 @@
 }
 
 /* Dark mode - handled automatically via CSS variables */
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}

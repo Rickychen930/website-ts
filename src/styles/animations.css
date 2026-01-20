@@ -6,7 +6,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(var(--spacing-xl));
   }
 
   to {
@@ -18,7 +18,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(var(--spacing-2xl));
   }
 
   to {
@@ -30,7 +30,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(calc(var(--spacing-2xl) * -1));
   }
 
   to {
@@ -42,7 +42,7 @@
 @keyframes fadeInLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(calc(var(--spacing-2xl) * -1));
   }
 
   to {
@@ -54,7 +54,7 @@
 @keyframes fadeInRight {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(var(--spacing-2xl));
   }
 
   to {
@@ -173,7 +173,7 @@
   }
 
   50% {
-    transform: translateY(-10px);
+    transform: translateY(calc(var(--spacing-sm) * -1.25));
   }
 }
 
@@ -233,43 +233,43 @@
 
 /* Utility Classes */
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn var(--transition-slow) ease-out forwards;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
+  animation: fadeInUp var(--transition-normal) ease-out forwards;
 }
 
 .animate-fade-in-down {
-  animation: fadeInDown 0.8s ease-out forwards;
+  animation: fadeInDown var(--transition-normal) ease-out forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
+  animation: scaleIn var(--transition-slow) ease-out forwards;
 }
 
 .animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
+  animation: slideInRight var(--transition-slow) ease-out forwards;
 }
 
 .animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out forwards;
+  animation: slideInLeft var(--transition-slow) ease-out forwards;
 }
 
 .animate-pulse {
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse calc(var(--transition-slow) * 4) ease-in-out infinite;
 }
 
 .animate-glow {
-  animation: glow 2s ease-in-out infinite;
+  animation: glow calc(var(--transition-slow) * 4) ease-in-out infinite;
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float calc(var(--transition-slow) * 6) ease-in-out infinite;
 }
 
 .animate-bounce-in {
-  animation: bounceIn 0.8s ease-out forwards;
+  animation: bounceIn var(--transition-normal) ease-out forwards;
 }
 
 /* Stagger Animation Delays */
@@ -301,10 +301,10 @@
 /* Scroll Reveal */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(var(--spacing-2xl));
   transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+    opacity var(--transition-slow) var(--transition-ease),
+    transform var(--transition-slow) var(--transition-ease);
 }
 
 .scroll-reveal.revealed {
@@ -315,19 +315,17 @@
 /* Hover Effects */
 .hover-lift {
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transform var(--transition-normal) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease);
 }
 
 .hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(calc(var(--spacing-xs) * -8));
+  box-shadow: var(--shadow-xl);
 }
 
 .hover-glow {
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow var(--transition-normal) var(--transition-ease);
 }
 
 .hover-glow:hover {
@@ -353,7 +351,7 @@
 
 /* Smooth Transitions */
 .smooth-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal) var(--transition-ease);
 }
 
 /* Text Gradient Animation */
@@ -362,5 +360,6 @@
   background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 3s ease infinite;
+  animation: gradientShift calc(var(--transition-slow) * 6)
+    var(--transition-ease) infinite;
 }

@@ -26,13 +26,13 @@
   opacity: 0.3;
   transform: translate(-50%, -50%);
   transition:
-    width 0.6s,
-    height 0.6s;
+    width var(--transition-slow),
+    height var(--transition-slow);
 }
 
 .button:hover::before {
-  width: 300px;
-  height: 300px;
+  width: 18.75rem;
+  height: 18.75rem;
 }
 
 .button:disabled {
@@ -43,7 +43,7 @@
 /* Variants */
 .button--primary {
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--color-primary-alpha-15);
   background: var(--gradient-primary);
   color: var(--text-inverse);
   font-weight: var(--font-weight-semibold);
@@ -55,9 +55,10 @@
 .button--primary:hover:not(:disabled) {
   background: var(--gradient-primary);
   background-size: 200% 200%;
-  animation: gradientShift 2s ease infinite;
+  animation: gradientShift calc(var(--transition-slow) * 4)
+    var(--transition-ease) infinite;
   box-shadow: var(--shadow-xl), var(--shadow-glow-strong);
-  transform: translateY(-3px) scale(1.03);
+  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.03);
 }
 
 @keyframes gradientShift {
@@ -75,7 +76,7 @@
   transform: translateY(0) scale(1);
   box-shadow:
     0 2px 4px -1px var(--color-primary-alpha-30),
-    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .button--secondary {
@@ -100,7 +101,7 @@
   background: var(--gradient-primary);
   color: var(--text-inverse);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
   border-color: var(--color-primary-600);
 }
 
@@ -149,7 +150,7 @@
   border: 2px solid currentcolor;
   border-top-color: transparent;
   border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+  animation: spin var(--transition-slow) linear infinite;
 }
 
 @keyframes spin {

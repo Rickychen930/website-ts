@@ -8,7 +8,7 @@
   backdrop-filter: blur(24px) saturate(180%);
   border-bottom: 1px solid var(--border-primary);
   box-shadow: var(--shadow-sm), var(--shadow-glow);
-  animation: fadeInDown 0.6s ease-out;
+  animation: fadeInDown var(--transition-slow) var(--transition-ease);
 }
 
 .header.scrolled {
@@ -71,7 +71,7 @@
 
 .logoImage {
   width: auto;
-  height: 40px;
+  height: 2.5rem;
   transition: all var(--transition-normal) var(--transition-ease);
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
@@ -133,7 +133,7 @@
 
 .navLink:hover {
   color: var(--color-primary-500);
-  transform: translateY(-1px);
+  transform: translateY(calc(var(--spacing-xs) * -1));
 }
 
 .navLink:hover::before {
@@ -175,7 +175,7 @@
 
 .menuIcon {
   display: block;
-  width: 24px;
+  width: 1.5rem;
   height: 2px;
   transition: all var(--transition-normal) var(--transition-ease);
   background-color: var(--text-primary);

@@ -6,12 +6,12 @@
 
 .carouselContainer {
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: var(--radius-xl);
 }
 
 .carouselTrack {
   display: flex;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-slow) var(--transition-ease);
 }
 
 .carouselSlide {
@@ -46,20 +46,20 @@
 .rating {
   display: flex;
   justify-content: center;
-  gap: 0.25rem;
-  margin-bottom: 1.5rem;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
 }
 
 .star {
-  font-size: 1.25rem;
+  font-size: var(--font-size-xl);
   opacity: 0.3;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal) var(--transition-ease);
 }
 
 .starFilled {
   opacity: 1;
   transform: scale(1.1);
-  filter: drop-shadow(0 2px 4px rgba(255, 193, 7, 0.3));
+  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
 }
 
 .testimonialContent {
@@ -80,8 +80,8 @@
 }
 
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 3.75rem;
+  height: 3.75rem;
   border-radius: var(--radius-full);
   object-fit: cover;
   border: 3px solid var(--color-primary-500);
@@ -108,14 +108,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
 }
 
 .navButton {
   display: flex;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border: none;
   background: var(--gradient-primary);
   color: var(--text-inverse);
@@ -181,8 +181,8 @@
   }
 
   .navButton {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     font-size: var(--font-size-base);
   }
 }

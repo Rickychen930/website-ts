@@ -1,11 +1,11 @@
 .skillChart {
   display: grid;
-  gap: 2rem;
+  gap: var(--spacing-xl);
 }
 
 /* Circular Variant */
 .skillChart.circular {
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
   justify-items: center;
 }
 
@@ -13,13 +13,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .circularContainer {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
 }
 
 .circularSvg {
@@ -36,7 +36,8 @@
 .circularProgress {
   stroke: var(--skill-color, var(--color-primary-500));
   stroke-linecap: round;
-  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: stroke-dashoffset calc(var(--transition-slow) * 2)
+    var(--transition-ease);
   filter: drop-shadow(0 0 4px var(--skill-color, var(--color-primary-500)));
 }
 
@@ -48,11 +49,11 @@
   transform: translate(-50%, -50%);
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--spacing-xs);
 }
 
 .skillIcon {
-  font-size: 1.5rem;
+  font-size: var(--font-size-2xl);
 }
 
 .skillPercentage {
@@ -71,13 +72,13 @@
 /* Bar Variant */
 .skillChart.bar {
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: var(--spacing-lg);
 }
 
 .barSkill {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .barHeader {
@@ -89,7 +90,7 @@
 .barInfo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 }
 
 .barContainer {
@@ -110,7 +111,7 @@
     var(--skill-color, var(--color-primary-500)) 0%,
     var(--skill-color, var(--color-primary-600)) 100%
   );
-  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width var(--transition-slow) var(--transition-ease);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-glow);
 }
@@ -119,14 +120,14 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 30px;
+  width: 1.875rem;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent 0%,
     rgba(255, 255, 255, 0.3) 100%
   );
-  animation: shimmer 2s infinite;
+  animation: shimmer var(--transition-slow) infinite;
 }
 
 @keyframes shimmer {
@@ -146,13 +147,13 @@
   }
 
   .skillChart.circular {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(5.625rem, 1fr));
     gap: var(--spacing-lg);
   }
 
   .circularContainer {
-    width: 90px;
-    height: 90px;
+    width: 5.625rem;
+    height: 5.625rem;
   }
 
   .skillIcon {
@@ -167,12 +168,12 @@
 
 @media (width >= 641px) and (width <= 768px) {
   .skillChart.circular {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr));
     gap: var(--spacing-xl);
   }
 
   .circularContainer {
-    width: 100px;
-    height: 100px;
+    width: 6.25rem;
+    height: 6.25rem;
   }
 }

@@ -10,6 +10,8 @@ import path from "path";
 import { connectDatabase } from "./config/database";
 import profileRoutes from "./routes/profileRoutes";
 import contactRoutes from "./routes/contactRoutes";
+import { apiLimiter } from "./middleware/rateLimiter";
+import { sanitizeInput } from "./middleware/sanitizeInput";
 
 // Load environment variables based on NODE_ENV
 const nodeEnv = process.env.NODE_ENV || "development";
@@ -23,18 +25,52 @@ dotenv.config(); // Load .env as fallback
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Middleware
-app.use(helmet());
+// Security Middleware
 app.use(
-  cors({
-    origin: process.env.ALLOWED_ORIGINS?.split(",") || [
-      "http://localhost:3000",
-    ],
-    credentials: true,
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+      },
+    },
+    crossOriginEmbedderPolicy: false, // Allow embedding for portfolio
   }),
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(",").map((origin) =>
+      origin.trim(),
+    ) || ["http://localhost:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
+// Body parsing with size limits to prevent DoS
+app.use(
+  express.json({
+    limit: "10mb", // Limit JSON payload size
+    strict: true,
+  }),
+);
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: "10mb", // Limit URL-encoded payload size
+    parameterLimit: 100, // Limit number of parameters
+  }),
+);
+
+// Input sanitization (before routes)
+app.use(sanitizeInput);
+
+// Rate limiting (apply to all routes)
+app.use("/api", apiLimiter);
 
 // Routes
 app.use("/api/profile", profileRoutes);
@@ -45,7 +81,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// 404 handler
+// 404 handler (must be after all routes)
 app.use((req, res) => {
   res.status(404).json({
     error: "Not found",
@@ -53,7 +89,7 @@ app.use((req, res) => {
   });
 });
 
-// Error handling middleware
+// Error handling middleware (must be last, after all routes and 404 handler)
 app.use(
   (
     err: Error,
@@ -102,7 +138,7 @@ const startServer = async () => {
   }
 
   // Start the server
-  app.listen(PORT, () => {
+  const httpServer = app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
     console.log(`🏥 Health check: http://localhost:${PORT}/health`);
@@ -113,17 +149,45 @@ const startServer = async () => {
       );
     }
   });
+
+  // Graceful shutdown handler
+  const gracefulShutdown = async (signal: string) => {
+    console.log(`${signal} signal received: closing HTTP server gracefully`);
+
+    // Close HTTP server
+    httpServer.close(() => {
+      console.log("HTTP server closed");
+
+      // Close database connection
+      const mongoose = require("mongoose");
+      mongoose.connection.close(false, () => {
+        console.log("MongoDB connection closed");
+        process.exit(0);
+      });
+    });
+
+    // Force close after 10 seconds
+    setTimeout(() => {
+      console.error("Forced shutdown after timeout");
+      process.exit(1);
+    }, 10000);
+  };
+
+  // Register shutdown handlers
+  process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+  process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+
+  // Handle uncaught exceptions
+  process.on("uncaughtException", (error: Error) => {
+    console.error("Uncaught Exception:", error);
+    gracefulShutdown("uncaughtException");
+  });
+
+  // Handle unhandled promise rejections
+  process.on("unhandledRejection", (reason: unknown) => {
+    console.error("Unhandled Rejection:", reason);
+    gracefulShutdown("unhandledRejection");
+  });
 };
-
-// Graceful shutdown
-process.on("SIGTERM", async () => {
-  console.log("SIGTERM signal received: closing HTTP server");
-  process.exit(0);
-});
-
-process.on("SIGINT", async () => {
-  console.log("SIGINT signal received: closing HTTP server");
-  process.exit(0);
-});
 
 startServer();

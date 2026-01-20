@@ -1,7 +1,7 @@
 .themeToggle {
   position: relative;
-  width: 56px;
-  height: 32px;
+  width: 3.5rem;
+  height: 2rem;
   padding: 0;
   border: 2px solid var(--color-primary-alpha-30);
   background: var(--bg-overlay);
@@ -27,7 +27,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 0 6px;
+  padding: 0 var(--spacing-xs);
   align-items: center;
   justify-content: space-between;
 }
@@ -35,8 +35,8 @@
 .icon {
   position: relative;
   z-index: 2;
-  font-size: 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal) var(--transition-ease);
 }
 
 .sunIcon {
@@ -52,10 +52,10 @@
 .slider {
   position: absolute;
   top: 50%;
-  left: 4px;
+  left: var(--spacing-xs);
   z-index: 1;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   background: var(--gradient-primary);
   transition: all var(--transition-normal) var(--transition-ease);
   transform: translateY(-50%);
@@ -64,7 +64,7 @@
 }
 
 .sliderDark {
-  left: calc(100% - 28px);
+  left: calc(100% - 1.75rem);
   background: linear-gradient(
     135deg,
     var(--bg-secondary) 0%,
