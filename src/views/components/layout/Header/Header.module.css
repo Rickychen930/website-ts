@@ -55,16 +55,30 @@
 }
 
 .logo {
+  display: flex;
   position: relative;
   padding: var(--spacing-sm);
   color: inherit;
   transition: all var(--transition-normal) var(--transition-ease);
+  align-items: center;
   text-decoration: none;
   border-radius: var(--radius-md);
 }
 
 .logo:hover {
   transform: scale(1.05);
+}
+
+.logoImage {
+  width: auto;
+  height: 40px;
+  transition: all var(--transition-normal) var(--transition-ease);
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.dark .logoImage {
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.1));
 }
 
 .logo::before {

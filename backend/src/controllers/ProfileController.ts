@@ -13,7 +13,11 @@ export class ProfileController {
       const profile = await ProfileModel.findOne();
 
       if (!profile) {
-        res.status(404).json({ error: "Profile not found" });
+        res.status(404).json({
+          error: "Profile not found",
+          message:
+            "No profile data found in database. Please run 'npm run seed' to populate the database.",
+        });
         return;
       }
 

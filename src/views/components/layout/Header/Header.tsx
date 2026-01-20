@@ -6,7 +6,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
-import { Typography } from "@/views/components/ui/Typography";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import styles from "./Header.module.css";
 
@@ -35,9 +34,11 @@ export const Header: React.FC = () => {
           className={styles.logo}
           aria-label={`${profile?.name || "Home"} - Home`}
         >
-          <Typography variant="h5" weight="bold" as="span">
-            {profile?.name || "Portfolio"}
-          </Typography>
+          <img
+            src="/logo192.png"
+            alt={profile?.name || "Ricky Chen"}
+            className={styles.logoImage}
+          />
         </Link>
 
         <nav

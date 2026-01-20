@@ -266,6 +266,18 @@ export class ProfileService {
 
       if (!response.ok) {
         const errorText = await response.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          errorData = { error: errorText };
+        }
+
+        // Handle 404 (Profile not found) - use fallback data
+        if (response.status === 404) {
+          throw new Error("PROFILE_NOT_FOUND");
+        }
+
         throw new Error(
           `HTTP error! status: ${response.status}, message: ${errorText.substring(0, 200)}`,
         );
@@ -334,8 +346,9 @@ export class ProfileService {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to fetch profile";
 
-      // If backend is unavailable, use fallback data
+      // If backend is unavailable or profile not found, use fallback data
       const isBackendUnavailable =
+        errorMessage === "PROFILE_NOT_FOUND" ||
         errorMessage.includes("HTML instead of JSON") ||
         errorMessage.includes("Invalid response format") ||
         errorMessage.includes("Failed to fetch") ||
@@ -346,13 +359,22 @@ export class ProfileService {
         (error instanceof TypeError && error.message.includes("fetch"));
 
       if (isBackendUnavailable) {
-        console.warn(
-          "⚠️ Backend server unavailable, using fallback profile data.\n" +
-            "To enable full functionality, please start the backend server:\n" +
-            `  npm run server:watch\n` +
-            `  Or: npm run dev (runs both frontend and backend)\n` +
-            `  Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
-        );
+        if (errorMessage === "PROFILE_NOT_FOUND") {
+          console.warn(
+            "⚠️ Profile not found in database, using fallback profile data.\n" +
+              "To populate the database with your profile data, run:\n" +
+              `  npm run seed\n` +
+              `  Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
+          );
+        } else {
+          console.warn(
+            "⚠️ Backend server unavailable, using fallback profile data.\n" +
+              "To enable full functionality, please start the backend server:\n" +
+              `  npm run server:watch\n` +
+              `  Or: npm run dev (runs both frontend and backend)\n` +
+              `  Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
+          );
+        }
 
         // Use fallback data
         this.profile = ProfileModel.create(FALLBACK_PROFILE);
