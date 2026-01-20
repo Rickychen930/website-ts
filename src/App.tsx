@@ -46,47 +46,49 @@ const Contact = React.lazy(() =>
   })),
 );
 
-export const App: React.FC = () => {
+// Inner component that uses keyboard shortcuts (must be inside Router)
+const AppContent: React.FC = () => {
   useKeyboardShortcuts();
 
+  return (
+    <>
+      <Analytics />
+      <PerformanceMonitor />
+      <AccessibilityAnnouncer />
+      <AccessibilityInfo />
+      <div className="app">
+        <ParticleBackground />
+        <ScrollProgress />
+        <CursorEffect />
+        <SkipLinks />
+        <Header />
+        <main id="main-content" className="app-main" role="main" tabIndex={-1}>
+          <Suspense fallback={<Loading fullScreen message="Loading page..." />}>
+            <PageTransition>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/experience" element={<Experience />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+            </PageTransition>
+          </Suspense>
+        </main>
+        <Footer />
+        <BackToTop />
+      </div>
+    </>
+  );
+};
+
+export const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <ThemeProvider>
         <ProfileProvider>
           <BrowserRouter>
-            <Analytics />
-            <PerformanceMonitor />
-            <AccessibilityAnnouncer />
-            <AccessibilityInfo />
-            <div className="app">
-              <ParticleBackground />
-              <ScrollProgress />
-              <CursorEffect />
-              <SkipLinks />
-              <Header />
-              <main
-                id="main-content"
-                className="app-main"
-                role="main"
-                tabIndex={-1}
-              >
-                <Suspense
-                  fallback={<Loading fullScreen message="Loading page..." />}
-                >
-                  <PageTransition>
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/projects" element={<Projects />} />
-                      <Route path="/experience" element={<Experience />} />
-                      <Route path="/contact" element={<Contact />} />
-                    </Routes>
-                  </PageTransition>
-                </Suspense>
-              </main>
-              <Footer />
-              <BackToTop />
-            </div>
+            <AppContent />
           </BrowserRouter>
         </ProfileProvider>
       </ThemeProvider>
