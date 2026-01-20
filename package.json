@@ -12,6 +12,7 @@
     "dompurify": "^3.3.1",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
     "express-validator": "^7.3.1",
     "framer-motion": "^12.26.2",
     "helmet": "^8.1.0",

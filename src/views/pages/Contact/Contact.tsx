@@ -13,13 +13,13 @@ import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
 import { Card } from "@/views/components/ui/Card";
 import { Loading } from "@/views/components/ui/Loading";
-import type { Contact } from "@/types/domain";
+import type { Contact as ContactType } from "@/types/domain";
 import styles from "./Contact.module.css";
 
 export const Contact: React.FC = () => {
   const { profile, isLoading, error, loadProfile } = useProfile();
   const [isEditingContacts, setIsEditingContacts] = useState(false);
-  const [editingContacts, setEditingContacts] = useState<Contact[]>([]);
+  const [editingContacts, setEditingContacts] = useState<ContactType[]>([]);
   const [contactUpdateErrors, setContactUpdateErrors] = useState<
     Record<string, string>
   >({});
@@ -79,7 +79,7 @@ export const Contact: React.FC = () => {
 
   const handleContactChange = (
     index: number,
-    field: keyof Contact,
+    field: keyof ContactType,
     value: string | boolean,
   ) => {
     const updated = [...editingContacts];
@@ -293,7 +293,7 @@ export const Contact: React.FC = () => {
                             handleContactChange(
                               index,
                               "type",
-                              e.target.value as Contact["type"],
+                              e.target.value as ContactType["type"],
                             )
                           }
                           className={
