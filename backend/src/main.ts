@@ -77,18 +77,30 @@ app.use(
 
 // Start server
 const startServer = async () => {
-  try {
-    await connectDatabase();
-    app.listen(PORT, () => {
-      console.log(`✅ Server running on port ${PORT}`);
-      console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
-      console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-      console.log(`🌍 Environment: ${nodeEnv}`);
+  const isDevelopment = nodeEnv === "development";
+
+  // In development, try to connect but don't block server startup
+  if (isDevelopment) {
+    connectDatabase().catch(() => {
+      // Connection will retry in the background
     });
-  } catch (error) {
-    console.error("❌ Failed to start server:", error);
-    process.exit(1);
+  } else {
+    // In production, wait for database connection
+    try {
+      await connectDatabase();
+    } catch (error) {
+      console.error("❌ Failed to connect to database:", error);
+      process.exit(1);
+    }
   }
+
+  // Start the server regardless of database connection status in development
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
+    console.log(`🏥 Health check: http://localhost:${PORT}/health`);
+    console.log(`🌍 Environment: ${nodeEnv}`);
+  });
 };
 
 // Graceful shutdown
