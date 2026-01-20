@@ -265,19 +265,12 @@ export class ProfileService {
       }
 
       if (!response.ok) {
-        const errorText = await response.text();
-        let errorData;
-        try {
-          errorData = JSON.parse(errorText);
-        } catch {
-          errorData = { error: errorText };
-        }
-
         // Handle 404 (Profile not found) - use fallback data
         if (response.status === 404) {
           throw new Error("PROFILE_NOT_FOUND");
         }
 
+        const errorText = await response.text();
         throw new Error(
           `HTTP error! status: ${response.status}, message: ${errorText.substring(0, 200)}`,
         );
