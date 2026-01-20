@@ -41,6 +41,7 @@ export interface IProfile extends Document {
     description: string;
     achievements: string[];
     technologies: string[];
+    skillIds?: string[]; // References to technical skill names
   }>;
   honors: Array<{
     title: string;

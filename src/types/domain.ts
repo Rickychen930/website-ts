@@ -48,6 +48,7 @@ export interface Experience {
   readonly description: string;
   readonly achievements: readonly string[];
   readonly technologies: readonly string[];
+  readonly skillIds?: readonly string[]; // References to technical skill names
 }
 
 export interface Honor {

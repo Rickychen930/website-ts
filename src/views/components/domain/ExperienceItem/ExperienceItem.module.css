@@ -114,8 +114,14 @@
 .technologies {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
+}
+
+.technologiesLabel {
+  width: 100%;
+  margin-bottom: var(--spacing-xs);
 }
 
 .techTag {
@@ -128,6 +134,23 @@
   background-color: var(--color-primary-50);
   border-radius: var(--radius-md);
   font-family: var(--font-family-sans);
+}
+
+.relatedSkills {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-primary);
+}
+
+.skillsLabel {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+.skillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
 }
 
 /* Responsive Design */

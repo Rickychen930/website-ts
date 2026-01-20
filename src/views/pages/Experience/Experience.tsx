@@ -57,7 +57,10 @@ export const Experience: React.FC = () => {
         >
           {profile.experiences.map((experience) => (
             <div key={experience.id} role="listitem">
-              <ExperienceItem experience={experience} />
+              <ExperienceItem
+                experience={experience}
+                technicalSkills={profile.technicalSkills}
+              />
             </div>
           ))}
         </div>

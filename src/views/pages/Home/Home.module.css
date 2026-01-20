@@ -53,9 +53,12 @@
 .heroContent {
   position: relative;
   z-index: 1;
-  padding: var(--spacing-xl);
-  text-align: center;
+  width: 100%;
   max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  box-sizing: border-box;
+  text-align: center;
   animation: fadeInUp 1s ease-out 0.2s both;
 }
 
@@ -138,11 +141,15 @@
 
 .heroActions {
   display: flex;
+  width: 100%;
+  max-width: 100%;
+  margin-top: var(--spacing-xl);
+  padding: 0 var(--spacing-sm);
+  box-sizing: border-box;
   gap: var(--spacing-lg);
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: var(--spacing-xl);
-  align-items: center;
   animation: fadeInUp 0.8s ease-out 0.7s both;
 }
 
@@ -161,8 +168,13 @@
 
 .codeSnippet {
   display: flex;
+  width: 100%;
+  max-width: 100%;
   margin: var(--spacing-xl) 0;
+  padding: 0 var(--spacing-sm);
+  box-sizing: border-box;
   justify-content: center;
+  overflow-x: auto;
 }
 
 .socialLinksWrapper {
@@ -350,8 +362,10 @@
   }
 
   .heroContent {
-    padding: var(--spacing-md);
+    width: 100%;
     max-width: 100%;
+    padding: var(--spacing-md);
+    box-sizing: border-box;
   }
 
   .heroTitle {
@@ -372,11 +386,20 @@
     flex-direction: column;
     gap: var(--spacing-md);
     width: 100%;
+    max-width: 100%;
+    padding: 0;
   }
 
   .heroActions a,
   .heroActions button {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .codeSnippet {
+    padding: 0;
+    overflow-x: auto;
   }
 
   .projectsGrid {

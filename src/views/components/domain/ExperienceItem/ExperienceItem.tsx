@@ -4,18 +4,27 @@
  */
 
 import React from "react";
-import type { Experience } from "@/types/domain";
+import type { Experience, TechnicalSkill } from "@/types/domain";
 import { Typography } from "@/views/components/ui/Typography";
+import { SkillBadge } from "@/views/components/domain/SkillBadge";
 import { formatDateRange, getDuration } from "@/utils/dateUtils";
 import styles from "./ExperienceItem.module.css";
 
 export interface ExperienceItemProps {
   experience: Experience;
+  technicalSkills?: readonly TechnicalSkill[];
 }
 
 export const ExperienceItem: React.FC<ExperienceItemProps> = ({
   experience,
+  technicalSkills = [],
 }) => {
+  // Resolve skillIds to actual technical skills
+  const relatedSkills = experience.skillIds
+    ? technicalSkills.filter((skill) =>
+        experience.skillIds?.includes(skill.name),
+      )
+    : [];
   return (
     <article
       className={styles.experienceItem}
@@ -94,11 +103,41 @@ export const ExperienceItem: React.FC<ExperienceItemProps> = ({
 
         {experience.technologies.length > 0 && (
           <div className={styles.technologies}>
+            <Typography
+              variant="small"
+              weight="semibold"
+              color="secondary"
+              className={styles.technologiesLabel}
+            >
+              Technologies:
+            </Typography>
             {experience.technologies.map((tech, index) => (
               <span key={index} className={styles.techTag}>
                 {tech}
               </span>
             ))}
+          </div>
+        )}
+
+        {relatedSkills.length > 0 && (
+          <div className={styles.relatedSkills}>
+            <Typography
+              variant="small"
+              weight="semibold"
+              color="secondary"
+              className={styles.skillsLabel}
+            >
+              Related Skills:
+            </Typography>
+            <div className={styles.skillsGrid}>
+              {relatedSkills.map((skill) => (
+                <SkillBadge
+                  key={skill.id}
+                  skill={skill}
+                  showProficiency={false}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -81,6 +81,9 @@ export const transformProfile = (profile: IProfile): any => {
       description: exp.description || "",
       achievements: Array.isArray(exp.achievements) ? exp.achievements : [],
       technologies: Array.isArray(exp.technologies) ? exp.technologies : [],
+      skillIds: Array.isArray((exp as any).skillIds)
+        ? (exp as any).skillIds
+        : [],
     })),
     honors: honors.map((honor, index) => ({
       id: (honor as any)?._id?.toString() || `honor-${index}`,
