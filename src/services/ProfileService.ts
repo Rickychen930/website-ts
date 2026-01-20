@@ -28,12 +28,97 @@ const FALLBACK_PROFILE: Profile = {
     {
       id: "contact-1",
       type: "email",
-      value: "ricky.chen@example.com",
+      value: "rickychen930@gmail.com",
       label: "Email",
       isPrimary: true,
     },
+    {
+      id: "contact-2",
+      type: "linkedin",
+      value: "https://www.linkedin.com/in/rickychen930",
+      label: "LinkedIn",
+      isPrimary: false,
+    },
+    {
+      id: "contact-3",
+      type: "github",
+      value: "https://github.com/rickychen930",
+      label: "GitHub",
+      isPrimary: false,
+    },
   ],
-  experiences: [],
+  experiences: [
+    {
+      id: "exp-1",
+      company: "Samsung R&D Institute – Jakarta",
+      position: "Software Engineer",
+      location: "Jakarta, Indonesia",
+      startDate: "2023-05-01",
+      endDate: "2024-05-31",
+      isCurrent: false,
+      description:
+        "Enhanced SmartThings app functionality and performance. Developed TV Plugin for seamless smart TV integration, enabling device discovery, remote control, and status monitoring. Contributed to One UI 6 enhancements, improving UI/UX and accessibility across devices. Focused on TypeScript, modular architecture, and scalable design. Worked in an Agile environment with cross-functional teams.",
+      achievements: [
+        "Developed TV Plugin for SmartThings enabling device discovery, remote control, and status monitoring",
+        "Contributed to One UI 6 enhancements improving UI/UX and accessibility",
+        "Improved user experience for millions of SmartThings users worldwide",
+        "Implemented scalable architecture using TypeScript and Node.js",
+      ],
+      technologies: [
+        "TypeScript",
+        "Node.js",
+        "Samsung SmartThings SDK",
+        "REST APIs",
+        "Git",
+        "Agile",
+        "Scrum",
+      ],
+      skillIds: [
+        "TypeScript",
+        "Node.js",
+        "Express.js",
+        "RESTful APIs",
+        "Git",
+        "GitHub",
+        "Backend Development",
+      ],
+    },
+    {
+      id: "exp-2",
+      company: "Apple Developer Academy – Tangerang",
+      position: "Software Engineer",
+      location: "Tangerang, Indonesia",
+      startDate: "2022-03-01",
+      endDate: "2022-12-31",
+      isCurrent: false,
+      description:
+        "Mastered Swift, UIKit, SwiftUI, GitHub, and soft skills through intensive training program. Developed five projects including Phowto (photography tutorials), Reguards (women's travel safety), and Bottani (farm management with remote control). Participated in design thinking workshops, user research, and iterative development processes. Collaborated with designers and other developers to create user-centered applications.",
+      achievements: [
+        "Developed five iOS applications using Swift and SwiftUI",
+        "Mastered iOS development lifecycle, app architecture, and best practices",
+        "Participated in design thinking workshops and user research",
+        "Collaborated effectively with designers and developers in cross-functional teams",
+      ],
+      technologies: [
+        "Swift",
+        "SwiftUI",
+        "UIKit",
+        "Xcode",
+        "Git",
+        "Core Data",
+        "Core Location",
+        "AVFoundation",
+      ],
+      skillIds: [
+        "Swift",
+        "SwiftUI",
+        "UIKit",
+        "Git",
+        "GitHub",
+        "iOS Development",
+      ],
+    },
+  ],
   honors: [],
   languages: [],
   projects: [
@@ -339,37 +424,31 @@ export class ProfileService {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to fetch profile";
 
-      // If backend is unavailable or profile not found, use fallback data
+      // Only use fallback in development mode when backend is truly unavailable
+      // In production, always require database connection
+      const isDevelopment = process.env.NODE_ENV === "development";
       const isBackendUnavailable =
-        errorMessage === "PROFILE_NOT_FOUND" ||
-        errorMessage.includes("HTML instead of JSON") ||
-        errorMessage.includes("Invalid response format") ||
-        errorMessage.includes("Failed to fetch") ||
-        errorMessage.includes("NetworkError") ||
-        errorMessage.includes("Network request failed") ||
-        errorMessage.includes("fetch failed") ||
-        errorMessage.includes("CORS") ||
-        (error instanceof TypeError && error.message.includes("fetch"));
+        (errorMessage.includes("HTML instead of JSON") ||
+          errorMessage.includes("Invalid response format") ||
+          errorMessage.includes("Failed to fetch") ||
+          errorMessage.includes("NetworkError") ||
+          errorMessage.includes("Network request failed") ||
+          errorMessage.includes("fetch failed") ||
+          errorMessage.includes("CORS") ||
+          (error instanceof TypeError && error.message.includes("fetch"))) &&
+        !errorMessage.includes("PROFILE_NOT_FOUND");
 
-      if (isBackendUnavailable) {
-        if (errorMessage === "PROFILE_NOT_FOUND") {
-          console.warn(
-            "⚠️ Profile not found in database, using fallback profile data.\n" +
-              "To populate the database with your profile data, run:\n" +
-              `  npm run seed\n` +
-              `  Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
-          );
-        } else {
-          console.warn(
-            "⚠️ Backend server unavailable, using fallback profile data.\n" +
-              "To enable full functionality, please start the backend server:\n" +
-              `  npm run server:watch\n` +
-              `  Or: npm run dev (runs both frontend and backend)\n` +
-              `  Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
-          );
-        }
+      // Only use fallback in development mode
+      if (isBackendUnavailable && isDevelopment) {
+        console.warn(
+          "⚠️ Backend server unavailable, using fallback profile data (development mode only).\n" +
+            "To enable full functionality with MongoDB Atlas, please:\n" +
+            "1. Ensure MONGODB_URI is set in your .env file\n" +
+            "2. Start the backend server: npm run server:watch\n" +
+            "3. Seed the database: npm run seed\n" +
+            `Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
+        );
 
-        // Use fallback data
         this.profile = ProfileModel.create(FALLBACK_PROFILE);
         this.cache = {
           data: this.profile,
@@ -377,6 +456,20 @@ export class ProfileService {
         };
 
         return this.profile;
+      }
+
+      // In production or when profile not found, throw error
+      if (errorMessage === "PROFILE_NOT_FOUND") {
+        throw new Error(
+          "Profile not found in MongoDB Atlas database. Please run 'npm run seed' to populate the database with your profile data.",
+        );
+      }
+
+      // In production, don't use fallback - require database connection
+      if (!isDevelopment && isBackendUnavailable) {
+        throw new Error(
+          "Cannot connect to backend server. Please ensure the backend is running and connected to MongoDB Atlas.",
+        );
       }
 
       throw new Error(errorMessage);
@@ -390,6 +483,65 @@ export class ProfileService {
   public clearCache(): void {
     this.profile = null;
     this.cache = null;
+  }
+
+  public async updateContacts(
+    contacts: Array<{
+      id?: string;
+      type: "email" | "phone" | "linkedin" | "github" | "website" | "other";
+      value: string;
+      label: string;
+      isPrimary: boolean;
+    }>,
+  ): Promise<ProfileModel> {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:4000";
+      const apiEndpoint = `${apiUrl}/api/profile/contacts`;
+
+      const response = await fetch(apiEndpoint, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ contacts }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({
+          error: "Failed to update contacts",
+        }));
+        throw new Error(
+          errorData.error ||
+            errorData.message ||
+            `HTTP error! status: ${response.status}`,
+        );
+      }
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error(
+          `Invalid response format. Expected JSON but received ${contentType}`,
+        );
+      }
+
+      const data: Profile = await response.json();
+
+      // Update cached profile
+      this.profile = ProfileModel.create(data);
+      this.cache = {
+        data: this.profile,
+        timestamp: Date.now(),
+      };
+
+      return this.profile;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to update contact information";
+      throw new Error(errorMessage);
+    }
   }
 }
 

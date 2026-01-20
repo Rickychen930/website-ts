@@ -6,16 +6,27 @@
 import React, { useState, FormEvent } from "react";
 import { useProfile } from "@/contexts/ProfileContext";
 import { contactService } from "@/services/ContactService";
+import { profileService } from "@/services/ProfileService";
 import { validateContactForm } from "@/utils/formValidation";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
 import { Card } from "@/views/components/ui/Card";
 import { Loading } from "@/views/components/ui/Loading";
+import type { Contact } from "@/types/domain";
 import styles from "./Contact.module.css";
 
 export const Contact: React.FC = () => {
-  const { profile, isLoading, error } = useProfile();
+  const { profile, isLoading, error, loadProfile } = useProfile();
+  const [isEditingContacts, setIsEditingContacts] = useState(false);
+  const [editingContacts, setEditingContacts] = useState<Contact[]>([]);
+  const [contactUpdateErrors, setContactUpdateErrors] = useState<
+    Record<string, string>
+  >({});
+  const [isUpdatingContacts, setIsUpdatingContacts] = useState(false);
+  const [contactUpdateStatus, setContactUpdateStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,6 +58,88 @@ export const Contact: React.FC = () => {
       const newErrors = { ...formErrors };
       delete newErrors[field];
       setFormErrors(newErrors);
+    }
+  };
+
+  const handleEditContacts = () => {
+    if (profile) {
+      setEditingContacts([...profile.contacts]);
+      setIsEditingContacts(true);
+      setContactUpdateStatus("idle");
+      setContactUpdateErrors({});
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingContacts(false);
+    setEditingContacts([]);
+    setContactUpdateErrors({});
+    setContactUpdateStatus("idle");
+  };
+
+  const handleContactChange = (
+    index: number,
+    field: keyof Contact,
+    value: string | boolean,
+  ) => {
+    const updated = [...editingContacts];
+    updated[index] = { ...updated[index], [field]: value };
+    setEditingContacts(updated);
+    // Clear error for this field
+    if (contactUpdateErrors[`${index}-${field}`]) {
+      const newErrors = { ...contactUpdateErrors };
+      delete newErrors[`${index}-${field}`];
+      setContactUpdateErrors(newErrors);
+    }
+  };
+
+  const handleSaveContacts = async () => {
+    // Validate contacts
+    const errors: Record<string, string> = {};
+    let hasPrimary = false;
+
+    editingContacts.forEach((contact, index) => {
+      if (!contact.value.trim()) {
+        errors[`${index}-value`] = "Value is required";
+      }
+      if (!contact.label.trim()) {
+        errors[`${index}-label`] = "Label is required";
+      }
+      if (contact.isPrimary) {
+        hasPrimary = true;
+      }
+    });
+
+    if (!hasPrimary) {
+      errors["primary"] = "At least one contact must be marked as primary";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setContactUpdateErrors(errors);
+      return;
+    }
+
+    setIsUpdatingContacts(true);
+    setContactUpdateStatus("idle");
+    setContactUpdateErrors({});
+
+    try {
+      await profileService.updateContacts(editingContacts);
+      setContactUpdateStatus("success");
+      setIsEditingContacts(false);
+      // Reload profile to get updated data
+      await loadProfile();
+      // Clear success message after 3 seconds
+      setTimeout(() => setContactUpdateStatus("idle"), 3000);
+    } catch (error) {
+      setContactUpdateStatus("error");
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to update contact information";
+      setContactUpdateErrors({ submit: errorMessage });
+    } finally {
+      setIsUpdatingContacts(false);
     }
   };
 
@@ -110,6 +203,9 @@ export const Contact: React.FC = () => {
 
   const primaryContact = profile.getPrimaryContact();
   const contacts = profile.contacts.filter((c) => !c.isPrimary);
+  const displayContacts = isEditingContacts
+    ? editingContacts
+    : profile.contacts;
 
   return (
     <Section
@@ -119,75 +215,277 @@ export const Contact: React.FC = () => {
       <div className={styles.container}>
         <div className={styles.contactInfo}>
           <Card variant="elevated" className={styles.contactCard}>
-            <Typography
-              variant="h4"
-              weight="semibold"
-              className={styles.cardTitle}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "2rem",
+              }}
             >
-              Contact Information
-            </Typography>
-            {primaryContact && (
-              <div className={styles.contactItem}>
-                <Typography variant="body" weight="medium">
-                  {primaryContact.label}
-                </Typography>
-                <a
-                  href={
-                    primaryContact.type === "email"
-                      ? `mailto:${primaryContact.value}`
-                      : primaryContact.type === "phone"
-                        ? `tel:${primaryContact.value}`
-                        : primaryContact.value
-                  }
-                  target={
-                    primaryContact.type === "email" ||
-                    primaryContact.type === "phone"
-                      ? undefined
-                      : "_blank"
-                  }
-                  rel={
-                    primaryContact.type === "email" ||
-                    primaryContact.type === "phone"
-                      ? undefined
-                      : "noopener noreferrer"
-                  }
-                  className={styles.contactLink}
+              <Typography
+                variant="h4"
+                weight="semibold"
+                className={styles.cardTitle}
+              >
+                Contact Information
+              </Typography>
+              {!isEditingContacts && (
+                <Button
+                  variant="secondary"
+                  onClick={handleEditContacts}
+                  aria-label="Edit contact information"
                 >
-                  {primaryContact.value}
-                </a>
+                  Edit
+                </Button>
+              )}
+            </div>
+
+            {contactUpdateStatus === "success" && (
+              <div
+                className={styles.successMessage}
+                role="alert"
+                aria-live="polite"
+              >
+                ✓ Contact information updated successfully!
               </div>
             )}
-            {contacts.length > 0 && (
-              <div className={styles.socialLinks}>
-                {contacts.map((contact) => {
-                  const href =
-                    contact.type === "email"
-                      ? `mailto:${contact.value}`
-                      : contact.type === "phone"
-                        ? `tel:${contact.value}`
-                        : contact.value;
 
-                  return (
+            {contactUpdateStatus === "error" && contactUpdateErrors.submit && (
+              <div
+                className={styles.errorMessage}
+                role="alert"
+                aria-live="assertive"
+              >
+                ✗ {contactUpdateErrors.submit}
+              </div>
+            )}
+
+            {contactUpdateErrors.primary && (
+              <div
+                className={styles.errorMessage}
+                role="alert"
+                aria-live="assertive"
+              >
+                ✗ {contactUpdateErrors.primary}
+              </div>
+            )}
+
+            {isEditingContacts ? (
+              <div className={styles.form}>
+                {displayContacts.map((contact, index) => (
+                  <div key={contact.id || index} className={styles.formGroup}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "1rem",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <div style={{ flex: 1 }}>
+                        <label htmlFor={`contact-type-${index}`}>
+                          Type <span aria-label="required">*</span>
+                        </label>
+                        <select
+                          id={`contact-type-${index}`}
+                          value={contact.type}
+                          onChange={(e) =>
+                            handleContactChange(
+                              index,
+                              "type",
+                              e.target.value as Contact["type"],
+                            )
+                          }
+                          className={
+                            contactUpdateErrors[`${index}-type`]
+                              ? styles.inputError
+                              : ""
+                          }
+                          style={{
+                            width: "100%",
+                            padding: "0.875rem 1.25rem",
+                            border: "2px solid var(--border-primary)",
+                            background: "var(--bg-overlay)",
+                            color: "var(--text-primary)",
+                            fontSize: "1rem",
+                            borderRadius: "var(--radius-lg)",
+                            fontFamily: "inherit",
+                          }}
+                        >
+                          <option value="email">Email</option>
+                          <option value="phone">Phone</option>
+                          <option value="linkedin">LinkedIn</option>
+                          <option value="github">GitHub</option>
+                          <option value="website">Website</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <label htmlFor={`contact-label-${index}`}>
+                          Label <span aria-label="required">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id={`contact-label-${index}`}
+                          value={contact.label}
+                          onChange={(e) =>
+                            handleContactChange(index, "label", e.target.value)
+                          }
+                          className={
+                            contactUpdateErrors[`${index}-label`]
+                              ? styles.inputError
+                              : ""
+                          }
+                        />
+                        {contactUpdateErrors[`${index}-label`] && (
+                          <span className={styles.errorText}>
+                            {contactUpdateErrors[`${index}-label`]}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor={`contact-value-${index}`}>
+                        Value <span aria-label="required">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id={`contact-value-${index}`}
+                        value={contact.value}
+                        onChange={(e) =>
+                          handleContactChange(index, "value", e.target.value)
+                        }
+                        className={
+                          contactUpdateErrors[`${index}-value`]
+                            ? styles.inputError
+                            : ""
+                        }
+                      />
+                      {contactUpdateErrors[`${index}-value`] && (
+                        <span className={styles.errorText}>
+                          {contactUpdateErrors[`${index}-value`]}
+                        </span>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        id={`contact-primary-${index}`}
+                        checked={contact.isPrimary}
+                        onChange={(e) =>
+                          handleContactChange(
+                            index,
+                            "isPrimary",
+                            e.target.checked,
+                          )
+                        }
+                      />
+                      <label
+                        htmlFor={`contact-primary-${index}`}
+                        style={{ margin: 0, fontWeight: "normal" }}
+                      >
+                        Primary Contact
+                      </label>
+                    </div>
+                  </div>
+                ))}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                    marginTop: "1rem",
+                  }}
+                >
+                  <Button
+                    variant="primary"
+                    onClick={handleSaveContacts}
+                    isLoading={isUpdatingContacts}
+                    fullWidth
+                  >
+                    {isUpdatingContacts ? "Saving..." : "Save Changes"}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={handleCancelEdit}
+                    fullWidth
+                    disabled={isUpdatingContacts}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {primaryContact && (
+                  <div className={styles.contactItem}>
+                    <Typography variant="body" weight="medium">
+                      {primaryContact.label}
+                    </Typography>
                     <a
-                      key={contact.id}
-                      href={href}
+                      href={
+                        primaryContact.type === "email"
+                          ? `mailto:${primaryContact.value}`
+                          : primaryContact.type === "phone"
+                            ? `tel:${primaryContact.value}`
+                            : primaryContact.value
+                      }
                       target={
-                        contact.type === "email" || contact.type === "phone"
+                        primaryContact.type === "email" ||
+                        primaryContact.type === "phone"
                           ? undefined
                           : "_blank"
                       }
                       rel={
-                        contact.type === "email" || contact.type === "phone"
+                        primaryContact.type === "email" ||
+                        primaryContact.type === "phone"
                           ? undefined
                           : "noopener noreferrer"
                       }
-                      className={styles.socialLink}
+                      className={styles.contactLink}
                     >
-                      {contact.label}
+                      {primaryContact.value}
                     </a>
-                  );
-                })}
-              </div>
+                  </div>
+                )}
+                {contacts.length > 0 && (
+                  <div className={styles.socialLinks}>
+                    {contacts.map((contact) => {
+                      const href =
+                        contact.type === "email"
+                          ? `mailto:${contact.value}`
+                          : contact.type === "phone"
+                            ? `tel:${contact.value}`
+                            : contact.value;
+
+                      return (
+                        <a
+                          key={contact.id}
+                          href={href}
+                          target={
+                            contact.type === "email" || contact.type === "phone"
+                              ? undefined
+                              : "_blank"
+                          }
+                          rel={
+                            contact.type === "email" || contact.type === "phone"
+                              ? undefined
+                              : "noopener noreferrer"
+                          }
+                          className={styles.socialLink}
+                        >
+                          {contact.label}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </>
             )}
           </Card>
         </div>

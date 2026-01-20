@@ -20,12 +20,33 @@ export const Experience: React.FC = () => {
   }
 
   if (error || !profile) {
+    const isProfileNotFound = error?.message?.includes("Profile not found");
+
     return (
       <div className={styles.error} role="alert" aria-live="assertive">
         <Typography variant="h3">Failed to load experience</Typography>
         <Typography variant="body" color="secondary">
           {error?.message || "Please try again later"}
         </Typography>
+        {isProfileNotFound && (
+          <Typography
+            variant="small"
+            color="tertiary"
+            style={{ marginTop: "1rem" }}
+          >
+            💡 Tip: Make sure the database is seeded. Run{" "}
+            <code
+              style={{
+                background: "var(--bg-tertiary)",
+                padding: "0.2rem 0.4rem",
+                borderRadius: "4px",
+              }}
+            >
+              npm run seed
+            </code>{" "}
+            in the backend directory.
+          </Typography>
+        )}
         <Button
           onClick={() => window.location.reload()}
           variant="primary"
@@ -38,10 +59,23 @@ export const Experience: React.FC = () => {
     );
   }
 
+  // Sort experiences: current first, then by start date (newest first)
+  const sortedExperiences = [...profile.experiences].sort((a, b) => {
+    // Current experiences first
+    if (a.isCurrent && !b.isCurrent) return -1;
+    if (!a.isCurrent && b.isCurrent) return 1;
+
+    // Then sort by start date (newest first)
+    const dateA = new Date(a.startDate).getTime();
+    const dateB = new Date(b.startDate).getTime();
+    return dateB - dateA;
+  });
+
   return (
     <Section title="Experience" subtitle="My professional journey">
-      {profile.experiences.length === 0 ? (
+      {sortedExperiences.length === 0 ? (
         <div className={styles.empty} role="status" aria-live="polite">
+          <div className={styles.emptyIcon}>💼</div>
           <Typography variant="h4" weight="semibold" color="secondary">
             No experience available
           </Typography>
@@ -55,7 +89,7 @@ export const Experience: React.FC = () => {
           role="list"
           aria-label="Work experience timeline"
         >
-          {profile.experiences.map((experience) => (
+          {sortedExperiences.map((experience) => (
             <div key={experience.id} role="listitem">
               <ExperienceItem
                 experience={experience}

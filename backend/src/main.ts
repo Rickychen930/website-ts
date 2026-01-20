@@ -79,27 +79,39 @@ app.use(
 const startServer = async () => {
   const isDevelopment = nodeEnv === "development";
 
-  // In development, try to connect but don't block server startup
-  if (isDevelopment) {
-    connectDatabase().catch(() => {
-      // Connection will retry in the background
-    });
-  } else {
-    // In production, wait for database connection
-    try {
-      await connectDatabase();
-    } catch (error) {
-      console.error("❌ Failed to connect to database:", error);
+  // Always try to connect to database (MongoDB Atlas)
+  // In production, require successful connection before starting server
+  try {
+    await connectDatabase();
+    console.log("✅ Database connection established");
+  } catch (error) {
+    console.error("❌ Failed to connect to MongoDB Atlas:", error);
+    if (!isDevelopment) {
+      console.error(
+        "❌ Production mode requires database connection. Exiting...",
+      );
       process.exit(1);
+    } else {
+      console.warn(
+        "⚠️  Development mode: Server will start but database features may not work.",
+      );
+      console.warn(
+        "💡 Make sure MONGODB_URI is set correctly in your .env file",
+      );
     }
   }
 
-  // Start the server regardless of database connection status in development
+  // Start the server
   app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
     console.log(`🏥 Health check: http://localhost:${PORT}/health`);
     console.log(`🌍 Environment: ${nodeEnv}`);
+    if (isDevelopment) {
+      console.log(
+        `💡 To seed database: npm run seed (ensure MONGODB_URI is set)`,
+      );
+    }
   });
 };
 
