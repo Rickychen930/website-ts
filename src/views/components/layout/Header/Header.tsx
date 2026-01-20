@@ -3,16 +3,27 @@
  * Main navigation header
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Search } from "@/components/Search";
 import styles from "./Header.module.css";
 
 export const Header: React.FC = () => {
   const { profile } = useProfile();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { path: "/", label: "Home" },
@@ -27,7 +38,10 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className={styles.header} role="banner">
+    <header
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}
+      role="banner"
+    >
       <div className={styles.container}>
         <Link
           to="/"
@@ -36,12 +50,15 @@ export const Header: React.FC = () => {
         >
           <img
             src="/logo192.png"
-            alt={profile?.name || "Ricky Chen"}
+            alt={`${profile?.name || "Ricky Chen"} logo - Home`}
             className={styles.logoImage}
+            width="192"
+            height="192"
           />
         </Link>
 
         <nav
+          id="main-navigation"
           className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ""}`}
           role="navigation"
           aria-label="Main navigation"
@@ -60,6 +77,9 @@ export const Header: React.FC = () => {
         </nav>
 
         <div className={styles.headerActions}>
+          <div className={styles.searchWrapper}>
+            <Search className={styles.headerSearch} />
+          </div>
           <ThemeToggle />
         </div>
 
@@ -69,6 +89,7 @@ export const Header: React.FC = () => {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
           aria-controls="main-navigation"
+          aria-haspopup="true"
           type="button"
         >
           <span className={styles.menuIcon} aria-hidden="true" />

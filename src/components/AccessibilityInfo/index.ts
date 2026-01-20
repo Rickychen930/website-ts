@@ -1,0 +1,1 @@
+export { AccessibilityInfo } from "./AccessibilityInfo";

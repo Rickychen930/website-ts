@@ -19,15 +19,30 @@
   left: 50%;
   transform: translateX(-50%);
   width: 3.75rem;
-  height: 3px;
+  height: 4px;
   background: var(--gradient-primary-accent);
+  background-size: 200% 100%;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   opacity: 0;
   transition: opacity var(--transition-slow) var(--transition-ease);
+  box-shadow: var(--shadow-glow);
 }
 
 .statItem:hover::before {
   opacity: 1;
+  animation: gradientShift calc(var(--transition-slow) * 4)
+    var(--transition-ease) infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .statItem:hover {
@@ -38,9 +53,24 @@
 
 .value {
   background: var(--gradient-primary);
+  background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-clip: text;
   margin-bottom: var(--spacing-sm);
+  animation: gradientShift calc(var(--transition-slow) * 8)
+    var(--transition-ease) infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .unit {

@@ -3,11 +3,12 @@
   position: relative;
   padding: var(--spacing-3xl) var(--spacing-xl);
   background: var(--gradient-hero);
-  min-height: 95vh;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   animation: fadeIn var(--transition-slow) var(--transition-ease);
+  isolation: isolate;
 }
 
 .hero::before {
@@ -17,21 +18,27 @@
   background-image:
     radial-gradient(
       circle at 20% 50%,
-      var(--color-primary-alpha-20) 0%,
+      var(--color-primary-alpha-30) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 80%,
-      var(--color-accent-alpha-20) 0%,
+      var(--color-accent-alpha-30) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 50% 20%,
-      var(--color-primary-alpha-10) 0%,
+      var(--color-primary-alpha-15) 0%,
       transparent 50%
+    ),
+    radial-gradient(
+      circle at 10% 10%,
+      var(--color-accent-alpha-20) 0%,
+      transparent 40%
     );
   pointer-events: none;
-  animation: float calc(var(--transition-slow) * 16) ease-in-out infinite;
+  animation: float calc(var(--transition-slow) * 20) ease-in-out infinite;
+  z-index: 0;
 }
 
 .hero::after {
@@ -81,21 +88,23 @@
 }
 
 .heroTitle {
+  position: relative;
   background: var(--gradient-text);
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   margin-bottom: var(--spacing-lg);
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-clip: text;
   background-size: 200% 200%;
   animation:
     fadeInUp var(--transition-normal) var(--transition-ease)
       calc(var(--transition-fast) * 2) both,
-    gradientShift calc(var(--transition-slow) * 8) var(--transition-ease)
+    gradientShift calc(var(--transition-slow) * 10) var(--transition-ease)
       infinite;
-  letter-spacing: var(--letter-spacing-tight);
-  text-shadow: var(--shadow-glow);
+  letter-spacing: calc(var(--letter-spacing-tight) * 1.5);
+  filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
 }
 
 .heroSubtitle {
@@ -109,6 +118,7 @@
 
 .heroLocation {
   display: inline-flex;
+  position: relative;
   padding: var(--spacing-sm) var(--spacing-lg);
   border: 1px solid var(--border-primary);
   background: var(--bg-overlay);
@@ -118,18 +128,34 @@
   margin-bottom: var(--spacing-2xl);
   align-items: center;
   gap: var(--spacing-sm);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-md), var(--shadow-glow);
   animation: fadeInUp var(--transition-normal) var(--transition-ease)
     calc(var(--transition-fast) * 3.33) both;
+  overflow: hidden;
 }
 
 .heroLocation:hover {
-  transform: translateY(calc(var(--spacing-xs) * -2));
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-strong);
   border-color: var(--color-primary-500);
+  background: var(--gradient-glass);
+}
+
+.heroLocation::before {
+  position: absolute;
+  z-index: -1;
+  background: var(--gradient-primary-accent);
+  opacity: 0;
+  transition: opacity var(--transition-normal) var(--transition-ease);
+  content: "";
+  inset: 0;
+}
+
+.heroLocation:hover::before {
+  opacity: 0.1;
 }
 
 .heroBio {
@@ -166,7 +192,8 @@
 }
 
 .heroActions a:hover {
-  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.02);
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.05);
+  filter: brightness(1.1);
 }
 
 .heroActions a:active {
@@ -364,7 +391,7 @@
 /* Responsive Design */
 @media (width <= 640px) {
   .hero {
-    min-height: 50vh;
+    min-height: 85vh;
     padding: var(--spacing-2xl) var(--spacing-md);
   }
 

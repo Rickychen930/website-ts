@@ -52,6 +52,182 @@
   border-width: 0;
 }
 
+/* Ensure all interactive elements are keyboard accessible */
+[role="button"],
+[role="link"],
+[role="menuitem"],
+[role="tab"],
+[role="option"] {
+  cursor: pointer;
+}
+
+[role="button"]:focus-visible,
+[role="link"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="option"]:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Better focus indicators for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+}
+
+/* Landmark regions */
+main[role="main"] {
+  outline: none;
+}
+
+main[role="main"]:focus {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
+}
+
+/* Better link contrast - only for text links, not buttons */
+a:not(button, [role="button"]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:not(button, [role="button"]):hover,
+a:not(button, [role="button"]):focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Ensure sufficient color contrast for text */
+.text-secondary {
+  color: var(--text-secondary);
+
+  /* Ensure minimum 4.5:1 contrast ratio */
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+
+  /* Ensure minimum 4.5:1 contrast ratio */
+}
+
+/* Better form labels */
+label {
+  display: block;
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-xs);
+}
+
+label[required]::after,
+label:has(+ input[required])::after,
+label:has(+ textarea[required])::after {
+  content: " *";
+  color: var(--color-error-500);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Better error messages */
+[role="alert"] {
+  color: var(--color-error-600);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--spacing-xs);
+}
+
+/* Better success messages */
+[role="status"] {
+  color: var(--color-success-700);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Ensure images have proper alt text handling */
+img:not([alt]) {
+  border: 2px dashed var(--color-error-500);
+}
+
+img[alt=""] {
+  /* Decorative image - already handled by empty alt */
+}
+
+/* Better table accessibility */
+table {
+  border-collapse: collapse;
+}
+
+th {
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+}
+
+/* Better list accessibility */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* Ensure headings have proper hierarchy */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  margin-top: 0;
+}
+
+/* Better button accessibility */
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Better input accessibility */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  min-height: 2.75rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/* Better select accessibility */
+select {
+  min-height: 2.75rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+}
+
+/* Ensure all interactive elements have proper touch targets on mobile */
+@media (width <= 768px) {
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="link"] {
+    min-height: 3rem;
+    min-width: 3rem;
+  }
+}
+
 /* Skip to content link - Using design tokens */
 .skip-to-content {
   position: absolute;

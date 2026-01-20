@@ -15,7 +15,8 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 3px;
+  z-index: 1;
+  height: 4px;
   background: var(--gradient-primary-accent);
   transition: transform var(--transition-slow) var(--transition-ease);
   content: "";
@@ -69,9 +70,11 @@
 }
 
 .card--elevated:hover {
-  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
-  transform: translateY(calc(var(--spacing-xs) * -6)) scale(1.02);
+  box-shadow:
+    var(--shadow-2xl), var(--shadow-glow-strong), var(--shadow-colored);
+  transform: translateY(calc(var(--spacing-xs) * -8)) scale(1.03);
   border-color: var(--color-primary-500);
+  filter: brightness(1.02);
 }
 
 .card--outlined {

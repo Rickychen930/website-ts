@@ -6,6 +6,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
+import {
+  useSEO,
+  useStructuredData,
+  generateStructuredData,
+} from "@/hooks/useSEO";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
@@ -21,6 +26,25 @@ import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
   const { profile, isLoading, error } = useProfile();
+
+  // SEO Configuration
+  useSEO({
+    title: profile
+      ? `${profile.name} - ${profile.title} | Portfolio`
+      : "Ricky Chen - Software Engineer & AI Researcher | Portfolio",
+    description:
+      profile?.bio ||
+      "Portfolio of Ricky Chen, Software Engineer & AI Researcher. Specializing in full-stack development, machine learning, and modern web technologies.",
+    keywords:
+      "Software Engineer, Full-Stack Developer, AI Researcher, Web Developer, TypeScript, React, Python, Machine Learning, Portfolio",
+    type: "website",
+  });
+
+  // Structured Data
+  const structuredData = profile
+    ? generateStructuredData({ type: "Person", profile })
+    : null;
+  useStructuredData(structuredData);
 
   if (isLoading) {
     return <Loading fullScreen message="Loading profile..." />;

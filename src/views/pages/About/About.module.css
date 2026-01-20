@@ -1,9 +1,45 @@
 .content {
-  max-width: var(--container-lg);
+  position: relative;
   margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
+  max-width: var(--container-lg);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.content::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: var(--gradient-primary-accent);
+  content: "";
+  background-size: 200% 100%;
+  animation: gradientShift calc(var(--transition-slow) * 8)
+    var(--transition-ease) infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .bio {
+  position: relative;
+  z-index: 1;
+  color: var(--text-secondary);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-xl);
@@ -16,11 +52,58 @@
 }
 
 .skillCategory {
+  position: relative;
   width: 100%;
+  padding: var(--spacing-xl);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-overlay);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.skillCategory::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gradient-primary-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--transition-slow) var(--transition-ease);
+}
+
+.skillCategory:hover {
+  transform: translateY(calc(var(--spacing-xs) * -2));
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  border-color: var(--color-primary-alpha-30);
+}
+
+.skillCategory:hover::before {
+  transform: scaleY(1);
 }
 
 .categoryTitle {
+  display: inline-block;
+  position: relative;
   margin-bottom: var(--spacing-lg);
+}
+
+.categoryTitle::after {
+  content: "";
+  position: absolute;
+  bottom: calc(var(--spacing-xs) * -1);
+  left: 0;
+  width: 3rem;
+  height: 2px;
+  background: var(--gradient-primary-accent);
+  border-radius: var(--radius-sm);
+  opacity: 0.6;
 }
 
 .skillsGrid {
@@ -48,15 +131,17 @@
 
 .languageItem {
   position: relative;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-xl);
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
   text-align: center;
   transition: all var(--transition-normal) var(--transition-ease);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   min-width: 9.375rem;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .languageItem::before {

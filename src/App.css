@@ -89,26 +89,7 @@ img {
   height: auto;
 }
 
-/* Skip to content link - Accessibility */
-.skip-to-content {
-  position: absolute;
-  top: calc(var(--spacing-xl) * -1);
-  left: 0;
-  z-index: var(--z-tooltip);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  background: var(--color-primary-500);
-  color: var(--text-inverse);
-  font-weight: var(--font-weight-semibold);
-  transition: top var(--transition-fast) var(--transition-ease);
-  text-decoration: none;
-  border-radius: 0 0 var(--radius-md) 0;
-}
-
-.skip-to-content:focus {
-  top: 0;
-  outline: 3px solid var(--text-inverse);
-  outline-offset: var(--spacing-xs);
-}
+/* Skip to content link - Accessibility (now handled by SkipLinks component) */
 
 /* Focus visible styles - Better keyboard navigation */
 *:focus-visible {

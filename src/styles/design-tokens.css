@@ -102,6 +102,10 @@
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
   --shadow-glow-strong: 0 0 30px rgba(59, 130, 246, 0.5);
+  --shadow-glow-accent: 0 0 25px rgba(34, 197, 94, 0.4);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-colored: 0 8px 24px rgba(59, 130, 246, 0.15);
 
   /* Transitions */
   --transition-fast: 150ms;
@@ -121,41 +125,60 @@
   --z-cursor: 9998;
   --z-progress: 9999;
 
-  /* Gradients */
+  /* Gradients - Enhanced with more sophisticated color stops */
   --gradient-primary: linear-gradient(
     135deg,
     var(--color-primary-500) 0%,
-    var(--color-primary-600) 50%,
-    var(--color-primary-700) 100%
+    var(--color-primary-600) 30%,
+    var(--color-primary-700) 60%,
+    var(--color-primary-600) 100%
   );
   --gradient-accent: linear-gradient(
     135deg,
     var(--color-accent-500) 0%,
-    var(--color-accent-600) 100%
+    var(--color-accent-600) 50%,
+    var(--color-accent-700) 100%
   );
   --gradient-primary-accent: linear-gradient(
     135deg,
     var(--color-primary-500) 0%,
-    var(--color-accent-500) 100%
+    var(--color-primary-600) 25%,
+    var(--color-accent-500) 50%,
+    var(--color-accent-600) 75%,
+    var(--color-primary-600) 100%
   );
   --gradient-text: linear-gradient(
     135deg,
     var(--text-primary) 0%,
-    var(--color-primary-500) 50%,
-    var(--color-accent-500) 100%
+    var(--color-primary-500) 30%,
+    var(--color-accent-500) 60%,
+    var(--color-primary-600) 100%
   );
   --gradient-card: linear-gradient(
     135deg,
     var(--bg-primary) 0%,
-    var(--bg-secondary) 100%
+    var(--bg-secondary) 50%,
+    var(--bg-primary) 100%
   );
   --gradient-hero: linear-gradient(
     135deg,
     var(--color-primary-50) 0%,
-    var(--color-primary-100) 25%,
-    var(--bg-primary) 50%,
-    var(--color-primary-50) 75%,
-    var(--color-primary-100) 100%
+    var(--color-primary-100) 20%,
+    var(--bg-primary) 40%,
+    var(--color-primary-50) 60%,
+    var(--color-primary-100) 80%,
+    var(--bg-primary) 100%
+  );
+  --gradient-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  --gradient-glow: radial-gradient(
+    circle,
+    var(--color-primary-alpha-40) 0%,
+    var(--color-primary-alpha-20) 40%,
+    transparent 70%
   );
 
   /* Additional color utilities for gradients and effects */
@@ -210,21 +233,29 @@
   --gradient-hero: linear-gradient(
     135deg,
     var(--bg-primary) 0%,
-    var(--bg-secondary) 25%,
-    var(--bg-primary) 50%,
-    var(--bg-secondary) 75%,
-    var(--bg-primary) 100%
+    var(--bg-secondary) 20%,
+    var(--bg-primary) 40%,
+    var(--bg-secondary) 60%,
+    var(--bg-primary) 80%,
+    var(--bg-secondary) 100%
   );
   --gradient-card: linear-gradient(
     135deg,
     var(--bg-secondary) 0%,
-    var(--bg-primary) 100%
+    var(--bg-primary) 50%,
+    var(--bg-secondary) 100%
   );
   --gradient-text: linear-gradient(
     135deg,
     var(--text-primary) 0%,
-    var(--color-primary-500) 50%,
-    var(--color-accent-500) 100%
+    var(--color-primary-500) 30%,
+    var(--color-accent-500) 60%,
+    var(--color-primary-600) 100%
+  );
+  --gradient-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
   );
 }
 

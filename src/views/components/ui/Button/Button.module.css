@@ -57,8 +57,10 @@
   background-size: 200% 200%;
   animation: gradientShift calc(var(--transition-slow) * 4)
     var(--transition-ease) infinite;
-  box-shadow: var(--shadow-xl), var(--shadow-glow-strong);
-  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.03);
+  box-shadow:
+    var(--shadow-xl), var(--shadow-glow-strong), var(--shadow-colored);
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.05);
+  filter: brightness(1.1);
 }
 
 @keyframes gradientShift {
@@ -100,9 +102,10 @@
 .button--outline:hover:not(:disabled) {
   background: var(--gradient-primary);
   color: var(--text-inverse);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
-  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-glow), var(--shadow-colored);
+  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.03);
   border-color: var(--color-primary-600);
+  filter: brightness(1.05);
 }
 
 .button--outline:active:not(:disabled) {
@@ -116,6 +119,8 @@
 
 .button--ghost:hover:not(:disabled) {
   background-color: var(--bg-tertiary);
+  transform: translateY(calc(var(--spacing-xs) * -1));
+  box-shadow: var(--shadow-soft);
 }
 
 /* Sizes */

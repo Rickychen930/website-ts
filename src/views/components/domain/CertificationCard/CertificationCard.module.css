@@ -2,12 +2,72 @@
   display: flex;
   position: relative;
   height: 100%;
-  transition: all var(--transition-normal) var(--transition-ease);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
+  transition: all var(--transition-slow) var(--transition-ease);
   flex-direction: column;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.certificationCard::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: var(--gradient-primary-accent);
+  transition: transform var(--transition-slow) var(--transition-ease);
+  content: "";
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  box-shadow: var(--shadow-glow);
+}
+
+.certificationCard:hover::before {
+  transform: scaleX(1);
+  animation: gradientShift calc(var(--transition-slow) * 4)
+    var(--transition-ease) infinite;
+}
+
+.certificationCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    var(--color-primary-alpha-10) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-slow) var(--transition-ease);
+  pointer-events: none;
+}
+
+.certificationCard:hover::after {
+  opacity: 1;
 }
 
 .certificationCard:hover {
-  transform: translateY(calc(var(--spacing-xs) * -4));
+  transform: translateY(calc(var(--spacing-xs) * -6)) scale(1.02);
+  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
+  border-color: var(--color-primary-500);
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .header {
@@ -23,16 +83,30 @@
 }
 
 .link {
+  display: inline-flex;
+  position: relative;
+  width: fit-content;
   color: var(--color-primary-500);
-  text-decoration: none;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  transition: color var(--transition-fast) var(--transition-ease);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-normal) var(--transition-ease);
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+}
+
+.link::after {
+  content: "→";
+  transition: transform var(--transition-normal) var(--transition-ease);
 }
 
 .link:hover {
   color: var(--color-primary-600);
-  text-decoration: underline;
+  transform: translateX(var(--spacing-xs));
+}
+
+.link:hover::after {
+  transform: translateX(var(--spacing-xs));
 }
 
 /* Responsive Design */

@@ -22,13 +22,28 @@
   width: 4px;
   height: 100%;
   background: var(--gradient-primary-accent);
+  background-size: 100% 200%;
   transform: scaleY(0);
   transform-origin: top;
   transition: transform var(--transition-slow) var(--transition-ease);
+  box-shadow: var(--shadow-glow);
 }
 
 .testimonialCard:hover::before {
   transform: scaleY(1);
+  animation: gradientShift calc(var(--transition-slow) * 4)
+    var(--transition-ease) infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 0% 100%;
+  }
 }
 
 .testimonialCard:hover {

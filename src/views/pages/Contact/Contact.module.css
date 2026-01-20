@@ -11,17 +11,34 @@
 .formCard {
   position: relative;
   height: 100%;
+  overflow: hidden;
 }
 
-.contactCard::before {
+.contactCard::before,
+.formCard::before {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  height: 3px;
+  z-index: 1;
+  height: 4px;
   background: var(--gradient-primary-accent);
+  background-size: 200% 100%;
   content: "";
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  animation: gradientShift calc(var(--transition-slow) * 8)
+    var(--transition-ease) infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .cardTitle {
@@ -96,10 +113,11 @@
 }
 
 .socialLink:hover {
-  background-color: var(--color-primary-500);
+  background: var(--gradient-primary);
   color: var(--text-inverse);
-  transform: translateY(calc(var(--spacing-xs) * -1));
-  box-shadow: var(--shadow-sm), var(--shadow-glow);
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  border-color: var(--color-primary-600);
 }
 
 .form {
@@ -144,10 +162,12 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   background: var(--bg-primary);
-  transform: translateY(calc(var(--spacing-xs) * -2));
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.01);
   outline: none;
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+  box-shadow:
+    0 0 0 3px var(--color-primary-alpha-10),
+    var(--shadow-md);
 }
 
 .formGroup input:invalid:not(:focus, :placeholder-shown),

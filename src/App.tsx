@@ -17,6 +17,10 @@ import { CursorEffect } from "@/components/CursorEffect";
 import { PageTransition } from "@/components/PageTransition";
 import { Analytics } from "@/components/Analytics";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
+import { SkipLinks } from "@/components/SkipLinks";
+import { AccessibilityAnnouncer } from "@/components/AccessibilityAnnouncer";
+import { AccessibilityInfo } from "@/components/AccessibilityInfo";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import "./App.css";
 
 // Lazy load pages for code splitting
@@ -43,6 +47,8 @@ const Contact = React.lazy(() =>
 );
 
 export const App: React.FC = () => {
+  useKeyboardShortcuts();
+
   return (
     <ErrorBoundary>
       <ThemeProvider>
@@ -50,13 +56,13 @@ export const App: React.FC = () => {
           <BrowserRouter>
             <Analytics />
             <PerformanceMonitor />
+            <AccessibilityAnnouncer />
+            <AccessibilityInfo />
             <div className="app">
               <ParticleBackground />
               <ScrollProgress />
               <CursorEffect />
-              <a href="#main-content" className="skip-to-content">
-                Skip to main content
-              </a>
+              <SkipLinks />
               <Header />
               <main
                 id="main-content"

@@ -2,12 +2,33 @@
   display: flex;
   gap: var(--spacing-xl);
   position: relative;
+  padding: var(--spacing-lg);
   padding-bottom: var(--spacing-3xl);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-lg);
   transition: all var(--transition-normal) var(--transition-ease);
 }
 
+.experienceItem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-overlay);
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transition: opacity var(--transition-normal) var(--transition-ease);
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
 .experienceItem:hover {
-  transform: translateX(var(--spacing-sm));
+  transform: translateX(var(--spacing-md));
+}
+
+.experienceItem:hover::before {
+  opacity: 1;
 }
 
 .timeline {
@@ -19,16 +40,26 @@
 
 .timelineDot {
   position: relative;
-  z-index: 1;
-  width: 0.75rem;
-  height: 0.75rem;
+  z-index: 2;
+  width: 1rem;
+  height: 1rem;
   border: 3px solid var(--bg-primary);
-  background-color: var(--color-primary-500);
+  background: var(--gradient-primary);
   border-radius: var(--radius-full);
   box-shadow:
     0 0 0 2px var(--color-primary-500),
-    0 0 0 4px var(--color-primary-alpha-10);
+    0 0 0 4px var(--color-primary-alpha-10),
+    0 0 12px var(--color-primary-alpha-30);
   animation: pulse calc(var(--transition-slow) * 4) ease-in-out infinite;
+  transition: all var(--transition-normal) var(--transition-ease);
+}
+
+.experienceItem:hover .timelineDot {
+  transform: scale(1.3);
+  box-shadow:
+    0 0 0 2px var(--color-primary-500),
+    0 0 0 4px var(--color-primary-alpha-20),
+    0 0 20px var(--color-primary-alpha-50);
 }
 
 .timelineDot::before {

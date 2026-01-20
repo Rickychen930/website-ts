@@ -1,6 +1,40 @@
 .timeline {
-  max-width: var(--container-lg);
+  position: relative;
   margin: 0 auto;
+  padding: var(--spacing-xl) 0;
+  max-width: var(--container-lg);
+}
+
+.timeline::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2rem;
+  width: 3px;
+  background: var(--gradient-primary-accent);
+  opacity: 0.3;
+  content: "";
+  background-size: 100% 200%;
+  animation: gradientShift calc(var(--transition-slow) * 10)
+    var(--transition-ease) infinite;
+  border-radius: var(--radius-full);
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 0% 100%;
+  }
+}
+
+@media (width <= 768px) {
+  .timeline::before {
+    left: 1rem;
+  }
 }
 
 .empty {

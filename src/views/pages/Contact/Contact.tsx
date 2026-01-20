@@ -465,6 +465,7 @@ export const Contact: React.FC = () => {
               Send a Message
             </Typography>
             <form
+              id="contact-form"
               onSubmit={handleSubmit}
               className={styles.form}
               aria-label="Contact form"

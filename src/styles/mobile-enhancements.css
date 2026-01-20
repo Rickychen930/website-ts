@@ -102,11 +102,37 @@
   button:active,
   .button:active,
   a:active {
-    transform: scale(0.97);
-    opacity: 0.9;
+    transform: scale(0.95);
+    opacity: 0.85;
     transition:
       transform var(--transition-fast) var(--transition-ease),
       opacity var(--transition-fast) var(--transition-ease);
+  }
+
+  /* Enhanced touch feedback with ripple effect */
+  .touch-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .touch-ripple::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.6s,
+      height 0.6s;
+  }
+
+  .touch-ripple:active::after {
+    width: 300px;
+    height: 300px;
   }
 
   /* Better focus states for touch devices */

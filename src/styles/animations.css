@@ -360,6 +360,70 @@
   background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-clip: text;
   animation: gradientShift calc(var(--transition-slow) * 6)
     var(--transition-ease) infinite;
+}
+
+/* Smooth Scroll Reveal with Intersection Observer */
+.scroll-reveal-enhanced {
+  opacity: 0;
+  transform: translateY(calc(var(--spacing-2xl) * 1.5)) scale(0.95);
+  transition:
+    opacity calc(var(--transition-slow) * 1.5) var(--transition-ease),
+    transform calc(var(--transition-slow) * 1.5) var(--transition-ease);
+}
+
+.scroll-reveal-enhanced.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered Animation for Lists */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(var(--spacing-xl));
+  animation: fadeInUp var(--transition-slow) var(--transition-ease) forwards;
+}
+
+.stagger-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.stagger-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.stagger-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.stagger-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.stagger-item:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.stagger-item:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.stagger-item:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* Smooth Page Load Animation */
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.page-load {
+  animation: pageLoad var(--transition-slow) var(--transition-ease) forwards;
 }
