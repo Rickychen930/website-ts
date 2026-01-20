@@ -26,18 +26,19 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Pull to refresh indicator */
+  /* Pull to refresh indicator - Using design tokens */
   .pull-to-refresh {
     position: fixed;
     top: -60px;
     left: 50%;
-    z-index: 10000;
-    padding: 1rem;
-    background: rgba(59, 130, 246, 0.9);
-    color: white;
-    transition: top 0.3s ease;
+    z-index: var(--z-tooltip);
+    padding: var(--spacing-md);
+    background: var(--color-primary-500);
+    color: var(--text-inverse);
+    opacity: 0.9;
+    transition: top var(--transition-normal) var(--transition-ease);
     transform: translateX(-50%);
-    border-radius: 0 0 1rem 1rem;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
   }
 
   .pull-to-refresh.active {
@@ -54,14 +55,15 @@
     font-size: 16px; /* Prevents zoom on iOS */
   }
 
-  /* Mobile menu enhancements */
+  /* Mobile menu enhancements - Using design tokens */
   .mobile-menu {
     position: fixed;
+    z-index: var(--z-modal);
+    background: var(--bg-overlay);
     inset: 0;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn var(--transition-normal) var(--transition-ease);
   }
 
   /* Safe area insets for notched devices */
@@ -87,19 +89,33 @@
     overscroll-behavior-y: contain;
   }
 
-  /* Prevent text selection on buttons */
+  /* Prevent text selection on buttons - Better UX */
   button,
   .button {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     user-select: none;
+    touch-action: manipulation; /* Prevents double-tap zoom */
   }
 
-  /* Better focus states for touch */
+  /* Better active states for touch - Immediate feedback */
   button:active,
-  .button:active {
-    transform: scale(0.98);
-    opacity: 0.8;
+  .button:active,
+  a:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+    transition:
+      transform 0.1s ease,
+      opacity 0.1s ease;
+  }
+
+  /* Better focus states for touch devices */
+  button:focus-visible,
+  .button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
   }
 }
 
@@ -137,9 +153,28 @@
   }
 }
 
-/* Dark mode mobile */
+/* Dark mode mobile - Using design tokens */
 @media (width <= 768px) {
   .dark .mobile-menu {
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--bg-overlay);
+    opacity: 0.9;
+  }
+}
+
+/* Reduced motion support for mobile */
+@media (width <= 768px) and (prefers-reduced-motion: reduce) {
+  button:active,
+  .button:active,
+  a:active {
+    transform: none;
+    transition: none;
+  }
+
+  .pull-to-refresh {
+    transition: none;
+  }
+
+  .mobile-menu {
+    animation: none;
   }
 }

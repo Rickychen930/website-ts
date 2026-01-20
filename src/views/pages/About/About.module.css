@@ -154,17 +154,67 @@
   margin-top: 1.5rem;
 }
 
-@media (width <= 768px) {
+/* Responsive Design */
+@media (width <= 640px) {
+  .content {
+    max-width: 100%;
+    padding: 0 var(--spacing-sm);
+  }
+
+  .bio {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .skillsContainer {
+    gap: var(--spacing-2xl);
+  }
+
   .skillsGrid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
   }
 
   .certificationsGrid,
   .honorsGrid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
   }
 
   .softSkillsGrid {
-    gap: 0.75rem;
+    gap: var(--spacing-sm);
+  }
+
+  .languages {
+    gap: var(--spacing-lg);
+  }
+
+  .languageItem {
+    min-width: 120px;
+    padding: var(--spacing-md);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .skillsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .certificationsGrid,
+  .honorsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  .skillsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .certificationsGrid,
+  .honorsGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

@@ -14,12 +14,13 @@ export const getContrastRatio = (color1: string, color2: string): number => {
 };
 
 /**
- * Generate accessible focus styles
+ * Generate accessible focus styles - Using CSS variables
  */
 export const focusStyles = {
-  outline: "2px solid #3b82f6",
+  outline: "2px solid var(--color-primary-500)",
   outlineOffset: "2px",
-  borderRadius: "0.25rem",
+  borderRadius: "var(--radius-sm)",
+  boxShadow: "0 0 0 3px var(--color-primary-alpha-10)",
 };
 
 /**
@@ -34,11 +35,13 @@ export const SkipToContent: React.FC = () => {
         position: "absolute",
         top: "-40px",
         left: "0",
-        background: "#3b82f6",
-        color: "#ffffff",
-        padding: "0.5rem 1rem",
+        background: "var(--color-primary-500)",
+        color: "var(--text-inverse)",
+        padding: "var(--spacing-sm) var(--spacing-md)",
         textDecoration: "none",
-        zIndex: 10000,
+        zIndex: "var(--z-tooltip)",
+        fontWeight: "var(--font-weight-semibold)",
+        borderRadius: "0 0 var(--radius-md) 0",
       }}
       onFocus={(e) => {
         e.currentTarget.style.top = "0";

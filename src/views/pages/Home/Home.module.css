@@ -342,16 +342,124 @@
   margin-top: var(--spacing-md);
 }
 
-@media (width <= 768px) {
+/* Responsive Design */
+@media (width <= 640px) {
   .hero {
-    min-height: 60vh;
+    min-height: 50vh;
+    padding: var(--spacing-2xl) var(--spacing-md);
   }
 
-  .projectsGrid {
-    grid-template-columns: 1fr;
+  .heroContent {
+    padding: var(--spacing-md);
+    max-width: 100%;
+  }
+
+  .heroTitle {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .heroSubtitle {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
+
+  .heroBio {
+    padding: 0 var(--spacing-sm);
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
   }
 
   .heroActions {
     flex-direction: column;
+    gap: var(--spacing-md);
+    width: 100%;
+  }
+
+  .heroActions a,
+  .heroActions button {
+    width: 100%;
+  }
+
+  .projectsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .hero {
+    min-height: 70vh;
+    padding: var(--spacing-3xl) var(--spacing-lg);
+  }
+
+  .projectsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  .hero {
+    min-height: 85vh;
+  }
+
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 1025px) {
+  .projectsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+@media (orientation: landscape) and (width <= 768px) {
+  .hero {
+    min-height: 100vh;
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .heroTitle {
+    font-size: clamp(2rem, 6vw, 3.5rem);
   }
 }

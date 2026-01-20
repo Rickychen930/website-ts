@@ -43,8 +43,8 @@
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2.5rem;
-  padding: 0 1rem;
+  gap: var(--spacing-2xl);
+  padding: 0 var(--spacing-md);
 }
 
 .empty {
@@ -78,8 +78,41 @@
   margin-top: var(--spacing-md);
 }
 
-@media (width <= 768px) {
+/* Responsive Design */
+@media (width <= 640px) {
+  .filters {
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+
+  .filterButton {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+
   .projectsGrid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .projectsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (width >= 1025px) {
+  .projectsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
 }

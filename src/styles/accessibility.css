@@ -2,11 +2,12 @@
  * Accessibility Styles - WCAG 2.1 AA compliant
  */
 
-/* Focus styles for keyboard navigation */
+/* Focus styles for keyboard navigation - Using design tokens */
 *:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--color-primary-500);
   outline-offset: 2px;
-  border-radius: 0.25rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
 }
 
 /* Remove default focus for mouse users */
@@ -51,25 +52,26 @@
   border-width: 0;
 }
 
-/* Skip to content link */
+/* Skip to content link - Using design tokens */
 .skip-to-content {
   position: absolute;
   top: -40px;
   left: 0;
-  z-index: 10000;
-  padding: 0.75rem 1.5rem;
-  background: #3b82f6;
-  color: #fff;
-  font-weight: 600;
-  transition: top 0.2s ease;
+  z-index: var(--z-tooltip);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-primary-500);
+  color: var(--text-inverse);
+  font-weight: var(--font-weight-semibold);
+  transition: top var(--transition-fast) var(--transition-ease);
   text-decoration: none;
-  border-radius: 0 0 0.5rem;
+  border-radius: 0 0 var(--radius-md) 0;
 }
 
 .skip-to-content:focus {
   top: 0;
-  outline: 3px solid #fff;
+  outline: 3px solid var(--text-inverse);
   outline-offset: 2px;
+  box-shadow: var(--shadow-lg);
 }
 
 /* Minimum touch target size (44x44px) */
@@ -87,23 +89,34 @@ input[type="radio"],
   justify-content: center;
 }
 
-/* Color contrast improvements */
+/* Color contrast improvements - Using design tokens */
 .text-primary {
-  color: #1e293b; /* WCAG AA compliant with white background */
+  color: var(--text-primary);
 }
 
 .text-secondary {
-  color: #475569; /* WCAG AA compliant */
+  color: var(--text-secondary);
 }
 
-/* Error states */
+/* Error states - Using design tokens */
 [aria-invalid="true"] {
-  border-color: #ef4444 !important;
+  border-color: var(--color-error-500) !important;
 }
 
 [aria-invalid="true"]:focus {
-  outline-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  outline-color: var(--color-error-500);
+  box-shadow: 0 0 0 3px var(--color-error-50);
+  border-color: var(--color-error-500) !important;
+}
+
+/* Success states */
+[aria-invalid="false"]:not(:placeholder-shown, :focus) {
+  border-color: var(--color-success-500);
+}
+
+[aria-invalid="false"]:not(:placeholder-shown):focus {
+  border-color: var(--color-success-500);
+  box-shadow: 0 0 0 3px var(--color-success-50);
 }
 
 /* Loading states */
@@ -111,10 +124,51 @@ input[type="radio"],
   cursor: wait;
 }
 
-/* Disabled states */
+/* Disabled states - Better UX */
 [aria-disabled="true"],
 :disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
+  filter: grayscale(0.3);
+}
+
+/* Better loading states */
+[aria-busy="true"] {
+  cursor: wait;
+  position: relative;
+}
+
+[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg-overlay);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Better error messages visibility */
+[role="alert"] {
+  animation: slideInDown 0.3s ease-out;
+  margin-top: var(--spacing-sm);
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion support - Override all animations */
+@media (prefers-reduced-motion: reduce) {
+  [role="alert"] {
+    animation: none;
+  }
 }

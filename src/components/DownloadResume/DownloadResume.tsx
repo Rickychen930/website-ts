@@ -12,13 +12,13 @@ interface DownloadResumeProps {
 }
 
 export const DownloadResume: React.FC<DownloadResumeProps> = ({
-  resumeUrl = "/resume.pdf",
+  resumeUrl = "/RICKY - CV - 8 AUG.pdf",
   className = "",
 }) => {
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = resumeUrl;
-    link.download = "Ricky_Chen_Resume.pdf";
+    link.download = "Ricky_Chen_CV.pdf";
     link.target = "_blank";
     document.body.appendChild(link);
     link.click();

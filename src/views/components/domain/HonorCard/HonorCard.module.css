@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   height: 100%;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal) var(--transition-ease);
   flex-direction: column;
 }
 
@@ -11,27 +11,35 @@
 }
 
 .header {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .content {
   flex: 1;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .description {
-  margin-top: 0.75rem;
+  margin-top: var(--spacing-md);
+  color: var(--text-secondary);
 }
 
 .link {
-  color: #3b82f6;
+  color: var(--color-primary-500);
   text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast) var(--transition-ease);
 }
 
 .link:hover {
-  color: #2563eb;
+  color: var(--color-primary-600);
   text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (width <= 640px) {
+  .honorCard {
+    gap: var(--spacing-sm);
+  }
 }

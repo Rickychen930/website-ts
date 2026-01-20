@@ -12,21 +12,26 @@
 
 .searchInput {
   width: 100%;
-  padding: 0.875rem 1rem 0.875rem 3rem;
-  border: 2px solid rgba(226, 232, 240, 0.8);
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  border-radius: 0.75rem;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 3rem;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-overlay);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-lg);
   backdrop-filter: blur(10px);
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--color-primary-500);
   box-shadow:
-    0 0 0 3px rgba(59, 130, 246, 0.1),
-    0 4px 6px -1px rgba(59, 130, 246, 0.1);
+    0 0 0 3px var(--color-primary-alpha-10),
+    var(--shadow-md);
+}
+
+.searchInput::placeholder {
+  color: var(--text-tertiary);
 }
 
 .searchIcon {
@@ -46,33 +51,32 @@
 
 .filterButton {
   display: flex;
-  padding: 0.625rem 1.25rem;
-  border: 2px solid rgba(226, 232, 240, 0.8);
-  background: rgba(255, 255, 255, 0.9);
-  color: #475569;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border: 2px solid var(--border-primary);
+  background: var(--bg-overlay);
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-normal) var(--transition-ease);
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 0.75rem;
+  gap: var(--spacing-sm);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   backdrop-filter: blur(10px);
 }
 
 .filterButton:hover {
-  border-color: #3b82f6;
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-500);
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+  box-shadow: var(--shadow-md);
 }
 
 .filterButton.active {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  border-color: #3b82f6;
-  color: #fff;
-  box-shadow:
-    0 4px 6px -1px rgba(59, 130, 246, 0.3),
-    0 0 20px rgba(59, 130, 246, 0.2);
+  background: var(--gradient-primary);
+  border-color: var(--color-primary-600);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
 .filterIcon {
@@ -86,75 +90,81 @@
 }
 
 .sortLabel {
-  color: #64748b;
-  font-size: 0.9375rem;
-  font-weight: 500;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
 }
 
 .sortSelect {
-  padding: 0.625rem 1rem;
-  border: 2px solid rgba(226, 232, 240, 0.8);
-  background: rgba(255, 255, 255, 0.9);
-  color: #1e293b;
-  font-size: 0.9375rem;
-  transition: all 0.3s ease;
-  border-radius: 0.75rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--border-primary);
+  background: var(--bg-overlay);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-lg);
   backdrop-filter: blur(10px);
   cursor: pointer;
 }
 
 .sortSelect:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+}
+
+.sortLabel {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
 }
 
 .resultsCount {
-  color: #64748b;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
-/* Dark mode */
-.dark .searchInput {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(148, 163, 184, 0.3);
-  color: #e2e8f0;
-}
+/* Dark mode - handled automatically via CSS variables */
 
-.dark .filterButton {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(148, 163, 184, 0.3);
-  color: #cbd5e1;
-}
+/* Responsive Design */
+@media (width <= 640px) {
+  .projectFilter {
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
 
-.dark .sortSelect {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(148, 163, 184, 0.3);
-  color: #e2e8f0;
-}
+  .searchContainer {
+    max-width: 100%;
+  }
 
-.dark .sortLabel {
-  color: #94a3b8;
-}
+  .searchInput {
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 2.5rem;
+    font-size: var(--font-size-sm);
+  }
 
-.dark .resultsCount {
-  color: #94a3b8;
-}
-
-/* Responsive */
-@media (width <= 768px) {
   .filterButtons {
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
   }
 
   .filterButton {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
   }
 
   .sortContainer {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .filterButtons {
+    gap: var(--spacing-sm);
+  }
+
+  .filterButton {
+    padding: var(--spacing-sm) var(--spacing-lg);
   }
 }

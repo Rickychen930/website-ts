@@ -1,10 +1,24 @@
 .footer {
   position: relative;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-  color: #fff;
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 50%,
+    var(--bg-primary) 100%
+  );
+  color: var(--text-primary);
   overflow: hidden;
-  margin-top: 6rem;
-  border-top: 1px solid rgba(59, 130, 246, 0.1);
+  margin-top: var(--spacing-5xl);
+  border-top: 1px solid var(--color-primary-alpha-10);
+}
+
+.dark .footer {
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 50%,
+    var(--bg-primary) 100%
+  );
 }
 
 .footer::before {
@@ -16,12 +30,12 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(59, 130, 246, 0.6) 25%,
-    rgba(34, 197, 94, 0.6) 75%,
+    var(--color-primary-alpha-60) 25%,
+    var(--color-accent-alpha-60) 75%,
     transparent 100%
   );
   content: "";
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-glow);
 }
 
 .footer::after {
@@ -30,12 +44,12 @@
   background:
     radial-gradient(
       circle at 20% 30%,
-      rgba(59, 130, 246, 0.08) 0%,
+      var(--color-primary-alpha-10) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 70%,
-      rgba(34, 197, 94, 0.06) 0%,
+      var(--color-accent-alpha-10) 0%,
       transparent 50%
     );
   opacity: 0.6;
@@ -70,25 +84,25 @@
 }
 
 .footerBrand {
-  background: linear-gradient(135deg, #fff 0%, #60a5fa 50%, #4ade80 100%);
+  background: var(--gradient-text);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-sm);
 }
 
 .footerTagline {
-  color: #cbd5e1;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-sm);
 }
 
 .footerLocation {
   display: flex;
-  color: #94a3b8;
+  color: var(--text-tertiary);
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
 }
 
 .socialLinksWrapper {
@@ -96,9 +110,9 @@
 }
 
 .sectionTitle {
-  color: #fff;
-  margin-bottom: 1rem;
-  font-size: 1.125rem;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
 }
 
 .footerNav {
@@ -110,20 +124,20 @@
 .footerLink {
   display: inline-block;
   width: fit-content;
-  color: #cbd5e1;
-  transition: all 0.3s ease;
+  color: var(--text-secondary);
+  transition: all var(--transition-normal) var(--transition-ease);
   text-decoration: none;
 }
 
 .footerLink:hover {
-  color: #60a5fa;
+  color: var(--color-primary-500);
   transform: translateX(4px);
 }
 
 .newsletterDescription {
-  color: #94a3b8;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-normal);
 }
 
 .newsletterForm {
@@ -139,34 +153,36 @@
 
 .newsletterInput {
   flex: 1;
-  padding: 0.75rem 1rem;
-  border: 2px solid rgba(148, 163, 184, 0.3);
-  border-radius: 0.5rem;
-  background: rgba(30, 41, 59, 0.5);
-  color: #e2e8f0;
-  font-size: 0.9375rem;
-  transition: all 0.3s ease;
+  padding: var(--spacing-md) var(--spacing-md);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-overlay);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal) var(--transition-ease);
+  backdrop-filter: blur(10px);
 }
 
 .newsletterInput:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
 }
 
 .newsletterInput::placeholder {
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .newsletterButton {
   display: flex;
-  padding: 0.75rem 1.5rem;
+  padding: var(--spacing-md) var(--spacing-lg);
   border: none;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: #fff;
-  font-size: 1.25rem;
-  transition: all 0.3s ease;
-  border-radius: 0.5rem;
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-md);
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -174,9 +190,22 @@
 }
 
 .newsletterButton:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  animation: gradientShift 2s ease infinite;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .newsletterButton:active {
@@ -184,17 +213,17 @@
 }
 
 .newsletterSuccess {
-  color: #4ade80;
-  font-size: 0.875rem;
-  font-weight: 500;
-  animation: fadeIn 0.3s ease;
+  color: var(--color-accent-500);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  animation: fadeIn var(--transition-fast) var(--transition-ease);
 }
 
 .footerBottom {
   position: relative;
   z-index: 1;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  padding: var(--spacing-xl) 0;
+  border-top: 1px solid var(--border-primary);
 }
 
 .footerBottom .container {
@@ -212,18 +241,18 @@
 }
 
 .footerBottomLink {
-  color: #94a3b8;
+  color: var(--text-tertiary);
   text-decoration: none;
-  font-size: 0.875rem;
-  transition: color 0.3s ease;
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-normal) var(--transition-ease);
 }
 
 .footerBottomLink:hover {
-  color: #60a5fa;
+  color: var(--color-primary-500);
 }
 
 .separator {
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 @keyframes fadeIn {
@@ -239,23 +268,24 @@
 }
 
 /* Responsive */
-@media (width <= 768px) {
+@media (width <= 640px) {
   .footerTop {
-    padding: 3rem 0;
+    padding: var(--spacing-3xl) 0;
   }
 
   .footer {
-    margin-top: 4rem;
+    margin-top: var(--spacing-4xl);
   }
 
   .footerGrid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: var(--spacing-xl);
   }
 
   .footerBottom .container {
-    flex-direction: column;
+    padding: 0 var(--spacing-md);
     text-align: center;
+    flex-direction: column;
   }
 
   .newsletterInputGroup {
@@ -264,5 +294,26 @@
 
   .newsletterButton {
     width: 100%;
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .footerTop {
+    padding: var(--spacing-3xl) 0;
+  }
+
+  .footer {
+    margin-top: var(--spacing-4xl);
+  }
+
+  .footerGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  .footerGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

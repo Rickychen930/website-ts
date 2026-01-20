@@ -2,12 +2,15 @@
   display: flex;
   position: relative;
   height: 100%;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   flex-direction: column;
   animation: fadeInUp 0.6s ease-out both;
   overflow: hidden;
+  border-radius: var(--radius-xl);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 .projectCard::before {
@@ -17,13 +20,13 @@
   left: 0;
   z-index: 1;
   height: 4px;
-  background: linear-gradient(90deg, #3b82f6 0%, #22c55e 50%, #3b82f6 100%);
+  background: var(--gradient-primary-accent);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   content: "";
   background-size: 200% 100%;
   transform: scaleX(0);
   transform-origin: left;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-glow);
 }
 
 .projectCard:hover::before {
@@ -37,7 +40,7 @@
   inset: 0;
   background: radial-gradient(
     circle at 50% 0%,
-    rgba(59, 130, 246, 0.05) 0%,
+    var(--color-primary-alpha-10) 0%,
     transparent 50%
   );
   opacity: 0;
@@ -51,12 +54,8 @@
 
 .projectCard:hover {
   transform: translateY(-12px) scale(1.03);
-  box-shadow:
-    0 30px 40px -8px rgba(0, 0, 0, 0.15),
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 0 50px rgba(59, 130, 246, 0.25),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
+  border-color: var(--color-primary-500);
 }
 
 @keyframes gradientShift {
@@ -84,42 +83,43 @@
 .categoryBadge {
   display: inline-block;
   padding: 0.375rem 0.875rem;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--color-primary-alpha-30);
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.15) 0%,
-    rgba(59, 130, 246, 0.1) 100%
+    var(--color-primary-alpha-20) 0%,
+    var(--color-primary-alpha-10) 100%
   );
-  color: #2563eb;
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  border-radius: 0.5rem;
+  color: var(--color-primary-600);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-md);
   text-transform: capitalize;
-  font-family: Inter, sans-serif;
-  letter-spacing: 0.025em;
+  font-family: var(--font-family-sans);
+  letter-spacing: var(--letter-spacing-tight);
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .categoryBadge:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+  box-shadow: var(--shadow-md);
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.2) 0%,
-    rgba(59, 130, 246, 0.15) 100%
+    var(--color-primary-alpha-30) 0%,
+    var(--color-primary-alpha-20) 100%
   );
+  border-color: var(--color-primary-alpha-40);
 }
 
 .activeBadge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background-color: #dcfce7;
-  color: #15803d;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  font-weight: 500;
+  background-color: var(--color-success-50);
+  color: var(--color-success-700);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
 }
 
 .content {
@@ -137,25 +137,23 @@
 .techTag {
   display: inline-block;
   padding: 0.375rem 0.75rem;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  color: #475569;
-  font-size: 0.75rem;
-  font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  font-family: Inter, sans-serif;
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-family-sans);
 }
 
 .techTag:hover {
-  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-  color: #1e293b;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
   transform: translateY(-2px) scale(1.05);
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 0 10px rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+  border-color: var(--color-primary-500);
 }
 
 .achievements {
@@ -174,8 +172,8 @@
   content: "✓";
   position: absolute;
   left: 0;
-  color: #22c55e;
-  font-weight: 600;
+  color: var(--color-accent-500);
+  font-weight: var(--font-weight-semibold);
 }
 
 .footer {
@@ -187,7 +185,7 @@
 .expandedContent {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  border-top: 1px solid var(--border-primary);
 }
 
 .longDescription {
@@ -197,40 +195,40 @@
 
 .sectionTitle {
   margin-bottom: 0.75rem;
-  color: var(--color-primary);
+  color: var(--color-primary-500);
 }
 
 .architecture {
-  padding: 1rem;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  background: rgba(241, 245, 249, 0.8);
-  font-size: 0.875rem;
-  line-height: 1.75;
-  font-family: "Courier New", monospace;
-  border-radius: 0.5rem;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-md);
 }
 
 .expandButton {
   display: flex;
   width: 100%;
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-primary-alpha-30);
   background: transparent;
-  color: #2563eb;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  color: var(--color-primary-600);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-normal) var(--transition-ease);
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  border-radius: 0.5rem;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  border-radius: var(--radius-md);
   cursor: pointer;
   justify-content: center;
 }
 
 .expandButton:hover {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.5);
+  background: var(--color-primary-alpha-10);
+  border-color: var(--color-primary-500);
   transform: translateY(-1px);
 }
 
@@ -239,10 +237,35 @@
 }
 
 .expandIcon {
-  font-size: 0.75rem;
-  transition: transform 0.3s ease;
+  font-size: var(--font-size-xs);
+  transition: transform var(--transition-normal) var(--transition-ease);
 }
 
 .expandButton[aria-expanded="true"] .expandIcon {
   transform: rotate(180deg);
+}
+
+/* Responsive Design */
+@media (width <= 640px) {
+  .projectCard {
+    border-radius: var(--radius-lg);
+  }
+
+  .categoryBadge,
+  .techTag {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .projectCard {
+    border-radius: var(--radius-lg);
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  .projectCard {
+    border-radius: var(--radius-xl);
+  }
 }

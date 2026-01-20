@@ -21,7 +21,7 @@ const FALLBACK_PROFILE: Profile = {
   name: "Ricky Chen",
   title: "Software Engineer & AI Researcher",
   location: "Sydney, Australia",
-  bio: "Experienced software engineer specializing in full-stack development, AI/ML applications, and modern software architecture. Passionate about building scalable systems and solving complex problems with elegant solutions.",
+  bio: "Experienced in backend, mobile, and frontend development, with hands-on projects at Samsung R&D and Apple Developer Academy. Strong foundation in algorithms and competitive programming. Currently preparing for a Master of Artificial Intelligence at UTS, driven to build scalable tech with real-world impact.",
   academics: [],
   certifications: [],
   contacts: [
@@ -36,7 +36,193 @@ const FALLBACK_PROFILE: Profile = {
   experiences: [],
   honors: [],
   languages: [],
-  projects: [],
+  projects: [
+    {
+      id: "project-1",
+      title: "giftforyou.idn",
+      description:
+        "A full-stack e-commerce platform for bouquet shopping in Indonesia.",
+      longDescription:
+        "A full-stack e-commerce platform for bouquet shopping in Indonesia. Built with React, TypeScript, Express.js, and MongoDB, featuring a modern and responsive user interface. The platform enables customers to browse, customize, and purchase bouquets with seamless payment integration and order tracking. Implemented RESTful API architecture, secure authentication, and efficient database design to ensure scalability and performance.",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Express.js",
+        "MongoDB",
+        "Node.js",
+        "RESTful APIs",
+      ],
+      category: "fullstack",
+      startDate: "2025-01-01",
+      isActive: true,
+      githubUrl: "https://github.com/rickychen930/giftforyou.idn",
+      achievements: [
+        "Built production-ready e-commerce platform with modern tech stack",
+        "Implemented secure authentication and payment integration",
+        "Designed scalable RESTful API architecture",
+        "Created responsive and user-friendly interface",
+      ],
+      architecture:
+        "Full-stack architecture with React frontend, Express.js backend, and MongoDB database. RESTful API design with JWT authentication and secure payment processing.",
+    },
+    {
+      id: "project-2",
+      title: "TV Plugin – SmartThings",
+      description:
+        "Developed a TV control plugin for Samsung SmartThings app enabling device discovery, remote control, and status monitoring.",
+      longDescription:
+        "Developed a TV control plugin for Samsung SmartThings app. Enabled device discovery, remote control, and status monitoring for smart TVs. Contributed to One UI 6 enhancements and improved user experience for millions of users. Built with TypeScript, Node.js, and Samsung SmartThings SDK.",
+      technologies: [
+        "TypeScript",
+        "Node.js",
+        "Samsung SmartThings SDK",
+        "REST APIs",
+      ],
+      category: "backend",
+      startDate: "2023-05-01",
+      endDate: "2024-05-31",
+      isActive: false,
+      achievements: [
+        "Enabled device discovery and remote control for smart TVs",
+        "Improved user experience for millions of SmartThings users worldwide",
+        "Integrated seamlessly with SmartThings ecosystem",
+        "Implemented modular and scalable architecture",
+      ],
+    },
+    {
+      id: "project-3",
+      title: "Bottani",
+      description:
+        "A smart agriculture app integrated with IoT devices to monitor soil parameters in real time.",
+      longDescription:
+        "A smart agriculture app integrated with IoT devices to monitor soil parameters in real time. Enables automated responses based on environmental data, helping farmers maintain optimal soil conditions and improve crop productivity. Built during Apple Developer Academy using Swift, SwiftUI, and IoT integration.",
+      technologies: ["Swift", "SwiftUI", "IoT", "Core Data", "Bluetooth"],
+      category: "mobile",
+      startDate: "2022-08-01",
+      endDate: "2022-12-31",
+      isActive: false,
+      achievements: [
+        "Integrated IoT devices for real-time soil monitoring",
+        "Implemented automated irrigation control system",
+        "Created predictive analytics for crop management",
+        "Built intuitive mobile interface for farmers",
+      ],
+    },
+    {
+      id: "project-4",
+      title: "Kabisa",
+      description:
+        "An educational app introducing Sundanese script through game-based learning.",
+      longDescription:
+        "An educational app introducing Sundanese script through game-based learning. Designed to preserve traditional language and culture. Presented in academic forums and published in IEEE. Built with Swift and SwiftUI, featuring interactive learning modules, gamification elements, and cultural preservation features.",
+      technologies: [
+        "Swift",
+        "SwiftUI",
+        "Game Development",
+        "Education Technology",
+      ],
+      category: "mobile",
+      startDate: "2023-01-01",
+      endDate: "2023-12-31",
+      isActive: false,
+      githubUrl: "https://github.com/rickychen930/kabisa",
+      achievements: [
+        "Preserved traditional Sundanese script through gamification",
+        "Presented research at academic forums and published in IEEE",
+        "Created engaging interactive learning modules",
+        "Promoted cultural preservation through technology",
+      ],
+    },
+    {
+      id: "project-5",
+      title: "Reguards",
+      description:
+        "A women's travel safety app designed to enhance safety for women travelers.",
+      longDescription:
+        "A women's travel safety app developed during Apple Developer Academy. Designed to enhance safety for women travelers through real-time location sharing, emergency contacts, and safety alerts. Built with Swift and SwiftUI, featuring GPS tracking, emergency SOS functionality, and community safety features.",
+      technologies: [
+        "Swift",
+        "SwiftUI",
+        "Core Location",
+        "AVFoundation",
+        "GPS",
+      ],
+      category: "mobile",
+      startDate: "2022-03-01",
+      endDate: "2022-12-31",
+      isActive: false,
+      achievements: [
+        "Implemented real-time GPS tracking and location sharing",
+        "Created emergency SOS functionality for user safety",
+        "Built community safety features and alerts",
+        "Addressed real-world safety concerns through technology",
+      ],
+    },
+    {
+      id: "project-6",
+      title: "Phowto",
+      description:
+        "A photography tutorial app providing interactive tutorials and guides for photography enthusiasts.",
+      longDescription:
+        "A photography tutorial app developed during Apple Developer Academy. Provides interactive tutorials and guides for photography enthusiasts. Built with Swift and SwiftUI, featuring video tutorials, step-by-step guides, and community features.",
+      technologies: ["Swift", "SwiftUI", "AVFoundation", "Video Processing"],
+      category: "mobile",
+      startDate: "2022-03-01",
+      endDate: "2022-12-31",
+      isActive: false,
+      achievements: [
+        "Created comprehensive photography learning platform",
+        "Implemented video tutorial system",
+        "Built step-by-step interactive guides",
+        "Designed engaging user interface for learning",
+      ],
+    },
+    {
+      id: "project-7",
+      title: "M-arkir",
+      description:
+        "A license plate recognition system using Python and OpenCV with Arduino integration.",
+      longDescription:
+        "A license plate recognition system using Python and OpenCV. Integrated with Arduino for hardware control, combining C++ and Python to enable real-time image processing and automated response. Built as a university project.",
+      technologies: [
+        "Python",
+        "OpenCV",
+        "Arduino",
+        "C++",
+        "Computer Vision",
+        "OCR",
+      ],
+      category: "ai",
+      startDate: "2022-01-01",
+      endDate: "2022-06-30",
+      isActive: false,
+      achievements: [
+        "Implemented real-time license plate recognition using OpenCV",
+        "Integrated computer vision with embedded systems",
+        "Created automated gate control system",
+        "Demonstrated expertise in computer vision and IoT integration",
+      ],
+    },
+    {
+      id: "project-8",
+      title: "L-emot",
+      description:
+        "A smart lamp controller built with Arduino and custom hardware for wireless lighting control.",
+      longDescription:
+        "A smart lamp controller built with Arduino and custom hardware. Enabled wireless control of lighting through embedded systems and software integration. Demonstrates practical IoT applications in home automation.",
+      technologies: ["Arduino", "C++", "Bluetooth", "IoT", "Embedded Systems"],
+      category: "other",
+      startDate: "2022-01-01",
+      endDate: "2022-06-30",
+      isActive: false,
+      achievements: [
+        "Built custom hardware solution for smart lighting",
+        "Implemented wireless control via Bluetooth",
+        "Created energy monitoring features",
+        "Demonstrated practical IoT application in home automation",
+      ],
+    },
+  ],
   softSkills: [],
   stats: [],
   technicalSkills: [],

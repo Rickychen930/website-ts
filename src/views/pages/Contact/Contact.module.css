@@ -21,7 +21,7 @@
   height: 3px;
   background: var(--gradient-primary-accent);
   content: "";
-  border-radius: 1rem 1rem 0 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
 .cardTitle {
@@ -79,14 +79,14 @@
 }
 
 .socialLink {
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-md);
   border: 1px solid transparent;
   color: var(--text-primary);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal) var(--transition-ease);
   background-color: var(--bg-tertiary);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-md);
   text-decoration: none;
 }
 
@@ -237,8 +237,28 @@
   margin-top: var(--spacing-md);
 }
 
-@media (width <= 1024px) {
+/* Responsive Design */
+@media (width <= 640px) {
   .container {
     grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .socialLinks {
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (width >= 641px) and (width <= 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (width >= 1025px) {
+  .container {
+    grid-template-columns: 1fr 1.5fr;
   }
 }

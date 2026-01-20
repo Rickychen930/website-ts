@@ -21,23 +21,23 @@
 
 .testimonialCard {
   position: relative;
-  padding: 2.5rem;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+  padding: var(--spacing-2xl);
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
   text-align: center;
-  border-radius: 1rem;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 .testimonialCard::before {
   position: absolute;
   top: -20px;
   left: 20px;
-  color: rgba(59, 130, 246, 0.1);
-  font-size: 8rem;
+  color: var(--color-primary-alpha-10);
+  font-size: var(--font-size-6xl);
   line-height: 1;
   content: '"';
   font-family: serif;
@@ -65,10 +65,10 @@
 .testimonialContent {
   position: relative;
   z-index: 1;
-  color: #475569;
-  font-size: 1.125rem;
-  line-height: 1.75;
-  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-xl);
   font-style: italic;
 }
 
@@ -76,16 +76,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .avatar {
   width: 60px;
   height: 60px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   object-fit: cover;
-  border: 3px solid #3b82f6;
-  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+  border: 3px solid var(--color-primary-500);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
 }
 
 .authorInfo {
@@ -93,15 +93,15 @@
 }
 
 .authorName {
-  color: #1e293b;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
 }
 
 .authorRole {
-  color: #64748b;
-  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
 }
 
 .carouselNav {
@@ -117,20 +117,20 @@
   width: 48px;
   height: 48px;
   border: none;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: #fff;
-  font-size: 1.25rem;
-  transition: all 0.3s ease;
-  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+  font-size: var(--font-size-xl);
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-full);
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
 }
 
 .navButton:hover {
   transform: scale(1.1);
-  box-shadow: 0 8px 12px -2px rgba(59, 130, 246, 0.4);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-strong);
 }
 
 .navButton:active {
@@ -139,17 +139,17 @@
 
 .dots {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 }
 
 .dot {
   width: 12px;
   height: 12px;
   padding: 0;
-  border: 2px solid #3b82f6;
+  border: 2px solid var(--color-primary-500);
   background: transparent;
-  transition: all 0.3s ease;
-  border-radius: 50%;
+  transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-full);
   cursor: pointer;
 }
 
@@ -158,45 +158,37 @@
 }
 
 .dotActive {
-  background: #3b82f6;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  background: var(--color-primary-500);
+  box-shadow: var(--shadow-glow);
 }
 
-/* Dark mode */
-.dark .testimonialCard {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border-color: rgba(148, 163, 184, 0.2);
-}
+/* Dark mode - handled automatically via CSS variables */
 
-.dark .testimonialContent {
-  color: #cbd5e1;
-}
-
-.dark .authorName {
-  color: #e2e8f0;
-}
-
-.dark .authorRole {
-  color: #94a3b8;
-}
-
-/* Responsive */
-@media (width <= 768px) {
+/* Responsive Design */
+@media (width <= 640px) {
   .testimonialCard {
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
   }
 
   .testimonialContent {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
 
   .carouselNav {
-    margin-top: 1.5rem;
+    margin-top: var(--spacing-lg);
+    gap: var(--spacing-sm);
   }
 
   .navButton {
     width: 40px;
     height: 40px;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
+  .testimonialCard {
+    padding: var(--spacing-xl);
   }
 }

@@ -1,11 +1,13 @@
 .academicItem {
   position: relative;
-  padding: 2rem;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 1rem;
+  padding: var(--spacing-xl);
+  border: 1px solid var(--border-primary);
+  background: var(--gradient-card);
+  transition: all var(--transition-slow) var(--transition-ease);
+  border-radius: var(--radius-2xl);
   overflow: hidden;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 .academicItem::before {
@@ -15,10 +17,10 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg, #3b82f6 0%, #22c55e 100%);
+  background: var(--gradient-primary-accent);
   transform: scaleY(0);
   transform-origin: top;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-slow) var(--transition-ease);
 }
 
 .academicItem:hover::before {
@@ -26,20 +28,26 @@
 }
 
 .academicItem:hover {
-  border-color: #3b82f6;
-  box-shadow:
-    0 12px 18px -3px rgba(0, 0, 0, 0.12),
-    0 6px 8px -2px rgba(0, 0, 0, 0.06),
-    0 0 25px rgba(59, 130, 246, 0.2);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
   transform: translateY(-4px) scale(1.01);
 }
 
 .header {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .description {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #f5f5f5;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (width <= 640px) {
+  .academicItem {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+  }
 }

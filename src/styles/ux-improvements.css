@@ -143,34 +143,38 @@ textarea:disabled {
   color: var(--text-primary);
 }
 
-.dark ::selection {
-  background-color: var(--color-primary-alpha-40);
-  color: var(--text-inverse);
-}
-
-.dark ::selection {
-  background-color: var(--color-primary-alpha-40);
-  color: var(--text-inverse);
-}
-
-/* Better scrollbar styling */
+/* Better scrollbar styling - Modern and accessible */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
 
 ::-webkit-scrollbar-track {
+  border: 1px solid var(--border-primary);
   background: var(--bg-tertiary);
   border-radius: var(--radius-md);
 }
 
 ::-webkit-scrollbar-thumb {
+  border: 2px solid var(--bg-tertiary);
   background: var(--border-secondary);
+  transition: background var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-md);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-tertiary);
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-alpha-20);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-primary-600);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-secondary) var(--bg-tertiary);
 }
 
 /* Print styles */

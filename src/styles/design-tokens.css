@@ -161,13 +161,18 @@
   /* Additional color utilities for gradients and effects */
   --color-primary-rgb: 59, 130, 246;
   --color-accent-rgb: 34, 197, 94;
+  --color-primary-alpha-5: rgba(var(--color-primary-rgb), 0.05);
   --color-primary-alpha-10: rgba(var(--color-primary-rgb), 0.1);
+  --color-primary-alpha-15: rgba(var(--color-primary-rgb), 0.15);
   --color-primary-alpha-20: rgba(var(--color-primary-rgb), 0.2);
   --color-primary-alpha-30: rgba(var(--color-primary-rgb), 0.3);
   --color-primary-alpha-40: rgba(var(--color-primary-rgb), 0.4);
   --color-primary-alpha-50: rgba(var(--color-primary-rgb), 0.5);
+  --color-primary-alpha-60: rgba(var(--color-primary-rgb), 0.6);
   --color-accent-alpha-10: rgba(var(--color-accent-rgb), 0.1);
   --color-accent-alpha-20: rgba(var(--color-accent-rgb), 0.2);
+  --color-accent-alpha-60: rgba(var(--color-accent-rgb), 0.6);
+  --color-accent-alpha-80: rgba(var(--color-accent-rgb), 0.8);
 }
 
 /* Dark Mode Variables */

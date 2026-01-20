@@ -29,18 +29,15 @@
 }
 
 .circularBackground {
-  stroke: rgba(226, 232, 240, 0.5);
-}
-
-.dark .circularBackground {
-  stroke: rgba(148, 163, 184, 0.2);
+  stroke: var(--border-primary);
+  opacity: 0.5;
 }
 
 .circularProgress {
-  stroke: var(--skill-color, #3b82f6);
+  stroke: var(--skill-color, var(--color-primary-500));
   stroke-linecap: round;
   transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 0 4px var(--skill-color, #3b82f6));
+  filter: drop-shadow(0 0 4px var(--skill-color, var(--color-primary-500)));
 }
 
 .circularContent {
@@ -59,20 +56,16 @@
 }
 
 .skillPercentage {
-  color: var(--skill-color, #3b82f6);
-  font-size: 0.875rem;
-  font-weight: 700;
+  color: var(--skill-color, var(--color-primary-500));
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
 }
 
 .skillName {
-  color: #475569;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   text-align: center;
-}
-
-.dark .skillName {
-  color: #cbd5e1;
 }
 
 /* Bar Variant */
@@ -103,13 +96,10 @@
   position: relative;
   width: 100%;
   height: 12px;
-  background: rgba(226, 232, 240, 0.5);
-  border-radius: 6px;
+  background: var(--border-primary);
+  opacity: 0.5;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-}
-
-.dark .barContainer {
-  background: rgba(148, 163, 184, 0.2);
 }
 
 .barProgress {
@@ -117,14 +107,12 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    var(--skill-color, #3b82f6) 0%,
-    var(--skill-color, #2563eb) 100%
+    var(--skill-color, var(--color-primary-500)) 0%,
+    var(--skill-color, var(--color-primary-600)) 100%
   );
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 6px;
-  box-shadow:
-    0 0 10px rgba(59, 130, 246, 0.3),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glow);
 }
 
 .barGlow {
@@ -151,11 +139,36 @@
   }
 }
 
-/* Responsive */
-@media (width <= 768px) {
+/* Responsive Design */
+@media (width <= 640px) {
+  .skillChart {
+    gap: var(--spacing-lg);
+  }
+
+  .skillChart.circular {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .circularContainer {
+    width: 90px;
+    height: 90px;
+  }
+
+  .skillIcon {
+    font-size: var(--font-size-xl);
+  }
+
+  .skillPercentage,
+  .skillName {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (width >= 641px) and (width <= 768px) {
   .skillChart.circular {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1.5rem;
+    gap: var(--spacing-xl);
   }
 
   .circularContainer {

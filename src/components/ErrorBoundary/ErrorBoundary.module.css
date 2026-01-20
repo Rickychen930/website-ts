@@ -1,14 +1,23 @@
 .errorBoundary {
   display: flex;
-  padding: 2rem;
+  padding: var(--spacing-xl);
+  color: var(--text-primary);
   text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 50vh;
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .resetButton {
-  margin-top: 1rem;
+  margin-top: var(--spacing-md);
+}
+
+/* Responsive Design */
+@media (width <= 640px) {
+  .errorBoundary {
+    padding: var(--spacing-lg);
+    min-height: 40vh;
+  }
 }
