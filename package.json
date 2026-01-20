@@ -26,9 +26,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "start:dev": "NODE_ENV=development craco start",
-    "start:prod": "NODE_ENV=production craco start",
+    "start": "PORT=3000 craco start",
+    "start:dev": "PORT=3000 NODE_ENV=development craco start",
+    "start:prod": "PORT=3000 NODE_ENV=production craco start",
     "build": "NODE_ENV=production craco build",
     "build:dev": "NODE_ENV=development craco build",
     "test": "craco test",
@@ -46,6 +46,7 @@
     "check:mongodb": "node scripts/check-mongodb.js",
     "test:api": "node scripts/test-backend-api.js",
     "verify-data": "node scripts/verify-data.js",
+    "verify:production": "node scripts/verify-production-connection.js",
     "backend:build": "tsc -p backend/tsconfig.backend.json",
     "backend:start": "node backend/dist/main.js",
     "backend:pm2": "pm2 start backend/ecosystem.config.js --env production",
@@ -107,6 +108,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "http-proxy-middleware": "^3.0.5",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "nodemon": "^3.1.10",

@@ -54,15 +54,13 @@ export const Search: React.FC<SearchProps> = ({
     });
 
     // Skills
-    profile.technicalSkills.forEach((skillCategory) => {
-      skillCategory.items.forEach((skill) => {
-        content.push({
-          type: "skill",
-          id: `${skillCategory.category}-${skill}`,
-          title: skill,
-          description: `${skillCategory.category} skill`,
-          category: skillCategory.category,
-        });
+    profile.technicalSkills.forEach((skill) => {
+      content.push({
+        type: "skill",
+        id: skill.id,
+        title: skill.name,
+        description: `${skill.category} skill - ${skill.proficiency}`,
+        category: skill.category,
       });
     });
 

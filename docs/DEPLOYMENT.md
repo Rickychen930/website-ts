@@ -49,7 +49,8 @@ SSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem
 SSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem
 
 # Frontend API URL (untuk React app)
-REACT_APP_API_URL=https://rickychen930.cloud:4000
+# Catatan: Gunakan domain tanpa port karena nginx akan proxy /api ke backend
+REACT_APP_API_URL=https://rickychen930.cloud
 ```
 
 ## Local Development
@@ -225,6 +226,7 @@ pm2 save
 ### PM2 Ecosystem Config
 
 File `backend/ecosystem.config.js` sudah dikonfigurasi dengan:
+
 - Auto-restart
 - Memory limit (500MB)
 - Log rotation
@@ -339,7 +341,7 @@ netstat -tulpn | grep 4000
 ## Support
 
 Untuk masalah deployment, check:
+
 - PM2 logs: `pm2 logs website-backend`
 - Nginx logs: `/var/log/nginx/error.log`
 - System logs: `journalctl -u nginx`
-
