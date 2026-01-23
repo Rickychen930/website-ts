@@ -201,6 +201,7 @@ export const Search: React.FC<SearchProps> = ({
           aria-label="Search"
           role="combobox"
           aria-expanded={isOpen}
+          aria-controls="search-results-listbox"
           aria-haspopup="listbox"
           aria-autocomplete="list"
         />
@@ -225,6 +226,7 @@ export const Search: React.FC<SearchProps> = ({
 
       {isOpen && results.length > 0 && (
         <div
+          id="search-results-listbox"
           className={styles.results}
           role="listbox"
           aria-label="Search results"
