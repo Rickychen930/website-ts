@@ -23,5 +23,11 @@ module.exports = {
       : [];
   },
   "*.{css,scss,sass}": ["stylelint --fix", "prettier --write"],
-  "*.{json,md,yml,yaml}": ["prettier --write"],
+  "*.{json,md,yml,yaml}": (filenames) => {
+    // Exclude GitHub Actions workflows (they contain heredoc that Prettier can't handle)
+    const filtered = filenames.filter((f) => !f.includes(".github/workflows/"));
+    return filtered.length > 0
+      ? [`prettier --write ${filtered.join(" ")}`]
+      : [];
+  },
 };

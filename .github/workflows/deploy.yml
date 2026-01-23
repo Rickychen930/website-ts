@@ -372,50 +372,43 @@ jobs:
             fi
 
             # Create reusable Node.js script for cleaning MONGODB_URI
-            cat > /tmp/clean-mongodb-uri.js << 'EOF'
-// Clean and normalize MongoDB URI by removing duplicate parameters
+            cat > /tmp/clean-mongodb-uri.js << 'HEREDOC_END'
 function cleanMongoDBUri(uri) {
   if (!uri || typeof uri !== 'string') return uri;
-  
   if (!uri.includes('?')) {
     return uri + '?retryWrites=true&w=majority';
   }
-  
-  const [base, query] = uri.split('?', 2);
-  const params = query.split('&').filter(p => p.trim());
+  const parts = uri.split('?', 2);
+  const base = parts[0];
+  const query = parts[1];
+  const params = query.split('&').filter(function(p) { return p.trim(); });
   const seen = {};
   const cleaned = [];
-  
-  for (const param of params) {
+  for (var i = 0; i < params.length; i++) {
+    var param = params[i];
     if (!param) continue;
-    const [key] = param.split('=');
+    var key = param.split('=')[0];
     if (!seen[key]) {
       seen[key] = true;
       cleaned.push(param);
     }
   }
-  
   if (!seen['retryWrites']) cleaned.push('retryWrites=true');
   if (!seen['w']) cleaned.push('w=majority');
-  
   return base + '?' + cleaned.join('&');
 }
-
-// Export for use as module
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = cleanMongoDBUri;
 }
-
-// If called as script
 if (require.main === module) {
-  const uri = process.argv[2];
+  var uri = process.argv[2];
   if (!uri) {
     console.error('Usage: node clean-mongodb-uri.js <uri>');
     process.exit(1);
   }
   console.log(cleanMongoDBUri(uri));
 }
-EOF
+HEREDOC_END
 
             # Fast update from GitHub Secrets (priority over file)
             echo "🔑 Updating from GitHub Secrets..."

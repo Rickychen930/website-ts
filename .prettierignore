@@ -1,0 +1,21 @@
+# GitHub Actions workflows (contain heredoc that Prettier can't handle)
+.github/workflows/*.yml
+.github/workflows/*.yaml
+
+# Build outputs
+backend/dist/
+build/
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.*
+
+# Other
+*.min.js
+*.min.css
+public/
