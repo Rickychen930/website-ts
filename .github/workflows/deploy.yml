@@ -372,28 +372,66 @@ jobs:
             # Fast update from GitHub Secrets (priority over file)
             echo "🔑 Updating from GitHub Secrets..."
             {
-              # Helper function to set env var
+              # Helper function to set env var (handles special characters)
               set_env() {
                 local key="$1"
                 local value="$2"
                 if [ -n "$value" ]; then
+                  # Escape special characters for sed (especially for MONGODB_URI)
+                  local escaped_value=$(printf '%s\n' "$value" | sed 's/[[\.*^$()+?{|]/\\&/g')
+                  
                   if grep -q "^${key}=" "$ENV_FILE.tmp" 2>/dev/null; then
+                    # Use different delimiter (|) to avoid issues with / in URIs
                     sed -i "s|^${key}=.*|${key}=${value}|" "$ENV_FILE.tmp" 2>/dev/null || true
                   else
                     echo "${key}=${value}" >> "$ENV_FILE.tmp"
                   fi
-                  echo "  ✓ $key"
+                  echo "  ✓ $key (updated)"
+                else
+                  echo "  ⚠ $key (not set in secrets)"
                 fi
               }
               
               # Update from secrets (only if provided)
               set_env "PORT" "${{ secrets.BACKEND_PORT }}"
               set_env "NODE_ENV" "${{ secrets.NODE_ENV }}"
-              set_env "MONGODB_URI" "${{ secrets.MONGODB_URI }}"
+              
+              # MONGODB_URI requires special handling
+              MONGODB_URI_VALUE="${{ secrets.MONGODB_URI }}"
+              if [ -n "$MONGODB_URI_VALUE" ]; then
+                set_env "MONGODB_URI" "$MONGODB_URI_VALUE"
+                
+                # Validate MONGODB_URI format
+                if [[ "$MONGODB_URI_VALUE" =~ ^mongodb(\+srv)?:// ]]; then
+                  echo "  ✅ MONGODB_URI format validated (starts with mongodb:// or mongodb+srv://)"
+                else
+                  echo "  ⚠️  WARNING: MONGODB_URI format might be incorrect"
+                  echo "     Expected: mongodb://... or mongodb+srv://..."
+                fi
+              else
+                echo "  ❌ ERROR: MONGODB_URI secret is not set!"
+                echo "     Please set MONGODB_URI in GitHub Secrets"
+                exit 1
+              fi
+              
               set_env "ALLOWED_ORIGINS" "${{ secrets.ALLOWED_ORIGINS }}"
               set_env "SSL_CERT_PATH" "${{ secrets.SSL_CERT_PATH }}"
               set_env "SSL_KEY_PATH" "${{ secrets.SSL_KEY_PATH }}"
             }
+
+            # Verify MONGODB_URI was set correctly (without showing the actual value)
+            if grep -q "^MONGODB_URI=" "$ENV_FILE.tmp" 2>/dev/null; then
+              MONGODB_URI_LINE=$(grep "^MONGODB_URI=" "$ENV_FILE.tmp")
+              MONGODB_URI_LENGTH=${#MONGODB_URI_LINE}
+              if [ "$MONGODB_URI_LENGTH" -lt 20 ]; then
+                echo "⚠️  WARNING: MONGODB_URI seems too short (might be incomplete)"
+              else
+                echo "✅ MONGODB_URI is set (length: ${MONGODB_URI_LENGTH} chars)"
+              fi
+            else
+              echo "❌ ERROR: MONGODB_URI not found in .env file after update!"
+              exit 1
+            fi
 
             # Ensure defaults exist
             if ! grep -q "^PORT=" "$ENV_FILE.tmp" 2>/dev/null; then
@@ -409,6 +447,38 @@ jobs:
 
             echo "✅ .env updated"
             echo "📊 Variables: $(grep -v '^#' "$ENV_FILE" | grep -c '=' || echo 0)"
+
+            # Verify critical variables
+            echo ""
+            echo "🔍 Verifying critical environment variables..."
+            if grep -q "^MONGODB_URI=" "$ENV_FILE" 2>/dev/null; then
+              MONGODB_URI_VALUE=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
+              if [ -n "$MONGODB_URI_VALUE" ]; then
+                if [[ "$MONGODB_URI_VALUE" =~ ^mongodb(\+srv)?:// ]]; then
+                  echo "✅ MONGODB_URI is set and format looks correct"
+                else
+                  echo "⚠️  WARNING: MONGODB_URI format might be incorrect"
+                fi
+              else
+                echo "❌ ERROR: MONGODB_URI is empty!"
+                exit 1
+              fi
+            else
+              echo "❌ ERROR: MONGODB_URI not found in .env file!"
+              exit 1
+            fi
+
+            if grep -q "^NODE_ENV=" "$ENV_FILE" 2>/dev/null; then
+              echo "✅ NODE_ENV is set"
+            else
+              echo "⚠️  NODE_ENV not set (will use default)"
+            fi
+
+            if grep -q "^PORT=" "$ENV_FILE" 2>/dev/null; then
+              echo "✅ PORT is set"
+            else
+              echo "⚠️  PORT not set (will use default 4000)"
+            fi
 
             # Keep only last 3 backups
             ls -t "$(dirname $ENV_FILE)"/.env.backup.* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
