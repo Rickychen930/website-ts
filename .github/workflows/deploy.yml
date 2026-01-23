@@ -146,6 +146,56 @@ jobs:
         with:
           name: deployment-artifacts
 
+      - name: Validate deployment secrets
+        run: |
+          if [ -z "${{ secrets.HOSTINGER_HOST }}" ]; then
+            echo "❌ Error: HOSTINGER_HOST secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.HOSTINGER_USER }}" ]; then
+            echo "❌ Error: HOSTINGER_USER secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.HOSTINGER_SSH_KEY }}" ]; then
+            echo "❌ Error: HOSTINGER_SSH_KEY secret is not set"
+            exit 1
+          fi
+          echo "✅ All deployment secrets are configured"
+          HOST="${{ secrets.HOSTINGER_HOST }}"
+          echo "Host: $HOST"
+          echo "User: ${{ secrets.HOSTINGER_USER }}"
+          echo "Port: 22"
+
+          # Test DNS resolution
+          echo "🔍 Testing DNS resolution..."
+          if command -v nslookup &> /dev/null; then
+            nslookup "$HOST" || echo "⚠️  nslookup failed, trying host command..."
+          fi
+          if command -v host &> /dev/null; then
+            host "$HOST" || echo "⚠️  host command failed"
+          fi
+
+          # Test connectivity
+          echo "🔍 Testing connectivity..."
+          if command -v nc &> /dev/null; then
+            timeout 5 nc -zv "$HOST" 22 2>&1 || echo "⚠️  Port 22 connection test failed (this is OK if hostname resolves)"
+          fi
+
+      - name: Test SSH connection
+        uses: appleboy/ssh-action@v1.0.3
+        continue-on-error: true
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            echo "✅ SSH connection successful"
+            echo "Hostname: $(hostname)"
+            echo "Uptime: $(uptime)"
+            echo "Disk space:"
+            df -h / | tail -1
+
       - name: Deploy to VPS (Backend + Frontend + Config)
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -156,6 +206,10 @@ jobs:
           source: "*.tar.gz"
           target: "/tmp/deploy"
           strip_components: 0
+          timeout: 60s
+          command_timeout: 60s
+          debug: true
+          overwrite: true
 
       - name: Extract and deploy all services
         uses: appleboy/ssh-action@v1.0.3
