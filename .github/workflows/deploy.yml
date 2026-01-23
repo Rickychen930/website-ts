@@ -498,52 +498,91 @@ jobs:
             echo "✅ .env updated"
             echo "📊 Variables: $(grep -v '^#' "$ENV_FILE" | grep -c '=' || echo 0)"
 
-            # Fix duplicate parameters in MONGODB_URI (if any)
+            # Fix duplicate parameters in MONGODB_URI (if any) using Node.js for robust parsing
             echo ""
             echo "🔧 Checking and fixing MONGODB_URI for duplicate parameters..."
             if grep -q "^MONGODB_URI=" "$ENV_FILE" 2>/dev/null; then
-              MONGODB_URI_VALUE=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
+              # Use Node.js to properly parse and fix the URI
+              cat > /tmp/fix-mongodb-uri.js << 'NODE_SCRIPT'
+              const fs = require('fs');
+              const envFile = process.argv[2] || '/root/backend/.env';
               
-              # Check for duplicate 'w' parameter
-              if echo "$MONGODB_URI_VALUE" | grep -q "?"; then
-                QUERY_STRING=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f2-)
-                W_COUNT=$(echo "$QUERY_STRING" | grep -o "w=" | wc -l)
+              try {
+                const content = fs.readFileSync(envFile, 'utf8');
+                const lines = content.split('\n');
                 
-                if [ "$W_COUNT" -gt 1 ]; then
-                  echo "⚠️  Found $W_COUNT 'w=' parameters (duplicate detected)"
-                  echo "🔧 Fixing duplicate parameters..."
-                  
-                  BASE_URI=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f1)
-                  # Remove all 'w=' parameters
-                  CLEANED_QUERY=$(echo "$QUERY_STRING" | sed 's/&w=[^&]*//g' | sed 's/^w=[^&]*&//' | sed 's/^w=[^&]*$//' | sed 's/&$//')
-                  
-                  # Reconstruct with single 'w=majority'
-                  # Since we already removed trailing &, we can safely add &w=majority
-                  if [ -n "$CLEANED_QUERY" ]; then
-                    FIXED_URI="${BASE_URI}?${CLEANED_QUERY}&w=majority"
-                  else
-                    FIXED_URI="${BASE_URI}?w=majority"
-                  fi
-                  
-                  # Update .env file
-                  sed -i "s|^MONGODB_URI=.*|MONGODB_URI=${FIXED_URI}|" "$ENV_FILE"
-                  echo "✅ Fixed duplicate parameters in MONGODB_URI"
-                  
-                  # Verify fix
-                  VERIFY_URI=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
-                  VERIFY_QUERY=$(echo "$VERIFY_URI" | cut -d'?' -f2-)
-                  VERIFY_W_COUNT=$(echo "$VERIFY_QUERY" | grep -o "w=" | wc -l)
-                  
-                  if [ "$VERIFY_W_COUNT" -eq 1 ]; then
-                    echo "✅ Verified: Only 1 'w=' parameter remains"
-                  else
-                    echo "❌ ERROR: Still found $VERIFY_W_COUNT 'w=' parameters after fix!"
-                    exit 1
-                  fi
-                else
-                  echo "✅ No duplicate 'w' parameter found"
-                fi
-              fi
+                const newLines = lines.map(line => {
+                  if (line.startsWith('MONGODB_URI=')) {
+                    const uri = line.substring('MONGODB_URI='.length).trim();
+                    
+                    if (uri.includes('?')) {
+                      const [base, query] = uri.split('?', 2);
+                      const params = query.split('&').filter(p => p.trim());
+                      
+                      // Track seen parameters and their values
+                      const seen = {};
+                      const cleaned = [];
+                      
+                      for (const param of params) {
+                        if (!param) continue;
+                        
+                        const [key, ...valueParts] = param.split('=');
+                        const value = valueParts.join('=');
+                        
+                        // Only keep first occurrence of each parameter
+                        if (!seen[key]) {
+                          seen[key] = true;
+                          cleaned.push(param);
+                        }
+                      }
+                      
+                      // Ensure required parameters exist
+                      if (!seen['retryWrites']) {
+                        cleaned.push('retryWrites=true');
+                      }
+                      if (!seen['w']) {
+                        cleaned.push('w=majority');
+                      }
+                      
+                      const fixedUri = base + '?' + cleaned.join('&');
+                      
+                      // Verify
+                      const queryPart = fixedUri.split('?')[1];
+                      // Count parameters: match 'w=' at start or after '&'
+                      const wCount = (queryPart.match(/(^|&)w=/g) || []).length;
+                      const retryWritesCount = (queryPart.match(/(^|&)retryWrites=/g) || []).length;
+                      
+                      console.log(`✅ Fixed URI`);
+                      console.log(`   w= count: ${wCount} (should be 1)`);
+                      console.log(`   retryWrites= count: ${retryWritesCount} (should be 1)`);
+                      
+                      if (wCount !== 1) {
+                        console.error(`❌ ERROR: w= count is ${wCount}, expected 1!`);
+                        process.exit(1);
+                      }
+                      if (retryWritesCount !== 1) {
+                        console.error(`❌ ERROR: retryWrites= count is ${retryWritesCount}, expected 1!`);
+                        process.exit(1);
+                      }
+                      
+                      return `MONGODB_URI=${fixedUri}`;
+                    } else {
+                      // No query string, add defaults
+                      return `MONGODB_URI=${uri}?retryWrites=true&w=majority`;
+                    }
+                  }
+                  return line;
+                });
+                
+                fs.writeFileSync(envFile, newLines.join('\n'));
+                console.log('✅ .env file updated successfully');
+              } catch (error) {
+                console.error('❌ Error fixing MONGODB_URI:', error.message);
+                process.exit(1);
+              }
+              NODE_SCRIPT
+              node /tmp/fix-mongodb-uri.js "$ENV_FILE"
+              rm -f /tmp/fix-mongodb-uri.js
               
               # Final validation
               FINAL_URI=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
@@ -625,32 +664,78 @@ jobs:
             echo "⏳ Waiting for backend to start (5 seconds)..."
             sleep 5
 
-            # Fix MONGODB_URI if needed (before starting)
-            echo "🔧 Final check: Fixing MONGODB_URI if needed..."
-            if [ -f "/root/backend/.env" ]; then
-              MONGODB_URI_LINE=$(grep "^MONGODB_URI=" /root/backend/.env 2>/dev/null)
-              if [ -n "$MONGODB_URI_LINE" ]; then
-                MONGODB_URI_VALUE=$(echo "$MONGODB_URI_LINE" | cut -d'=' -f2-)
-                if echo "$MONGODB_URI_VALUE" | grep -q "?"; then
-                  QUERY_STRING=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f2-)
-                  W_COUNT=$(echo "$QUERY_STRING" | grep -o "w=" | wc -l)
-                  
-                  if [ "$W_COUNT" -gt 1 ]; then
-                    echo "⚠️  Found duplicate 'w' parameter, fixing..."
-                    BASE_URI=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f1)
-                    CLEANED_QUERY=$(echo "$QUERY_STRING" | sed 's/&w=[^&]*//g' | sed 's/^w=[^&]*&//' | sed 's/^w=[^&]*$//' | sed 's/&$//')
+            # Final check: Fix MONGODB_URI if needed (using Node.js for robustness)
+            echo "🔧 Final check: Verifying MONGODB_URI..."
+            if [ -f "/root/backend/.env" ] && grep -q "^MONGODB_URI=" /root/backend/.env 2>/dev/null; then
+              # Use the same Node.js script for consistency
+              cat > /tmp/fix-mongodb-uri-final.js << 'NODE_SCRIPT'
+              const fs = require('fs');
+              const envFile = '/root/backend/.env';
+              
+              try {
+                const content = fs.readFileSync(envFile, 'utf8');
+                const lines = content.split('\n');
+                let needsFix = false;
+                
+                const newLines = lines.map(line => {
+                  if (line.startsWith('MONGODB_URI=')) {
+                    const uri = line.substring('MONGODB_URI='.length).trim();
                     
-                    if [ -n "$CLEANED_QUERY" ]; then
-                      FIXED_URI="${BASE_URI}?${CLEANED_QUERY}&w=majority"
-                    else
-                      FIXED_URI="${BASE_URI}?w=majority"
-                    fi
-                    
-                    sed -i "s|^MONGODB_URI=.*|MONGODB_URI=${FIXED_URI}|" /root/backend/.env
-                    echo "✅ Fixed MONGODB_URI"
-                  fi
-                fi
-              fi
+                    if (uri.includes('?')) {
+                      const [base, query] = uri.split('?', 2);
+                      const params = query.split('&').filter(p => p.trim());
+                      
+                      // Check for duplicates
+                      const seen = {};
+                      let hasDuplicates = false;
+                      
+                      for (const param of params) {
+                        if (!param) continue;
+                        const [key] = param.split('=');
+                        if (seen[key]) {
+                          hasDuplicates = true;
+                          break;
+                        }
+                        seen[key] = true;
+                      }
+                      
+                      if (hasDuplicates || !seen['retryWrites'] || !seen['w']) {
+                        needsFix = true;
+                        const cleaned = [];
+                        const seenFixed = {};
+                        
+                        for (const param of params) {
+                          if (!param) continue;
+                          const [key] = param.split('=');
+                          if (!seenFixed[key]) {
+                            seenFixed[key] = true;
+                            cleaned.push(param);
+                          }
+                        }
+                        
+                        if (!seenFixed['retryWrites']) cleaned.push('retryWrites=true');
+                        if (!seenFixed['w']) cleaned.push('w=majority');
+                        
+                        return `MONGODB_URI=${base}?${cleaned.join('&')}`;
+                      }
+                    }
+                  }
+                  return line;
+                });
+                
+                if (needsFix) {
+                  fs.writeFileSync(envFile, newLines.join('\n'));
+                  console.log('✅ Fixed MONGODB_URI duplicates');
+                } else {
+                  console.log('✅ MONGODB_URI is already clean');
+                }
+              } catch (error) {
+                console.error('⚠️  Error checking MONGODB_URI:', error.message);
+                // Don't exit, just log the error
+              }
+              NODE_SCRIPT
+              node /tmp/fix-mongodb-uri-final.js
+              rm -f /tmp/fix-mongodb-uri-final.js
             fi
 
             # Verify PM2 process is running
