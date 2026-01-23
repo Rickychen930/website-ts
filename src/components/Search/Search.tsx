@@ -199,6 +199,7 @@ export const Search: React.FC<SearchProps> = ({
           placeholder={placeholder}
           className={styles.searchInput}
           aria-label="Search"
+          role="combobox"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
           aria-autocomplete="list"

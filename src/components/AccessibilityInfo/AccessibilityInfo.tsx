@@ -112,7 +112,7 @@ export const AccessibilityInfo: React.FC = () => {
             efficiently.
           </Typography>
 
-          <ul className={styles.shortcutsList} role="list">
+          <ul className={styles.shortcutsList}>
             {shortcuts.map((shortcut) => (
               <li key={shortcut.key} className={styles.shortcutItem}>
                 <kbd className={styles.key}>{shortcut.key}</kbd>
