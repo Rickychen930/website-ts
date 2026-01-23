@@ -160,44 +160,91 @@ jobs:
             echo "❌ Error: HOSTINGER_SSH_KEY secret is not set"
             exit 1
           fi
-          echo "✅ All deployment secrets are configured"
+
           HOST="${{ secrets.HOSTINGER_HOST }}"
-          echo "Host: $HOST"
+
+          # Validate that HOST is an IP address, not a hostname
+          if [[ ! "$HOST" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            echo "❌ ERROR: HOSTINGER_HOST appears to be a hostname, not an IP address!"
+            echo ""
+            echo "Current value format: $HOST"
+            echo ""
+            echo "🔧 SOLUTION:"
+            echo "1. Go to: Repository → Settings → Secrets and variables → Actions"
+            echo "2. Edit 'HOSTINGER_HOST' secret"
+            echo "3. Replace hostname with IP address (e.g., '185.123.45.67')"
+            echo "4. Save and re-run this workflow"
+            echo ""
+            echo "💡 Why IP address?"
+            echo "   GitHub Actions runners cannot resolve some hostnames."
+            echo "   Using IP address directly avoids DNS resolution issues."
+            echo ""
+            echo "📝 To find your VPS IP address:"
+            echo "   - Check Hostinger control panel → VPS details"
+            echo "   - Or run: nslookup your-hostname.com (from your local machine)"
+            exit 1
+          fi
+
+          echo "✅ All deployment secrets are configured"
+          echo "Host: $HOST (IP address format validated)"
           echo "User: ${{ secrets.HOSTINGER_USER }}"
           echo "Port: 22"
 
-          # Test DNS resolution
-          echo "🔍 Testing DNS resolution..."
-          if command -v nslookup &> /dev/null; then
-            nslookup "$HOST" || echo "⚠️  nslookup failed, trying host command..."
-          fi
-          if command -v host &> /dev/null; then
-            host "$HOST" || echo "⚠️  host command failed"
+          # Test connectivity to IP address
+          echo "🔍 Testing connectivity to IP address..."
+          echo "⚠️  IMPORTANT: Make sure IP address is correct!"
+          echo "   Expected: 72.60.208.150 (for ricky.website)"
+          echo "   Current: $HOST"
+          if [ "$HOST" != "72.60.208.150" ]; then
+            echo "⚠️  WARNING: IP address doesn't match expected value!"
+            echo "   Please verify the correct IP address in Hostinger control panel"
           fi
 
-          # Test connectivity
-          echo "🔍 Testing connectivity..."
           if command -v nc &> /dev/null; then
-            timeout 5 nc -zv "$HOST" 22 2>&1 || echo "⚠️  Port 22 connection test failed (this is OK if hostname resolves)"
+            echo "Testing port 22 connectivity (10 second timeout)..."
+            if timeout 10 nc -zv "$HOST" 22 2>&1; then
+              echo "✅ Port 22 is reachable"
+            else
+              echo "❌ Port 22 connection test FAILED"
+              echo ""
+              echo "🔧 TROUBLESHOOTING:"
+              echo "1. Verify IP address is correct: $HOST"
+              echo "2. Check if VPS is running (ping from local machine)"
+              echo "3. Check firewall allows port 22 from GitHub Actions IPs"
+              echo "4. Verify SSH service is running on VPS"
+              echo ""
+              echo "💡 Test from your local machine:"
+              echo "   ssh -v root@$HOST"
+              exit 1
+            fi
+          else
+            echo "⚠️  nc (netcat) not available, skipping connectivity test"
           fi
 
-      - name: Test SSH connection
+      - name: Test SSH connection (with retry)
         uses: appleboy/ssh-action@v1.0.3
-        continue-on-error: true
+        continue-on-error: false
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
+          timeout: 120s
+          command_timeout: 120s
           script: |
             echo "✅ SSH connection successful"
             echo "Hostname: $(hostname)"
             echo "Uptime: $(uptime)"
             echo "Disk space:"
             df -h / | tail -1
+            echo ""
+            echo "Network info:"
+            ip addr show | grep "inet " | head -3
 
       - name: Deploy to VPS (Backend + Frontend + Config)
+        id: scp-deploy
         uses: appleboy/scp-action@v0.1.7
+        continue-on-error: false
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -206,10 +253,13 @@ jobs:
           source: "*.tar.gz"
           target: "/tmp/deploy"
           strip_components: 0
-          timeout: 60s
-          command_timeout: 60s
+          timeout: 120s
+          command_timeout: 120s
           debug: true
           overwrite: true
+        env:
+          # Increase timeout for slow connections
+          SCP_TIMEOUT: 120
 
       - name: Extract and deploy all services
         uses: appleboy/ssh-action@v1.0.3
