@@ -111,6 +111,8 @@ jobs:
             package.json \
             package-lock.json \
             scripts/fix-backend-on-server.sh \
+            scripts/fix-mongodb-uri.sh \
+            scripts/fix-mongodb-uri-simple.js \
             .env 2>/dev/null || true
 
           # Create compressed frontend package
@@ -496,19 +498,66 @@ jobs:
             echo "✅ .env updated"
             echo "📊 Variables: $(grep -v '^#' "$ENV_FILE" | grep -c '=' || echo 0)"
 
-            # Verify critical variables
+            # Fix duplicate parameters in MONGODB_URI (if any)
             echo ""
-            echo "🔍 Verifying critical environment variables..."
+            echo "🔧 Checking and fixing MONGODB_URI for duplicate parameters..."
             if grep -q "^MONGODB_URI=" "$ENV_FILE" 2>/dev/null; then
               MONGODB_URI_VALUE=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
-              if [ -n "$MONGODB_URI_VALUE" ]; then
-                if [[ "$MONGODB_URI_VALUE" =~ ^mongodb(\+srv)?:// ]]; then
-                  echo "✅ MONGODB_URI is set and format looks correct"
+              
+              # Check for duplicate 'w' parameter
+              if echo "$MONGODB_URI_VALUE" | grep -q "?"; then
+                QUERY_STRING=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f2-)
+                W_COUNT=$(echo "$QUERY_STRING" | grep -o "w=" | wc -l)
+                
+                if [ "$W_COUNT" -gt 1 ]; then
+                  echo "⚠️  Found $W_COUNT 'w=' parameters (duplicate detected)"
+                  echo "🔧 Fixing duplicate parameters..."
+                  
+                  BASE_URI=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f1)
+                  # Remove all 'w=' parameters
+                  CLEANED_QUERY=$(echo "$QUERY_STRING" | sed 's/&w=[^&]*//g' | sed 's/^w=[^&]*&//' | sed 's/^w=[^&]*$//' | sed 's/&$//')
+                  
+                  # Reconstruct with single 'w=majority'
+                  if [ -n "$CLEANED_QUERY" ]; then
+                    if [[ "$CLEANED_QUERY" =~ &$ ]]; then
+                      FIXED_URI="${BASE_URI}?${CLEANED_QUERY}w=majority"
+                    else
+                      FIXED_URI="${BASE_URI}?${CLEANED_QUERY}&w=majority"
+                    fi
+                  else
+                    FIXED_URI="${BASE_URI}?w=majority"
+                  fi
+                  
+                  # Update .env file
+                  sed -i "s|^MONGODB_URI=.*|MONGODB_URI=${FIXED_URI}|" "$ENV_FILE"
+                  echo "✅ Fixed duplicate parameters in MONGODB_URI"
+                  
+                  # Verify fix
+                  VERIFY_URI=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
+                  VERIFY_QUERY=$(echo "$VERIFY_URI" | cut -d'?' -f2-)
+                  VERIFY_W_COUNT=$(echo "$VERIFY_QUERY" | grep -o "w=" | wc -l)
+                  
+                  if [ "$VERIFY_W_COUNT" -eq 1 ]; then
+                    echo "✅ Verified: Only 1 'w=' parameter remains"
+                  else
+                    echo "❌ ERROR: Still found $VERIFY_W_COUNT 'w=' parameters after fix!"
+                    exit 1
+                  fi
+                else
+                  echo "✅ No duplicate 'w' parameter found"
+                fi
+              fi
+              
+              # Final validation
+              FINAL_URI=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2-)
+              if [ -n "$FINAL_URI" ]; then
+                if [[ "$FINAL_URI" =~ ^mongodb(\+srv)?:// ]]; then
+                  echo "✅ MONGODB_URI format validated"
                 else
                   echo "⚠️  WARNING: MONGODB_URI format might be incorrect"
                 fi
               else
-                echo "❌ ERROR: MONGODB_URI is empty!"
+                echo "❌ ERROR: MONGODB_URI is empty after processing!"
                 exit 1
               fi
             else
@@ -578,6 +627,34 @@ jobs:
             # Wait a bit for process to start
             echo "⏳ Waiting for backend to start (5 seconds)..."
             sleep 5
+
+            # Fix MONGODB_URI if needed (before starting)
+            echo "🔧 Final check: Fixing MONGODB_URI if needed..."
+            if [ -f "/root/backend/.env" ]; then
+              MONGODB_URI_LINE=$(grep "^MONGODB_URI=" /root/backend/.env 2>/dev/null)
+              if [ -n "$MONGODB_URI_LINE" ]; then
+                MONGODB_URI_VALUE=$(echo "$MONGODB_URI_LINE" | cut -d'=' -f2-)
+                if echo "$MONGODB_URI_VALUE" | grep -q "?"; then
+                  QUERY_STRING=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f2-)
+                  W_COUNT=$(echo "$QUERY_STRING" | grep -o "w=" | wc -l)
+                  
+                  if [ "$W_COUNT" -gt 1 ]; then
+                    echo "⚠️  Found duplicate 'w' parameter, fixing..."
+                    BASE_URI=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f1)
+                    CLEANED_QUERY=$(echo "$QUERY_STRING" | sed 's/&w=[^&]*//g' | sed 's/^w=[^&]*&//' | sed 's/^w=[^&]*$//' | sed 's/&$//')
+                    
+                    if [ -n "$CLEANED_QUERY" ]; then
+                      FIXED_URI="${BASE_URI}?${CLEANED_QUERY}&w=majority"
+                    else
+                      FIXED_URI="${BASE_URI}?w=majority"
+                    fi
+                    
+                    sed -i "s|^MONGODB_URI=.*|MONGODB_URI=${FIXED_URI}|" /root/backend/.env
+                    echo "✅ Fixed MONGODB_URI"
+                  fi
+                fi
+              fi
+            fi
 
             # Verify PM2 process is running
             echo "🔍 Verifying PM2 process status..."
