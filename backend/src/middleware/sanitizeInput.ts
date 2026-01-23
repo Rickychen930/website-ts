@@ -10,7 +10,8 @@ import { JSDOM } from "jsdom";
 // Create a JSDOM window for DOMPurify (server-side)
 const window = new JSDOM("").window;
 // DOMPurify requires Window type but JSDOM provides a compatible interface
-const purify = DOMPurify(window as unknown as Window);
+// Cast to unknown first, then to the expected type to satisfy TypeScript
+const purify = DOMPurify(window as unknown as Window & typeof globalThis);
 
 /**
  * Type for sanitizable values
@@ -67,13 +68,19 @@ export const sanitizeInput = (
   next: NextFunction,
 ): void => {
   if (req.body) {
-    req.body = sanitizeObject(req.body);
+    req.body = sanitizeObject(req.body) as typeof req.body;
   }
   if (req.query) {
-    req.query = sanitizeObject(req.query);
+    const sanitized = sanitizeObject(req.query);
+    if (sanitized !== undefined && sanitized !== null) {
+      req.query = sanitized as typeof req.query;
+    }
   }
   if (req.params) {
-    req.params = sanitizeObject(req.params);
+    const sanitized = sanitizeObject(req.params);
+    if (sanitized !== undefined && sanitized !== null) {
+      req.params = sanitized as typeof req.params;
+    }
   }
   next();
 };

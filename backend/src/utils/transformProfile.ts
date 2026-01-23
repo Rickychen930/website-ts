@@ -4,7 +4,7 @@
  */
 
 import type { IProfile } from "../models/Profile";
-import type { Profile } from "../../../src/types/domain";
+import type { Profile } from "../types/domain";
 
 // Helper type for Mongoose document with _id
 type MongooseDoc = { _id?: { toString(): string } | string | number };
