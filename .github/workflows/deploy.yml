@@ -399,6 +399,54 @@ jobs:
               # MONGODB_URI requires special handling
               MONGODB_URI_VALUE="${{ secrets.MONGODB_URI }}"
               if [ -n "$MONGODB_URI_VALUE" ]; then
+                # Clean MONGODB_URI: remove duplicate query parameters
+                # This fixes "URI option 'w' cannot appear more than once" error
+                if echo "$MONGODB_URI_VALUE" | grep -q "?"; then
+                  # Split URI and query string
+                  BASE_URI=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f1)
+                  QUERY_STRING=$(echo "$MONGODB_URI_VALUE" | cut -d'?' -f2-)
+                  
+                  # Remove duplicate parameters using awk
+                  # Keep only first occurrence of each parameter name
+                  if command -v awk &> /dev/null; then
+                    CLEANED_QUERY=$(echo "$QUERY_STRING" | tr '&' '\n' | awk -F'=' '{
+                      param_name = $1
+                      if (!seen[param_name]++) {
+                        if (NR > 1) printf "&"
+                        printf "%s", $0
+                      } else {
+                        print "  ⚠️  Removed duplicate parameter: " param_name > "/dev/stderr"
+                      }
+                    }' | tr '\n' '&' | sed 's/&$//')
+                    
+                    # Reconstruct URI
+                    if [ -n "$CLEANED_QUERY" ]; then
+                      MONGODB_URI_VALUE="${BASE_URI}?${CLEANED_QUERY}"
+                      echo "  ✅ MONGODB_URI cleaned (removed duplicate parameters)"
+                    else
+                      MONGODB_URI_VALUE="$BASE_URI"
+                      echo "  ⚠️  All query parameters were duplicates, removed query string"
+                    fi
+                  else
+                    # Fallback: simple check for duplicate 'w' parameter
+                    W_COUNT=$(echo "$QUERY_STRING" | grep -o "&w=" | wc -l || echo "0")
+                    if [ "$W_COUNT" -gt 0 ]; then
+                      echo "  ⚠️  WARNING: Found duplicate 'w' parameter, attempting to fix..."
+                      # Remove all 'w=' parameters and add one at the end
+                      CLEANED_QUERY=$(echo "$QUERY_STRING" | sed 's/&w=[^&]*//g' | sed 's/^w=[^&]*&//' | sed 's/^w=[^&]*$//')
+                      if [ -n "$CLEANED_QUERY" ]; then
+                        MONGODB_URI_VALUE="${BASE_URI}?${CLEANED_QUERY}&w=majority"
+                      else
+                        MONGODB_URI_VALUE="${BASE_URI}?w=majority"
+                      fi
+                      echo "  ✅ Fixed duplicate 'w' parameter"
+                    fi
+                  fi
+                else
+                  # No query string, use as is
+                  echo "  ℹ️  MONGODB_URI has no query parameters"
+                fi
+                
                 set_env "MONGODB_URI" "$MONGODB_URI_VALUE"
                 
                 # Validate MONGODB_URI format
@@ -527,6 +575,42 @@ jobs:
               pm2 save
             fi
 
+            # Wait a bit for process to start
+            echo "⏳ Waiting for backend to start (5 seconds)..."
+            sleep 5
+
+            # Verify PM2 process is running
+            echo "🔍 Verifying PM2 process status..."
+            pm2 list
+
+            # Check PM2 status (without jq dependency)
+            PM2_LIST=$(pm2 list 2>/dev/null)
+            if echo "$PM2_LIST" | grep -q "website-backend.*online"; then
+              echo "✅ PM2 process is online"
+            elif echo "$PM2_LIST" | grep -q "website-backend"; then
+              PM2_STATUS=$(echo "$PM2_LIST" | grep "website-backend" | awk '{print $10}' || echo "unknown")
+              echo "❌ ERROR: PM2 process is not online! Status: $PM2_STATUS"
+              echo "📋 PM2 Info:"
+              pm2 info website-backend 2>/dev/null || echo "Could not get PM2 info"
+              echo "📋 PM2 Logs (last 50 lines):"
+              pm2 logs website-backend --lines 50 --nostream 2>/dev/null || true
+              exit 1
+            else
+              echo "❌ ERROR: PM2 process 'website-backend' not found!"
+              echo "📋 PM2 List:"
+              pm2 list
+              exit 1
+            fi
+
+            # Check if port is listening
+            echo "🔍 Checking if port 4000 is listening..."
+            if command -v netstat &> /dev/null; then
+              netstat -tlnp | grep :4000 || echo "⚠️  Port 4000 not found in netstat"
+            fi
+            if command -v ss &> /dev/null; then
+              ss -tlnp | grep :4000 || echo "⚠️  Port 4000 not found in ss"
+            fi
+
             # Restart nginx
             echo "🔄 Restarting nginx..."
             sudo nginx -t 2>/dev/null && sudo systemctl reload nginx 2>/dev/null || \
@@ -536,6 +620,59 @@ jobs:
 
             # Cleanup deployment temp files
             rm -rf /tmp/deploy
+
+      - name: Verify backend status before health check
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set +e
+
+            echo "🔍 Pre-health check verification..."
+
+            # Check PM2 status
+            echo "📋 PM2 Status:"
+            pm2 list
+
+            # Check if process exists and is online (without jq)
+            PM2_LIST=$(pm2 list 2>/dev/null)
+            if echo "$PM2_LIST" | grep -q "website-backend.*online"; then
+              echo "✅ PM2 process is online"
+            elif echo "$PM2_LIST" | grep -q "website-backend"; then
+              PM2_STATUS=$(echo "$PM2_LIST" | grep "website-backend" | awk '{print $10}' || echo "unknown")
+              echo "❌ PM2 process is not online! Status: $PM2_STATUS"
+              echo "📋 PM2 Info:"
+              pm2 info website-backend 2>/dev/null || echo "Could not get PM2 info"
+              echo "📋 PM2 Logs (last 50 lines):"
+              pm2 logs website-backend --lines 50 --nostream 2>/dev/null || true
+              exit 1
+            else
+              echo "❌ PM2 process 'website-backend' not found!"
+              exit 1
+            fi
+
+            # Check if port is listening
+            echo "🔍 Checking port 4000..."
+            if command -v ss &> /dev/null; then
+              PORT_CHECK=$(ss -tlnp | grep :4000 || echo "")
+              if [ -n "$PORT_CHECK" ]; then
+                echo "✅ Port 4000 is listening"
+                echo "$PORT_CHECK"
+              else
+                echo "⚠️  Port 4000 is NOT listening!"
+                echo "Checking all listening ports..."
+                ss -tlnp | grep LISTEN | head -10
+              fi
+            fi
+
+            # Check process
+            echo "🔍 Checking Node.js processes..."
+            ps aux | grep -E "node|tsx" | grep -v grep | head -5
+
+            echo "✅ Pre-check complete, proceeding to health check..."
 
       - name: Health check with exponential backoff
         uses: appleboy/ssh-action@v1.0.3
@@ -550,34 +687,92 @@ jobs:
             echo "🏥 Starting health check..."
             max_attempts=6
             attempt=1
-            backoff=2
+            backoff=3
 
             while [ $attempt -le $max_attempts ]; do
-              echo "Attempt $attempt/$max_attempts (waiting ${backoff}s)..."
+              echo ""
+              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+              echo "Attempt $attempt/$max_attempts (waiting ${backoff}s before check)..."
               sleep $backoff
               
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 \
-                http://localhost:4000/health 2>/dev/null || echo "000")
+              # Check PM2 status first (without jq)
+              PM2_LIST=$(pm2 list 2>/dev/null)
+              if echo "$PM2_LIST" | grep -q "website-backend.*online"; then
+                PM2_STATUS="online"
+              else
+                PM2_STATUS=$(echo "$PM2_LIST" | grep "website-backend" | awk '{print $10}' 2>/dev/null || echo "unknown")
+              fi
+              echo "PM2 Status: $PM2_STATUS"
               
-              if [ "$HTTP_CODE" = "200" ]; then
-                HEALTH_BODY=$(curl -s --max-time 5 http://localhost:4000/health 2>/dev/null)
-                if echo "$HEALTH_BODY" | grep -q -E '"status".*"ok"|"status":\s*"ok"'; then
-                  echo "✅ Backend health check passed (HTTP 200)"
-                  echo "Response: $(echo "$HEALTH_BODY" | head -1)"
-                  exit 0
+              # Try health check
+              echo "Testing http://localhost:4000/health..."
+              HTTP_CODE=$(curl -s -o /tmp/health_response.txt -w "%{http_code}" --max-time 10 \
+                http://localhost:4000/health 2>&1)
+              CURL_EXIT=$?
+              
+              if [ $CURL_EXIT -ne 0 ]; then
+                echo "❌ curl failed with exit code: $CURL_EXIT"
+                echo "curl error output:"
+                cat /tmp/health_response.txt 2>/dev/null || echo "No response captured"
+              else
+                echo "HTTP Code: $HTTP_CODE"
+                
+                if [ "$HTTP_CODE" = "200" ]; then
+                  HEALTH_BODY=$(cat /tmp/health_response.txt 2>/dev/null)
+                  echo "Response body: $HEALTH_BODY"
+                  
+                  if echo "$HEALTH_BODY" | grep -q -E '"status".*"ok"|"status":\s*"ok"'; then
+                    echo ""
+                    echo "✅✅✅ Backend health check PASSED (HTTP 200) ✅✅✅"
+                    echo "Response: $HEALTH_BODY"
+                    rm -f /tmp/health_response.txt
+                    exit 0
+                  else
+                    echo "⚠️  HTTP 200 but response doesn't contain 'ok' status"
+                  fi
+                elif [ "$HTTP_CODE" = "000" ]; then
+                  echo "❌ Connection failed (HTTP 000) - server might not be responding"
+                else
+                  echo "⚠️  Unexpected HTTP code: $HTTP_CODE"
+                  HEALTH_BODY=$(cat /tmp/health_response.txt 2>/dev/null)
+                  echo "Response: $HEALTH_BODY"
                 fi
               fi
               
-              echo "HTTP Code: $HTTP_CODE"
+              # Show more debug info on last attempt
+              if [ $attempt -eq $max_attempts ]; then
+                echo ""
+                echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+                echo "❌ Health check failed after $max_attempts attempts"
+                echo ""
+                echo "📋 PM2 Status:"
+                pm2 list
+                echo ""
+                echo "📋 PM2 Info:"
+                pm2 info website-backend 2>/dev/null || echo "Could not get PM2 info"
+                echo ""
+                echo "📋 PM2 Logs (last 50 lines):"
+                pm2 logs website-backend --lines 50 --nostream 2>/dev/null || true
+                echo ""
+                echo "📋 Port 4000 status:"
+                ss -tlnp | grep :4000 || echo "Port 4000 not listening"
+                echo ""
+                echo "📋 Node.js processes:"
+                ps aux | grep -E "node|tsx" | grep -v grep
+                echo ""
+                echo "📋 .env file (MONGODB_URI check):"
+                if [ -f "/root/backend/.env" ]; then
+                  grep "^MONGODB_URI=" /root/backend/.env | sed 's/\(mongodb[^:]*:\/\/[^:]*:\)[^@]*\(@.*\)/\1***\2/' || echo "MONGODB_URI not found"
+                else
+                  echo ".env file not found!"
+                fi
+              fi
+              
               attempt=$((attempt + 1))
               backoff=$((backoff * 2))
             done
 
-            echo "❌ Health check failed after $max_attempts attempts"
-            echo "📋 PM2 Status:"
-            pm2 list
-            echo "📋 PM2 Logs (last 30 lines):"
-            pm2 logs website-backend --lines 30 --nostream 2>/dev/null || true
+            rm -f /tmp/health_response.txt
             exit 1
 
       - name: Final verification and cleanup
