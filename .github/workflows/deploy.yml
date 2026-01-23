@@ -518,12 +518,9 @@ jobs:
                   CLEANED_QUERY=$(echo "$QUERY_STRING" | sed 's/&w=[^&]*//g' | sed 's/^w=[^&]*&//' | sed 's/^w=[^&]*$//' | sed 's/&$//')
                   
                   # Reconstruct with single 'w=majority'
+                  # Since we already removed trailing &, we can safely add &w=majority
                   if [ -n "$CLEANED_QUERY" ]; then
-                    if [[ "$CLEANED_QUERY" =~ &$ ]]; then
-                      FIXED_URI="${BASE_URI}?${CLEANED_QUERY}w=majority"
-                    else
-                      FIXED_URI="${BASE_URI}?${CLEANED_QUERY}&w=majority"
-                    fi
+                    FIXED_URI="${BASE_URI}?${CLEANED_QUERY}&w=majority"
                   else
                     FIXED_URI="${BASE_URI}?w=majority"
                   fi
