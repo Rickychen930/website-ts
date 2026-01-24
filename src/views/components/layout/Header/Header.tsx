@@ -52,8 +52,8 @@ export const Header: React.FC = () => {
             src="/logo192.png"
             alt={`${profile?.name || "Ricky Chen"} logo - Home`}
             className={styles.logoImage}
-            width="192"
-            height="192"
+            width="48"
+            height="48"
           />
         </Link>
 
