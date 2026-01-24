@@ -21,6 +21,21 @@ export class ProfileController {
         return;
       }
 
+      // Debug: Check database connection and collection
+      const db = mongoose.connection.db;
+      const dbName = db?.databaseName || "unknown";
+      const collections = (await db?.listCollections().toArray()) || [];
+      const profilesExists = collections.some(
+        (c: { name: string }) => c.name === "profiles",
+      );
+      const profilesCount = profilesExists
+        ? await db.collection("profiles").countDocuments()
+        : 0;
+
+      console.log(
+        `[ProfileController] DB: ${dbName}, Collections: ${collections.map((c: { name: string }) => c.name).join(", ")}, Profiles count: ${profilesCount}`,
+      );
+
       const profile = await ProfileModel.findOne();
 
       if (!profile) {
@@ -28,6 +43,12 @@ export class ProfileController {
           error: "Profile not found",
           message:
             "No profile data found in MongoDB Atlas database. Please run 'npm run seed' to populate the database with your profile data.",
+          debug: {
+            database: dbName,
+            collections: collections.map((c: { name: string }) => c.name),
+            profilesCount,
+            profilesCollectionExists: profilesExists,
+          },
         });
         return;
       }

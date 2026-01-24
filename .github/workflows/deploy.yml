@@ -235,22 +235,39 @@ jobs:
             set -e
 
             echo "🔐 Updating .env file..."
-            cd /root/backend
-            ENV_FILE="/root/backend/.env"
-            ENV_BACKUP="/root/backend/.env.backup.$(date +%Y%m%d_%H%M%S)"
+            echo "📝 IMPORTANT: Backend loads .env from /root/.env (not /root/backend/.env)"
+            echo "   See: backend/src/main.ts line 18: path.resolve(__dirname, '../../', '.env')"
+            
+            # Backend loads from /root/.env (path.resolve from backend/dist -> ../../)
+            ENV_FILE="/root/.env"
+            ENV_BACKUP="/root/.env.backup.$(date +%Y%m%d_%H%M%S)"
             ENV_NEW="/tmp/deploy/.env.new"
+            ENV_BACKEND="/root/backend/.env"  # Keep this as fallback source
 
-            # Backup existing .env
+            # Backup existing .env files
             if [ -f "$ENV_FILE" ]; then
               cp "$ENV_FILE" "$ENV_BACKUP"
               echo "✅ Backup created: $(basename $ENV_BACKUP)"
             fi
+            
+            # Also backup backend .env if exists (as source)
+            if [ -f "$ENV_BACKEND" ]; then
+              BACKEND_BACKUP="/root/backend/.env.backup.$(date +%Y%m%d_%H%M%S)"
+              cp "$ENV_BACKEND" "$BACKEND_BACKUP"
+              echo "✅ Backend .env backed up: $(basename $BACKEND_BACKUP)"
+            fi
 
             # Start with existing .env or create new
+            # Prefer /root/.env, fallback to /root/backend/.env for source
             if [ -f "$ENV_FILE" ]; then
               cp "$ENV_FILE" "$ENV_FILE.tmp"
+              echo "📖 Using existing /root/.env as base"
+            elif [ -f "$ENV_BACKEND" ]; then
+              cp "$ENV_BACKEND" "$ENV_FILE.tmp"
+              echo "📖 Using /root/backend/.env as base (will write to /root/.env)"
             else
               touch "$ENV_FILE.tmp"
+              echo "📝 Creating new /root/.env file"
             fi
 
             # Update/Add from deployment .env file
@@ -306,15 +323,26 @@ jobs:
               echo "NODE_ENV=production" >> "$ENV_FILE.tmp"
             fi
 
-            # Finalize
+            # Ensure MONGODB_URI has correct database name (extract from URI if needed)
+            if grep -q "^MONGODB_URI=" "$ENV_FILE.tmp" 2>/dev/null; then
+              MONGODB_URI=$(grep "^MONGODB_URI=" "$ENV_FILE.tmp" | cut -d'=' -f2- | head -1)
+              # Extract database name from URI
+              DB_NAME_FROM_URI=$(echo "$MONGODB_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
+              if [ -n "$DB_NAME_FROM_URI" ]; then
+                echo "📊 Database name in URI: $DB_NAME_FROM_URI"
+              fi
+            fi
+
+            # Finalize - write to /root/.env (where backend actually loads from)
             mv "$ENV_FILE.tmp" "$ENV_FILE"
             chmod 600 "$ENV_FILE"
 
-            echo "✅ .env updated"
+            echo "✅ .env updated at $ENV_FILE"
             echo "📊 Variables: $(grep -v '^#' "$ENV_FILE" | grep -c '=' || echo 0)"
+            echo "📋 MONGODB_URI (hidden): $(grep '^MONGODB_URI=' "$ENV_FILE" | sed 's|//[^:]*:[^@]*@|//***:***@|' | head -c 80)"
 
             # Keep only last 3 backups
-            ls -t "$(dirname $ENV_FILE)"/.env.backup.* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
+            ls -t /root/.env.backup.* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
 
       - name: Install dependencies and restart services
         uses: appleboy/ssh-action@v1.2.4
@@ -345,18 +373,29 @@ jobs:
 
             # Restart backend
             echo "🔄 Restarting backend..."
+            echo "📝 Ensuring /root/.env exists (backend load path)..."
+            if [ ! -f "/root/.env" ]; then
+              echo "⚠️  /root/.env not found, creating from /root/backend/.env if exists..."
+              if [ -f "/root/backend/.env" ]; then
+                cp /root/backend/.env /root/.env
+                echo "✅ Created /root/.env from /root/backend/.env"
+              else
+                echo "❌ No .env file found anywhere!"
+              fi
+            fi
+            
             if [ -f "fix-backend-on-server.sh" ]; then
               ./fix-backend-on-server.sh || {
                 echo "⚠️  Fix script failed, using manual restart..."
                 pm2 stop website-backend 2>/dev/null || true
                 pm2 delete website-backend 2>/dev/null || true
-                pm2 start ecosystem.config.js --env production
+                pm2 start ecosystem.config.js --env production --update-env
                 pm2 save
               }
             else
               pm2 stop website-backend 2>/dev/null || true
               pm2 delete website-backend 2>/dev/null || true
-              pm2 start ecosystem.config.js --env production
+              pm2 start ecosystem.config.js --env production --update-env
               pm2 save
             fi
 
@@ -479,8 +518,25 @@ jobs:
             git pull
             npm install
             npm run build
-            cd /root/backend && (npm ci --omit=dev --ignore-scripts --legacy-peer-deps 2>/dev/null || npm install --omit=dev --ignore-scripts --legacy-peer-deps || true)
-            pm2 restart website-backend 2>/dev/null || true
+            
+            # Backend
+            cd /root/backend
+            (npm ci --omit=dev --ignore-scripts --legacy-peer-deps 2>/dev/null || npm install --omit=dev --ignore-scripts --legacy-peer-deps || true)
+            
+            # Ensure /root/.env exists (backend loads from here)
+            if [ ! -f "/root/.env" ] && [ -f "/root/backend/.env" ]; then
+              echo "📝 Creating /root/.env from /root/backend/.env..."
+              cp /root/backend/.env /root/.env
+            fi
+            
+            # Restart with update-env flag
+            pm2 restart website-backend --update-env 2>/dev/null || {
+              pm2 stop website-backend 2>/dev/null || true
+              pm2 delete website-backend 2>/dev/null || true
+              pm2 start ecosystem.config.js --env production --update-env
+              pm2 save
+            }
+            
             sudo systemctl restart nginx
             echo "✅ Simple deploy complete"
 
