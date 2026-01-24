@@ -9,6 +9,58 @@ let retryCount = 0;
 const MAX_RETRIES = 10; // Maximum number of retry attempts
 const RETRY_DELAY = 5000; // 5 seconds between retries
 
+/**
+ * Clean MongoDB URI by removing duplicate query parameters
+ * Fixes issue where "w" parameter appears multiple times in connection string
+ */
+const cleanMongoUri = (uri: string): string => {
+  try {
+    // Check if URI has query parameters
+    const queryIndex = uri.indexOf("?");
+    if (queryIndex === -1) {
+      return uri; // No query parameters, return as is
+    }
+
+    const baseUri = uri.substring(0, queryIndex);
+    const queryString = uri.substring(queryIndex + 1);
+
+    // Parse query parameters and remove duplicates (keep first occurrence)
+    const params = new URLSearchParams();
+    const seenParams = new Set<string>();
+
+    // Split by & and process each parameter
+    queryString.split("&").forEach((param) => {
+      if (!param) return; // Skip empty strings
+
+      const equalIndex = param.indexOf("=");
+      if (equalIndex === -1) {
+        // Parameter without value
+        if (!seenParams.has(param)) {
+          params.append(param, "");
+          seenParams.add(param);
+        }
+      } else {
+        const key = param.substring(0, equalIndex);
+        const value = param.substring(equalIndex + 1);
+
+        // Only add if we haven't seen this parameter before
+        if (!seenParams.has(key)) {
+          params.append(key, value);
+          seenParams.add(key);
+        }
+      }
+    });
+
+    // Reconstruct URI
+    const cleanQuery = params.toString();
+    return cleanQuery ? `${baseUri}?${cleanQuery}` : baseUri;
+  } catch (error) {
+    // If parsing fails, return original URI
+    console.warn("⚠️ Failed to parse MongoDB URI, using original:", error);
+    return uri;
+  }
+};
+
 export const connectDatabase = async (
   retryAttempt: number = 0,
 ): Promise<void> => {
@@ -20,7 +72,7 @@ export const connectDatabase = async (
   dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
   dotenv.config({ path: path.resolve(__dirname, "../../../config/.env") });
 
-  const mongoUri =
+  let mongoUri =
     process.env.MONGODB_URI || "mongodb://localhost:27017/website-db";
   const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -29,6 +81,9 @@ export const connectDatabase = async (
       "⚠️ MONGODB_URI not found in environment variables. Using default localhost.",
     );
   }
+
+  // Clean URI to remove duplicate parameters (especially "w" parameter)
+  mongoUri = cleanMongoUri(mongoUri);
 
   try {
     // Set connection options for better reliability
