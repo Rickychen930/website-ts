@@ -57,6 +57,19 @@ app.use(express_1.default.urlencoded({
 app.use(sanitizeInput_1.sanitizeInput);
 // Rate limiting (apply to all routes)
 app.use("/api", rateLimiter_1.apiLimiter);
+// API info endpoint
+app.get("/api", (req, res) => {
+    res.json({
+        message: "API is running",
+        version: "1.0.0",
+        endpoints: {
+            health: "/health",
+            profile: "/api/profile",
+            contact: "/api/contact",
+        },
+        example: "/api/profile",
+    });
+});
 // Routes
 app.use("/api/profile", profileRoutes_1.default);
 app.use("/api/contact", contactRoutes_1.default);

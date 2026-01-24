@@ -87,7 +87,7 @@ app.get("/api", (req, res) => {
 });
 
 // Routes
-app.use("/api/profile", profileRoutes);
+app.use("/api/profiles", profileRoutes);
 app.use("/api/contact", contactRoutes);
 
 // Health check
