@@ -60,27 +60,21 @@ const sanitizeObject = (obj: SanitizableValue): SanitizableValue => {
 };
 
 /**
- * Middleware to sanitize request body, query, and params
+ * Middleware to sanitize request body.
+ * Note: req.query and req.params are read-only in Express 5 (getter-only),
+ * so we only sanitize body. Body covers contact form, profile updates, etc.
  */
 export const sanitizeInput = (
   req: Request,
   res: Response,
   next: NextFunction,
 ): void => {
-  if (req.body) {
-    req.body = sanitizeObject(req.body) as typeof req.body;
-  }
-  if (req.query) {
-    const sanitized = sanitizeObject(req.query);
-    if (sanitized !== undefined && sanitized !== null) {
-      req.query = sanitized as typeof req.query;
+  try {
+    if (req.body && typeof req.body === "object") {
+      req.body = sanitizeObject(req.body) as typeof req.body;
     }
-  }
-  if (req.params) {
-    const sanitized = sanitizeObject(req.params);
-    if (sanitized !== undefined && sanitized !== null) {
-      req.params = sanitized as typeof req.params;
-    }
+  } catch (err) {
+    console.error("sanitizeInput error:", err);
   }
   next();
 };
