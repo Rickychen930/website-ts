@@ -4,7 +4,16 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      deploy_type:
+        description: "Deploy mode"
+        required: true
+        default: "full"
+        type: choice
+        options:
+          - full
+          - simple
 
 # Hanya satu deploy aktif; push baru membatalkan yang sedang berjalan
 concurrency:
@@ -16,6 +25,7 @@ jobs:
   # 🏗️ BUILD STAGE
   # ============================
   build:
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.deploy_type != 'simple'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
@@ -141,6 +151,7 @@ jobs:
   # 🚀 DEPLOY STAGE
   # ============================
   deploy:
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.deploy_type != 'simple'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     needs: build
@@ -443,4 +454,81 @@ jobs:
           else
             echo "### ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
             echo "Please check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ============================
+  # 🚀 DEPLOY SIMPLE (git pull on server)
+  # ============================
+  deploy-simple:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_type == 'simple'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Deploy via SSH (git pull + build + restart)
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+            echo "📦 Simple deploy: git pull + build + restart..."
+            cd /var/www/website-ts
+            git pull
+            npm install
+            npm run build
+            cd /root/backend && (npm ci --omit=dev --ignore-scripts --legacy-peer-deps 2>/dev/null || npm install --omit=dev --ignore-scripts --legacy-peer-deps || true)
+            pm2 restart website-backend 2>/dev/null || true
+            sudo systemctl restart nginx
+            echo "✅ Simple deploy complete"
+
+      - name: Health check (timeout 300s)
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set +e
+            echo "🏥 Health check: https://rickychen930.cloud/health (timeout 300s)..."
+            max_attempts=10
+            attempt=1
+            backoff=5
+            total_wait=0
+            while [ $attempt -le $max_attempts ]; do
+              echo "Attempt $attempt/$max_attempts (waiting ${backoff}s, total ~${total_wait}s)..."
+              sleep $backoff
+              total_wait=$((total_wait + backoff))
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://localhost:4000/health 2>/dev/null || echo "000")
+              if [ "$HTTP_CODE" = "200" ]; then
+                HEALTH_BODY=$(curl -s --max-time 10 http://localhost:4000/health 2>/dev/null)
+                if echo "$HEALTH_BODY" | grep -qE '"status".*"ok"|"status":\s*"ok"'; then
+                  echo "✅ Health check passed (HTTP 200)"
+                  exit 0
+                fi
+              fi
+              echo "HTTP $HTTP_CODE"
+              attempt=$((attempt + 1))
+              backoff=$((backoff + 5))
+            done
+            echo "❌ Health check failed after ~300s"
+            pm2 list
+            exit 1
+
+      - name: Deployment summary (simple)
+        if: always()
+        run: |
+          echo "## 🚀 Deployment Summary (Simple)" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "### ✅ Simple Deploy Successful" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Git pull + build on server" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ PM2 + nginx restarted" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Health check passed" >> $GITHUB_STEP_SUMMARY
+            echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Simple Deploy Failed" >> $GITHUB_STEP_SUMMARY
+            echo "Check logs above." >> $GITHUB_STEP_SUMMARY
           fi
