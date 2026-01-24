@@ -133,6 +133,8 @@ sudo certbot certificates
 
 Untuk panduan step-by-step lengkap, lihat:
 
+- **[NGINX_UPDATE_QUICK.md](../docs/NGINX_UPDATE_QUICK.md)** - ⚡ Quick guide update nginx (5 menit)
+- **[NGINX_UPDATE_STEP_BY_STEP.md](../docs/NGINX_UPDATE_STEP_BY_STEP.md)** - 📋 Panduan lengkap update nginx (detail)
 - **[SETUP_NGINX_DARI_AWAL.md](../docs/SETUP_NGINX_DARI_AWAL.md)** - 🆕 Panduan setup nginx dari awal (RECOMMENDED)
 - **[NGINX_SETUP_STEP_BY_STEP.md](../docs/NGINX_SETUP_STEP_BY_STEP.md)** - Panduan lengkap setup nginx
 
@@ -176,6 +178,8 @@ Setelah setup, pastikan:
 
 Lihat dokumentasi lengkap:
 
-- [NGINX_SETUP_STEP_BY_STEP.md](../docs/NGINX_SETUP_STEP_BY_STEP.md)
-- [PM2_NGINX_SETUP.md](../docs/PM2_NGINX_SETUP.md)
-- [DEPLOYMENT.md](../docs/DEPLOYMENT.md)
+- [NGINX_UPDATE_QUICK.md](../docs/NGINX_UPDATE_QUICK.md) - Quick guide untuk update
+- [NGINX_UPDATE_STEP_BY_STEP.md](../docs/NGINX_UPDATE_STEP_BY_STEP.md) - Panduan detail update
+- [NGINX_SETUP_STEP_BY_STEP.md](../docs/NGINX_SETUP_STEP_BY_STEP.md) - Setup dari awal
+- [PM2_NGINX_SETUP.md](../docs/PM2_NGINX_SETUP.md) - Setup PM2 dan Nginx
+- [DEPLOYMENT.md](../docs/DEPLOYMENT.md) - Panduan deployment
