@@ -72,6 +72,20 @@ app.use(sanitizeInput);
 // Rate limiting (apply to all routes)
 app.use("/api", apiLimiter);
 
+// API info endpoint
+app.get("/api", (req, res) => {
+  res.json({
+    message: "API is running",
+    version: "1.0.0",
+    endpoints: {
+      health: "/health",
+      profile: "/api/profile",
+      contact: "/api/contact",
+    },
+    example: "/api/profile",
+  });
+});
+
 // Routes
 app.use("/api/profile", profileRoutes);
 app.use("/api/contact", contactRoutes);

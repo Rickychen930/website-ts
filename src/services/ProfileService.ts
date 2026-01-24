@@ -319,6 +319,9 @@ const FALLBACK_PROFILE: Profile = {
 export class ProfileService {
   private profile: ProfileModel | null = null;
   private cache: CacheEntry | null = null;
+  private profileNotFoundError: Error | null = null; // Cache 404 errors to prevent repeated requests
+  private isFetching: boolean = false; // Prevent concurrent requests
+  private fetchPromise: Promise<ProfileModel> | null = null; // Deduplicate concurrent requests
 
   private async fetchWithRetry(
     url: string,
@@ -350,7 +353,7 @@ export class ProfileService {
       }
 
       if (!response.ok) {
-        // Handle 404 (Profile not found) - use fallback data
+        // Handle 404 (Profile not found) - don't retry
         if (response.status === 404) {
           throw new Error("PROFILE_NOT_FOUND");
         }
@@ -363,13 +366,17 @@ export class ProfileService {
 
       return response;
     } catch (error) {
+      // Don't retry on 404 errors or HTML responses
       if (
-        retries > 0 &&
-        !(
-          error instanceof Error &&
-          error.message.includes("HTML instead of JSON")
-        )
+        error instanceof Error &&
+        (error.message === "PROFILE_NOT_FOUND" ||
+          error.message.includes("HTML instead of JSON"))
       ) {
+        throw error;
+      }
+
+      // Retry for other errors
+      if (retries > 0) {
         await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
         return this.fetchWithRetry(url, retries - 1);
       }
@@ -396,84 +403,108 @@ export class ProfileService {
       return this.profile;
     }
 
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:4000";
-      const apiEndpoint = `${apiUrl}/api/profile`;
+    // If we've already determined the profile is not found, throw immediately
+    // (prevents repeated 404 requests)
+    if (this.profileNotFoundError) {
+      throw this.profileNotFoundError;
+    }
 
-      const response = await this.fetchWithRetry(apiEndpoint);
+    // Deduplicate concurrent requests
+    if (this.isFetching && this.fetchPromise) {
+      return this.fetchPromise;
+    }
 
-      // Double check content type before parsing
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        await response.text(); // Consume response body
-        throw new Error(
-          `Invalid response format. Expected JSON but received ${contentType}. Make sure the backend server is running at ${apiUrl}`,
-        );
-      }
+    this.isFetching = true;
+    this.fetchPromise = (async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:4000";
+        const apiEndpoint = `${apiUrl}/api/profile`;
 
-      const data: Profile = await response.json();
+        const response = await this.fetchWithRetry(apiEndpoint);
 
-      this.profile = ProfileModel.create(data);
-      this.cache = {
-        data: this.profile,
-        timestamp: Date.now(),
-      };
+        // Double check content type before parsing
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          await response.text(); // Consume response body
+          throw new Error(
+            `Invalid response format. Expected JSON but received ${contentType}. Make sure the backend server is running at ${apiUrl}`,
+          );
+        }
 
-      return this.profile;
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to fetch profile";
+        const data: Profile = await response.json();
 
-      // Only use fallback in development mode when backend is truly unavailable
-      // In production, always require database connection
-      const isDevelopment = process.env.NODE_ENV === "development";
-      const isBackendUnavailable =
-        (errorMessage.includes("HTML instead of JSON") ||
-          errorMessage.includes("Invalid response format") ||
-          errorMessage.includes("Failed to fetch") ||
-          errorMessage.includes("NetworkError") ||
-          errorMessage.includes("Network request failed") ||
-          errorMessage.includes("fetch failed") ||
-          errorMessage.includes("CORS") ||
-          (error instanceof TypeError && error.message.includes("fetch"))) &&
-        !errorMessage.includes("PROFILE_NOT_FOUND");
-
-      // Only use fallback in development mode
-      if (isBackendUnavailable && isDevelopment) {
-        console.warn(
-          "⚠️ Backend server unavailable, using fallback profile data (development mode only).\n" +
-            "To enable full functionality with MongoDB Atlas, please:\n" +
-            "1. Ensure MONGODB_URI is set in your .env file\n" +
-            "2. Start the backend server: npm run server:watch\n" +
-            "3. Seed the database: npm run seed\n" +
-            `Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
-        );
-
-        this.profile = ProfileModel.create(FALLBACK_PROFILE);
+        this.profile = ProfileModel.create(data);
         this.cache = {
           data: this.profile,
           timestamp: Date.now(),
         };
+        // Clear 404 error cache on success
+        this.profileNotFoundError = null;
 
         return this.profile;
-      }
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Failed to fetch profile";
 
-      // In production or when profile not found, throw error
-      if (errorMessage === "PROFILE_NOT_FOUND") {
-        throw new Error(
-          "Profile not found in MongoDB Atlas database. Please run 'npm run seed' to populate the database with your profile data.",
-        );
-      }
+        // Only use fallback in development mode when backend is truly unavailable
+        // In production, always require database connection
+        const isDevelopment = process.env.NODE_ENV === "development";
+        const isBackendUnavailable =
+          (errorMessage.includes("HTML instead of JSON") ||
+            errorMessage.includes("Invalid response format") ||
+            errorMessage.includes("Failed to fetch") ||
+            errorMessage.includes("NetworkError") ||
+            errorMessage.includes("Network request failed") ||
+            errorMessage.includes("fetch failed") ||
+            errorMessage.includes("CORS") ||
+            (error instanceof TypeError && error.message.includes("fetch"))) &&
+          !errorMessage.includes("PROFILE_NOT_FOUND");
 
-      // In production, don't use fallback - require database connection
-      if (!isDevelopment && isBackendUnavailable) {
-        throw new Error(
-          "Cannot connect to backend server. Please ensure the backend is running and connected to MongoDB Atlas.",
-        );
-      }
+        // Only use fallback in development mode
+        if (isBackendUnavailable && isDevelopment) {
+          console.warn(
+            "⚠️ Backend server unavailable, using fallback profile data (development mode only).\n" +
+              "To enable full functionality with MongoDB Atlas, please:\n" +
+              "1. Ensure MONGODB_URI is set in your .env file\n" +
+              "2. Start the backend server: npm run server:watch\n" +
+              "3. Seed the database: npm run seed\n" +
+              `Backend URL: ${process.env.REACT_APP_API_URL || "http://localhost:4000"}`,
+          );
 
-      throw new Error(errorMessage);
-    }
+          this.profile = ProfileModel.create(FALLBACK_PROFILE);
+          this.cache = {
+            data: this.profile,
+            timestamp: Date.now(),
+          };
+
+          return this.profile;
+        }
+
+        // In production or when profile not found, cache the error and throw
+        if (errorMessage === "PROFILE_NOT_FOUND") {
+          const notFoundError = new Error(
+            "Profile not found in MongoDB Atlas database. Please run 'npm run seed' to populate the database with your profile data.",
+          );
+          // Cache the 404 error to prevent repeated requests
+          this.profileNotFoundError = notFoundError;
+          throw notFoundError;
+        }
+
+        // In production, don't use fallback - require database connection
+        if (!isDevelopment && isBackendUnavailable) {
+          throw new Error(
+            "Cannot connect to backend server. Please ensure the backend is running and connected to MongoDB Atlas.",
+          );
+        }
+
+        throw new Error(errorMessage);
+      } finally {
+        this.isFetching = false;
+        this.fetchPromise = null;
+      }
+    })();
+
+    return this.fetchPromise;
   }
 
   public getProfile(): ProfileModel | null {
@@ -483,6 +514,7 @@ export class ProfileService {
   public clearCache(): void {
     this.profile = null;
     this.cache = null;
+    this.profileNotFoundError = null; // Clear 404 error cache when clearing cache
   }
 
   public async updateContacts(

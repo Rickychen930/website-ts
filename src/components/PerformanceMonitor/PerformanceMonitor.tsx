@@ -62,17 +62,47 @@ export const PerformanceMonitor: React.FC = () => {
       }
     };
 
-    // Track navigation timing
+    // Track navigation timing using modern PerformanceNavigationTiming API
     const trackNavigationTiming = () => {
-      if ("performance" in window && "timing" in window.performance) {
-        const timing = (window.performance as any).timing;
-        const loadTime = timing.loadEventEnd - timing.navigationStart;
-        const domReady =
-          timing.domContentLoadedEventEnd - timing.navigationStart;
+      try {
+        // Use modern PerformanceNavigationTiming API (more reliable)
+        const navigationEntries = performance.getEntriesByType(
+          "navigation",
+        ) as PerformanceNavigationTiming[];
 
-        console.log("Page Load Time:", loadTime);
-        console.log("DOM Ready:", domReady);
+        if (navigationEntries.length > 0) {
+          const navEntry = navigationEntries[0];
+          const loadTime = navEntry.loadEventEnd - navEntry.fetchStart;
+          const domReady =
+            navEntry.domContentLoadedEventEnd - navEntry.fetchStart;
+
+          // Only log valid positive values
+          if (loadTime > 0 && loadTime < Number.MAX_SAFE_INTEGER) {
+            console.log("Page Load Time:", Math.round(loadTime));
+          }
+          if (domReady > 0 && domReady < Number.MAX_SAFE_INTEGER) {
+            console.log("DOM Ready:", Math.round(domReady));
+          }
+        } else {
+          // Fallback to legacy API if modern API not available
+          const timing = (window.performance as any).timing;
+          if (timing && timing.navigationStart && timing.loadEventEnd) {
+            const loadTime = timing.loadEventEnd - timing.navigationStart;
+            const domReady =
+              timing.domContentLoadedEventEnd - timing.navigationStart;
+
+            // Only log valid positive values
+            if (loadTime > 0 && loadTime < Number.MAX_SAFE_INTEGER) {
+              console.log("Page Load Time:", Math.round(loadTime));
+            }
+            if (domReady > 0 && domReady < Number.MAX_SAFE_INTEGER) {
+              console.log("DOM Ready:", Math.round(domReady));
+            }
+          }
+        }
         // Send to analytics
+      } catch (error) {
+        console.warn("Navigation timing not available:", error);
       }
     };
 

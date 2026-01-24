@@ -108,11 +108,13 @@ jobs:
           tar -czf backend-deploy.tar.gz \
             backend/dist \
             backend/ecosystem.config.js \
+            backend/tsconfig.backend.json \
             package.json \
             package-lock.json \
             scripts/fix-backend-on-server.sh \
+            scripts/backend-build.js \
             scripts/fix-mongodb-uri.sh \
-            scripts/fix-mongodb-uri-simple.js \
+            scripts/fix-mongodb-uri.js \
             .env 2>/dev/null || true
 
           # Create compressed frontend package
@@ -352,26 +354,7 @@ jobs:
               touch "$ENV_FILE.tmp"
             fi
 
-            # Update/Add from deployment .env file
-            if [ -f "$ENV_NEW" ]; then
-              echo "📝 Applying changes from deployment .env..."
-              while IFS= read -r line || [ -n "$line" ]; do
-                line=$(echo "$line" | xargs)
-                [[ -z "$line" || "$line" =~ ^# ]] && continue
-                
-                key=$(echo "$line" | cut -d'=' -f1 | xargs)
-                value=$(echo "$line" | cut -d'=' -f2- | xargs | sed 's/^"//;s/"$//')
-                [[ -z "$key" ]] && continue
-                
-                if grep -q "^${key}=" "$ENV_FILE.tmp" 2>/dev/null; then
-                  sed -i "s|^${key}=.*|${key}=${value}|" "$ENV_FILE.tmp" 2>/dev/null || true
-                else
-                  echo "${key}=${value}" >> "$ENV_FILE.tmp"
-                fi
-              done < "$ENV_NEW"
-            fi
-
-            # Create reusable Node.js script for cleaning MONGODB_URI
+            # Create reusable Node.js script for cleaning MONGODB_URI (must be before using it)
             cat > /tmp/clean-mongodb-uri.js << 'HEREDOC_END'
 function cleanMongoDBUri(uri) {
   if (!uri || typeof uri !== 'string') return uri;
@@ -382,18 +365,19 @@ function cleanMongoDBUri(uri) {
   const base = parts[0];
   const query = parts[1];
   const params = query.split('&').filter(function(p) { return p.trim(); });
-  const seen = {};
+  const seen = {}; // Use lowercase keys for case-insensitive comparison
   const cleaned = [];
   for (var i = 0; i < params.length; i++) {
     var param = params[i];
     if (!param) continue;
-    var key = param.split('=')[0];
+    var key = param.split('=')[0].toLowerCase().trim(); // Case-insensitive + trim
     if (!seen[key]) {
       seen[key] = true;
       cleaned.push(param);
     }
   }
-  if (!seen['retryWrites']) cleaned.push('retryWrites=true');
+  // Check case-insensitively for required parameters
+  if (!seen['retrywrites']) cleaned.push('retryWrites=true');
   if (!seen['w']) cleaned.push('w=majority');
   return base + '?' + cleaned.join('&');
 }
