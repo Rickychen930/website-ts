@@ -12,18 +12,80 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 const Profile_1 = require("../models/Profile");
 const seedData_1 = require("./seedData");
-// Load environment variables from root directory
-// Try multiple possible locations for .env file
+// Load environment variables from root directory - only use .env file
 const rootPath = path_1.default.resolve(__dirname, "../../../");
 dotenv_1.default.config({ path: path_1.default.resolve(rootPath, ".env") });
-dotenv_1.default.config({ path: path_1.default.resolve(rootPath, ".env.development") });
-dotenv_1.default.config({ path: path_1.default.resolve(rootPath, ".env.production") });
+/**
+ * Clean MongoDB URI by removing duplicate query parameters
+ * Fixes issues with duplicate parameters and invalid values
+ */
+const cleanMongoUri = (uri) => {
+    try {
+        // Check if URI has query parameters
+        const queryIndex = uri.indexOf("?");
+        if (queryIndex === -1) {
+            return uri; // No query parameters, return as is
+        }
+        const baseUri = uri.substring(0, queryIndex);
+        const queryString = uri.substring(queryIndex + 1);
+        // Parse query parameters and remove duplicates (keep first occurrence)
+        const params = new URLSearchParams();
+        const seenParams = new Set();
+        // Split by & and process each parameter
+        queryString.split("&").forEach((param) => {
+            if (!param)
+                return; // Skip empty strings
+            const equalIndex = param.indexOf("=");
+            if (equalIndex === -1) {
+                // Parameter without value
+                if (!seenParams.has(param)) {
+                    params.append(param, "");
+                    seenParams.add(param);
+                }
+            }
+            else {
+                const key = param.substring(0, equalIndex);
+                let value = param.substring(equalIndex + 1);
+                // Normalize boolean values for retryWrites
+                if (key === "retryWrites") {
+                    // Convert to lowercase and ensure it's "true" or "false"
+                    const lowerValue = value.toLowerCase();
+                    if (lowerValue === "true" || lowerValue === "1") {
+                        value = "true";
+                    }
+                    else if (lowerValue === "false" || lowerValue === "0") {
+                        value = "false";
+                    }
+                    // If invalid, default to "true"
+                    if (value !== "true" && value !== "false") {
+                        value = "true";
+                    }
+                }
+                // Only add if we haven't seen this parameter before
+                if (!seenParams.has(key)) {
+                    params.append(key, value);
+                    seenParams.add(key);
+                }
+            }
+        });
+        // Reconstruct URI
+        const cleanQuery = params.toString();
+        return cleanQuery ? `${baseUri}?${cleanQuery}` : baseUri;
+    }
+    catch (error) {
+        // If parsing fails, return original URI
+        console.warn("⚠️ Failed to parse MongoDB URI, using original:", error);
+        return uri;
+    }
+};
 const seedDatabase = async () => {
     try {
-        const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/website-db";
+        let mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/website-db";
         if (!mongoUri) {
             throw new Error("MONGODB_URI is not defined. Please check your environment variables.");
         }
+        // Clean URI to remove duplicate parameters (especially "w" parameter)
+        mongoUri = cleanMongoUri(mongoUri);
         console.log("🌱 Starting database seeding...");
         console.log(`📡 Connecting to MongoDB: ${mongoUri.replace(/\/\/.*@/, "//***:***@")}`); // Hide credentials
         // Connection options for better reliability

@@ -9,16 +9,13 @@ import path from "path";
 import { ProfileModel } from "../models/Profile";
 import { seedProfileData } from "./seedData";
 
-// Load environment variables from root directory
-// Try multiple possible locations for .env file
+// Load environment variables from root directory - only use .env file
 const rootPath = path.resolve(__dirname, "../../../");
 dotenv.config({ path: path.resolve(rootPath, ".env") });
-dotenv.config({ path: path.resolve(rootPath, ".env.development") });
-dotenv.config({ path: path.resolve(rootPath, ".env.production") });
 
 /**
  * Clean MongoDB URI by removing duplicate query parameters
- * Fixes issue where "w" parameter appears multiple times in connection string
+ * Fixes issues with duplicate parameters and invalid values
  */
 const cleanMongoUri = (uri: string): string => {
   try {
@@ -48,7 +45,22 @@ const cleanMongoUri = (uri: string): string => {
         }
       } else {
         const key = param.substring(0, equalIndex);
-        const value = param.substring(equalIndex + 1);
+        let value = param.substring(equalIndex + 1);
+
+        // Normalize boolean values for retryWrites
+        if (key === "retryWrites") {
+          // Convert to lowercase and ensure it's "true" or "false"
+          const lowerValue = value.toLowerCase();
+          if (lowerValue === "true" || lowerValue === "1") {
+            value = "true";
+          } else if (lowerValue === "false" || lowerValue === "0") {
+            value = "false";
+          }
+          // If invalid, default to "true"
+          if (value !== "true" && value !== "false") {
+            value = "true";
+          }
+        }
 
         // Only add if we haven't seen this parameter before
         if (!seenParams.has(key)) {

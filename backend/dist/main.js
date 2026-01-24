@@ -16,13 +16,11 @@ const profileRoutes_1 = __importDefault(require("./routes/profileRoutes"));
 const contactRoutes_1 = __importDefault(require("./routes/contactRoutes"));
 const rateLimiter_1 = require("./middleware/rateLimiter");
 const sanitizeInput_1 = require("./middleware/sanitizeInput");
-// Load environment variables based on NODE_ENV
+// Load environment variables - only use .env file
 const nodeEnv = process.env.NODE_ENV || "development";
-const envFile = `.env.${nodeEnv}`;
-const envPath = path_1.default.resolve(__dirname, "../../", envFile);
-// Load environment-specific .env file, fallback to .env
+const envPath = path_1.default.resolve(__dirname, "../../", ".env");
+// Load .env file only
 dotenv_1.default.config({ path: envPath });
-dotenv_1.default.config(); // Load .env as fallback
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 4000;
 // Security Middleware
@@ -71,7 +69,7 @@ app.get("/api", (req, res) => {
     });
 });
 // Routes
-app.use("/api/profile", profileRoutes_1.default);
+app.use("/api/profiles", profileRoutes_1.default);
 app.use("/api/contact", contactRoutes_1.default);
 // Health check
 app.get("/health", (req, res) => {

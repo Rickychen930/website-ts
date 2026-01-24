@@ -13,14 +13,12 @@ import contactRoutes from "./routes/contactRoutes";
 import { apiLimiter } from "./middleware/rateLimiter";
 import { sanitizeInput } from "./middleware/sanitizeInput";
 
-// Load environment variables based on NODE_ENV
+// Load environment variables - only use .env file
 const nodeEnv = process.env.NODE_ENV || "development";
-const envFile = `.env.${nodeEnv}`;
-const envPath = path.resolve(__dirname, "../../", envFile);
+const envPath = path.resolve(__dirname, "../../", ".env");
 
-// Load environment-specific .env file, fallback to .env
+// Load .env file only
 dotenv.config({ path: envPath });
-dotenv.config(); // Load .env as fallback
 
 const app = express();
 const PORT = process.env.PORT || 4000;

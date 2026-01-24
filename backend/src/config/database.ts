@@ -11,7 +11,7 @@ const RETRY_DELAY = 5000; // 5 seconds between retries
 
 /**
  * Clean MongoDB URI by removing duplicate query parameters
- * Fixes issue where "w" parameter appears multiple times in connection string
+ * Fixes issues with duplicate parameters and invalid values
  */
 const cleanMongoUri = (uri: string): string => {
   try {
@@ -41,7 +41,22 @@ const cleanMongoUri = (uri: string): string => {
         }
       } else {
         const key = param.substring(0, equalIndex);
-        const value = param.substring(equalIndex + 1);
+        let value = param.substring(equalIndex + 1);
+
+        // Normalize boolean values for retryWrites
+        if (key === "retryWrites") {
+          // Convert to lowercase and ensure it's "true" or "false"
+          const lowerValue = value.toLowerCase();
+          if (lowerValue === "true" || lowerValue === "1") {
+            value = "true";
+          } else if (lowerValue === "false" || lowerValue === "0") {
+            value = "false";
+          }
+          // If invalid, default to "true"
+          if (value !== "true" && value !== "false") {
+            value = "true";
+          }
+        }
 
         // Only add if we haven't seen this parameter before
         if (!seenParams.has(key)) {
@@ -64,13 +79,12 @@ const cleanMongoUri = (uri: string): string => {
 export const connectDatabase = async (
   retryAttempt: number = 0,
 ): Promise<void> => {
-  // Load environment variables explicitly
+  // Load environment variables explicitly - only use .env file
   const dotenv = require("dotenv");
   const path = require("path");
 
-  // Try to load from multiple locations
+  // Load .env file only
   dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
-  dotenv.config({ path: path.resolve(__dirname, "../../../config/.env") });
 
   let mongoUri =
     process.env.MONGODB_URI || "mongodb://localhost:27017/website-db";
