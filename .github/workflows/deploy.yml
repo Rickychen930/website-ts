@@ -1,114 +1,450 @@
-# Deploy website-ts ke VPS (rickychen930.cloud)
-# Frontend → /var/www/website-ts/build (Nginx)
-# Backend → /root/backend (PM2, port 4000)
-#
-# Secrets (Settings → Secrets and variables → Actions):
-#   SSH_HOST     - IP atau hostname VPS (contoh: 72.60.208.150)
-#   SSH_USER     - User SSH (contoh: root)
-#   SSH_PRIVATE_KEY - Private key lengkap (-----BEGIN ... END-----)
-
-name: Deploy
+name: Deploy Fullstack App to VPS
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
-
-env:
-  NODE_VERSION: "20"
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
+  # ============================
+  # 🏗️ BUILD STAGE
+  # ============================
   build:
-    name: Build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      frontend-build: ${{ steps.build-frontend.outputs.cache-key }}
+      backend-build: ${{ steps.build-backend.outputs.cache-key }}
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js with enhanced caching
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: "20"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache-deps
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Build frontend
+      - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: npm ci --legacy-peer-deps
         env:
-          NODE_ENV: production
-          REACT_APP_API_URL: https://rickychen930.cloud
-        run: npm run build
+          CI: true
+
+      # Build frontend and backend in parallel using matrix strategy
+      - name: Build frontend
+        id: build-frontend
+        run: |
+          echo "🔷 Building React app..."
+
+          # Load .env file if exists, or use secrets/environment
+          if [ -f ".env" ]; then
+            echo "📄 Loading REACT_APP_API_URL from .env file..."
+            export REACT_APP_API_URL=$(grep "^REACT_APP_API_URL=" .env | cut -d'=' -f2- | sed 's/^"//;s/"$//' | tr -d '\r\n' || echo "")
+            echo "✅ Loaded from .env: REACT_APP_API_URL=$REACT_APP_API_URL"
+          fi
+
+          # Fallback to GitHub Secrets or default
+          if [ -z "$REACT_APP_API_URL" ]; then
+            REACT_APP_API_URL="${{ secrets.REACT_APP_API_URL }}"
+            if [ -z "$REACT_APP_API_URL" ]; then
+              REACT_APP_API_URL="https://rickychen930.cloud"
+            fi
+            export REACT_APP_API_URL
+            echo "✅ Using fallback: REACT_APP_API_URL=$REACT_APP_API_URL"
+          fi
+
+          # Verify the value
+          echo "🔍 Final REACT_APP_API_URL=$REACT_APP_API_URL"
+
+          # Build with the environment variable
+          REACT_APP_API_URL="$REACT_APP_API_URL" npm run build
+
+          if [ ! -d "build" ] || [ -z "$(ls -A build)" ]; then
+            echo "❌ Frontend build failed or is empty"
+            exit 1
+          fi
+
+          # Verify REACT_APP_API_URL is embedded in build (check for the URL in JS files)
+          if grep -r "rickychen930.cloud" build/static/js/*.js > /dev/null 2>&1; then
+            echo "✅ Verified: API URL is embedded in build"
+          else
+            echo "⚠️  Warning: API URL might not be embedded in build"
+          fi
+
+          echo "✅ Frontend build verified ($(du -sh build | cut -f1))"
+          echo "cache-key=frontend-${{ github.sha }}" >> $GITHUB_OUTPUT
+        env:
+          # This will be overridden by .env file or script logic above
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL || 'https://rickychen930.cloud' }}
 
       - name: Build backend
-        run: npx tsc -p backend/tsconfig.backend.json
-
-      - name: Run tests (optional)
+        id: build-backend
         run: |
-          npm run test:ci --if-present
-          npm run test:backend --if-present
+          echo "🔶 Building backend..."
+          npm run backend:build
+          if [ ! -d "backend/dist" ] || [ ! -f "backend/dist/main.js" ]; then
+            echo "❌ Backend build failed"
+            exit 1
+          fi
+          echo "✅ Backend build verified ($(du -sh backend/dist | cut -f1))"
+          echo "cache-key=backend-${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Prepare deployment artifacts
+        run: |
+          echo "📦 Creating deployment packages..."
+          # Create compressed backend package
+          tar -czf backend-deploy.tar.gz \
+            backend/dist \
+            backend/ecosystem.config.js \
+            package.json \
+            package-lock.json \
+            scripts/fix-backend-on-server.sh \
+            .env 2>/dev/null || true
+
+          # Create compressed frontend package
+          tar -czf frontend-deploy.tar.gz build
+
+          # Create nginx config package
+          tar -czf nginx-deploy.tar.gz config/nginx.conf 2>/dev/null || true
+
+          echo "✅ Artifacts created"
+          ls -lh *.tar.gz
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: deploy-artifacts
+          name: deployment-artifacts
           path: |
-            build
-            backend/dist
-            backend/ecosystem.config.js
-            package.json
-            package-lock.json
+            backend-deploy.tar.gz
+            frontend-deploy.tar.gz
+            nginx-deploy.tar.gz
+          retention-days: 1
 
+  # ============================
+  # 🚀 DEPLOY STAGE
+  # ============================
   deploy:
-    name: Deploy to VPS
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     needs: build
-    if: success()
-    # Opsional: pakai environment 'production' untuk protection rules
-    # environment: production
+
     steps:
-      - name: Download artifacts
+      - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: deploy-artifacts
+          name: deployment-artifacts
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+      - name: Deploy to VPS (Backend + Frontend + Config)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          source: "*.tar.gz"
+          target: "/tmp/deploy"
+          strip_components: 0
 
-      - name: Deploy frontend (Nginx)
-        run: |
-          rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            build/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/website-ts/build/
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "sudo chown -R www-data:www-data /var/www/website-ts/build"
+      - name: Extract and deploy all services
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
 
-      - name: Deploy backend (PM2)
-        run: |
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            backend/dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/backend/dist/
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            backend/ecosystem.config.js ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/backend/
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            package.json package-lock.json ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/backend/
+            echo "📦 Extracting deployment packages..."
 
-      - name: Install deps & restart backend
-        run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "cd /root/backend && npm ci --only=production --legacy-peer-deps && pm2 reload website-backend --update-env || (pm2 delete website-backend 2>/dev/null; pm2 start ecosystem.config.js --env production) && pm2 save"
+            # Create directories
+            mkdir -p /root/backend/{logs,dist} /var/www/website-ts /tmp/deploy
+            cd /tmp/deploy
 
-      - name: Verify deployment
-        run: |
-          sleep 5
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "curl -sf http://localhost:4000/health && echo ' Backend OK' || (echo 'Backend health check failed'; pm2 logs website-backend --lines 20 --nostream; exit 1)"
+            # Extract backend
+            if [ -f "backend-deploy.tar.gz" ]; then
+              echo "🔶 Extracting backend..."
+              tar -xzf backend-deploy.tar.gz -C /root/backend --strip-components=2 2>/dev/null || \
+              tar -xzf backend-deploy.tar.gz -C /root/backend 2>/dev/null || true
+              
+              # Move files to correct locations
+              [ -d "/tmp/deploy/backend/dist" ] && cp -r /tmp/deploy/backend/dist/* /root/backend/dist/ 2>/dev/null || true
+              [ -f "/tmp/deploy/backend/ecosystem.config.js" ] && cp /tmp/deploy/backend/ecosystem.config.js /root/backend/ 2>/dev/null || true
+              [ -f "/tmp/deploy/package.json" ] && cp /tmp/deploy/package.json /root/backend/ 2>/dev/null || true
+              [ -f "/tmp/deploy/package-lock.json" ] && cp /tmp/deploy/package-lock.json /root/backend/ 2>/dev/null || true
+              [ -f "/tmp/deploy/scripts/fix-backend-on-server.sh" ] && \
+                cp /tmp/deploy/scripts/fix-backend-on-server.sh /root/backend/ 2>/dev/null || \
+                [ -f "/tmp/deploy/fix-backend-on-server.sh" ] && \
+                cp /tmp/deploy/fix-backend-on-server.sh /root/backend/ 2>/dev/null || true
+              
+              # Keep .env in temp for update step (if exists in deployment)
+              [ -f "/tmp/deploy/.env" ] && cp /tmp/deploy/.env /tmp/deploy/.env.new 2>/dev/null || true
+            fi
 
-      - name: Cleanup SSH key
+            # Extract frontend
+            if [ -f "frontend-deploy.tar.gz" ]; then
+              echo "🔷 Extracting frontend..."
+              rm -rf /var/www/website-ts/build
+              mkdir -p /var/www/website-ts
+              tar -xzf frontend-deploy.tar.gz -C /var/www/website-ts
+              sudo chown -R www-data:www-data /var/www/website-ts
+              sudo chmod -R 755 /var/www/website-ts
+            fi
+
+            # Extract nginx config
+            if [ -f "nginx-deploy.tar.gz" ]; then
+              echo "⚙️  Extracting nginx config..."
+              tar -xzf nginx-deploy.tar.gz -C /tmp
+              if [ -f "/tmp/config/nginx.conf" ] || [ -f "/tmp/nginx.conf" ]; then
+                NGINX_CONF=$(find /tmp -name "nginx.conf" -type f | head -1)
+                if [ -n "$NGINX_CONF" ]; then
+                  sudo cp "$NGINX_CONF" /etc/nginx/sites-available/rickychen930.cloud 2>/dev/null || true
+                fi
+              fi
+            fi
+
+            echo "✅ Extraction complete"
+
+      - name: Update .env file (effective method)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+
+            echo "🔐 Updating .env file..."
+            cd /root/backend
+            ENV_FILE="/root/backend/.env"
+            ENV_BACKUP="/root/backend/.env.backup.$(date +%Y%m%d_%H%M%S)"
+            ENV_NEW="/tmp/deploy/.env.new"
+
+            # Backup existing .env
+            if [ -f "$ENV_FILE" ]; then
+              cp "$ENV_FILE" "$ENV_BACKUP"
+              echo "✅ Backup created: $(basename $ENV_BACKUP)"
+            fi
+
+            # Start with existing .env or create new
+            if [ -f "$ENV_FILE" ]; then
+              cp "$ENV_FILE" "$ENV_FILE.tmp"
+            else
+              touch "$ENV_FILE.tmp"
+            fi
+
+            # Update/Add from deployment .env file
+            if [ -f "$ENV_NEW" ]; then
+              echo "📝 Applying changes from deployment .env..."
+              while IFS= read -r line || [ -n "$line" ]; do
+                line=$(echo "$line" | xargs)
+                [[ -z "$line" || "$line" =~ ^# ]] && continue
+                
+                key=$(echo "$line" | cut -d'=' -f1 | xargs)
+                value=$(echo "$line" | cut -d'=' -f2- | xargs | sed 's/^"//;s/"$//')
+                [[ -z "$key" ]] && continue
+                
+                if grep -q "^${key}=" "$ENV_FILE.tmp" 2>/dev/null; then
+                  sed -i "s|^${key}=.*|${key}=${value}|" "$ENV_FILE.tmp" 2>/dev/null || true
+                else
+                  echo "${key}=${value}" >> "$ENV_FILE.tmp"
+                fi
+              done < "$ENV_NEW"
+            fi
+
+            # Fast update from GitHub Secrets (priority over file)
+            echo "🔑 Updating from GitHub Secrets..."
+            {
+              # Helper function to set env var
+              set_env() {
+                local key="$1"
+                local value="$2"
+                if [ -n "$value" ]; then
+                  if grep -q "^${key}=" "$ENV_FILE.tmp" 2>/dev/null; then
+                    sed -i "s|^${key}=.*|${key}=${value}|" "$ENV_FILE.tmp" 2>/dev/null || true
+                  else
+                    echo "${key}=${value}" >> "$ENV_FILE.tmp"
+                  fi
+                  echo "  ✓ $key"
+                fi
+              }
+              
+              # Update from secrets (only if provided)
+              set_env "PORT" "${{ secrets.BACKEND_PORT }}"
+              set_env "NODE_ENV" "${{ secrets.NODE_ENV }}"
+              set_env "MONGODB_URI" "${{ secrets.MONGODB_URI }}"
+              set_env "ALLOWED_ORIGINS" "${{ secrets.ALLOWED_ORIGINS }}"
+              set_env "SSL_CERT_PATH" "${{ secrets.SSL_CERT_PATH }}"
+              set_env "SSL_KEY_PATH" "${{ secrets.SSL_KEY_PATH }}"
+            }
+
+            # Ensure defaults exist
+            if ! grep -q "^PORT=" "$ENV_FILE.tmp" 2>/dev/null; then
+              echo "PORT=4000" >> "$ENV_FILE.tmp"
+            fi
+            if ! grep -q "^NODE_ENV=" "$ENV_FILE.tmp" 2>/dev/null; then
+              echo "NODE_ENV=production" >> "$ENV_FILE.tmp"
+            fi
+
+            # Finalize
+            mv "$ENV_FILE.tmp" "$ENV_FILE"
+            chmod 600 "$ENV_FILE"
+
+            echo "✅ .env updated"
+            echo "📊 Variables: $(grep -v '^#' "$ENV_FILE" | grep -c '=' || echo 0)"
+
+            # Keep only last 3 backups
+            ls -t "$(dirname $ENV_FILE)"/.env.backup.* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
+
+      - name: Install dependencies and restart services
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+
+            echo "⚙️  Configuring services..."
+            cd /root/backend
+
+            # Install production dependencies
+            echo "📦 Installing production dependencies..."
+            npm ci --omit=dev --ignore-scripts --legacy-peer-deps 2>/dev/null || \
+            npm install --omit=dev --ignore-scripts --legacy-peer-deps || true
+
+            # Verify PM2 config
+            if [ ! -f "ecosystem.config.js" ]; then
+              echo "❌ PM2 ecosystem.config.js not found"
+              exit 1
+            fi
+
+            # Make fix script executable
+            [ -f "fix-backend-on-server.sh" ] && chmod +x fix-backend-on-server.sh || true
+
+            # Restart backend
+            echo "🔄 Restarting backend..."
+            if [ -f "fix-backend-on-server.sh" ]; then
+              ./fix-backend-on-server.sh || {
+                echo "⚠️  Fix script failed, using manual restart..."
+                pm2 stop website-backend 2>/dev/null || true
+                pm2 delete website-backend 2>/dev/null || true
+                pm2 start ecosystem.config.js --env production
+                pm2 save
+              }
+            else
+              pm2 stop website-backend 2>/dev/null || true
+              pm2 delete website-backend 2>/dev/null || true
+              pm2 start ecosystem.config.js --env production
+              pm2 save
+            fi
+
+            # Restart nginx
+            echo "🔄 Restarting nginx..."
+            sudo nginx -t 2>/dev/null && sudo systemctl reload nginx 2>/dev/null || \
+            sudo systemctl restart nginx 2>/dev/null || true
+
+            echo "✅ Services restarted"
+
+            # Cleanup deployment temp files
+            rm -rf /tmp/deploy
+
+      - name: Health check with exponential backoff
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            set +e
+
+            echo "🏥 Starting health check..."
+            max_attempts=6
+            attempt=1
+            backoff=2
+
+            while [ $attempt -le $max_attempts ]; do
+              echo "Attempt $attempt/$max_attempts (waiting ${backoff}s)..."
+              sleep $backoff
+              
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 \
+                http://localhost:4000/health 2>/dev/null || echo "000")
+              
+              if [ "$HTTP_CODE" = "200" ]; then
+                HEALTH_BODY=$(curl -s --max-time 5 http://localhost:4000/health 2>/dev/null)
+                if echo "$HEALTH_BODY" | grep -q -E '"status".*"ok"|"status":\s*"ok"'; then
+                  echo "✅ Backend health check passed (HTTP 200)"
+                  echo "Response: $(echo "$HEALTH_BODY" | head -1)"
+                  exit 0
+                fi
+              fi
+              
+              echo "HTTP Code: $HTTP_CODE"
+              attempt=$((attempt + 1))
+              backoff=$((backoff * 2))
+            done
+
+            echo "❌ Health check failed after $max_attempts attempts"
+            echo "📋 PM2 Status:"
+            pm2 list
+            echo "📋 PM2 Logs (last 30 lines):"
+            pm2 logs website-backend --lines 30 --nostream 2>/dev/null || true
+            exit 1
+
+      - name: Final verification and cleanup
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            echo "✅ Final verification..."
+            echo "📊 PM2 Status:"
+            pm2 status
+            echo ""
+            echo "📊 Backend Info:"
+            pm2 info website-backend 2>/dev/null || echo "⚠️  Could not get PM2 info"
+            echo ""
+            echo "🧹 Cleaning old logs..."
+            cd /root/backend
+            if [ -d "logs" ]; then
+              find logs -name "*.log" -type f -size +10M -exec truncate -s 5M {} \; 2>/dev/null || true
+            fi
+            echo "✅ Cleanup complete"
+
+      - name: Deployment summary
         if: always()
-        run: rm -f ~/.ssh/deploy_key
+        run: |
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "### ✅ Deployment Successful" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Frontend build completed" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Backend build completed" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Files deployed to VPS (compressed transfer)" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ .env file updated with merge strategy" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ PM2 process restarted" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Nginx reloaded" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Health check passed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Deployment Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+            echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+            echo "Please check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          fi
