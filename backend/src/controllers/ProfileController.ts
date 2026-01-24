@@ -33,16 +33,23 @@ export class ProfileController {
       }
 
       // Transform to match frontend Profile interface
-      const transformed = transformProfile(profile);
+      let transformed;
+      try {
+        transformed = transformProfile(profile);
+      } catch (transformErr) {
+        console.error("Profile transform error:", transformErr);
+        throw transformErr;
+      }
       res.json(transformed);
     } catch (error) {
       console.error("Error fetching profile from MongoDB Atlas:", error);
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Unknown error occurred while fetching from database";
       res.status(500).json({
         error: "Failed to fetch profile",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Unknown error occurred while fetching from database",
+        message,
       });
     }
   }

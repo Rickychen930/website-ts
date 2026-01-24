@@ -359,9 +359,18 @@ export class ProfileService {
         }
 
         const errorText = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorText.substring(0, 200)}`,
-        );
+        let errMsg = `Request failed (${response.status})`;
+        try {
+          const data = JSON.parse(errorText) as {
+            message?: string;
+            error?: string;
+          };
+          if (data?.message) errMsg = data.message;
+          else if (data?.error) errMsg = data.error;
+        } catch {
+          if (errorText) errMsg = errorText.substring(0, 200);
+        }
+        throw new Error(errMsg);
       }
 
       return response;

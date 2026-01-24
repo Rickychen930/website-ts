@@ -84,8 +84,8 @@ app.get("/api", (req, res) => {
   });
 });
 
-// Routes
-app.use("/api/profiles", profileRoutes);
+// Routes (frontend uses /api/profile singular)
+app.use("/api/profile", profileRoutes);
 app.use("/api/contact", contactRoutes);
 
 // Health check

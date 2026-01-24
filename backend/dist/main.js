@@ -68,8 +68,8 @@ app.get("/api", (req, res) => {
         example: "/api/profile",
     });
 });
-// Routes
-app.use("/api/profiles", profileRoutes_1.default);
+// Routes (frontend uses /api/profile singular)
+app.use("/api/profile", profileRoutes_1.default);
 app.use("/api/contact", contactRoutes_1.default);
 // Health check
 app.get("/health", (req, res) => {
