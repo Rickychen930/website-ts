@@ -5,13 +5,16 @@
   max-width: var(--container-xl);
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-md);
+  box-sizing: border-box;
 }
 
 .contactCard,
 .formCard {
+  display: flex;
   position: relative;
   height: 100%;
   overflow: hidden;
+  flex-direction: column;
 }
 
 .contactCard::before,
@@ -42,11 +45,22 @@
 }
 
 .cardTitle {
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
   margin-bottom: var(--spacing-xl);
 }
 
 .contactItem {
   margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.contactItem:last-child {
+  margin-bottom: 0;
 }
 
 .contactLink {
@@ -54,10 +68,20 @@
   position: relative;
   padding: var(--spacing-sm) 0;
   color: var(--color-primary-500);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   text-decoration: none;
-  word-break: break-all;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+}
+
+.contactLink:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .contactLink::after {
@@ -82,10 +106,12 @@
 
 .contactItem a {
   color: var(--color-primary-500);
-  text-decoration: none;
-  word-break: break-all;
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
+  text-decoration: none;
+  overflow-wrap: break-word;
 }
 
 .socialLinks {
@@ -96,20 +122,27 @@
 }
 
 .socialLink {
+  display: flex;
   padding: var(--spacing-md) var(--spacing-md);
   border: 1px solid transparent;
   color: var(--text-primary);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   text-align: center;
   transition: all var(--transition-normal) var(--transition-ease);
   background-color: var(--bg-tertiary);
   border-radius: var(--radius-md);
   text-decoration: none;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .socialLink:focus-visible {
   outline: 2px solid var(--color-primary-500);
-  outline-offset: var(--spacing-xs);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-primary-alpha-10);
 }
 
 .socialLink:hover {
@@ -135,13 +168,16 @@
 .formGroup label {
   display: block;
   color: var(--text-primary);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-sm);
 }
 
 .formGroup label span {
   color: var(--color-error-500);
   margin-left: var(--spacing-xs);
+  font-weight: var(--font-weight-semibold);
 }
 
 .formGroup input,
@@ -153,10 +189,17 @@
   background: var(--bg-overlay);
   color: var(--text-primary);
   font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-lg);
   font-family: inherit;
   backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+.formGroup textarea {
+  min-height: 8rem;
+  resize: vertical;
 }
 
 .formGroup input:focus,
@@ -168,6 +211,12 @@
   box-shadow:
     0 0 0 3px var(--color-primary-alpha-10),
     var(--shadow-md);
+}
+
+.formGroup input:focus-visible,
+.formGroup textarea:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 .formGroup input:invalid:not(:focus, :placeholder-shown),
@@ -203,7 +252,9 @@
   border: 2px solid var(--color-success-500);
   background: var(--color-success-50);
   color: var(--color-success-700);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   text-align: center;
   border-radius: var(--radius-lg);
   align-items: center;
@@ -219,7 +270,9 @@
   border: 2px solid var(--color-error-500);
   background: var(--color-error-50);
   color: var(--color-error-600);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   text-align: center;
   border-radius: var(--radius-lg);
   align-items: center;
@@ -244,13 +297,17 @@
 .loading,
 .error {
   display: flex;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-lg);
   min-height: 50vh;
-  padding: var(--spacing-xl);
-  text-align: center;
+  max-width: var(--container-md);
+  box-sizing: border-box;
 }
 
 .retryButton {
@@ -262,34 +319,52 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .formRow {
   display: flex;
   gap: var(--spacing-md);
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .formField {
   flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .selectInput {
+  position: relative;
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
   border: 2px solid var(--border-primary);
   background: var(--bg-overlay);
   color: var(--text-primary);
   font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
   border-radius: var(--radius-lg);
   font-family: inherit;
   transition: all var(--transition-normal) var(--transition-ease);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  min-height: 2.75rem;
 }
 
 .selectInput:focus {
+  background: var(--bg-primary);
   outline: none;
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+  box-shadow:
+    0 0 0 3px var(--color-primary-alpha-10),
+    var(--shadow-md);
+}
+
+.selectInput:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 .checkboxRow {
@@ -317,8 +392,33 @@
     padding: var(--spacing-md) var(--spacing-sm);
   }
 
+  .contactCard,
+  .formCard {
+    padding: var(--spacing-lg);
+  }
+
+  .cardTitle {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-xl);
+  }
+
   .socialLinks {
     gap: var(--spacing-sm);
+  }
+
+  .formGroup input,
+  .formGroup textarea,
+  .selectInput {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .formActions button {
+    width: 100%;
   }
 }
 

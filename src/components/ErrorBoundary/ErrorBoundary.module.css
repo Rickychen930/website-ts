@@ -1,5 +1,6 @@
 .errorBoundary {
   display: flex;
+  margin: 0 auto;
   padding: var(--spacing-xl);
   color: var(--text-primary);
   text-align: center;
@@ -7,7 +8,39 @@
   align-items: center;
   justify-content: center;
   min-height: 50vh;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
+  max-width: var(--container-md);
+  box-sizing: border-box;
+}
+
+.errorTitle {
+  color: var(--text-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-sm);
+}
+
+.errorMessage {
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-md);
+}
+
+.errorDetails {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  text-align: left;
+  margin-bottom: var(--spacing-lg);
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-md);
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .resetButton {
@@ -19,5 +52,26 @@
   .errorBoundary {
     padding: var(--spacing-lg);
     min-height: 40vh;
+    gap: var(--spacing-md);
+  }
+
+  .errorTitle {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .errorDetails {
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  .resetButton {
+    width: 100%;
+    max-width: 100%;
   }
 }

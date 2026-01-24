@@ -1,6 +1,7 @@
 .filters {
   display: flex;
   position: relative;
+  width: 100%;
   padding: var(--spacing-lg);
   border: 1px solid var(--border-primary);
   background: var(--bg-overlay);
@@ -13,6 +14,8 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   overflow: hidden;
+  isolation: isolate;
+  box-sizing: border-box;
 }
 
 .filters::before {
@@ -20,12 +23,14 @@
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1;
   height: 3px;
   background: var(--gradient-primary-accent);
   content: "";
   background-size: 200% 100%;
   animation: gradientShift calc(var(--transition-slow) * 8)
     var(--transition-ease) infinite;
+  pointer-events: none;
 }
 
 @keyframes gradientShift {
@@ -40,20 +45,26 @@
 }
 
 .filterButton {
+  display: inline-flex;
   position: relative;
   padding: var(--spacing-sm) var(--spacing-lg);
   border: 2px solid var(--border-primary);
-  border-radius: var(--radius-full);
   background: var(--bg-overlay);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  cursor: pointer;
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
+  border-radius: var(--radius-full);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
+  white-space: nowrap;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .filterButton::before {
@@ -73,8 +84,19 @@
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
+.filterButton:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-primary-alpha-10);
+}
+
 .filterButton:hover::before {
   opacity: 1;
+}
+
+.filterButton:active:not(.filterButtonActive) {
+  transform: translateY(calc(var(--spacing-xs) * -1)) scale(1.02);
+  box-shadow: var(--shadow-md);
 }
 
 .filterButtonActive {
@@ -94,33 +116,47 @@
   grid-template-columns: repeat(auto-fill, minmax(21.25rem, 1fr));
   gap: var(--spacing-2xl);
   padding: 0 var(--spacing-md);
+  align-items: start;
+  box-sizing: border-box;
 }
 
 .empty {
   display: flex;
+  width: 100%;
+  margin: 0 auto;
   padding: var(--spacing-3xl) var(--spacing-lg);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
   text-align: center;
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
   min-height: 18.75rem;
   justify-content: center;
+  box-sizing: border-box;
+  max-width: var(--container-md);
 }
 
 .viewAllButton {
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  text-align: center;
 }
 
 .loading,
 .error {
   display: flex;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-lg);
   min-height: 50vh;
-  padding: var(--spacing-xl);
-  text-align: center;
+  max-width: var(--container-md);
+  box-sizing: border-box;
 }
 
 .retryButton {
@@ -132,17 +168,24 @@
   .filters {
     padding: var(--spacing-md);
     gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-2xl);
   }
 
   .filterButton {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
     font-size: var(--font-size-xs);
+    min-height: 2rem;
   }
 
   .projectsGrid {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
     padding: 0 var(--spacing-sm);
+  }
+
+  .empty {
+    padding: var(--spacing-2xl) var(--spacing-md);
+    min-height: 15rem;
   }
 }
 

@@ -4,10 +4,17 @@
 
 /* Touch-friendly targets */
 @media (width <= 768px) {
-  /* Larger touch targets */
-  button,
-  a,
-  input,
+  /* Larger touch targets - but respect component-specific min-heights */
+  button:not(
+    .backToTop,
+    .clearButton,
+    .menuToggle,
+    .themeToggle,
+    .navButton,
+    .dot
+  ),
+  a:not(.navLink, .footerLink, .contactLink, .socialLink, .badgeLink),
+  input:not([type="checkbox"], [type="radio"]),
   select,
   textarea {
     min-height: 3rem;

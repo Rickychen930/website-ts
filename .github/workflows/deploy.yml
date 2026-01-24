@@ -307,9 +307,10 @@ jobs:
               }
               
               # Update from secrets (only if provided)
+              # Note: MONGODB_URI is handled separately below with validation and rebuilding
               set_env "PORT" "${{ secrets.BACKEND_PORT }}"
               set_env "NODE_ENV" "${{ secrets.NODE_ENV }}"
-              set_env "MONGODB_URI" "${{ secrets.MONGODB_URI }}"
+              # Skip MONGODB_URI here - handled by dedicated logic below
               set_env "ALLOWED_ORIGINS" "${{ secrets.ALLOWED_ORIGINS }}"
               set_env "SSL_CERT_PATH" "${{ secrets.SSL_CERT_PATH }}"
               set_env "SSL_KEY_PATH" "${{ secrets.SSL_KEY_PATH }}"
@@ -324,51 +325,102 @@ jobs:
             fi
 
             # Ensure MONGODB_URI exists and has correct format
+            # Priority: GitHub Secret > Clean extraction from existing file > Error
             FINAL_MONGODB_URI=""
             
-            if ! grep -q "^MONGODB_URI=" "$ENV_FILE.tmp" 2>/dev/null; then
-              echo "⚠️  MONGODB_URI not found, trying to extract from existing files..."
-              # Try to get from backend .env
-              if [ -f "$ENV_BACKEND" ] && grep -q "^MONGODB_URI=" "$ENV_BACKEND" 2>/dev/null; then
-                EXISTING_URI=$(grep "^MONGODB_URI=" "$ENV_BACKEND" | cut -d'=' -f2- | head -1)
-                FINAL_MONGODB_URI="$EXISTING_URI"
-                echo "MONGODB_URI=$EXISTING_URI" >> "$ENV_FILE.tmp"
-                echo "✅ Extracted MONGODB_URI from /root/backend/.env"
-              else
-                echo "❌ MONGODB_URI not found anywhere and no secret provided!"
-                echo "   Backend will fail to start. Please set MONGODB_URI secret."
+            # Helper function to extract and clean MongoDB URI
+            extract_clean_uri() {
+              local source_file="$1"
+              if [ -f "$source_file" ] && grep -q "^MONGODB_URI=" "$source_file" 2>/dev/null; then
+                # Extract URI: get line starting with MONGODB_URI=, take everything after first =, remove quotes, trim whitespace
+                local raw_uri=$(grep "^MONGODB_URI=" "$source_file" | head -1 | sed 's/^MONGODB_URI=//' | sed 's/^["'\'']//;s/["'\'']$//' | xargs)
+                # Validate: must start with mongodb:// or mongodb+srv://
+                if echo "$raw_uri" | grep -qE '^mongodb[+]?srv?://'; then
+                  echo "$raw_uri"
+                  return 0
+                fi
               fi
-            else
-              FINAL_MONGODB_URI=$(grep "^MONGODB_URI=" "$ENV_FILE.tmp" | cut -d'=' -f2- | head -1)
+              return 1
+            }
+            
+            # Helper function to rebuild URI with correct database name
+            rebuild_uri() {
+              local uri="$1"
+              local target_db="${2:-portfolio}"
+              
+              # Extract credentials (mongodb://user:pass@host or mongodb+srv://user:pass@host)
+              local cred_match=$(echo "$uri" | grep -oE 'mongodb[+]?srv?://[^@]+@[^/]+' | head -1)
+              
+              if [ -n "$cred_match" ]; then
+                # Rebuild with correct database and query params
+                echo "${cred_match}/${target_db}?retryWrites=true&w=majority&authSource=admin"
+                return 0
+              fi
+              return 1
+            }
+            
+            # Step 1: Try GitHub Secret first (most reliable)
+            if [ -n "${{ secrets.MONGODB_URI }}" ]; then
+              SECRET_URI="${{ secrets.MONGODB_URI }}"
+              # Remove any quotes and trim
+              SECRET_URI=$(echo "$SECRET_URI" | sed 's/^["'\'']//;s/["'\'']$//' | xargs)
+              
+              if echo "$SECRET_URI" | grep -qE '^mongodb[+]?srv?://'; then
+                FINAL_MONGODB_URI=$(rebuild_uri "$SECRET_URI" "portfolio")
+                if [ -n "$FINAL_MONGODB_URI" ]; then
+                  echo "✅ Using MONGODB_URI from GitHub Secret"
+                fi
+              fi
             fi
             
-            # Verify and ensure database name is correct (default to 'portfolio' if not specified)
-            if [ -n "$FINAL_MONGODB_URI" ]; then
-              # Extract database name from URI
-              DB_NAME_FROM_URI=$(echo "$FINAL_MONGODB_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
+            # Step 2: If secret didn't work, try extracting from existing files
+            if [ -z "$FINAL_MONGODB_URI" ]; then
+              echo "⚠️  Secret not available or invalid, trying to extract from existing files..."
               
-              if [ -n "$DB_NAME_FROM_URI" ]; then
-                echo "📊 Database name in URI: $DB_NAME_FROM_URI"
-                
-                # If database name is 'website-db', fix it to 'portfolio'
-                if [ "$DB_NAME_FROM_URI" = "website-db" ]; then
-                  echo "⚠️  Database name is 'website-db', fixing to 'portfolio'..."
-                  # Extract credentials
-                  CRED_MATCH=$(echo "$FINAL_MONGODB_URI" | grep -oE 'mongodb[^:]*://[^@]+@[^/]+')
-                  if [ -n "$CRED_MATCH" ]; then
-                    FIXED_URI="${CRED_MATCH}/portfolio?retryWrites=true&w=majority&authSource=admin"
-                    # Update in temp file
-                    sed -i "s|^MONGODB_URI=.*|MONGODB_URI=$FIXED_URI|" "$ENV_FILE.tmp" 2>/dev/null || \
-                    sed -i "s|MONGODB_URI=.*|MONGODB_URI=$FIXED_URI|" "$ENV_FILE.tmp" 2>/dev/null || true
-                    FINAL_MONGODB_URI="$FIXED_URI"
-                    echo "✅ Fixed database name to 'portfolio'"
+              # Try /root/.env first
+              if [ -f "$ENV_FILE" ]; then
+                EXTRACTED=$(extract_clean_uri "$ENV_FILE")
+                if [ -n "$EXTRACTED" ]; then
+                  FINAL_MONGODB_URI=$(rebuild_uri "$EXTRACTED" "portfolio")
+                  if [ -n "$FINAL_MONGODB_URI" ]; then
+                    echo "✅ Extracted and rebuilt URI from /root/.env"
                   fi
                 fi
-              else
-                echo "⚠️  Could not extract database name from MONGODB_URI"
-                echo "   URI format might be incorrect"
+              fi
+              
+              # Try /root/backend/.env as fallback
+              if [ -z "$FINAL_MONGODB_URI" ] && [ -f "$ENV_BACKEND" ]; then
+                EXTRACTED=$(extract_clean_uri "$ENV_BACKEND")
+                if [ -n "$EXTRACTED" ]; then
+                  FINAL_MONGODB_URI=$(rebuild_uri "$EXTRACTED" "portfolio")
+                  if [ -n "$FINAL_MONGODB_URI" ]; then
+                    echo "✅ Extracted and rebuilt URI from /root/backend/.env"
+                  fi
+                fi
               fi
             fi
+            
+            # Step 3: Validate final URI
+            if [ -z "$FINAL_MONGODB_URI" ]; then
+              echo "❌ Could not get valid MONGODB_URI from any source!"
+              echo "   Please ensure MONGODB_URI secret is set in GitHub"
+              exit 1
+            fi
+            
+            # Validate URI format
+            if ! echo "$FINAL_MONGODB_URI" | grep -qE '^mongodb[+]?srv?://[^@]+@[^/]+/[^?]+'; then
+              echo "❌ Invalid MONGODB_URI format: $(echo "$FINAL_MONGODB_URI" | sed 's|//[^:]*:[^@]*@|//***:***@|' | head -c 80)"
+              exit 1
+            fi
+            
+            # Extract database name for verification
+            DB_NAME_FROM_URI=$(echo "$FINAL_MONGODB_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
+            echo "📊 Database name: ${DB_NAME_FROM_URI:-unknown}"
+            
+            # Remove any existing MONGODB_URI from temp file and add the clean one
+            grep -v "^MONGODB_URI=" "$ENV_FILE.tmp" > "$ENV_FILE.tmp.clean" 2>/dev/null || true
+            mv "$ENV_FILE.tmp.clean" "$ENV_FILE.tmp" 2>/dev/null || true
+            echo "MONGODB_URI=$FINAL_MONGODB_URI" >> "$ENV_FILE.tmp"
 
             # Finalize - write to /root/.env (where backend actually loads from)
             mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -377,19 +429,52 @@ jobs:
             echo "✅ .env updated at $ENV_FILE"
             echo "📊 Variables: $(grep -v '^#' "$ENV_FILE" | grep -c '=' || echo 0)"
             
-            # Final verification
-            if grep -q "^MONGODB_URI=" "$ENV_FILE"; then
-              FINAL_URI=$(grep "^MONGODB_URI=" "$ENV_FILE" | cut -d'=' -f2- | head -1)
-              FINAL_DB=$(echo "$FINAL_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
-              echo "📋 MONGODB_URI (hidden): $(echo "$FINAL_URI" | sed 's|//[^:]*:[^@]*@|//***:***@|' | head -c 80)"
-              echo "📊 Final database name: $FINAL_DB"
-              
-              if [ "$FINAL_DB" = "website-db" ]; then
-                echo "⚠️  WARNING: Database is still 'website-db', should be 'portfolio'"
-                echo "   This might cause issues. Consider updating MONGODB_URI secret."
-              fi
-            else
+            # Final verification with strict validation
+            if ! grep -q "^MONGODB_URI=" "$ENV_FILE"; then
               echo "❌ MONGODB_URI not found in final .env file!"
+              exit 1
+            fi
+            
+            # Extract and validate final URI
+            FINAL_URI=$(grep "^MONGODB_URI=" "$ENV_FILE" | head -1 | sed 's/^MONGODB_URI=//' | sed 's/^["'\'']//;s/["'\'']$//' | xargs | tr -d '\r\n')
+            
+            # Check for corruption patterns
+            if echo "$FINAL_URI" | grep -qE '(MONGODB_URI=|adminw=|majorityMONGODB_URI|^[^m])'; then
+              echo "❌ .env file appears corrupted! Invalid patterns detected in MONGODB_URI"
+              echo "   Preview: $(echo "$FINAL_URI" | head -c 100)"
+              exit 1
+            fi
+            
+            # Validate URI format
+            if ! echo "$FINAL_URI" | grep -qE '^mongodb[+]?srv?://[^@]+@[^/]+/[^?]+'; then
+              echo "❌ Invalid MONGODB_URI format in final .env!"
+              echo "   Preview: $(echo "$FINAL_URI" | sed 's|//[^:]*:[^@]*@|//***:***@|' | head -c 100)"
+              exit 1
+            fi
+            
+            FINAL_DB=$(echo "$FINAL_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
+            echo "📋 MONGODB_URI (hidden): $(echo "$FINAL_URI" | sed 's|//[^:]*:[^@]*@|//***:***@|' | head -c 80)"
+            echo "📊 Final database name: ${FINAL_DB:-unknown}"
+            
+            if [ -z "$FINAL_DB" ]; then
+              echo "⚠️  Could not extract database name from URI"
+            elif [ "$FINAL_DB" = "website-db" ]; then
+              echo "⚠️  WARNING: Database is still 'website-db', should be 'portfolio'"
+              echo "   This might cause issues. Consider updating MONGODB_URI secret."
+            elif [ "$FINAL_DB" = "portfolio" ]; then
+              echo "✅ Database name is correct: portfolio"
+            fi
+            
+            # Check for duplicate lines
+            URI_COUNT=$(grep -c "^MONGODB_URI=" "$ENV_FILE" || echo "0")
+            if [ "$URI_COUNT" -gt 1 ]; then
+              echo "❌ Found $URI_COUNT MONGODB_URI lines (should be 1)! Cleaning..."
+              FIRST_URI_LINE=$(grep "^MONGODB_URI=" "$ENV_FILE" | head -1)
+              grep -v "^MONGODB_URI=" "$ENV_FILE" > "$ENV_FILE.clean" 2>/dev/null || true
+              echo "$FIRST_URI_LINE" >> "$ENV_FILE.clean"
+              mv "$ENV_FILE.clean" "$ENV_FILE"
+              chmod 600 "$ENV_FILE"
+              echo "✅ Cleaned duplicate lines"
             fi
 
             # Keep only last 3 backups
@@ -422,44 +507,125 @@ jobs:
             # Ensure /root/.env exists (backend loads from here, not /root/backend/.env)
             echo "📝 Ensuring /root/.env exists (backend load path)..."
             if [ ! -f "/root/.env" ]; then
-              echo "⚠️  /root/.env not found, creating from /root/backend/.env..."
-              if [ -f "/root/backend/.env" ]; then
-                # Extract credentials and create clean .env (same as manual script)
-                CRED_MATCH=$(grep -oE 'mongodb[^:]*://[^@]+@[^/]+' /root/backend/.env | head -1)
-                if [ -n "$CRED_MATCH" ]; then
-                  DB_NAME="portfolio"
-                  NEW_URI="${CRED_MATCH}/${DB_NAME}?retryWrites=true&w=majority&authSource=admin"
-                  
-                  # Create complete .env file using printf to avoid YAML issues
-                  printf "# Server Configuration\nPORT=4000\nNODE_ENV=production\n\n# Database\n# MongoDB Atlas\nMONGODB_URI=%s\n\n# CORS Configuration (comma-separated)\n# Production:\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\n\n# SSL Configuration (for production with Let's Encrypt)\n# These paths are used by nginx, not the Node.js backend\n# Let's Encrypt default paths:\nSSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem\nSSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem\nSSL_CHAIN_PATH=/etc/letsencrypt/live/rickychen930.cloud/chain.pem\n\n# SSL Certificate Domain (for Let's Encrypt)\nSSL_DOMAIN=rickychen930.cloud\nSSL_ALT_DOMAINS=www.rickychen930.cloud\n\n# Frontend API URL (for React app)\n# Production:\nREACT_APP_API_URL=https://rickychen930.cloud\n" "$NEW_URI" > /root/.env
-                  echo "✅ Created /root/.env with database: $DB_NAME"
-                else
-                  cp /root/backend/.env /root/.env
-                  echo "✅ Created /root/.env from /root/backend/.env (could not extract credentials)"
+              echo "⚠️  /root/.env not found, creating clean .env file..."
+              
+              # Helper to extract and rebuild URI
+              extract_and_rebuild_uri() {
+                local source_file="$1"
+                if [ -f "$source_file" ] && grep -q "^MONGODB_URI=" "$source_file" 2>/dev/null; then
+                  local raw_uri=$(grep "^MONGODB_URI=" "$source_file" | head -1 | sed 's/^MONGODB_URI=//' | sed 's/^["'\'']//;s/["'\'']$//' | xargs | tr -d '\r\n')
+                  if echo "$raw_uri" | grep -qE '^mongodb[+]?srv?://'; then
+                    local cred_match=$(echo "$raw_uri" | grep -oE 'mongodb[+]?srv?://[^@]+@[^/]+' | head -1)
+                    if [ -n "$cred_match" ]; then
+                      echo "${cred_match}/portfolio?retryWrites=true&w=majority&authSource=admin"
+                      return 0
+                    fi
+                  fi
                 fi
-              else
-                echo "❌ No .env file found! Creating minimal from secrets..."
-                printf "PORT=4000\nNODE_ENV=production\nMONGODB_URI=%s\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\nREACT_APP_API_URL=https://rickychen930.cloud\n" "${{ secrets.MONGODB_URI }}" > /root/.env
-                echo "✅ Created minimal /root/.env from secrets"
+                return 1
+              }
+              
+              FINAL_URI=""
+              
+              # Try GitHub Secret first
+              if [ -n "${{ secrets.MONGODB_URI }}" ]; then
+                SECRET_URI=$(echo "${{ secrets.MONGODB_URI }}" | sed 's/^["'\'']//;s/["'\'']$//' | xargs | tr -d '\r\n')
+                if echo "$SECRET_URI" | grep -qE '^mongodb[+]?srv?://'; then
+                  CRED_MATCH=$(echo "$SECRET_URI" | grep -oE 'mongodb[+]?srv?://[^@]+@[^/]+' | head -1)
+                  if [ -n "$CRED_MATCH" ]; then
+                    FINAL_URI="${CRED_MATCH}/portfolio?retryWrites=true&w=majority&authSource=admin"
+                    echo "✅ Using MONGODB_URI from GitHub Secret"
+                  fi
+                fi
+              fi
+              
+              # Try extracting from /root/backend/.env
+              if [ -z "$FINAL_URI" ] && [ -f "/root/backend/.env" ]; then
+                EXTRACTED=$(extract_and_rebuild_uri "/root/backend/.env")
+                if [ -n "$EXTRACTED" ]; then
+                  FINAL_URI="$EXTRACTED"
+                  echo "✅ Extracted URI from /root/backend/.env"
+                fi
+              fi
+              
+              if [ -z "$FINAL_URI" ]; then
+                echo "❌ Could not create valid MONGODB_URI!"
+                echo "   Please ensure MONGODB_URI secret is set in GitHub"
+                exit 1
+              fi
+              
+              # Validate URI before writing
+              if ! echo "$FINAL_URI" | grep -qE '^mongodb[+]?srv?://[^@]+@[^/]+/[^?]+'; then
+                echo "❌ Invalid MONGODB_URI format!"
+                exit 1
+              fi
+              
+              # Create complete .env file using printf (escape % for printf)
+              printf "# Server Configuration\nPORT=4000\nNODE_ENV=production\n\n# Database\n# MongoDB Atlas\nMONGODB_URI=%s\n\n# CORS Configuration (comma-separated)\n# Production:\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\n\n# SSL Configuration (for production with Let's Encrypt)\n# These paths are used by nginx, not the Node.js backend\n# Let's Encrypt default paths:\nSSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem\nSSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem\nSSL_CHAIN_PATH=/etc/letsencrypt/live/rickychen930.cloud/chain.pem\n\n# SSL Certificate Domain (for Let's Encrypt)\nSSL_DOMAIN=rickychen930.cloud\nSSL_ALT_DOMAINS=www.rickychen930.cloud\n\n# Frontend API URL (for React app)\n# Production:\nREACT_APP_API_URL=https://rickychen930.cloud\n" "$FINAL_URI" > /root/.env
+              chmod 600 /root/.env
+              
+              DB_NAME=$(echo "$FINAL_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
+              echo "✅ Created /root/.env with database: ${DB_NAME:-portfolio}"
+            fi
+            
+            # Verify .env file with strict validation
+            echo "🔍 Verifying /root/.env..."
+            if [ ! -f "/root/.env" ]; then
+              echo "❌ /root/.env still not found after creation attempt!"
+              exit 1
+            fi
+            
+            echo "✅ /root/.env exists"
+            
+            # Verify MONGODB_URI exists and is valid
+            if ! grep -q "^MONGODB_URI=" /root/.env; then
+              echo "❌ MONGODB_URI not found in .env!"
+              exit 1
+            fi
+            
+            # Extract and validate URI
+            ENV_URI=$(grep "^MONGODB_URI=" /root/.env | head -1 | sed 's/^MONGODB_URI=//' | sed 's/^["'\'']//;s/["'\'']$//' | xargs | tr -d '\r\n')
+            
+            # Check for common corruption patterns
+            if echo "$ENV_URI" | grep -qE '(MONGODB_URI=|adminw=|majorityMONGODB_URI)'; then
+              echo "❌ .env file appears corrupted! Found invalid patterns in MONGODB_URI"
+              echo "   URI preview: $(echo "$ENV_URI" | head -c 100)"
+              exit 1
+            fi
+            
+            # Validate URI format
+            if ! echo "$ENV_URI" | grep -qE '^mongodb[+]?srv?://[^@]+@[^/]+/[^?]+'; then
+              echo "❌ Invalid MONGODB_URI format in .env!"
+              echo "   URI preview: $(echo "$ENV_URI" | sed 's|//[^:]*:[^@]*@|//***:***@|' | head -c 100)"
+              exit 1
+            fi
+            
+            # Extract database name
+            DB_NAME=$(echo "$ENV_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
+            if [ -z "$DB_NAME" ]; then
+              echo "⚠️  Could not extract database name from URI"
+            else
+              echo "✅ MONGODB_URI is valid"
+              echo "📊 Database name: $DB_NAME"
+              
+              # Warn if database is not 'portfolio'
+              if [ "$DB_NAME" != "portfolio" ]; then
+                echo "⚠️  Database name is '$DB_NAME', expected 'portfolio'"
               fi
             fi
             
-            # Verify .env file
-            echo "🔍 Verifying /root/.env..."
-            if [ -f "/root/.env" ]; then
-              echo "✅ /root/.env exists"
-              if grep -q "^MONGODB_URI=" /root/.env; then
-                echo "✅ MONGODB_URI found in .env"
-                DB_NAME=$(grep "^MONGODB_URI=" /root/.env | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
-                if [ -n "$DB_NAME" ]; then
-                  echo "📊 Database name: $DB_NAME"
-                fi
-              else
-                echo "⚠️  MONGODB_URI not found in .env!"
-              fi
-            else
-              echo "❌ /root/.env still not found after creation attempt!"
-              exit 1
+            # Check for duplicate MONGODB_URI lines (corruption indicator)
+            URI_COUNT=$(grep -c "^MONGODB_URI=" /root/.env || echo "0")
+            if [ "$URI_COUNT" -gt 1 ]; then
+              echo "❌ Found $URI_COUNT MONGODB_URI lines in .env (should be 1)!"
+              echo "   This indicates file corruption. Cleaning..."
+              # Keep only the first valid MONGODB_URI line
+              FIRST_URI_LINE=$(grep "^MONGODB_URI=" /root/.env | head -1)
+              grep -v "^MONGODB_URI=" /root/.env > /root/.env.clean 2>/dev/null || true
+              echo "$FIRST_URI_LINE" >> /root/.env.clean
+              mv /root/.env.clean /root/.env
+              chmod 600 /root/.env
+              echo "✅ Cleaned duplicate MONGODB_URI lines"
             fi
             
             # Verify dist exists

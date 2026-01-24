@@ -35,8 +35,8 @@ ol {
 
 li {
   color: var(--text-primary);
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-sm);
 }
 
 /* Improved form field spacing */
@@ -46,7 +46,8 @@ input[type="tel"],
 input[type="url"],
 textarea,
 select {
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-sm);
+  box-sizing: border-box;
 }
 
 /* Loading skeleton for better perceived performance - Support dark/light mode */
@@ -66,13 +67,17 @@ select {
 .empty-state {
   padding: var(--spacing-3xl) var(--spacing-md);
   color: var(--text-tertiary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
   text-align: center;
+  box-sizing: border-box;
 }
 
 .empty-state-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: var(--font-size-5xl);
+  line-height: 1;
   opacity: 0.5;
+  margin-bottom: var(--spacing-lg);
 }
 
 /* Error states with better visibility */
@@ -82,6 +87,9 @@ select {
   border: 2px solid var(--color-error-500);
   border-radius: var(--radius-md);
   color: var(--color-error-600);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  box-sizing: border-box;
 }
 
 /* Success states */
@@ -91,6 +99,9 @@ select {
   border: 2px solid var(--color-success-500);
   border-radius: var(--radius-md);
   color: var(--color-success-700);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  box-sizing: border-box;
 }
 
 /* Better button spacing */
@@ -103,14 +114,15 @@ select {
   margin-top: var(--spacing-lg);
 }
 
-/* Better focus indicators for interactive elements */
-button:focus-visible,
-a:focus-visible,
+/* Better focus indicators for interactive elements - Component-specific overrides take precedence */
+button:focus-visible:not(:has(> *)),
+a:focus-visible:not(:has(> *)),
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--color-primary-500);
   outline-offset: var(--spacing-xs);
+  border-radius: var(--radius-sm);
 }
 
 /* Improved contrast for disabled states */
@@ -121,23 +133,25 @@ textarea:disabled {
   cursor: not-allowed;
 }
 
-/* Better mobile touch targets */
+/* Better mobile touch targets - Respect component-specific sizes */
 @media (width <= 768px) {
-  button,
-  a,
+  button:not(
+    .backToTop,
+    .clearButton,
+    .menuToggle,
+    .themeToggle,
+    .navButton,
+    .dot
+  ),
+  a:not(.navLink, .footerLink, .contactLink, .socialLink, .badgeLink),
   input[type="button"],
   input[type="submit"] {
-    min-height: 48px;
-    min-width: 48px;
+    min-height: 3rem;
+    min-width: 3rem;
   }
 }
 
 /* Improved text selection - Support dark/light mode */
-::selection {
-  background-color: var(--color-primary-alpha-30);
-  color: var(--text-primary);
-}
-
 ::selection {
   background-color: var(--color-primary-alpha-30);
   color: var(--text-primary);

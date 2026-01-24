@@ -1,6 +1,15 @@
 .downloadButton {
+  display: inline-flex;
   position: relative;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  box-sizing: border-box;
 }
 
 .downloadButton::before {
@@ -25,9 +34,11 @@
 }
 
 .icon {
+  display: flex;
   font-size: var(--font-size-xl);
-  margin-right: var(--spacing-sm);
   transition: transform var(--transition-normal) var(--transition-ease);
+  align-items: center;
+  justify-content: center;
 }
 
 .downloadButton:hover .icon {
@@ -36,8 +47,32 @@
 
 .arrow {
   display: inline-block;
+  font-size: var(--font-size-base);
+  line-height: 1;
   transition: transform var(--transition-normal) var(--transition-ease);
-  margin-left: var(--spacing-sm);
+}
+
+.downloadButton:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* Responsive Design */
+@media (width <= 640px) {
+  .downloadButton {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    gap: var(--spacing-xs);
+  }
+
+  .icon {
+    font-size: var(--font-size-lg);
+  }
+
+  .arrow {
+    font-size: var(--font-size-sm);
+  }
 }
 
 .downloadButton:hover .arrow {

@@ -22,6 +22,24 @@
   backdrop-filter: blur(20px) saturate(180%);
 }
 
+.codeBlock::-webkit-scrollbar {
+  height: 0.5rem;
+}
+
+.codeBlock::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+}
+
+.codeBlock::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.codeBlock::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-500);
+}
+
 .codeBlock::before {
   position: absolute;
   top: 0;
@@ -54,6 +72,7 @@
   margin-left: 2px;
   animation: blink var(--transition-fast) infinite;
   vertical-align: baseline;
+  box-shadow: 0 0 4px var(--color-primary-alpha-50);
 }
 
 @keyframes blink {

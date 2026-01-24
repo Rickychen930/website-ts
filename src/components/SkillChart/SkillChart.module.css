@@ -60,12 +60,14 @@
   color: var(--skill-color, var(--color-primary-500));
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
 }
 
 .skillName {
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   text-align: center;
 }
 
@@ -93,6 +95,20 @@
   gap: var(--spacing-sm);
 }
 
+.barName {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+.barPercentage {
+  color: var(--skill-color, var(--color-primary-500));
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-normal);
+}
+
 .barContainer {
   position: relative;
   width: 100%;
@@ -114,6 +130,7 @@
   transition: width var(--transition-slow) var(--transition-ease);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-glow);
+  will-change: width;
 }
 
 .barGlow {

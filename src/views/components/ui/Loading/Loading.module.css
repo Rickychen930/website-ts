@@ -55,6 +55,8 @@
   color: var(--text-tertiary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  text-align: center;
 }
 
 /* Responsive Design */
@@ -63,16 +65,22 @@
     padding: var(--spacing-lg);
     gap: var(--spacing-sm);
   }
+
+  .spinner--lg {
+    width: 3rem;
+    height: 3rem;
+    border-width: 3px;
+  }
+
+  .spinner--md {
+    width: 2rem;
+    height: 2rem;
+    border-width: 2px;
+  }
+
+  .message {
+    font-size: var(--font-size-xs);
+  }
 }
 
-.visuallyHidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
+/* Use global .visually-hidden from accessibility.css */

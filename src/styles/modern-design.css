@@ -24,6 +24,7 @@
   background: var(--gradient-text);
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-clip: text;
   background-size: 200% 200%;
   animation: gradientShift calc(var(--transition-slow) * 6)
     var(--transition-ease) infinite;

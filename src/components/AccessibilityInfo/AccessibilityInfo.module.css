@@ -24,6 +24,25 @@
   backdrop-filter: blur(20px) saturate(180%);
   overflow-y: auto;
   animation: scaleIn var(--transition-normal) var(--transition-ease);
+  box-sizing: border-box;
+}
+
+.modal::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-500);
 }
 
 .header {
@@ -31,6 +50,13 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-xl);
+}
+
+.headerTitle {
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
 }
 
 .content {
@@ -41,7 +67,9 @@
 
 .description {
   color: var(--text-secondary);
+  font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-md);
 }
 
 .shortcutsList {
@@ -62,6 +90,15 @@
   background: var(--bg-secondary);
   border-radius: var(--radius-lg);
   transition: all var(--transition-normal) var(--transition-ease);
+  box-sizing: border-box;
+}
+
+.shortcutLabel {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  flex: 1;
 }
 
 .shortcutItem:hover {
@@ -80,9 +117,13 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
   text-align: center;
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .inlineKey {
@@ -138,11 +179,37 @@
   .modal {
     max-width: 90vw;
     padding: var(--spacing-xl);
+    max-height: 90vh;
+  }
+
+  .header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .headerTitle {
+    font-size: var(--font-size-xl);
+  }
+
+  .description {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
   }
 
   .shortcutItem {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+  }
+
+  .shortcutLabel {
+    width: 100%;
+    font-size: var(--font-size-sm);
+  }
+
+  .key {
+    min-width: 2rem;
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-xs);
   }
 }

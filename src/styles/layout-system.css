@@ -8,6 +8,7 @@
   max-width: var(--container-xl);
   margin: 0 auto;
   padding: 0 var(--spacing-xl);
+  box-sizing: border-box;
 }
 
 .container-sm {

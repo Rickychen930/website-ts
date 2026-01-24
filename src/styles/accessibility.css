@@ -3,7 +3,17 @@
  */
 
 /* Focus styles for keyboard navigation - Using design tokens */
-*:focus-visible {
+
+/* Component-specific focus styles take precedence */
+*:focus-visible:not(
+    button,
+    a,
+    input,
+    textarea,
+    select,
+    [role="button"],
+    [role="link"]
+  ) {
   outline: 2px solid var(--color-primary-500);
   outline-offset: var(--spacing-xs);
   border-radius: var(--radius-sm);
@@ -72,11 +82,26 @@
 }
 
 /* Better focus indicators for all interactive elements */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
+
+/* Component-specific styles override these defaults */
+a:focus-visible:not(
+    [class*="navLink"],
+    [class*="footerLink"],
+    [class*="contactLink"],
+    [class*="socialLink"],
+    [class*="badgeLink"]
+  ),
+button:focus-visible:not(
+    [class*="backToTop"],
+    [class*="clearButton"],
+    [class*="menuToggle"],
+    [class*="themeToggle"],
+    [class*="navButton"],
+    [class*="dot"]
+  ),
+input:focus-visible:not([class*="searchInput"], [class*="newsletterInput"]),
+select:focus-visible:not([class*="sortSelect"], [class*="selectInput"]),
+textarea:focus-visible:not([class*="code"]),
 [tabindex]:focus-visible {
   outline: 2px solid var(--color-primary-500);
   outline-offset: 2px;

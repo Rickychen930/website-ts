@@ -24,7 +24,7 @@ export const SkipLinks: React.FC = () => {
       announcement.setAttribute("role", "status");
       announcement.setAttribute("aria-live", "polite");
       announcement.setAttribute("aria-atomic", "true");
-      announcement.className = styles.srOnly;
+      announcement.className = "sr-only";
       announcement.textContent = `Skipped to ${targetId === "main-content" ? "main content" : "navigation"}`;
       document.body.appendChild(announcement);
       setTimeout(() => document.body.removeChild(announcement), 1000);

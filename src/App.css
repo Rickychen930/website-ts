@@ -104,20 +104,42 @@ img {
 }
 
 /* Ensure minimum touch target size (44x44px = 2.75rem) */
-button,
-a,
+button:not(.backToTop, .clearButton, .menuToggle, .themeToggle),
+a:not(.navLink, .footerLink, .contactLink, .socialLink),
 input[type="button"],
-input[type="submit"],
-input[type="checkbox"],
-input[type="radio"] {
+input[type="submit"] {
   min-height: 2.75rem;
   min-width: 2.75rem;
+}
+
+/* Specific components have their own min-height defined */
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: 1.25rem;
+  min-width: 1.25rem;
 }
 
 /* Ensure readable line length */
 p,
 li {
   max-width: 65ch;
+}
+
+/* Better text rendering */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Smooth scrolling with offset for fixed header */
+html {
+  scroll-padding-top: 5rem;
 }
 
 /* High contrast mode support */

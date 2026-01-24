@@ -1,5 +1,6 @@
 .content {
   position: relative;
+  width: 100%;
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-lg);
   border: 1px solid var(--border-primary);
@@ -10,6 +11,8 @@
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   overflow: hidden;
+  isolation: isolate;
+  box-sizing: border-box;
 }
 
 .content::before {
@@ -17,12 +20,14 @@
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1;
   height: 4px;
   background: var(--gradient-primary-accent);
   content: "";
   background-size: 200% 100%;
   animation: gradientShift calc(var(--transition-slow) * 8)
     var(--transition-ease) infinite;
+  pointer-events: none;
 }
 
 @keyframes gradientShift {
@@ -79,9 +84,16 @@
 }
 
 .skillCategory:hover {
-  transform: translateY(calc(var(--spacing-xs) * -2));
+  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.01);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
   border-color: var(--color-primary-alpha-30);
+}
+
+.skillCategory:focus-within {
+  border-color: var(--color-primary-alpha-30);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 3px var(--color-primary-alpha-10);
 }
 
 .skillCategory:hover::before {
@@ -91,6 +103,10 @@
 .categoryTitle {
   display: inline-block;
   position: relative;
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-lg);
 }
 
@@ -110,6 +126,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16.25rem, 1fr));
   gap: var(--spacing-lg);
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
 @media (width >= 1024px) {
@@ -142,6 +160,7 @@
   overflow: hidden;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  box-sizing: border-box;
 }
 
 .languageItem::before {
@@ -169,25 +188,36 @@
 
 .empty {
   display: flex;
+  width: 100%;
+  margin: 0 auto;
   padding: var(--spacing-3xl) var(--spacing-lg);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
   text-align: center;
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
   min-height: 18.75rem;
   justify-content: center;
+  box-sizing: border-box;
+  max-width: var(--container-md);
 }
 
 .loading,
 .error {
   display: flex;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-lg);
   min-height: 50vh;
-  padding: var(--spacing-xl);
-  text-align: center;
+  max-width: var(--container-md);
+  box-sizing: border-box;
 }
 
 .retryButton {
@@ -196,16 +226,20 @@
 
 .academicsList {
   display: flex;
+  width: 100%;
+  margin: 0 auto;
   flex-direction: column;
   gap: var(--spacing-lg);
   max-width: var(--container-lg);
-  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .certificationsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
   gap: var(--spacing-xl);
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
 .honorsSection {
@@ -216,6 +250,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
   gap: var(--spacing-xl);
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
 .softSkillsSection {
@@ -242,22 +278,33 @@
 /* Responsive Design */
 @media (width <= 640px) {
   .content {
+    margin: 0 var(--spacing-sm);
+    padding: var(--spacing-lg) var(--spacing-md);
     max-width: 100%;
-    padding: 0 var(--spacing-sm);
   }
 
   .bio {
     font-size: var(--font-size-base);
     line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-lg);
   }
 
   .skillsContainer {
     gap: var(--spacing-2xl);
   }
 
+  .skillCategory {
+    padding: var(--spacing-lg);
+  }
+
+  .categoryTitle {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg);
+  }
+
   .skillsGrid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
   }
 
   .certificationsGrid,
@@ -271,11 +318,14 @@
   }
 
   .languages {
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
   }
 
   .languageItem {
-    min-width: 7.5rem;
+    min-width: auto;
+    width: 100%;
+    max-width: 100%;
     padding: var(--spacing-md);
   }
 }

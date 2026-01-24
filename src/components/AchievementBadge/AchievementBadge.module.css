@@ -41,6 +41,14 @@
   border-color: var(--badge-color, var(--color-primary-500));
 }
 
+.achievementBadge:focus-within {
+  border-color: var(--badge-color, var(--color-primary-500));
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 3px var(--color-primary-alpha-10);
+  outline: none;
+}
+
 .badgeContainer {
   display: flex;
   justify-content: center;
@@ -85,7 +93,7 @@
   color: var(--text-primary);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -93,12 +101,14 @@
   color: var(--text-tertiary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-xs);
 }
 
 .badgeDate {
   color: var(--text-muted);
   font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -114,6 +124,7 @@
   color: var(--badge-color, var(--color-primary-500));
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-fast) var(--transition-ease);
   align-items: center;
   gap: var(--spacing-sm);
@@ -121,6 +132,12 @@
   margin-top: auto;
   padding-top: var(--spacing-sm);
   border-top: 1px solid var(--border-primary);
+}
+
+.badgeLink:focus-visible {
+  outline: 2px solid var(--badge-color, var(--color-primary-500));
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .badgeLink:hover {
@@ -181,6 +198,36 @@
   .achievementBadge {
     padding: var(--spacing-md);
     border-radius: var(--radius-xl);
+    gap: var(--spacing-sm);
+  }
+
+  .badgeImage,
+  .badgeIcon,
+  .badgePlaceholder {
+    width: 4rem;
+    height: 4rem;
+    font-size: var(--font-size-3xl);
+  }
+
+  .badgeTitle {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .badgeIssuer {
+    font-size: var(--font-size-xs);
+  }
+
+  .badgeDate {
+    font-size: 0.7rem;
+  }
+
+  .badgeDescription {
+    font-size: var(--font-size-xs);
+  }
+
+  .badgeLink {
+    font-size: var(--font-size-xs);
   }
 
   .achievementBadge.compact {
@@ -197,6 +244,14 @@
     border-top: 1px solid var(--border-primary);
     padding-left: 0;
     padding-top: var(--spacing-sm);
+  }
+
+  .compact .badgeImage,
+  .compact .badgeIcon,
+  .compact .badgePlaceholder {
+    width: 3rem;
+    height: 3rem;
+    font-size: var(--font-size-xl);
   }
 }
 

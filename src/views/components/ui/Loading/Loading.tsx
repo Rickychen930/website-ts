@@ -47,7 +47,7 @@ export const Loading: React.FC<LoadingProps> = ({
   return (
     <div className={containerClass}>
       <div className={spinnerClass} aria-label="Loading" role="status">
-        <span className={styles.visuallyHidden}>Loading...</span>
+        <span className="visually-hidden">Loading...</span>
       </div>
       {message && <p className={styles.message}>{message}</p>}
     </div>

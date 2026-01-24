@@ -193,6 +193,7 @@
   background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-clip: text;
   animation: textGradientFlow calc(var(--transition-slow) * 8)
     var(--transition-ease) infinite;
 }

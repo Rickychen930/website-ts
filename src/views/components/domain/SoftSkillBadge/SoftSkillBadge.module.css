@@ -36,9 +36,16 @@
   box-shadow: var(--shadow-md), var(--shadow-glow);
 }
 
+.softSkillBadge:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-full);
+}
+
 .name {
   color: var(--text-primary);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
 }
 
 .category {
@@ -48,6 +55,26 @@
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (width <= 640px) {
+  .softSkillBadge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    gap: var(--spacing-xs);
+  }
+
+  .name {
+    font-size: var(--font-size-xs);
+  }
+
+  .category {
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
+    font-size: 0.7rem;
+  }
 }
 
 /* Dark mode handled automatically via CSS variables */

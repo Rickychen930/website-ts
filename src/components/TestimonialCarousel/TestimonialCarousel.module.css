@@ -65,6 +65,7 @@
 .testimonialContent {
   position: relative;
   z-index: 1;
+  padding: 0 var(--spacing-md);
   color: var(--text-secondary);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
@@ -96,12 +97,14 @@
   color: var(--text-primary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-xs);
 }
 
 .authorRole {
   color: var(--text-tertiary);
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
 }
 
 .carouselNav {
@@ -116,6 +119,8 @@
   display: flex;
   width: 3rem;
   height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
   border: none;
   background: var(--gradient-primary);
   color: var(--text-inverse);
@@ -126,6 +131,16 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md), var(--shadow-glow);
+  box-sizing: border-box;
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--text-inverse);
+  outline-offset: 3px;
+  box-shadow:
+    var(--shadow-xl),
+    var(--shadow-glow-strong),
+    0 0 0 4px var(--color-primary-alpha-20);
 }
 
 .navButton:hover {
@@ -145,12 +160,20 @@
 .dot {
   width: 12px;
   height: 12px;
+  min-width: 12px;
+  min-height: 12px;
   padding: 0;
   border: 2px solid var(--color-primary-500);
   background: transparent;
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-full);
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 .dot:hover {
@@ -171,8 +194,37 @@
     border-radius: var(--radius-xl);
   }
 
+  .testimonialCard::before {
+    top: -10px;
+    left: 10px;
+    font-size: var(--font-size-4xl);
+  }
+
   .testimonialContent {
+    padding: 0 var(--spacing-sm);
     font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .rating {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .star {
+    font-size: var(--font-size-lg);
+  }
+
+  .avatar {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .authorName {
+    font-size: var(--font-size-sm);
+  }
+
+  .authorRole {
+    font-size: var(--font-size-xs);
   }
 
   .carouselNav {
@@ -183,7 +235,16 @@
   .navButton {
     width: 2.5rem;
     height: 2.5rem;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
     font-size: var(--font-size-base);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
   }
 }
 

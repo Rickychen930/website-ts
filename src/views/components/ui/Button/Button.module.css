@@ -2,7 +2,9 @@
   display: inline-flex;
   position: relative;
   border: none;
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   align-items: center;
   justify-content: center;
@@ -12,6 +14,7 @@
   cursor: pointer;
   text-decoration: none;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .button::before {
@@ -38,6 +41,13 @@
 .button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-primary-alpha-10);
 }
 
 /* Variants */
@@ -84,10 +94,16 @@
 .button--secondary {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
+  min-height: inherit;
 }
 
 .button--secondary:hover:not(:disabled) {
   background-color: var(--border-primary);
+}
+
+.button--secondary:active:not(:disabled) {
+  background-color: var(--bg-tertiary);
+  transform: scale(0.98);
 }
 
 .button--outline {
@@ -97,6 +113,7 @@
   font-weight: var(--font-weight-semibold);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-sm);
+  min-height: inherit;
 }
 
 .button--outline:hover:not(:disabled) {
@@ -115,6 +132,7 @@
 .button--ghost {
   background-color: transparent;
   color: var(--text-primary);
+  min-height: inherit;
 }
 
 .button--ghost:hover:not(:disabled) {
@@ -123,20 +141,28 @@
   box-shadow: var(--shadow-soft);
 }
 
+.button--ghost:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
 /* Sizes */
 .button--sm {
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--font-size-sm);
+  min-height: 2.25rem;
 }
 
 .button--md {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--font-size-base);
+  min-height: 2.5rem;
 }
 
 .button--lg {
   padding: var(--spacing-md) var(--spacing-xl);
   font-size: var(--font-size-lg);
+  min-height: 3rem;
 }
 
 /* Full width */
@@ -164,14 +190,4 @@
   }
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
+/* Use global .visually-hidden from accessibility.css */

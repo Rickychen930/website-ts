@@ -18,9 +18,11 @@
   background: var(--bg-overlay);
   color: var(--text-primary);
   font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(10px);
+  box-sizing: border-box;
 }
 
 .searchInput:focus {
@@ -29,6 +31,11 @@
   box-shadow:
     0 0 0 3px var(--color-primary-alpha-10),
     var(--shadow-md);
+}
+
+.searchInput:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 .searchInput::placeholder {
@@ -58,12 +65,15 @@
   color: var(--text-secondary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   align-items: center;
   gap: var(--spacing-sm);
   border-radius: var(--radius-lg);
   cursor: pointer;
   backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  min-height: 2.75rem;
 }
 
 .filterButton:hover {
@@ -80,6 +90,12 @@
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
+.filterButton:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-lg);
+}
+
 .filterIcon {
   font-size: var(--font-size-lg);
 }
@@ -94,6 +110,8 @@
   color: var(--text-tertiary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  white-space: nowrap;
 }
 
 .sortSelect {
@@ -102,10 +120,13 @@
   background: var(--bg-overlay);
   color: var(--text-primary);
   font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(10px);
   cursor: pointer;
+  box-sizing: border-box;
+  min-height: 2.75rem;
 }
 
 .sortSelect:focus {
@@ -114,16 +135,16 @@
   box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
 }
 
-.sortLabel {
-  color: var(--text-tertiary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+.sortSelect:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 .resultsCount {
   color: var(--text-tertiary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
 }
 
 /* Dark mode - handled automatically via CSS variables */

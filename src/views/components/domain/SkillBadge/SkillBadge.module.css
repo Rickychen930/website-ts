@@ -12,11 +12,13 @@
   overflow: hidden;
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
+  isolation: isolate;
+  box-sizing: border-box;
 }
 
 .skillBadge::before {
   position: absolute;
-  inset: 0;
+  z-index: 0;
   background: linear-gradient(
     135deg,
     var(--color-primary-alpha-10) 0%,
@@ -24,7 +26,9 @@
   );
   opacity: 0;
   transition: opacity var(--transition-slow) var(--transition-ease);
+  inset: 0;
   content: "";
+  pointer-events: none;
 }
 
 .skillBadge:hover::before {
@@ -34,18 +38,29 @@
 .skillBadge:hover {
   border-color: var(--color-primary-500);
   box-shadow: var(--shadow-xl), var(--shadow-glow);
-  transform: translateY(calc(var(--spacing-sm) * -1.25)) scale(1.03);
+  transform: translateY(calc(var(--spacing-md) * -1.5)) scale(1.03);
+}
+
+.skillBadge:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 3px var(--color-primary-alpha-10);
+  outline: none;
 }
 
 .skillBadge > * {
   position: relative;
   z-index: 1;
+  isolation: isolate;
 }
 
 .name {
   color: var(--text-primary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--spacing-xs);
 }
 
 .proficiency {
@@ -74,13 +89,17 @@
   color: var(--text-tertiary);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   text-transform: capitalize;
   min-width: 5rem;
+  text-align: right;
 }
 
 .experience {
   color: var(--text-tertiary);
   font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+  margin-top: var(--spacing-xs);
 }
 
 /* Responsive Design */
@@ -88,5 +107,19 @@
   .skillBadge {
     padding: var(--spacing-md);
     border-radius: var(--radius-md);
+    gap: var(--spacing-sm);
+  }
+
+  .name {
+    font-size: var(--font-size-sm);
+  }
+
+  .proficiencyLabel {
+    min-width: 4rem;
+    font-size: 0.7rem;
+  }
+
+  .experience {
+    font-size: 0.7rem;
   }
 }

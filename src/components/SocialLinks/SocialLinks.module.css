@@ -14,13 +14,17 @@
   color: var(--text-primary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   align-items: center;
   gap: var(--spacing-sm);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(180%);
   border-radius: var(--radius-lg);
   text-decoration: none;
   overflow: hidden;
+  box-sizing: border-box;
+  min-height: 2.75rem;
 }
 
 .socialLink::before {
@@ -46,6 +50,13 @@
 
 .socialLink:active {
   transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
+  filter: brightness(0.95);
+}
+
+.socialLink:focus-visible {
+  outline: 2px solid var(--link-color, var(--color-primary-500));
+  outline-offset: 2px;
+  border-radius: var(--radius-lg);
 }
 
 .icon {
@@ -62,6 +73,8 @@
 .label {
   position: relative;
   z-index: 1;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
 }
 
 /* Dark mode - handled automatically via CSS variables */

@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   height: 100%;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg);
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
   transition: all var(--transition-slow) var(--transition-ease);
@@ -12,6 +12,8 @@
   overflow: hidden;
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
+  isolation: isolate;
+  box-sizing: border-box;
 }
 
 .testimonialCard::before {
@@ -48,12 +50,23 @@
 
 .testimonialCard:hover {
   box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
-  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.01);
+  transform: translateY(calc(var(--spacing-md) * -1.5)) scale(1.03);
   border-color: var(--color-primary-500);
+}
+
+.testimonialCard:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 3px var(--color-primary-alpha-10);
+  outline: none;
 }
 
 .quote {
   margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
 }
 
 .quoteIcon {
@@ -64,10 +77,12 @@
 }
 
 .content {
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
   flex: 1;
   margin-bottom: var(--spacing-lg);
   font-style: italic;
-  line-height: var(--line-height-relaxed);
 }
 
 .footer {
@@ -83,6 +98,26 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+  flex: 1;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.authorName {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+.authorRole {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
 }
 
 .avatar {
@@ -100,10 +135,34 @@
     border-radius: var(--radius-xl);
   }
 
+  .content {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .quote {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .quoteIcon {
+    width: var(--spacing-lg);
+    height: var(--spacing-lg);
+  }
+
   .footer {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+  }
+
+  .author {
+    width: 100%;
+  }
+
+  .avatar {
+    width: 2rem;
+    height: 2rem;
   }
 }
 

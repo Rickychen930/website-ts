@@ -11,6 +11,8 @@
   border-radius: var(--radius-xl);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
+  isolation: isolate;
+  box-sizing: border-box;
 }
 
 .projectCard::before {
@@ -36,9 +38,8 @@
 }
 
 .projectCard::after {
-  content: "";
   position: absolute;
-  inset: 0;
+  z-index: 0;
   background: radial-gradient(
     circle at 50% 0%,
     var(--color-primary-alpha-10) 0%,
@@ -46,6 +47,8 @@
   );
   opacity: 0;
   transition: opacity var(--transition-slow) var(--transition-ease);
+  content: "";
+  inset: 0;
   pointer-events: none;
 }
 
@@ -93,6 +96,7 @@
   color: var(--color-primary-600);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-md);
   text-transform: capitalize;
@@ -100,6 +104,7 @@
   letter-spacing: var(--letter-spacing-tight);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
 }
 
 .categoryBadge:hover {
@@ -111,6 +116,12 @@
     var(--color-primary-alpha-20) 100%
   );
   border-color: var(--color-primary-alpha-40);
+}
+
+.categoryBadge:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
 }
 
 .activeBadge {
@@ -143,10 +154,12 @@
   color: var(--text-secondary);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   font-family: var(--font-family-sans);
+  box-sizing: border-box;
 }
 
 .techTag:hover {
@@ -155,6 +168,12 @@
   transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.05);
   box-shadow: var(--shadow-md), var(--shadow-glow);
   border-color: var(--color-primary-500);
+}
+
+.techTag:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
 }
 
 .achievements {
@@ -218,6 +237,7 @@
   color: var(--color-primary-600);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   transition: all var(--transition-normal) var(--transition-ease);
   align-items: center;
   gap: var(--spacing-sm);
@@ -225,6 +245,8 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   justify-content: center;
+  min-height: 2.75rem;
+  box-sizing: border-box;
 }
 
 .expandButton:hover {
@@ -235,6 +257,12 @@
 
 .expandButton:active {
   transform: translateY(0);
+}
+
+.expandButton:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
 }
 
 .expandIcon {
@@ -250,12 +278,27 @@
 @media (width <= 640px) {
   .projectCard {
     border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
   }
 
   .categoryBadge,
   .techTag {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-xs);
+    line-height: var(--line-height-tight);
+  }
+
+  .header {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .content {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .footer {
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
   }
 }
 

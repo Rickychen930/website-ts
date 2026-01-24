@@ -128,6 +128,14 @@
   border-color: var(--color-primary-500);
 }
 
+.timelineCard:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 3px var(--color-primary-alpha-10);
+  outline: none;
+}
+
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -140,7 +148,7 @@
   color: var(--text-primary);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-normal);
   margin-bottom: var(--spacing-xs);
 }
 
@@ -148,6 +156,7 @@
   color: var(--text-tertiary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
 }
 
 .itemPeriod {
@@ -156,13 +165,16 @@
   color: var(--text-muted);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   white-space: nowrap;
   border-radius: var(--radius-md);
+  box-sizing: border-box;
 }
 
 .itemDescription {
   color: var(--text-secondary);
-  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-md);
 }
 
@@ -183,8 +195,10 @@
   color: var(--color-primary-600);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
   transition: all var(--transition-fast) var(--transition-ease);
   border-radius: var(--radius-md);
+  box-sizing: border-box;
 }
 
 .tag:hover {
@@ -215,10 +229,19 @@
     align-items: center;
   }
 
+  .markerDot {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .markerIcon {
+    font-size: var(--font-size-xl);
+  }
+
   .timelineLine {
     top: 50%;
-    left: 3.75rem;
-    width: calc(100% - 3.75rem);
+    left: 3rem;
+    width: calc(100% - 3rem);
     height: 3px;
     transform: translateY(-50%);
     background: linear-gradient(
@@ -237,10 +260,32 @@
   .cardHeader {
     flex-direction: column;
     gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .itemTitle {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .itemSubtitle {
+    font-size: var(--font-size-sm);
   }
 
   .itemPeriod {
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
+    font-size: var(--font-size-xs);
     align-self: flex-start;
+  }
+
+  .itemDescription {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .tag {
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
+    font-size: 0.7rem;
   }
 }
 
