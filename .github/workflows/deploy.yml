@@ -98,6 +98,15 @@ jobs:
             echo "❌ Backend build failed"
             exit 1
           fi
+          
+          # Verify Profile model is compiled with correct collection name
+          echo "🔍 Verifying Profile model compilation..."
+          if grep -q '"profiles"' backend/dist/models/Profile.js 2>/dev/null; then
+            echo "✅ Profile model uses 'profiles' collection"
+          else
+            echo "⚠️  Warning: Profile model collection name not verified in compiled code"
+          fi
+          
           echo "✅ Backend build verified ($(du -sh backend/dist | cut -f1))"
           echo "cache-key=backend-${{ github.sha }}" >> $GITHUB_OUTPUT
 
@@ -556,10 +565,45 @@ EOF
               pm2 start ecosystem.config.js --env production
               pm2 save
             fi
+            
+            # Verify Profile model collection name in deployed code
+            echo "🔍 Verifying deployed Profile model..."
+            if [ -f "dist/models/Profile.js" ]; then
+              if grep -q '"profiles"' dist/models/Profile.js 2>/dev/null; then
+                echo "✅ Deployed Profile model uses 'profiles' collection"
+              else
+                echo "⚠️  Warning: Profile model collection name not verified"
+              fi
+            fi
 
             # Wait a bit for process to start
             echo "⏳ Waiting for backend to start (5 seconds)..."
             sleep 5
+            
+            # Test API profile endpoint to verify collection name fix
+            echo "🔍 Testing API profile endpoint..."
+            sleep 2
+            PROFILE_RESPONSE=$(curl -s -w "\n%{http_code}" http://localhost:4000/api/profile 2>/dev/null || echo "")
+            PROFILE_HTTP_CODE=$(echo "$PROFILE_RESPONSE" | tail -1)
+            PROFILE_BODY=$(echo "$PROFILE_RESPONSE" | head -n -1)
+            
+            if [ "$PROFILE_HTTP_CODE" = "200" ]; then
+              echo "✅ Profile API returned 200 OK"
+              if echo "$PROFILE_BODY" | grep -q '"name"'; then
+                echo "✅ Profile data retrieved successfully (collection name working)"
+              else
+                echo "⚠️  Profile API returned 200 but no name field found"
+              fi
+            elif [ "$PROFILE_HTTP_CODE" = "404" ]; then
+              if echo "$PROFILE_BODY" | grep -q "not found\|User not found"; then
+                echo "⚠️  Profile not found - database might need seeding"
+                echo "   Run: cd /root/website-ts && npm run seed"
+              else
+                echo "⚠️  Profile API returned 404"
+              fi
+            else
+              echo "⚠️  Profile API returned HTTP $PROFILE_HTTP_CODE"
+            fi
 
             # Final verification before restart (quick check)
             echo "🔧 Final verification: Checking MONGODB_URI..."
