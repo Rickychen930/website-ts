@@ -146,4 +146,8 @@ const ProfileSchema = new Schema<IProfile>(
   },
 );
 
-export const ProfileModel = mongoose.model<IProfile>("Profile", ProfileSchema);
+export const ProfileModel = mongoose.model<IProfile>(
+  "Profile",
+  ProfileSchema,
+  "profiles",
+);
