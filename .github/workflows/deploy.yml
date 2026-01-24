@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch: # Allow manual trigger
 
+# Hanya satu deploy aktif; push baru membatalkan yang sedang berjalan
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: true
+
 jobs:
   # ============================
   # 🏗️ BUILD STAGE
@@ -77,7 +82,7 @@ jobs:
           fi
 
           # Verify REACT_APP_API_URL is embedded in build (check for the URL in JS files)
-          if grep -r "rickychen930.cloud" build/static/js/*.js > /dev/null 2>&1; then
+          if [ -n "$REACT_APP_API_URL" ] && grep -rqF "$REACT_APP_API_URL" build/static/js/*.js 2>/dev/null; then
             echo "✅ Verified: API URL is embedded in build"
           else
             echo "⚠️  Warning: API URL might not be embedded in build"
@@ -104,20 +109,20 @@ jobs:
       - name: Prepare deployment artifacts
         run: |
           echo "📦 Creating deployment packages..."
-          # Create compressed backend package
+          # Backend: wajib + .env jika ada
           tar -czf backend-deploy.tar.gz \
             backend/dist \
             backend/ecosystem.config.js \
             package.json \
             package-lock.json \
-            scripts/fix-backend-on-server.sh \
-            .env 2>/dev/null || true
+            scripts/fix-backend-on-server.sh
+          [ -f .env ] && tar -rzf backend-deploy.tar.gz .env || true
 
-          # Create compressed frontend package
+          # Frontend
           tar -czf frontend-deploy.tar.gz build
 
-          # Create nginx config package
-          tar -czf nginx-deploy.tar.gz config/nginx.conf 2>/dev/null || true
+          # Nginx config
+          tar -czf nginx-deploy.tar.gz config/nginx.conf
 
           echo "✅ Artifacts created"
           ls -lh *.tar.gz
@@ -147,7 +152,7 @@ jobs:
           name: deployment-artifacts
 
       - name: Deploy to VPS (Backend + Frontend + Config)
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -155,10 +160,9 @@ jobs:
           port: 22
           source: "*.tar.gz"
           target: "/tmp/deploy"
-          strip_components: 0
 
       - name: Extract and deploy all services
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -169,31 +173,27 @@ jobs:
 
             echo "📦 Extracting deployment packages..."
 
-            # Create directories
             mkdir -p /root/backend/{logs,dist} /var/www/website-ts /tmp/deploy
             cd /tmp/deploy
 
-            # Extract backend
+            # Backend: extract ke /tmp/deploy, lalu sync ke /root/backend
             if [ -f "backend-deploy.tar.gz" ]; then
               echo "🔶 Extracting backend..."
-              tar -xzf backend-deploy.tar.gz -C /root/backend --strip-components=2 2>/dev/null || \
-              tar -xzf backend-deploy.tar.gz -C /root/backend 2>/dev/null || true
-              
-              # Move files to correct locations
-              [ -d "/tmp/deploy/backend/dist" ] && cp -r /tmp/deploy/backend/dist/* /root/backend/dist/ 2>/dev/null || true
-              [ -f "/tmp/deploy/backend/ecosystem.config.js" ] && cp /tmp/deploy/backend/ecosystem.config.js /root/backend/ 2>/dev/null || true
-              [ -f "/tmp/deploy/package.json" ] && cp /tmp/deploy/package.json /root/backend/ 2>/dev/null || true
-              [ -f "/tmp/deploy/package-lock.json" ] && cp /tmp/deploy/package-lock.json /root/backend/ 2>/dev/null || true
-              [ -f "/tmp/deploy/scripts/fix-backend-on-server.sh" ] && \
-                cp /tmp/deploy/scripts/fix-backend-on-server.sh /root/backend/ 2>/dev/null || \
-                [ -f "/tmp/deploy/fix-backend-on-server.sh" ] && \
-                cp /tmp/deploy/fix-backend-on-server.sh /root/backend/ 2>/dev/null || true
-              
-              # Keep .env in temp for update step (if exists in deployment)
-              [ -f "/tmp/deploy/.env" ] && cp /tmp/deploy/.env /tmp/deploy/.env.new 2>/dev/null || true
+              tar -xzf backend-deploy.tar.gz
+              # Sync ke /root/backend
+              [ -d "backend/dist" ] && rm -rf /root/backend/dist && cp -r backend/dist /root/backend/
+              [ -f "backend/ecosystem.config.js" ] && cp backend/ecosystem.config.js /root/backend/
+              [ -f "package.json" ] && cp package.json /root/backend/
+              [ -f "package-lock.json" ] && cp package-lock.json /root/backend/
+              if [ -f "scripts/fix-backend-on-server.sh" ]; then
+                cp scripts/fix-backend-on-server.sh /root/backend/
+              elif [ -f "fix-backend-on-server.sh" ]; then
+                cp fix-backend-on-server.sh /root/backend/
+              fi
+              [ -f ".env" ] && cp .env .env.new
             fi
 
-            # Extract frontend
+            # Frontend
             if [ -f "frontend-deploy.tar.gz" ]; then
               echo "🔷 Extracting frontend..."
               rm -rf /var/www/website-ts/build
@@ -203,22 +203,18 @@ jobs:
               sudo chmod -R 755 /var/www/website-ts
             fi
 
-            # Extract nginx config
+            # Nginx config
             if [ -f "nginx-deploy.tar.gz" ]; then
               echo "⚙️  Extracting nginx config..."
               tar -xzf nginx-deploy.tar.gz -C /tmp
-              if [ -f "/tmp/config/nginx.conf" ] || [ -f "/tmp/nginx.conf" ]; then
-                NGINX_CONF=$(find /tmp -name "nginx.conf" -type f | head -1)
-                if [ -n "$NGINX_CONF" ]; then
-                  sudo cp "$NGINX_CONF" /etc/nginx/sites-available/rickychen930.cloud 2>/dev/null || true
-                fi
-              fi
+              NGINX_CONF=$(find /tmp -name "nginx.conf" -type f 2>/dev/null | head -1)
+              [ -n "$NGINX_CONF" ] && sudo cp "$NGINX_CONF" /etc/nginx/sites-available/rickychen930.cloud 2>/dev/null || true
             fi
 
             echo "✅ Extraction complete"
 
       - name: Update .env file (effective method)
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -310,7 +306,7 @@ jobs:
             ls -t "$(dirname $ENV_FILE)"/.env.backup.* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
 
       - name: Install dependencies and restart services
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -364,7 +360,7 @@ jobs:
             rm -rf /tmp/deploy
 
       - name: Health check with exponential backoff
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -407,7 +403,7 @@ jobs:
             exit 1
 
       - name: Final verification and cleanup
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
