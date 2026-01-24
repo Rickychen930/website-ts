@@ -419,66 +419,27 @@ jobs:
               exit 1
             fi
 
-            # Make fix script executable
-            [ -f "fix-backend-on-server.sh" ] && chmod +x fix-backend-on-server.sh || true
-
-            # Restart backend - following same steps as manual script
-            echo "🔄 Restarting backend (same steps as manual fix script)..."
-            echo "📝 Step 1: Ensuring /root/.env exists (backend load path)..."
+            # Ensure /root/.env exists (backend loads from here, not /root/backend/.env)
+            echo "📝 Ensuring /root/.env exists (backend load path)..."
             if [ ! -f "/root/.env" ]; then
-              echo "⚠️  /root/.env not found, creating from /root/backend/.env if exists..."
+              echo "⚠️  /root/.env not found, creating from /root/backend/.env..."
               if [ -f "/root/backend/.env" ]; then
                 # Extract credentials and create clean .env (same as manual script)
                 CRED_MATCH=$(grep -oE 'mongodb[^:]*://[^@]+@[^/]+' /root/backend/.env | head -1)
                 if [ -n "$CRED_MATCH" ]; then
-                  # Use 'portfolio' as default database (same as manual script)
                   DB_NAME="portfolio"
                   NEW_URI="${CRED_MATCH}/${DB_NAME}?retryWrites=true&w=majority&authSource=admin"
                   
-                  # Create complete .env file (same format as manual script)
-                  cat > /root/.env <<ENVEOF
-# Server Configuration
-PORT=4000
-NODE_ENV=production
-
-# Database
-# MongoDB Atlas
-MONGODB_URI=$NEW_URI
-
-# CORS Configuration (comma-separated)
-# Production:
-ALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud
-
-# SSL Configuration (for production with Let's Encrypt)
-# These paths are used by nginx, not the Node.js backend
-# Let's Encrypt default paths:
-SSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem
-SSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem
-SSL_CHAIN_PATH=/etc/letsencrypt/live/rickychen930.cloud/chain.pem
-
-# SSL Certificate Domain (for Let's Encrypt)
-SSL_DOMAIN=rickychen930.cloud
-SSL_ALT_DOMAINS=www.rickychen930.cloud
-
-# Frontend API URL (for React app)
-# Production:
-REACT_APP_API_URL=https://rickychen930.cloud
-ENVEOF
+                  # Create complete .env file using printf to avoid YAML issues
+                  printf "# Server Configuration\nPORT=4000\nNODE_ENV=production\n\n# Database\n# MongoDB Atlas\nMONGODB_URI=%s\n\n# CORS Configuration (comma-separated)\n# Production:\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\n\n# SSL Configuration (for production with Let's Encrypt)\n# These paths are used by nginx, not the Node.js backend\n# Let's Encrypt default paths:\nSSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem\nSSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem\nSSL_CHAIN_PATH=/etc/letsencrypt/live/rickychen930.cloud/chain.pem\n\n# SSL Certificate Domain (for Let's Encrypt)\nSSL_DOMAIN=rickychen930.cloud\nSSL_ALT_DOMAINS=www.rickychen930.cloud\n\n# Frontend API URL (for React app)\n# Production:\nREACT_APP_API_URL=https://rickychen930.cloud\n" "$NEW_URI" > /root/.env
                   echo "✅ Created /root/.env with database: $DB_NAME"
                 else
                   cp /root/backend/.env /root/.env
                   echo "✅ Created /root/.env from /root/backend/.env (could not extract credentials)"
                 fi
               else
-                echo "❌ No .env file found anywhere!"
-                echo "⚠️  This will cause backend to fail. Creating minimal .env from secrets..."
-                cat > /root/.env <<ENVEOF
-PORT=4000
-NODE_ENV=production
-MONGODB_URI=${{ secrets.MONGODB_URI }}
-ALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud
-REACT_APP_API_URL=https://rickychen930.cloud
-ENVEOF
+                echo "❌ No .env file found! Creating minimal from secrets..."
+                printf "PORT=4000\nNODE_ENV=production\nMONGODB_URI=%s\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\nREACT_APP_API_URL=https://rickychen930.cloud\n" "${{ secrets.MONGODB_URI }}" > /root/.env
                 echo "✅ Created minimal /root/.env from secrets"
               fi
             fi
