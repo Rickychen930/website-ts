@@ -34,24 +34,28 @@ export const ParticleBackground: React.FC = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Create particles
+    // Create particles - Reduced count for better performance
     const particleCount = Math.min(
-      50,
-      Math.floor((window.innerWidth * window.innerHeight) / 15000),
+      30, // Reduced from 50
+      Math.floor((window.innerWidth * window.innerHeight) / 25000), // Increased divisor
     );
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-      radius: Math.random() * 2 + 1,
-      opacity: Math.random() * 0.5 + 0.2,
+      vx: (Math.random() - 0.5) * 0.3, // Slower movement
+      vy: (Math.random() - 0.5) * 0.3,
+      radius: Math.random() * 1.5 + 0.5, // Smaller particles
+      opacity: Math.random() * 0.3 + 0.1, // Lower opacity
     }));
+
+    // Optimized connection distance check - avoid expensive sqrt
+    const connectionDistanceSq = 100 * 100; // 100px squared
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particlesRef.current.forEach((particle, i) => {
+      // Draw particles first
+      particlesRef.current.forEach((particle) => {
         // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -67,23 +71,28 @@ export const ParticleBackground: React.FC = () => {
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(59, 130, 246, ${particle.opacity})`;
         ctx.fill();
+      });
 
-        // Draw connections
-        particlesRef.current.slice(i + 1).forEach((otherParticle) => {
+      // Draw connections - optimized with distance squared check
+      for (let i = 0; i < particlesRef.current.length; i++) {
+        const particle = particlesRef.current[i];
+        for (let j = i + 1; j < particlesRef.current.length; j++) {
+          const otherParticle = particlesRef.current[j];
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distanceSq = dx * dx + dy * dy; // Use squared distance
 
-          if (distance < 150) {
+          if (distanceSq < connectionDistanceSq) {
+            const distance = Math.sqrt(distanceSq);
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 150)})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${0.05 * (1 - distance / 100)})`; // Lower opacity
+            ctx.lineWidth = 0.5; // Thinner lines
             ctx.stroke();
           }
-        });
-      });
+        }
+      }
 
       animationFrameRef.current = requestAnimationFrame(animate);
     };

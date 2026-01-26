@@ -37,9 +37,10 @@
       transparent 40%
     );
   pointer-events: none;
-  animation: float calc(var(--transition-slow) * 20) ease-in-out infinite;
+  animation: float calc(var(--transition-slow) * 12) ease-in-out infinite;
   z-index: 0;
-  will-change: transform, opacity;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .hero::after {
@@ -55,9 +56,10 @@
     transparent 70%
   );
   content: "";
-  animation: rotate calc(var(--transition-slow) * 40) linear infinite;
+  animation: rotate calc(var(--transition-slow) * 30) linear infinite;
   pointer-events: none;
-  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .heroContent {
@@ -87,9 +89,10 @@
     transparent 70%
   );
   content: "";
-  animation: pulse calc(var(--transition-slow) * 8) ease-in-out infinite;
+  animation: pulse calc(var(--transition-slow) * 6) ease-in-out infinite;
   pointer-events: none;
-  will-change: transform, opacity;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .heroTitle {
@@ -108,9 +111,9 @@
       calc(var(--transition-fast) * 2) both,
     gradientShift calc(var(--transition-slow) * 10) var(--transition-ease)
       infinite;
-  will-change: background-position;
+  transform: translateZ(0);
   letter-spacing: calc(var(--letter-spacing-tight) * 1.5);
-  filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
+  filter: drop-shadow(0 4px 12px var(--color-primary-alpha-30));
 }
 
 .heroSubtitle {
@@ -135,13 +138,14 @@
   margin-bottom: var(--spacing-2xl);
   align-items: center;
   gap: var(--spacing-sm);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-md), var(--shadow-glow);
   animation: fadeInUp var(--transition-normal) var(--transition-ease)
     calc(var(--transition-fast) * 3.33) both;
   overflow: hidden;
+  transform: translateZ(0);
 }
 
 .heroLocation:hover {
@@ -430,7 +434,6 @@
     transparent 70%
   );
   content: "";
-  transform: translate(-50%, -50%);
   border-radius: 50%;
   pointer-events: none;
   opacity: 0.6;
@@ -438,7 +441,7 @@
     opacity var(--transition-normal) var(--transition-ease),
     width var(--transition-normal) var(--transition-ease),
     height var(--transition-normal) var(--transition-ease);
-  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .currentRole:hover .currentRoleContent::before {

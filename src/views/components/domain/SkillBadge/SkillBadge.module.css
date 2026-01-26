@@ -4,16 +4,21 @@
   padding: var(--spacing-xl);
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
-  transition: all var(--transition-slow) var(--transition-ease);
+  transition:
+    transform var(--transition-normal) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease),
+    border-color var(--transition-normal) var(--transition-ease);
   flex-direction: column;
   gap: var(--spacing-md);
   border-radius: var(--radius-lg);
-  animation: scaleIn var(--transition-slow) var(--transition-ease) both;
+  animation: scaleIn var(--transition-normal) var(--transition-ease) both;
   overflow: hidden;
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   isolation: isolate;
   box-sizing: border-box;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .skillBadge::before {
@@ -116,10 +121,10 @@
 
   .proficiencyLabel {
     min-width: 4rem;
-    font-size: 0.7rem;
+    font-size: var(--font-size-xs);
   }
 
   .experience {
-    font-size: 0.7rem;
+    font-size: var(--font-size-xs);
   }
 }

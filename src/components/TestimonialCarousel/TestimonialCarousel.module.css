@@ -28,8 +28,9 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
+  transform: translateZ(0);
 }
 
 .testimonialCard::before {
@@ -59,7 +60,7 @@
 .starFilled {
   opacity: 1;
   transform: scale(1.1);
-  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
+  filter: drop-shadow(0 2px 4px var(--color-primary-alpha-30));
 }
 
 .testimonialContent {

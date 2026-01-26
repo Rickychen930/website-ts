@@ -8,7 +8,7 @@
   background: var(--border-primary);
   opacity: 0.3;
   pointer-events: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .progressBar {
@@ -19,7 +19,7 @@
     infinite;
   box-shadow: var(--shadow-glow-strong);
   transition: width var(--transition-fast) ease-out;
-  will-change: width;
+  transform: translateZ(0);
 }
 
 @keyframes gradientShift {

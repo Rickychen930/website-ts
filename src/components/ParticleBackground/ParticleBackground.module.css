@@ -5,10 +5,19 @@
   z-index: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.4;
+  opacity: 0.3;
   pointer-events: none;
+  contain: layout style paint;
+  will-change: contents;
 }
 
 .dark .particleBackground {
-  opacity: 0.2;
+  opacity: 0.15;
+}
+
+/* Disable particle animation for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .particleBackground {
+    display: none;
+  }
 }

@@ -108,9 +108,10 @@
   overflow-y: auto;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   animation: fadeInDown var(--transition-fast) var(--transition-ease);
+  transform: translateZ(0);
 }
 
 .resultItem {
@@ -202,9 +203,10 @@
   text-align: center;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   animation: fadeInDown var(--transition-fast) var(--transition-ease);
+  transform: translateZ(0);
 }
 
 @keyframes fadeInDown {

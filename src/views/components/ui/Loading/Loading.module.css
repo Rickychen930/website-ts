@@ -16,7 +16,8 @@
   align-items: center;
   justify-content: center;
   background-color: var(--bg-overlay);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
+  transform: translateZ(0);
 }
 
 .spinner {

@@ -2,16 +2,27 @@
  * Cursor Effect - Custom cursor with glow effect
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./CursorEffect.module.css";
 
 export const CursorEffect: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const rafRef = useRef<number | null>(null);
+  const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      // Update ref immediately for smooth tracking
+      positionRef.current = { x: e.clientX, y: e.clientY };
+
+      // Throttle state updates using requestAnimationFrame
+      if (rafRef.current === null) {
+        rafRef.current = requestAnimationFrame(() => {
+          setPosition(positionRef.current);
+          rafRef.current = null;
+        });
+      }
     };
 
     const handleMouseEnter = () => setIsHovering(true);
@@ -42,6 +53,9 @@ export const CursorEffect: React.FC = () => {
       document.removeEventListener("mouseover", handleMouseOver);
       document.removeEventListener("mouseenter", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, []);
 

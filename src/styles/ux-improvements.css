@@ -59,8 +59,8 @@ select {
     var(--bg-tertiary) 80px
   );
   background-size: 200px 100%;
-  animation: skeleton-loading 1.5s infinite;
-  border-radius: 0.5rem;
+  animation: skeleton-loading calc(var(--transition-slow) * 3) infinite;
+  border-radius: var(--radius-md);
 }
 
 /* Empty states */

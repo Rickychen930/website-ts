@@ -14,7 +14,10 @@
   height: 4px;
   background: var(--gradient-primary-accent);
   opacity: 0.4;
-  transition: all var(--transition-slow) var(--transition-ease);
+  transition:
+    width var(--transition-normal) var(--transition-ease),
+    opacity var(--transition-normal) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease);
   content: "";
   transform: translateX(-50%);
   border-radius: var(--radius-sm);

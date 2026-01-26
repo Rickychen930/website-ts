@@ -130,7 +130,7 @@
   transition: width var(--transition-slow) var(--transition-ease);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-glow);
-  will-change: width;
+  transform: translateZ(0);
 }
 
 .barGlow {
@@ -142,7 +142,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.3) 100%
+    var(--color-primary-alpha-30) 100%
   );
   animation: shimmer var(--transition-slow) infinite;
 }

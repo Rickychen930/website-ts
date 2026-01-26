@@ -9,6 +9,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   ReactNode,
 } from "react";
 import { ProfileModel } from "@/models/ProfileModel";
@@ -59,18 +60,28 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
     }
   }, []);
 
-  const clearError = (): void => {
+  const clearError = useCallback((): void => {
     setError(null);
-  };
+  }, []);
 
   useEffect(() => {
     loadProfile();
   }, [loadProfile]);
 
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({
+      profile,
+      isLoading,
+      error,
+      loadProfile,
+      clearError,
+    }),
+    [profile, isLoading, error, loadProfile, clearError],
+  );
+
   return (
-    <ProfileContext.Provider
-      value={{ profile, isLoading, error, loadProfile, clearError }}
-    >
+    <ProfileContext.Provider value={contextValue}>
       {children}
     </ProfileContext.Provider>
   );

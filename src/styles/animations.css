@@ -1,6 +1,19 @@
 /**
  * Global Animations - Premium effects for software engineer portfolio
+ * Optimized for performance - reduced animations for smooth experience
  */
+
+/* Disable heavy animations for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* Fade In Animations */
 @keyframes fadeIn {
@@ -129,13 +142,13 @@
 @keyframes glow {
   0%,
   100% {
-    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    box-shadow: var(--shadow-glow);
   }
 
   50% {
     box-shadow:
-      0 0 20px rgba(59, 130, 246, 0.8),
-      0 0 30px rgba(59, 130, 246, 0.4);
+      var(--shadow-glow-strong),
+      0 0 30px var(--color-primary-alpha-40);
   }
 }
 
@@ -195,7 +208,7 @@
   }
 
   50% {
-    border-color: #3b82f6;
+    border-color: var(--color-primary-500);
   }
 }
 
@@ -329,7 +342,7 @@
 }
 
 .hover-glow:hover {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  box-shadow: var(--shadow-glow);
 }
 
 /* Loading Skeleton */
@@ -344,9 +357,14 @@
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 0, #f8f8f8 40px, #f0f0f0 80px);
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 0,
+    var(--border-primary) 40px,
+    var(--bg-tertiary) 80px
+  );
   background-size: 200px 100%;
-  animation: skeleton-loading 1.5s infinite;
+  animation: skeleton-loading calc(var(--transition-slow) * 3) infinite;
 }
 
 /* Smooth Transitions */
@@ -422,12 +440,10 @@
 @keyframes pageLoad {
   from {
     opacity: 0;
-    filter: blur(10px);
   }
 
   to {
     opacity: 1;
-    filter: blur(0);
   }
 }
 

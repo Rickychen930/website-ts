@@ -6,8 +6,12 @@
   padding-bottom: var(--spacing-3xl);
   margin-bottom: var(--spacing-xl);
   border-radius: var(--radius-lg);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    transform var(--transition-normal) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease),
+    border-color var(--transition-normal) var(--transition-ease);
   box-sizing: border-box;
+  contain: layout style paint;
 }
 
 .experienceItem::before {
@@ -62,7 +66,9 @@
     0 0 0 4px var(--color-primary-alpha-10),
     0 0 12px var(--color-primary-alpha-30);
   animation: pulse calc(var(--transition-slow) * 4) ease-in-out infinite;
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    transform var(--transition-fast) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease);
 }
 
 .experienceItem:hover .timelineDot {
@@ -226,6 +232,25 @@
   border-top: 1px solid var(--border-primary);
 }
 
+/* Dark Mode Support */
+.dark .currentBadge {
+  border: 1px solid var(--color-accent-alpha-30);
+  background-color: var(--color-accent-alpha-20);
+  color: var(--color-success-500);
+}
+
+.dark .techTag {
+  border-color: var(--color-primary-alpha-30);
+  background-color: var(--bg-tertiary);
+  color: var(--color-primary-400);
+}
+
+.dark .techTag:hover {
+  border-color: var(--color-primary-alpha-50);
+  background-color: var(--bg-secondary);
+  color: var(--color-primary-300);
+}
+
 .skillsLabel {
   display: block;
   margin-bottom: var(--spacing-sm);
@@ -285,8 +310,8 @@
   }
 
   .techTag {
-    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
-    font-size: 0.7rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
   }
 }
 

@@ -5,17 +5,22 @@
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
   text-align: center;
-  transition: all var(--transition-slow) var(--transition-ease);
+  transition:
+    transform var(--transition-normal) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease),
+    border-color var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-md), var(--shadow-glow);
   overflow: hidden;
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   isolation: isolate;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .statItem::before {
@@ -77,7 +82,7 @@
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-  will-change: background-position;
+  transform: translateZ(0);
 }
 
 @keyframes gradientShift {

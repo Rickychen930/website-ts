@@ -5,7 +5,10 @@
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
   font-size: var(--font-size-sm);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    transform var(--transition-fast) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease),
+    border-color var(--transition-normal) var(--transition-ease);
   align-items: center;
   gap: var(--spacing-sm);
   border-radius: var(--radius-full);
@@ -72,8 +75,8 @@
   }
 
   .category {
-    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
-    font-size: 0.7rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
   }
 }
 

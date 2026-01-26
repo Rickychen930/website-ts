@@ -138,7 +138,9 @@
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    color var(--transition-normal) var(--transition-ease),
+    transform var(--transition-fast) var(--transition-ease);
   text-decoration: none;
   border-radius: var(--radius-sm);
 }
@@ -181,7 +183,10 @@
   color: var(--text-primary);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    background-color var(--transition-normal) var(--transition-ease),
+    border-color var(--transition-normal) var(--transition-ease),
+    color var(--transition-normal) var(--transition-ease);
   -webkit-backdrop-filter: blur(10px) saturate(180%);
   backdrop-filter: blur(10px) saturate(180%);
   box-sizing: border-box;
@@ -212,7 +217,10 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    background var(--transition-normal) var(--transition-ease),
+    color var(--transition-normal) var(--transition-ease),
+    transform var(--transition-fast) var(--transition-ease);
   border-radius: var(--radius-md);
   cursor: pointer;
   align-items: center;

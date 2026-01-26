@@ -5,7 +5,12 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    transform var(--transition-fast) var(--transition-ease),
+    box-shadow var(--transition-normal) var(--transition-ease),
+    background var(--transition-normal) var(--transition-ease),
+    border-color var(--transition-normal) var(--transition-ease),
+    color var(--transition-normal) var(--transition-ease);
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
@@ -88,7 +93,7 @@
   transform: translateY(0) scale(1);
   box-shadow:
     0 2px 4px -1px var(--color-primary-alpha-30),
-    inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    var(--shadow-inner);
 }
 
 .button--secondary {

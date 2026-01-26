@@ -43,3 +43,41 @@ coverage
 # Temporary files
 *.tmp
 .cache
+
+# Sensitive data files
+backend/current-*.json
+backend/*-data.json
+backend/*-messages.json
+backend/*.log
+backend/logs/
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+id_rsa
+id_rsa.pub
+*.ssh
+*.gpg
+
+# Database dumps and backups
+*.sql
+*.dump
+*.backup
+*.bak
+
+# API keys and secrets (additional patterns)
+*secret*
+*key*
+*credential*
+*token*
+*password*
+*private*
+
+# Local configuration files
+config/local.*
+config/*.local.*
+*.local.json
+*.local.js
+*.local.ts

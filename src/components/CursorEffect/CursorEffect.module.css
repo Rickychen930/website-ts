@@ -11,9 +11,8 @@
     transform var(--transition-fast) var(--transition-ease);
   border-radius: var(--radius-full);
   pointer-events: none;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) translateZ(0);
   mix-blend-mode: difference;
-  will-change: transform;
 }
 
 .cursorHover {
@@ -34,9 +33,8 @@
     transform var(--transition-fast) var(--transition-ease);
   border-radius: var(--radius-full);
   pointer-events: none;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) translateZ(0);
   box-shadow: var(--shadow-glow-strong);
-  will-change: transform;
 }
 
 /* Responsive Design */

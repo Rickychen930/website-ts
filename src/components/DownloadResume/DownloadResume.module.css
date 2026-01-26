@@ -29,8 +29,8 @@
 }
 
 .downloadButton:hover::before {
-  width: 25rem;
-  height: 25rem;
+  width: 300%;
+  height: 300%;
 }
 
 .icon {

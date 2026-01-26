@@ -9,13 +9,14 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: var(--spacing-4xl);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   overflow: hidden;
   isolation: isolate;
   box-sizing: border-box;
+  transform: translateZ(0);
 }
 
 .filters::before {

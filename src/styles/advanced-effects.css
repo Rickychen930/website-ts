@@ -15,7 +15,6 @@
 /* Parallax Effect */
 .parallax {
   transform: translateZ(0);
-  will-change: transform;
 }
 
 .parallax-slow {
@@ -26,8 +25,8 @@
 .glass-enhanced {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.1);
-  -webkit-backdrop-filter: blur(var(--spacing-xl)) saturate(180%);
-  backdrop-filter: blur(var(--spacing-xl)) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   box-shadow:
     0 var(--spacing-sm) var(--spacing-2xl) 0 rgba(31, 38, 135, 0.37),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
@@ -113,7 +112,7 @@
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.3) 50%,
+    var(--color-primary-alpha-30) 50%,
     transparent 70%
   );
   transform: rotate(45deg);

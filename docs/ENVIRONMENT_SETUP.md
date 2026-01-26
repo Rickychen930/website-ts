@@ -30,7 +30,8 @@ Template file untuk dokumentasi. **JANGAN** commit file `.env` yang sebenarnya, 
 
 - `MONGODB_URI` - MongoDB connection string
   - Development: `mongodb://localhost:27017/portfolio-dev`
-  - Production: `mongodb+srv://rickychen930:satuduatiga@ricky-website-portfolio.bkjauxk.mongodb.net/portfolio?retryWrites=true&w=majority&authSource=admin`
+  - Production: `mongodb+srv://USERNAME:PASSWORD@cluster.mongodb.net/database-name?retryWrites=true&w=majority&authSource=admin`
+  - ⚠️ **JANGAN** commit credentials ke repository. Gunakan environment variables atau secrets management.
 - `PORT` - Backend server port (default: 4000)
 - `NODE_ENV` - Environment mode (`development` atau `production`)
 - `ALLOWED_ORIGINS` - CORS allowed origins (comma-separated)
@@ -129,11 +130,13 @@ Backend menggunakan `dotenv` untuk load environment variables:
 
    ```env
    REACT_APP_API_URL=https://rickychen930.cloud/api
-   MONGODB_URI=mongodb+srv://rickychen930:satuduatiga@ricky-website-portfolio.bkjauxk.mongodb.net/portfolio?retryWrites=true&w=majority&authSource=admin
+   MONGODB_URI=mongodb+srv://USERNAME:PASSWORD@cluster.mongodb.net/database-name?retryWrites=true&w=majority&authSource=admin
    PORT=4000
    NODE_ENV=production
    ALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud
    ```
+
+   ⚠️ **IMPORTANT**: Ganti `USERNAME` dan `PASSWORD` dengan credentials MongoDB Atlas Anda yang sebenarnya.
 
 4. **Verify `.gitignore`** memastikan file `.env*` tidak di-commit (kecuali `.env.example`)
 
