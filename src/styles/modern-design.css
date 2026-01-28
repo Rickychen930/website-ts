@@ -26,10 +26,10 @@
   background: var(--gradient-text);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-clip: text;
   background-size: 200% 200%;
-  animation: gradientShift calc(var(--transition-slow) * 6)
-    var(--transition-ease) infinite;
+
+  /* Keep the gradient, drop the constant motion */
+  animation: none;
 }
 
 @keyframes gradientShift {
@@ -77,7 +77,7 @@
   }
 
   50% {
-    transform: translateY(calc(var(--spacing-xl) * -1.25));
+    transform: translateY(calc(var(--spacing-md) * -1));
   }
 }
 
@@ -98,7 +98,7 @@
 }
 
 .pulse-glow {
-  animation: pulseGlow calc(var(--transition-slow) * 4) ease-in-out infinite;
+  animation: pulseGlow calc(var(--transition-slow) * 8) ease-in-out infinite;
 }
 
 /* Modern Section Divider */
@@ -379,7 +379,7 @@ section::before {
 }
 
 section:hover::before {
-  opacity: 1;
+  opacity: 0.35;
 }
 
 /* Professional Card Enhancements */

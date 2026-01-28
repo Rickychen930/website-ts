@@ -18,7 +18,7 @@
 
 .header.scrolled {
   background: var(--bg-overlay);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  box-shadow: var(--shadow-md);
   border-bottom-color: var(--border-secondary);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   backdrop-filter: blur(12px) saturate(180%);
@@ -54,11 +54,11 @@
 .container {
   display: flex;
   margin: 0 auto;
-  padding: var(--spacing-md) var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-xl);
   max-width: var(--container-xl);
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-lg);
 }
 
 .headerActions {
@@ -85,7 +85,7 @@
 .logo {
   display: flex;
   position: relative;
-  padding: var(--spacing-sm);
+  padding: var(--spacing-xs);
   color: inherit;
   transition: transform var(--transition-fast) var(--transition-ease);
   align-items: center;
@@ -94,7 +94,7 @@
 }
 
 .logo:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .logoImage {
@@ -166,7 +166,7 @@
 
 .navLink:hover {
   color: var(--color-primary-500);
-  transform: translateY(calc(var(--spacing-xs) * -1));
+  transform: translateY(-1px);
 }
 
 .navLink:focus-visible {
@@ -251,7 +251,7 @@
 
 @media (width <= 768px) {
   .container {
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-lg);
     gap: var(--spacing-md);
   }
 

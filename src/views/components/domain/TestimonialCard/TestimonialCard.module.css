@@ -11,7 +11,7 @@
     border-color var(--transition-normal) var(--transition-ease);
   flex-direction: column;
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-md), var(--shadow-glow);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
@@ -29,33 +29,23 @@
   width: 4px;
   height: 100%;
   background: var(--gradient-primary-accent);
-  background-size: 100% 200%;
+  background-size: 100% 100%;
   transform: scaleY(0);
   transform-origin: top;
   transition: transform var(--transition-slow) var(--transition-ease);
-  box-shadow: var(--shadow-glow);
+  box-shadow: none;
 }
 
 .testimonialCard:hover::before {
   transform: scaleY(1);
-  animation: gradientShift calc(var(--transition-slow) * 4)
-    var(--transition-ease) infinite;
+  animation: none;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 0% 100%;
-  }
-}
+/* Removed gradientShift keyframes (no longer used) */
 
 .testimonialCard:hover {
-  box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
-  transform: translateY(calc(var(--spacing-md) * -1.5)) scale(1.03);
+  box-shadow: var(--shadow-lg), var(--shadow-colored);
+  transform: translateY(-3px);
   border-color: var(--color-primary-500);
 }
 

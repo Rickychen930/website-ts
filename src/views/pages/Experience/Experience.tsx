@@ -26,7 +26,8 @@ export const Experience: React.FC = () => {
       <div className={styles.error} role="alert" aria-live="assertive">
         <Typography variant="h3">Failed to load experience</Typography>
         <Typography variant="body" color="secondary">
-          {error?.message || "Please try again later"}
+          {error?.message ||
+            "Something went wrong while loading your experience. Please refresh the page or try again shortly."}
         </Typography>
         {isProfileNotFound && (
           <Typography variant="small" color="tertiary" className={styles.tip}>

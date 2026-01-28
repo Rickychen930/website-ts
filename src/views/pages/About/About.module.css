@@ -21,25 +21,15 @@
   right: 0;
   left: 0;
   z-index: 1;
-  height: 4px;
+  height: 3px;
   background: var(--gradient-primary-accent);
   content: "";
-  background-size: 200% 100%;
-  animation: gradientShift calc(var(--transition-slow) * 8)
-    var(--transition-ease) infinite;
+  background-size: 100% 100%;
+  animation: none;
   pointer-events: none;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
+/* Removed gradientShift keyframes (no longer used) */
 
 .bio {
   position: relative;
@@ -84,8 +74,8 @@
 }
 
 .skillCategory:hover {
-  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.01);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
   border-color: var(--color-primary-alpha-30);
 }
 
@@ -177,8 +167,8 @@
 }
 
 .languageItem:hover {
-  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.02);
-  box-shadow: var(--shadow-xl), var(--shadow-glow);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg), var(--shadow-colored);
   border-color: var(--color-primary-alpha-30);
 }
 

@@ -24,25 +24,15 @@
   right: 0;
   left: 0;
   z-index: 1;
-  height: 4px;
+  height: 3px;
   background: var(--gradient-primary-accent);
-  background-size: 200% 100%;
+  background-size: 100% 100%;
   content: "";
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-  animation: gradientShift calc(var(--transition-slow) * 8)
-    var(--transition-ease) infinite;
+  animation: none;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
+/* Removed gradientShift keyframes (no longer used) */
 
 .cardTitle {
   color: var(--text-primary);
@@ -148,8 +138,8 @@
 .socialLink:hover {
   background: var(--gradient-primary);
   color: var(--text-inverse);
-  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md), var(--shadow-colored);
   border-color: var(--color-primary-600);
 }
 
@@ -205,7 +195,7 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   background: var(--bg-primary);
-  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.01);
+  transform: translateY(-1px);
   outline: none;
   border-color: var(--color-primary-500);
   box-shadow:

@@ -3,7 +3,7 @@
   position: relative;
   padding: var(--spacing-3xl) var(--spacing-xl);
   background: var(--gradient-hero);
-  min-height: 100vh;
+  min-height: 92vh;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -37,7 +37,9 @@
       transparent 40%
     );
   pointer-events: none;
-  animation: float calc(var(--transition-slow) * 12) ease-in-out infinite;
+
+  /* Keep the soft blobs, drop the constant motion */
+  animation: none;
   z-index: 0;
   transform: translateZ(0);
   contain: layout style paint;
@@ -56,7 +58,7 @@
     transparent 70%
   );
   content: "";
-  animation: rotate calc(var(--transition-slow) * 30) linear infinite;
+  animation: none;
   pointer-events: none;
   transform: translateZ(0);
   contain: layout style paint;
@@ -89,7 +91,7 @@
     transparent 70%
   );
   content: "";
-  animation: pulse calc(var(--transition-slow) * 6) ease-in-out infinite;
+  animation: none;
   pointer-events: none;
   transform: translateZ(0);
   contain: layout style paint;
@@ -104,16 +106,12 @@
   margin-bottom: var(--spacing-lg);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-clip: text;
-  background-size: 200% 200%;
-  animation:
-    fadeInUp var(--transition-normal) var(--transition-ease)
-      calc(var(--transition-fast) * 2) both,
-    gradientShift calc(var(--transition-slow) * 10) var(--transition-ease)
-      infinite;
+  background-size: 100% 100%;
+  animation: fadeInUp var(--transition-normal) var(--transition-ease)
+    calc(var(--transition-fast) * 2) both;
   transform: translateZ(0);
-  letter-spacing: calc(var(--letter-spacing-tight) * 1.5);
-  filter: drop-shadow(0 4px 12px var(--color-primary-alpha-30));
+  letter-spacing: var(--letter-spacing-tight);
+  filter: none;
 }
 
 .heroSubtitle {
@@ -149,8 +147,8 @@
 }
 
 .heroLocation:hover {
-  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
   border-color: var(--color-primary-500);
   background: var(--gradient-glass);
   color: var(--text-primary);
@@ -212,8 +210,8 @@
 }
 
 .heroActions a:hover {
-  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.05);
-  filter: brightness(1.1);
+  transform: translateY(-2px);
+  filter: brightness(1.02);
 }
 
 .heroActions a:focus-visible {
@@ -478,7 +476,7 @@
 /* Responsive Design */
 @media (width <= 640px) {
   .hero {
-    min-height: 85vh;
+    min-height: 80vh;
     padding: var(--spacing-2xl) var(--spacing-md);
   }
 

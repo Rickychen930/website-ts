@@ -23,20 +23,19 @@
   right: 0;
   left: 0;
   z-index: 1;
-  height: 4px;
+  height: 3px;
   background: var(--gradient-primary-accent);
   transition: transform var(--transition-slow) var(--transition-ease);
   content: "";
-  background-size: 200% 100%;
+  background-size: 100% 100%;
   transform: scaleX(0);
   transform-origin: left;
-  box-shadow: var(--shadow-glow);
+  box-shadow: none;
 }
 
 .card:hover::before {
   transform: scaleX(1);
-  animation: gradientShift var(--transition-slow) var(--transition-ease)
-    infinite;
+  animation: none;
 }
 
 .card::after {
@@ -58,16 +57,7 @@
   opacity: 1;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
+/* Removed gradientShift keyframes (no longer used) */
 
 .card--default {
   box-shadow: var(--shadow-sm);
@@ -78,11 +68,10 @@
 }
 
 .card--elevated:hover {
-  box-shadow:
-    var(--shadow-2xl), var(--shadow-glow-strong), var(--shadow-colored);
-  transform: translateY(calc(var(--spacing-xs) * -8)) scale(1.03);
+  box-shadow: var(--shadow-lg), var(--shadow-colored);
+  transform: translateY(-3px);
   border-color: var(--color-primary-500);
-  filter: brightness(1.02);
+  filter: brightness(1.01);
 }
 
 .card:focus-within {

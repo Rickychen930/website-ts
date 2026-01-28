@@ -25,7 +25,8 @@ export const Projects: React.FC = () => {
       <div className={styles.error} role="alert" aria-live="assertive">
         <Typography variant="h3">Failed to load projects</Typography>
         <Typography variant="body" color="secondary">
-          {error?.message || "Please try again later"}
+          {error?.message ||
+            "Something went wrong while loading projects. Please refresh the page or try again in a moment."}
         </Typography>
         <Button
           onClick={() => window.location.reload()}

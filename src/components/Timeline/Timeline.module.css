@@ -47,17 +47,17 @@
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-md), var(--shadow-glow);
+  box-shadow: var(--shadow-md);
 }
 
 .timelineItem:hover .markerDot {
-  transform: scale(1.15);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-strong);
+  transform: scale(1.08);
+  box-shadow: var(--shadow-lg);
 }
 
 .markerIcon {
   font-size: var(--font-size-2xl);
-  filter: drop-shadow(0 2px 4px var(--color-primary-alpha-20));
+  filter: none;
 }
 
 .timelineLine {
@@ -121,8 +121,8 @@
 }
 
 .timelineItem:hover .timelineCard {
-  transform: translateY(calc(var(--spacing-xs) * -4));
-  box-shadow: var(--shadow-xl), var(--shadow-glow);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg), var(--shadow-colored);
   border-color: var(--color-primary-500);
 }
 

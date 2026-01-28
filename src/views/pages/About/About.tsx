@@ -38,7 +38,8 @@ export const About: React.FC = () => {
       <div className={styles.error} role="alert" aria-live="assertive">
         <Typography variant="h3">Failed to load profile</Typography>
         <Typography variant="body" color="secondary">
-          {error?.message || "Please try again later"}
+          {error?.message ||
+            "Something went wrong while loading your profile. Please refresh the page or try again shortly."}
         </Typography>
         <Button
           onClick={() => window.location.reload()}

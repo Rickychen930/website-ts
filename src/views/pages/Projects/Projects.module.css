@@ -8,7 +8,7 @@
   gap: var(--spacing-md);
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: var(--spacing-4xl);
+  margin-bottom: var(--spacing-3xl);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
   border-radius: var(--radius-xl);
@@ -28,22 +28,12 @@
   height: 3px;
   background: var(--gradient-primary-accent);
   content: "";
-  background-size: 200% 100%;
-  animation: gradientShift calc(var(--transition-slow) * 8)
-    var(--transition-ease) infinite;
+  background-size: 100% 100%;
+  animation: none;
   pointer-events: none;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
+/* Removed gradientShift keyframes (no longer used) */
 
 .filterButton {
   display: inline-flex;
@@ -81,8 +71,8 @@
 .filterButton:hover {
   border-color: var(--color-primary-500);
   color: var(--text-inverse);
-  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.05);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md), var(--shadow-colored);
 }
 
 .filterButton:focus-visible {
@@ -104,8 +94,8 @@
   background: var(--gradient-primary);
   color: var(--text-inverse);
   border-color: var(--color-primary-600);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-strong);
-  transform: translateY(calc(var(--spacing-xs) * -2)) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-colored);
+  transform: translateY(-1px);
 }
 
 .filterButtonActive::before {

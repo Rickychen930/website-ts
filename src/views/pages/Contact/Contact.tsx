@@ -39,6 +39,22 @@ export const Contact: React.FC = () => {
     "idle" | "success" | "error"
   >("idle");
 
+  // Only allow editing stored contacts in development (owner/admin usage),
+  // so visitors on the live site cannot modify your contact data.
+  const canEditContacts = process.env.NODE_ENV === "development";
+
+  const getContactIcon = (type: ContactType["type"]): string => {
+    const icons: Record<ContactType["type"], string> = {
+      email: "✉️",
+      phone: "📞",
+      linkedin: "💼",
+      github: "💻",
+      website: "🌐",
+      other: "🔗",
+    };
+    return icons[type] || "🔗";
+  };
+
   const handleBlur = (field: string) => {
     setTouched({ ...touched, [field]: true });
     const validation = validateContactForm(formData);
@@ -171,7 +187,9 @@ export const Contact: React.FC = () => {
     } catch (error) {
       setSubmitStatus("error");
       const errorMessage =
-        error instanceof Error ? error.message : "Failed to send message";
+        error instanceof Error
+          ? error.message
+          : "I couldn't send your message. Please try again in a moment or use the primary contact above.";
       setFormErrors({ submit: errorMessage });
     } finally {
       setIsSubmitting(false);
@@ -223,7 +241,7 @@ export const Contact: React.FC = () => {
               >
                 Contact Information
               </Typography>
-              {!isEditingContacts && (
+              {canEditContacts && !isEditingContacts && (
                 <Button
                   variant="secondary"
                   onClick={handleEditContacts}
@@ -264,7 +282,7 @@ export const Contact: React.FC = () => {
               </div>
             )}
 
-            {isEditingContacts ? (
+            {canEditContacts && isEditingContacts ? (
               <div className={styles.form}>
                 {displayContacts.map((contact, index) => (
                   <div key={contact.id || index} className={styles.formGroup}>
@@ -390,6 +408,7 @@ export const Contact: React.FC = () => {
                 {primaryContact && (
                   <div className={styles.contactItem}>
                     <Typography variant="body" weight="medium">
+                      {getContactIcon(primaryContact.type)}{" "}
                       {primaryContact.label}
                     </Typography>
                     <a
@@ -444,6 +463,9 @@ export const Contact: React.FC = () => {
                           }
                           className={styles.socialLink}
                         >
+                          <span aria-hidden="true">
+                            {getContactIcon(contact.type)}{" "}
+                          </span>
                           {contact.label}
                         </a>
                       );
@@ -565,7 +587,8 @@ export const Contact: React.FC = () => {
                   aria-live="polite"
                   aria-atomic="true"
                 >
-                  ✓ Message sent successfully!
+                  ✓ Message sent successfully! I&apos;ll get back to you as soon
+                  as possible.
                 </div>
               )}
               {submitStatus === "error" && (
@@ -575,7 +598,8 @@ export const Contact: React.FC = () => {
                   aria-live="assertive"
                   aria-atomic="true"
                 >
-                  ✗ Failed to send message. Please try again.
+                  ✗ I couldn&apos;t send your message. Please try again or reach
+                  me via the primary contact above.
                 </div>
               )}
               <Button

@@ -8,7 +8,7 @@
   );
   color: var(--text-primary);
   overflow: hidden;
-  margin-top: var(--spacing-5xl);
+  margin-top: var(--spacing-4xl);
   border-top: 1px solid var(--color-primary-alpha-10);
 }
 
@@ -26,7 +26,7 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 3px;
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -37,10 +37,9 @@
     transparent 100%
   );
   content: "";
-  box-shadow: var(--shadow-glow), var(--shadow-glow-accent);
-  background-size: 200% 100%;
-  animation: gradientShift calc(var(--transition-slow) * 8)
-    var(--transition-ease) infinite;
+  box-shadow: none;
+  background-size: 100% 100%;
+  animation: none;
 }
 
 .footer::after {
@@ -93,7 +92,6 @@
 .footerBrand {
   background: var(--gradient-text);
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   background-clip: text;
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
@@ -241,22 +239,9 @@
 
 .newsletterButton:hover {
   background: var(--gradient-primary);
-  background-size: 200% 200%;
-  animation: gradientShift var(--transition-slow) var(--transition-ease)
-    infinite;
-  transform: scale(1.05);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
-}
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
+  background-size: 100% 100%;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md), var(--shadow-colored);
 }
 
 .newsletterButton:active {

@@ -31,7 +31,7 @@
   height: 0;
   border-radius: 50%;
   background: var(--text-inverse);
-  opacity: 0.3;
+  opacity: 0.12;
   transform: translate(-50%, -50%);
   transition:
     width var(--transition-slow),
@@ -39,8 +39,8 @@
 }
 
 .button:hover::before {
-  width: 18.75rem;
-  height: 18.75rem;
+  width: 14rem;
+  height: 14rem;
 }
 
 .button:disabled {
@@ -69,24 +69,9 @@
 
 .button--primary:hover:not(:disabled) {
   background: var(--gradient-primary);
-  background-size: 200% 200%;
-  animation: gradientShift calc(var(--transition-slow) * 4)
-    var(--transition-ease) infinite;
-  box-shadow:
-    var(--shadow-xl), var(--shadow-glow-strong), var(--shadow-colored);
-  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.05);
-  filter: brightness(1.1);
-}
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
+  box-shadow: var(--shadow-lg), var(--shadow-colored);
+  transform: translateY(-2px);
+  filter: brightness(1.03);
 }
 
 .button--primary:active:not(:disabled) {
@@ -124,10 +109,10 @@
 .button--outline:hover:not(:disabled) {
   background: var(--gradient-primary);
   color: var(--text-inverse);
-  box-shadow: var(--shadow-lg), var(--shadow-glow), var(--shadow-colored);
-  transform: translateY(calc(var(--spacing-xs) * -3)) scale(1.03);
+  box-shadow: var(--shadow-md), var(--shadow-colored);
+  transform: translateY(-2px);
   border-color: var(--color-primary-600);
-  filter: brightness(1.05);
+  filter: brightness(1.02);
 }
 
 .button--outline:active:not(:disabled) {
@@ -142,7 +127,7 @@
 
 .button--ghost:hover:not(:disabled) {
   background-color: var(--bg-tertiary);
-  transform: translateY(calc(var(--spacing-xs) * -1));
+  transform: translateY(-1px);
   box-shadow: var(--shadow-soft);
 }
 
