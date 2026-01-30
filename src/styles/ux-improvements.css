@@ -4,7 +4,7 @@
 
 /* Improved spacing for better readability */
 section {
-  scroll-margin-top: 2rem;
+  scroll-margin-top: var(--spacing-xl);
 }
 
 /* Better link styling */
@@ -21,15 +21,15 @@ a:not(.button, .navLink):hover {
 }
 
 a:not(.button, .navLink):focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: var(--spacing-xs);
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
 }
 
 /* Better list styling - Support dark/light mode */
 ul,
 ol {
-  padding-left: 1.5rem;
+  padding-left: var(--spacing-lg);
   color: var(--text-primary);
 }
 
@@ -55,10 +55,10 @@ select {
   background: linear-gradient(
     90deg,
     var(--bg-tertiary) 0,
-    var(--border-primary) 40px,
-    var(--bg-tertiary) 80px
+    var(--border-primary) 2.5rem,
+    var(--bg-tertiary) 5rem
   );
-  background-size: 200px 100%;
+  background-size: 12.5rem 100%;
   animation: skeleton-loading calc(var(--transition-slow) * 3) infinite;
   border-radius: var(--radius-md);
 }
@@ -120,8 +120,8 @@ a:focus-visible:not(:has(> *)),
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: var(--spacing-xs);
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
 }
 
@@ -129,7 +129,7 @@ select:focus-visible {
 button:disabled,
 input:disabled,
 textarea:disabled {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: not-allowed;
 }
 
@@ -159,8 +159,8 @@ textarea:disabled {
 
 /* Better scrollbar styling - Modern and accessible */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 0.75rem;
+  height: 0.75rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -203,7 +203,16 @@ textarea:disabled {
     text-decoration: underline;
   }
 
-  .no-print {
+  .no-print,
+  [data-print="hide"] {
     display: none !important;
+  }
+
+  /* Avoid breaking cards and sections across pages */
+  section,
+  article,
+  [class*="card"],
+  [class*="Card"] {
+    page-break-inside: avoid;
   }
 }

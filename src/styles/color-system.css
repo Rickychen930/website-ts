@@ -1,9 +1,11 @@
 /**
- * Color System - Centralized color usage
- * Ensures all colors follow design tokens
+ * Color System - Legacy/alias layer
+ * Single source of truth: design-tokens.css
+ * This file re-exports the same values for backward compatibility.
+ * Prefer --text-primary, --bg-primary, --color-primary-* from design-tokens.
  */
 
-/* Primary Colors - Tech Blue */
+/* Primary Colors - Tech Blue (mirrors design-tokens.css) */
 :root {
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;

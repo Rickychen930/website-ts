@@ -2,7 +2,7 @@
   display: flex;
   position: fixed;
   z-index: var(--z-modal-backdrop);
-  background: rgba(23, 23, 23, 0.5);
+  background: var(--overlay-backdrop);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   inset: 0;
@@ -13,7 +13,7 @@
 
 .modal {
   position: relative;
-  max-width: 600px;
+  max-width: var(--container-sm);
   max-height: 80vh;
   padding: var(--spacing-2xl);
   border: 1px solid var(--border-primary);

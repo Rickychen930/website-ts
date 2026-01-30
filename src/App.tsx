@@ -45,6 +45,16 @@ const Contact = React.lazy(() =>
     default: module.Contact,
   })),
 );
+const Privacy = React.lazy(() =>
+  import("@/views/pages/Privacy").then((module) => ({
+    default: module.Privacy,
+  })),
+);
+const Terms = React.lazy(() =>
+  import("@/views/pages/Terms").then((module) => ({
+    default: module.Terms,
+  })),
+);
 
 // Inner component that uses keyboard shortcuts (must be inside Router)
 const AppContent: React.FC = () => {
@@ -71,6 +81,8 @@ const AppContent: React.FC = () => {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/experience" element={<Experience />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
               </Routes>
             </PageTransition>
           </Suspense>

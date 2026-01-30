@@ -74,7 +74,7 @@
 @media (width >= 1024px) {
   .searchWrapper {
     display: block;
-    width: 300px;
+    width: 18.75rem; /* 300px - consistent with design scale */
   }
 
   .headerSearch {
@@ -170,8 +170,8 @@
 }
 
 .navLink:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-md);
 }
 
@@ -231,9 +231,9 @@
 }
 
 .menuToggle:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px var(--color-primary-alpha-10);
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 4px var(--focus-ring-glow);
 }
 
 .menuIcon {

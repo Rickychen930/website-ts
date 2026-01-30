@@ -130,7 +130,7 @@
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, var(--opacity-ripple));
     transform: translate(-50%, -50%);
     transition:
       width 0.6s,
@@ -142,13 +142,19 @@
     height: 300px;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .touch-ripple::after {
+      transition: none;
+    }
+  }
+
   /* Better focus states for touch devices */
   button:focus-visible,
   .button:focus-visible,
   a:focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: var(--spacing-xs);
-    box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+    outline: var(--focus-outline-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-outline-offset);
+    box-shadow: 0 0 0 3px var(--focus-ring-glow);
   }
 }
 

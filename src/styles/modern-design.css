@@ -5,8 +5,8 @@
 
 /* Enhanced Glassmorphism Effects */
 .glass {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-overlay);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
   box-shadow: var(--shadow-lg);
@@ -59,7 +59,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.3),
+    var(--color-primary-alpha-20),
     transparent
   );
   transition: left var(--transition-slow) var(--transition-ease);
@@ -446,7 +446,12 @@ textarea:focus {
 }
 
 .loading-shimmer {
-  background: linear-gradient(90deg, #f0f0f0 0, #f8f8f8 40px, #f0f0f0 80px);
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-100) 0,
+    var(--color-neutral-50) 2.5rem,
+    var(--color-neutral-100) 5rem
+  );
   background-size: 1000px 100%;
   animation: shimmer calc(var(--transition-slow) * 4) infinite;
 }

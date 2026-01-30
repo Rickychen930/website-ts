@@ -63,7 +63,7 @@ export const About: React.FC = () => {
 
   return (
     <>
-      <Section title="About Me" subtitle={profile.bio}>
+      <Section title="About Me" subtitle="A brief introduction">
         <div className={styles.content}>
           <Typography variant="body" className={styles.bio}>
             {profile.bio}

@@ -34,12 +34,12 @@
 }
 
 .searchInput:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .searchInput::placeholder {
-  color: var(--text-tertiary);
+  color: var(--text-muted);
 }
 
 .searchIcon {
@@ -91,8 +91,8 @@
 }
 
 .filterButton:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-lg);
 }
 
@@ -132,12 +132,12 @@
 .sortSelect:focus {
   outline: none;
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+  box-shadow: 0 0 0 3px var(--focus-ring-glow);
 }
 
 .sortSelect:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .resultsCount {

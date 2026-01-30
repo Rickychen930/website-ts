@@ -62,6 +62,16 @@ export const colors = {
   },
 } as const;
 
+/** Parse hex color to [r, g, b] for canvas/JS use (e.g. rgba(r, g, b, alpha)). */
+export function hexToRgb(hex: string): [number, number, number] {
+  const n = hex.replace(/^#/, "");
+  const v = parseInt(n, 16);
+  if (n.length === 3) {
+    return [(v >> 8) * 17, ((v >> 4) & 0xf) * 17, (v & 0xf) * 17];
+  }
+  return [(v >> 16) & 0xff, (v >> 8) & 0xff, v & 0xff];
+}
+
 export const spacing = {
   xs: "0.25rem", // 4px
   sm: "0.5rem", // 8px

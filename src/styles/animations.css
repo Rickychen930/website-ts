@@ -374,10 +374,14 @@
 
 /* Text Gradient Animation */
 .text-gradient {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #22c55e 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-500) 0%,
+    var(--color-primary-600) 50%,
+    var(--color-accent-500) 100%
+  );
   background-size: 200% 200%;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   background-clip: text;
   animation: gradientShift calc(var(--transition-slow) * 6)
     var(--transition-ease) infinite;

@@ -19,8 +19,8 @@
 }
 
 .themeToggle:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-full);
 }
 

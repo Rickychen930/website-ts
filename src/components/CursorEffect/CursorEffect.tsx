@@ -68,6 +68,7 @@ export const CursorEffect: React.FC = () => {
           top: `${position.y}px`,
         }}
         aria-hidden="true"
+        data-print="hide"
       />
       <div
         className={styles.cursorDot}
@@ -76,6 +77,7 @@ export const CursorEffect: React.FC = () => {
           top: `${position.y}px`,
         }}
         aria-hidden="true"
+        data-print="hide"
       />
     </>
   );

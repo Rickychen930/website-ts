@@ -41,6 +41,8 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
               src={testimonial.avatarUrl}
               alt={testimonial.author}
               className={styles.avatar}
+              loading="lazy"
+              decoding="async"
             />
           )}
           <div>

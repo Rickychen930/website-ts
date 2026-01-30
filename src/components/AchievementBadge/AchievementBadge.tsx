@@ -32,9 +32,9 @@ export const AchievementBadge: React.FC<AchievementBadgeProps> = ({
     <div
       className={`${styles.achievementBadge} ${styles[variant]} ${className}`}
       style={
-        {
-          "--badge-color": achievement.color || "#3b82f6",
-        } as React.CSSProperties
+        achievement.color
+          ? ({ "--badge-color": achievement.color } as React.CSSProperties)
+          : undefined
       }
     >
       <div className={styles.badgeContainer}>
@@ -43,6 +43,8 @@ export const AchievementBadge: React.FC<AchievementBadgeProps> = ({
             src={achievement.badge}
             alt={achievement.title}
             className={styles.badgeImage}
+            loading="lazy"
+            decoding="async"
           />
         )}
         {achievement.icon && !achievement.badge && (

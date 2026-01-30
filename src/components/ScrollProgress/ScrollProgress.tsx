@@ -40,6 +40,7 @@ export const ScrollProgress: React.FC = () => {
   return (
     <div
       className={styles.scrollProgress}
+      data-print="hide"
       role="progressbar"
       aria-valuenow={scrollProgress}
       aria-valuemin={0}

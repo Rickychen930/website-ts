@@ -114,6 +114,14 @@
   .typography--h4 {
     font-size: var(--font-size-xl);
   }
+
+  .typography--h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  .typography--h6 {
+    font-size: var(--font-size-base);
+  }
 }
 
 @media (width >= 641px) and (width <= 768px) {

@@ -76,9 +76,9 @@
 }
 
 .filterButton:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px var(--color-primary-alpha-10);
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 4px var(--focus-ring-glow);
 }
 
 .filterButton:hover::before {

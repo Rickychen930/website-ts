@@ -598,8 +598,9 @@ export const Contact: React.FC = () => {
                   aria-live="assertive"
                   aria-atomic="true"
                 >
-                  ✗ I couldn&apos;t send your message. Please try again or reach
-                  me via the primary contact above.
+                  ✗{" "}
+                  {formErrors.submit ||
+                    "I couldn't send your message. Please try again or reach me via the primary contact above."}
                 </div>
               )}
               <Button

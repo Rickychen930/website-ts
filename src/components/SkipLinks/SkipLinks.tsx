@@ -32,7 +32,11 @@ export const SkipLinks: React.FC = () => {
   };
 
   return (
-    <nav className={styles.skipLinks} aria-label="Skip navigation">
+    <nav
+      className={styles.skipLinks}
+      aria-label="Skip navigation"
+      data-print="hide"
+    >
       <a
         href="#main-content"
         className={styles.skipLink}

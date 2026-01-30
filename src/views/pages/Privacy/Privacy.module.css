@@ -1,0 +1,36 @@
+.content {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  box-sizing: border-box;
+}
+
+.content p {
+  margin-bottom: var(--spacing-xl);
+  line-height: var(--line-height-relaxed);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+}
+
+.actions a {
+  text-decoration: none;
+}
+
+@media (width <= 640px) {
+  .content {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions a {
+    width: 100%;
+  }
+}

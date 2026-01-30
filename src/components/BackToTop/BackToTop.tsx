@@ -37,6 +37,7 @@ export const BackToTop: React.FC = () => {
 
   return (
     <button
+      data-print="hide"
       onClick={scrollToTop}
       className={styles.backToTop}
       aria-label="Back to top"

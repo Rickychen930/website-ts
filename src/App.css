@@ -72,7 +72,7 @@ body {
 code {
   padding: var(--spacing-xs) var(--spacing-xs);
   color: var(--color-primary-500);
-  font-size: 0.875em;
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-family-mono);
   background-color: var(--bg-tertiary);
@@ -106,8 +106,8 @@ img {
 
 /* Focus visible styles - Better keyboard navigation */
 *:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: var(--spacing-xs);
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
 }
 

@@ -74,6 +74,7 @@ export const Header: React.FC = () => {
           className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ""}`}
           role="navigation"
           aria-label="Main navigation"
+          data-print="hide"
         >
           {navItems.map((item) => (
             <Link
@@ -88,7 +89,7 @@ export const Header: React.FC = () => {
           ))}
         </nav>
 
-        <div className={styles.headerActions}>
+        <div className={styles.headerActions} data-print="hide">
           <div className={styles.searchWrapper}>
             <Search className={styles.headerSearch} />
           </div>
@@ -103,6 +104,7 @@ export const Header: React.FC = () => {
           aria-controls="main-navigation"
           aria-haspopup="true"
           type="button"
+          data-print="hide"
         >
           <span className={styles.menuIcon} aria-hidden="true" />
           <span className={styles.menuIcon} aria-hidden="true" />

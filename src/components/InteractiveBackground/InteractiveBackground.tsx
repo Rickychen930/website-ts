@@ -3,6 +3,8 @@
  */
 
 import React, { useEffect, useRef } from "react";
+import { colors, hexToRgb } from "@/config/design-tokens";
+import { useTheme } from "@/contexts/ThemeContext";
 import styles from "./InteractiveBackground.module.css";
 
 interface InteractiveBackgroundProps {
@@ -16,11 +18,19 @@ export const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({
   intensity = "medium",
   className = "",
 }) => {
+  const { isDark } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (variant !== "mesh" || !canvasRef.current) return;
+
+    const primaryRgb = hexToRgb(
+      isDark ? colors.primary[400] : colors.primary[500],
+    );
+    const accentRgb = hexToRgb(
+      isDark ? colors.accent[400] : colors.accent[500],
+    );
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -52,15 +62,15 @@ export const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({
 
         gradient.addColorStop(
           0,
-          `rgba(59, 130, 246, ${0.08 + Math.sin(time) * 0.03})`, // Lower opacity
+          `rgba(${primaryRgb[0]}, ${primaryRgb[1]}, ${primaryRgb[2]}, ${0.08 + Math.sin(time) * 0.03})`,
         );
         gradient.addColorStop(
           0.5,
-          `rgba(34, 197, 94, ${0.06 + Math.cos(time) * 0.02})`,
+          `rgba(${accentRgb[0]}, ${accentRgb[1]}, ${accentRgb[2]}, ${0.06 + Math.cos(time) * 0.02})`,
         );
         gradient.addColorStop(
           1,
-          `rgba(59, 130, 246, ${0.08 + Math.sin(time * 1.2) * 0.03})`,
+          `rgba(${primaryRgb[0]}, ${primaryRgb[1]}, ${primaryRgb[2]}, ${0.08 + Math.sin(time * 1.2) * 0.03})`,
         );
 
         ctx.fillStyle = gradient;
@@ -80,7 +90,7 @@ export const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [variant]);
+  }, [variant, isDark]);
 
   if (variant === "mesh") {
     return (

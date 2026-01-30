@@ -89,7 +89,7 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Newsletter */}
-            <div className={styles.footerSection}>
+            <div className={styles.footerSection} data-print="hide">
               <Typography
                 variant="h6"
                 weight="semibold"
@@ -144,13 +144,23 @@ export const Footer: React.FC = () => {
             reserved.
           </Typography>
           <div className={styles.footerBottomLinks}>
-            <a href="/privacy" className={styles.footerBottomLink}>
+            <Link
+              to="/privacy"
+              className={styles.footerBottomLink}
+              aria-label="Privacy Policy"
+            >
               Privacy Policy
-            </a>
-            <span className={styles.separator}>•</span>
-            <a href="/terms" className={styles.footerBottomLink}>
+            </Link>
+            <span className={styles.separator} aria-hidden="true">
+              •
+            </span>
+            <Link
+              to="/terms"
+              className={styles.footerBottomLink}
+              aria-label="Terms of Service"
+            >
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -48,9 +48,9 @@ export const Timeline: React.FC<TimelineProps> = ({
             <div
               className={styles.markerDot}
               style={
-                {
-                  "--item-color": item.color || "#3b82f6",
-                } as React.CSSProperties
+                item.color
+                  ? ({ "--item-color": item.color } as React.CSSProperties)
+                  : undefined
               }
             >
               {item.icon && (

@@ -78,13 +78,25 @@
   border-color: var(--color-primary-500);
   box-shadow:
     var(--shadow-md),
-    0 0 0 3px var(--color-primary-alpha-10);
+    0 0 0 3px var(--focus-ring-glow);
   outline: none;
 }
 
 .card--outlined {
   border: 1px solid var(--border-primary);
   box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::before,
+  .card::after {
+    transition: none;
+  }
+
+  .card--elevated:hover {
+    transform: none;
+  }
 }
 
 /* Padding variants */

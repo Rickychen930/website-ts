@@ -27,7 +27,7 @@
 
 .section:hover::before {
   width: 5.5rem;
-  opacity: 0.35;
+  opacity: calc(var(--opacity-decorative) + 0.15);
   box-shadow: none;
 }
 
@@ -65,7 +65,7 @@
   height: 3px;
   background: var(--gradient-primary-accent);
   border-radius: var(--radius-sm);
-  opacity: 0.6;
+  opacity: var(--opacity-decorative);
 }
 
 .subtitle {

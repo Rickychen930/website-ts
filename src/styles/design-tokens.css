@@ -68,6 +68,7 @@
   --bg-tertiary: #f1f5f9;
   --bg-card: #fff;
   --bg-overlay: rgba(255, 255, 255, 0.9);
+  --overlay-backdrop: rgba(23, 23, 23, 0.5);
 
   /* Text Colors - Light Mode */
   --text-primary: #1e293b;
@@ -117,6 +118,21 @@
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   --shadow-soft: 0 2px 10px rgba(15, 23, 42, 0.06);
   --shadow-colored: 0 8px 24px rgba(59, 130, 246, 0.08);
+
+  /* Focus ring (accessibility) */
+  --focus-outline-width: 2px;
+  --focus-outline-offset: var(--spacing-xs);
+  --focus-ring-color: var(--color-primary-500);
+  --focus-ring-glow: var(--color-primary-alpha-10);
+
+  /* High contrast: thicker outline for better visibility */
+  --focus-outline-width-high: 3px;
+
+  /* State opacity */
+  --opacity-disabled: 0.6;
+  --opacity-loading-overlay: 0.5;
+  --opacity-decorative: 0.6;
+  --opacity-ripple: 0.5;
 
   /* Transitions */
   --transition-fast: 150ms;
@@ -210,6 +226,7 @@
   --bg-tertiary: #334155;
   --bg-card: #1e293b;
   --bg-overlay: rgba(30, 41, 59, 0.9);
+  --overlay-backdrop: rgba(15, 23, 42, 0.75);
 
   /* Text Colors - Dark Mode */
   --text-primary: #e2e8f0;

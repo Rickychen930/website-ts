@@ -60,9 +60,11 @@ export const SkillChart: React.FC<SkillChartProps> = ({
                   strokeDasharray={`${2 * Math.PI * 50}`}
                   strokeDashoffset={`${2 * Math.PI * 50 * (1 - skill.level / 100)}`}
                   style={
-                    {
-                      "--skill-color": skill.color || "#3b82f6",
-                    } as React.CSSProperties
+                    skill.color
+                      ? ({
+                          "--skill-color": skill.color,
+                        } as React.CSSProperties)
+                      : undefined
                   }
                 />
               </svg>
@@ -108,7 +110,11 @@ export const SkillChart: React.FC<SkillChartProps> = ({
                 style={
                   {
                     width: `${skill.level}%`,
-                    "--skill-color": skill.color || "#3b82f6",
+                    ...(skill.color
+                      ? ({
+                          "--skill-color": skill.color,
+                        } as React.CSSProperties)
+                      : {}),
                   } as React.CSSProperties
                 }
               >

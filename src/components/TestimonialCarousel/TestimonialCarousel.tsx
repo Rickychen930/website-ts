@@ -109,6 +109,8 @@ export const TestimonialCarousel: React.FC<TestimonialCarouselProps> = ({
                       src={testimonial.avatar}
                       alt={testimonial.name}
                       className={styles.avatar}
+                      loading="lazy"
+                      decoding="async"
                     />
                   )}
                   <div className={styles.authorInfo}>

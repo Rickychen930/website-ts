@@ -33,4 +33,10 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .scrollProgress .progressBar {
+    animation: none;
+  }
+}
+
 /* Dark mode - handled automatically via CSS variables */

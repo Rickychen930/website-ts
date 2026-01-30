@@ -14,10 +14,10 @@
     [role="button"],
     [role="link"]
   ) {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: var(--spacing-xs);
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+  box-shadow: 0 0 0 3px var(--focus-ring-glow);
 }
 
 /* Remove default focus for mouse users */
@@ -33,6 +33,12 @@
 
   .button {
     border: 2px solid currentcolor;
+  }
+
+  /* Thicker focus outline for better visibility in high contrast */
+  *:focus-visible {
+    outline-width: var(--focus-outline-width-high) !important;
+    outline-offset: var(--focus-outline-offset) !important;
   }
 }
 
@@ -218,7 +224,7 @@ button:not(:disabled) {
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: var(--opacity-disabled);
 }
 
 /* Better input accessibility */
@@ -328,7 +334,7 @@ input[type="radio"],
 /* Disabled states - Better UX */
 [aria-disabled="true"],
 :disabled {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: not-allowed;
   pointer-events: none;
   filter: grayscale(0.3);
@@ -345,7 +351,7 @@ input[type="radio"],
   position: absolute;
   inset: 0;
   background: var(--bg-overlay);
-  opacity: 0.5;
+  opacity: var(--opacity-loading-overlay);
   pointer-events: none;
 }
 

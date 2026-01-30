@@ -3,6 +3,8 @@
  */
 
 import React, { useEffect, useRef } from "react";
+import { colors, hexToRgb } from "@/config/design-tokens";
+import { useTheme } from "@/contexts/ThemeContext";
 import styles from "./ParticleBackground.module.css";
 
 interface Particle {
@@ -15,11 +17,15 @@ interface Particle {
 }
 
 export const ParticleBackground: React.FC = () => {
+  const { isDark } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
+    const primaryRgb = hexToRgb(
+      isDark ? colors.primary[400] : colors.primary[500],
+    );
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -69,7 +75,7 @@ export const ParticleBackground: React.FC = () => {
         // Draw particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(59, 130, 246, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(${primaryRgb[0]}, ${primaryRgb[1]}, ${primaryRgb[2]}, ${particle.opacity})`;
         ctx.fill();
       });
 
@@ -87,7 +93,7 @@ export const ParticleBackground: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.05 * (1 - distance / 100)})`; // Lower opacity
+            ctx.strokeStyle = `rgba(${primaryRgb[0]}, ${primaryRgb[1]}, ${primaryRgb[2]}, ${0.05 * (1 - distance / 100)})`;
             ctx.lineWidth = 0.5; // Thinner lines
             ctx.stroke();
           }
@@ -105,13 +111,14 @@ export const ParticleBackground: React.FC = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [isDark]);
 
   return (
     <canvas
       ref={canvasRef}
       className={styles.particleBackground}
       aria-hidden="true"
+      data-print="hide"
     />
   );
 };
