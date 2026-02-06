@@ -24,10 +24,22 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <Card
       variant="elevated"
+      padding="none"
       className={styles.projectCard}
       role="article"
       aria-labelledby={`project-${project.id}-title`}
     >
+      {project.imageUrl && (
+        <div className={styles.imageWrap}>
+          <img
+            src={project.imageUrl}
+            alt=""
+            width={400}
+            height={400}
+            loading="lazy"
+          />
+        </div>
+      )}
       <div className={styles.header}>
         <div className={styles.category}>
           <span

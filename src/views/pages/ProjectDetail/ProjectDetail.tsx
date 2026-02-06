@@ -80,6 +80,17 @@ export const ProjectDetail: React.FC = () => {
             className={styles.card}
             aria-labelledby="project-detail-title"
           >
+            {project.imageUrl && (
+              <div className={styles.imageWrap}>
+                <img
+                  src={project.imageUrl}
+                  alt=""
+                  width={800}
+                  height={800}
+                  loading="eager"
+                />
+              </div>
+            )}
             <header className={styles.header}>
               <div className={styles.meta}>
                 <span
