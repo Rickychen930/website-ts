@@ -1,6 +1,8 @@
 .scrollReveal {
   opacity: 0;
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition:
+    opacity 0.6s var(--ease-out-expo),
+    transform 0.6s var(--ease-out-expo);
 }
 
 .scrollReveal.visible {
@@ -8,7 +10,7 @@
 }
 
 .scrollReveal.up {
-  transform: translateY(var(--spacing-3xl));
+  transform: translateY(4rem);
 }
 
 .scrollReveal.up.visible {
@@ -16,7 +18,7 @@
 }
 
 .scrollReveal.down {
-  transform: translateY(calc(var(--spacing-3xl) * -1));
+  transform: translateY(-4rem);
 }
 
 .scrollReveal.down.visible {
@@ -24,7 +26,7 @@
 }
 
 .scrollReveal.left {
-  transform: translateX(var(--spacing-3xl));
+  transform: translateX(4rem);
 }
 
 .scrollReveal.left.visible {
@@ -32,7 +34,7 @@
 }
 
 .scrollReveal.right {
-  transform: translateX(calc(var(--spacing-3xl) * -1));
+  transform: translateX(-4rem);
 }
 
 .scrollReveal.right.visible {
@@ -43,8 +45,12 @@
   transform: none;
 }
 
+.scrollReveal.fade.visible {
+  opacity: 1;
+}
+
 .scrollReveal.scale {
-  transform: scale(0.9);
+  transform: scale(0.92);
 }
 
 .scrollReveal.scale.visible {

@@ -1,10 +1,31 @@
 /**
- * Design Tokens CSS Variables
- * Single source of truth untuk semua colors, spacing, typography, dll
- * Semua komponen harus menggunakan variables ini untuk konsistensi
+ * Design Tokens – Single source of truth
+ * TEMA: "Modern Tech Paper" – profesional, grid, tekstur kertas, satu tema untuk semua komponen
+ * Semua komponen WAJIB pakai token di bawah; jangan hardcode warna/spacing/radius.
  */
 
 :root {
+  /* ========== TEMA (semua komponen mengacu ke sini) ========== */
+  --theme-name: "Modern Tech Paper";
+  --theme-primary: var(--color-primary-500);
+  --theme-primary-strong: var(--color-primary-600);
+  --theme-accent: var(--color-accent-500);
+  --theme-surface: var(--bg-primary);
+  --theme-surface-alt: var(--bg-section-alt);
+  --theme-surface-card: var(--bg-card);
+  --theme-text: var(--text-primary);
+  --theme-text-muted: var(--text-secondary);
+  --theme-border: var(--border-primary);
+  --theme-radius: var(--radius-xl);
+  --theme-radius-card: var(--radius-xl);
+  --theme-shadow: var(--shadow-md);
+  --theme-shadow-hover: var(--shadow-lg);
+  --theme-transition: var(--transition-normal) var(--ease-out-expo);
+  --theme-font: var(--font-family-sans);
+  --theme-font-display: var(--font-family-display);
+  --theme-pattern: var(--pattern-line-color);
+  --theme-pattern-size: var(--pattern-grid-size);
+
   /* Primary Colors */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
@@ -93,6 +114,16 @@
   --spacing-4xl: 6rem; /* 96px */
   --spacing-5xl: 8rem; /* 128px */
 
+  /* Section alternate (subtle band for alternating sections) */
+  --bg-section-alt: #f1f5f9;
+  --bg-section-alt-subtle: rgba(241, 245, 249, 0.6);
+
+  /* Patterns & texture – subtle agar tidak pusing; satu token untuk semua komponen */
+  --pattern-line-color: rgba(0, 0, 0, 0.04);
+  --pattern-grid-size: 40px;
+  --texture-noise-opacity: 0.05;
+  --texture-paper-wrinkle-opacity: 0.02;
+
   /* Border Radius */
   --radius-sm: 0.25rem; /* 4px */
   --radius-md: 0.5rem; /* 8px */
@@ -101,20 +132,25 @@
   --radius-2xl: 1.5rem; /* 24px */
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  /* Shadows - deeper, more premium */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
   --shadow-md:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.02);
   --shadow-lg:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.02);
   --shadow-xl:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.02);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  --shadow-card-edge: 0 1px 0 0 rgba(255, 255, 255, 0.6);
 
   /* Subtle glow system (premium, less "neon") */
-  --shadow-glow: 0 0 0 rgba(59, 130, 246, 0);
-  --shadow-glow-strong: 0 0 0 rgba(59, 130, 246, 0);
-  --shadow-glow-accent: 0 0 0 rgba(34, 197, 94, 0);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.12);
+  --shadow-glow-strong: 0 0 32px rgba(59, 130, 246, 0.2);
+  --shadow-glow-accent: 0 0 20px rgba(34, 197, 94, 0.12);
+  --shadow-card-hover: 0 12px 24px -8px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(59, 130, 246, 0.08);
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   --shadow-soft: 0 2px 10px rgba(15, 23, 42, 0.06);
   --shadow-colored: 0 8px 24px rgba(59, 130, 246, 0.08);
@@ -138,7 +174,11 @@
   --transition-fast: 150ms;
   --transition-normal: 300ms;
   --transition-slow: 500ms;
+  --transition-smooth: 450ms;
   --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Z-Index */
   --z-base: 0;
@@ -178,16 +218,21 @@
     var(--color-primary-600) 100%
   );
   --gradient-card: linear-gradient(
-    135deg,
+    165deg,
     var(--bg-primary) 0%,
-    var(--bg-secondary) 50%,
+    var(--bg-secondary) 45%,
     var(--bg-primary) 100%
   );
   --gradient-hero: linear-gradient(
-    135deg,
+    160deg,
     var(--color-primary-50) 0%,
-    var(--bg-primary) 55%,
+    var(--bg-primary) 40%,
     var(--color-primary-100) 100%
+  );
+  --gradient-section-alt: linear-gradient(
+    180deg,
+    var(--bg-section-alt) 0%,
+    var(--bg-primary) 100%
   );
   --gradient-glass: linear-gradient(
     135deg,
@@ -256,22 +301,37 @@
     var(--bg-primary) 0%,
     var(--bg-secondary) 100%
   );
+  --bg-section-alt: #1a2332;
   --gradient-card: linear-gradient(
-    135deg,
+    165deg,
     var(--bg-secondary) 0%,
-    var(--bg-primary) 50%,
+    var(--bg-primary) 45%,
     var(--bg-secondary) 100%
   );
+  --gradient-section-alt: linear-gradient(
+    180deg,
+    var(--bg-section-alt) 0%,
+    var(--bg-primary) 100%
+  );
+
+  /* Dark: pattern & texture lebih halus */
+  --pattern-line-color: rgba(255, 255, 255, 0.04);
+  --texture-noise-opacity: 0.05;
+  --texture-paper-wrinkle-opacity: 0.025;
+
+  /* Dark: hero title uses lighter primary for better contrast */
   --gradient-text: linear-gradient(
     135deg,
     var(--text-primary) 0%,
-    var(--color-primary-500) 100%
+    var(--color-primary-400) 60%,
+    var(--color-primary-300) 100%
   );
   --gradient-glass: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.05) 0%,
     rgba(255, 255, 255, 0.02) 100%
   );
+  --shadow-card-edge: 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Container Max Widths and Typography Scale */
@@ -283,16 +343,19 @@
   --container-xl: 1280px;
   --container-2xl: 1536px;
 
-  /* Font Families - Support dark/light mode (fonts work in both modes) */
+  /* Font Families - Display for impact, sans for body */
   --font-family-sans:
-    "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    "Plus Jakarta Sans", "Inter", -apple-system, blinkmacsystemfont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Helvetica Neue",
     sans-serif;
   --font-family-mono:
     "JetBrains Mono", "Fira Code", "Menlo", "Monaco", "Consolas",
     "Liberation Mono", "Courier New", monospace;
   --font-family-display:
-    "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", "Roboto", sans-serif;
+    "Plus Jakarta Sans", "Inter", -apple-system, blinkmacsystemfont, "Segoe UI",
+    "Roboto", sans-serif;
+  --font-family-quote:
+    georgia, "Times New Roman", times, serif;
 
   /* Typography Scale */
   --font-size-xs: 0.75rem; /* 12px */

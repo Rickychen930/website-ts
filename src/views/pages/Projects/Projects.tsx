@@ -5,16 +5,30 @@
 
 import React, { useState } from "react";
 import { useProfile } from "@/contexts/ProfileContext";
+import { useSEO } from "@/hooks/useSEO";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Loading } from "@/views/components/ui/Loading";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
+import { PageError } from "@/views/components/ui/PageError";
 import { ProjectCard } from "@/views/components/domain/ProjectCard";
 import styles from "./Projects.module.css";
 
 export const Projects: React.FC = () => {
-  const { profile, isLoading, error } = useProfile();
+  const { profile, isLoading, error, refetch } = useProfile();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  useSEO({
+    title: profile
+      ? `${profile.name} - Projects | Portfolio`
+      : "Projects | Ricky Chen Portfolio",
+    description: profile
+      ? `Projects by ${profile.name}: ${profile.projects.length} projects in web, mobile, AI, and more.`
+      : "Portfolio projects: web, mobile, AI, and full-stack development.",
+    keywords: "projects, portfolio, web development, mobile, software",
+    type: "website",
+  });
 
   if (isLoading) {
     return <Loading fullScreen message="Loading projects..." />;
@@ -22,21 +36,15 @@ export const Projects: React.FC = () => {
 
   if (error || !profile) {
     return (
-      <div className={styles.error} role="alert" aria-live="assertive">
-        <Typography variant="h3">Failed to load projects</Typography>
-        <Typography variant="body" color="secondary">
-          {error?.message ||
-            "Something went wrong while loading projects. Please refresh the page or try again in a moment."}
-        </Typography>
-        <Button
-          onClick={() => window.location.reload()}
-          variant="primary"
-          className={styles.retryButton}
-          aria-label="Retry loading projects"
-        >
-          Retry
-        </Button>
-      </div>
+      <PageError
+        title="Failed to load projects"
+        message={
+          error?.message ||
+          "Something went wrong while loading projects. Please try again in a moment."
+        }
+        onRetry={refetch}
+        retryLabel="Retry"
+      />
     );
   }
 
@@ -54,49 +62,65 @@ export const Projects: React.FC = () => {
     <Section
       title="Projects"
       subtitle="A collection of my work and side projects"
+      variant="alt"
     >
-      <div
-        className={styles.filters}
-        role="group"
-        aria-label="Filter projects by category"
-      >
-        {categories.map((category) => (
-          <button
-            key={category}
-            type="button"
-            className={`${styles.filterButton} ${selectedCategory === category ? styles.filterButtonActive : ""}`}
-            onClick={() => setSelectedCategory(category)}
-            aria-pressed={selectedCategory === category}
-            aria-label={`Filter by ${category}`}
-          >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
-          </button>
-        ))}
-      </div>
+      <ScrollReveal direction="up" delay={0}>
+        <div
+          className={styles.filters}
+          role="group"
+          aria-label="Filter projects by category"
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={`${styles.filterButton} ${selectedCategory === category ? styles.filterButtonActive : ""}`}
+              onClick={() => setSelectedCategory(category)}
+              aria-pressed={selectedCategory === category}
+              aria-label={`Filter by ${category}`}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
+        </div>
 
-      <div className={styles.projectsGrid} role="list" aria-label="Projects">
-        {filteredProjects.map((project) => (
-          <div key={project.id} role="listitem">
-            <ProjectCard project={project} />
-          </div>
-        ))}
-      </div>
+        <div className={styles.projectsGrid} role="list" aria-label="Projects">
+          {filteredProjects.map((project) => (
+            <div key={project.id} role="listitem">
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
+      </ScrollReveal>
 
       {filteredProjects.length === 0 && (
-        <div className={styles.empty} role="status" aria-live="polite">
-          <Typography variant="h4" weight="semibold" color="secondary">
-            No projects found
+        <div
+          className={styles.empty}
+          role="status"
+          aria-live="polite"
+          aria-labelledby="projects-empty-title"
+        >
+          <Typography
+            id="projects-empty-title"
+            variant="h4"
+            weight="semibold"
+            color="secondary"
+          >
+            {selectedCategory === "all"
+              ? "No projects yet"
+              : "No projects in this category"}
           </Typography>
           <Typography variant="body" color="tertiary">
             {selectedCategory === "all"
-              ? "No projects available at the moment."
-              : `No projects found in the "${selectedCategory}" category.`}
+              ? "Projects will appear here once added. Check back later or explore About and Experience."
+              : `No projects in "${selectedCategory}". Try another category or view all.`}
           </Typography>
           {selectedCategory !== "all" && (
             <Button
               onClick={() => setSelectedCategory("all")}
               variant="outline"
               className={styles.viewAllButton}
+              aria-label="Clear filter and view all projects"
             >
               View All Projects
             </Button>

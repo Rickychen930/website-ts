@@ -1,0 +1,27 @@
+.link {
+  display: inline-flex;
+  padding: var(--spacing-xs) 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+  margin-bottom: var(--spacing-lg);
+  min-height: 2.75rem;
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.icon {
+  flex-shrink: 0;
+  line-height: 1;
+}

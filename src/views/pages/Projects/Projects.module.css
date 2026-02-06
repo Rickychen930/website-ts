@@ -45,7 +45,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
-  transition: all var(--transition-normal) var(--transition-ease);
+  transition: all 0.3s var(--ease-out-expo);
   border-radius: var(--radius-full);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -63,7 +63,7 @@
   z-index: -1;
   background: var(--gradient-primary);
   opacity: 0;
-  transition: opacity var(--transition-normal) var(--transition-ease);
+  transition: opacity 0.35s var(--ease-out-expo);
   content: "";
   inset: 0;
 }

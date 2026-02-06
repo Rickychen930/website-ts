@@ -1,10 +1,18 @@
 .timeline {
+  display: grid;
   position: relative;
   width: 100%;
   margin: 0 auto;
   padding: var(--spacing-xl) 0;
   max-width: var(--container-lg);
   box-sizing: border-box;
+  grid-auto-rows: 1fr;
+  gap: var(--spacing-xl);
+}
+
+.timelineItem {
+  display: flex;
+  min-height: 0;
 }
 
 .timeline::before {

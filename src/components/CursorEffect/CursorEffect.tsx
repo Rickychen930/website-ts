@@ -1,5 +1,6 @@
 /**
  * Cursor Effect - Custom cursor with glow effect
+ * Hidden on touch devices and when user prefers reduced motion.
  */
 
 import React, { useEffect, useState, useRef } from "react";
@@ -8,10 +9,20 @@ import styles from "./CursorEffect.module.css";
 export const CursorEffect: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [enabled, setEnabled] = useState(true);
   const rafRef = useRef<number | null>(null);
   const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    const reduceMotion =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouch =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    setEnabled(!reduceMotion && !isTouch);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
     const updateCursor = (e: MouseEvent) => {
       // Update ref immediately for smooth tracking
       positionRef.current = { x: e.clientX, y: e.clientY };
@@ -57,7 +68,9 @@ export const CursorEffect: React.FC = () => {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>

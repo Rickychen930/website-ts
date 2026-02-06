@@ -6,11 +6,11 @@
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);
   transition:
-    transform var(--transition-fast) var(--transition-ease),
-    box-shadow var(--transition-normal) var(--transition-ease),
-    background var(--transition-normal) var(--transition-ease),
-    border-color var(--transition-normal) var(--transition-ease),
-    color var(--transition-normal) var(--transition-ease);
+    transform 0.2s var(--ease-out-expo),
+    box-shadow 0.3s var(--ease-out-expo),
+    background 0.3s var(--ease-out-expo),
+    border-color 0.3s var(--ease-out-expo),
+    color 0.3s var(--ease-out-expo);
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);

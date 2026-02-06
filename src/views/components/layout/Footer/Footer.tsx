@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className={styles.footer} role="contentinfo">
+    <footer className={styles.footer} role="contentinfo" data-print="hide">
       <div className={styles.footerTop}>
         <div className={styles.container}>
           <div className={styles.footerGrid}>

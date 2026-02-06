@@ -1,8 +1,41 @@
 .section {
   position: relative;
-  padding: var(--spacing-3xl) 0;
-  animation: fadeIn var(--transition-normal) var(--transition-ease) both;
+  padding: var(--spacing-4xl) 0;
+  animation: fadeIn 0.6s var(--ease-out-expo) both;
   isolation: isolate;
+}
+
+.sectionAlt {
+  background-image:
+    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
+    var(--gradient-section-alt);
+  background-size:
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
+}
+
+/* Dark pattern dari design-tokens .dark */
+
+.sectionAlt::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-primary-alpha-20) 20%,
+    var(--color-primary-alpha-30) 50%,
+    var(--color-primary-alpha-20) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .section::before {
@@ -10,25 +43,25 @@
   top: 0;
   left: 50%;
   z-index: 1;
-  width: 5rem;
-  height: 3px;
+  width: 6rem;
+  height: 4px;
   background: var(--gradient-primary-accent);
-  opacity: 0.25;
+  opacity: 0.4;
   transition:
-    width var(--transition-normal) var(--transition-ease),
-    opacity var(--transition-normal) var(--transition-ease),
-    box-shadow var(--transition-normal) var(--transition-ease);
+    width 0.45s var(--ease-out-expo),
+    opacity 0.45s var(--ease-out-expo),
+    box-shadow 0.45s var(--ease-out-expo);
   content: "";
   transform: translateX(-50%);
-  border-radius: var(--radius-sm);
-  box-shadow: none;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 16px var(--color-primary-alpha-25);
   pointer-events: none;
 }
 
 .section:hover::before {
-  width: 5.5rem;
-  opacity: calc(var(--opacity-decorative) + 0.15);
-  box-shadow: none;
+  width: 8rem;
+  opacity: 0.7;
+  box-shadow: 0 0 20px var(--color-primary-alpha-35);
 }
 
 .container {
@@ -45,14 +78,34 @@
   margin-bottom: var(--spacing-3xl);
 }
 
+.label {
+  display: block;
+  font-family: var(--font-family-display);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-primary-500);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-sm);
+}
+
+.info {
+  margin-top: var(--spacing-sm);
+  max-width: var(--container-md);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .title {
   display: inline-block;
   position: relative;
   color: var(--text-primary);
-  font-size: var(--font-size-4xl);
+  font-family: var(--font-family-display);
+  font-size: clamp(var(--font-size-3xl), 4vw, var(--font-size-4xl));
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   margin-bottom: var(--spacing-md);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .title::after {
@@ -61,11 +114,20 @@
   bottom: calc(var(--spacing-sm) * -1);
   left: 50%;
   transform: translateX(-50%);
-  width: 3.75rem;
-  height: 3px;
+  width: 4rem;
+  height: 4px;
   background: var(--gradient-primary-accent);
-  border-radius: var(--radius-sm);
-  opacity: var(--opacity-decorative);
+  border-radius: var(--radius-full);
+  opacity: 0.8;
+  transition:
+    width 0.45s var(--ease-out-expo),
+    opacity 0.35s var(--ease-out-expo);
+  box-shadow: 0 0 10px var(--color-primary-alpha-30);
+}
+
+.section:hover .title::after {
+  width: 5rem;
+  opacity: 1;
 }
 
 .subtitle {

@@ -39,10 +39,11 @@
     <meta name="apple-mobile-web-app-title" content="Ricky Chen" />
     <meta name="format-detection" content="telephone=no" />
     
-    <!-- Preconnect for Performance -->
+    <!-- Preconnect & Preload Fonts for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin />
     
     <!-- App Icons -->
     <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/logo192.png" />
@@ -55,6 +56,21 @@
     <link rel="canonical" href="https://rickychen.dev/" />
   </head>
   <body>
+    <!-- SVG filters: noise (paper grain) + paper wrinkle -->
+    <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
+      <defs>
+        <filter id="noiseFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" result="noise" />
+          <feColorMatrix in="noise" type="saturate" values="0" result="noiseGray" />
+          <feBlend in="SourceGraphic" in2="noiseGray" mode="multiply" />
+        </filter>
+        <filter id="paperWrinkleFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" result="wrinkle" />
+          <feColorMatrix in="wrinkle" type="saturate" values="0" result="wGray" />
+          <feBlend in="SourceGraphic" in2="wGray" mode="multiply" />
+        </filter>
+      </defs>
+    </svg>
     <noscript>
       <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
         <h1>JavaScript Required</h1>

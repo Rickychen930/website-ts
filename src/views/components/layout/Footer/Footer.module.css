@@ -1,24 +1,40 @@
 .footer {
   position: relative;
-  background: linear-gradient(
-    135deg,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 50%,
-    var(--bg-primary) 100%
-  );
+  background-image:
+    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(
+      165deg,
+      var(--bg-secondary) 0%,
+      var(--bg-primary) 50%,
+      var(--bg-secondary) 100%
+    );
+  background-size:
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
   color: var(--text-primary);
   overflow: hidden;
   margin-top: var(--spacing-4xl);
-  border-top: 1px solid var(--color-primary-alpha-10);
+  border-top: 1px solid var(--theme-border);
 }
 
 .dark .footer {
-  background: linear-gradient(
-    135deg,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 50%,
-    var(--bg-primary) 100%
-  );
+  background-image:
+    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(
+      135deg,
+      var(--bg-primary) 0%,
+      var(--bg-secondary) 50%,
+      var(--bg-primary) 100%
+    );
+  background-size:
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
 }
 
 .footer::before {
@@ -26,20 +42,19 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-primary-alpha-60) 20%,
-    var(--color-primary-500) 40%,
-    var(--color-accent-500) 60%,
-    var(--color-accent-alpha-60) 80%,
+    var(--color-primary-alpha-40) 15%,
+    var(--color-primary-500) 35%,
+    var(--color-accent-500) 50%,
+    var(--color-primary-500) 65%,
+    var(--color-primary-alpha-40) 85%,
     transparent 100%
   );
   content: "";
-  box-shadow: none;
-  background-size: 100% 100%;
-  animation: none;
+  box-shadow: 0 0 20px var(--color-primary-alpha-20);
 }
 
 .footer::after {
@@ -130,15 +145,17 @@
 }
 
 .footerLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   width: fit-content;
+  min-height: 2.75rem;
   padding: var(--spacing-xs) 0;
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
   transition:
-    color var(--transition-normal) var(--transition-ease),
-    transform var(--transition-fast) var(--transition-ease);
+    color var(--transition-normal) var(--ease-out-expo),
+    transform var(--transition-fast) var(--ease-out-expo);
   text-decoration: none;
   border-radius: var(--radius-sm);
 }
@@ -182,9 +199,9 @@
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   transition:
-    background-color var(--transition-normal) var(--transition-ease),
-    border-color var(--transition-normal) var(--transition-ease),
-    color var(--transition-normal) var(--transition-ease);
+    background-color var(--transition-normal) var(--ease-out-expo),
+    border-color var(--transition-normal) var(--ease-out-expo),
+    color var(--transition-normal) var(--ease-out-expo);
   -webkit-backdrop-filter: blur(10px) saturate(180%);
   backdrop-filter: blur(10px) saturate(180%);
   box-sizing: border-box;
@@ -216,9 +233,9 @@
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
   transition:
-    background var(--transition-normal) var(--transition-ease),
-    color var(--transition-normal) var(--transition-ease),
-    transform var(--transition-fast) var(--transition-ease);
+    background var(--transition-normal) var(--ease-out-expo),
+    color var(--transition-normal) var(--ease-out-expo),
+    transform var(--transition-fast) var(--ease-out-expo);
   border-radius: var(--radius-md);
   cursor: pointer;
   align-items: center;
@@ -253,7 +270,7 @@
   color: var(--color-accent-500);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  animation: fadeIn var(--transition-fast) var(--transition-ease);
+  animation: fadeIn var(--transition-fast) var(--ease-out-expo);
 }
 
 .footerBottom {
@@ -281,7 +298,7 @@
   color: var(--text-tertiary);
   text-decoration: none;
   font-size: var(--font-size-sm);
-  transition: color var(--transition-normal) var(--transition-ease);
+  transition: color var(--transition-normal) var(--ease-out-expo);
 }
 
 .footerBottomLink:hover {

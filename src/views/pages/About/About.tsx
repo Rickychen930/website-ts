@@ -5,11 +5,13 @@
 
 import React from "react";
 import { useProfile } from "@/contexts/ProfileContext";
+import { useSEO } from "@/hooks/useSEO";
 import type { SoftSkill } from "@/types/domain";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
-import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
+import { PageError } from "@/views/components/ui/PageError";
 import { SkillBadge } from "@/views/components/domain/SkillBadge";
 import { SoftSkillBadge } from "@/views/components/domain/SoftSkillBadge";
 import { CertificationCard } from "@/views/components/domain/CertificationCard";
@@ -27,7 +29,14 @@ const categoryLabels: Record<SoftSkill["category"], string> = {
 };
 
 export const About: React.FC = () => {
-  const { profile, isLoading, error } = useProfile();
+  const { profile, isLoading, error, refetch } = useProfile();
+
+  useSEO({
+    title: profile ? `${profile.name} - About | Portfolio` : "About | Ricky Chen Portfolio",
+    description: profile?.bio || "About me: skills, education, certifications, and honors.",
+    keywords: "Software Engineer, skills, education, certifications, portfolio",
+    type: "profile",
+  });
 
   if (isLoading) {
     return <Loading fullScreen message="Loading profile..." />;
@@ -35,21 +44,15 @@ export const About: React.FC = () => {
 
   if (error || !profile) {
     return (
-      <div className={styles.error} role="alert" aria-live="assertive">
-        <Typography variant="h3">Failed to load profile</Typography>
-        <Typography variant="body" color="secondary">
-          {error?.message ||
-            "Something went wrong while loading your profile. Please refresh the page or try again shortly."}
-        </Typography>
-        <Button
-          onClick={() => window.location.reload()}
-          variant="primary"
-          className={styles.retryButton}
-          aria-label="Retry loading profile"
-        >
-          Retry
-        </Button>
-      </div>
+      <PageError
+        title="Failed to load profile"
+        message={
+          error?.message ||
+          "Something went wrong while loading your profile. Please try again shortly."
+        }
+        onRetry={refetch}
+        retryLabel="Retry"
+      />
     );
   }
 
@@ -64,27 +67,40 @@ export const About: React.FC = () => {
   return (
     <>
       <Section title="About Me" subtitle="A brief introduction">
-        <div className={styles.content}>
-          <Typography variant="body" className={styles.bio}>
-            {profile.bio}
-          </Typography>
-        </div>
+        <ScrollReveal direction="up" delay={0}>
+          <div className={styles.content}>
+            <Typography variant="body" className={styles.bio}>
+              {profile.bio}
+            </Typography>
+          </div>
+        </ScrollReveal>
       </Section>
 
       <Section
         title="Technical Skills"
         subtitle="Technologies and tools I work with"
+        variant="alt"
       >
         {skillCategories.every(
           ({ category }) =>
             profile.getSkillsByCategory(category as any).length === 0,
         ) ? (
-          <div className={styles.empty} role="status" aria-live="polite">
-            <Typography variant="h4" weight="semibold" color="secondary">
-              No skills available
+          <div
+            className={styles.empty}
+            role="status"
+            aria-live="polite"
+            aria-labelledby="skills-empty-title"
+          >
+            <Typography
+              id="skills-empty-title"
+              variant="h4"
+              weight="semibold"
+              color="secondary"
+            >
+              No skills listed yet
             </Typography>
             <Typography variant="body" color="tertiary">
-              Skills information will be available soon.
+              Skills and tools will show here once added. Check out Experience or Projects for more.
             </Typography>
           </div>
         ) : (
@@ -195,6 +211,7 @@ export const About: React.FC = () => {
           title="Honors & Awards"
           subtitle="Recognition and achievements"
           className={styles.honorsSection}
+          variant="alt"
         >
           <div
             className={styles.honorsGrid}

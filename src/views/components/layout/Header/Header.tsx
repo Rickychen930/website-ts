@@ -43,6 +43,7 @@ export const Header: React.FC = () => {
     { path: "/projects", label: "Projects" },
     { path: "/experience", label: "Experience" },
     { path: "/contact", label: "Contact" },
+    { path: "/admin/login", label: "Login" },
   ];
 
   const isActive = (path: string): boolean => {
@@ -53,6 +54,7 @@ export const Header: React.FC = () => {
     <header
       className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}
       role="banner"
+      data-print="hide"
     >
       <div className={styles.container}>
         <Link

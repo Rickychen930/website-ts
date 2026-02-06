@@ -1,0 +1,33 @@
+.pageError {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 50vh;
+  max-width: var(--container-md);
+  box-sizing: border-box;
+}
+
+.tip {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-sm);
+  max-width: 36rem;
+}
+
+.tip code {
+  padding: 0.125em 0.375em;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+}
+
+.retryButton {
+  margin-top: var(--spacing-md);
+}

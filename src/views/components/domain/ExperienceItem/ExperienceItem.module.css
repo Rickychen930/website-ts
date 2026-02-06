@@ -1,15 +1,16 @@
 .experienceItem {
   display: flex;
+  flex: 1;
+  min-height: 0;
   gap: var(--spacing-xl);
   position: relative;
   padding: var(--spacing-lg);
   padding-bottom: var(--spacing-3xl);
-  margin-bottom: var(--spacing-xl);
   border-radius: var(--radius-lg);
   transition:
-    transform var(--transition-normal) var(--transition-ease),
-    box-shadow var(--transition-normal) var(--transition-ease),
-    border-color var(--transition-normal) var(--transition-ease);
+    transform var(--transition-normal) var(--ease-out-expo),
+    box-shadow var(--transition-normal) var(--ease-out-expo),
+    border-color var(--transition-normal) var(--ease-out-expo);
   box-sizing: border-box;
   contain: layout style paint;
 }
@@ -24,7 +25,7 @@
   background: transparent;
   border-radius: var(--radius-lg);
   opacity: 0;
-  transition: opacity var(--transition-normal) var(--transition-ease);
+  transition: opacity var(--transition-normal) var(--ease-out-expo);
   pointer-events: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
@@ -68,8 +69,8 @@
     0 0 0 4px var(--color-primary-alpha-10);
   animation: none;
   transition:
-    transform var(--transition-fast) var(--transition-ease),
-    box-shadow var(--transition-normal) var(--transition-ease);
+    transform var(--transition-fast) var(--ease-out-expo),
+    box-shadow var(--transition-normal) var(--ease-out-expo);
 }
 
 .experienceItem:hover .timelineDot {

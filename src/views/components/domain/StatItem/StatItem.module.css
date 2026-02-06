@@ -6,11 +6,11 @@
   background: var(--gradient-card);
   text-align: center;
   transition:
-    transform var(--transition-normal) var(--transition-ease),
-    box-shadow var(--transition-normal) var(--transition-ease),
-    border-color var(--transition-normal) var(--transition-ease);
+    transform 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo),
+    border-color 0.3s var(--ease-out-expo);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), var(--shadow-card-edge);
   overflow: hidden;
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
@@ -35,7 +35,7 @@
   background-size: 100% 100%;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   opacity: 0;
-  transition: opacity var(--transition-slow) var(--transition-ease);
+  transition: opacity 0.5s var(--ease-out-expo);
   box-shadow: none;
 }
 
@@ -45,8 +45,13 @@
 }
 
 .statItem:hover {
-  box-shadow: var(--shadow-lg), var(--shadow-colored);
-  transform: translateY(-3px);
+  box-shadow:
+    var(--shadow-xl),
+    var(--shadow-colored),
+    0 0 0 1px var(--color-primary-alpha-15),
+    0 16px 32px -10px var(--color-primary-alpha-12),
+    var(--shadow-card-edge);
+  transform: translateY(-5px);
   border-color: var(--color-primary-500);
 }
 

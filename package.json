@@ -31,6 +31,8 @@
     "start:prod": "PORT=3000 NODE_ENV=production craco start",
     "build": "NODE_ENV=production craco build",
     "build:dev": "NODE_ENV=development craco build",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --max-warnings 0 --fix",
     "test": "craco test",
     "test:watch": "react-scripts test --watch",
     "test:coverage": "react-scripts test --coverage --watchAll=false",

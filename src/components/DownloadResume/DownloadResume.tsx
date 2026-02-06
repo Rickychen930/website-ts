@@ -4,6 +4,7 @@
 
 import React from "react";
 import { Button } from "@/views/components/ui/Button";
+import { trackEvent } from "@/utils/analytics";
 import styles from "./DownloadResume.module.css";
 
 interface DownloadResumeProps {
@@ -16,6 +17,7 @@ export const DownloadResume: React.FC<DownloadResumeProps> = ({
   className = "",
 }) => {
   const handleDownload = () => {
+    trackEvent("download_resume");
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "Ricky_Chen_CV.pdf";

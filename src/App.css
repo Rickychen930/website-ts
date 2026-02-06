@@ -2,8 +2,9 @@
  * App Global Styles
  */
 
-/* Import Inter font for modern software engineer aesthetic */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+/* Display + body: Plus Jakarta Sans (premium, distinctive) */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 /* Import design tokens FIRST - must be before all other styles */
@@ -21,6 +22,7 @@
 @import url("./styles/advanced-effects.css");
 @import url("./styles/mobile-enhancements.css");
 @import url("./styles/creative-design.css");
+@import url("./styles/patterns-texture.css");
 
 * {
   box-sizing: border-box;
@@ -41,15 +43,32 @@ html {
 }
 
 body {
-  background: var(--gradient-hero);
+  background-image:
+    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
+    var(--gradient-hero);
+  background-size:
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
+  background-position:
+    0 0,
+    0 0,
+    0 0;
   color: var(--text-primary);
   line-height: var(--line-height-normal);
-  font-family: var(--font-family-sans);
+  font-family: var(--theme-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-attachment: scroll;
+  background-attachment: scroll, scroll, scroll;
   letter-spacing: var(--letter-spacing-tight);
   text-rendering: optimizelegibility;
+}
+
+h1,
+h2 {
+  font-family: var(--font-family-display);
 }
 
 .app {
@@ -61,7 +80,7 @@ body {
 /* Allow fixed background only when it won't jank */
 @media (width >= 1024px) and (prefers-reduced-motion: no-preference) {
   body {
-    background-attachment: fixed;
+    background-attachment: fixed, fixed, fixed;
   }
 }
 

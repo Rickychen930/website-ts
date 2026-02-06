@@ -1,13 +1,14 @@
 .card {
   position: relative;
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--theme-border);
   background: var(--gradient-card);
+  box-shadow: var(--theme-shadow), var(--shadow-card-edge);
   transition:
-    transform var(--transition-normal) var(--transition-ease),
-    box-shadow var(--transition-normal) var(--transition-ease),
-    border-color var(--transition-normal) var(--transition-ease);
-  border-radius: var(--radius-xl);
-  animation: fadeIn var(--transition-normal) var(--transition-ease) both;
+    transform 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo),
+    border-color 0.3s var(--ease-out-expo);
+  border-radius: var(--theme-radius-card);
+  animation: fadeIn 0.5s var(--ease-out-expo) both;
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
   overflow: hidden;
@@ -25,7 +26,7 @@
   z-index: 1;
   height: 3px;
   background: var(--gradient-primary-accent);
-  transition: transform var(--transition-slow) var(--transition-ease);
+  transition: transform 0.5s var(--ease-out-expo);
   content: "";
   background-size: 100% 100%;
   transform: scaleX(0);
@@ -47,7 +48,7 @@
     transparent 50%
   );
   opacity: 0;
-  transition: opacity var(--transition-slow) var(--transition-ease);
+  transition: opacity 0.4s var(--ease-out-expo);
   content: "";
   inset: 0;
   pointer-events: none;
@@ -60,30 +61,35 @@
 /* Removed gradientShift keyframes (no longer used) */
 
 .card--default {
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--theme-shadow);
 }
 
 .card--elevated {
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--theme-shadow-hover);
 }
 
 .card--elevated:hover {
-  box-shadow: var(--shadow-lg), var(--shadow-colored);
-  transform: translateY(-3px);
-  border-color: var(--color-primary-500);
-  filter: brightness(1.01);
+  box-shadow:
+    var(--shadow-xl),
+    var(--shadow-colored),
+    0 0 0 1px var(--color-primary-alpha-15),
+    0 16px 32px -10px var(--color-primary-alpha-12),
+    var(--shadow-card-edge);
+  transform: translateY(-5px);
+  border-color: var(--color-primary-400);
+  filter: brightness(1.02);
 }
 
 .card:focus-within {
-  border-color: var(--color-primary-500);
+  border-color: var(--theme-primary);
   box-shadow:
-    var(--shadow-md),
+    var(--theme-shadow),
     0 0 0 3px var(--focus-ring-glow);
   outline: none;
 }
 
 .card--outlined {
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--theme-border);
   box-shadow: none;
 }
 

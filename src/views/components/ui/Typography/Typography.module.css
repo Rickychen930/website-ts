@@ -4,6 +4,7 @@
 
 /* Variants */
 .typography--h1 {
+  font-family: var(--font-family-display);
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
@@ -11,6 +12,7 @@
 }
 
 .typography--h2 {
+  font-family: var(--font-family-display);
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);

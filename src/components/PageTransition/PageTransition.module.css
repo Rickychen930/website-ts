@@ -2,18 +2,19 @@
   width: 100%;
   min-height: 100%;
   transition:
-    opacity var(--transition-normal) var(--transition-ease),
-    transform var(--transition-normal) var(--transition-ease);
+    opacity var(--transition-smooth) var(--ease-out-expo),
+    transform var(--transition-smooth) var(--ease-out-expo);
+  transform-origin: center top;
 }
 
 .pageTransition.entering {
   opacity: 0;
-  transform: translateY(var(--spacing-xl));
+  transform: translateY(1.25rem) scale(0.988);
 }
 
 .pageTransition.entered {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Reduced motion support */

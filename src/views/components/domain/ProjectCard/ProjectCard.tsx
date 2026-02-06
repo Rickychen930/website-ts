@@ -1,9 +1,10 @@
 /**
  * ProjectCard Component - Domain Component
- * Displays project information in a card format
+ * Displays project summary; "View Details" links to project detail page.
  */
 
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import type { Project } from "@/types/domain";
 import { Card } from "@/views/components/ui/Card";
 import { Typography } from "@/views/components/ui/Typography";
@@ -20,19 +21,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onViewDetails,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleViewDetails = () => {
-    if (onViewDetails) {
-      onViewDetails(project.id);
-    }
-  };
-
-  const hasDetails = project.longDescription || project.architecture;
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
 
   return (
     <Card
@@ -78,37 +66,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.description}
         </Typography>
 
-        {isExpanded && project.longDescription && (
-          <div className={styles.expandedContent}>
-            <Typography
-              variant="body"
-              color="secondary"
-              className={styles.longDescription}
-            >
-              {project.longDescription}
-            </Typography>
-          </div>
-        )}
-
-        {isExpanded && project.architecture && (
-          <div className={styles.expandedContent}>
-            <Typography
-              variant="h6"
-              weight="semibold"
-              className={styles.sectionTitle}
-            >
-              Architecture
-            </Typography>
-            <Typography
-              variant="body"
-              color="secondary"
-              className={styles.architecture}
-            >
-              {project.architecture}
-            </Typography>
-          </div>
-        )}
-
         {project.technologies.length > 0 && (
           <div className={styles.technologies}>
             {project.technologies.slice(0, 5).map((tech, index) => (
@@ -126,10 +83,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {project.achievements.length > 0 && (
           <ul className={styles.achievements}>
-            {(isExpanded
-              ? project.achievements
-              : project.achievements.slice(0, 2)
-            ).map((achievement, index) => (
+            {project.achievements.slice(0, 2).map((achievement, index) => (
               <li key={index}>
                 <Typography variant="small" color="secondary">
                   {achievement}
@@ -139,33 +93,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           </ul>
         )}
 
-        {hasDetails && (
-          <button
-            type="button"
-            onClick={toggleExpand}
-            className={styles.expandButton}
-            aria-expanded={isExpanded}
-            aria-label={isExpanded ? "Show less details" : "Show more details"}
-          >
-            {isExpanded ? "Show Less" : "Show More Details"}
-            <span className={styles.expandIcon}>{isExpanded ? "▲" : "▼"}</span>
-          </button>
-        )}
+        <Link
+          to={`/projects/${project.id}`}
+          className={styles.detailLink}
+          aria-label={`View details for ${project.title}`}
+        >
+          View Details
+          <span className={styles.detailLinkIcon} aria-hidden>→</span>
+        </Link>
       </div>
 
       <div className={styles.footer} role="group" aria-label="Project actions">
-        {project.githubUrl && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              window.open(project.githubUrl, "_blank", "noopener,noreferrer")
-            }
-            aria-label={`View ${project.title} on GitHub`}
-          >
-            GitHub
-          </Button>
-        )}
         {project.liveUrl && (
           <Button
             variant="primary"
@@ -176,16 +114,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             aria-label={`View live demo of ${project.title}`}
           >
             Live Demo
-          </Button>
-        )}
-        {onViewDetails && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleViewDetails}
-            aria-label={`View details for ${project.title}`}
-          >
-            View Details
           </Button>
         )}
       </div>

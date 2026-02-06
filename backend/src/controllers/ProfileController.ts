@@ -156,4 +156,90 @@ export class ProfileController {
       });
     }
   }
+
+  /** Full profile update (admin only) */
+  public async updateProfile(req: Request, res: Response): Promise<void> {
+    try {
+      const mongoose = require("mongoose");
+      if (mongoose.connection.readyState !== 1) {
+        res.status(503).json({
+          error: "Database not connected",
+          message: "MongoDB is not available.",
+        });
+        return;
+      }
+
+      const body = req.body as Record<string, unknown>;
+      const {
+        name,
+        title,
+        location,
+        bio,
+        academics,
+        certifications,
+        contacts,
+        experiences,
+        honors,
+        languages,
+        projects,
+        softSkills,
+        stats,
+        technicalSkills,
+        testimonials,
+      } = body;
+
+      if (!name || !title || !location || typeof bio !== "string") {
+        res.status(400).json({
+          error: "Invalid request",
+          message: "name, title, location, and bio are required.",
+        });
+        return;
+      }
+
+      const profile = await ProfileModel.findOne();
+      if (!profile) {
+        res.status(404).json({
+          error: "Profile not found",
+          message: "No profile in database. Run npm run seed first.",
+        });
+        return;
+      }
+
+      profile.name = String(name);
+      profile.title = String(title);
+      profile.location = String(location);
+      profile.bio = String(bio);
+      profile.academics = Array.isArray(academics) ? academics : profile.academics;
+      profile.certifications = Array.isArray(certifications)
+        ? certifications
+        : profile.certifications;
+      profile.contacts = Array.isArray(contacts) ? contacts : profile.contacts;
+      profile.experiences = Array.isArray(experiences)
+        ? experiences
+        : profile.experiences;
+      profile.honors = Array.isArray(honors) ? honors : profile.honors;
+      profile.languages = Array.isArray(languages) ? languages : profile.languages;
+      profile.projects = Array.isArray(projects) ? projects : profile.projects;
+      profile.softSkills = Array.isArray(softSkills)
+        ? softSkills
+        : profile.softSkills;
+      profile.stats = Array.isArray(stats) ? stats : profile.stats;
+      profile.technicalSkills = Array.isArray(technicalSkills)
+        ? technicalSkills
+        : profile.technicalSkills;
+      profile.testimonials = Array.isArray(testimonials)
+        ? testimonials
+        : profile.testimonials;
+
+      await profile.save();
+      const transformed = transformProfile(profile);
+      res.json(transformed);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({
+        error: "Failed to update profile",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
 }

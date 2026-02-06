@@ -10,6 +10,7 @@ import path from "path";
 import { connectDatabase } from "./config/database";
 import profileRoutes from "./routes/profileRoutes";
 import contactRoutes from "./routes/contactRoutes";
+import adminRoutes from "./routes/adminRoutes";
 import { apiLimiter } from "./middleware/rateLimiter";
 import { sanitizeInput } from "./middleware/sanitizeInput";
 
@@ -87,6 +88,7 @@ app.get("/api", (req, res) => {
 // Routes (frontend uses /api/profile singular)
 app.use("/api/profile", profileRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

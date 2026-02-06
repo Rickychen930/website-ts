@@ -1,5 +1,6 @@
 /**
  * useCounter Hook - Animated counter for numbers
+ * Respects prefers-reduced-motion: no animation when user prefers reduced motion.
  */
 
 import { useEffect, useState } from "react";
@@ -9,13 +10,22 @@ export interface UseCounterOptions {
   startOnView?: boolean;
 }
 
+const prefersReducedMotion = (): boolean =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export const useCounter = (target: number, options: UseCounterOptions = {}) => {
   const { duration = 2000, startOnView = true } = options;
-  const [count, setCount] = useState(0);
-  const [hasStarted, setHasStarted] = useState(!startOnView);
+  const skipAnimation = prefersReducedMotion();
+  const [count, setCount] = useState(skipAnimation ? target : 0);
+  const [hasStarted, setHasStarted] = useState(skipAnimation || !startOnView);
 
   useEffect(() => {
     if (!hasStarted) return;
+    if (skipAnimation) {
+      setCount(target);
+      return;
+    }
 
     let startTime: number;
     let animationFrame: number;
@@ -44,7 +54,7 @@ export const useCounter = (target: number, options: UseCounterOptions = {}) => {
         cancelAnimationFrame(animationFrame);
       }
     };
-  }, [target, duration, hasStarted]);
+  }, [target, duration, hasStarted, skipAnimation]);
 
   const start = () => {
     setHasStarted(true);

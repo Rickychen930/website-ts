@@ -1,0 +1,55 @@
+/**
+ * Patterns & texture – grid, paper grain (noise), paper wrinkle
+ * Semua komponen mengandalkan token yang sama; supports satu sama lain
+ */
+
+/* Paper grain – noise halus seperti kertas (requires #noiseFilter) */
+.textureNoise {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: #fff;
+  opacity: var(--texture-noise-opacity);
+  filter: url("#noiseFilter");
+}
+
+.dark .textureNoise {
+  background: var(--bg-primary);
+  opacity: var(--texture-noise-opacity);
+}
+
+/* Kertas sedikit lecek – wrinkle halus (requires #paperWrinkleFilter) */
+.texturePaperWrinkle {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background: #fff;
+  opacity: var(--texture-paper-wrinkle-opacity);
+  filter: url("#paperWrinkleFilter");
+}
+
+.dark .texturePaperWrinkle {
+  background: var(--bg-primary);
+  opacity: var(--texture-paper-wrinkle-opacity);
+}
+
+/* Grid line pattern – use as background on sections/cards (theme token) */
+.patternGrid {
+  background-image:
+    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px);
+  background-size: var(--theme-pattern-size) var(--theme-pattern-size);
+  background-repeat: repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textureNoise {
+    opacity: 0.02;
+  }
+
+  .texturePaperWrinkle {
+    opacity: 0.02;
+  }
+}

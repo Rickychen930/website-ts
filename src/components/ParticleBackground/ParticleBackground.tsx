@@ -1,8 +1,9 @@
 /**
  * Particle Background - Animated particle effect
+ * Disabled when user prefers reduced motion.
  */
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { colors, hexToRgb } from "@/config/design-tokens";
 import { useTheme } from "@/contexts/ThemeContext";
 import styles from "./ParticleBackground.module.css";
@@ -21,8 +22,14 @@ export const ParticleBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const [reduceMotion] = useState(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
 
   useEffect(() => {
+    if (reduceMotion) return;
+
     const primaryRgb = hexToRgb(
       isDark ? colors.primary[400] : colors.primary[500],
     );
@@ -111,7 +118,9 @@ export const ParticleBackground: React.FC = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isDark]);
+  }, [isDark, reduceMotion]);
+
+  if (reduceMotion) return null;
 
   return (
     <canvas

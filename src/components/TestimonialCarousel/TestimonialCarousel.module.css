@@ -41,7 +41,7 @@
   font-size: var(--font-size-6xl);
   line-height: 1;
   content: '"';
-  font-family: serif;
+  font-family: var(--font-family-quote);
 }
 
 .rating {
