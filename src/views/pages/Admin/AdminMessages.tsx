@@ -21,7 +21,9 @@ export const AdminMessages: React.FC = () => {
     adminService
       .getContactMessages({ limit: 100 })
       .then(setData)
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"))
+      .catch((err) =>
+        setError(err instanceof Error ? err.message : "Failed to load"),
+      )
       .finally(() => setLoading(false));
   };
 
@@ -43,7 +45,11 @@ export const AdminMessages: React.FC = () => {
     return <p className={styles.emptyState}>Loading…</p>;
   }
   if (error && !data) {
-    return <p className={styles.emptyState} role="alert">Error: {error}</p>;
+    return (
+      <p className={styles.emptyState} role="alert">
+        Error: {error}
+      </p>
+    );
   }
 
   const items = data?.items ?? [];
@@ -51,7 +57,11 @@ export const AdminMessages: React.FC = () => {
   return (
     <>
       <h1 className={styles.pageTitle}>Contact messages</h1>
-      {error && <p className={styles.error} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.tableWrap}>
         <table className={styles.table}>
           <thead>
@@ -69,9 +79,15 @@ export const AdminMessages: React.FC = () => {
                 <td>{new Date(msg.createdAt).toLocaleString()}</td>
                 <td>{msg.name}</td>
                 <td>{msg.email}</td>
-                <td className={styles.msgPreview} title={msg.message}>{msg.message}</td>
+                <td className={styles.msgPreview} title={msg.message}>
+                  {msg.message}
+                </td>
                 <td>
-                  <Button variant="ghost" size="sm" onClick={() => handleDelete(msg.id)}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleDelete(msg.id)}
+                  >
                     Delete
                   </Button>
                 </td>

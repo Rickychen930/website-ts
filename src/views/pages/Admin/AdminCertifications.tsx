@@ -26,7 +26,10 @@ export const AdminCertifications: React.FC = () => {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    adminService.getProfile().then(setProfile).catch(() => setError("Failed to load"));
+    adminService
+      .getProfile()
+      .then(setProfile)
+      .catch(() => setError("Failed to load"));
   }, []);
 
   const certs = (profile?.certifications as Certification[] | undefined) ?? [];
@@ -52,7 +55,14 @@ export const AdminCertifications: React.FC = () => {
   };
 
   const add = () => {
-    update([...certs, { name: "", issuer: "", issueDate: new Date().toISOString().slice(0, 10) }]);
+    update([
+      ...certs,
+      {
+        name: "",
+        issuer: "",
+        issueDate: new Date().toISOString().slice(0, 10),
+      },
+    ]);
   };
 
   const remove = (i: number) => {
@@ -74,10 +84,18 @@ export const AdminCertifications: React.FC = () => {
     <>
       <h1 className={styles.pageTitle}>Certifications</h1>
       {message && <p className={styles.message}>{message}</p>}
-      {error && <p className={styles.error} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
-        <Button variant="primary" onClick={add}>Add</Button>
-        <Button variant="secondary" onClick={save} disabled={saving}>{saving ? "Saving…" : "Save all"}</Button>
+        <Button variant="primary" onClick={add}>
+          Add
+        </Button>
+        <Button variant="secondary" onClick={save} disabled={saving}>
+          {saving ? "Saving…" : "Save all"}
+        </Button>
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
@@ -92,16 +110,45 @@ export const AdminCertifications: React.FC = () => {
           <tbody>
             {certs.map((c, i) => (
               <tr key={i}>
-                <td><input value={c.name} onChange={(e) => setOne(i, "name", e.target.value)} className={styles.input} style={{ maxWidth: "14rem" }} /></td>
-                <td><input value={c.issuer} onChange={(e) => setOne(i, "issuer", e.target.value)} className={styles.input} style={{ maxWidth: "12rem" }} /></td>
-                <td><input type="date" value={(c.issueDate || "").slice(0, 10)} onChange={(e) => setOne(i, "issueDate", e.target.value)} className={styles.input} /></td>
-                <td><Button variant="ghost" size="sm" onClick={() => remove(i)}>Delete</Button></td>
+                <td>
+                  <input
+                    value={c.name}
+                    onChange={(e) => setOne(i, "name", e.target.value)}
+                    className={styles.input}
+                    style={{ maxWidth: "14rem" }}
+                  />
+                </td>
+                <td>
+                  <input
+                    value={c.issuer}
+                    onChange={(e) => setOne(i, "issuer", e.target.value)}
+                    className={styles.input}
+                    style={{ maxWidth: "12rem" }}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="date"
+                    value={(c.issueDate || "").slice(0, 10)}
+                    onChange={(e) => setOne(i, "issueDate", e.target.value)}
+                    className={styles.input}
+                  />
+                </td>
+                <td>
+                  <Button variant="ghost" size="sm" onClick={() => remove(i)}>
+                    Delete
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {certs.length === 0 && <p className={styles.emptyState}>No certifications. Click Add to create one.</p>}
+      {certs.length === 0 && (
+        <p className={styles.emptyState}>
+          No certifications. Click Add to create one.
+        </p>
+      )}
     </>
   );
 };

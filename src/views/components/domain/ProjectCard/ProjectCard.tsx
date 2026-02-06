@@ -21,7 +21,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onViewDetails,
 }) => {
-
   return (
     <Card
       variant="elevated"
@@ -99,7 +98,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           aria-label={`View details for ${project.title}`}
         >
           View Details
-          <span className={styles.detailLinkIcon} aria-hidden>→</span>
+          <span className={styles.detailLinkIcon} aria-hidden>
+            →
+          </span>
         </Link>
       </div>
 

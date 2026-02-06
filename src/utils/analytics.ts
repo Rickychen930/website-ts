@@ -8,7 +8,10 @@ export interface AnalyticsConfig {
   googleAnalyticsId?: string;
   plausibleDomain?: string;
   customAnalytics?: (path: string) => void;
-  customEvent?: (eventName: string, params?: Record<string, string | number>) => void;
+  customEvent?: (
+    eventName: string,
+    params?: Record<string, string | number>,
+  ) => void;
 }
 
 const analyticsConfig: AnalyticsConfig = {
@@ -25,14 +28,16 @@ export function trackPageView(path: string): void {
   if (typeof window === "undefined") return;
 
   if (analyticsConfig.googleAnalyticsId) {
-    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void })
+      .gtag;
     if (gtag) {
       gtag("config", analyticsConfig.googleAnalyticsId, { page_path: path });
     }
   }
 
   if (analyticsConfig.plausibleDomain) {
-    const plausible = (window as Window & { plausible?: (n: string) => void }).plausible;
+    const plausible = (window as Window & { plausible?: (n: string) => void })
+      .plausible;
     if (plausible) plausible("pageview");
   }
 
@@ -52,14 +57,22 @@ export function trackEvent(
   if (typeof window === "undefined") return;
 
   if (analyticsConfig.googleAnalyticsId) {
-    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void })
+      .gtag;
     if (gtag) {
       gtag("event", eventName, params ?? {});
     }
   }
 
   if (analyticsConfig.plausibleDomain) {
-    const plausible = (window as Window & { plausible?: (n: string, o?: { props?: Record<string, string | number> }) => void }).plausible;
+    const plausible = (
+      window as Window & {
+        plausible?: (
+          n: string,
+          o?: { props?: Record<string, string | number> },
+        ) => void;
+      }
+    ).plausible;
     if (plausible) plausible(eventName, params ? { props: params } : undefined);
   }
 

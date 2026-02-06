@@ -49,10 +49,7 @@ export class ContactController {
   /** List contact messages (admin only) */
   public async listContactMessages(req: Request, res: Response): Promise<void> {
     try {
-      const limit = Math.min(
-        parseInt(String(req.query.limit), 10) || 50,
-        200,
-      );
+      const limit = Math.min(parseInt(String(req.query.limit), 10) || 50, 200);
       const skip = Math.max(parseInt(String(req.query.skip), 10) || 0, 0);
 
       const [messages, total] = await Promise.all([
@@ -90,7 +87,10 @@ export class ContactController {
   }
 
   /** Delete a contact message (admin only) */
-  public async deleteContactMessage(req: Request, res: Response): Promise<void> {
+  public async deleteContactMessage(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
     try {
       const { id } = req.params;
       const mongoose = require("mongoose");

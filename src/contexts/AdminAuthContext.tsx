@@ -21,7 +21,9 @@ interface AdminAuthContextType {
   token: string | null;
 }
 
-const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
+const AdminAuthContext = createContext<AdminAuthContextType | undefined>(
+  undefined,
+);
 
 export const useAdminAuth = (): AdminAuthContextType => {
   const ctx = useContext(AdminAuthContext);
@@ -35,7 +37,9 @@ interface AdminAuthProviderProps {
   children: ReactNode;
 }
 
-export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }) => {
+export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({
+  children,
+}) => {
   const [token, setToken] = useState<string | null>(() =>
     localStorage.getItem(TOKEN_KEY),
   );

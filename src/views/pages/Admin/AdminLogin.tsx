@@ -18,7 +18,9 @@ export const AdminLogin: React.FC = () => {
   const { login, isAuthenticated } = useAdminAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? "/admin/dashboard";
+  const from =
+    (location.state as { from?: { pathname: string } })?.from?.pathname ??
+    "/admin/dashboard";
 
   useSEO({
     title: "Sign in | Admin",

@@ -4,7 +4,13 @@
  */
 
 import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { ProfileProvider, ThemeProvider, AdminAuthProvider } from "@/contexts";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Header } from "@/views/components/layout/Header";
@@ -95,7 +101,9 @@ const AdminAcademics = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminAcademics })),
 );
 const AdminCertifications = React.lazy(() =>
-  import("@/views/pages/Admin").then((m) => ({ default: m.AdminCertifications })),
+  import("@/views/pages/Admin").then((m) => ({
+    default: m.AdminCertifications,
+  })),
 );
 const AdminHonors = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminHonors })),
@@ -155,7 +163,12 @@ const AppContent: React.FC = () => {
     return (
       <>
         <div className="app">
-          <main id="main-content" className="app-main" role="main" tabIndex={-1}>
+          <main
+            id="main-content"
+            className="app-main"
+            role="main"
+            tabIndex={-1}
+          >
             <Suspense fallback={<Loading fullScreen message="Loading..." />}>
               {routes}
             </Suspense>

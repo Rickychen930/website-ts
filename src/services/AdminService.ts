@@ -65,7 +65,8 @@ export const adminService = {
       headers: getAuthHeaders(),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || data.error || "Failed to load stats");
+    if (!res.ok)
+      throw new Error(data.message || data.error || "Failed to load stats");
     return data;
   },
 
@@ -74,22 +75,29 @@ export const adminService = {
       headers: { Accept: "application/json" },
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || data.error || "Failed to load profile");
+    if (!res.ok)
+      throw new Error(data.message || data.error || "Failed to load profile");
     return data;
   },
 
-  async updateProfile(profile: Record<string, unknown>): Promise<Record<string, unknown>> {
+  async updateProfile(
+    profile: Record<string, unknown>,
+  ): Promise<Record<string, unknown>> {
     const res = await fetch(`${getBaseUrl()}/api/admin/profile`, {
       method: "PUT",
       headers: getAuthHeaders(),
       body: JSON.stringify(profile),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || data.error || "Failed to update profile");
+    if (!res.ok)
+      throw new Error(data.message || data.error || "Failed to update profile");
     return data;
   },
 
-  async getContactMessages(params?: { limit?: number; skip?: number }): Promise<ContactMessagesResponse> {
+  async getContactMessages(params?: {
+    limit?: number;
+    skip?: number;
+  }): Promise<ContactMessagesResponse> {
     const q = new URLSearchParams();
     if (params?.limit != null) q.set("limit", String(params.limit));
     if (params?.skip != null) q.set("skip", String(params.skip));
@@ -97,7 +105,8 @@ export const adminService = {
       headers: getAuthHeaders(),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || data.error || "Failed to load messages");
+    if (!res.ok)
+      throw new Error(data.message || data.error || "Failed to load messages");
     return data;
   },
 
@@ -107,6 +116,7 @@ export const adminService = {
       headers: getAuthHeaders(),
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.message || data.error || "Failed to delete message");
+    if (!res.ok)
+      throw new Error(data.message || data.error || "Failed to delete message");
   },
 };

@@ -19,7 +19,9 @@ export const AdminProfile: React.FC = () => {
     adminService
       .getProfile()
       .then(setProfile)
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"));
+      .catch((err) =>
+        setError(err instanceof Error ? err.message : "Failed to load"),
+      );
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,15 +58,24 @@ export const AdminProfile: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState} role="alert">Error: {error}</p>;
+    if (error)
+      return (
+        <p className={styles.emptyState} role="alert">
+          Error: {error}
+        </p>
+      );
     return <p className={styles.emptyState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Profile</h1>
-      <p className={styles.emptyState} style={{ marginBottom: "1rem", textAlign: "left" }}>
-        Update: edit fields below → Save profile. (Other sections in sidebar for projects, experience, etc.)
+      <p
+        className={styles.emptyState}
+        style={{ marginBottom: "1rem", textAlign: "left" }}
+      >
+        Update: edit fields below → Save profile. (Other sections in sidebar for
+        projects, experience, etc.)
       </p>
       <form onSubmit={handleSubmit}>
         <div className={styles.formSection}>
@@ -82,7 +93,9 @@ export const AdminProfile: React.FC = () => {
             <input
               id="title"
               value={String(profile.title ?? "")}
-              onChange={(e) => setProfile({ ...profile, title: e.target.value })}
+              onChange={(e) =>
+                setProfile({ ...profile, title: e.target.value })
+              }
             />
           </div>
           <div className={styles.formGroup}>
@@ -90,7 +103,9 @@ export const AdminProfile: React.FC = () => {
             <input
               id="location"
               value={String(profile.location ?? "")}
-              onChange={(e) => setProfile({ ...profile, location: e.target.value })}
+              onChange={(e) =>
+                setProfile({ ...profile, location: e.target.value })
+              }
             />
           </div>
           <div className={styles.formGroup}>
@@ -102,7 +117,11 @@ export const AdminProfile: React.FC = () => {
               rows={5}
             />
           </div>
-          {error && <p className={styles.error} role="alert">{error}</p>}
+          {error && (
+            <p className={styles.error} role="alert">
+              {error}
+            </p>
+          )}
           {message && <p className={styles.message}>{message}</p>}
           <div className={styles.formActions}>
             <Button type="submit" variant="primary" disabled={saving}>
@@ -113,4 +132,4 @@ export const AdminProfile: React.FC = () => {
       </form>
     </>
   );
-}
+};

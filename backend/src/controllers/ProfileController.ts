@@ -209,7 +209,9 @@ export class ProfileController {
       profile.title = String(title);
       profile.location = String(location);
       profile.bio = String(bio);
-      profile.academics = Array.isArray(academics) ? academics : profile.academics;
+      profile.academics = Array.isArray(academics)
+        ? academics
+        : profile.academics;
       profile.certifications = Array.isArray(certifications)
         ? certifications
         : profile.certifications;
@@ -218,7 +220,9 @@ export class ProfileController {
         ? experiences
         : profile.experiences;
       profile.honors = Array.isArray(honors) ? honors : profile.honors;
-      profile.languages = Array.isArray(languages) ? languages : profile.languages;
+      profile.languages = Array.isArray(languages)
+        ? languages
+        : profile.languages;
       profile.projects = Array.isArray(projects) ? projects : profile.projects;
       profile.softSkills = Array.isArray(softSkills)
         ? softSkills

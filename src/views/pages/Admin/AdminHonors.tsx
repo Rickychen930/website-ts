@@ -25,7 +25,10 @@ export const AdminHonors: React.FC = () => {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    adminService.getProfile().then(setProfile).catch(() => setError("Failed to load"));
+    adminService
+      .getProfile()
+      .then(setProfile)
+      .catch(() => setError("Failed to load"));
   }, []);
 
   const honors = (profile?.honors as Honor[] | undefined) ?? [];
@@ -51,7 +54,10 @@ export const AdminHonors: React.FC = () => {
   };
 
   const add = () => {
-    update([...honors, { title: "", issuer: "", date: new Date().toISOString().slice(0, 10) }]);
+    update([
+      ...honors,
+      { title: "", issuer: "", date: new Date().toISOString().slice(0, 10) },
+    ]);
   };
 
   const remove = (i: number) => {
@@ -73,10 +79,18 @@ export const AdminHonors: React.FC = () => {
     <>
       <h1 className={styles.pageTitle}>Honors & Awards</h1>
       {message && <p className={styles.message}>{message}</p>}
-      {error && <p className={styles.error} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
-        <Button variant="primary" onClick={add}>Add</Button>
-        <Button variant="secondary" onClick={save} disabled={saving}>{saving ? "Saving…" : "Save all"}</Button>
+        <Button variant="primary" onClick={add}>
+          Add
+        </Button>
+        <Button variant="secondary" onClick={save} disabled={saving}>
+          {saving ? "Saving…" : "Save all"}
+        </Button>
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
@@ -91,16 +105,43 @@ export const AdminHonors: React.FC = () => {
           <tbody>
             {honors.map((h, i) => (
               <tr key={i}>
-                <td><input value={h.title} onChange={(e) => setOne(i, "title", e.target.value)} className={styles.input} style={{ maxWidth: "14rem" }} /></td>
-                <td><input value={h.issuer} onChange={(e) => setOne(i, "issuer", e.target.value)} className={styles.input} style={{ maxWidth: "12rem" }} /></td>
-                <td><input type="date" value={(h.date || "").slice(0, 10)} onChange={(e) => setOne(i, "date", e.target.value)} className={styles.input} /></td>
-                <td><Button variant="ghost" size="sm" onClick={() => remove(i)}>Delete</Button></td>
+                <td>
+                  <input
+                    value={h.title}
+                    onChange={(e) => setOne(i, "title", e.target.value)}
+                    className={styles.input}
+                    style={{ maxWidth: "14rem" }}
+                  />
+                </td>
+                <td>
+                  <input
+                    value={h.issuer}
+                    onChange={(e) => setOne(i, "issuer", e.target.value)}
+                    className={styles.input}
+                    style={{ maxWidth: "12rem" }}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="date"
+                    value={(h.date || "").slice(0, 10)}
+                    onChange={(e) => setOne(i, "date", e.target.value)}
+                    className={styles.input}
+                  />
+                </td>
+                <td>
+                  <Button variant="ghost" size="sm" onClick={() => remove(i)}>
+                    Delete
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {honors.length === 0 && <p className={styles.emptyState}>No honors. Click Add to create one.</p>}
+      {honors.length === 0 && (
+        <p className={styles.emptyState}>No honors. Click Add to create one.</p>
+      )}
     </>
   );
 };

@@ -32,8 +32,12 @@ export const About: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
 
   useSEO({
-    title: profile ? `${profile.name} - About | Portfolio` : "About | Ricky Chen Portfolio",
-    description: profile?.bio || "About me: skills, education, certifications, and honors.",
+    title: profile
+      ? `${profile.name} - About | Portfolio`
+      : "About | Ricky Chen Portfolio",
+    description:
+      profile?.bio ||
+      "About me: skills, education, certifications, and honors.",
     keywords: "Software Engineer, skills, education, certifications, portfolio",
     type: "profile",
   });
@@ -100,7 +104,8 @@ export const About: React.FC = () => {
               No skills listed yet
             </Typography>
             <Typography variant="body" color="tertiary">
-              Skills and tools will show here once added. Check out Experience or Projects for more.
+              Skills and tools will show here once added. Check out Experience
+              or Projects for more.
             </Typography>
           </div>
         ) : (

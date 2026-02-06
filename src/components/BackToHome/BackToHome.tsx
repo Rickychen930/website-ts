@@ -7,12 +7,10 @@ import { Link } from "react-router-dom";
 import styles from "./BackToHome.module.css";
 
 export const BackToHome: React.FC = () => (
-  <Link
-    to="/"
-    className={styles.link}
-    aria-label="Back to home"
-  >
-    <span className={styles.icon} aria-hidden>←</span>
+  <Link to="/" className={styles.link} aria-label="Back to home">
+    <span className={styles.icon} aria-hidden>
+      ←
+    </span>
     Back to Home
   </Link>
 );

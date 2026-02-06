@@ -14,10 +14,10 @@ export const CursorEffect: React.FC = () => {
   const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const reduceMotion =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch =
-      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     setEnabled(!reduceMotion && !isTouch);
   }, []);
 

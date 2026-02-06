@@ -40,7 +40,10 @@ export const AdminExperience: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    adminService.getProfile().then(setProfile).catch(() => setError("Failed to load"));
+    adminService
+      .getProfile()
+      .then(setProfile)
+      .catch(() => setError("Failed to load"));
   }, []);
 
   const experiences = (profile?.experiences as Experience[] | undefined) ?? [];
@@ -86,11 +89,16 @@ export const AdminExperience: React.FC = () => {
     if (window.confirm("Remove this experience?")) {
       updateExperiences(experiences.filter((_, i) => i !== index));
       if (expandedIndex === index) setExpandedIndex(null);
-      else if (expandedIndex !== null && expandedIndex > index) setExpandedIndex(expandedIndex - 1);
+      else if (expandedIndex !== null && expandedIndex > index)
+        setExpandedIndex(expandedIndex - 1);
     }
   };
 
-  const updateOne = (index: number, field: keyof Experience, value: unknown) => {
+  const updateOne = (
+    index: number,
+    field: keyof Experience,
+    value: unknown,
+  ) => {
     const next = [...experiences];
     next[index] = { ...next[index], [field]: value };
     updateExperiences(next);
@@ -104,13 +112,23 @@ export const AdminExperience: React.FC = () => {
   return (
     <>
       <h1 className={styles.pageTitle}>Experience</h1>
-      <p className={styles.emptyState} style={{ marginBottom: "1rem", textAlign: "left" }}>
-        Create: Add experience → edit fields → Save all. Update: edit inline or + for details. Delete: Delete → Save all.
+      <p
+        className={styles.emptyState}
+        style={{ marginBottom: "1rem", textAlign: "left" }}
+      >
+        Create: Add experience → edit fields → Save all. Update: edit inline or
+        + for details. Delete: Delete → Save all.
       </p>
       {message && <p className={styles.message}>{message}</p>}
-      {error && <p className={styles.error} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
-        <Button variant="primary" onClick={addNew}>Add experience</Button>
+        <Button variant="primary" onClick={addNew}>
+          Add experience
+        </Button>
         <Button variant="secondary" onClick={handleSave} disabled={saving}>
           {saving ? "Saving…" : "Save all"}
         </Button>
@@ -137,7 +155,9 @@ export const AdminExperience: React.FC = () => {
                     <button
                       type="button"
                       className={styles.toggleDetail}
-                      onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+                      onClick={() =>
+                        setExpandedIndex(expandedIndex === i ? null : i)
+                      }
                       aria-expanded={expandedIndex === i}
                     >
                       {expandedIndex === i ? "−" : "+"}
@@ -146,7 +166,9 @@ export const AdminExperience: React.FC = () => {
                   <td>
                     <input
                       value={e.company}
-                      onChange={(ev) => updateOne(i, "company", ev.target.value)}
+                      onChange={(ev) =>
+                        updateOne(i, "company", ev.target.value)
+                      }
                       className={styles.input}
                       style={{ width: "100%", maxWidth: "12rem" }}
                     />
@@ -154,7 +176,9 @@ export const AdminExperience: React.FC = () => {
                   <td>
                     <input
                       value={e.position}
-                      onChange={(ev) => updateOne(i, "position", ev.target.value)}
+                      onChange={(ev) =>
+                        updateOne(i, "position", ev.target.value)
+                      }
                       className={styles.input}
                       style={{ width: "100%", maxWidth: "12rem" }}
                     />
@@ -162,7 +186,9 @@ export const AdminExperience: React.FC = () => {
                   <td>
                     <input
                       value={e.location}
-                      onChange={(ev) => updateOne(i, "location", ev.target.value)}
+                      onChange={(ev) =>
+                        updateOne(i, "location", ev.target.value)
+                      }
                       className={styles.input}
                       style={{ width: "100%", maxWidth: "10rem" }}
                     />
@@ -171,14 +197,18 @@ export const AdminExperience: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={e.isCurrent}
-                      onChange={(ev) => updateOne(i, "isCurrent", ev.target.checked)}
+                      onChange={(ev) =>
+                        updateOne(i, "isCurrent", ev.target.checked)
+                      }
                     />
                   </td>
                   <td>
                     <input
                       type="date"
                       value={(e.startDate || "").slice(0, 10)}
-                      onChange={(ev) => updateOne(i, "startDate", ev.target.value)}
+                      onChange={(ev) =>
+                        updateOne(i, "startDate", ev.target.value)
+                      }
                       className={styles.input}
                     />
                   </td>
@@ -186,23 +216,32 @@ export const AdminExperience: React.FC = () => {
                     <input
                       type="date"
                       value={(e.endDate || "").slice(0, 10)}
-                      onChange={(ev) => updateOne(i, "endDate", ev.target.value || undefined)}
+                      onChange={(ev) =>
+                        updateOne(i, "endDate", ev.target.value || undefined)
+                      }
                       className={styles.input}
                     />
                   </td>
                   <td>
-                    <Button variant="ghost" size="sm" onClick={() => remove(i)}>Delete</Button>
+                    <Button variant="ghost" size="sm" onClick={() => remove(i)}>
+                      Delete
+                    </Button>
                   </td>
                 </tr>
                 {expandedIndex === i && (
                   <tr className={styles.detailRow}>
                     <td colSpan={8}>
                       <div className={styles.detailGrid}>
-                        <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                        <div
+                          className={styles.formGroup}
+                          style={{ gridColumn: "1 / -1" }}
+                        >
                           <label>Description</label>
                           <textarea
                             value={e.description}
-                            onChange={(ev) => updateOne(i, "description", ev.target.value)}
+                            onChange={(ev) =>
+                              updateOne(i, "description", ev.target.value)
+                            }
                             className={styles.input}
                             rows={3}
                           />
@@ -211,7 +250,13 @@ export const AdminExperience: React.FC = () => {
                           <label>Achievements (one per line or comma)</label>
                           <textarea
                             value={joinList(e.achievements)}
-                            onChange={(ev) => updateOne(i, "achievements", parseList(ev.target.value))}
+                            onChange={(ev) =>
+                              updateOne(
+                                i,
+                                "achievements",
+                                parseList(ev.target.value),
+                              )
+                            }
                             className={styles.input}
                             rows={3}
                           />
@@ -220,7 +265,13 @@ export const AdminExperience: React.FC = () => {
                           <label>Technologies (one per line or comma)</label>
                           <textarea
                             value={joinList(e.technologies)}
-                            onChange={(ev) => updateOne(i, "technologies", parseList(ev.target.value))}
+                            onChange={(ev) =>
+                              updateOne(
+                                i,
+                                "technologies",
+                                parseList(ev.target.value),
+                              )
+                            }
                             className={styles.input}
                             rows={3}
                           />
@@ -235,7 +286,10 @@ export const AdminExperience: React.FC = () => {
         </table>
       </div>
       {experiences.length === 0 && (
-        <p className={styles.emptyState}>No experiences. Click &quot;Add experience&quot; then &quot;Save all&quot;.</p>
+        <p className={styles.emptyState}>
+          No experiences. Click &quot;Add experience&quot; then &quot;Save
+          all&quot;.
+        </p>
       )}
     </>
   );

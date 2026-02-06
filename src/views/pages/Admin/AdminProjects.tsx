@@ -44,7 +44,10 @@ export const AdminProjects: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    adminService.getProfile().then(setProfile).catch(() => setError("Failed to load"));
+    adminService
+      .getProfile()
+      .then(setProfile)
+      .catch(() => setError("Failed to load"));
   }, []);
 
   const projects = (profile?.projects as Project[] | undefined) ?? [];
@@ -89,7 +92,8 @@ export const AdminProjects: React.FC = () => {
     if (window.confirm("Remove this project?")) {
       updateProjects(projects.filter((_, i) => i !== index));
       if (expandedIndex === index) setExpandedIndex(null);
-      else if (expandedIndex !== null && expandedIndex > index) setExpandedIndex(expandedIndex - 1);
+      else if (expandedIndex !== null && expandedIndex > index)
+        setExpandedIndex(expandedIndex - 1);
     }
   };
 
@@ -107,13 +111,23 @@ export const AdminProjects: React.FC = () => {
   return (
     <>
       <h1 className={styles.pageTitle}>Projects</h1>
-      <p className={styles.emptyState} style={{ marginBottom: "1rem", textAlign: "left" }}>
-        Create: Add project → edit fields → Save all. Update: edit inline or open details. Delete: Delete → Save all.
+      <p
+        className={styles.emptyState}
+        style={{ marginBottom: "1rem", textAlign: "left" }}
+      >
+        Create: Add project → edit fields → Save all. Update: edit inline or
+        open details. Delete: Delete → Save all.
       </p>
       {message && <p className={styles.message}>{message}</p>}
-      {error && <p className={styles.error} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
-        <Button variant="primary" onClick={addNew}>Add project</Button>
+        <Button variant="primary" onClick={addNew}>
+          Add project
+        </Button>
         <Button variant="secondary" onClick={handleSave} disabled={saving}>
           {saving ? "Saving…" : "Save all"}
         </Button>
@@ -139,7 +153,9 @@ export const AdminProjects: React.FC = () => {
                     <button
                       type="button"
                       className={styles.toggleDetail}
-                      onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+                      onClick={() =>
+                        setExpandedIndex(expandedIndex === i ? null : i)
+                      }
                       aria-expanded={expandedIndex === i}
                     >
                       {expandedIndex === i ? "−" : "+"}
@@ -159,8 +175,17 @@ export const AdminProjects: React.FC = () => {
                       onChange={(e) => updateOne(i, "category", e.target.value)}
                       className={styles.input}
                     >
-                      {["web", "mobile", "ai", "backend", "fullstack", "other"].map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                      {[
+                        "web",
+                        "mobile",
+                        "ai",
+                        "backend",
+                        "fullstack",
+                        "other",
+                      ].map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
                       ))}
                     </select>
                   </td>
@@ -168,14 +193,18 @@ export const AdminProjects: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={p.isActive}
-                      onChange={(e) => updateOne(i, "isActive", e.target.checked)}
+                      onChange={(e) =>
+                        updateOne(i, "isActive", e.target.checked)
+                      }
                     />
                   </td>
                   <td>
                     <input
                       type="date"
                       value={(p.startDate || "").slice(0, 10)}
-                      onChange={(e) => updateOne(i, "startDate", e.target.value)}
+                      onChange={(e) =>
+                        updateOne(i, "startDate", e.target.value)
+                      }
                       className={styles.input}
                     />
                   </td>
@@ -183,12 +212,16 @@ export const AdminProjects: React.FC = () => {
                     <input
                       type="date"
                       value={(p.endDate || "").slice(0, 10)}
-                      onChange={(e) => updateOne(i, "endDate", e.target.value || undefined)}
+                      onChange={(e) =>
+                        updateOne(i, "endDate", e.target.value || undefined)
+                      }
                       className={styles.input}
                     />
                   </td>
                   <td>
-                    <Button variant="ghost" size="sm" onClick={() => remove(i)}>Delete</Button>
+                    <Button variant="ghost" size="sm" onClick={() => remove(i)}>
+                      Delete
+                    </Button>
                   </td>
                 </tr>
                 {expandedIndex === i && (
@@ -199,7 +232,9 @@ export const AdminProjects: React.FC = () => {
                           <label>Description</label>
                           <textarea
                             value={p.description}
-                            onChange={(e) => updateOne(i, "description", e.target.value)}
+                            onChange={(e) =>
+                              updateOne(i, "description", e.target.value)
+                            }
                             className={styles.input}
                             rows={2}
                           />
@@ -208,7 +243,13 @@ export const AdminProjects: React.FC = () => {
                           <label>Long description</label>
                           <textarea
                             value={p.longDescription ?? ""}
-                            onChange={(e) => updateOne(i, "longDescription", e.target.value || undefined)}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "longDescription",
+                                e.target.value || undefined,
+                              )
+                            }
                             className={styles.input}
                             rows={2}
                           />
@@ -217,7 +258,13 @@ export const AdminProjects: React.FC = () => {
                           <label>Technologies (one per line or comma)</label>
                           <textarea
                             value={joinList(p.technologies)}
-                            onChange={(e) => updateOne(i, "technologies", parseList(e.target.value))}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "technologies",
+                                parseList(e.target.value),
+                              )
+                            }
                             className={styles.input}
                             rows={2}
                           />
@@ -226,7 +273,13 @@ export const AdminProjects: React.FC = () => {
                           <label>Achievements (one per line or comma)</label>
                           <textarea
                             value={joinList(p.achievements)}
-                            onChange={(e) => updateOne(i, "achievements", parseList(e.target.value))}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "achievements",
+                                parseList(e.target.value),
+                              )
+                            }
                             className={styles.input}
                             rows={2}
                           />
@@ -236,7 +289,13 @@ export const AdminProjects: React.FC = () => {
                           <input
                             type="url"
                             value={p.githubUrl ?? ""}
-                            onChange={(e) => updateOne(i, "githubUrl", e.target.value || undefined)}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "githubUrl",
+                                e.target.value || undefined,
+                              )
+                            }
                             className={styles.input}
                           />
                         </div>
@@ -245,15 +304,30 @@ export const AdminProjects: React.FC = () => {
                           <input
                             type="url"
                             value={p.liveUrl ?? ""}
-                            onChange={(e) => updateOne(i, "liveUrl", e.target.value || undefined)}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "liveUrl",
+                                e.target.value || undefined,
+                              )
+                            }
                             className={styles.input}
                           />
                         </div>
-                        <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                        <div
+                          className={styles.formGroup}
+                          style={{ gridColumn: "1 / -1" }}
+                        >
                           <label>Architecture</label>
                           <textarea
                             value={p.architecture ?? ""}
-                            onChange={(e) => updateOne(i, "architecture", e.target.value || undefined)}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "architecture",
+                                e.target.value || undefined,
+                              )
+                            }
                             className={styles.input}
                             rows={2}
                           />
@@ -268,7 +342,9 @@ export const AdminProjects: React.FC = () => {
         </table>
       </div>
       {projects.length === 0 && (
-        <p className={styles.emptyState}>No projects. Click &quot;Add project&quot; then &quot;Save all&quot;.</p>
+        <p className={styles.emptyState}>
+          No projects. Click &quot;Add project&quot; then &quot;Save all&quot;.
+        </p>
       )}
     </>
   );

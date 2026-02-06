@@ -24,7 +24,10 @@ export const AdminContacts: React.FC = () => {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    adminService.getProfile().then(setProfile).catch(() => setError("Failed to load"));
+    adminService
+      .getProfile()
+      .then(setProfile)
+      .catch(() => setError("Failed to load"));
   }, []);
 
   const contacts = (profile?.contacts as Contact[] | undefined) ?? [];
@@ -35,7 +38,9 @@ export const AdminContacts: React.FC = () => {
 
   const save = async () => {
     if (!profile) return;
-    const primaryCount = (profile.contacts as Contact[]).filter((c) => c.isPrimary).length;
+    const primaryCount = (profile.contacts as Contact[]).filter(
+      (c) => c.isPrimary,
+    ).length;
     if (primaryCount !== 1) {
       setError("Exactly one contact must be marked as primary.");
       return;
@@ -55,11 +60,15 @@ export const AdminContacts: React.FC = () => {
   };
 
   const add = () => {
-    update([...contacts, { type: "other", value: "", label: "", isPrimary: false }]);
+    update([
+      ...contacts,
+      { type: "other", value: "", label: "", isPrimary: false },
+    ]);
   };
 
   const remove = (i: number) => {
-    if (window.confirm("Remove?")) update(contacts.filter((_, idx) => idx !== i));
+    if (window.confirm("Remove?"))
+      update(contacts.filter((_, idx) => idx !== i));
   };
 
   const setOne = (i: number, field: keyof Contact, value: unknown) => {
@@ -77,10 +86,18 @@ export const AdminContacts: React.FC = () => {
     <>
       <h1 className={styles.pageTitle}>Contact info</h1>
       {message && <p className={styles.message}>{message}</p>}
-      {error && <p className={styles.error} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
-        <Button variant="primary" onClick={add}>Add contact</Button>
-        <Button variant="secondary" onClick={save} disabled={saving}>{saving ? "Saving…" : "Save all"}</Button>
+        <Button variant="primary" onClick={add}>
+          Add contact
+        </Button>
+        <Button variant="secondary" onClick={save} disabled={saving}>
+          {saving ? "Saving…" : "Save all"}
+        </Button>
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
@@ -97,29 +114,68 @@ export const AdminContacts: React.FC = () => {
             {contacts.map((c, i) => (
               <tr key={i}>
                 <td>
-                  <select value={c.type} onChange={(e) => setOne(i, "type", e.target.value)} className={styles.input}>
-                    {["email", "phone", "linkedin", "github", "website", "other"].map((t) => (
-                      <option key={t} value={t}>{t}</option>
+                  <select
+                    value={c.type}
+                    onChange={(e) => setOne(i, "type", e.target.value)}
+                    className={styles.input}
+                  >
+                    {[
+                      "email",
+                      "phone",
+                      "linkedin",
+                      "github",
+                      "website",
+                      "other",
+                    ].map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
                     ))}
                   </select>
                 </td>
-                <td><input value={c.label} onChange={(e) => setOne(i, "label", e.target.value)} className={styles.input} style={{ maxWidth: "8rem" }} /></td>
-                <td><input value={c.value} onChange={(e) => setOne(i, "value", e.target.value)} className={styles.input} style={{ maxWidth: "14rem" }} /></td>
+                <td>
+                  <input
+                    value={c.label}
+                    onChange={(e) => setOne(i, "label", e.target.value)}
+                    className={styles.input}
+                    style={{ maxWidth: "8rem" }}
+                  />
+                </td>
+                <td>
+                  <input
+                    value={c.value}
+                    onChange={(e) => setOne(i, "value", e.target.value)}
+                    className={styles.input}
+                    style={{ maxWidth: "14rem" }}
+                  />
+                </td>
                 <td>
                   <input
                     type="radio"
                     name="primary"
                     checked={c.isPrimary}
-                    onChange={() => update(contacts.map((x, j) => ({ ...x, isPrimary: j === i })))}
+                    onChange={() =>
+                      update(
+                        contacts.map((x, j) => ({ ...x, isPrimary: j === i })),
+                      )
+                    }
                   />
                 </td>
-                <td><Button variant="ghost" size="sm" onClick={() => remove(i)}>Delete</Button></td>
+                <td>
+                  <Button variant="ghost" size="sm" onClick={() => remove(i)}>
+                    Delete
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {contacts.length === 0 && <p className={styles.emptyState}>No contacts. Click Add to create one.</p>}
+      {contacts.length === 0 && (
+        <p className={styles.emptyState}>
+          No contacts. Click Add to create one.
+        </p>
+      )}
     </>
   );
 };
