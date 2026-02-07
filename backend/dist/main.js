@@ -14,6 +14,7 @@ const path_1 = __importDefault(require("path"));
 const database_1 = require("./config/database");
 const profileRoutes_1 = __importDefault(require("./routes/profileRoutes"));
 const contactRoutes_1 = __importDefault(require("./routes/contactRoutes"));
+const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 const rateLimiter_1 = require("./middleware/rateLimiter");
 const sanitizeInput_1 = require("./middleware/sanitizeInput");
 // Load environment variables - only use .env file
@@ -71,6 +72,7 @@ app.get("/api", (req, res) => {
 // Routes (frontend uses /api/profile singular)
 app.use("/api/profile", profileRoutes_1.default);
 app.use("/api/contact", contactRoutes_1.default);
+app.use("/api/admin", adminRoutes_1.default);
 // Health check
 app.get("/health", (req, res) => {
     res.json({ status: "ok" });

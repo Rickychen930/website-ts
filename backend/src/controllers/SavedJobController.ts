@@ -59,7 +59,9 @@ export class SavedJobController {
         source: source != null ? String(source).trim() : undefined,
         notes: notes != null ? String(notes).trim() : undefined,
       });
-      res.status(201).json(toItem(doc.toObject() as Record<string, unknown>));
+      res
+        .status(201)
+        .json(toItem(doc.toObject() as unknown as Record<string, unknown>));
     } catch (err) {
       console.error("SavedJob create error:", err);
       res.status(500).json({

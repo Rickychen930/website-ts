@@ -59,7 +59,9 @@ export class SavedCoverLetterController {
           jobDescription != null ? String(jobDescription).trim() : undefined,
         bodyText: bodyText != null ? String(bodyText) : "",
       });
-      res.status(201).json(toItem(doc.toObject() as Record<string, unknown>));
+      res
+        .status(201)
+        .json(toItem(doc.toObject() as unknown as Record<string, unknown>));
     } catch (err) {
       console.error("SavedCoverLetter create error:", err);
       res.status(500).json({

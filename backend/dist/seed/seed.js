@@ -12,6 +12,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 const Profile_1 = require("../models/Profile");
 const seedData_1 = require("./seedData");
+const seedAdmin_1 = require("./seedAdmin");
 // Load environment variables from root directory - only use .env file
 const rootPath = path_1.default.resolve(__dirname, "../../../");
 dotenv_1.default.config({ path: path_1.default.resolve(rootPath, ".env") });
@@ -114,6 +115,15 @@ const seedDatabase = async () => {
         console.log(`💼 Title: ${profile.title}`);
         console.log(`📍 Location: ${profile.location}`);
         console.log(`📈 Stats: ${profile.projects?.length || 0} projects, ${profile.experiences?.length || 0} experiences, ${profile.testimonials?.length || 0} testimonials`);
+        try {
+            await (0, seedAdmin_1.seedAdmin)();
+        }
+        catch (adminErr) {
+            console.error("⚠️  Admin seed failed (profile was seeded):", adminErr);
+            if (adminErr instanceof Error) {
+                console.error(adminErr.message);
+            }
+        }
         await mongoose_1.default.disconnect();
         console.log("👋 Disconnected from MongoDB");
         process.exit(0);

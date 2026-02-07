@@ -60,7 +60,9 @@ export class GoalController {
         status: ["active", "completed"].includes(status) ? status : "active",
         notes: notes != null ? String(notes).trim() : undefined,
       });
-      res.status(201).json(toItem(doc.toObject() as Record<string, unknown>));
+      res
+        .status(201)
+        .json(toItem(doc.toObject() as unknown as Record<string, unknown>));
     } catch (err) {
       console.error("Goal create error:", err);
       res.status(500).json({

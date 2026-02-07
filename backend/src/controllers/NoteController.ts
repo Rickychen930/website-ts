@@ -62,7 +62,9 @@ export class NoteController {
           ? category
           : "other",
       });
-      res.status(201).json(toItem(doc.toObject() as Record<string, unknown>));
+      res
+        .status(201)
+        .json(toItem(doc.toObject() as unknown as Record<string, unknown>));
     } catch (err) {
       console.error("Note create error:", err);
       res.status(500).json({
