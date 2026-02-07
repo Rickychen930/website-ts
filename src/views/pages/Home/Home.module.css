@@ -86,9 +86,7 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--letter-spacing-wide);
   border-radius: var(--radius-full);
-  box-shadow:
-    var(--shadow-sm),
-    0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-sm), var(--shadow-badge-ring);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
   animation: fadeInUp 0.6s var(--ease-out-expo) 0.05s both;

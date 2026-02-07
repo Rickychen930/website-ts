@@ -3,34 +3,34 @@
 .letter {
   margin: 0 auto;
   padding: 0.6in 0.65in;
-  border: 1px solid #1a1a1a;
-  background: #fff;
-  color: #1a1a1a;
+  border: 1px solid var(--text-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 11.5pt;
   line-height: 1.6;
   font-family: Georgia, "Times New Roman", serif;
   max-width: 6.75in;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-md);
 }
 
 .letterhead {
   margin-bottom: 1.25em;
   padding-bottom: 0.65em;
-  border-bottom: 3px solid #1a1a1a;
+  border-bottom: 3px solid var(--text-primary);
   width: 3em;
 }
 
 .date {
   margin: 0 0 1.75em;
-  color: #333;
+  color: var(--text-secondary);
   font-size: 10.5pt;
   letter-spacing: 0.02em;
 }
 
 .recipient {
   margin: 0 0 0.5em;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 11pt;
   font-weight: 600;
   line-height: 1.5;
@@ -38,7 +38,7 @@
 
 .re {
   margin: 0 0 1.75em;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 11pt;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -46,13 +46,13 @@
 
 .greeting {
   margin: 0 0 1.1em;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 11.5pt;
 }
 
 .paragraph {
   margin: 0 0 1.1em;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 11.5pt;
   line-height: 1.6;
   text-align: justify;
@@ -61,38 +61,38 @@
 
 .closing {
   margin: 1.6em 0 0.35em;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 11.5pt;
 }
 
 .signature {
   margin: 0;
-  color: #333;
+  color: var(--text-secondary);
   font-size: 10.5pt;
   line-height: 1.6;
   letter-spacing: 0.01em;
 }
 
 .signature strong {
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 11pt;
 }
 
-/* Page UI – aligned with admin design */
+/* Page UI – aligned with admin design & design tokens */
 .previewWrap {
   padding: 2rem;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .letterContainer {
-  border: 1px solid #e2e8f0;
-  background: #fff;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .savedList {
@@ -102,8 +102,8 @@
 .savedItem {
   display: flex;
   padding: 1rem 1.25rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -112,27 +112,27 @@
   gap: 1rem;
   border-radius: 12px;
   margin-bottom: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .savedItem:hover {
-  border-color: #93c5fd;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-primary-300);
+  box-shadow: var(--shadow-lg);
 }
 
 .savedItem:focus-within {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-15);
 }
 
 .savedItemTitle {
-  color: #0f172a;
+  color: var(--text-primary);
   font-size: 0.9375rem;
   font-weight: 600;
 }
 
 .savedItemMeta {
-  color: #64748b;
+  color: var(--text-tertiary);
   font-size: 0.8125rem;
   font-weight: 500;
   margin-top: 0.25rem;
@@ -147,9 +147,9 @@
 .bodyEditor {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  color: #0f172a;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 11.5pt;
   line-height: 1.6;
   transition:
@@ -163,14 +163,14 @@
 }
 
 .bodyEditor::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .bodyEditor:focus,
 .bodyEditor:focus-visible {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-15);
 }
 
 /* Tabs wrap: tabs + AI status row */
@@ -182,7 +182,7 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .aiStatusRow {
@@ -195,11 +195,11 @@
   flex-shrink: 0;
 }
 
-/* Tabs – solid professional */
+/* Tabs – design tokens */
 .tabs {
   display: flex;
   padding: 0 0 0 0.5rem;
-  background: #f8fafc;
+  background: var(--bg-secondary);
   gap: 0;
   border-radius: 12px 12px 0 0;
 }
@@ -208,7 +208,7 @@
   padding: 0.75rem 1.25rem;
   border: none;
   background: transparent;
-  color: #64748b;
+  color: var(--text-tertiary);
   font-size: 0.9375rem;
   font-weight: 600;
   transition:
@@ -221,19 +221,19 @@
 }
 
 .tab:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 .tab:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--color-primary-600);
   outline-offset: 2px;
 }
 
 .tabActive {
-  background: #fff;
-  color: #2563eb;
-  border-bottom-color: #2563eb;
+  background: var(--bg-primary);
+  color: var(--color-primary-600);
+  border-bottom-color: var(--color-primary-600);
 }
 
 /* AI badge / status */
@@ -242,8 +242,8 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.5rem;
-  background: #2563eb;
-  color: #fff;
+  background: var(--color-primary-600);
+  color: var(--text-inverse);
   font-size: 0.6875rem;
   font-weight: 600;
   border-radius: 6px;
@@ -252,91 +252,91 @@
 }
 
 .aiBadgeInactive {
-  background: #94a3b8;
-  color: #fff;
+  background: var(--text-muted);
+  color: var(--text-inverse);
 }
 
-/* Dark mode – aligned with admin palette (letter content stays white for print) */
+/* Dark mode – design tokens (letter content overridden in print) */
 :global(.dark) .previewWrap {
-  background: #1e293b;
-  border-color: #334155;
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
 }
 
 :global(.dark) .letterContainer {
-  background: #fff;
-  border-color: #334155;
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
 }
 
 :global(.dark) .savedItem {
-  background: #1e293b;
-  border-color: #334155;
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
 }
 
 :global(.dark) .savedItem:hover {
-  border-color: #475569;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: var(--text-tertiary);
+  box-shadow: var(--shadow-lg);
 }
 
 :global(.dark) .savedItem:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
 }
 
 :global(.dark) .savedItemTitle {
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 :global(.dark) .savedItemMeta {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 :global(.dark) .bodyEditor {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
+  color: var(--text-primary);
 }
 
 :global(.dark) .bodyEditor::placeholder {
-  color: #64748b;
+  color: var(--text-tertiary);
 }
 
 :global(.dark) .bodyEditor:focus,
 :global(.dark) .bodyEditor:focus-visible {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
 }
 
 :global(.dark) .tabsWrap {
-  border-bottom-color: #334155;
+  border-bottom-color: var(--border-primary);
 }
 
 :global(.dark) .tabs {
-  background: #1e293b;
+  background: var(--bg-secondary);
 }
 
 :global(.dark) .tab {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 :global(.dark) .tab:hover {
-  background: #334155;
-  color: #f1f5f9;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 :global(.dark) .tabActive {
-  background: #334155;
-  color: #93c5fd;
-  border-bottom-color: #3b82f6;
+  background: var(--bg-tertiary);
+  color: var(--color-primary-300);
+  border-bottom-color: var(--color-primary-500);
 }
 
 :global(.dark) .aiBadge {
-  background: #3b82f6;
-  color: #fff;
+  background: var(--color-primary-500);
+  color: var(--text-inverse);
 }
 
 :global(.dark) .aiBadgeInactive {
-  background: #475569;
-  color: #94a3b8;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
 }
 
 @media print {

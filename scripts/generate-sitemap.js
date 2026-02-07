@@ -36,6 +36,7 @@ const routes = [
   { path: "/projects", priority: "0.9", changefreq: "weekly" },
   { path: "/experience", priority: "0.9", changefreq: "weekly" },
   { path: "/contact", priority: "0.8", changefreq: "monthly" },
+  { path: "/resume", priority: "0.8", changefreq: "weekly" },
   { path: "/privacy", priority: "0.5", changefreq: "monthly" },
   { path: "/terms", priority: "0.5", changefreq: "monthly" },
 ];

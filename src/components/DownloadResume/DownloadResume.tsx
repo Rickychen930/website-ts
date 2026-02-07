@@ -8,12 +8,12 @@ import { trackEvent } from "@/utils/analytics";
 import styles from "./DownloadResume.module.css";
 
 interface DownloadResumeProps {
-  /** URL to resume: use /resume.html for ATS version (open then Print → Save as PDF), or .pdf for direct download */
+  /** URL to resume: use /resume for live data (then Print → Save as PDF), or .pdf for direct download */
   resumeUrl?: string;
   className?: string;
 }
 
-const DEFAULT_RESUME_URL = "/resume.html";
+const DEFAULT_RESUME_URL = "/resume";
 
 export const DownloadResume: React.FC<DownloadResumeProps> = ({
   resumeUrl = DEFAULT_RESUME_URL,

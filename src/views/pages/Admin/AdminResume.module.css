@@ -1,34 +1,34 @@
-/* Admin Resume – ATS-friendly preview, aligned with admin design */
+/* Admin Resume – ATS-friendly preview, design tokens & theme */
 
 .resumeActions {
   display: flex;
   padding: 1rem 1.25rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .resumePrintArea {
   margin: 0 auto;
   padding: 2rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  color: #1c1c1c;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 11pt;
   line-height: 1.45;
   max-width: 8.5in;
   font-family: Arial, Helvetica, "Helvetica Neue", sans-serif;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .resumeName {
   margin: 0 0 4px;
-  color: #1c1c1c;
+  color: var(--text-primary);
   font-size: 24pt;
   font-weight: 700;
   line-height: 1.2;
@@ -37,7 +37,7 @@
 
 .resumeTagline {
   margin: 0 0 10px;
-  color: #333;
+  color: var(--text-secondary);
   font-size: 11pt;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .contact {
-  color: #444;
+  color: var(--text-secondary);
   font-size: 10pt;
   line-height: 1.5;
   margin-bottom: 18px;
@@ -58,18 +58,18 @@
 
 .resumeH2 {
   margin: 18px 0 10px;
-  color: #1c1c1c;
+  color: var(--text-primary);
   font-size: 10.5pt;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border-bottom: 2px solid #1c1c1c;
+  border-bottom: 2px solid var(--text-primary);
   padding-bottom: 4px;
 }
 
 .resumeH3 {
   margin: 0 0 4px;
-  color: #1c1c1c;
+  color: var(--text-primary);
   font-size: 11pt;
   font-weight: 700;
 }
@@ -94,13 +94,13 @@
 }
 
 .jobMeta {
-  color: #505050;
+  color: var(--text-tertiary);
   font-size: 10pt;
   margin-bottom: 6px;
 }
 
 .tech {
-  color: #555;
+  color: var(--text-tertiary);
   font-size: 9.5pt;
   font-style: italic;
   margin-top: 4px;
@@ -113,32 +113,32 @@
 
 .printHint {
   padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-  color: #64748b;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+  color: var(--text-tertiary);
   font-size: 9pt;
   margin-top: 1.25rem;
   border-radius: 8px;
 }
 
-/* Dark mode (when .dark .adminLayout is active) */
+/* Dark mode – design tokens */
 :global(.dark) .resumeActions {
-  background: #1e293b;
-  border-color: #334155;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-md);
 }
 
 :global(.dark) .resumePrintArea {
-  background: #f8fafc;
-  color: #0f172a;
-  border-color: #334155;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-md);
 }
 
 :global(.dark) .printHint {
-  background: #1e293b;
-  color: #94a3b8;
-  border-color: #334155;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border-color: var(--border-primary);
 }
 
 @media print {

@@ -66,6 +66,9 @@ const Terms = React.lazy(() =>
     default: module.Terms,
   })),
 );
+const Resume = React.lazy(() =>
+  import("@/views/pages/Resume").then((m) => ({ default: m.Resume })),
+);
 
 const AdminLogin = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminLogin })),
@@ -151,6 +154,7 @@ const AppContent: React.FC = () => {
       <Route path="/projects/:projectId" element={<ProjectDetail />} />
       <Route path="/experience" element={<Experience />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/resume" element={<Resume />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/admin/login" element={<AdminLogin />} />

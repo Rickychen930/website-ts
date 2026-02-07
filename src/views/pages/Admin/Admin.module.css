@@ -19,29 +19,24 @@
   box-sizing: border-box;
 }
 
+/* Same background as project (body): grid pattern + gradient-hero */
 .loginBackdrop {
   position: fixed;
   z-index: 0;
-  background: linear-gradient(145deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-  inset: 0;
-}
-
-.loginBackdrop::after {
-  content: "";
-  position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(59, 130, 246, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(99, 102, 241, 0.06) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
+    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
+    var(--gradient-hero);
+  background-size:
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    var(--theme-pattern-size) var(--theme-pattern-size),
+    100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
+  background-position:
+    0 0,
+    0 0,
+    0 0;
 }
 
 .loginCard {
@@ -50,11 +45,11 @@
   width: 100%;
   max-width: 24rem;
   padding: 2.5rem 2rem;
-  background: #fff;
+  background: var(--bg-primary);
   border-radius: 16px;
   box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
+    var(--shadow-2xl),
+    0 0 0 1px var(--border-primary);
   animation: adminLoginCardIn var(--admin-duration-slow) var(--admin-ease) both;
 }
 
@@ -82,8 +77,8 @@
   width: 3rem;
   height: 3rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
-  color: #fff;
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
   font-size: 1.25rem;
   border-radius: 12px;
 }
@@ -233,7 +228,7 @@
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   border-radius: var(--admin-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-sm);
 }
 
 .filterBar label {
@@ -330,8 +325,8 @@
   position: fixed;
   z-index: var(--z-modal-backdrop);
   padding: 2rem;
-  background: rgba(15, 23, 42, 0.6);
   inset: 0;
+  background: var(--overlay-backdrop);
   align-items: center;
   justify-content: center;
   -webkit-backdrop-filter: blur(4px);
@@ -344,7 +339,7 @@
   max-height: 85vh;
   overflow: auto;
   border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-2xl);
   animation: adminModalBoxIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
@@ -352,6 +347,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -462,10 +458,11 @@
 
 /* ========== ADMIN LAYOUT – Dashboard shell (sync with design-tokens) ========== */
 .adminLayout {
-  --admin-sidebar-bg: #0f172a;
-  --admin-sidebar-text: #94a3b8;
-  --admin-sidebar-text-active: #fff;
+  --admin-sidebar-bg: var(--color-primary-900);
+  --admin-sidebar-text: var(--text-muted);
+  --admin-sidebar-text-active: var(--text-inverse);
   --admin-sidebar-hover: rgba(255, 255, 255, 0.08);
+  --admin-sidebar-border: rgba(255, 255, 255, 0.06);
   --admin-sidebar-accent: var(--color-primary-500);
   --admin-main-bg: var(--bg-tertiary);
   --admin-topbar-bg: var(--bg-primary);
@@ -487,12 +484,12 @@
   background: var(--admin-sidebar-bg);
   flex-shrink: 0;
   flex-direction: column;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid var(--admin-sidebar-border);
 }
 
 .sidebarBrand {
   padding: 1.5rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--admin-sidebar-border);
 }
 
 .sidebarTitle {
@@ -584,7 +581,7 @@
 .sidebarFooter {
   margin-top: auto;
   padding: 1rem 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--admin-sidebar-border);
 }
 
 .sidebarLogout button {
@@ -708,14 +705,14 @@
 
 .dashboardGreeting {
   margin: 0 0 0.25rem;
-  color: #64748b;
+  color: var(--text-tertiary);
   font-size: 0.9375rem;
   font-weight: 500;
 }
 
 .dashboardMeta {
   margin: 0.5rem 0 0;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.8125rem;
   line-height: 1.4;
 }
@@ -738,12 +735,12 @@
     transform 0.2s var(--admin-ease, ease),
     border-color 0.2s var(--admin-ease, ease);
   border-radius: var(--admin-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
   text-decoration: none;
 }
 
 .quickStatCard:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
   border-color: var(--color-primary-300);
 }
@@ -882,12 +879,12 @@
   align-items: center;
   gap: 0.75rem;
   border-radius: var(--admin-radius-sm);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-sm);
   text-decoration: none;
 }
 
 .statCard:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
   border-color: var(--color-primary-300);
   background: var(--bg-secondary);
 }
@@ -932,13 +929,13 @@
   }
 }
 
-/* Dark mode – admin layout */
+/* Dark mode – admin layout (design tokens) */
 .dark .adminLayout {
-  --admin-main-bg: #0f172a;
-  --admin-topbar-bg: #1e293b;
-  --admin-topbar-border: rgba(255, 255, 255, 0.08);
-  --admin-card-bg: #1e293b;
-  --admin-card-border: rgba(255, 255, 255, 0.1);
+  --admin-main-bg: var(--bg-primary);
+  --admin-topbar-bg: var(--bg-secondary);
+  --admin-topbar-border: var(--border-primary);
+  --admin-card-bg: var(--bg-secondary);
+  --admin-card-border: var(--border-primary);
 }
 
 .dark .adminLayout .topBarTitle {
@@ -1109,32 +1106,36 @@
 .dark .adminLayout .modalBox {
   border: 1px solid var(--admin-card-border);
   background: var(--admin-card-bg);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-2xl);
 }
 
 .dark .adminLayout .jobTrackingCard {
-  background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
-  border-color: rgba(96, 165, 250, 0.25);
-  border-left-color: #3b82f6;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-800) 0%,
+    var(--bg-secondary) 100%
+  );
+  border-color: var(--color-primary-alpha-30);
+  border-left-color: var(--color-primary-500);
 }
 
 .dark .adminLayout .jobTrackingCard .formSectionTitle,
 .dark .adminLayout .jobTrackingBlockTitle {
-  color: #e0f2fe;
+  color: var(--color-primary-200);
 }
 
 .dark .adminLayout .jobTrackingItem {
-  color: #e2e8f0;
-  border-bottom-color: rgba(96, 165, 250, 0.15);
+  color: var(--text-primary);
+  border-bottom-color: var(--color-primary-alpha-15);
 }
 
 .dark .adminLayout .jobTrackingItemDate,
 .dark .adminLayout .jobTrackingMore {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .dark .jobTrackingLink {
-  color: #93c5fd;
+  color: var(--color-primary-300);
 }
 
 @media (width <= 640px) {
@@ -1194,7 +1195,7 @@
     border-color 0.2s var(--admin-ease, ease);
   margin-bottom: 2.5rem;
   border-radius: var(--admin-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .formSection .formGroup input,
@@ -1218,7 +1219,7 @@
 
 .formSectionTitle {
   margin: 0 0 1.25rem;
-  color: #0f172a;
+  color: var(--text-primary);
   font-size: 1.0625rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -1234,7 +1235,7 @@
 
 .formGroup label {
   display: block;
-  color: #334155;
+  color: var(--text-secondary);
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 0.375rem;
@@ -1296,7 +1297,7 @@
   background: var(--admin-card-bg);
   overflow-x: auto;
   border-radius: var(--admin-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .table {
@@ -1358,7 +1359,7 @@
   text-align: center;
   max-width: 22rem;
   border-radius: var(--admin-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .loadingState::before {

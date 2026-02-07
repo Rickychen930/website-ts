@@ -2,7 +2,7 @@
  * Admin Companies - Track companies you've applied to
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { adminService, type AppliedCompanyItem } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
 import styles from "./Admin.module.css";
@@ -408,51 +408,16 @@ export const AdminCompanies: React.FC = () => {
       </div>
 
       {interviewModal && (
-        <div
-          className={styles.modalOverlay}
-          onClick={() => setInterviewModal(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="interview-questions-title"
-        >
-          <div
-            className={`${styles.formSection} ${styles.modalBox}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2
-              id="interview-questions-title"
-              className={styles.formSectionTitle}
-            >
-              Interview questions – {interviewModal.companyName} (
-              {interviewModal.position})
-            </h2>
-            {aiConfigured && (
-              <div
-                className={`${styles.formActions} ${styles.modalActionsTop}`}
-              >
-                <Button
-                  variant="primary"
-                  onClick={handleGenerateInterviewQuestions}
-                  disabled={interviewLoading}
-                >
-                  {interviewLoading ? "Generating…" : "Generate with AI"}
-                </Button>
-                <Button variant="ghost" onClick={() => setInterviewModal(null)}>
-                  Close
-                </Button>
-              </div>
-            )}
-            {interviewQuestions && (
-              <pre className={styles.preWrap}>{interviewQuestions}</pre>
-            )}
-            {!aiConfigured && (
-              <p className={styles.emptyState}>
-                Set OPENAI_API_KEY on the server to generate interview
-                questions.
-              </p>
-            )}
-          </div>
-        </div>
+        <InterviewModal
+          companyName={interviewModal.companyName}
+          position={interviewModal.position}
+          aiConfigured={aiConfigured}
+          interviewLoading={interviewLoading}
+          interviewQuestions={interviewQuestions}
+          onGenerate={handleGenerateInterviewQuestions}
+          onClose={() => setInterviewModal(null)}
+          styles={styles}
+        />
       )}
 
       {items.length === 0 && !loading && (
@@ -466,3 +431,88 @@ export const AdminCompanies: React.FC = () => {
     </>
   );
 };
+
+function InterviewModal({
+  companyName,
+  position,
+  aiConfigured,
+  interviewLoading,
+  interviewQuestions,
+  onGenerate,
+  onClose,
+  styles: modalStyles,
+}: {
+  companyName: string;
+  position: string;
+  aiConfigured: boolean;
+  interviewLoading: boolean;
+  interviewQuestions: string | null;
+  onGenerate: () => void;
+  onClose: () => void;
+  styles: Record<string, string>;
+}) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = modalRef.current;
+    if (!el) return;
+    el.focus({ preventScroll: true });
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <div
+      className={modalStyles.modalOverlay}
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        ref={modalRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="interview-questions-title"
+        className={`${modalStyles.formSection} ${modalStyles.modalBox}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2
+          id="interview-questions-title"
+          className={modalStyles.formSectionTitle}
+        >
+          Interview questions – {companyName} ({position})
+        </h2>
+        {aiConfigured && (
+          <div
+            className={`${modalStyles.formActions} ${modalStyles.modalActionsTop}`}
+          >
+            <Button
+              variant="primary"
+              onClick={onGenerate}
+              disabled={interviewLoading}
+            >
+              {interviewLoading ? "Generating…" : "Generate with AI"}
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              Close
+            </Button>
+          </div>
+        )}
+        {interviewQuestions && (
+          <pre className={modalStyles.preWrap}>{interviewQuestions}</pre>
+        )}
+        {!aiConfigured && (
+          <p className={modalStyles.emptyState}>
+            Set OPENAI_API_KEY on the server to generate interview questions.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}

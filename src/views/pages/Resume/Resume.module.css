@@ -1,0 +1,77 @@
+/* Public Resume page – layout only; print area uses AdminResume.module.css
+   Background aligned with admin login & dashboard (design tokens) */
+
+.resumePage {
+  min-height: 100vh;
+  background: var(--bg-tertiary);
+}
+
+:global(.dark) .resumePage {
+  background: var(--bg-primary);
+}
+
+.section {
+  margin: 0 auto;
+  max-width: 56rem;
+  padding: 2rem 1.5rem;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.backLink:hover {
+  color: var(--color-primary-600);
+}
+
+.backLink:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+:global(.dark) .backLink:hover {
+  color: var(--color-primary-400);
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.intro {
+  margin: 0 0 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.error {
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-error-500);
+  border-radius: 8px;
+  background: var(--color-error-50);
+  color: var(--color-error-700);
+}
+
+@media print {
+  .section {
+    padding: 0;
+  }
+
+  .backLink,
+  .title,
+  .intro,
+  .resumeActions {
+    display: none !important;
+  }
+}
