@@ -152,17 +152,16 @@
     visibility: visible;
   }
 
+  /* Normal flow so content can span multiple pages (no position: fixed) */
   .resumePrintArea {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0.4in 0.5in;
     border: none;
     background: #fff;
     color: #1a1a1a;
-    max-width: none;
+    visibility: visible;
+    max-width: 8.5in;
     box-shadow: none;
   }
 
