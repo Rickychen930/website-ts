@@ -1,0 +1,196 @@
+/* Cover letter – senior designer: premium print layout */
+
+.letter {
+  margin: 0 auto;
+  padding: 0.6in 0.65in;
+  border: 1px solid var(--border-primary);
+  background: #fff;
+  color: #1c1c1c;
+  font-size: 11.5pt;
+  line-height: 1.55;
+  font-family: Georgia, "Times New Roman", serif;
+  max-width: 6.75in;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Subtle letterhead accent */
+.letterhead {
+  margin-bottom: 1.25em;
+  padding-bottom: 0.65em;
+  border-bottom: 2px solid #1c1c1c;
+  width: 2.5em;
+}
+
+.date {
+  margin: 0 0 1.75em;
+  color: #505050;
+  font-size: 10.5pt;
+  letter-spacing: 0.01em;
+}
+
+.recipient {
+  margin: 0 0 0.5em;
+  color: #252525;
+  font-size: 11pt;
+  line-height: 1.45;
+}
+
+.re {
+  margin: 0 0 1.75em;
+  color: #1c1c1c;
+  font-size: 11pt;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.greeting {
+  margin: 0 0 1.1em;
+  font-size: 11.5pt;
+}
+
+.paragraph {
+  margin: 0 0 1.1em;
+  font-size: 11.5pt;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.closing {
+  margin: 1.6em 0 0.35em;
+  font-size: 11.5pt;
+}
+
+.signature {
+  margin: 0;
+  color: #404040;
+  font-size: 10.5pt;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+.signature strong {
+  color: #1c1c1c;
+  font-size: 11pt;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.previewWrap {
+  padding: var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.letterContainer {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.savedList {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.savedItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.savedItemTitle {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.savedItemMeta {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: 2px;
+}
+
+.savedItemActions {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.bodyEditor {
+  width: 100%;
+  min-height: 220px;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11.5pt;
+  line-height: 1.55;
+  border-radius: var(--radius-md);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.bodyEditor:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-primary-alpha-20);
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.tab {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tabActive {
+  color: var(--color-primary-600);
+  border-bottom-color: var(--color-primary-500);
+}
+
+.dark .tabActive {
+  color: var(--color-primary-400);
+  border-bottom-color: var(--color-primary-400);
+}
+
+@media print {
+  .letter {
+    padding: 0.5in 0.6in;
+    border: none;
+    box-shadow: none;
+  }
+
+  .letterhead {
+    border-bottom-color: #1c1c1c;
+  }
+}

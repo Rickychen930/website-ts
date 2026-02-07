@@ -1,31 +1,31 @@
 /**
- * Admin Auth Middleware - Protects admin routes with ADMIN_SECRET
+ * Admin Auth Middleware - Protects admin routes with token from DB (set on login)
  */
 
 import { Request, Response, NextFunction } from "express";
+import { AdminModel } from "../models/Admin";
 
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
-
-export const requireAdmin = (
+export const requireAdmin = async (
   req: Request,
   res: Response,
   next: NextFunction,
-): void => {
-  if (!ADMIN_SECRET) {
-    res.status(503).json({
-      error: "Admin not configured",
-      message: "ADMIN_SECRET is not set on the server.",
-    });
-    return;
-  }
-
+): Promise<void> => {
   const authHeader = req.headers.authorization;
   const token =
     authHeader && authHeader.startsWith("Bearer ")
       ? authHeader.slice(7)
       : (req.body?.token as string | undefined);
 
-  if (!token || token !== ADMIN_SECRET) {
+  if (!token) {
+    res.status(401).json({
+      error: "Unauthorized",
+      message: "Invalid or missing admin token.",
+    });
+    return;
+  }
+
+  const admin = await AdminModel.findOne({ token }).lean();
+  if (!admin) {
     res.status(401).json({
       error: "Unauthorized",
       message: "Invalid or missing admin token.",

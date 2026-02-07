@@ -1,5 +1,5 @@
 /**
- * Admin Profile - Edit name, title, location, bio
+ * Admin Profile - Edit name, title, location, bio, languages
  */
 
 import React, { useEffect, useState } from "react";
@@ -7,6 +7,16 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { adminService } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
 import styles from "./Admin.module.css";
+
+type Language = { id?: string; name: string; proficiency: string };
+
+const PROFICIENCY_OPTIONS = [
+  "native",
+  "fluent",
+  "professional",
+  "conversational",
+  "basic",
+];
 
 export const AdminProfile: React.FC = () => {
   const { refetch } = useProfile();
@@ -55,6 +65,23 @@ export const AdminProfile: React.FC = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const languages = (profile?.languages as Language[] | undefined) ?? [];
+  const setLanguages = (next: Language[]) => {
+    setProfile((p) => (p ? { ...p, languages: next } : null));
+  };
+  const addLanguage = () => {
+    setLanguages([...languages, { name: "", proficiency: "professional" }]);
+  };
+  const removeLanguage = (i: number) => {
+    if (window.confirm("Remove this language?"))
+      setLanguages(languages.filter((_, idx) => idx !== i));
+  };
+  const updateLanguage = (i: number, field: keyof Language, value: string) => {
+    const next = [...languages];
+    next[i] = { ...next[i], [field]: value };
+    setLanguages(next);
   };
 
   if (!profile) {
@@ -117,17 +144,65 @@ export const AdminProfile: React.FC = () => {
               rows={5}
             />
           </div>
-          {error && (
-            <p className={styles.error} role="alert">
-              {error}
-            </p>
-          )}
-          {message && <p className={styles.message}>{message}</p>}
-          <div className={styles.formActions}>
-            <Button type="submit" variant="primary" disabled={saving}>
-              {saving ? "Saving…" : "Save profile"}
-            </Button>
-          </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <h2 className={styles.formSectionTitle}>Languages</h2>
+          {languages.map((lang, i) => (
+            <div
+              key={lang.id ?? i}
+              className={styles.formGroup}
+              style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
+            >
+              <input
+                placeholder="Language name"
+                value={lang.name}
+                onChange={(e) => updateLanguage(i, "name", e.target.value)}
+                style={{ flex: 1 }}
+              />
+              <select
+                value={lang.proficiency}
+                onChange={(e) =>
+                  updateLanguage(i, "proficiency", e.target.value)
+                }
+              >
+                {PROFICIENCY_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeLanguage(i)}
+              >
+                Remove
+              </Button>
+            </div>
+          ))}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={addLanguage}
+            style={{ marginBottom: "1rem" }}
+          >
+            Add language
+          </Button>
+        </div>
+
+        {error && (
+          <p className={styles.error} role="alert">
+            {error}
+          </p>
+        )}
+        {message && <p className={styles.message}>{message}</p>}
+        <div className={styles.formActions}>
+          <Button type="submit" variant="primary" disabled={saving}>
+            {saving ? "Saving…" : "Save profile"}
+          </Button>
         </div>
       </form>
     </>

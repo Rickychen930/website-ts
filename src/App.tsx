@@ -82,6 +82,24 @@ const AdminDashboard = React.lazy(() =>
 const AdminProfile = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminProfile })),
 );
+const AdminCompanies = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminCompanies })),
+);
+const AdminCoverLetter = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminCoverLetter })),
+);
+const AdminSavedJobs = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminSavedJobs })),
+);
+const AdminTasks = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminTasks })),
+);
+const AdminGoals = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminGoals })),
+);
+const AdminNotes = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminNotes })),
+);
 const AdminProjects = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminProjects })),
 );
@@ -144,6 +162,12 @@ const AppContent: React.FC = () => {
         <Route index element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="profile" element={<AdminProfile />} />
+        <Route path="companies" element={<AdminCompanies />} />
+        <Route path="cover-letter" element={<AdminCoverLetter />} />
+        <Route path="saved-jobs" element={<AdminSavedJobs />} />
+        <Route path="tasks" element={<AdminTasks />} />
+        <Route path="goals" element={<AdminGoals />} />
+        <Route path="notes" element={<AdminNotes />} />
         <Route path="projects" element={<AdminProjects />} />
         <Route path="experience" element={<AdminExperience />} />
         <Route path="skills" element={<AdminSkills />} />

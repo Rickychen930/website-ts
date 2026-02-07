@@ -93,7 +93,7 @@ ts-node -P backend/tsconfig.backend.json backend/src/seed/seed.ts
 
 ### Environment Setup
 
-Make sure your `.env` file (or `config/.env`) contains:
+Make sure your **`.env`** file (at project root) contains:
 
 ```
 MONGODB_URI=mongodb://localhost:27017/website-db
@@ -104,6 +104,23 @@ Or use MongoDB Atlas connection string:
 ```
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database
 ```
+
+**Important:** `.env` is in **`.gitignore`** — never commit it. Use `config/env.example` as a template (without real secrets).
+
+### Admin seed (password only on backend)
+
+The seed creates **one admin user** in the `admins` collection. The password is **hashed** (PBKDF2) and stored only in the backend DB.
+
+- Set **`ADMIN_SECRET`** (or **`ADMIN_SEED_PASSWORD`**) in **`.env`** before running `npm run seed`. That value is hashed and stored; use the **same value** to log in at `/admin/login`.
+- If neither is set, the seed uses the default **`admin`** (and logs a warning). **For production, always set `ADMIN_SECRET` in `.env`.**
+
+After seeding, log in with the same secret you set in `ADMIN_SECRET`.
+
+### Security / Ignored files
+
+- **`.env`** is gitignored; it must contain `MONGODB_URI`, `ADMIN_SECRET`, and optionally `OPENAI_API_KEY`. Never commit `.env`.
+- Local seed overrides (e.g. `seedData.local.ts`, `backend/src/seed/local/`) are in `.gitignore` so you can keep local or sensitive overrides out of the repo.
+- Keep `config/env.example` as a template **without** real secrets; real values go only in `.env`.
 
 ## Data Schema Compliance
 

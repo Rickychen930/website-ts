@@ -205,35 +205,23 @@ export class ProfileController {
         return;
       }
 
-      profile.name = String(name);
-      profile.title = String(title);
-      profile.location = String(location);
-      profile.bio = String(bio);
-      profile.academics = Array.isArray(academics)
-        ? academics
-        : profile.academics;
-      profile.certifications = Array.isArray(certifications)
-        ? certifications
-        : profile.certifications;
-      profile.contacts = Array.isArray(contacts) ? contacts : profile.contacts;
-      profile.experiences = Array.isArray(experiences)
-        ? experiences
-        : profile.experiences;
-      profile.honors = Array.isArray(honors) ? honors : profile.honors;
-      profile.languages = Array.isArray(languages)
-        ? languages
-        : profile.languages;
-      profile.projects = Array.isArray(projects) ? projects : profile.projects;
-      profile.softSkills = Array.isArray(softSkills)
-        ? softSkills
-        : profile.softSkills;
-      profile.stats = Array.isArray(stats) ? stats : profile.stats;
-      profile.technicalSkills = Array.isArray(technicalSkills)
-        ? technicalSkills
-        : profile.technicalSkills;
-      profile.testimonials = Array.isArray(testimonials)
-        ? testimonials
-        : profile.testimonials;
+      if (name !== undefined) profile.name = String(name);
+      if (title !== undefined) profile.title = String(title);
+      if (location !== undefined) profile.location = String(location);
+      if (bio !== undefined) profile.bio = String(bio);
+      if (Array.isArray(academics)) profile.academics = academics;
+      if (Array.isArray(certifications))
+        profile.certifications = certifications;
+      if (Array.isArray(contacts)) profile.contacts = contacts;
+      if (Array.isArray(experiences)) profile.experiences = experiences;
+      if (Array.isArray(honors)) profile.honors = honors;
+      if (Array.isArray(languages)) profile.languages = languages;
+      if (Array.isArray(projects)) profile.projects = projects;
+      if (Array.isArray(softSkills)) profile.softSkills = softSkills;
+      if (Array.isArray(stats)) profile.stats = stats;
+      if (Array.isArray(technicalSkills))
+        profile.technicalSkills = technicalSkills;
+      if (Array.isArray(testimonials)) profile.testimonials = testimonials;
 
       await profile.save();
       const transformed = transformProfile(profile);

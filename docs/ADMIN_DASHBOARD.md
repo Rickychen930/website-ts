@@ -1,15 +1,36 @@
 # Admin Dashboard
 
-Dashboard untuk menganalisis dan mengedit semua konten website (profile, projects, experience, skills, testimonials, stats, messages, dll).
+Dashboard untuk menganalisis dan mengedit **semua** konten website. Semua data di bawah disimpan di backend (MongoDB) dan disinkronkan dengan halaman publik lewat API profile.
+
+## Sync (satu sumber kebenaran)
+
+- **Backend:** Satu dokumen `profiles` + koleksi `admins`. Profile berisi: name, title, location, bio, academics, certifications, contacts, experiences, honors, languages, projects, softSkills, stats, technicalSkills, testimonials.
+- **API:** `GET /api/profile` (publik) mengembalikan profile yang sudah di-transform. Admin mengubah data lewat `PUT /api/admin/profile` dengan body profile lengkap.
+- **Frontend:** Halaman admin memuat profile via `GET /api/profile`, mengedit section per halaman, lalu menyimpan seluruh profile dengan `PUT /api/admin/profile`. Setelah save, `ProfileContext` di-refetch sehingga situs publik langsung menampilkan data terbaru.
+
+## Semua yang bisa diatur dari Admin
+
+| Menu Admin         | Data yang diatur                                                                                                                                    | Simpan          |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| **Profile**        | name, title, location, bio                                                                                                                          | Save profile    |
+| **Projects**       | title, description, longDescription, technologies, category, startDate, endDate, isActive, githubUrl, liveUrl, imageUrl, achievements, architecture | Save all        |
+| **Experience**     | company, position, location, startDate, endDate, isCurrent, description, achievements, technologies, skillIds                                       | Save all        |
+| **Skills**         | Technical skills (name, category, proficiency, yearsOfExperience) + Soft skills (name, category)                                                    | Save all        |
+| **Testimonials**   | author, role, company, content, date, avatarUrl                                                                                                     | Save all        |
+| **Stats**          | label, value, unit, description                                                                                                                     | Save all        |
+| **Academics**      | institution, degree, field, startDate, endDate, description                                                                                         | Save all        |
+| **Certifications** | name, issuer, issueDate, expiryDate, credentialId, credentialUrl                                                                                    | Save all        |
+| **Honors**         | title, issuer, date, description, url                                                                                                               | Save all        |
+| **Contact info**   | type, value, label, isPrimary (email, linkedin, github, dll) — tepat satu primary                                                                   | Save all        |
+| **Messages**       | Lihat dan hapus pesan dari form kontak (tidak mengedit profile)                                                                                     | Delete per item |
 
 ## Setup
 
-1. **Backend:** Set variabel lingkungan `ADMIN_SECRET` (rahasia kuat, hanya untuk admin).
-   - Di `.env` (root atau `backend/`):  
-     `ADMIN_SECRET=<string-acak-panjang>`
-   - Contoh generate: `openssl rand -hex 32`
+1. **Backend:** Password admin disimpan hanya di backend (DB, di-hash). Set di env **sebelum** jalankan seed:
+   - `ADMIN_SEED_PASSWORD=<rahasia-kuat>` (atau `ADMIN_SECRET`) di `.env` root.
+   - Jalankan `npm run seed` agar admin terbentuk. Login dengan password yang sama.
 
-2. **Frontend:** Tidak perlu env tambahan; memakai `REACT_APP_API_URL` yang sama untuk API.
+2. **Frontend:** Pakai `REACT_APP_API_URL` yang sama untuk API.
 
 ## Cara akses
 
@@ -30,15 +51,15 @@ Dashboard untuk menganalisis dan mengedit semua konten website (profile, project
 
 ## API (backend)
 
-- `POST /api/admin/login` — body: `{ "secret": "<ADMIN_SECRET>" }` → mengembalikan `{ "success": true, "token": "..." }`.
+- `POST /api/admin/login` — body: `{ "secret": "<password>" }` (password yang di-set lewat ADMIN_SEED_PASSWORD saat seed) → `{ "success": true, "token": "..." }`.
 - Semua route di bawah membutuhkan header: `Authorization: Bearer <token>`.
 - `GET /api/admin/stats` — statistik dashboard.
-- `PUT /api/admin/profile` — update penuh profile (body = object profile).
-- `GET /api/admin/contacts?limit=50&skip=0` — daftar pesan kontak.
+- `PUT /api/admin/profile` — update profile (body = object profile; hanya field yang dikirim yang di-update, array hanya jika dikirim sebagai array).
+- `GET /api/admin/contacts?limit=50&skip=0` — daftar pesan kontak (dari form kontak).
 - `DELETE /api/admin/contacts/:id` — hapus satu pesan kontak.
 
 ## Keamanan
 
-- Simpan `ADMIN_SECRET` hanya di server (env), jangan di frontend.
-- Token disimpan di `localStorage` di browser; logout menghapusnya.
-- Di production, pastikan HTTPS dan `ADMIN_SECRET` cukup panjang dan acak.
+- Password admin hanya di backend (disimpan hashed di DB via seed). Jangan simpan di frontend.
+- Token disimpan di `localStorage`; logout menghapusnya.
+- Di production, pakai HTTPS dan `ADMIN_SEED_PASSWORD` yang kuat.

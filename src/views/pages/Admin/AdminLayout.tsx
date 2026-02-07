@@ -11,6 +11,12 @@ import styles from "./Admin.module.css";
 const navItems = [
   { to: "/admin/dashboard", label: "Overview" },
   { to: "/admin/profile", label: "Profile" },
+  { to: "/admin/companies", label: "Companies" },
+  { to: "/admin/saved-jobs", label: "Saved jobs" },
+  { to: "/admin/cover-letter", label: "Cover letter" },
+  { to: "/admin/tasks", label: "Tasks" },
+  { to: "/admin/goals", label: "Goals" },
+  { to: "/admin/notes", label: "Notes" },
   { to: "/admin/projects", label: "Projects" },
   { to: "/admin/experience", label: "Experience" },
   { to: "/admin/skills", label: "Skills" },

@@ -50,6 +50,7 @@ export const seedProfileData = {
       issuer: "SoloLearn",
       issueDate: "2020-02-01",
       credentialId: "SOLOLEARN-MULTI-LANG-2020",
+      credentialUrl: "https://www.sololearn.com",
     },
   ],
 
@@ -192,6 +193,87 @@ export const seedProfileData = {
 
   projects: [
     {
+      title: "Web Architech",
+      description:
+        "Company website for Web Architech, a web development company in Sydney.",
+      longDescription:
+        "Company website for Web Architech, a web development company in Sydney. Built with React, TypeScript, Express.js, and MongoDB, featuring a modern and responsive user interface. Enables visitors to browse services and contact the team. Implemented RESTful API architecture, secure forms, and efficient database design for scalability and performance.",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Express.js",
+        "MongoDB",
+        "Node.js",
+        "RESTful APIs",
+      ],
+      category: "fullstack" as const,
+      startDate: "2025-12-01",
+      isActive: true,
+      liveUrl: "https://web-architech.com.au",
+      achievements: [
+        "Built production-ready company website with modern tech stack",
+        "Implemented contact and inquiry flows with backend API",
+        "Designed scalable RESTful API architecture",
+        "Created responsive and accessible user interface",
+      ],
+      architecture:
+        "Full-stack architecture with React frontend, Express.js backend, and MongoDB database. RESTful API design with secure form handling.",
+    },
+    {
+      title: "JB IT Services",
+      description:
+        "Store and service website for JB IT Services, an IT services provider in Sydney.",
+      longDescription:
+        "Store and service website for JB IT Services, an IT services provider in Sydney. Built with React, TypeScript, Express.js, and MongoDB, featuring a modern and responsive user interface. Enables customers to browse and purchase IT services with seamless integration. Implemented RESTful API architecture, secure authentication, and efficient database design for scalability and performance.",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Express.js",
+        "MongoDB",
+        "Node.js",
+        "RESTful APIs",
+      ],
+      category: "fullstack" as const,
+      startDate: "2025-12-01",
+      isActive: true,
+      liveUrl: "https://jbitservices.com.au",
+      achievements: [
+        "Built production-ready service and store front with modern tech stack",
+        "Implemented secure authentication and payment integration",
+        "Designed scalable RESTful API architecture",
+        "Created responsive and user-friendly interface",
+      ],
+      architecture:
+        "Full-stack architecture with React frontend, Express.js backend, and MongoDB database. RESTful API design with JWT authentication.",
+    },
+    {
+      title: "Christina Sings4You",
+      description:
+        "Personal website for Christina Sings4You, a singer and vocal coach in Sydney.",
+      longDescription:
+        "Personal website for Christina Sings4You, a singer and vocal coach in Sydney. Built with React, TypeScript, and a modern stack, featuring a responsive user interface. Showcases services, bookings, and contact options. Implemented with clean architecture and performance in mind.",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Express.js",
+        "MongoDB",
+        "Node.js",
+        "RESTful APIs",
+      ],
+      category: "fullstack" as const,
+      startDate: "2025-12-01",
+      isActive: true,
+      liveUrl: "https://christina-sings4you.com.au",
+      achievements: [
+        "Built production-ready personal branding and booking site",
+        "Implemented contact and booking flows",
+        "Designed responsive layout and clear information hierarchy",
+        "Created accessible and mobile-friendly interface",
+      ],
+      architecture:
+        "Full-stack architecture with React frontend and Node.js backend. RESTful API for forms and contact.",
+    },
+    {
       title: "giftforyou.idn",
       description:
         "A full-stack e-commerce platform for bouquet shopping in Indonesia.",
@@ -209,6 +291,7 @@ export const seedProfileData = {
       startDate: "2025-01-01",
       isActive: true,
       githubUrl: "https://github.com/rickychen930/giftforyou.idn",
+      liveUrl: "https://giftforyou-idn.cloud",
       achievements: [
         "Built production-ready e-commerce platform with modern tech stack",
         "Implemented secure authentication and payment integration",
@@ -405,7 +488,7 @@ export const seedProfileData = {
     },
     {
       label: "Projects Delivered",
-      value: 8,
+      value: 12,
       description: "Successfully completed projects across various domains",
     },
     {
@@ -599,7 +682,7 @@ export const seedProfileData = {
       role: "Master of IT Student @ UTS",
       company: "Apple Developer Academy",
       content:
-        "I highly recommend Ricky for his outstanding skills in iOS development, collaboration, critical thinking, and problem-solving. We have worked together on an internship project, and I found him highly passionate and dedicated to his profession in tackling every. He has a fun personality that makes me enjoy every time working with him. His contribution to the team as a developer is highly considerable as it helped our team to build our first App. Ricky definetely would become an appreciated member of any team.",
+        "I highly recommend Ricky for his outstanding skills in iOS development, collaboration, critical thinking, and problem-solving. We have worked together on an internship project, and I found him highly passionate and dedicated to his profession in tackling every task. He has a fun personality that makes me enjoy working with him every time. His contribution to the team as a developer is highly considerable as it helped our team to build our first app. Ricky definitely would become an appreciated member of any team.",
       date: "2023-05-01",
     },
     {

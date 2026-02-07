@@ -43,10 +43,14 @@ export const transformProfile = (profile: IProfile): Profile => {
       ? profile.updatedAt.toISOString()
       : new Date(profile.updatedAt || Date.now()).toISOString();
 
-  // Helper function to extract ID from Mongoose document (defensive: never throw)
+  // Helper: extract ID (from _id or stored id for admin round-trip sync)
   const extractId = (doc: unknown, fallback: string): string => {
+    if (!doc || typeof doc !== "object") return fallback;
+    const withId = doc as MongooseDoc & { id?: string };
+    if (typeof withId.id === "string" && withId.id.trim() !== "")
+      return withId.id.trim();
     try {
-      if (!doc || typeof doc !== "object" || !("_id" in doc)) return fallback;
+      if (!("_id" in doc)) return fallback;
       const id = (doc as MongooseDoc)._id;
       if (id != null && typeof id === "object" && "toString" in id) {
         return (id as { toString(): string }).toString();

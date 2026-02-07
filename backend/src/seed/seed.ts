@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { ProfileModel } from "../models/Profile";
 import { seedProfileData } from "./seedData";
+import { seedAdmin } from "./seedAdmin";
 
 // Load environment variables from root directory - only use .env file
 const rootPath = path.resolve(__dirname, "../../../");
@@ -136,6 +137,15 @@ const seedDatabase = async (): Promise<void> => {
     console.log(
       `📈 Stats: ${profile.projects?.length || 0} projects, ${profile.experiences?.length || 0} experiences, ${profile.testimonials?.length || 0} testimonials`,
     );
+
+    try {
+      await seedAdmin();
+    } catch (adminErr) {
+      console.error("⚠️  Admin seed failed (profile was seeded):", adminErr);
+      if (adminErr instanceof Error) {
+        console.error(adminErr.message);
+      }
+    }
 
     await mongoose.disconnect();
     console.log("👋 Disconnected from MongoDB");

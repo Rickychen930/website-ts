@@ -81,3 +81,11 @@ config/*.local.*
 *.local.json
 *.local.js
 *.local.ts
+
+# Seed: local overrides and sensitive data (secrets stay in .env only)
+backend/src/seed/*.local.*
+backend/src/seed/local/
+backend/src/seed/**/seedData.local.*
+backend/src/seed/**/seedAdmin.local.*
+.env.seed
+.env.seed.*
