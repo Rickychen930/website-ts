@@ -142,13 +142,18 @@
 }
 
 @media print {
+  /* Hide entire page, then show only resume (visibility keeps layout for print) */
   body * {
-    display: none !important;
+    visibility: hidden;
+  }
+
+  .resumePrintArea,
+  .resumePrintArea * {
+    visibility: visible;
   }
 
   .resumePrintArea {
-    display: block !important;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -156,12 +161,24 @@
     padding: 0.4in 0.5in;
     border: none;
     background: #fff;
+    color: #1a1a1a;
     max-width: none;
     box-shadow: none;
   }
 
-  .resumePrintArea * {
-    display: revert;
+  .resumePrintArea .resumeName,
+  .resumePrintArea .resumeH2,
+  .resumePrintArea .resumeH3,
+  .resumePrintArea .resumeTagline,
+  .resumePrintArea .contact,
+  .resumePrintArea .summary,
+  .resumePrintArea .jobMeta,
+  .resumePrintArea .tech {
+    color: #1a1a1a;
+  }
+
+  .resumePrintArea .resumeH2 {
+    border-bottom-color: #1a1a1a;
   }
 
   .resumeActions,

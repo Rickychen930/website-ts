@@ -89,8 +89,10 @@ export const Resume: React.FC = () => {
           Resume
         </h1>
         <p className={styles.intro}>
-          Use <strong>Print</strong> (Ctrl+P / Cmd+P) →{" "}
-          <strong>Save as PDF</strong> for an ATS-friendly copy.
+          Click the button below, then in the print dialog choose{" "}
+          <strong>Save as PDF</strong> or{" "}
+          <strong>Microsoft Print to PDF</strong> as the destination to download
+          your resume.
         </p>
 
         <div className={resumeStyles.resumeActions}>
