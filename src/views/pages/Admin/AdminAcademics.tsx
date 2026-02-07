@@ -89,10 +89,12 @@ export const AdminAcademics: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Academics</h1>
-      <p className={styles.pageIntro}>
-        Education entries: institution, degree, field, and dates.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Academics</h1>
+        <p className={styles.pageIntro}>
+          Education entries: institution, degree, field, and dates.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

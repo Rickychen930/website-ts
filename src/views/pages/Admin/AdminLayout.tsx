@@ -1,9 +1,9 @@
 /**
- * Admin Layout - Grouped sidebar navigation + outlet
+ * Admin Layout - Dark sidebar + top bar + main content
  */
 
-import React from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import React, { useMemo } from "react";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAdminAuth } from "@/contexts/AdminAuthContext";
 import { Button } from "@/views/components/ui/Button";
 import styles from "./Admin.module.css";
@@ -33,6 +33,7 @@ const navGroups: { label: string; items: { to: string; label: string }[] }[] = [
     label: "Portfolio",
     items: [
       { to: "/admin/profile", label: "Profile" },
+      { to: "/admin/resume", label: "Resume" },
       { to: "/admin/projects", label: "Projects" },
       { to: "/admin/experience", label: "Experience" },
       { to: "/admin/skills", label: "Skills" },
@@ -52,9 +53,40 @@ const navGroups: { label: string; items: { to: string; label: string }[] }[] = [
   { label: "Support", items: [{ to: "/admin/messages", label: "Messages" }] },
 ];
 
+const routeTitles: Record<string, string> = {
+  "/admin/dashboard": "Dashboard",
+  "/admin/profile": "Profile",
+  "/admin/resume": "Resume",
+  "/admin/companies": "Companies applied",
+  "/admin/saved-jobs": "Saved jobs",
+  "/admin/cover-letter": "Cover letter",
+  "/admin/tasks": "Tasks",
+  "/admin/goals": "Goals",
+  "/admin/notes": "Notes",
+  "/admin/projects": "Projects",
+  "/admin/experience": "Experience",
+  "/admin/skills": "Skills",
+  "/admin/testimonials": "Testimonials",
+  "/admin/stats": "Stats",
+  "/admin/academics": "Academics",
+  "/admin/certifications": "Certifications",
+  "/admin/honors": "Honors & Awards",
+  "/admin/contacts": "Contact info",
+  "/admin/messages": "Messages",
+};
+
+function getPageTitle(pathname: string): string {
+  return routeTitles[pathname] ?? "Admin";
+}
+
 export const AdminLayout: React.FC = () => {
   const { logout } = useAdminAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const pageTitle = useMemo(
+    () => getPageTitle(location.pathname),
+    [location.pathname],
+  );
 
   const handleLogout = () => {
     logout();
@@ -64,7 +96,10 @@ export const AdminLayout: React.FC = () => {
   return (
     <div className={styles.adminLayout}>
       <aside className={styles.sidebar}>
-        <h2 className={styles.sidebarTitle}>Admin</h2>
+        <div className={styles.sidebarBrand}>
+          <h2 className={styles.sidebarTitle}>Admin</h2>
+          <p className={styles.sidebarSubtitle}>Portfolio control panel</p>
+        </div>
         <nav className={styles.sidebarNav} aria-label="Admin navigation">
           {navGroups.map((group) => (
             <div key={group.label} className={styles.navGroup}>
@@ -94,9 +129,14 @@ export const AdminLayout: React.FC = () => {
           </div>
         </div>
       </aside>
-      <main className={styles.main}>
-        <Outlet />
-      </main>
+      <div className={styles.mainWrap}>
+        <header className={styles.topBar}>
+          <h1 className={styles.topBarTitle}>{pageTitle}</h1>
+        </header>
+        <main className={styles.main}>
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

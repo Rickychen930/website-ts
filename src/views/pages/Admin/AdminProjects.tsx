@@ -115,11 +115,13 @@ export const AdminProjects: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Projects</h1>
-      <p className={styles.pageIntro}>
-        Add project, edit fields or open details with +, then Save all. Use
-        Delete then Save all to remove.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Projects</h1>
+        <p className={styles.pageIntro}>
+          Add project, edit fields or open details with +, then Save all. Use
+          Delete then Save all to remove.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

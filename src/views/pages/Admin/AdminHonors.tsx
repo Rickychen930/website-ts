@@ -82,10 +82,12 @@ export const AdminHonors: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Honors & Awards</h1>
-      <p className={styles.pageIntro}>
-        Awards and honors: title, issuer, and date.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Honors & Awards</h1>
+        <p className={styles.pageIntro}>
+          Awards and honors: title, issuer, and date.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

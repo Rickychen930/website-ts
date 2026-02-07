@@ -138,11 +138,13 @@ export const AdminSavedJobs: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Saved jobs</h1>
-      <p className={styles.pageIntro}>
-        Jobs you want to apply to later. When you apply, click &quot;Apply&quot;
-        to move them to Companies applied.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Saved jobs</h1>
+        <p className={styles.pageIntro}>
+          Jobs you want to apply to later. When you apply, click
+          &quot;Apply&quot; to move them to Companies applied.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

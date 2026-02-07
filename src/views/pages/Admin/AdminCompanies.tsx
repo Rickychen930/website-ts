@@ -181,11 +181,13 @@ export const AdminCompanies: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Companies applied</h1>
-      <p className={styles.pageIntro}>
-        Track companies you've applied to: status, follow-up dates, and next
-        interviews in one place.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Companies applied</h1>
+        <p className={styles.pageIntro}>
+          Track companies you've applied to: status, follow-up dates, and next
+          interviews in one place.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

@@ -77,6 +77,36 @@ export const seedProfileData = {
 
   experiences: [
     {
+      company: "Web Architech",
+      position: "Full-Stack Developer | Founder of Web Architech",
+      location: "Sydney, Australia · Remote",
+      startDate: "2025-01-01",
+      isCurrent: true,
+      description:
+        "Founded a freelance practice delivering modern, high-performance web applications using MongoDB, Node.js, and React. Owned the full lifecycle: requirements, system design, implementation, testing, deployment, and optimization. Designed clean, maintainable codebases by applying OOP, SOLID, DRY, and MVC principles. Delivered custom client solutions with clear documentation, responsive communication, and ongoing support.",
+      achievements: [
+        "Founded a freelance practice delivering modern, high-performance web applications using MongoDB, Node.js, and React",
+        "Owned the full lifecycle: requirements, system design, implementation, testing, deployment, and optimization",
+        "Designed clean, maintainable codebases by applying OOP, SOLID, DRY, and MVC principles",
+        "Delivered custom client solutions with clear documentation, responsive communication, and ongoing support",
+      ],
+      technologies: [
+        "MongoDB",
+        "Node.js",
+        "React",
+        "TypeScript",
+        "REST APIs",
+        "Git",
+      ],
+      skillIds: [
+        "TypeScript",
+        "Node.js",
+        "React",
+        "MongoDB",
+        "Full-Stack Development",
+      ],
+    },
+    {
       company: "Samsung R&D Institute – Jakarta",
       position: "Software Engineer",
       location: "Jakarta, Indonesia",

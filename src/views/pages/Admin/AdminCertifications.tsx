@@ -87,10 +87,12 @@ export const AdminCertifications: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Certifications</h1>
-      <p className={styles.pageIntro}>
-        Professional certifications: name, issuer, and issue date.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Certifications</h1>
+        <p className={styles.pageIntro}>
+          Professional certifications: name, issuer, and issue date.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

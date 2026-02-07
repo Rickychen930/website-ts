@@ -3,6 +3,7 @@ export { AdminGuard } from "./AdminGuard";
 export { AdminLayout } from "./AdminLayout";
 export { AdminDashboard } from "./AdminDashboard";
 export { AdminProfile } from "./AdminProfile";
+export { AdminResume } from "./AdminResume";
 export { AdminProjects } from "./AdminProjects";
 export { AdminExperience } from "./AdminExperience";
 export { AdminSkills } from "./AdminSkills";

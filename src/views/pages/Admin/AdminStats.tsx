@@ -84,11 +84,13 @@ export const AdminStats: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Stats</h1>
-      <p className={styles.pageIntro}>
-        Profile stats (e.g. &quot;Years of experience&quot;, &quot;Projects
-        completed&quot;) with optional unit.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Stats</h1>
+        <p className={styles.pageIntro}>
+          Profile stats (e.g. &quot;Years of experience&quot;, &quot;Projects
+          completed&quot;) with optional unit.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

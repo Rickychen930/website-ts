@@ -122,10 +122,12 @@ export const AdminNotes: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Notes</h1>
-      <p className={styles.pageIntro}>
-        Study, work, interview prep, or other notes. Use as a scratchpad.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Notes</h1>
+        <p className={styles.pageIntro}>
+          Study, work, interview prep, or other notes. Use as a scratchpad.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

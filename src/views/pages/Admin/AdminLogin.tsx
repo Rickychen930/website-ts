@@ -49,45 +49,47 @@ export const AdminLogin: React.FC = () => {
   };
 
   return (
-    <Section
-      title="Sign in"
-      subtitle="Admin access. Enter your secret to continue."
-      id="admin-login"
-    >
-      <Card variant="elevated" className={styles.loginCard}>
-        <form onSubmit={handleSubmit} className={styles.loginForm}>
-          <label htmlFor="admin-secret" className={styles.label}>
-            Secret
-          </label>
-          <input
-            id="admin-secret"
-            type="password"
-            value={secret}
-            onChange={(e) => setSecret(e.target.value)}
-            className={styles.input}
-            placeholder="Enter admin secret"
-            autoComplete="current-password"
-            autoFocus
-            disabled={loading}
-            aria-invalid={!!error}
-            aria-describedby={error ? "login-error" : undefined}
-          />
-          {error && (
-            <p id="login-error" className={styles.error} role="alert">
-              {error}
-            </p>
-          )}
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            disabled={loading}
-            fullWidth
-          >
-            {loading ? "Signing in…" : "Sign in"}
-          </Button>
-        </form>
-      </Card>
-    </Section>
+    <div className={styles.loginWrap}>
+      <Section
+        title="Sign in"
+        subtitle="Admin access. Enter your secret to continue."
+        id="admin-login"
+      >
+        <Card variant="elevated" className={styles.loginCard}>
+          <form onSubmit={handleSubmit} className={styles.loginForm}>
+            <label htmlFor="admin-secret" className={styles.label}>
+              Secret
+            </label>
+            <input
+              id="admin-secret"
+              type="password"
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
+              className={styles.input}
+              placeholder="Enter admin secret"
+              autoComplete="current-password"
+              autoFocus
+              disabled={loading}
+              aria-invalid={!!error}
+              aria-describedby={error ? "login-error" : undefined}
+            />
+            {error && (
+              <p id="login-error" className={styles.error} role="alert">
+                {error}
+              </p>
+            )}
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              disabled={loading}
+              fullWidth
+            >
+              {loading ? "Signing in…" : "Sign in"}
+            </Button>
+          </form>
+        </Card>
+      </Section>
+    </div>
   );
 };

@@ -3,6 +3,7 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { adminService } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
@@ -96,11 +97,17 @@ export const AdminProfile: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Profile</h1>
-      <p className={styles.pageIntro}>
-        Edit fields below, then Save profile. Other sections (Projects,
-        Experience, etc.) are in the sidebar.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Profile</h1>
+        <p className={styles.pageIntro}>
+          Edit fields below, then Save profile. Other sections (Projects,
+          Experience, etc.) are in the sidebar.{" "}
+          <Link to="/admin/resume" className={styles.jobTrackingLink}>
+            Preview resume
+          </Link>{" "}
+          to see the live resume from this data.
+        </p>
+      </header>
       <form onSubmit={handleSubmit}>
         <div className={styles.formSection}>
           <h2 className={styles.formSectionTitle}>Basic info</h2>

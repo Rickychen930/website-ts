@@ -56,10 +56,12 @@ export const AdminMessages: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Contact messages</h1>
-      <p className={styles.pageIntro}>
-        Messages sent from the site contact form. Delete to remove.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Contact messages</h1>
+        <p className={styles.pageIntro}>
+          Messages sent from the site contact form. Delete to remove.
+        </p>
+      </header>
       {error && (
         <p className={styles.error} role="alert">
           {error}

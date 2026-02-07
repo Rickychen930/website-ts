@@ -119,16 +119,16 @@ function buildLetterHtml(
 
 const PRINT_STYLES = `
   * { box-sizing: border-box; }
-  body { font-family: Georgia, "Times New Roman", serif; font-size: 11.5pt; line-height: 1.55; color: #1c1c1c; max-width: 6.75in; margin: 0 auto; padding: 0.5in 0.6in; background: #fff; }
-  .letterhead { margin-bottom: 1.25em; padding-bottom: 0.65em; border-bottom: 2px solid #1c1c1c; width: 2.5em; }
-  .date { margin: 0 0 1.75em 0; font-size: 10.5pt; color: #505050; }
-  .recipient { margin: 0 0 0.5em 0; font-size: 11pt; line-height: 1.45; color: #252525; }
-  .re { margin: 0 0 1.75em 0; font-weight: 600; font-size: 11pt; color: #1c1c1c; }
-  .greeting { margin: 0 0 1.1em 0; font-size: 11.5pt; }
-  .paragraph { margin: 0 0 1.1em 0; text-align: justify; hyphens: auto; font-size: 11.5pt; }
-  .closing { margin: 1.6em 0 0.35em 0; font-size: 11.5pt; }
-  .signature { margin: 0; font-size: 10.5pt; line-height: 1.6; color: #404040; }
-  .signature strong { color: #1c1c1c; font-size: 11pt; }
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 11.5pt; line-height: 1.6; color: #1a1a1a; max-width: 6.75in; margin: 0 auto; padding: 0.5in 0.6in; background: #ffffff; }
+  .letterhead { margin-bottom: 1.25em; padding-bottom: 0.65em; border-bottom: 3px solid #1a1a1a; width: 3em; }
+  .date { margin: 0 0 1.75em 0; font-size: 10.5pt; color: #333333; }
+  .recipient { margin: 0 0 0.5em 0; font-size: 11pt; line-height: 1.5; color: #1a1a1a; font-weight: 600; }
+  .re { margin: 0 0 1.75em 0; font-weight: 600; font-size: 11pt; color: #1a1a1a; }
+  .greeting { margin: 0 0 1.1em 0; font-size: 11.5pt; color: #1a1a1a; }
+  .paragraph { margin: 0 0 1.1em 0; text-align: justify; hyphens: auto; font-size: 11.5pt; line-height: 1.6; color: #1a1a1a; }
+  .closing { margin: 1.6em 0 0.35em 0; font-size: 11.5pt; color: #1a1a1a; }
+  .signature { margin: 0; font-size: 10.5pt; line-height: 1.6; color: #333333; }
+  .signature strong { color: #1a1a1a; font-size: 11pt; }
 `;
 
 export const AdminCoverLetter: React.FC = () => {
@@ -146,6 +146,7 @@ export const AdminCoverLetter: React.FC = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [aiConfigured, setAiConfigured] = useState(false);
+  const [aiStatusLoading, setAiStatusLoading] = useState(true);
   const [aiLoading, setAiLoading] = useState(false);
   const [jdSummary, setJdSummary] = useState<string | null>(null);
   const [jdSummaryLoading, setJdSummaryLoading] = useState(false);
@@ -172,11 +173,20 @@ export const AdminCoverLetter: React.FC = () => {
     loadSaved();
   }, []);
 
-  useEffect(() => {
+  const checkAiStatus = () => {
+    setAiStatusLoading(true);
     adminService
       .getAiStatus()
-      .then((r) => setAiConfigured(r.configured))
-      .catch(() => setAiConfigured(false));
+      .then((r) => {
+        setAiConfigured(r.configured);
+        if (r.configured) setError(null);
+      })
+      .catch(() => setAiConfigured(false))
+      .finally(() => setAiStatusLoading(false));
+  };
+
+  useEffect(() => {
+    checkAiStatus();
   }, []);
 
   useEffect(() => {
@@ -213,20 +223,28 @@ export const AdminCoverLetter: React.FC = () => {
   };
 
   const handleGenerate = () => {
-    if (!profile) return;
-    setBodyText(
-      generateBodyText(
-        profile,
-        companyName || "Company",
-        position || "Role",
-        jobDescription,
-      ),
-    );
+    adminService
+      .getProfile()
+      .then((p) => {
+        const fresh = p as Profile;
+        setProfile(fresh);
+        setBodyText(
+          generateBodyText(
+            fresh,
+            companyName || "Company",
+            position || "Role",
+            jobDescription,
+          ),
+        );
+        setMessage("Body regenerated from latest profile.");
+      })
+      .catch(() => setError("Failed to load profile for regeneration."));
   };
 
   const handleImproveWithAi = async () => {
     if (!bodyText.trim()) return;
     setError(null);
+    setMessage(null);
     setAiLoading(true);
     try {
       const { improved } = await adminService.aiEnhanceCoverLetter({
@@ -235,10 +253,15 @@ export const AdminCoverLetter: React.FC = () => {
         companyName: companyName.trim() || undefined,
         position: position.trim() || undefined,
       });
-      setBodyText(improved);
-      setMessage("Cover letter improved with AI.");
+      if (improved && typeof improved === "string") {
+        setBodyText(improved);
+        setMessage("Cover letter improved with AI. Review and edit as needed.");
+      } else {
+        setError("AI returned no content. Please try again.");
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "AI request failed");
+      const msg = err instanceof Error ? err.message : "AI request failed";
+      setError(msg.includes("AI") ? msg : `AI error: ${msg}`);
     } finally {
       setAiLoading(false);
     }
@@ -253,9 +276,15 @@ export const AdminCoverLetter: React.FC = () => {
       const { summary } = await adminService.aiSummarizeJobDescription(
         jobDescription.trim(),
       );
-      setJdSummary(summary);
+      if (summary && typeof summary === "string") {
+        setJdSummary(summary);
+        setMessage("Job description summarized. Use it to tailor your letter.");
+      } else {
+        setError("AI returned no summary. Please try again.");
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "AI request failed");
+      const msg = err instanceof Error ? err.message : "AI request failed";
+      setError(msg.includes("AI") ? msg : `AI error: ${msg}`);
     } finally {
       setJdSummaryLoading(false);
     }
@@ -299,6 +328,8 @@ export const AdminCoverLetter: React.FC = () => {
   };
 
   const openEdit = (letter: SavedCoverLetterItem) => {
+    setError(null);
+    setMessage(null);
     setEditingId(letter.id);
     setCompanyName(letter.companyName);
     setPosition(letter.position);
@@ -387,11 +418,14 @@ export const AdminCoverLetter: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Cover letter</h1>
-      <p className={styles.pageIntro}>
-        Create a different cover letter for each company. Edit the body for each
-        application, then save and print.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Cover letter</h1>
+        <p className={styles.pageIntro}>
+          Create a different cover letter for each company. Body is generated
+          from your Profile; use &quot;Regenerate body from profile&quot; after
+          updating Profile to get the latest. Edit, save, then print or copy.
+        </p>
+      </header>
 
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -400,21 +434,54 @@ export const AdminCoverLetter: React.FC = () => {
         </p>
       )}
 
-      <div className={coverLetterStyles.tabs}>
-        <button
-          type="button"
-          className={`${coverLetterStyles.tab} ${activeTab === "create" ? coverLetterStyles.tabActive : ""}`}
-          onClick={() => setActiveTab("create")}
-        >
-          Create / Edit
-        </button>
-        <button
-          type="button"
-          className={`${coverLetterStyles.tab} ${activeTab === "saved" ? coverLetterStyles.tabActive : ""}`}
-          onClick={() => setActiveTab("saved")}
-        >
-          Saved letters ({savedList.length})
-        </button>
+      <div className={coverLetterStyles.tabsWrap}>
+        <div className={coverLetterStyles.tabs}>
+          <button
+            type="button"
+            className={`${coverLetterStyles.tab} ${activeTab === "create" ? coverLetterStyles.tabActive : ""}`}
+            onClick={() => setActiveTab("create")}
+          >
+            Create / Edit
+          </button>
+          <button
+            type="button"
+            className={`${coverLetterStyles.tab} ${activeTab === "saved" ? coverLetterStyles.tabActive : ""}`}
+            onClick={() => setActiveTab("saved")}
+          >
+            Saved letters ({savedList.length})
+          </button>
+        </div>
+        <div className={coverLetterStyles.aiStatusRow}>
+          {aiStatusLoading ? (
+            <span className={coverLetterStyles.aiBadgeInactive}>
+              Checking AI…
+            </span>
+          ) : aiConfigured ? (
+            <span
+              className={coverLetterStyles.aiBadge}
+              title="AI enhance & summarize available"
+            >
+              AI enabled
+            </span>
+          ) : (
+            <span
+              className={coverLetterStyles.aiBadgeInactive}
+              title="Set OPENAI_API_KEY on server for AI tools"
+            >
+              AI unavailable
+            </span>
+          )}
+          {!aiStatusLoading && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={checkAiStatus}
+              className={coverLetterStyles.aiRefreshBtn}
+            >
+              Refresh
+            </Button>
+          )}
+        </div>
       </div>
 
       {activeTab === "saved" && (

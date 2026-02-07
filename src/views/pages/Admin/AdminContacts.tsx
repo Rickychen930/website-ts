@@ -89,11 +89,13 @@ export const AdminContacts: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Contact info</h1>
-      <p className={styles.pageIntro}>
-        Email, phone, LinkedIn, GitHub, website, etc. Mark one per type as
-        primary.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Contact info</h1>
+        <p className={styles.pageIntro}>
+          Email, phone, LinkedIn, GitHub, website, etc. Mark one per type as
+          primary.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

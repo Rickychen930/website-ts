@@ -75,7 +75,7 @@ export const AdminDashboard: React.FC = () => {
 
   const quickStats = [
     {
-      label: "Companies",
+      label: "Companies applied",
       value: counts.appliedCompanies ?? 0,
       to: "/admin/companies",
     },
@@ -88,7 +88,7 @@ export const AdminDashboard: React.FC = () => {
     },
   ];
 
-  const sectionJobHunt = [
+  const shortcuts = [
     {
       label: "Companies",
       value: counts.appliedCompanies ?? 0,
@@ -100,13 +100,9 @@ export const AdminDashboard: React.FC = () => {
       to: "/admin/saved-jobs",
     },
     { label: "Cover letter", value: "—", to: "/admin/cover-letter" },
-  ];
-  const sectionPersonal = [
     { label: "Tasks", value: counts.tasks ?? 0, to: "/admin/tasks" },
     { label: "Goals", value: counts.goals ?? 0, to: "/admin/goals" },
     { label: "Notes", value: counts.notes ?? 0, to: "/admin/notes" },
-  ];
-  const sectionPortfolio = [
     { label: "Profile", value: "—", to: "/admin/profile" },
     { label: "Projects", value: counts.projects, to: "/admin/projects" },
     { label: "Experience", value: counts.experiences, to: "/admin/experience" },
@@ -117,8 +113,6 @@ export const AdminDashboard: React.FC = () => {
       to: "/admin/testimonials",
     },
     { label: "Stats", value: counts.stats, to: "/admin/stats" },
-  ];
-  const sectionContent = [
     {
       label: "Academics",
       value: counts.academics ?? 0,
@@ -138,10 +132,18 @@ export const AdminDashboard: React.FC = () => {
     { label: "Messages", value: counts.contactMessages, to: "/admin/messages" },
   ];
 
+  const greeting =
+    new Date().getHours() < 12
+      ? "Good morning"
+      : new Date().getHours() < 18
+        ? "Good afternoon"
+        : "Good evening";
+
   return (
     <>
       <header className={styles.dashboardWelcome}>
-        <h1 className={styles.pageTitle}>Dashboard</h1>
+        <p className={styles.dashboardGreeting}>{greeting}</p>
+        <h1 className={styles.pageTitle}>Overview</h1>
         {profileUpdatedAt && (
           <p className={styles.dashboardMeta}>
             Profile last updated: {new Date(profileUpdatedAt).toLocaleString()}
@@ -149,7 +151,7 @@ export const AdminDashboard: React.FC = () => {
         )}
       </header>
 
-      <section className={styles.quickStats} aria-label="Quick stats">
+      <section className={styles.quickStats} aria-label="Key metrics">
         {quickStats.map((card) => (
           <Link
             key={card.to}
@@ -168,8 +170,11 @@ export const AdminDashboard: React.FC = () => {
           <h2 className={styles.formSectionTitle}>Job tracking</h2>
           <div className={styles.jobTrackingGrid}>
             {followUpsDue.length > 0 && (
-              <div>
-                <Link to="/admin/companies" className={styles.jobTrackingLink}>
+              <div className={styles.jobTrackingBlock}>
+                <Link
+                  to="/admin/companies"
+                  className={`${styles.jobTrackingLink} ${styles.jobTrackingBlockTitle}`}
+                >
                   Follow-ups due ({followUpsDue.length})
                 </Link>
                 <ul className={styles.jobTrackingList}>
@@ -194,8 +199,11 @@ export const AdminDashboard: React.FC = () => {
               </div>
             )}
             {upcomingInterviews.length > 0 && (
-              <div>
-                <Link to="/admin/companies" className={styles.jobTrackingLink}>
+              <div className={styles.jobTrackingBlock}>
+                <Link
+                  to="/admin/companies"
+                  className={`${styles.jobTrackingLink} ${styles.jobTrackingBlockTitle}`}
+                >
                   Upcoming interviews ({upcomingInterviews.length})
                 </Link>
                 <ul className={styles.jobTrackingList}>
@@ -229,52 +237,13 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      <section className={styles.dashboardSection} aria-label="Job hunt">
-        <h2 className={styles.dashboardSectionTitle}>Job hunt</h2>
-        <div className={styles.statsGrid}>
-          {sectionJobHunt.map((card) => (
+      <section className={styles.dashboardSection} aria-label="Shortcuts">
+        <h2 className={styles.dashboardSectionTitle}>Shortcuts</h2>
+        <div className={styles.shortcutsGrid}>
+          {shortcuts.map((card) => (
             <Link key={card.to} to={card.to} className={styles.statCard}>
-              <div className={styles.statCardValue}>{card.value}</div>
-              <div className={styles.statCardLabel}>{card.label}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.dashboardSection} aria-label="Personal">
-        <h2 className={styles.dashboardSectionTitle}>Personal</h2>
-        <div className={styles.statsGrid}>
-          {sectionPersonal.map((card) => (
-            <Link key={card.to} to={card.to} className={styles.statCard}>
-              <div className={styles.statCardValue}>{card.value}</div>
-              <div className={styles.statCardLabel}>{card.label}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.dashboardSection} aria-label="Portfolio">
-        <h2 className={styles.dashboardSectionTitle}>Portfolio</h2>
-        <div className={styles.statsGrid}>
-          {sectionPortfolio.map((card) => (
-            <Link key={card.to} to={card.to} className={styles.statCard}>
-              <div className={styles.statCardValue}>{card.value}</div>
-              <div className={styles.statCardLabel}>{card.label}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section
-        className={styles.dashboardSection}
-        aria-label="Content & messages"
-      >
-        <h2 className={styles.dashboardSectionTitle}>Content & messages</h2>
-        <div className={styles.statsGrid}>
-          {sectionContent.map((card) => (
-            <Link key={card.to} to={card.to} className={styles.statCard}>
-              <div className={styles.statCardValue}>{card.value}</div>
-              <div className={styles.statCardLabel}>{card.label}</div>
+              <span className={styles.statCardValue}>{card.value}</span>
+              <span className={styles.statCardLabel}>{card.label}</span>
             </Link>
           ))}
         </div>

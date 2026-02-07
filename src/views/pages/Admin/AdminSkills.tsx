@@ -89,11 +89,13 @@ export const AdminSkills: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Skills</h1>
-      <p className={styles.pageIntro}>
-        Add technical or soft skills, edit inline, then Save all. Use Delete
-        then Save all to remove.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Skills</h1>
+        <p className={styles.pageIntro}>
+          Add technical or soft skills, edit inline, then Save all. Use Delete
+          then Save all to remove.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

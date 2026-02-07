@@ -96,10 +96,13 @@ export const AdminTestimonials: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Testimonials</h1>
-      <p className={styles.pageIntro}>
-        Add testimonial, edit author/role/company/content inline, then Save all.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Testimonials</h1>
+        <p className={styles.pageIntro}>
+          Add testimonial, edit author/role/company/content inline, then Save
+          all.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

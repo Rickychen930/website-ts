@@ -137,10 +137,12 @@ export const AdminGoals: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Goals</h1>
-      <p className={styles.pageIntro}>
-        Short-term targets: this semester, job applications, projects, etc.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Goals</h1>
+        <p className={styles.pageIntro}>
+          Short-term targets: this semester, job applications, projects, etc.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">

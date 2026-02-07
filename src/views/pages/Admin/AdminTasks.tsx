@@ -160,10 +160,12 @@ export const AdminTasks: React.FC = () => {
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Tasks</h1>
-      <p className={styles.pageIntro}>
-        Track study, work, and personal tasks. Filter by status below.
-      </p>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Tasks</h1>
+        <p className={styles.pageIntro}>
+          Track study, work, and personal tasks. Filter by status below.
+        </p>
+      </header>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">
