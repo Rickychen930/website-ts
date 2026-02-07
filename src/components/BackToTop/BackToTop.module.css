@@ -74,3 +74,18 @@
     bottom: var(--spacing-lg);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .backToTop {
+    animation: none;
+  }
+
+  .backToTop:hover {
+    animation: none;
+    transform: none;
+  }
+
+  .backToTop:active {
+    transform: none;
+  }
+}

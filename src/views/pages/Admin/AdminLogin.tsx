@@ -1,13 +1,11 @@
 /**
- * Admin Login Page - Same layout as rest of site (Section + Card)
+ * Admin Login – Full-screen centered panel, modern design
  */
 
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAdminAuth } from "@/contexts/AdminAuthContext";
 import { useSEO } from "@/hooks/useSEO";
-import { Section } from "@/views/components/layout/Section";
-import { Card } from "@/views/components/ui/Card";
 import { Button } from "@/views/components/ui/Button";
 import styles from "./Admin.module.css";
 
@@ -50,46 +48,51 @@ export const AdminLogin: React.FC = () => {
 
   return (
     <div className={styles.loginWrap}>
-      <Section
-        title="Sign in"
-        subtitle="Admin access. Enter your secret to continue."
-        id="admin-login"
-      >
-        <Card variant="elevated" className={styles.loginCard}>
-          <form onSubmit={handleSubmit} className={styles.loginForm}>
-            <label htmlFor="admin-secret" className={styles.label}>
-              Secret
-            </label>
-            <input
-              id="admin-secret"
-              type="password"
-              value={secret}
-              onChange={(e) => setSecret(e.target.value)}
-              className={styles.input}
-              placeholder="Enter admin secret"
-              autoComplete="current-password"
-              autoFocus
-              disabled={loading}
-              aria-invalid={!!error}
-              aria-describedby={error ? "login-error" : undefined}
-            />
-            {error && (
-              <p id="login-error" className={styles.error} role="alert">
-                {error}
-              </p>
-            )}
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              disabled={loading}
-              fullWidth
-            >
-              {loading ? "Signing in…" : "Sign in"}
-            </Button>
-          </form>
-        </Card>
-      </Section>
+      <div className={styles.loginBackdrop} aria-hidden="true" />
+      <div className={styles.loginCard}>
+        <div className={styles.loginBrand}>
+          <span className={styles.loginLogo} aria-hidden="true">
+            ◈
+          </span>
+          <h1 className={styles.loginTitle}>Admin</h1>
+          <p className={styles.loginSubtitle}>
+            Portfolio control panel · Sign in to continue
+          </p>
+        </div>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          <label htmlFor="admin-secret" className={styles.loginLabel}>
+            Secret key
+          </label>
+          <input
+            id="admin-secret"
+            type="password"
+            value={secret}
+            onChange={(e) => setSecret(e.target.value)}
+            className={styles.loginInput}
+            placeholder="Enter your secret"
+            autoComplete="current-password"
+            autoFocus
+            disabled={loading}
+            aria-invalid={!!error}
+            aria-describedby={error ? "login-error" : undefined}
+          />
+          {error && (
+            <p id="login-error" className={styles.loginError} role="alert">
+              {error}
+            </p>
+          )}
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            disabled={loading}
+            fullWidth
+            className={styles.loginSubmit}
+          >
+            {loading ? "Signing in…" : "Sign in"}
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

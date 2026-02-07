@@ -56,6 +56,16 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .spinner--sm,
+  .spinner--md,
+  .spinner--lg {
+    animation: none;
+    border-top-color: var(--color-primary-500);
+  }
+}
+
 .message {
   margin: 0;
   color: var(--text-tertiary);

@@ -77,6 +77,16 @@ h2 {
   flex-direction: column;
 }
 
+.app-admin {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-admin > * {
+  flex: 1;
+  min-height: 0;
+}
+
 /* Allow fixed background only when it won't jank */
 @media (width >= 1024px) and (prefers-reduced-motion: no-preference) {
   body {

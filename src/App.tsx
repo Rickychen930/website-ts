@@ -186,21 +186,15 @@ const AppContent: React.FC = () => {
     </Routes>
   );
 
-  /* Admin dashboard: minimal layout (no header/footer). Login page: same layout as rest of site. */
+  /* Admin dashboard: minimal layout (no header/footer), with skip link for a11y. */
   if (isAdminArea && !isAdminLoginPage) {
     return (
       <>
-        <div className="app">
-          <main
-            id="main-content"
-            className="app-main"
-            role="main"
-            tabIndex={-1}
-          >
-            <Suspense fallback={<Loading fullScreen message="Loading..." />}>
-              {routes}
-            </Suspense>
-          </main>
+        <SkipLinks />
+        <div className="app app-admin">
+          <Suspense fallback={<Loading fullScreen message="Loading..." />}>
+            {routes}
+          </Suspense>
         </div>
       </>
     );
