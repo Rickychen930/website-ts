@@ -105,19 +105,21 @@ export const AdminExperience: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Experience</h1>
-      <p
-        className={styles.emptyState}
-        style={{ marginBottom: "1rem", textAlign: "left" }}
-      >
-        Create: Add experience → edit fields → Save all. Update: edit inline or
-        + for details. Delete: Delete → Save all.
+      <p className={styles.pageIntro}>
+        Add experience, edit inline or expand with + for description and
+        achievements, then Save all.
       </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -125,7 +127,9 @@ export const AdminExperience: React.FC = () => {
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={addNew}>
           Add experience
         </Button>
@@ -137,7 +141,7 @@ export const AdminExperience: React.FC = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th style={{ width: "2rem" }}></th>
+              <th className={styles.tableColThumb}></th>
               <th>Company</th>
               <th>Position</th>
               <th>Location</th>
@@ -154,11 +158,14 @@ export const AdminExperience: React.FC = () => {
                   <td>
                     <button
                       type="button"
-                      className={styles.toggleDetail}
+                      className={styles.tableBtnLink}
                       onClick={() =>
                         setExpandedIndex(expandedIndex === i ? null : i)
                       }
                       aria-expanded={expandedIndex === i}
+                      title={
+                        expandedIndex === i ? "Collapse" : "Expand details"
+                      }
                     >
                       {expandedIndex === i ? "−" : "+"}
                     </button>
@@ -169,8 +176,7 @@ export const AdminExperience: React.FC = () => {
                       onChange={(ev) =>
                         updateOne(i, "company", ev.target.value)
                       }
-                      className={styles.input}
-                      style={{ width: "100%", maxWidth: "12rem" }}
+                      className={`${styles.input} ${styles.tableColWide}`}
                     />
                   </td>
                   <td>
@@ -179,8 +185,7 @@ export const AdminExperience: React.FC = () => {
                       onChange={(ev) =>
                         updateOne(i, "position", ev.target.value)
                       }
-                      className={styles.input}
-                      style={{ width: "100%", maxWidth: "12rem" }}
+                      className={`${styles.input} ${styles.tableColWide}`}
                     />
                   </td>
                   <td>
@@ -189,8 +194,7 @@ export const AdminExperience: React.FC = () => {
                       onChange={(ev) =>
                         updateOne(i, "location", ev.target.value)
                       }
-                      className={styles.input}
-                      style={{ width: "100%", maxWidth: "10rem" }}
+                      className={`${styles.input} ${styles.tableColMedium}`}
                     />
                   </td>
                   <td>
@@ -233,8 +237,7 @@ export const AdminExperience: React.FC = () => {
                     <td colSpan={8}>
                       <div className={styles.detailGrid}>
                         <div
-                          className={styles.formGroup}
-                          style={{ gridColumn: "1 / -1" }}
+                          className={`${styles.formGroup} ${styles.gridFullWidth}`}
                         >
                           <label>Description</label>
                           <textarea

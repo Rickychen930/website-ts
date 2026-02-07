@@ -133,16 +133,13 @@ export const AdminSavedJobs: React.FC = () => {
   };
 
   if (loading && items.length === 0) {
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Saved jobs</h1>
-      <p
-        className={styles.emptyState}
-        style={{ textAlign: "left", marginBottom: "1rem" }}
-      >
+      <p className={styles.pageIntro}>
         Jobs you want to apply to later. When you apply, click &quot;Apply&quot;
         to move them to Companies applied.
       </p>
@@ -289,7 +286,7 @@ export const AdminSavedJobs: React.FC = () => {
         <p className={styles.emptyState}>No saved jobs yet. Add one above.</p>
       )}
       {total > 0 && (
-        <p className={styles.emptyState} style={{ marginTop: "0.5rem" }}>
+        <p className={styles.totalCount} aria-live="polite">
           Total: {total}
         </p>
       )}

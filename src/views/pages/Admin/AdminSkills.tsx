@@ -78,19 +78,21 @@ export const AdminSkills: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Skills</h1>
-      <p
-        className={styles.emptyState}
-        style={{ marginBottom: "1rem", textAlign: "left" }}
-      >
-        Create: Add technical/soft skill → edit → Save all. Update: edit inline.
-        Delete: Delete → Save all.
+      <p className={styles.pageIntro}>
+        Add technical or soft skills, edit inline, then Save all. Use Delete
+        then Save all to remove.
       </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -98,7 +100,9 @@ export const AdminSkills: React.FC = () => {
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={handleSave} disabled={saving}>
           {saving ? "Saving…" : "Save all"}
         </Button>
@@ -107,7 +111,9 @@ export const AdminSkills: React.FC = () => {
         <h2 className={styles.formSectionTitle}>
           Technical skills ({technicalSkills.length})
         </h2>
-        <div className={styles.formActions} style={{ marginBottom: "0.5rem" }}>
+        <div
+          className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+        >
           <Button variant="primary" size="sm" onClick={addTechnical}>
             Add technical skill
           </Button>
@@ -133,8 +139,7 @@ export const AdminSkills: React.FC = () => {
                         n[i] = { ...n[i], name: e.target.value };
                         updateTechnical(n);
                       }}
-                      className={styles.input}
-                      style={{ width: "100%", maxWidth: "12rem" }}
+                      className={`${styles.input} ${styles.tableColWide}`}
                     />
                   </td>
                   <td>
@@ -199,7 +204,9 @@ export const AdminSkills: React.FC = () => {
         <h2 className={styles.formSectionTitle}>
           Soft skills ({softSkills.length})
         </h2>
-        <div className={styles.formActions} style={{ marginBottom: "0.5rem" }}>
+        <div
+          className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+        >
           <Button variant="primary" size="sm" onClick={addSoft}>
             Add soft skill
           </Button>
@@ -224,8 +231,7 @@ export const AdminSkills: React.FC = () => {
                         n[i] = { ...n[i], name: e.target.value };
                         updateSoft(n);
                       }}
-                      className={styles.input}
-                      style={{ width: "100%", maxWidth: "12rem" }}
+                      className={`${styles.input} ${styles.tableColWide}`}
                     />
                   </td>
                   <td>

@@ -117,16 +117,13 @@ export const AdminNotes: React.FC = () => {
   };
 
   if (loading && items.length === 0) {
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Notes</h1>
-      <p
-        className={styles.emptyState}
-        style={{ textAlign: "left", marginBottom: "1rem" }}
-      >
+      <p className={styles.pageIntro}>
         Study, work, interview prep, or other notes. Use as a scratchpad.
       </p>
       {message && <p className={styles.message}>{message}</p>}
@@ -189,12 +186,13 @@ export const AdminNotes: React.FC = () => {
         </form>
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
+      <div className={styles.filterBar}>
+        <label htmlFor="notes-filter-category">Filter by category</label>
         <select
-          className={styles.input}
+          id="notes-filter-category"
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
-          style={{ width: "auto" }}
+          aria-label="Filter notes by category"
         >
           <option value="">All categories</option>
           {CATEGORY_OPTIONS.map((o) => (
@@ -231,10 +229,11 @@ export const AdminNotes: React.FC = () => {
                     <div className={styles.listActions}>
                       <button
                         type="button"
-                        className={styles.toggleDetail}
+                        className={styles.tableBtnLink}
                         onClick={() =>
                           setExpandedId((prev) => (prev === n.id ? null : n.id))
                         }
+                        aria-expanded={expandedId === n.id}
                       >
                         {expandedId === n.id ? "Hide" : "View"}
                       </button>
@@ -258,15 +257,7 @@ export const AdminNotes: React.FC = () => {
                 {expandedId === n.id && (
                   <tr className={styles.detailRow}>
                     <td colSpan={4}>
-                      <pre
-                        style={{
-                          whiteSpace: "pre-wrap",
-                          margin: 0,
-                          fontFamily: "inherit",
-                        }}
-                      >
-                        {n.content || "(empty)"}
-                      </pre>
+                      <pre>{n.content || "(empty)"}</pre>
                     </td>
                   </tr>
                 )}
@@ -279,7 +270,7 @@ export const AdminNotes: React.FC = () => {
         <p className={styles.emptyState}>No notes yet. Add one above.</p>
       )}
       {total > 0 && (
-        <p className={styles.emptyState} style={{ marginTop: "0.5rem" }}>
+        <p className={styles.totalCount} aria-live="polite">
           Total: {total}
         </p>
       )}

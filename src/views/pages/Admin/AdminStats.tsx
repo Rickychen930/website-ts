@@ -73,19 +73,21 @@ export const AdminStats: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Stats</h1>
-      <p
-        className={styles.emptyState}
-        style={{ marginBottom: "1rem", textAlign: "left" }}
-      >
-        Create: Add stat → edit value/label/unit → Save all. Update: edit
-        inline. Delete: Delete → Save all.
+      <p className={styles.pageIntro}>
+        Profile stats (e.g. &quot;Years of experience&quot;, &quot;Projects
+        completed&quot;) with optional unit.
       </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -93,7 +95,9 @@ export const AdminStats: React.FC = () => {
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={addNew}>
           Add stat
         </Button>
@@ -118,25 +122,22 @@ export const AdminStats: React.FC = () => {
                   <input
                     value={s.label}
                     onChange={(e) => updateOne(i, "label", e.target.value)}
-                    className={styles.input}
-                    style={{ width: "100%", maxWidth: "12rem" }}
+                    className={`${styles.input} ${styles.tableColWide}`}
                   />
                 </td>
                 <td>
                   <input
                     value={String(s.value)}
                     onChange={(e) => updateOne(i, "value", e.target.value)}
-                    className={styles.input}
-                    style={{ width: "6rem" }}
+                    className={`${styles.input} ${styles.tableColFixed6}`}
                   />
                 </td>
                 <td>
                   <input
                     value={s.unit ?? ""}
                     onChange={(e) => updateOne(i, "unit", e.target.value)}
-                    className={styles.input}
+                    className={`${styles.input} ${styles.tableColNarrow}`}
                     placeholder="e.g. +"
-                    style={{ width: "4rem" }}
                   />
                 </td>
                 <td>

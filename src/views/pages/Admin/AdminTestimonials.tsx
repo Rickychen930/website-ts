@@ -85,19 +85,20 @@ export const AdminTestimonials: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Testimonials</h1>
-      <p
-        className={styles.emptyState}
-        style={{ marginBottom: "1rem", textAlign: "left" }}
-      >
-        Create: Add testimonial → edit → Save all. Update: edit inline. Delete:
-        Delete → Save all.
+      <p className={styles.pageIntro}>
+        Add testimonial, edit author/role/company/content inline, then Save all.
       </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -105,7 +106,9 @@ export const AdminTestimonials: React.FC = () => {
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={addNew}>
           Add testimonial
         </Button>
@@ -131,33 +134,29 @@ export const AdminTestimonials: React.FC = () => {
                   <input
                     value={t.author}
                     onChange={(e) => updateOne(i, "author", e.target.value)}
-                    className={styles.input}
-                    style={{ width: "100%", maxWidth: "10rem" }}
+                    className={`${styles.input} ${styles.tableColMedium}`}
                   />
                 </td>
                 <td>
                   <input
                     value={t.role}
                     onChange={(e) => updateOne(i, "role", e.target.value)}
-                    className={styles.input}
-                    style={{ width: "100%", maxWidth: "10rem" }}
+                    className={`${styles.input} ${styles.tableColMedium}`}
                   />
                 </td>
                 <td>
                   <input
                     value={t.company}
                     onChange={(e) => updateOne(i, "company", e.target.value)}
-                    className={styles.input}
-                    style={{ width: "100%", maxWidth: "10rem" }}
+                    className={`${styles.input} ${styles.tableColMedium}`}
                   />
                 </td>
                 <td>
                   <textarea
                     value={t.content}
                     onChange={(e) => updateOne(i, "content", e.target.value)}
-                    className={styles.input}
+                    className={`${styles.input} ${styles.tableColWidest}`}
                     rows={2}
-                    style={{ width: "100%", maxWidth: "20rem" }}
                   />
                 </td>
                 <td>

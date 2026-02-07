@@ -176,17 +176,15 @@ export const AdminCompanies: React.FC = () => {
   };
 
   if (loading && items.length === 0) {
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Companies applied</h1>
-      <p
-        className={styles.emptyState}
-        style={{ textAlign: "left", marginBottom: "1rem" }}
-      >
-        Track companies you've applied to so you don't forget.
+      <p className={styles.pageIntro}>
+        Track companies you've applied to: status, follow-up dates, and next
+        interviews in one place.
       </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -409,23 +407,14 @@ export const AdminCompanies: React.FC = () => {
 
       {interviewModal && (
         <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.4)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
+          className={styles.modalOverlay}
           onClick={() => setInterviewModal(null)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="interview-questions-title"
         >
           <div
-            className={styles.formSection}
-            style={{ maxWidth: "32rem", maxHeight: "85vh", overflow: "auto" }}
+            className={`${styles.formSection} ${styles.modalBox}`}
             onClick={(e) => e.stopPropagation()}
           >
             <h2
@@ -437,8 +426,7 @@ export const AdminCompanies: React.FC = () => {
             </h2>
             {aiConfigured && (
               <div
-                className={styles.formActions}
-                style={{ marginBottom: "1rem" }}
+                className={`${styles.formActions} ${styles.modalActionsTop}`}
               >
                 <Button
                   variant="primary"
@@ -453,16 +441,7 @@ export const AdminCompanies: React.FC = () => {
               </div>
             )}
             {interviewQuestions && (
-              <pre
-                style={{
-                  whiteSpace: "pre-wrap",
-                  fontFamily: "inherit",
-                  fontSize: "var(--font-size-sm)",
-                  margin: 0,
-                }}
-              >
-                {interviewQuestions}
-              </pre>
+              <pre className={styles.preWrap}>{interviewQuestions}</pre>
             )}
             {!aiConfigured && (
               <p className={styles.emptyState}>
@@ -478,7 +457,7 @@ export const AdminCompanies: React.FC = () => {
         <p className={styles.emptyState}>No companies yet. Add one above.</p>
       )}
       {total > 0 && (
-        <p className={styles.emptyState} style={{ marginTop: "0.5rem" }}>
+        <p className={styles.totalCount} aria-live="polite">
           Total: {total}
         </p>
       )}

@@ -91,18 +91,15 @@ export const AdminProfile: React.FC = () => {
           Error: {error}
         </p>
       );
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Profile</h1>
-      <p
-        className={styles.emptyState}
-        style={{ marginBottom: "1rem", textAlign: "left" }}
-      >
-        Update: edit fields below → Save profile. (Other sections in sidebar for
-        projects, experience, etc.)
+      <p className={styles.pageIntro}>
+        Edit fields below, then Save profile. Other sections (Projects,
+        Experience, etc.) are in the sidebar.
       </p>
       <form onSubmit={handleSubmit}>
         <div className={styles.formSection}>
@@ -151,14 +148,13 @@ export const AdminProfile: React.FC = () => {
           {languages.map((lang, i) => (
             <div
               key={lang.id ?? i}
-              className={styles.formGroup}
-              style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
+              className={`${styles.formGroup} ${styles.formRow}`}
             >
               <input
+                className={styles.formRowFlex1}
                 placeholder="Language name"
                 value={lang.name}
                 onChange={(e) => updateLanguage(i, "name", e.target.value)}
-                style={{ flex: 1 }}
               />
               <select
                 value={lang.proficiency}
@@ -182,15 +178,16 @@ export const AdminProfile: React.FC = () => {
               </Button>
             </div>
           ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={addLanguage}
-            style={{ marginBottom: "1rem" }}
-          >
-            Add language
-          </Button>
+          <div className={styles.formActionsMarginBottom}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={addLanguage}
+            >
+              Add language
+            </Button>
+          </div>
         </div>
 
         {error && (

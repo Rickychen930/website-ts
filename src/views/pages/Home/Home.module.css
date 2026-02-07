@@ -362,12 +362,19 @@
   gap: var(--spacing-2xl);
   margin-bottom: var(--spacing-3xl);
   padding: 0 var(--spacing-md);
-  align-items: start;
+  align-items: stretch;
   box-sizing: border-box;
 }
 
 .projectsGrid > * {
+  display: flex;
+  min-height: 0;
   animation: fadeInUp var(--transition-slow) var(--transition-ease) both;
+}
+
+.projectsGrid > * > * {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 .projectsGrid > *:nth-child(1) {
@@ -459,7 +466,14 @@
 }
 
 .testimonialsGrid > * {
+  display: flex;
+  min-height: 0;
   animation: fadeInUp var(--transition-slow) var(--transition-ease) both;
+}
+
+.testimonialsGrid > * > * {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 .testimonialsGrid > *:nth-child(1) {

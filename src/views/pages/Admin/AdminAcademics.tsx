@@ -78,20 +78,30 @@ export const AdminAcademics: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Academics</h1>
+      <p className={styles.pageIntro}>
+        Education entries: institution, degree, field, and dates.
+      </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={add}>
           Add
         </Button>
@@ -117,24 +127,21 @@ export const AdminAcademics: React.FC = () => {
                   <input
                     value={a.institution}
                     onChange={(e) => setOne(i, "institution", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "12rem" }}
+                    className={`${styles.input} ${styles.tableColWide}`}
                   />
                 </td>
                 <td>
                   <input
                     value={a.degree}
                     onChange={(e) => setOne(i, "degree", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "10rem" }}
+                    className={`${styles.input} ${styles.tableColMedium}`}
                   />
                 </td>
                 <td>
                   <input
                     value={a.field}
                     onChange={(e) => setOne(i, "field", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "10rem" }}
+                    className={`${styles.input} ${styles.tableColMedium}`}
                   />
                 </td>
                 <td>

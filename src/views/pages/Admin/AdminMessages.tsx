@@ -42,7 +42,7 @@ export const AdminMessages: React.FC = () => {
   };
 
   if (loading && !data) {
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
   if (error && !data) {
     return (
@@ -57,6 +57,9 @@ export const AdminMessages: React.FC = () => {
   return (
     <>
       <h1 className={styles.pageTitle}>Contact messages</h1>
+      <p className={styles.pageIntro}>
+        Messages sent from the site contact form. Delete to remove.
+      </p>
       {error && (
         <p className={styles.error} role="alert">
           {error}

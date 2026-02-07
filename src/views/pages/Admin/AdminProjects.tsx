@@ -104,19 +104,21 @@ export const AdminProjects: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Projects</h1>
-      <p
-        className={styles.emptyState}
-        style={{ marginBottom: "1rem", textAlign: "left" }}
-      >
-        Create: Add project → edit fields → Save all. Update: edit inline or
-        open details. Delete: Delete → Save all.
+      <p className={styles.pageIntro}>
+        Add project, edit fields or open details with +, then Save all. Use
+        Delete then Save all to remove.
       </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
@@ -124,7 +126,9 @@ export const AdminProjects: React.FC = () => {
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={addNew}>
           Add project
         </Button>
@@ -136,7 +140,7 @@ export const AdminProjects: React.FC = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th style={{ width: "2rem" }}></th>
+              <th className={styles.tableColThumb}></th>
               <th>Title</th>
               <th>Category</th>
               <th>Active</th>
@@ -152,11 +156,14 @@ export const AdminProjects: React.FC = () => {
                   <td>
                     <button
                       type="button"
-                      className={styles.toggleDetail}
+                      className={styles.tableBtnLink}
                       onClick={() =>
                         setExpandedIndex(expandedIndex === i ? null : i)
                       }
                       aria-expanded={expandedIndex === i}
+                      title={
+                        expandedIndex === i ? "Collapse" : "Expand details"
+                      }
                     >
                       {expandedIndex === i ? "−" : "+"}
                     </button>
@@ -165,8 +172,7 @@ export const AdminProjects: React.FC = () => {
                     <input
                       value={p.title}
                       onChange={(e) => updateOne(i, "title", e.target.value)}
-                      className={styles.input}
-                      style={{ width: "100%", maxWidth: "14rem" }}
+                      className={`${styles.input} ${styles.tableColWider}`}
                     />
                   </td>
                   <td>
@@ -315,8 +321,7 @@ export const AdminProjects: React.FC = () => {
                           />
                         </div>
                         <div
-                          className={styles.formGroup}
-                          style={{ gridColumn: "1 / -1" }}
+                          className={`${styles.formGroup} ${styles.gridFullWidth}`}
                         >
                           <label>Architecture</label>
                           <textarea

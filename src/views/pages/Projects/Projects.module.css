@@ -107,8 +107,18 @@
   grid-template-columns: repeat(auto-fill, minmax(21.25rem, 1fr));
   gap: var(--spacing-2xl);
   padding: 0 var(--spacing-md);
-  align-items: start;
+  align-items: stretch;
   box-sizing: border-box;
+}
+
+.projectsGrid > * {
+  display: flex;
+  min-height: 0;
+}
+
+.projectsGrid > * > * {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 .empty {

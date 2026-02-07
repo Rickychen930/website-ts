@@ -78,20 +78,31 @@ export const AdminContacts: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Contact info</h1>
+      <p className={styles.pageIntro}>
+        Email, phone, LinkedIn, GitHub, website, etc. Mark one per type as
+        primary.
+      </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={add}>
           Add contact
         </Button>
@@ -137,16 +148,14 @@ export const AdminContacts: React.FC = () => {
                   <input
                     value={c.label}
                     onChange={(e) => setOne(i, "label", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "8rem" }}
+                    className={`${styles.input} ${styles.tableColSmall}`}
                   />
                 </td>
                 <td>
                   <input
                     value={c.value}
                     onChange={(e) => setOne(i, "value", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "14rem" }}
+                    className={`${styles.input} ${styles.tableColWider}`}
                   />
                 </td>
                 <td>

@@ -155,16 +155,13 @@ export const AdminTasks: React.FC = () => {
   };
 
   if (loading && items.length === 0) {
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
-      <h1 className={styles.pageTitle}>Tasks (To-Do)</h1>
-      <p
-        className={styles.emptyState}
-        style={{ textAlign: "left", marginBottom: "1rem" }}
-      >
+      <h1 className={styles.pageTitle}>Tasks</h1>
+      <p className={styles.pageIntro}>
         Track study, work, and personal tasks. Filter by status below.
       </p>
       {message && <p className={styles.message}>{message}</p>}
@@ -266,30 +263,21 @@ export const AdminTasks: React.FC = () => {
         </form>
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label
-          className={styles.formGroup}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
+      <div className={styles.filterBar}>
+        <label htmlFor="tasks-filter-status">Filter by status</label>
+        <select
+          id="tasks-filter-status"
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          aria-label="Filter tasks by status"
         >
-          Filter status:{" "}
-          <select
-            className={styles.input}
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            style={{ width: "auto" }}
-          >
-            <option value="">All</option>
-            {STATUS_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </label>
+          <option value="">All</option>
+          {STATUS_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className={styles.tableWrap}>
@@ -308,13 +296,15 @@ export const AdminTasks: React.FC = () => {
             {items.map((t) => (
               <tr
                 key={t.id}
-                style={t.status === "done" ? { opacity: 0.7 } : undefined}
+                className={
+                  t.status === "done" ? styles.tableRowMuted : undefined
+                }
               >
                 <td>
                   <span
-                    style={
+                    className={
                       t.status === "done"
-                        ? { textDecoration: "line-through" }
+                        ? styles.tableCellStrikethrough
                         : undefined
                     }
                   >
@@ -331,7 +321,7 @@ export const AdminTasks: React.FC = () => {
                 <td>
                   <button
                     type="button"
-                    className={styles.toggleDetail}
+                    className={styles.tableBtnLink}
                     onClick={() => toggleStatus(t)}
                     title="Change status"
                   >
@@ -370,7 +360,7 @@ export const AdminTasks: React.FC = () => {
         <p className={styles.emptyState}>No tasks yet. Add one above.</p>
       )}
       {total > 0 && (
-        <p className={styles.emptyState} style={{ marginTop: "0.5rem" }}>
+        <p className={styles.totalCount} aria-live="polite">
           Total: {total}
         </p>
       )}

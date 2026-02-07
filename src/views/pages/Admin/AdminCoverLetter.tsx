@@ -375,11 +375,11 @@ export const AdminCoverLetter: React.FC = () => {
   };
 
   if (loading && !profile) {
-    return <p className={styles.emptyState}>Loading profile…</p>;
+    return <p className={styles.loadingState}>Loading profile…</p>;
   }
   if (error && !profile) {
     return (
-      <p className={styles.emptyState} role="alert">
+      <p className={styles.error} role="alert">
         {error}
       </p>
     );
@@ -388,10 +388,7 @@ export const AdminCoverLetter: React.FC = () => {
   return (
     <>
       <h1 className={styles.pageTitle}>Cover letter</h1>
-      <p
-        className={styles.emptyState}
-        style={{ textAlign: "left", marginBottom: "1rem" }}
-      >
+      <p className={styles.pageIntro}>
         Create a different cover letter for each company. Edit the body for each
         application, then save and print.
       </p>
@@ -520,25 +517,14 @@ export const AdminCoverLetter: React.FC = () => {
                     type="button"
                     variant="ghost"
                     size="sm"
+                    className={styles.btnTopMargin}
                     onClick={handleSummarizeJd}
                     disabled={!jobDescription.trim() || jdSummaryLoading}
-                    style={{ marginTop: "0.5rem" }}
                   >
                     {jdSummaryLoading ? "Summarizing…" : "Summarize with AI"}
                   </Button>
                   {jdSummary && (
-                    <div
-                      style={{
-                        marginTop: "0.75rem",
-                        padding: "0.75rem",
-                        background: "var(--bg-tertiary)",
-                        borderRadius: "var(--radius-md)",
-                        whiteSpace: "pre-wrap",
-                        fontSize: "var(--font-size-sm)",
-                      }}
-                    >
-                      {jdSummary}
-                    </div>
+                    <div className={styles.summaryBox}>{jdSummary}</div>
                   )}
                 </>
               )}
@@ -568,10 +554,7 @@ export const AdminCoverLetter: React.FC = () => {
             <h2 className={styles.formSectionTitle}>
               Letter body (edit for this company)
             </h2>
-            <p
-              className={styles.emptyState}
-              style={{ textAlign: "left", marginBottom: "0.5rem" }}
-            >
+            <p className={styles.formHint}>
               Each paragraph separated by a blank line. Customize this for every
               company.
             </p>
@@ -582,7 +565,9 @@ export const AdminCoverLetter: React.FC = () => {
               placeholder="Dear Hiring Manager, ..."
               spellCheck
             />
-            <div className={styles.formActions} style={{ marginTop: "1rem" }}>
+            <div
+              className={`${styles.formActions} ${styles.formActionsMarginTop}`}
+            >
               <Button variant="primary" onClick={handleSave} disabled={saving}>
                 {saving
                   ? "Saving…"

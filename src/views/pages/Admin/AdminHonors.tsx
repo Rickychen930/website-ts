@@ -71,20 +71,30 @@ export const AdminHonors: React.FC = () => {
   };
 
   if (!profile) {
-    if (error) return <p className={styles.emptyState}>Error: {error}</p>;
-    return <p className={styles.emptyState}>Loading…</p>;
+    if (error)
+      return (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      );
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Honors & Awards</h1>
+      <p className={styles.pageIntro}>
+        Awards and honors: title, issuer, and date.
+      </p>
       {message && <p className={styles.message}>{message}</p>}
       {error && (
         <p className={styles.error} role="alert">
           {error}
         </p>
       )}
-      <div className={styles.formActions} style={{ marginBottom: "1rem" }}>
+      <div
+        className={`${styles.formActions} ${styles.formActionsMarginBottom}`}
+      >
         <Button variant="primary" onClick={add}>
           Add
         </Button>
@@ -109,16 +119,14 @@ export const AdminHonors: React.FC = () => {
                   <input
                     value={h.title}
                     onChange={(e) => setOne(i, "title", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "14rem" }}
+                    className={`${styles.input} ${styles.tableColWider}`}
                   />
                 </td>
                 <td>
                   <input
                     value={h.issuer}
                     onChange={(e) => setOne(i, "issuer", e.target.value)}
-                    className={styles.input}
-                    style={{ maxWidth: "12rem" }}
+                    className={`${styles.input} ${styles.tableColWide}`}
                   />
                 </td>
                 <td>

@@ -132,16 +132,13 @@ export const AdminGoals: React.FC = () => {
   };
 
   if (loading && items.length === 0) {
-    return <p className={styles.emptyState}>Loading…</p>;
+    return <p className={styles.loadingState}>Loading…</p>;
   }
 
   return (
     <>
       <h1 className={styles.pageTitle}>Goals</h1>
-      <p
-        className={styles.emptyState}
-        style={{ textAlign: "left", marginBottom: "1rem" }}
-      >
+      <p className={styles.pageIntro}>
         Short-term targets: this semester, job applications, projects, etc.
       </p>
       {message && <p className={styles.message}>{message}</p>}
@@ -215,12 +212,13 @@ export const AdminGoals: React.FC = () => {
         </form>
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
+      <div className={styles.filterBar}>
+        <label htmlFor="goals-filter-status">Filter by status</label>
         <select
-          className={styles.input}
+          id="goals-filter-status"
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          style={{ width: "auto" }}
+          aria-label="Filter goals by status"
         >
           <option value="">All statuses</option>
           {STATUS_OPTIONS.map((o) => (
@@ -245,13 +243,15 @@ export const AdminGoals: React.FC = () => {
             {items.map((g) => (
               <tr
                 key={g.id}
-                style={g.status === "completed" ? { opacity: 0.7 } : undefined}
+                className={
+                  g.status === "completed" ? styles.tableRowMuted : undefined
+                }
               >
                 <td>
                   <span
-                    style={
+                    className={
                       g.status === "completed"
-                        ? { textDecoration: "line-through" }
+                        ? styles.tableCellStrikethrough
                         : undefined
                     }
                   >
@@ -266,7 +266,7 @@ export const AdminGoals: React.FC = () => {
                 <td>
                   <button
                     type="button"
-                    className={styles.toggleDetail}
+                    className={styles.tableBtnLink}
                     onClick={() => markCompleted(g)}
                     title="Mark completed or active"
                   >
@@ -301,7 +301,7 @@ export const AdminGoals: React.FC = () => {
         <p className={styles.emptyState}>No goals yet. Add one above.</p>
       )}
       {total > 0 && (
-        <p className={styles.emptyState} style={{ marginTop: "0.5rem" }}>
+        <p className={styles.totalCount} aria-live="polite">
           Total: {total}
         </p>
       )}
