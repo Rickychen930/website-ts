@@ -1,15 +1,23 @@
 /**
- * Generate resume as PDF and trigger direct download (one click, no print dialog).
- * Uses jsPDF for client-side PDF generation. Output stays under 2 MB.
+ * Generate resume as PDF – ATS-friendly, professional, structured.
+ * Single column, clear headings, consistent spacing. Output stays under 2 MB.
  */
 
 import { jsPDF } from "jspdf";
 import type { ResumePrintData } from "./resumePrint";
+import {
+  formatContactLabel,
+  formatContactValue,
+  formatExperienceCompanyLine,
+  sortContactsForResume,
+  trimResumeText,
+} from "./resumeFormat";
 
-const MARGIN = 15;
+const MARGIN = 18;
 const PAGE_WIDTH = 210;
 const PAGE_HEIGHT = 297;
 const CONTENT_WIDTH = PAGE_WIDTH - 2 * MARGIN;
+const LINE_HEIGHT_FACTOR = 0.42; // mm per pt of font size
 
 function addPageIfNeeded(doc: jsPDF, y: number, needSpace: number): number {
   if (y + needSpace > PAGE_HEIGHT - MARGIN) {
@@ -19,265 +27,290 @@ function addPageIfNeeded(doc: jsPDF, y: number, needSpace: number): number {
   return y;
 }
 
-function addText(
+/** Add body text with wrapping; returns new y */
+function addBodyText(
   doc: jsPDF,
   text: string,
   x: number,
   y: number,
   fontSize: number,
-  options?: { bold?: boolean },
+  maxWidth: number = CONTENT_WIDTH,
 ): number {
   doc.setFontSize(fontSize);
-  doc.setFont("helvetica", options?.bold ? "bold" : "normal");
-  const lines = doc.splitTextToSize(text, CONTENT_WIDTH);
+  doc.setFont("helvetica", "normal");
+  const lines = doc.splitTextToSize(text, maxWidth);
   doc.text(lines, x, y);
-  return y + lines.length * (fontSize * 0.45);
+  return y + lines.length * (fontSize * LINE_HEIGHT_FACTOR);
 }
 
-function addHeading(doc: jsPDF, text: string, y: number): number {
+/** Add bold text with optional wrap; returns new y */
+function addBoldText(
+  doc: jsPDF,
+  text: string,
+  x: number,
+  y: number,
+  fontSize: number,
+  maxWidth: number = CONTENT_WIDTH,
+): number {
+  doc.setFontSize(fontSize);
+  doc.setFont("helvetica", "bold");
+  const lines = doc.splitTextToSize(text, maxWidth);
+  doc.text(lines, x, y);
+  return y + lines.length * (fontSize * LINE_HEIGHT_FACTOR);
+}
+
+/** ATS-friendly section heading: uppercase, underline; avoid orphan (require min space after). */
+function addSectionHeading(doc: jsPDF, text: string, y: number): number {
+  y = addPageIfNeeded(doc, y, 25);
   doc.setFontSize(11);
   doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 0);
   doc.text(text.toUpperCase(), MARGIN, y);
   doc.setDrawColor(0, 0, 0);
-  doc.setLineWidth(0.3);
-  doc.line(MARGIN, y + 1, PAGE_WIDTH - MARGIN, y + 1);
-  return y + 8;
+  doc.setLineWidth(0.35);
+  doc.line(MARGIN, y + 1.5, PAGE_WIDTH - MARGIN, y + 1.5);
+  return y + 10;
 }
 
 export function downloadResumePdf(data: ResumePrintData): void {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
+  doc.setFont("helvetica");
+  doc.setTextColor(0, 0, 0);
   let y = MARGIN;
 
+  // —— Name ——
+  const name = trimResumeText(data.name) || "Resume";
   doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
-  doc.text(data.name, MARGIN, y);
-  y += 10;
+  doc.text(name, MARGIN, y);
+  y += 9;
 
-  if (data.title || data.location) {
+  // —— Title & Location (one line if possible) ——
+  const title = trimResumeText(data.title);
+  const location = trimResumeText(data.location);
+  if (title || location) {
     doc.setFontSize(11);
     doc.setFont("helvetica", "normal");
-    if (data.title) {
-      doc.setFont("helvetica", "bold");
-      doc.text(data.title, MARGIN, y);
-      y += 5;
-    }
-    if (data.location) {
-      doc.setFont("helvetica", "normal");
-      doc.text(data.location, MARGIN, y);
-      y += 5;
-    }
+    const titleLine = [title, location].filter(Boolean).join("  ·  ");
+    doc.text(titleLine, MARGIN, y, { maxWidth: CONTENT_WIDTH });
+    y += 6;
   }
 
-  const contactParts = data.contacts
-    .filter((c) => c.value)
-    .map((c) => `${c.label || c.type}: ${c.value}`);
-  if (contactParts.length > 0) {
+  // —— Contact line: Email | Phone | LinkedIn | GitHub (sorted, short, professional) ——
+  const contactEntries = sortContactsForResume(
+    data.contacts.filter((c) => trimResumeText(c.value)),
+  ).map(
+    (c) =>
+      `${formatContactLabel(c.type, c.label)}: ${formatContactValue(c.type, c.value)}`,
+  );
+  if (contactEntries.length > 0) {
     doc.setFontSize(9);
-    doc.text(contactParts.join("  |  "), MARGIN, y, {
-      maxWidth: CONTENT_WIDTH,
-    });
-    y += 8;
+    const contactLine = contactEntries.join("  |  ");
+    const contactLines = doc.splitTextToSize(contactLine, CONTENT_WIDTH);
+    doc.text(contactLines, MARGIN, y);
+    y += contactLines.length * (9 * LINE_HEIGHT_FACTOR) + 4;
   }
 
-  y += 2;
-
-  if (data.bio) {
-    y = addPageIfNeeded(doc, y, 25);
-    y = addHeading(doc, "Professional Summary", y);
-    y = addText(doc, data.bio, MARGIN, y, 10) + 3;
+  // —— Professional Summary ——
+  const bio = trimResumeText(data.bio);
+  if (bio) {
+    y = addSectionHeading(doc, "Professional Summary", y);
+    y = addBodyText(doc, bio, MARGIN, y, 10) + 5;
   }
 
+  // —— Experience ——
   if (data.experiences.length > 0) {
-    y = addPageIfNeeded(doc, y, 15);
-    y = addHeading(doc, "Experience", y);
+    y = addSectionHeading(doc, "Experience", y);
     for (const exp of data.experiences) {
-      y = addPageIfNeeded(doc, y, 20);
+      y = addPageIfNeeded(doc, y, 25);
       const dateRange = exp.endDate
-        ? `${exp.startDate} – ${exp.endDate}`
+        ? `${trimResumeText(exp.startDate)} – ${trimResumeText(exp.endDate)}`
         : exp.isCurrent
-          ? `${exp.startDate} – Present`
-          : exp.startDate;
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text(
-        `${exp.position} | ${exp.company}${exp.location ? ` – ${exp.location}` : ""}`,
-        MARGIN,
-        y,
-        { maxWidth: CONTENT_WIDTH },
+          ? `${trimResumeText(exp.startDate)} – Present`
+          : trimResumeText(exp.startDate);
+      const companyPart = formatExperienceCompanyLine(
+        trimResumeText(exp.company),
+        exp.location ? trimResumeText(exp.location) : undefined,
       );
-      y += 5;
-      doc.setFont("helvetica", "normal");
+      const titleLine = `${trimResumeText(exp.position)} | ${companyPart}`;
+      y = addBoldText(doc, titleLine, MARGIN, y, 10) + 1;
       doc.setFontSize(9);
+      doc.setFont("helvetica", "normal");
       doc.text(dateRange, MARGIN, y);
       y += 5;
-      if (exp.description) {
-        y = addText(doc, exp.description, MARGIN, y, 9) + 2;
+      const desc = trimResumeText(exp.description);
+      if (desc) {
+        y = addBodyText(doc, desc, MARGIN, y, 9) + 2;
       }
       if (exp.achievements?.length) {
+        doc.setFontSize(9);
         for (const a of exp.achievements) {
-          y = addPageIfNeeded(doc, y, 6);
-          doc.text(`• ${a}`, MARGIN + 3, y, { maxWidth: CONTENT_WIDTH - 3 });
-          y += 5;
+          y = addPageIfNeeded(doc, y, 8);
+          const bulletText = `• ${trimResumeText(a)}`;
+          const lines = doc.splitTextToSize(bulletText, CONTENT_WIDTH - 4);
+          doc.text(lines, MARGIN + 4, y);
+          y += lines.length * (9 * LINE_HEIGHT_FACTOR) + 1;
         }
       }
       if (exp.technologies?.length) {
         doc.setFont("helvetica", "italic");
         doc.setFontSize(8);
-        doc.text(`Technologies: ${exp.technologies.join(", ")}`, MARGIN, y, {
-          maxWidth: CONTENT_WIDTH,
-        });
-        y += 6;
+        const techText = `Technologies: ${exp.technologies.map((t) => trimResumeText(t)).join(", ")}`;
+        const techLines = doc.splitTextToSize(techText, CONTENT_WIDTH);
+        doc.text(techLines, MARGIN, y);
+        y += techLines.length * (8 * LINE_HEIGHT_FACTOR) + 2;
         doc.setFont("helvetica", "normal");
       }
-      y += 3;
+      y += 4;
     }
   }
 
+  // —— Education ——
   if (data.academics.length > 0) {
-    y = addPageIfNeeded(doc, y, 15);
-    y = addHeading(doc, "Education", y);
+    y = addSectionHeading(doc, "Education", y);
     for (const a of data.academics) {
-      y = addPageIfNeeded(doc, y, 15);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text(`${a.degree}${a.field ? ` in ${a.field}` : ""}`, MARGIN, y, {
-        maxWidth: CONTENT_WIDTH,
-      });
-      y += 5;
-      doc.setFont("helvetica", "normal");
+      y = addPageIfNeeded(doc, y, 18);
+      const degree = trimResumeText(a.degree);
+      const field = trimResumeText(a.field);
+      const degreeLine = `${degree}${field ? ` in ${field}` : ""}`;
+      y = addBoldText(doc, degreeLine, MARGIN, y, 10) + 1;
       doc.setFontSize(9);
-      const dateStr =
-        a.startDate || a.endDate
-          ? ` ${a.startDate ?? ""}${a.endDate ? ` – ${a.endDate}` : ""}`
-          : "";
-      doc.text(`${a.institution}${dateStr}`, MARGIN, y);
+      doc.setFont("helvetica", "normal");
+      const datePart = [a.startDate, a.endDate]
+        .map((d) => trimResumeText(d))
+        .filter(Boolean)
+        .join(" – ");
+      const dateStr = datePart ? `  ${datePart}` : "";
+      doc.text(`${trimResumeText(a.institution)}${dateStr}`.trim(), MARGIN, y);
       y += 5;
-      if (a.description) {
-        y = addText(doc, a.description, MARGIN, y, 9) + 3;
+      const acadDesc = trimResumeText(a.description);
+      if (acadDesc) {
+        y = addBodyText(doc, acadDesc, MARGIN, y, 9) + 3;
       }
     }
   }
 
+  // —— Skills (Technical & Soft each on own line; content wraps with correct y) ——
   if (data.technicalSkills.length > 0 || data.softSkills.length > 0) {
-    y = addPageIfNeeded(doc, y, 15);
-    y = addHeading(doc, "Skills", y);
+    y = addSectionHeading(doc, "Skills", y);
     doc.setFontSize(9);
     if (data.technicalSkills.length > 0) {
       doc.setFont("helvetica", "bold");
-      doc.text("Technical: ", MARGIN, y);
+      doc.text("Technical:", MARGIN, y);
+      y += 9 * LINE_HEIGHT_FACTOR;
+      const techStr = data.technicalSkills
+        .map((s) => trimResumeText(s.name))
+        .filter(Boolean)
+        .join(", ");
       doc.setFont("helvetica", "normal");
-      const techText = " " + data.technicalSkills.map((s) => s.name).join(", ");
-      doc.text(techText.trim(), MARGIN + doc.getTextWidth("Technical: "), y, {
-        maxWidth: CONTENT_WIDTH - doc.getTextWidth("Technical: "),
-      });
-      y += 6;
+      y = addBodyText(doc, techStr, MARGIN, y, 9) + 4;
     }
     if (data.softSkills.length > 0) {
       doc.setFont("helvetica", "bold");
-      doc.text("Soft: ", MARGIN, y);
+      doc.text("Soft:", MARGIN, y);
+      y += 9 * LINE_HEIGHT_FACTOR;
+      const softStr = data.softSkills
+        .map((s) => trimResumeText(s.name))
+        .filter(Boolean)
+        .join(", ");
       doc.setFont("helvetica", "normal");
-      doc.text(
-        data.softSkills.map((s) => s.name).join(", "),
-        MARGIN + doc.getTextWidth("Soft: "),
-        y,
-        { maxWidth: CONTENT_WIDTH - doc.getTextWidth("Soft: ") },
-      );
-      y += 6;
+      y = addBodyText(doc, softStr, MARGIN, y, 9) + 4;
     }
     y += 2;
   }
 
+  // —— Projects ——
   if (data.projects.length > 0) {
-    y = addPageIfNeeded(doc, y, 15);
-    y = addHeading(doc, "Projects", y);
+    y = addSectionHeading(doc, "Projects", y);
     for (const proj of data.projects.slice(0, 8)) {
-      y = addPageIfNeeded(doc, y, 15);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text(proj.title, MARGIN, y, { maxWidth: CONTENT_WIDTH });
-      y += 5;
+      y = addPageIfNeeded(doc, y, 20);
+      y = addBoldText(doc, trimResumeText(proj.title), MARGIN, y, 10) + 2;
       doc.setFont("helvetica", "normal");
       doc.setFontSize(9);
-      if (proj.description) {
-        y = addText(doc, proj.description, MARGIN, y, 9) + 2;
+      const projDesc = trimResumeText(proj.description);
+      if (projDesc) {
+        y = addBodyText(doc, projDesc, MARGIN, y, 9) + 2;
       }
       if (proj.achievements?.length) {
+        doc.setFontSize(9);
         for (const a of proj.achievements.slice(0, 3)) {
-          y = addPageIfNeeded(doc, y, 5);
-          doc.text(`• ${a}`, MARGIN + 3, y, { maxWidth: CONTENT_WIDTH - 3 });
-          y += 5;
+          y = addPageIfNeeded(doc, y, 8);
+          const bulletText = `• ${trimResumeText(a)}`;
+          const lines = doc.splitTextToSize(bulletText, CONTENT_WIDTH - 4);
+          doc.text(lines, MARGIN + 4, y);
+          y += lines.length * (9 * LINE_HEIGHT_FACTOR) + 1;
         }
       }
       if (proj.technologies?.length) {
         doc.setFont("helvetica", "italic");
         doc.setFontSize(8);
-        doc.text(proj.technologies.join(", "), MARGIN, y, {
-          maxWidth: CONTENT_WIDTH,
-        });
-        y += 5;
+        const projTechLines = doc.splitTextToSize(
+          proj.technologies.map((t) => trimResumeText(t)).join(", "),
+          CONTENT_WIDTH,
+        );
+        doc.text(projTechLines, MARGIN, y);
+        y += projTechLines.length * (8 * LINE_HEIGHT_FACTOR) + 2;
         doc.setFont("helvetica", "normal");
       }
-      y += 3;
+      y += 4;
     }
   }
 
+  // —— Certifications ——
   if (data.certifications.length > 0) {
-    y = addPageIfNeeded(doc, y, 12);
-    y = addHeading(doc, "Certifications", y);
+    y = addSectionHeading(doc, "Certifications", y);
     doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
     for (const c of data.certifications) {
-      y = addPageIfNeeded(doc, y, 6);
-      doc.text(
-        `${c.name}${c.issuer ? ` | ${c.issuer}` : ""}${c.issueDate ? ` | ${c.issueDate}` : ""}`,
-        MARGIN,
-        y,
-        { maxWidth: CONTENT_WIDTH },
-      );
-      y += 5;
+      y = addPageIfNeeded(doc, y, 7);
+      const issuer = trimResumeText(c.issuer);
+      const issueDate = trimResumeText(c.issueDate);
+      const line = `${trimResumeText(c.name)}${issuer ? ` | ${issuer}` : ""}${issueDate ? ` | ${issueDate}` : ""}`;
+      y = addBodyText(doc, line, MARGIN, y, 9) + 2;
     }
     y += 2;
   }
 
+  // —— Honors & Awards ——
   if (data.honors.length > 0) {
-    y = addPageIfNeeded(doc, y, 12);
-    y = addHeading(doc, "Honors & Awards", y);
+    y = addSectionHeading(doc, "Honors & Awards", y);
     doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
     for (const h of data.honors) {
-      y = addPageIfNeeded(doc, y, 6);
-      doc.text(
-        `${h.title}${h.issuer ? ` | ${h.issuer}` : ""}${h.date ? ` | ${h.date}` : ""}`,
-        MARGIN,
-        y,
-        { maxWidth: CONTENT_WIDTH },
-      );
-      y += 5;
+      y = addPageIfNeeded(doc, y, 7);
+      const honIssuer = trimResumeText(h.issuer);
+      const honDate = trimResumeText(h.date);
+      const line = `${trimResumeText(h.title)}${honIssuer ? ` | ${honIssuer}` : ""}${honDate ? ` | ${honDate}` : ""}`;
+      y = addBodyText(doc, line, MARGIN, y, 9) + 2;
     }
     y += 2;
   }
 
+  // —— Highlights (Key metrics) ——
   if (data.stats.length > 0) {
-    y = addPageIfNeeded(doc, y, 10);
-    y = addHeading(doc, "Highlights", y);
+    y = addSectionHeading(doc, "Key Highlights", y);
     doc.setFontSize(9);
     const line = data.stats
-      .map((s) => `${s.label}: ${s.value}${s.unit ?? ""}`)
+      .map(
+        (s) =>
+          `${trimResumeText(s.label)}: ${s.value}${s.unit != null ? trimResumeText(String(s.unit)) : ""}`,
+      )
       .join("  ·  ");
-    y = addText(doc, line, MARGIN, y, 9) + 3;
+    y = addBodyText(doc, line, MARGIN, y, 9) + 4;
   }
 
+  // —— Languages (wrap correctly, advance y) ——
   if (data.languages.length > 0) {
-    y = addPageIfNeeded(doc, y, 10);
-    y = addHeading(doc, "Languages", y);
+    y = addSectionHeading(doc, "Languages", y);
     doc.setFontSize(9);
-    doc.text(
-      data.languages.map((l) => `${l.name} – ${l.proficiency}`).join("  |  "),
-      MARGIN,
-      y,
-      { maxWidth: CONTENT_WIDTH },
-    );
+    const langStr = data.languages
+      .map(
+        (l) => `${trimResumeText(l.name)} (${trimResumeText(l.proficiency)})`,
+      )
+      .join("  |  ");
+    y = addBodyText(doc, langStr, MARGIN, y, 9);
   }
 
-  const safeName =
-    data.name.replace(/\s+/g, "_").replace(/[^\w-]/g, "") || "Resume";
+  const safeName = name.replace(/\s+/g, "_").replace(/[^\w-]/g, "") || "Resume";
   doc.save(`${safeName}_Resume.pdf`);
 }

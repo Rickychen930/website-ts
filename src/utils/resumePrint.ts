@@ -5,6 +5,14 @@
  * so the saved PDF stays well under 2 MB.
  */
 
+import {
+  formatContactLabel,
+  formatContactValue,
+  formatExperienceCompanyLine,
+  sortContactsForResume,
+  trimResumeText,
+} from "./resumeFormat";
+
 function escapeHtml(text: string): string {
   const div = document.createElement("div");
   div.textContent = text;
@@ -78,27 +86,37 @@ const PRINT_STYLES = `
 `;
 
 function buildResumeHtml(data: ResumePrintData): string {
-  const contactParts = data.contacts
-    .filter((c) => c.value)
-    .map((c) => escapeHtml((c.label || c.type) + ": " + c.value));
+  const contactParts = sortContactsForResume(
+    data.contacts.filter((c) => trimResumeText(c.value)),
+  ).map((c) =>
+    escapeHtml(
+      formatContactLabel(c.type, c.label) +
+        ": " +
+        formatContactValue(c.type, c.value),
+    ),
+  );
   const contactHtml =
     contactParts.length > 0
       ? `<p class="contact">${contactParts.map((p, i) => (i > 0 ? " | " : "") + `<span>${p}</span>`).join("")}</p>`
       : "";
 
-  let html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${escapeHtml(data.name)} - Resume</title><style>${PRINT_STYLES}</style></head><body>`;
-  html += `<h1 class="resume-name">${escapeHtml(data.name)}</h1>`;
-  if (data.title || data.location) {
+  const name = trimResumeText(data.name) || "Resume";
+  const title = trimResumeText(data.title);
+  const location = trimResumeText(data.location);
+  const bio = trimResumeText(data.bio);
+  let html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${escapeHtml(name)} - Resume</title><style>${PRINT_STYLES}</style></head><body>`;
+  html += `<h1 class="resume-name">${escapeHtml(name)}</h1>`;
+  if (title || location) {
     html += `<p class="resume-tagline">`;
-    if (data.title) html += `<strong>${escapeHtml(data.title)}</strong>`;
-    if (data.title && data.location) html += "<br>";
-    if (data.location) html += escapeHtml(data.location);
+    if (title) html += `<strong>${escapeHtml(title)}</strong>`;
+    if (title && location) html += "<br>";
+    if (location) html += escapeHtml(location);
     html += `</p>`;
   }
   html += contactHtml;
 
-  if (data.bio) {
-    html += `<h2>Professional Summary</h2><p class="summary">${escapeHtml(data.bio)}</p>`;
+  if (bio) {
+    html += `<h2>Professional Summary</h2><p class="summary">${escapeHtml(bio)}</p>`;
   }
 
   if (data.experiences.length > 0) {
@@ -109,16 +127,21 @@ function buildResumeHtml(data: ResumePrintData): string {
         : exp.isCurrent
           ? `${exp.startDate} – Present`
           : exp.startDate;
-      html += `<div class="section-block"><h3>${escapeHtml(exp.position)} | ${escapeHtml(exp.company)}${exp.location ? ` – ${escapeHtml(exp.location)}` : ""}</h3><p class="job-meta">${escapeHtml(dateRange)}</p>`;
-      if (exp.description)
-        html += `<p class="summary">${escapeHtml(exp.description)}</p>`;
+      const companyLine = formatExperienceCompanyLine(
+        trimResumeText(exp.company),
+        exp.location ? trimResumeText(exp.location) : undefined,
+      );
+      html += `<div class="section-block"><h3>${escapeHtml(trimResumeText(exp.position))} | ${escapeHtml(companyLine)}</h3><p class="job-meta">${escapeHtml(trimResumeText(dateRange))}</p>`;
+      if (trimResumeText(exp.description))
+        html += `<p class="summary">${escapeHtml(trimResumeText(exp.description))}</p>`;
       if (exp.achievements?.length) {
         html += "<ul>";
-        for (const a of exp.achievements) html += `<li>${escapeHtml(a)}</li>`;
+        for (const a of exp.achievements)
+          html += `<li>${escapeHtml(trimResumeText(a))}</li>`;
         html += "</ul>";
       }
       if (exp.technologies?.length)
-        html += `<p class="tech">Technologies: ${exp.technologies.map((t) => escapeHtml(t)).join(", ")}</p>`;
+        html += `<p class="tech">Technologies: ${exp.technologies.map((t) => escapeHtml(trimResumeText(t))).join(", ")}</p>`;
       html += "</div>";
     }
   }
@@ -126,13 +149,14 @@ function buildResumeHtml(data: ResumePrintData): string {
   if (data.academics.length > 0) {
     html += "<h2>Education</h2>";
     for (const a of data.academics) {
-      const dateStr =
-        a.startDate || a.endDate
-          ? ` | ${a.startDate ?? ""}${a.endDate ? ` – ${a.endDate}` : ""}`
-          : "";
-      html += `<div class="section-block"><h3>${escapeHtml(a.degree)}${a.field ? ` in ${escapeHtml(a.field)}` : ""}</h3><p class="job-meta">${escapeHtml(a.institution)}${dateStr}</p>`;
-      if (a.description)
-        html += `<p class="summary">${escapeHtml(a.description)}</p>`;
+      const datePart = [a.startDate, a.endDate]
+        .map((d) => trimResumeText(d))
+        .filter(Boolean)
+        .join(" – ");
+      const dateStr = datePart ? " | " + datePart : "";
+      html += `<div class="section-block"><h3>${escapeHtml(trimResumeText(a.degree))}${trimResumeText(a.field) ? ` in ${escapeHtml(trimResumeText(a.field))}` : ""}</h3><p class="job-meta">${escapeHtml(trimResumeText(a.institution))}${dateStr}</p>`;
+      if (trimResumeText(a.description))
+        html += `<p class="summary">${escapeHtml(trimResumeText(a.description))}</p>`;
       html += "</div>";
     }
   }
@@ -140,49 +164,61 @@ function buildResumeHtml(data: ResumePrintData): string {
   if (data.technicalSkills.length > 0 || data.softSkills.length > 0) {
     html += "<h2>Skills</h2>";
     if (data.technicalSkills.length > 0)
-      html += `<p><strong>Technical:</strong> ${data.technicalSkills.map((s) => escapeHtml(s.name)).join(", ")}</p>`;
+      html += `<p><strong>Technical:</strong> ${data.technicalSkills
+        .map((s) => escapeHtml(trimResumeText(s.name)))
+        .filter(Boolean)
+        .join(", ")}</p>`;
     if (data.softSkills.length > 0)
-      html += `<p><strong>Soft:</strong> ${data.softSkills.map((s) => escapeHtml(s.name)).join(", ")}</p>`;
+      html += `<p><strong>Soft:</strong> ${data.softSkills
+        .map((s) => escapeHtml(trimResumeText(s.name)))
+        .filter(Boolean)
+        .join(", ")}</p>`;
   }
 
   if (data.projects.length > 0) {
     html += "<h2>Projects</h2>";
     for (const proj of data.projects.slice(0, 8)) {
-      html += `<div class="section-block"><h3>${escapeHtml(proj.title)}</h3>`;
-      if (proj.description)
-        html += `<p class="summary">${escapeHtml(proj.description)}</p>`;
+      html += `<div class="section-block"><h3>${escapeHtml(trimResumeText(proj.title))}</h3>`;
+      if (trimResumeText(proj.description))
+        html += `<p class="summary">${escapeHtml(trimResumeText(proj.description))}</p>`;
       if (proj.achievements?.length) {
         html += "<ul>";
         for (const a of proj.achievements.slice(0, 3))
-          html += `<li>${escapeHtml(a)}</li>`;
+          html += `<li>${escapeHtml(trimResumeText(a))}</li>`;
         html += "</ul>";
       }
       if (proj.technologies?.length)
-        html += `<p class="tech">${proj.technologies.map((t) => escapeHtml(t)).join(", ")}</p>`;
+        html += `<p class="tech">${proj.technologies.map((t) => escapeHtml(trimResumeText(t))).join(", ")}</p>`;
       html += "</div>";
     }
   }
 
   if (data.certifications.length > 0) {
     html += "<h2>Certifications</h2>";
-    for (const c of data.certifications)
-      html += `<p>${escapeHtml(c.name)}${c.issuer ? ` | ${escapeHtml(c.issuer)}` : ""}${c.issueDate ? ` | ${escapeHtml(c.issueDate)}` : ""}</p>`;
+    for (const c of data.certifications) {
+      const cIssuer = trimResumeText(c.issuer);
+      const cDate = trimResumeText(c.issueDate);
+      html += `<p>${escapeHtml(trimResumeText(c.name))}${cIssuer ? ` | ${escapeHtml(cIssuer)}` : ""}${cDate ? ` | ${escapeHtml(cDate)}` : ""}</p>`;
+    }
   }
 
   if (data.honors.length > 0) {
     html += "<h2>Honors &amp; Awards</h2>";
-    for (const h of data.honors)
-      html += `<p>${escapeHtml(h.title)}${h.issuer ? ` | ${escapeHtml(h.issuer)}` : ""}${h.date ? ` | ${escapeHtml(h.date)}` : ""}</p>`;
+    for (const h of data.honors) {
+      const hIssuer = trimResumeText(h.issuer);
+      const hDate = trimResumeText(h.date);
+      html += `<p>${escapeHtml(trimResumeText(h.title))}${hIssuer ? ` | ${escapeHtml(hIssuer)}` : ""}${hDate ? ` | ${escapeHtml(hDate)}` : ""}</p>`;
+    }
   }
 
   if (data.stats.length > 0) {
     html += "<h2>Highlights</h2>";
-    html += `<p>${data.stats.map((s) => `${escapeHtml(s.label)}: ${escapeHtml(String(s.value))}${s.unit ?? ""}`).join(" · ")}</p>`;
+    html += `<p>${data.stats.map((s) => `${escapeHtml(trimResumeText(s.label))}: ${escapeHtml(String(s.value))}${s.unit != null ? trimResumeText(String(s.unit)) : ""}`).join(" · ")}</p>`;
   }
 
   if (data.languages.length > 0) {
     html += "<h2>Languages</h2>";
-    html += `<p>${data.languages.map((l) => `${escapeHtml(l.name)} – ${escapeHtml(l.proficiency)}`).join(" | ")}</p>`;
+    html += `<p>${data.languages.map((l) => `${escapeHtml(trimResumeText(l.name))} (${escapeHtml(trimResumeText(l.proficiency))})`).join(" | ")}</p>`;
   }
 
   html += "</body></html>";

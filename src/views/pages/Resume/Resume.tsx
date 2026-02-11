@@ -3,17 +3,26 @@
  * Replaces static resume.html so resume always shows current profile data.
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { downloadResumePdf } from "@/utils/resumePdfDownload";
+import { getResumeAtsReport } from "@/utils/resumeAtsReport";
+import {
+  formatContactLabel,
+  formatContactValue,
+  formatExperienceCompanyLine,
+  sortContactsForResume,
+  trimResumeText,
+} from "@/utils/resumeFormat";
 import resumeStyles from "@/views/pages/Admin/AdminResume.module.css";
 import styles from "./Resume.module.css";
 
 export const Resume: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
+  const [showAtsReport, setShowAtsReport] = useState(false);
 
   useEffect(() => {
     const base = profile ? `${profile.name} - Resume` : "Resume";
@@ -97,10 +106,10 @@ export const Resume: React.FC = () => {
     );
   }
 
-  const name = profile.name || "Your Name";
-  const title = profile.title || "";
-  const location = profile.location || "";
-  const bio = profile.bio || "";
+  const name = trimResumeText(profile.name) || "Your Name";
+  const title = trimResumeText(profile.title);
+  const location = trimResumeText(profile.location);
+  const bio = trimResumeText(profile.bio);
   const contacts = profile.contacts ?? [];
   const experiences = profile.experiences ?? [];
   const academics = profile.academics ?? [];
@@ -111,9 +120,30 @@ export const Resume: React.FC = () => {
   const honors = profile.honors ?? [];
   const stats = profile.stats ?? [];
   const languages = profile.languages ?? [];
-  const contactParts = contacts
-    .filter((c) => c.value)
-    .map((c) => `${c.label || c.type}: ${c.value}`);
+  const contactParts = sortContactsForResume(
+    contacts.filter((c) => trimResumeText(c.value)),
+  ).map(
+    (c) =>
+      `${formatContactLabel(c.type, c.label)}: ${formatContactValue(c.type, c.value)}`,
+  );
+
+  const resumeData = {
+    name: profile.name || "Your Name",
+    title: profile.title || "",
+    location: profile.location || "",
+    bio: profile.bio || "",
+    contacts,
+    experiences,
+    academics,
+    projects,
+    technicalSkills,
+    softSkills,
+    certifications,
+    honors,
+    stats,
+    languages,
+  };
+  const atsReport = getResumeAtsReport(resumeData);
 
   return (
     <div className={styles.resumePage}>
@@ -133,7 +163,74 @@ export const Resume: React.FC = () => {
           <Button variant="primary" onClick={handleDownloadPdf}>
             Download PDF
           </Button>
+          <Button
+            variant="secondary"
+            onClick={() => setShowAtsReport((v) => !v)}
+            aria-expanded={showAtsReport}
+            aria-controls="ats-report"
+          >
+            {showAtsReport ? "Sembunyikan" : "Tes Keterbacaan ATS"}
+          </Button>
         </div>
+
+        {showAtsReport && (
+          <div
+            id="ats-report"
+            className={styles.atsReportSection}
+            role="region"
+            aria-labelledby="ats-report-heading"
+          >
+            <h2 id="ats-report-heading" className={styles.atsReportTitle}>
+              Laporan Keterbacaan ATS
+            </h2>
+            <p className={styles.atsSummary}>{atsReport.summary}</p>
+            <div className={styles.atsScoreRow}>
+              <span className={styles.atsScoreLabel}>Skor:</span>
+              <span className={styles.atsScoreValue}>
+                {atsReport.score}/100
+              </span>
+              <span
+                className={
+                  atsReport.atsReadable
+                    ? styles.atsBadgeOk
+                    : styles.atsBadgeWarn
+                }
+              >
+                {atsReport.atsReadable ? "Dapat dibaca ATS" : "Perlu perbaikan"}
+              </span>
+            </div>
+            <ul className={styles.atsChecks}>
+              {atsReport.checks.map((c) => (
+                <li
+                  key={c.id}
+                  className={c.passed ? styles.atsCheckOk : styles.atsCheckFail}
+                >
+                  <span aria-hidden={true}>{c.passed ? "✓" : "✗"}</span>{" "}
+                  {c.label}
+                  {c.detail && (
+                    <span className={styles.atsCheckDetail}> — {c.detail}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            {atsReport.recommendations.length > 0 && (
+              <div className={styles.atsRecs}>
+                <strong>Rekomendasi:</strong>
+                <ul>
+                  {atsReport.recommendations.map((rec, i) => (
+                    <li key={i}>{rec}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <details className={styles.atsPreviewDetails}>
+              <summary>Preview teks (seperti yang dibaca sistem)</summary>
+              <pre className={styles.atsPreviewPre}>
+                {atsReport.plainTextPreview}
+              </pre>
+            </details>
+          </div>
+        )}
 
         <div className={resumeStyles.resumePrintArea}>
           <div className={resumeStyles.resumeName}>{name}</div>
@@ -171,8 +268,8 @@ export const Resume: React.FC = () => {
                   className={resumeStyles.sectionBlock}
                 >
                   <h3 className={resumeStyles.resumeH3}>
-                    {exp.position} | {exp.company}
-                    {exp.location ? ` – ${exp.location}` : ""}
+                    {exp.position} |{" "}
+                    {formatExperienceCompanyLine(exp.company, exp.location)}
                   </h3>
                   <p className={resumeStyles.jobMeta}>
                     {exp.startDate}
@@ -213,9 +310,12 @@ export const Resume: React.FC = () => {
                   </h3>
                   <p className={resumeStyles.jobMeta}>
                     {a.institution}
-                    {a.startDate || a.endDate
-                      ? ` | ${a.startDate ?? ""}${a.endDate ? ` – ${a.endDate}` : ""}`
-                      : ""}
+                    {(() => {
+                      const dates = [a.startDate, a.endDate]
+                        .filter(Boolean)
+                        .join(" – ");
+                      return dates ? ` | ${dates}` : "";
+                    })()}
                   </p>
                   {a.description && (
                     <p className={resumeStyles.summary}>{a.description}</p>
@@ -311,15 +411,15 @@ export const Resume: React.FC = () => {
               <h2 className={resumeStyles.resumeH2}>Languages</h2>
               <p>
                 {languages
-                  .map((l) => `${l.name} – ${l.proficiency}`)
+                  .map((l) => `${l.name} (${l.proficiency})`)
                   .join(" | ")}
               </p>
             </>
           )}
 
           <p className={resumeStyles.printHint}>
-            Use browser Print (Ctrl+P / Cmd+P) → Save as PDF for ATS-friendly
-            output.
+            Use &quot;Download PDF&quot; above for ATS-friendly PDF, or browser
+            Print (Ctrl+P / Cmd+P) to print.
           </p>
         </div>
       </section>

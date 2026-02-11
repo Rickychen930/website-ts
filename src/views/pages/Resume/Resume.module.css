@@ -63,6 +63,142 @@
   color: var(--color-error-700);
 }
 
+/* ATS Report – hidden when printing */
+.atsReportSection {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.atsReportTitle {
+  margin: 0 0 0.75rem;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.atsSummary {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.atsScoreRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.atsScoreLabel {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.atsScoreValue {
+  color: var(--color-primary-600);
+  font-weight: 700;
+}
+
+:global(.dark) .atsScoreValue {
+  color: var(--color-primary-400);
+}
+
+.atsBadgeOk {
+  padding: 0.25rem 0.5rem;
+  background: var(--color-success-50);
+  color: var(--color-success-700);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+:global(.dark) .atsBadgeOk {
+  background: var(--color-success-dark);
+  color: var(--color-success-light);
+}
+
+.atsBadgeWarn {
+  padding: 0.25rem 0.5rem;
+  background: var(--color-warning-50);
+  color: var(--color-warning-700);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+:global(.dark) .atsBadgeWarn {
+  background: var(--color-warning-dark);
+  color: var(--color-warning-light);
+}
+
+.atsChecks {
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  padding-left: 1.5rem;
+}
+
+.atsCheckOk {
+  color: var(--text-secondary);
+}
+
+.atsCheckFail {
+  color: var(--color-error-600);
+}
+
+:global(.dark) .atsCheckFail {
+  color: var(--color-error-400);
+}
+
+.atsCheckDetail {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.atsRecs {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  margin-bottom: 1rem;
+}
+
+.atsRecs ul {
+  margin: 0.25rem 0 0 1.25rem;
+  padding: 0;
+}
+
+.atsPreviewDetails {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.atsPreviewDetails summary {
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.atsPreviewPre {
+  margin: 0.5rem 0 0;
+  padding: 1rem;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  overflow: auto;
+  max-height: 20rem;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
 @media print {
   .section {
     padding: 0;
@@ -71,7 +207,8 @@
   .backLink,
   .title,
   .intro,
-  .resumeActions {
+  .resumeActions,
+  .atsReportSection {
     display: none !important;
   }
 }

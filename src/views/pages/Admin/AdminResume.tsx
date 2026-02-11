@@ -8,6 +8,13 @@ import { Link } from "react-router-dom";
 import { adminService } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
 import { downloadResumePdf } from "@/utils/resumePdfDownload";
+import {
+  formatContactLabel,
+  formatContactValue,
+  formatExperienceCompanyLine,
+  sortContactsForResume,
+  trimResumeText,
+} from "@/utils/resumeFormat";
 import styles from "./Admin.module.css";
 import resumeStyles from "./AdminResume.module.css";
 
@@ -135,10 +142,10 @@ export const AdminResume: React.FC = () => {
     );
   }
 
-  const name = String(profile.name ?? "Your Name");
-  const title = String(profile.title ?? "");
-  const location = String(profile.location ?? "");
-  const bio = String(profile.bio ?? "");
+  const name = trimResumeText(profile.name) || "Your Name";
+  const title = trimResumeText(profile.title);
+  const location = trimResumeText(profile.location);
+  const bio = trimResumeText(profile.bio);
   const contacts = (profile.contacts as Profile["contacts"]) ?? [];
   const experiences = (profile.experiences as Profile["experiences"]) ?? [];
   const academics = (profile.academics as Profile["academics"]) ?? [];
@@ -151,9 +158,12 @@ export const AdminResume: React.FC = () => {
   const honors = (profile.honors as Profile["honors"]) ?? [];
   const stats = (profile.stats as Profile["stats"]) ?? [];
   const languages = (profile.languages as Profile["languages"]) ?? [];
-  const contactParts = contacts
-    .filter((c) => c.value)
-    .map((c) => `${c.label || c.type}: ${c.value}`);
+  const contactParts = sortContactsForResume(
+    contacts.filter((c) => trimResumeText(c.value)),
+  ).map(
+    (c) =>
+      `${formatContactLabel(c.type, c.label)}: ${formatContactValue(c.type, c.value)}`,
+  );
 
   return (
     <>
@@ -221,8 +231,8 @@ export const AdminResume: React.FC = () => {
             {experiences.map((exp, i) => (
               <div key={exp.company + i} className={resumeStyles.sectionBlock}>
                 <h3 className={resumeStyles.resumeH3}>
-                  {exp.position} | {exp.company}
-                  {exp.location ? ` – ${exp.location}` : ""}
+                  {exp.position} |{" "}
+                  {formatExperienceCompanyLine(exp.company, exp.location)}
                 </h3>
                 <p className={resumeStyles.jobMeta}>
                   {exp.startDate}
@@ -263,9 +273,12 @@ export const AdminResume: React.FC = () => {
                 </h3>
                 <p className={resumeStyles.jobMeta}>
                   {a.institution}
-                  {a.startDate || a.endDate
-                    ? ` | ${a.startDate ?? ""}${a.endDate ? ` – ${a.endDate}` : ""}`
-                    : ""}
+                  {(() => {
+                    const dates = [a.startDate, a.endDate]
+                      .filter(Boolean)
+                      .join(" – ");
+                    return dates ? ` | ${dates}` : "";
+                  })()}
                 </p>
                 {a.description && (
                   <p className={resumeStyles.summary}>{a.description}</p>
@@ -360,14 +373,14 @@ export const AdminResume: React.FC = () => {
           <>
             <h2 className={resumeStyles.resumeH2}>Languages</h2>
             <p>
-              {languages.map((l) => `${l.name} – ${l.proficiency}`).join(" | ")}
+              {languages.map((l) => `${l.name} (${l.proficiency})`).join(" | ")}
             </p>
           </>
         )}
 
         <p className={resumeStyles.printHint}>
-          Use browser Print (Ctrl+P / Cmd+P) → Save as PDF for ATS-friendly
-          output.
+          Use &quot;Download PDF&quot; for ATS-friendly PDF, or browser Print
+          (Ctrl+P / Cmd+P) to print.
         </p>
       </div>
     </>
