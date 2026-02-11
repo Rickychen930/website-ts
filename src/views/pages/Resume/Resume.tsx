@@ -75,7 +75,27 @@ export const Resume: React.FC = () => {
     );
   }
 
-  if (!profile) return null;
+  if (!profile) {
+    return (
+      <div className={styles.resumePage}>
+        <section className={styles.section} aria-labelledby="resume-no-data">
+          <Link to="/" className={styles.backLink}>
+            ← Back to home
+          </Link>
+          <h1 id="resume-no-data" className={styles.title}>
+            Resume
+          </h1>
+          <p className={styles.intro}>
+            No profile data available. The profile may still be loading or could
+            not be loaded.
+          </p>
+          <Button variant="secondary" onClick={() => refetch()}>
+            Retry
+          </Button>
+        </section>
+      </div>
+    );
+  }
 
   const name = profile.name || "Your Name";
   const title = profile.title || "";

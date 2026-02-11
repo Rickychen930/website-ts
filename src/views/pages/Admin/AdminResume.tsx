@@ -115,7 +115,25 @@ export const AdminResume: React.FC = () => {
     );
   }
 
-  if (!profile) return null;
+  if (!profile) {
+    return (
+      <p className={styles.emptyState}>
+        No profile loaded.{" "}
+        <Link to="/admin/profile" className={styles.jobTrackingLink}>
+          Open Profile
+        </Link>{" "}
+        or{" "}
+        <button
+          type="button"
+          className={styles.jobTrackingLink}
+          onClick={loadProfile}
+        >
+          refresh
+        </button>
+        .
+      </p>
+    );
+  }
 
   const name = String(profile.name ?? "Your Name");
   const title = String(profile.title ?? "");

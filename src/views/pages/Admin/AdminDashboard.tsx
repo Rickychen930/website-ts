@@ -57,7 +57,11 @@ export const AdminDashboard: React.FC = () => {
     );
   }
   if (!stats) {
-    return null;
+    return (
+      <p className={styles.loadingState}>
+        No dashboard data. Try refreshing the page.
+      </p>
+    );
   }
 
   const { counts, profileUpdatedAt } = stats;
