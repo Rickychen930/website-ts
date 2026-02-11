@@ -3,17 +3,17 @@
  * Replaces static resume.html so resume always shows current profile data.
  */
 
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
+import { printResumeToPdf } from "@/utils/resumePrint";
 import resumeStyles from "@/views/pages/Admin/AdminResume.module.css";
 import styles from "./Resume.module.css";
 
 export const Resume: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
-  const printRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const base = profile ? `${profile.name} - Resume` : "Resume";
@@ -24,7 +24,23 @@ export const Resume: React.FC = () => {
   }, [profile]);
 
   const handlePrint = () => {
-    window.print();
+    if (!profile) return;
+    printResumeToPdf({
+      name: profile.name || "Your Name",
+      title: profile.title || "",
+      location: profile.location || "",
+      bio: profile.bio || "",
+      contacts: profile.contacts ?? [],
+      experiences: profile.experiences ?? [],
+      academics: profile.academics ?? [],
+      projects: profile.projects ?? [],
+      technicalSkills: profile.technicalSkills ?? [],
+      softSkills: profile.softSkills ?? [],
+      certifications: profile.certifications ?? [],
+      honors: profile.honors ?? [],
+      stats: profile.stats ?? [],
+      languages: profile.languages ?? [],
+    });
   };
 
   if (isLoading && !profile) {
@@ -89,10 +105,10 @@ export const Resume: React.FC = () => {
           Resume
         </h1>
         <p className={styles.intro}>
-          Click the button below, then in the print dialog choose{" "}
-          <strong>Save as PDF</strong> or{" "}
-          <strong>Microsoft Print to PDF</strong> as the destination to download
-          your resume.
+          Click the button below. A new tab will open with your resume—then
+          choose <strong>Save as PDF</strong> or{" "}
+          <strong>Microsoft Print to PDF</strong> in the print dialog to
+          download. File size is kept under 2 MB.
         </p>
 
         <div className={resumeStyles.resumeActions}>
@@ -101,7 +117,7 @@ export const Resume: React.FC = () => {
           </Button>
         </div>
 
-        <div ref={printRef} className={resumeStyles.resumePrintArea}>
+        <div className={resumeStyles.resumePrintArea}>
           <div className={resumeStyles.resumeName}>{name}</div>
           {(title || location) && (
             <p className={resumeStyles.resumeTagline}>

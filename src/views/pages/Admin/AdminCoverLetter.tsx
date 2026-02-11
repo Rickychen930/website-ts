@@ -39,6 +39,12 @@ function getPrimaryContact(profile: Profile, type: string): string {
   return any?.value ?? "";
 }
 
+function escapeHtml(text: string): string {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 /** Generate default body text (paragraphs between greeting and closing) so each company can later be edited differently. */
 function generateBodyText(
   profile: Profile,
@@ -95,28 +101,30 @@ function buildLetterHtml(
     .split(/\n\n+/)
     .filter(Boolean)
     .map(
-      (p) => `<p class="${cssClass("paragraph")}">${p.replace(/\n/g, " ")}</p>`,
+      (p) =>
+        `<p class="${cssClass("paragraph")}">${escapeHtml(p.replace(/\n/g, " "))}</p>`,
     )
     .join("\n");
 
   return `
 <div class="${cssClass("letter")}">
   <div class="${cssClass("letterhead")}" aria-hidden="true"></div>
-  <p class="${cssClass("date")}">${today}</p>
-  <p class="${cssClass("recipient")}">${companyName}<br />Hiring Team</p>
-  <p class="${cssClass("re")}">Re: Application for ${position}</p>
+  <p class="${cssClass("date")}">${escapeHtml(today)}</p>
+  <p class="${cssClass("recipient")}">${escapeHtml(companyName)}<br />Hiring Team</p>
+  <p class="${cssClass("re")}">Re: Application for ${escapeHtml(position)}</p>
   <p class="${cssClass("greeting")}">Dear Hiring Manager,</p>
   ${paragraphs}
   <p class="${cssClass("closing")}">Sincerely,</p>
   <p class="${cssClass("signature")}">
-    <strong>${name}</strong><br />
-    ${title}${location ? ` · ${location}` : ""}<br />
-    ${email}${phone ? ` · ${phone}` : ""}${linkedIn ? ` · LinkedIn: ${linkedIn}` : ""}
+    <strong>${escapeHtml(name)}</strong><br />
+    ${escapeHtml(title)}${location ? ` · ${escapeHtml(location)}` : ""}<br />
+    ${escapeHtml(email)}${phone ? ` · ${escapeHtml(phone)}` : ""}${linkedIn ? ` · LinkedIn: ${escapeHtml(linkedIn)}` : ""}
   </p>
 </div>
 `.trim();
 }
 
+/* Minimal print styles: text + system fonts only so saved PDF stays under 2 MB */
 const PRINT_STYLES = `
   * { box-sizing: border-box; }
   body { font-family: Georgia, "Times New Roman", serif; font-size: 11.5pt; line-height: 1.6; color: #1a1a1a; max-width: 6.75in; margin: 0 auto; padding: 0.5in 0.6in; background: #ffffff; }
@@ -424,6 +432,7 @@ export const AdminCoverLetter: React.FC = () => {
           Create a different cover letter for each company. Body is generated
           from your Profile; use &quot;Regenerate body from profile&quot; after
           updating Profile to get the latest. Edit, save, then print or copy.
+          Saved PDF is kept under 2 MB.
         </p>
       </header>
 

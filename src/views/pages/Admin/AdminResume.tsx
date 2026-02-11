@@ -3,10 +3,11 @@
  * Updates when you save changes in Profile and other admin sections.
  */
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { adminService } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
+import { printResumeToPdf } from "@/utils/resumePrint";
 import styles from "./Admin.module.css";
 import resumeStyles from "./AdminResume.module.css";
 
@@ -58,7 +59,6 @@ export const AdminResume: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const printRef = useRef<HTMLDivElement>(null);
 
   const loadProfile = () => {
     setLoading(true);
@@ -77,7 +77,25 @@ export const AdminResume: React.FC = () => {
   }, []);
 
   const handlePrint = () => {
-    window.print();
+    if (!profile) return;
+    printResumeToPdf({
+      name: String(profile.name ?? "Your Name"),
+      title: String(profile.title ?? ""),
+      location: String(profile.location ?? ""),
+      bio: String(profile.bio ?? ""),
+      contacts: (profile.contacts as Profile["contacts"]) ?? [],
+      experiences: (profile.experiences as Profile["experiences"]) ?? [],
+      academics: (profile.academics as Profile["academics"]) ?? [],
+      projects: (profile.projects as Profile["projects"]) ?? [],
+      technicalSkills:
+        (profile.technicalSkills as Profile["technicalSkills"]) ?? [],
+      softSkills: (profile.softSkills as Profile["softSkills"]) ?? [],
+      certifications:
+        (profile.certifications as Profile["certifications"]) ?? [],
+      honors: (profile.honors as Profile["honors"]) ?? [],
+      stats: (profile.stats as Profile["stats"]) ?? [],
+      languages: (profile.languages as Profile["languages"]) ?? [],
+    });
   };
 
   if (loading && !profile) {
@@ -129,7 +147,7 @@ export const AdminResume: React.FC = () => {
             Profile
           </Link>
           , Experience, Projects, and other sections, then return here to see
-          the updated resume. Use Print to save as PDF.
+          the updated resume. Use Print to save as PDF (file size under 2 MB).
         </p>
       </header>
 
@@ -152,7 +170,7 @@ export const AdminResume: React.FC = () => {
         </Button>
       </div>
 
-      <div ref={printRef} className={resumeStyles.resumePrintArea}>
+      <div className={resumeStyles.resumePrintArea}>
         <div className={resumeStyles.resumeName}>{name}</div>
         {(title || location) && (
           <p className={resumeStyles.resumeTagline}>
