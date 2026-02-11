@@ -11,7 +11,7 @@ function escapeHtml(text: string): string {
   return div.innerHTML;
 }
 
-interface ResumePrintData {
+export interface ResumePrintData {
   name: string;
   title: string;
   location: string;

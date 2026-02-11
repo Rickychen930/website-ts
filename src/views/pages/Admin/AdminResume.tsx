@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { adminService } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
-import { printResumeToPdf } from "@/utils/resumePrint";
+import { downloadResumePdf } from "@/utils/resumePdfDownload";
 import styles from "./Admin.module.css";
 import resumeStyles from "./AdminResume.module.css";
 
@@ -76,9 +76,9 @@ export const AdminResume: React.FC = () => {
     loadProfile();
   }, []);
 
-  const handlePrint = () => {
+  const handleDownloadPdf = () => {
     if (!profile) return;
-    printResumeToPdf({
+    downloadResumePdf({
       name: String(profile.name ?? "Your Name"),
       title: String(profile.title ?? ""),
       location: String(profile.location ?? ""),
@@ -180,8 +180,8 @@ export const AdminResume: React.FC = () => {
       )}
 
       <div className={resumeStyles.resumeActions}>
-        <Button variant="primary" onClick={handlePrint}>
-          Print / Save as PDF
+        <Button variant="primary" onClick={handleDownloadPdf}>
+          Download PDF
         </Button>
         <Button variant="ghost" onClick={loadProfile}>
           Refresh from profile

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
-import { printResumeToPdf } from "@/utils/resumePrint";
+import { downloadResumePdf } from "@/utils/resumePdfDownload";
 import resumeStyles from "@/views/pages/Admin/AdminResume.module.css";
 import styles from "./Resume.module.css";
 
@@ -23,9 +23,9 @@ export const Resume: React.FC = () => {
     };
   }, [profile]);
 
-  const handlePrint = () => {
+  const handleDownloadPdf = () => {
     if (!profile) return;
-    printResumeToPdf({
+    downloadResumePdf({
       name: profile.name || "Your Name",
       title: profile.title || "",
       location: profile.location || "",
@@ -125,15 +125,13 @@ export const Resume: React.FC = () => {
           Resume
         </h1>
         <p className={styles.intro}>
-          Click the button below. A new tab will open with your resume—then
-          choose <strong>Save as PDF</strong> or{" "}
-          <strong>Microsoft Print to PDF</strong> in the print dialog to
-          download. File size is kept under 2 MB.
+          Click the button below to download your resume as PDF (one click,
+          under 2 MB).
         </p>
 
         <div className={resumeStyles.resumeActions}>
-          <Button variant="primary" onClick={handlePrint}>
-            Print / Save as PDF
+          <Button variant="primary" onClick={handleDownloadPdf}>
+            Download PDF
           </Button>
         </div>
 
