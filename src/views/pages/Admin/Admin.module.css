@@ -1460,6 +1460,147 @@
   border-radius: 4px;
 }
 
+/* ========== ADMIN LEARNING ========== */
+.label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.label .input {
+  margin-top: 0.25rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkboxLabel input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.learningSections {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.learningBlock {
+  border: 1px solid var(--admin-card-border);
+  background: var(--admin-card-bg);
+  border-radius: var(--admin-radius);
+  overflow: hidden;
+}
+
+.learningSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+}
+
+.learningSectionTitleBtn {
+  flex: 1;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.learningSectionTitleBtn:hover {
+  color: var(--color-primary-600);
+}
+
+.learningSectionBody {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--admin-card-border);
+}
+
+.learningSectionBodyHidden {
+  display: none;
+}
+
+.learningFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (width <= 640px) {
+  .learningFields {
+    grid-template-columns: 1fr;
+  }
+}
+
+.learningItems {
+  margin-top: 1rem;
+}
+
+.learningItemsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.learningItemRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.learningItemRow .input {
+  flex: 1;
+  min-width: 8rem;
+}
+
+.learningItemBlock {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--admin-card-border);
+  border-radius: 8px;
+  background: var(--bg-primary);
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+  min-height: 4rem;
+}
+
+.textarea:focus,
+.textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-15);
+}
+
 /* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
   .loginCard,

@@ -110,6 +110,24 @@ export interface IProfile extends Document {
     date: string;
     avatarUrl?: string;
   }>;
+  learningSections?: Array<{
+    id?: string;
+    title: string;
+    slug: string;
+    description?: string;
+    order: number;
+    published: boolean;
+    items: Array<{
+      id?: string;
+      title: string;
+      description?: string;
+      order: number;
+      content?: string;
+      codeExample?: string;
+      codeLanguage?: string;
+      imageUrl?: string;
+    }>;
+  }>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -132,6 +150,7 @@ const ProfileSchema = new Schema<IProfile>(
     stats: { type: Array, default: [] } as any,
     technicalSkills: { type: Array, default: [] } as any,
     testimonials: { type: Array, default: [] } as any,
+    learningSections: { type: Array, default: [] } as any,
   },
   {
     timestamps: true,

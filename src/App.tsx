@@ -69,6 +69,14 @@ const Terms = React.lazy(() =>
 const Resume = React.lazy(() =>
   import("@/views/pages/Resume").then((m) => ({ default: m.Resume })),
 );
+const Learning = React.lazy(() =>
+  import("@/views/pages/Learning").then((m) => ({ default: m.Learning })),
+);
+const LearningTopicDetail = React.lazy(() =>
+  import("@/views/pages/Learning").then((m) => ({
+    default: m.LearningTopicDetail,
+  })),
+);
 
 const AdminLogin = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminLogin })),
@@ -138,6 +146,9 @@ const AdminContacts = React.lazy(() =>
 const AdminMessages = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminMessages })),
 );
+const AdminLearning = React.lazy(() =>
+  import("@/views/pages/Admin").then((m) => ({ default: m.AdminLearning })),
+);
 
 // Inner component that uses keyboard shortcuts (must be inside Router)
 const AppContent: React.FC = () => {
@@ -155,6 +166,11 @@ const AppContent: React.FC = () => {
       <Route path="/experience" element={<Experience />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/resume" element={<Resume />} />
+      <Route path="/learning" element={<Learning />} />
+      <Route
+        path="/learning/:sectionSlug/:topicId"
+        element={<LearningTopicDetail />}
+      />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -184,9 +200,11 @@ const AppContent: React.FC = () => {
         <Route path="academics" element={<AdminAcademics />} />
         <Route path="certifications" element={<AdminCertifications />} />
         <Route path="honors" element={<AdminHonors />} />
+        <Route path="learning" element={<AdminLearning />} />
         <Route path="contacts" element={<AdminContacts />} />
         <Route path="messages" element={<AdminMessages />} />
       </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 

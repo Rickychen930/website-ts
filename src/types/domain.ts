@@ -138,6 +138,33 @@ export interface Testimonial {
   readonly avatarUrl?: string;
 }
 
+/** Single topic or resource within a learning section */
+export interface LearningTopicItem {
+  readonly id: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly order: number;
+  /** Full body content (plain text or markdown); can include multiple paragraphs */
+  readonly content?: string;
+  /** Code example to display (syntax shown via codeLanguage) */
+  readonly codeExample?: string;
+  /** Optional language label for code block (e.g. "cpp", "python", "javascript") */
+  readonly codeLanguage?: string;
+  /** Optional image URL (diagram, screenshot, etc.) */
+  readonly imageUrl?: string;
+}
+
+/** Learning section (e.g. Competitive Programming, React) */
+export interface LearningSection {
+  readonly id: string;
+  readonly title: string;
+  readonly slug: string;
+  readonly description?: string;
+  readonly order: number;
+  readonly published: boolean;
+  readonly items: readonly LearningTopicItem[];
+}
+
 export interface Profile {
   readonly id: string;
   readonly name: string;
@@ -150,6 +177,7 @@ export interface Profile {
   readonly experiences: readonly Experience[];
   readonly honors: readonly Honor[];
   readonly languages: readonly Language[];
+  readonly learningSections?: readonly LearningSection[];
   readonly projects: readonly Project[];
   readonly softSkills: readonly SoftSkill[];
   readonly stats: readonly Stat[];

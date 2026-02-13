@@ -11,6 +11,7 @@ import type {
   Experience,
   Honor,
   Language,
+  LearningSection,
   Project,
   SoftSkill,
   Stat,
@@ -30,6 +31,7 @@ export class ProfileModel implements Profile {
   public readonly experiences: readonly Experience[];
   public readonly honors: readonly Honor[];
   public readonly languages: readonly Language[];
+  public readonly learningSections: readonly LearningSection[];
   public readonly projects: readonly Project[];
   public readonly softSkills: readonly SoftSkill[];
   public readonly stats: readonly Stat[];
@@ -50,6 +52,9 @@ export class ProfileModel implements Profile {
     this.experiences = Object.freeze([...data.experiences]);
     this.honors = Object.freeze([...data.honors]);
     this.languages = Object.freeze([...data.languages]);
+    this.learningSections = Object.freeze(
+      [...(data.learningSections ?? [])].sort((a, b) => a.order - b.order),
+    );
     this.projects = Object.freeze([...data.projects]);
     this.softSkills = Object.freeze([...data.softSkills]);
     this.stats = Object.freeze([...data.stats]);
@@ -87,5 +92,10 @@ export class ProfileModel implements Profile {
     category: Project["category"],
   ): readonly Project[] {
     return this.projects.filter((project) => project.category === category);
+  }
+
+  /** Learning sections that are published, ordered by order field */
+  public getPublishedLearningSections(): readonly LearningSection[] {
+    return this.learningSections.filter((s) => s.published);
   }
 }

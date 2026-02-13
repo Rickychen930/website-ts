@@ -181,6 +181,7 @@ export class ProfileController {
         experiences,
         honors,
         languages,
+        learningSections,
         projects,
         softSkills,
         stats,
@@ -216,6 +217,45 @@ export class ProfileController {
       if (Array.isArray(experiences)) profile.experiences = experiences;
       if (Array.isArray(honors)) profile.honors = honors;
       if (Array.isArray(languages)) profile.languages = languages;
+      if (Array.isArray(learningSections)) {
+        profile.learningSections = learningSections.map(
+          (sec: Record<string, unknown>, idx: number) => ({
+            ...sec,
+            title: typeof sec.title === "string" ? sec.title : "Untitled",
+            slug:
+              typeof sec.slug === "string" && sec.slug
+                ? sec.slug
+                : `section-${idx}`,
+            order: typeof sec.order === "number" ? sec.order : idx,
+            published: Boolean(sec.published),
+            items: Array.isArray(sec.items)
+              ? sec.items.map((item: Record<string, unknown>, i: number) => ({
+                  ...item,
+                  title: typeof item.title === "string" ? item.title : "",
+                  description:
+                    typeof item.description === "string"
+                      ? item.description
+                      : undefined,
+                  order: typeof item.order === "number" ? item.order : i,
+                  content:
+                    typeof item.content === "string" ? item.content : undefined,
+                  codeExample:
+                    typeof item.codeExample === "string"
+                      ? item.codeExample
+                      : undefined,
+                  codeLanguage:
+                    typeof item.codeLanguage === "string"
+                      ? item.codeLanguage
+                      : undefined,
+                  imageUrl:
+                    typeof item.imageUrl === "string"
+                      ? item.imageUrl
+                      : undefined,
+                }))
+              : [],
+          }),
+        );
+      }
       if (Array.isArray(projects)) profile.projects = projects;
       if (Array.isArray(softSkills)) profile.softSkills = softSkills;
       if (Array.isArray(stats)) profile.stats = stats;

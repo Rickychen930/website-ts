@@ -18,7 +18,13 @@ export const SkipLinks: React.FC = () => {
     const target = document.getElementById(targetId);
     if (target) {
       target.focus();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      target.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
       // Announce to screen readers
       const announcement = document.createElement("div");
       announcement.setAttribute("role", "status");
@@ -61,6 +67,16 @@ export const SkipLinks: React.FC = () => {
           aria-label="Skip to contact form"
         >
           Skip to contact form
+        </a>
+      )}
+      {location.pathname === "/learning" && (
+        <a
+          href="#learning"
+          className={styles.skipLink}
+          onClick={(e) => handleSkip(e, "learning")}
+          aria-label="Skip to curriculum"
+        >
+          Skip to curriculum
         </a>
       )}
     </nav>

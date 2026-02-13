@@ -32,6 +32,9 @@ export const transformProfile = (profile: IProfile): Profile => {
   const testimonials = Array.isArray(profile.testimonials)
     ? profile.testimonials
     : [];
+  const learningSections = Array.isArray(profile.learningSections)
+    ? profile.learningSections
+    : [];
 
   // Convert dates safely
   const createdAt =
@@ -168,6 +171,36 @@ export const transformProfile = (profile: IProfile): Profile => {
       content: testimonial.content || "",
       date: testimonial.date || "",
       avatarUrl: testimonial.avatarUrl,
+    })),
+    learningSections: learningSections.map((sec, sIdx) => ({
+      id: extractId(sec, `learning-sec-${sIdx}`),
+      title: sec.title || "",
+      slug: sec.slug || "",
+      description: sec.description,
+      order: typeof sec.order === "number" ? sec.order : sIdx,
+      published: Boolean(sec.published),
+      items: (Array.isArray(sec.items) ? sec.items : []).map((item, iIdx) => ({
+        id: extractId(item, `learning-item-${sIdx}-${iIdx}`),
+        title: item.title || "",
+        description: item.description,
+        order: typeof item.order === "number" ? item.order : iIdx,
+        content:
+          typeof (item as { content?: string }).content === "string"
+            ? (item as { content: string }).content
+            : undefined,
+        codeExample:
+          typeof (item as { codeExample?: string }).codeExample === "string"
+            ? (item as { codeExample: string }).codeExample
+            : undefined,
+        codeLanguage:
+          typeof (item as { codeLanguage?: string }).codeLanguage === "string"
+            ? (item as { codeLanguage: string }).codeLanguage
+            : undefined,
+        imageUrl:
+          typeof (item as { imageUrl?: string }).imageUrl === "string"
+            ? (item as { imageUrl: string }).imageUrl
+            : undefined,
+      })),
     })),
     createdAt,
     updatedAt,

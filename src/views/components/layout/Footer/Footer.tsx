@@ -30,6 +30,8 @@ export const Footer: React.FC = () => {
     { path: "/about", label: "About" },
     { path: "/projects", label: "Projects" },
     { path: "/experience", label: "Experience" },
+    { path: "/learning", label: "Learning" },
+    { path: "/resume", label: "Resume" },
     { path: "/contact", label: "Contact" },
   ];
 

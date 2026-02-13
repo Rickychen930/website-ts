@@ -129,6 +129,11 @@ export const AdminDashboard: React.FC = () => {
     },
     { label: "Honors", value: counts.honors ?? 0, to: "/admin/honors" },
     {
+      label: "Learning",
+      value: counts.learningSections ?? 0,
+      to: "/admin/learning",
+    },
+    {
       label: "Contact info",
       value: counts.profileContacts ?? 0,
       to: "/admin/contacts",

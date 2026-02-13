@@ -1,0 +1,407 @@
+/* Learning Topic Detail Page – full-width reading layout, all information visible */
+
+.wrapper {
+  max-width: 52rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: var(--spacing-2xl);
+}
+
+.breadcrumb {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.breadcrumbList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs) var(--spacing-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumbLink {
+  color: var(--color-primary-600);
+  text-decoration: none;
+  transition: color var(--theme-transition);
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-primary-700);
+  text-decoration: underline;
+}
+
+.breadcrumbLink:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
+.breadcrumbSep {
+  color: var(--text-tertiary);
+  font-weight: var(--font-weight-normal);
+}
+
+.breadcrumbCurrent {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  margin: 0 0 var(--spacing-md);
+  color: var(--text-primary);
+  font-family: var(--theme-font-display);
+  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.content {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.detailSection {
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.detailSection:first-child {
+  padding-top: 0;
+}
+
+.detailSection:last-child {
+  border-bottom: none;
+}
+
+.sectionHeading {
+  display: flex;
+  margin: 0 0 var(--spacing-md);
+  align-items: baseline;
+  color: var(--color-primary-700);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.35;
+  gap: var(--spacing-sm);
+  scroll-margin-top: 5rem;
+}
+
+.sectionNum {
+  flex-shrink: 0;
+  color: var(--color-primary-600);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.sectionBody {
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+}
+
+.sectionBody p {
+  margin: 0 0 var(--spacing-md);
+}
+
+.sectionBody p:last-child {
+  margin-bottom: 0;
+}
+
+.bodyPara {
+  margin: 0 0 var(--spacing-md) !important;
+}
+
+.bodyPara:last-child {
+  margin-bottom: 0 !important;
+}
+
+.inlineCode {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--theme-border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+}
+
+.bodyLink {
+  color: var(--color-primary-600);
+  text-decoration: underline;
+  transition: color var(--theme-transition);
+}
+
+.bodyLink:hover {
+  color: var(--color-primary-700);
+}
+
+.bodyLink:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
+.bodyList {
+  list-style: disc;
+  margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-lg);
+  padding: 0;
+}
+
+.bodyList li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.bodyList li::marker {
+  color: var(--color-primary-600);
+}
+
+/* Numbered list (seed format: (1) (2) or 1. 2.) */
+.bodyListOrdered {
+  list-style: decimal;
+  margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-lg);
+  padding: 0 0 0 var(--spacing-lg);
+}
+
+.bodyListOrdered li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.bodyListOrdered li::marker {
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+.bodyListNested {
+  list-style: circle;
+  margin: var(--spacing-xs) 0 0 var(--spacing-lg);
+  padding: 0;
+}
+
+.bodyListNested li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.bodyListNested li::marker {
+  color: var(--color-primary-500);
+}
+
+/* Callouts: Tip, Note, Important */
+.callout {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--theme-radius-card);
+  border-left: 4px solid var(--color-primary-500);
+  background: var(--bg-secondary);
+}
+
+.calloutLabel {
+  display: block;
+  color: var(--color-primary-700);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--spacing-sm);
+}
+
+.calloutBody p {
+  margin: 0 0 var(--spacing-sm);
+}
+
+.calloutBody p:last-child {
+  margin-bottom: 0;
+}
+
+.calloutTip {
+  border-left-color: var(--color-accent-500);
+}
+
+.calloutTip .calloutLabel {
+  color: var(--color-accent-600);
+}
+
+.calloutNote {
+  border-left-color: var(--color-primary-500);
+}
+
+.calloutImportant {
+  border-left-color: var(--color-warning-500);
+}
+
+.calloutImportant .calloutLabel {
+  color: var(--color-warning-600);
+}
+
+.emptySectionHint {
+  margin: 0 !important;
+  color: var(--text-tertiary);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+/* Table of contents */
+.toc {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--theme-border);
+  border-radius: var(--theme-radius-card);
+  background: var(--bg-secondary);
+}
+
+.tocTitle {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--color-primary-700);
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tocList li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.tocLink {
+  color: var(--color-primary-600);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  transition: color var(--theme-transition);
+}
+
+.tocLink:hover {
+  color: var(--color-primary-700);
+  text-decoration: underline;
+}
+
+.tocLink:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
+.codeBlock {
+  margin: var(--spacing-md) 0 0;
+  border-radius: var(--theme-radius-card);
+  overflow: hidden;
+  border: 1px solid var(--theme-border);
+}
+
+.figure {
+  margin: var(--spacing-lg) 0 0;
+}
+
+.image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--theme-radius-card);
+  border: 1px solid var(--theme-border);
+  box-shadow: var(--theme-shadow);
+}
+
+.plainContent {
+  padding-top: var(--spacing-sm);
+}
+
+.plainContent p {
+  margin: 0 0 var(--spacing-md);
+}
+
+.plainContent p:last-child {
+  margin-bottom: 0;
+}
+
+.footer {
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--theme-border);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary-600);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: color var(--theme-transition);
+}
+
+.backLink:hover {
+  color: var(--color-primary-700);
+  text-decoration: underline;
+}
+
+.backLink:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* Lists inside content */
+.sectionBody ul,
+.plainContent ul {
+  list-style: disc;
+  margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-lg);
+  padding: 0;
+}
+
+.sectionBody li,
+.plainContent li {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Print: single topic, no nav clutter – use theme tokens for consistency */
+@media print {
+  .wrapper {
+    max-width: 100%;
+    padding-bottom: var(--spacing-lg);
+  }
+
+  .breadcrumb {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+  }
+
+  .breadcrumbLink {
+    color: var(--text-primary);
+  }
+
+  .footer {
+    padding-top: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+
+  .backLink {
+    color: var(--text-primary);
+  }
+
+  .detailSection {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .codeBlock {
+    break-inside: avoid;
+  }
+}

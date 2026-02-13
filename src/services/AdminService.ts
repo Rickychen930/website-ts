@@ -32,6 +32,7 @@ export interface AdminStats {
     academics?: number;
     certifications?: number;
     honors?: number;
+    learningSections?: number;
     profileContacts?: number;
     languages?: number;
   };

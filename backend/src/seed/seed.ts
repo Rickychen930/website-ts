@@ -137,6 +137,13 @@ const seedDatabase = async (): Promise<void> => {
     console.log(
       `📈 Stats: ${profile.projects?.length || 0} projects, ${profile.experiences?.length || 0} experiences, ${profile.testimonials?.length || 0} testimonials`,
     );
+    const sectionCount = profile.learningSections?.length ?? 0;
+    const topicCount =
+      profile.learningSections?.reduce(
+        (sum, s) => sum + (s.items?.length ?? 0),
+        0,
+      ) ?? 0;
+    console.log(`📚 Learning: ${sectionCount} sections, ${topicCount} topics`);
 
     try {
       await seedAdmin();

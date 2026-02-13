@@ -312,6 +312,22 @@ const navIcon = (name: string) => {
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
       </svg>
     ),
+    "book-open": (
+      <svg
+        width={w}
+        height={h}
+        viewBox="0 0 24 24"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+    ),
   };
   return icons[name] ?? null;
 };
@@ -362,6 +378,7 @@ const navGroups: {
         icon: "certificate",
       },
       { to: "/admin/honors", label: "Honors", icon: "trophy" },
+      { to: "/admin/learning", label: "Learning", icon: "book-open" },
       { to: "/admin/contacts", label: "Contact info", icon: "mail" },
     ],
   },
@@ -389,6 +406,7 @@ const routeTitles: Record<string, string> = {
   "/admin/academics": "Academics",
   "/admin/certifications": "Certifications",
   "/admin/honors": "Honors & Awards",
+  "/admin/learning": "Learning",
   "/admin/contacts": "Contact info",
   "/admin/messages": "Messages",
 };

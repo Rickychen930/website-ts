@@ -12,6 +12,7 @@ export { AdminStats } from "./AdminStats";
 export { AdminAcademics } from "./AdminAcademics";
 export { AdminCertifications } from "./AdminCertifications";
 export { AdminHonors } from "./AdminHonors";
+export { AdminLearning } from "./AdminLearning";
 export { AdminCompanies } from "./AdminCompanies";
 export { AdminCoverLetter } from "./AdminCoverLetter";
 export { AdminSavedJobs } from "./AdminSavedJobs";
