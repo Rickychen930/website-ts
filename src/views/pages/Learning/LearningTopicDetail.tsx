@@ -509,7 +509,7 @@ export const LearningTopicDetail: React.FC = () => {
           </li>
           <li>
             <Link
-              to={`/learning#section-${section.slug}`}
+              to={`/learning/${section.slug}`}
               className={styles.breadcrumbLink}
             >
               {section.title}
@@ -579,11 +579,8 @@ export const LearningTopicDetail: React.FC = () => {
       </div>
 
       <footer className={styles.footer}>
-        <Link
-          to={`/learning#section-${section.slug}`}
-          className={styles.backLink}
-        >
-          ← Back to {section.title}
+        <Link to={`/learning/${section.slug}`} className={styles.backLink}>
+          ← Kembali ke {section.title}
         </Link>
       </footer>
     </Section>

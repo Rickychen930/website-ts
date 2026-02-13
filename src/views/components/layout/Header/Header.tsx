@@ -10,16 +10,30 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Search } from "@/components/Search";
 import styles from "./Header.module.css";
 
+const MAIN_NAV_ITEMS = [
+  { path: "/", label: "Home" },
+  { path: "/projects", label: "Projects" },
+  { path: "/learning", label: "Learning" },
+];
+
+const DROPDOWN_NAV_ITEMS = [
+  { path: "/about", label: "About" },
+  { path: "/experience", label: "Experience" },
+  { path: "/resume", label: "Resume" },
+  { path: "/contact", label: "Contact" },
+];
+
 export const Header: React.FC = () => {
   const { profile } = useProfile();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const rafRef = useRef<number | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Throttle scroll updates using requestAnimationFrame
       if (rafRef.current === null) {
         rafRef.current = requestAnimationFrame(() => {
           setIsScrolled(window.scrollY > 20);
@@ -37,20 +51,32 @@ export const Header: React.FC = () => {
     };
   }, []);
 
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
-    { path: "/projects", label: "Projects" },
-    { path: "/experience", label: "Experience" },
-    { path: "/learning", label: "Learning" },
-    { path: "/resume", label: "Resume" },
-    { path: "/contact", label: "Contact" },
-    { path: "/admin/login", label: "Login" },
-  ];
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        isDropdownOpen &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isDropdownOpen]);
+
+  const closeAll = () => {
+    setIsMenuOpen(false);
+    setIsDropdownOpen(false);
+  };
 
   const isActive = (path: string): boolean => {
     return location.pathname === path;
   };
+
+  const isDropdownActive = DROPDOWN_NAV_ITEMS.some((item) =>
+    isActive(item.path),
+  );
 
   return (
     <header
@@ -80,17 +106,66 @@ export const Header: React.FC = () => {
           aria-label="Main navigation"
           data-print="hide"
         >
-          {navItems.map((item) => (
+          {MAIN_NAV_ITEMS.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               className={`${styles.navLink} ${isActive(item.path) ? styles.navLinkActive : ""}`}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={closeAll}
               aria-current={isActive(item.path) ? "page" : undefined}
             >
               {item.label}
             </Link>
           ))}
+
+          <div ref={dropdownRef} className={styles.navDropdown}>
+            <button
+              type="button"
+              className={`${styles.navDropdownTrigger} ${isDropdownActive ? styles.navLinkActive : ""}`}
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              aria-expanded={isDropdownOpen}
+              aria-haspopup="true"
+              aria-controls="nav-dropdown-menu"
+              id="nav-dropdown-trigger"
+            >
+              More
+              <span
+                className={`${styles.navDropdownChevron} ${isDropdownOpen ? styles.navDropdownChevronOpen : ""}`}
+                aria-hidden="true"
+              >
+                ▾
+              </span>
+            </button>
+            <ul
+              id="nav-dropdown-menu"
+              className={`${styles.navDropdownMenu} ${isDropdownOpen ? styles.navDropdownMenuOpen : ""}`}
+              role="menu"
+              aria-labelledby="nav-dropdown-trigger"
+            >
+              {DROPDOWN_NAV_ITEMS.map((item) => (
+                <li key={item.path} role="none">
+                  <Link
+                    to={item.path}
+                    className={`${styles.navDropdownLink} ${isActive(item.path) ? styles.navLinkActive : ""}`}
+                    role="menuitem"
+                    onClick={closeAll}
+                    aria-current={isActive(item.path) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <Link
+            to="/admin/login"
+            className={`${styles.navLink} ${isActive("/admin/login") ? styles.navLinkActive : ""}`}
+            onClick={closeAll}
+            aria-current={isActive("/admin/login") ? "page" : undefined}
+          >
+            Login
+          </Link>
         </nav>
 
         <div className={styles.headerActions} data-print="hide">

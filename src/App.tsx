@@ -72,6 +72,11 @@ const Resume = React.lazy(() =>
 const Learning = React.lazy(() =>
   import("@/views/pages/Learning").then((m) => ({ default: m.Learning })),
 );
+const LearningSectionPage = React.lazy(() =>
+  import("@/views/pages/Learning").then((m) => ({
+    default: m.LearningSectionPage,
+  })),
+);
 const LearningTopicDetail = React.lazy(() =>
   import("@/views/pages/Learning").then((m) => ({
     default: m.LearningTopicDetail,
@@ -171,6 +176,7 @@ const AppContent: React.FC = () => {
         path="/learning/:sectionSlug/:topicId"
         element={<LearningTopicDetail />}
       />
+      <Route path="/learning/:sectionSlug" element={<LearningSectionPage />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/admin/login" element={<AdminLogin />} />
