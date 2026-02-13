@@ -46,7 +46,7 @@ export const Learning: React.FC = () => {
   const sections = profile ? profile.getPublishedLearningSections() : [];
 
   if (isLoading) {
-    return <Loading fullScreen message="Loading..." />;
+    return <Loading fullScreen message="Loading curriculum..." />;
   }
 
   if (error || !profile) {
@@ -82,7 +82,7 @@ export const Learning: React.FC = () => {
       label="Curriculum"
       title="Learning"
       subtitle="Structured topics: algorithms, frameworks, and best practices."
-      info="Pilih section untuk melihat daftar topik, lalu buka topik untuk detail lengkap."
+      info="Select a section to view topics, then open a topic for full details."
       variant="alt"
     >
       {sections.length > 1 && (
@@ -172,7 +172,7 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
       <Link
         to={sectionUrl}
         className={styles.cardLink}
-        aria-label={`Buka ${section.title}, ${items.length} topik`}
+        aria-label={`Open ${section.title}, ${items.length} topics`}
       >
         <Card
           id={section.slug ? `section-${section.slug}` : undefined}
@@ -195,7 +195,7 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
               </Typography>
               {items.length > 0 && (
                 <span className={styles.sectionBadge}>
-                  {items.length} topik
+                  {items.length} topics
                 </span>
               )}
             </div>
@@ -209,7 +209,7 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
               </Typography>
             )}
             <span className={styles.seeMoreBtn}>
-              Lihat topik
+              View topics
               <span className={styles.seeMoreArrow} aria-hidden="true">
                 →
               </span>

@@ -726,10 +726,20 @@
 }
 
 .exploreIcon {
-  display: block;
-  font-size: 1.75rem;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   margin-bottom: var(--spacing-md);
+  color: var(--color-primary-600);
+}
+
+.exploreIcon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.dark .exploreIcon {
+  color: var(--color-primary-400);
 }
 
 .exploreTitle {

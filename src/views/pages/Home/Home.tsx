@@ -329,11 +329,11 @@ export const Home: React.FC = () => {
         </Section>
       )}
 
-      {/* Explore: About, Experience, Contact */}
+      {/* Explore: About, Experience, Learning, Resume, Contact */}
       <Section
         label="Discover more"
         title="Explore"
-        subtitle="Skills, career timeline, and how to get in touch"
+        subtitle="Skills, career timeline, curriculum, and how to get in touch"
         id="explore"
         aria-labelledby="explore-title"
       >
@@ -348,7 +348,19 @@ export const Home: React.FC = () => {
               aria-label="Go to About page – skills, education, certifications"
             >
               <span className={styles.exploreIcon} aria-hidden="true">
-                👤
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
               </span>
               <Typography
                 variant="h5"
@@ -368,7 +380,19 @@ export const Home: React.FC = () => {
               aria-label="Go to Experience page – work history and timeline"
             >
               <span className={styles.exploreIcon} aria-hidden="true">
-                💼
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
               </span>
               <Typography
                 variant="h5"
@@ -383,12 +407,93 @@ export const Home: React.FC = () => {
               <span className={styles.exploreLink}>View timeline →</span>
             </Link>
             <Link
+              to="/learning"
+              className={styles.exploreCard}
+              aria-label="Go to Learning page – curriculum and topics"
+            >
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  <path d="M8 7h8" />
+                  <path d="M8 11h8" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
+              >
+                Learning
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                Curriculum: algorithms, React, system design & more
+              </Typography>
+              <span className={styles.exploreLink}>Browse curriculum →</span>
+            </Link>
+            <Link
+              to="/resume"
+              className={styles.exploreCard}
+              aria-label="Go to Resume page – CV and experience summary"
+            >
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <path d="M14 2v6h6" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                  <path d="M10 9H8" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
+              >
+                Resume
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                CV, skills summary & download
+              </Typography>
+              <span className={styles.exploreLink}>View resume →</span>
+            </Link>
+            <Link
               to="/contact"
               className={styles.exploreCard}
               aria-label="Go to Contact page – get in touch"
             >
               <span className={styles.exploreIcon} aria-hidden="true">
-                ✉️
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <path d="m22 6-10 7L2 6" />
+                </svg>
               </span>
               <Typography
                 variant="h5"

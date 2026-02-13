@@ -104,7 +104,8 @@ export const Footer: React.FC = () => {
                 color="secondary"
                 className={styles.newsletterDescription}
               >
-                Get notified about new projects and updates
+                Get notified about new projects and updates. (Demo — no backend
+                yet)
               </Typography>
               <form
                 onSubmit={handleNewsletterSubmit}

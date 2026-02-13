@@ -73,7 +73,7 @@ export const LearningSectionPage: React.FC = () => {
   });
 
   if (isLoading) {
-    return <Loading fullScreen message="Loading..." />;
+    return <Loading fullScreen message="Loading section..." />;
   }
 
   if (error || !profile) {
@@ -133,7 +133,7 @@ export const LearningSectionPage: React.FC = () => {
           weight="semibold"
           className={styles.topicsLabel}
         >
-          Pilih topik ({items.length})
+          Select topic ({items.length})
         </Typography>
         {items.length > 0 ? (
           <ul
@@ -152,14 +152,14 @@ export const LearningSectionPage: React.FC = () => {
           </ul>
         ) : (
           <Typography variant="body" color="secondary">
-            Belum ada topik di section ini.
+            No topics in this section yet.
           </Typography>
         )}
       </div>
 
       <footer className={styles.footer}>
         <Link to="/learning" className={styles.backLink}>
-          ← Kembali ke Learning
+          ← Back to Learning
         </Link>
       </footer>
     </Section>

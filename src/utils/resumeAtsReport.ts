@@ -248,7 +248,7 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
     passed: hasContact,
     detail: hasContact
       ? `Email: ${hasEmail ? "Ya" : "Tidak"} | Phone: ${hasPhone ? "Ya" : "Tidak"} | ${contacts.length} item`
-      : "Belum ada kontak",
+      : "No contacts",
   });
   if (!hasEmail && hasContact)
     recommendations.push("Tambahkan Email agar ATS dan HR dapat menghubungi.");
@@ -337,7 +337,7 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
     passed: hasSkills,
     detail: hasSkills
       ? `Technical: ${data.technicalSkills.length}, Soft: ${data.softSkills.length}`
-      : "Belum ada skills",
+      : "No skills",
   });
   if (!hasSkills)
     recommendations.push(

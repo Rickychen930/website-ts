@@ -471,7 +471,7 @@ export const LearningTopicDetail: React.FC = () => {
   });
 
   if (isLoading) {
-    return <Loading fullScreen message="Loading..." />;
+    return <Loading fullScreen message="Loading topic..." />;
   }
 
   if (error || !profile) {
@@ -490,6 +490,13 @@ export const LearningTopicDetail: React.FC = () => {
   }
 
   const { section, topic } = sectionAndTopic;
+  const items = [...(section.items ?? [])].sort((a, b) => a.order - b.order);
+  const currentIndex = items.findIndex((i) => i.id === topic.id);
+  const prevTopic = currentIndex > 0 ? items[currentIndex - 1] : null;
+  const nextTopic =
+    currentIndex >= 0 && currentIndex < items.length - 1
+      ? items[currentIndex + 1]
+      : null;
 
   return (
     <Section
@@ -579,9 +586,31 @@ export const LearningTopicDetail: React.FC = () => {
       </div>
 
       <footer className={styles.footer}>
-        <Link to={`/learning/${section.slug}`} className={styles.backLink}>
-          ← Kembali ke {section.title}
-        </Link>
+        <div className={styles.footerNav}>
+          {prevTopic ? (
+            <Link
+              to={`/learning/${section.slug}/${encodeURIComponent(prevTopic.id)}`}
+              className={styles.footerNavLink}
+            >
+              ← {prevTopic.title}
+            </Link>
+          ) : (
+            <span />
+          )}
+          <Link to={`/learning/${section.slug}`} className={styles.backLink}>
+            Back to {section.title}
+          </Link>
+          {nextTopic ? (
+            <Link
+              to={`/learning/${section.slug}/${encodeURIComponent(nextTopic.id)}`}
+              className={styles.footerNavLink}
+            >
+              {nextTopic.title} →
+            </Link>
+          ) : (
+            <span />
+          )}
+        </div>
       </footer>
     </Section>
   );

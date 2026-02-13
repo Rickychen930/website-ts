@@ -69,11 +69,26 @@ export const SkipLinks: React.FC = () => {
           Skip to contact form
         </a>
       )}
-      {location.pathname === "/learning" && (
+      {(location.pathname === "/learning" ||
+        location.pathname.startsWith("/learning/")) && (
         <a
-          href="#learning"
+          href={
+            location.pathname === "/learning"
+              ? "#learning"
+              : /^\/learning\/[^/]+$/.test(location.pathname)
+                ? "#learning-section"
+                : "#learning-topic-detail"
+          }
           className={styles.skipLink}
-          onClick={(e) => handleSkip(e, "learning")}
+          onClick={(e) => {
+            const target =
+              location.pathname === "/learning"
+                ? "learning"
+                : /^\/learning\/[^/]+$/.test(location.pathname)
+                  ? "learning-section"
+                  : "learning-topic-detail";
+            handleSkip(e, target);
+          }}
           aria-label="Skip to curriculum"
         >
           Skip to curriculum

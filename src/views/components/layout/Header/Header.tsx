@@ -37,6 +37,7 @@ export const Header: React.FC = () => {
       if (rafRef.current === null) {
         rafRef.current = requestAnimationFrame(() => {
           setIsScrolled(window.scrollY > 20);
+          setIsDropdownOpen(false);
           rafRef.current = null;
         });
       }
