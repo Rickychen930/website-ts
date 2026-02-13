@@ -16,7 +16,37 @@ import { CodeBlock } from "@/views/components/ui/CodeBlock";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningTopicItem } from "@/types/domain";
+import { getSectionTheme } from "./sectionThemes";
 import styles from "./LearningTopicDetail.module.css";
+
+/** Fallback image when topic has no imageUrl */
+function getTopicImageUrl(
+  item: LearningTopicItem,
+  sectionSlug: string,
+): string {
+  if (item.imageUrl) return item.imageUrl;
+  const text = encodeURIComponent(item.title.slice(0, 40).replace(/&/g, "and"));
+  const colors: Record<string, string> = {
+    "how-to-learn": "4338ca",
+    "competitive-programming": "1e3a8a",
+    react: "0369a1",
+    nodejs: "059669",
+    "database-sql": "7c3aed",
+    "cs-theory": "b45309",
+    "data-analytics": "0d9488",
+    "ai-ml": "a21caf",
+    "system-design-devops": "475569",
+    "security-testing": "be123c",
+    "programming-languages": "6d28d9",
+    "english-learning": "1d4ed8",
+    "quantum-computing": "4338ca",
+    "interview-preparation": "059669",
+    "operating-systems-concurrency": "b45309",
+    "computer-networks": "0d9488",
+  };
+  const color = colors[sectionSlug] ?? "6366f1";
+  return `https://placehold.co/800x400/${color}/white?text=${text}`;
+}
 
 const SECTION_LABELS: Record<number, string> = {
   1: "Learning flow",
@@ -30,7 +60,6 @@ const SECTION_LABELS: Record<number, string> = {
 };
 
 const CODE_SECTION_LABEL = "Code example";
-const IMAGE_SECTION_LABEL = "Supporting image";
 
 /**
  * Parses 8-part structured content. Expected format in markdown-style:
@@ -122,6 +151,48 @@ function renderInline(text: string): React.ReactNode[] {
   });
 }
 
+const calloutIcons = {
+  tip: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14" />
+    </svg>
+  ),
+  note: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
+    </svg>
+  ),
+  important: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
+  ),
+};
+
 /** Returns true if the block is a callout: **Tip:**, **Note:**, or **Important:** at start. */
 function isCalloutBlock(
   block: string,
@@ -197,9 +268,13 @@ function parseNestedListLines(
 
 interface TopicDetailContentProps {
   item: LearningTopicItem;
+  sectionSlug: string;
 }
 
-const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
+const TopicDetailContent: React.FC<TopicDetailContentProps> = ({
+  item,
+  sectionSlug,
+}) => {
   const content = item.content ?? "";
   const sections = useMemo(() => parseStructuredContent(content), [content]);
   const byNum = useMemo(
@@ -221,6 +296,7 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
             role="note"
           >
             <span className={styles.calloutLabel}>
+              {calloutIcons[callout.kind]}
               {callout.kind === "tip"
                 ? "Tip"
                 : callout.kind === "note"
@@ -352,28 +428,6 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
     }
   });
 
-  if (item.imageUrl) {
-    blockOrder.push({
-      key: "image",
-      label: IMAGE_SECTION_LABEL,
-      node: (
-        <figure className={styles.figure}>
-          <img
-            src={item.imageUrl}
-            alt={
-              item.title
-                ? `Illustration for ${item.title}`
-                : "Topic illustration"
-            }
-            className={styles.image}
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-      ),
-    });
-  }
-
   if (blockOrder.length === 0 && content.trim()) {
     return (
       <div className={styles.plainContent}>
@@ -388,17 +442,6 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
             language={item.codeLanguage ?? "text"}
             className={styles.codeBlock}
           />
-        )}
-        {item.imageUrl && (
-          <figure className={styles.figure}>
-            <img
-              src={item.imageUrl}
-              alt=""
-              className={styles.image}
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
         )}
       </div>
     );
@@ -532,6 +575,16 @@ export const LearningTopicDetail: React.FC = () => {
       </nav>
 
       <header className={styles.header}>
+        {section.slug && (
+          <div
+            className={styles.sectionBanner}
+            style={{ background: getSectionTheme(section.slug).gradient }}
+          >
+            <span className={styles.sectionBannerIcon} aria-hidden="true">
+              {getSectionTheme(section.slug).icon}
+            </span>
+          </div>
+        )}
         <Typography variant="h1" weight="bold" as="h1" className={styles.title}>
           {topic.title}
         </Typography>
@@ -547,10 +600,24 @@ export const LearningTopicDetail: React.FC = () => {
         )}
       </header>
 
+      <figure className={styles.heroFigure}>
+        <img
+          src={getTopicImageUrl(topic, section.slug)}
+          alt={
+            topic.title
+              ? `Illustration for ${topic.title}`
+              : "Topic illustration"
+          }
+          className={styles.heroImage}
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+
       <div className={styles.content}>
         {topic.content || topic.codeExample || topic.imageUrl ? (
           isStructuredContent(topic.content ?? "") ? (
-            <TopicDetailContent item={topic} />
+            <TopicDetailContent item={topic} sectionSlug={section.slug} />
           ) : (
             <div className={styles.plainContent}>
               {topic.content?.split(/\n\n+/).map((para, i) => (
@@ -564,17 +631,6 @@ export const LearningTopicDetail: React.FC = () => {
                   language={topic.codeLanguage ?? "text"}
                   className={styles.codeBlock}
                 />
-              )}
-              {topic.imageUrl && (
-                <figure className={styles.figure}>
-                  <img
-                    src={topic.imageUrl}
-                    alt=""
-                    className={styles.image}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
               )}
             </div>
           )

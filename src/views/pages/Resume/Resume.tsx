@@ -169,7 +169,7 @@ export const Resume: React.FC = () => {
             aria-expanded={showAtsReport}
             aria-controls="ats-report"
           >
-            {showAtsReport ? "Sembunyikan" : "Tes Keterbacaan ATS"}
+            {showAtsReport ? "Hide report" : "ATS Readability Test"}
           </Button>
         </div>
 
@@ -224,7 +224,7 @@ export const Resume: React.FC = () => {
               </div>
             )}
             <details className={styles.atsPreviewDetails}>
-              <summary>Preview teks (seperti yang dibaca sistem)</summary>
+              <summary>Preview text (as read by ATS system)</summary>
               <pre className={styles.atsPreviewPre}>
                 {atsReport.plainTextPreview}
               </pre>

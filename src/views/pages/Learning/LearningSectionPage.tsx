@@ -13,6 +13,7 @@ import { Typography } from "@/views/components/ui/Typography";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningTopicItem } from "@/types/domain";
+import { getSectionTheme } from "./sectionThemes";
 import styles from "./LearningSectionPage.module.css";
 
 interface TopicLinkProps {
@@ -22,6 +23,35 @@ interface TopicLinkProps {
   total: number;
 }
 
+/** Fallback image when topic has no imageUrl - uses placehold.co with title */
+function getTopicImageUrl(
+  item: LearningTopicItem,
+  sectionSlug: string,
+): string {
+  if (item.imageUrl) return item.imageUrl;
+  const text = encodeURIComponent(item.title.slice(0, 40).replace(/&/g, "and"));
+  const colors: Record<string, string> = {
+    "how-to-learn": "4338ca",
+    "competitive-programming": "1e3a8a",
+    react: "0369a1",
+    nodejs: "059669",
+    "database-sql": "7c3aed",
+    "cs-theory": "b45309",
+    "data-analytics": "0d9488",
+    "ai-ml": "a21caf",
+    "system-design-devops": "475569",
+    "security-testing": "be123c",
+    "programming-languages": "6d28d9",
+    "english-learning": "1d4ed8",
+    "quantum-computing": "4338ca",
+    "interview-preparation": "059669",
+    "operating-systems-concurrency": "b45309",
+    "computer-networks": "0d9488",
+  };
+  const color = colors[sectionSlug] ?? "6366f1";
+  return `https://placehold.co/400x200/${color}/white?text=${text}`;
+}
+
 const TopicLink: React.FC<TopicLinkProps> = ({
   item,
   sectionSlug,
@@ -29,26 +59,36 @@ const TopicLink: React.FC<TopicLinkProps> = ({
   total,
 }) => {
   const detailUrl = `/learning/${sectionSlug}/${encodeURIComponent(item.id)}`;
+  const imageUrl = getTopicImageUrl(item, sectionSlug);
   return (
     <li className={styles.topicItem}>
       <Link to={detailUrl} className={styles.topicLink}>
+        <div
+          className={styles.topicThumb}
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+          }}
+          aria-hidden
+        />
         <span className={styles.topicIndex} aria-hidden="true">
-          {index + 1}/{total}
+          {index + 1}
         </span>
-        <span className={styles.topicTitle}>{item.title}</span>
+        <div className={styles.topicContent}>
+          <span className={styles.topicTitle}>{item.title}</span>
+          {item.description && (
+            <Typography
+              variant="small"
+              color="secondary"
+              className={styles.topicDesc}
+            >
+              {item.description}
+            </Typography>
+          )}
+        </div>
         <span className={styles.topicArrow} aria-hidden="true">
           →
         </span>
       </Link>
-      {item.description && (
-        <Typography
-          variant="small"
-          color="secondary"
-          className={styles.topicDesc}
-        >
-          {item.description}
-        </Typography>
-      )}
     </li>
   );
 };
@@ -112,6 +152,16 @@ export const LearningSectionPage: React.FC = () => {
       </nav>
 
       <header className={styles.header}>
+        {section.slug && (
+          <div
+            className={styles.sectionBanner}
+            style={{ background: getSectionTheme(section.slug).gradient }}
+          >
+            <span className={styles.sectionBannerIcon} aria-hidden="true">
+              {getSectionTheme(section.slug).icon}
+            </span>
+          </div>
+        )}
         <Typography variant="h1" weight="bold" as="h1" className={styles.title}>
           {section.title}
         </Typography>
@@ -144,16 +194,35 @@ export const LearningSectionPage: React.FC = () => {
               <TopicLink
                 key={item.id}
                 item={item}
-                sectionSlug={section.slug}
+                sectionSlug={sectionSlug}
                 index={idx}
                 total={items.length}
               />
             ))}
           </ul>
         ) : (
-          <Typography variant="body" color="secondary">
-            No topics in this section yet.
-          </Typography>
+          <div className={styles.emptyState}>
+            <span className={styles.emptyIcon} aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                <path d="M8 7h8" />
+                <path d="M8 11h8" />
+              </svg>
+            </span>
+            <Typography variant="body" color="secondary">
+              No topics in this section yet.
+            </Typography>
+          </div>
         )}
       </div>
 

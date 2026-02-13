@@ -100,6 +100,22 @@ export const Projects: React.FC = () => {
           aria-live="polite"
           aria-labelledby="projects-empty-title"
         >
+          <span className={styles.emptyIcon} aria-hidden="true">
+            <svg
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <path d="M3 9h18" />
+              <path d="M9 21V9" />
+            </svg>
+          </span>
           <Typography
             id="projects-empty-title"
             variant="h4"

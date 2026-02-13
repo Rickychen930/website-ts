@@ -14,6 +14,7 @@ import { Card } from "@/views/components/ui/Card";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningSection as LearningSectionType } from "@/types/domain";
+import { getSectionTheme } from "./sectionThemes";
 import styles from "./Learning.module.css";
 
 function scrollToLearningTop() {
@@ -69,9 +70,29 @@ export const Learning: React.FC = () => {
         title="Learning"
         subtitle="Structured topics and resources"
       >
-        <Typography variant="body" color="secondary">
-          No learning sections published yet. Check back later.
-        </Typography>
+        <div className={styles.emptyState}>
+          <span className={styles.emptyIcon} aria-hidden="true">
+            <svg
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              <path d="M8 7h8" />
+              <path d="M8 11h8" />
+              <path d="M8 15h4" />
+            </svg>
+          </span>
+          <Typography variant="body" color="secondary">
+            No learning sections published yet. Check back later.
+          </Typography>
+        </div>
       </Section>
     );
   }
@@ -124,18 +145,20 @@ export const Learning: React.FC = () => {
           />
         ))}
       </div>
-      <div className={styles.footerActions}>
-        <button
-          type="button"
-          onClick={scrollToLearningTop}
-          className={styles.backToTop}
-          aria-label="Scroll back to top of Learning"
-        >
-          <Typography variant="small" weight="medium" as="span">
-            Back to top
-          </Typography>
-        </button>
-      </div>
+      {sections.length > 6 && (
+        <div className={styles.footerActions}>
+          <button
+            type="button"
+            onClick={scrollToLearningTop}
+            className={styles.backToTop}
+            aria-label="Scroll back to top of Learning"
+          >
+            <Typography variant="small" weight="medium" as="span">
+              Back to top
+            </Typography>
+          </button>
+        </div>
+      )}
     </Section>
   );
 };
@@ -166,6 +189,7 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
     ? truncateDescription(section.description)
     : null;
   const sectionUrl = section.slug ? `/learning/${section.slug}` : "#";
+  const theme = section.slug ? getSectionTheme(section.slug) : null;
 
   return (
     <ScrollReveal direction="up">
@@ -177,9 +201,20 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
         <Card
           id={section.slug ? `section-${section.slug}` : undefined}
           variant="elevated"
-          padding="lg"
+          padding="none"
           className={styles.card}
         >
+          {/* Gradient banner with icon */}
+          {theme && (
+            <div
+              className={styles.cardBanner}
+              style={{ background: theme.gradient }}
+            >
+              <span className={styles.cardBannerIcon} aria-hidden="true">
+                {theme.icon}
+              </span>
+            </div>
+          )}
           <header className={styles.cardHeader}>
             <div className={styles.cardTitleRow}>
               <span className={styles.sectionIndex} aria-hidden="true">
@@ -193,6 +228,9 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
               >
                 {section.title}
               </Typography>
+              {section.slug === "how-to-learn" && (
+                <span className={styles.startHereBadge}>Start here</span>
+              )}
               {items.length > 0 && (
                 <span className={styles.sectionBadge}>
                   {items.length} topics

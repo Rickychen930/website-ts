@@ -139,6 +139,16 @@
   max-width: var(--container-md);
 }
 
+.emptyIcon {
+  display: flex;
+  color: var(--color-primary-300);
+}
+
+.emptyIcon svg {
+  width: 4rem;
+  height: 4rem;
+}
+
 .viewAllButton {
   margin-top: var(--spacing-xl);
   text-align: center;

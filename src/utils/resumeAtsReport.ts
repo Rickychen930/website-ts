@@ -227,33 +227,33 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
   const checks: AtsCheckItem[] = [];
   const recommendations: string[] = [];
 
-  // 1. Nama ada dan tidak kosong
+  // 1. Name present and not empty
   const hasName = !!trimResumeText(data.name);
   checks.push({
     id: "name",
-    label: "Nama jelas dan terisi",
+    label: "Name is clear and filled",
     passed: hasName,
-    detail: hasName ? trimResumeText(data.name) : "Nama kosong",
+    detail: hasName ? trimResumeText(data.name) : "Name is empty",
   });
-  if (!hasName) recommendations.push("Isi nama lengkap di bagian Profile.");
+  if (!hasName) recommendations.push("Add full name in Profile section.");
 
-  // 2. Kontak (minimal email atau phone untuk ATS)
+  // 2. Contact (minimal email or phone for ATS)
   const contacts = data.contacts.filter((c) => trimResumeText(c.value));
   const hasEmail = contacts.some((c) => c.type?.toLowerCase() === "email");
   const hasPhone = contacts.some((c) => c.type?.toLowerCase() === "phone");
   const hasContact = contacts.length > 0;
   checks.push({
     id: "contact",
-    label: "Kontak dapat di-parse (Email/Phone/LinkedIn)",
+    label: "Contact is parseable (Email/Phone/LinkedIn)",
     passed: hasContact,
     detail: hasContact
-      ? `Email: ${hasEmail ? "Ya" : "Tidak"} | Phone: ${hasPhone ? "Ya" : "Tidak"} | ${contacts.length} item`
+      ? `Email: ${hasEmail ? "Yes" : "No"} | Phone: ${hasPhone ? "Yes" : "No"} | ${contacts.length} item(s)`
       : "No contacts",
   });
   if (!hasEmail && hasContact)
-    recommendations.push("Tambahkan Email agar ATS dan HR dapat menghubungi.");
+    recommendations.push("Add Email so ATS and HR can reach you.");
   if (!hasContact)
-    recommendations.push("Tambahkan minimal Email atau Phone di Profile.");
+    recommendations.push("Add at least Email or Phone in Profile.");
 
   // 3. Section headings standar (semua section kita pakai nama standar)
   const usedHeadings = [
@@ -274,28 +274,28 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
   );
   checks.push({
     id: "sections",
-    label: "Section pakai nama standar (dikenali ATS)",
+    label: "Sections use standard names (ATS-recognized)",
     passed: standardHeadings.length === usedHeadings.length,
-    detail: `${standardHeadings.length}/${usedHeadings.length} section standar`,
+    detail: `${standardHeadings.length}/${usedHeadings.length} standard section(s)`,
   });
 
-  // 4. Single column / no complex layout (kita selalu single column)
+  // 4. Single column / no complex layout (we always use single column)
   checks.push({
     id: "layout",
-    label: "Layout satu kolom (ramah ATS)",
+    label: "Single-column layout (ATS-friendly)",
     passed: true,
-    detail: "PDF & tampilan menggunakan satu kolom.",
+    detail: "PDF and display use single column.",
   });
 
-  // 5. Teks asli (bukan gambar/scan) – PDF kita dari jsPDF = real text
+  // 5. Real text (not image/scan) – our PDF is from jsPDF = real text
   checks.push({
     id: "text",
-    label: "Resume teks asli (bukan scan/gambar)",
+    label: "Resume uses real text (not scan/image)",
     passed: true,
-    detail: "PDF dihasilkan dari teks (jsPDF), bukan gambar/OCR.",
+    detail: "PDF is generated from text (jsPDF), not image/OCR.",
   });
 
-  // 6. Experience dengan role + company + tanggal
+  // 6. Experience with role + company + date
   const expOk =
     data.experiences.length === 0 ||
     data.experiences.every(
@@ -306,16 +306,16 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
     );
   checks.push({
     id: "experience",
-    label: "Experience berisi Role, Company, dan Tanggal",
+    label: "Experience has Role, Company, and Date",
     passed: expOk,
-    detail: `${data.experiences.length} pengalaman; format lengkap: ${expOk ? "Ya" : "Periksa tiap entri"}`,
+    detail: `${data.experiences.length} experience(s); complete format: ${expOk ? "Yes" : "Check each entry"}`,
   });
   if (!expOk)
     recommendations.push(
-      "Pastikan tiap Experience punya Position, Company, dan Start Date.",
+      "Ensure each Experience has Position, Company, and Start Date.",
     );
 
-  // 7. Education dengan degree + institution
+  // 7. Education with degree + institution
   const eduOk =
     data.academics.length === 0 ||
     data.academics.every(
@@ -323,38 +323,36 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
     );
   checks.push({
     id: "education",
-    label: "Education berisi Degree dan Institution",
+    label: "Education has Degree and Institution",
     passed: eduOk,
-    detail: `${data.academics.length} entri pendidikan`,
+    detail: `${data.academics.length} education entr${data.academics.length === 1 ? "y" : "ies"}`,
   });
 
-  // 8. Skills terisi (technical atau soft)
+  // 8. Skills filled (technical or soft)
   const hasSkills =
     data.technicalSkills.length > 0 || data.softSkills.length > 0;
   checks.push({
     id: "skills",
-    label: "Skills (Technical/Soft) terisi",
+    label: "Skills (Technical/Soft) filled",
     passed: hasSkills,
     detail: hasSkills
       ? `Technical: ${data.technicalSkills.length}, Soft: ${data.softSkills.length}`
       : "No skills",
   });
   if (!hasSkills)
-    recommendations.push(
-      "Tambahkan Technical atau Soft Skills untuk meningkatkan match ATS.",
-    );
+    recommendations.push("Add Technical or Soft Skills to improve ATS match.");
 
-  // 9. Summary/bio (meningkatkan keyword matching)
+  // 9. Summary/bio (improves keyword matching)
   const hasSummary = !!trimResumeText(data.bio);
   checks.push({
     id: "summary",
-    label: "Professional Summary terisi",
+    label: "Professional Summary filled",
     passed: hasSummary,
-    detail: hasSummary ? "Ada ringkasan" : "Kosong",
+    detail: hasSummary ? "Summary present" : "Empty",
   });
   if (!hasSummary)
     recommendations.push(
-      "Tambahkan Professional Summary dengan kata kunci relevan untuk ATS.",
+      "Add Professional Summary with relevant keywords for ATS.",
     );
 
   const passedCount = checks.filter((c) => c.passed).length;
@@ -365,16 +363,16 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
   let summary: string;
   if (score >= 90 && atsReadable) {
     summary =
-      "Resume Anda sangat siap ATS: struktur jelas, kontak dan section standar, teks asli. Sistem dapat membaca dan mem-parse dengan baik.";
+      "Your resume is ATS-ready: clear structure, standard contact and sections, real text. The system can read and parse it well.";
   } else if (score >= 70 && atsReadable) {
     summary =
-      "Resume dapat dibaca ATS dengan baik. Beberapa poin bisa ditingkatkan untuk skor lebih tinggi.";
+      "Resume is readable by ATS. A few items can be improved for a higher score.";
   } else if (score >= 50) {
     summary =
-      "Resume sebagian dapat dibaca ATS. Lengkapi kontak, summary, atau experience agar parsing lebih andal.";
+      "Resume is partially ATS-readable. Complete contact, summary, or experience for more reliable parsing.";
   } else {
     summary =
-      "Resume berisiko tidak ter-parse dengan baik oleh ATS. Lengkapi nama, kontak, dan section wajib.";
+      "Resume may not parse well with ATS. Complete name, contact, and required sections.";
   }
 
   return {

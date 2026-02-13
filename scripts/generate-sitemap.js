@@ -29,6 +29,26 @@ const getBaseUrl = () => {
   return "http://localhost:3000";
 };
 
+// Learning section slugs (from seedData; update if curriculum changes)
+const LEARNING_SECTION_SLUGS = [
+  "how-to-learn",
+  "competitive-programming",
+  "react",
+  "nodejs",
+  "database-sql",
+  "cs-theory",
+  "data-analytics",
+  "ai-ml",
+  "system-design-devops",
+  "security-testing",
+  "programming-languages",
+  "english-learning",
+  "quantum-computing",
+  "interview-preparation",
+  "operating-systems-concurrency",
+  "computer-networks",
+];
+
 // Define all routes
 const routes = [
   { path: "/", priority: "1.0", changefreq: "daily" },
@@ -38,6 +58,11 @@ const routes = [
   { path: "/contact", priority: "0.8", changefreq: "monthly" },
   { path: "/resume", priority: "0.8", changefreq: "weekly" },
   { path: "/learning", priority: "0.8", changefreq: "weekly" },
+  ...LEARNING_SECTION_SLUGS.map((slug) => ({
+    path: `/learning/${slug}`,
+    priority: "0.75",
+    changefreq: "weekly",
+  })),
   { path: "/privacy", priority: "0.5", changefreq: "monthly" },
   { path: "/terms", priority: "0.5", changefreq: "monthly" },
 ];

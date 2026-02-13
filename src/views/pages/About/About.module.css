@@ -194,6 +194,16 @@
   max-width: var(--container-md);
 }
 
+.emptyIcon {
+  display: flex;
+  color: var(--color-primary-300);
+}
+
+.emptyIcon svg {
+  width: 4rem;
+  height: 4rem;
+}
+
 .loading,
 .error {
   display: flex;
