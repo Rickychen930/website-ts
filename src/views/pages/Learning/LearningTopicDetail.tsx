@@ -192,7 +192,7 @@ function isListBlock(block: string): boolean {
 
 /**
  * For section 7 (Example problem & solution): if body has "Problem:" and "Solution:",
- * split into two labeled boxes so the content is not cramped and does not look "tertimpa".
+ * split into two labeled boxes so the content is not cramped or overlapping.
  */
 function renderExampleSectionBody(
   body: string,
@@ -222,13 +222,13 @@ function renderExampleSectionBody(
         return (
           <>
             <div className={styles.exampleProblemBox}>
-              <div className={styles.exampleLabel}>Soal</div>
+              <div className={styles.exampleLabel}>Problem</div>
               <div className={styles.exampleContent}>
                 {renderBody(problemText)}
               </div>
             </div>
             <div className={styles.exampleSolutionBox}>
-              <div className={styles.exampleLabel}>Pembahasan</div>
+              <div className={styles.exampleLabel}>Solution</div>
               <div className={styles.exampleContent}>
                 {renderBody(solutionText)}
               </div>
@@ -404,7 +404,7 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
         ? renderBody(s.body)
         : [
             <p key="empty" className={styles.emptySectionHint}>
-              — No content for this section —
+              No content for this section.
             </p>,
           ];
       blockOrder.push({
@@ -440,7 +440,7 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
         )
       ) : (
         <p key="empty" className={styles.emptySectionHint}>
-          — No content for this section —
+          No content for this section.
         </p>
       );
       blockOrder.push({
@@ -470,16 +470,21 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
     );
   }
 
+  const totalSteps = blockOrder.length;
+
   return (
     <>
       {blockOrder.length > 2 && (
         <nav aria-label="Table of contents">
-          <details className={styles.toc}>
+          <details className={styles.toc} open>
             <summary className={styles.tocSummary}>On this page</summary>
             <ol className={styles.tocList}>
-              {blockOrder.map(({ key, label }) => (
+              {blockOrder.map(({ key, label }, idx) => (
                 <li key={key}>
                   <a href={`#detail-heading-${key}`} className={styles.tocLink}>
+                    <span className={styles.tocStep} aria-hidden="true">
+                      {idx + 1}.
+                    </span>{" "}
                     {label}
                   </a>
                 </li>
@@ -487,6 +492,12 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
             </ol>
           </details>
         </nav>
+      )}
+      {totalSteps > 0 && (
+        <p className={styles.learnerGuide} role="note">
+          Follow the sections in order for the best learning experience. Use the
+          list above to jump to any part.
+        </p>
       )}
       <article className={styles.article}>
         {blockOrder.map(({ key, label, node }, index) => (
@@ -500,9 +511,20 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
             }
             aria-labelledby={`detail-heading-${key}`}
           >
-            <h2 id={`detail-heading-${key}`} className={styles.sectionHeading}>
-              <span className={styles.sectionNum}>{index + 1}.</span> {label}
-            </h2>
+            <div className={styles.sectionHeadingRow}>
+              <h2
+                id={`detail-heading-${key}`}
+                className={styles.sectionHeading}
+              >
+                <span className={styles.sectionNum}>{index + 1}.</span> {label}
+              </h2>
+              <span
+                className={styles.sectionStepBadge}
+                aria-label={`Step ${index + 1} of ${totalSteps}`}
+              >
+                Step {index + 1} of {totalSteps}
+              </span>
+            </div>
             <div className={styles.sectionBody}>{node}</div>
           </section>
         ))}
@@ -620,39 +642,63 @@ export const LearningTopicDetail: React.FC = () => {
       </nav>
 
       <header className={styles.header}>
-        {section.slug && (
-          <div
-            className={styles.sectionBanner}
-            style={{ background: sectionTheme.gradient }}
-          >
-            <span className={styles.sectionBannerIcon} aria-hidden="true">
-              {sectionTheme.icon}
+        <div className={styles.headerMeta}>
+          {section.slug && (
+            <span
+              className={styles.sectionBadge}
+              style={{ background: sectionTheme.gradient }}
+              aria-hidden="true"
+            >
+              <span className={styles.sectionBadgeIcon}>
+                {sectionTheme.icon}
+              </span>
+              {section.title}
             </span>
-          </div>
-        )}
+          )}
+          <span className={styles.headerMetaSep} aria-hidden="true">
+            ·
+          </span>
+          {items.length > 0 && (
+            <Typography
+              variant="small"
+              color="tertiary"
+              as="span"
+              className={styles.topicProgress}
+            >
+              Topic {currentIndex + 1} of {items.length}
+            </Typography>
+          )}
+        </div>
         <Typography variant="h1" weight="bold" as="h1" className={styles.title}>
           {topic.title}
         </Typography>
-        {readingMinutes > 0 && (
-          <Typography
-            variant="small"
-            color="tertiary"
-            as="p"
-            className={styles.readingTime}
-          >
-            {readingMinutes} min read
-          </Typography>
-        )}
-        {topic.description && (
-          <Typography
-            variant="body"
-            color="secondary"
-            as="p"
-            className={styles.description}
-          >
-            {topic.description}
-          </Typography>
-        )}
+        <div className={styles.headerSub}>
+          {readingMinutes > 0 && (
+            <Typography
+              variant="small"
+              color="tertiary"
+              as="span"
+              className={styles.readingTime}
+            >
+              {readingMinutes} min read
+            </Typography>
+          )}
+          {topic.description && (
+            <div className={styles.whatYoullLearn}>
+              <span className={styles.whatYoullLearnLabel}>
+                What you&apos;ll learn
+              </span>
+              <Typography
+                variant="body"
+                color="secondary"
+                as="p"
+                className={styles.description}
+              >
+                {topic.description}
+              </Typography>
+            </div>
+          )}
+        </div>
       </header>
 
       <figure className={styles.heroFigure}>
