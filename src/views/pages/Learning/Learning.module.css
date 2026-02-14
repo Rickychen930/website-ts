@@ -95,6 +95,12 @@
   transform: translateX(4px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .cardLink:hover .seeMoreArrow {
+    transform: none;
+  }
+}
+
 .cardLink:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-outline-offset);
@@ -106,13 +112,15 @@
   height: 100%;
   flex-direction: column;
   overflow: hidden;
+  border-radius: var(--theme-radius-card);
+  transition: box-shadow var(--theme-transition);
 }
 
 .cardBanner {
   display: flex;
   position: relative;
   width: 100%;
-  height: 7rem;
+  height: 8rem;
   transition: opacity var(--theme-transition);
   align-items: center;
   justify-content: center;
@@ -131,8 +139,8 @@
 }
 
 .cardBannerIcon svg {
-  width: 3rem;
-  height: 3rem;
+  width: 3.25rem;
+  height: 3.25rem;
 }
 
 .cardHeader {
@@ -192,7 +200,14 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.5;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+@media (width >= 768px) {
+  .cardDescription {
+    -webkit-line-clamp: 4;
+  }
 }
 
 .seeMoreBtn {
@@ -200,9 +215,19 @@
   align-items: center;
   gap: var(--spacing-xs);
   margin-top: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
   color: var(--color-primary-600);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--theme-transition),
+    color var(--theme-transition);
+}
+
+.cardLink:hover .seeMoreBtn {
+  background: var(--color-primary-alpha-10);
+  color: var(--color-primary-700);
 }
 
 .seeMoreArrow {

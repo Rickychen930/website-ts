@@ -13,7 +13,7 @@ import { Typography } from "@/views/components/ui/Typography";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningTopicItem } from "@/types/domain";
-import { getSectionTheme } from "./sectionThemes";
+import { getSectionTheme, isPlaceholderImage } from "./sectionThemes";
 import styles from "./LearningSectionPage.module.css";
 
 interface TopicLinkProps {
@@ -23,35 +23,6 @@ interface TopicLinkProps {
   total: number;
 }
 
-/** Fallback image when topic has no imageUrl - uses placehold.co with title */
-function getTopicImageUrl(
-  item: LearningTopicItem,
-  sectionSlug: string,
-): string {
-  if (item.imageUrl) return item.imageUrl;
-  const text = encodeURIComponent(item.title.slice(0, 40).replace(/&/g, "and"));
-  const colors: Record<string, string> = {
-    "how-to-learn": "4338ca",
-    "competitive-programming": "1e3a8a",
-    react: "0369a1",
-    nodejs: "059669",
-    "database-sql": "7c3aed",
-    "cs-theory": "b45309",
-    "data-analytics": "0d9488",
-    "ai-ml": "a21caf",
-    "system-design-devops": "475569",
-    "security-testing": "be123c",
-    "programming-languages": "6d28d9",
-    "english-learning": "1d4ed8",
-    "quantum-computing": "4338ca",
-    "interview-preparation": "059669",
-    "operating-systems-concurrency": "b45309",
-    "computer-networks": "0d9488",
-  };
-  const color = colors[sectionSlug] ?? "6366f1";
-  return `https://placehold.co/400x200/${color}/white?text=${text}`;
-}
-
 const TopicLink: React.FC<TopicLinkProps> = ({
   item,
   sectionSlug,
@@ -59,17 +30,26 @@ const TopicLink: React.FC<TopicLinkProps> = ({
   total,
 }) => {
   const detailUrl = `/learning/${sectionSlug}/${encodeURIComponent(item.id)}`;
-  const imageUrl = getTopicImageUrl(item, sectionSlug);
+  const theme = getSectionTheme(sectionSlug);
+  const useImage = item.imageUrl && !isPlaceholderImage(item.imageUrl);
   return (
     <li className={styles.topicItem}>
       <Link to={detailUrl} className={styles.topicLink}>
         <div
           className={styles.topicThumb}
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-          }}
+          style={
+            useImage
+              ? { backgroundImage: `url(${item.imageUrl})` }
+              : { background: theme.gradient }
+          }
           aria-hidden
-        />
+        >
+          {!useImage && (
+            <span className={styles.topicThumbIcon} aria-hidden="true">
+              {theme.icon}
+            </span>
+          )}
+        </div>
         <span className={styles.topicIndex} aria-hidden="true">
           {index + 1}
         </span>
@@ -131,10 +111,15 @@ export const LearningSectionPage: React.FC = () => {
     return <Navigate to="/learning" replace />;
   }
 
-  const items = [...(section.items ?? [])].sort((a, b) => a.order - b.order);
+  const items = section.items ?? [];
 
   return (
-    <Section id="learning-section" className={styles.wrapper} variant="alt">
+    <Section
+      id="learning-section"
+      tabIndex={-1}
+      className={styles.wrapper}
+      variant="alt"
+    >
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
         <ol className={styles.breadcrumbList}>
           <li>
@@ -220,14 +205,21 @@ export const LearningSectionPage: React.FC = () => {
               </svg>
             </span>
             <Typography variant="body" color="secondary">
-              No topics in this section yet.
+              No topics in this section yet. Check back later.
             </Typography>
+            <Link to="/learning" className={styles.emptyStateLink}>
+              Browse other sections
+            </Link>
           </div>
         )}
       </div>
 
       <footer className={styles.footer}>
-        <Link to="/learning" className={styles.backLink}>
+        <Link
+          to="/learning"
+          className={styles.backLink}
+          aria-label="Back to Learning overview"
+        >
           ← Back to Learning
         </Link>
       </footer>

@@ -29,24 +29,14 @@ const getBaseUrl = () => {
   return "http://localhost:3000";
 };
 
-// Learning section slugs (from seedData; update if curriculum changes)
+// Learning section slugs (must match backend/src/seed/learningSeed.ts section slugs)
 const LEARNING_SECTION_SLUGS = [
   "how-to-learn",
   "competitive-programming",
-  "react",
   "nodejs",
   "database-sql",
-  "cs-theory",
-  "data-analytics",
-  "ai-ml",
-  "system-design-devops",
-  "security-testing",
-  "programming-languages",
-  "english-learning",
-  "quantum-computing",
+  "react",
   "interview-preparation",
-  "operating-systems-concurrency",
-  "computer-networks",
 ];
 
 // Define all routes

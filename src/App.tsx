@@ -154,6 +154,9 @@ const AdminMessages = React.lazy(() =>
 const AdminLearning = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminLearning })),
 );
+const NotFound = React.lazy(() =>
+  import("@/views/pages/NotFound").then((m) => ({ default: m.NotFound })),
+);
 
 // Inner component that uses keyboard shortcuts (must be inside Router)
 const AppContent: React.FC = () => {
@@ -210,7 +213,7 @@ const AppContent: React.FC = () => {
         <Route path="contacts" element={<AdminContacts />} />
         <Route path="messages" element={<AdminMessages />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 

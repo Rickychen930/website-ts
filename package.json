@@ -46,6 +46,7 @@
     "server:watch:dev": "cd backend && NODE_ENV=development nodemon --config nodemon.json",
     "server:watch:prod": "cd backend && NODE_ENV=production nodemon --config nodemon.json",
     "seed": "tsx backend/src/seed/seed.ts",
+    "learning:validate": "tsx backend/src/seed/learningSeed.ts",
     "check:mongodb": "node scripts/check-mongodb.js",
     "test:api": "node scripts/test-backend-api.js",
     "test:backend": "jest --config jest.backend.config.js",

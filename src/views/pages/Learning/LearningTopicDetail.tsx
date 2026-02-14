@@ -16,38 +16,10 @@ import { CodeBlock } from "@/views/components/ui/CodeBlock";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningTopicItem } from "@/types/domain";
-import { getSectionTheme } from "./sectionThemes";
+import { getSectionTheme, isPlaceholderImage } from "./sectionThemes";
 import styles from "./LearningTopicDetail.module.css";
 
-/** Fallback image when topic has no imageUrl */
-function getTopicImageUrl(
-  item: LearningTopicItem,
-  sectionSlug: string,
-): string {
-  if (item.imageUrl) return item.imageUrl;
-  const text = encodeURIComponent(item.title.slice(0, 40).replace(/&/g, "and"));
-  const colors: Record<string, string> = {
-    "how-to-learn": "4338ca",
-    "competitive-programming": "1e3a8a",
-    react: "0369a1",
-    nodejs: "059669",
-    "database-sql": "7c3aed",
-    "cs-theory": "b45309",
-    "data-analytics": "0d9488",
-    "ai-ml": "a21caf",
-    "system-design-devops": "475569",
-    "security-testing": "be123c",
-    "programming-languages": "6d28d9",
-    "english-learning": "1d4ed8",
-    "quantum-computing": "4338ca",
-    "interview-preparation": "059669",
-    "operating-systems-concurrency": "b45309",
-    "computer-networks": "0d9488",
-  };
-  const color = colors[sectionSlug] ?? "6366f1";
-  return `https://placehold.co/800x400/${color}/white?text=${text}`;
-}
-
+/** Must match backend learningSeedStructure CONTENT_SECTION_LABELS for consistent 8-part content. */
 const SECTION_LABELS: Record<number, string> = {
   1: "Learning flow",
   2: "Material",
@@ -533,7 +505,7 @@ export const LearningTopicDetail: React.FC = () => {
   }
 
   const { section, topic } = sectionAndTopic;
-  const items = [...(section.items ?? [])].sort((a, b) => a.order - b.order);
+  const items = section.items ?? [];
   const currentIndex = items.findIndex((i) => i.id === topic.id);
   const prevTopic = currentIndex > 0 ? items[currentIndex - 1] : null;
   const nextTopic =
@@ -544,6 +516,7 @@ export const LearningTopicDetail: React.FC = () => {
   return (
     <Section
       id="learning-topic-detail"
+      tabIndex={-1}
       className={styles.wrapper}
       variant="alt"
     >
@@ -601,17 +574,29 @@ export const LearningTopicDetail: React.FC = () => {
       </header>
 
       <figure className={styles.heroFigure}>
-        <img
-          src={getTopicImageUrl(topic, section.slug)}
-          alt={
-            topic.title
-              ? `Illustration for ${topic.title}`
-              : "Topic illustration"
-          }
-          className={styles.heroImage}
-          loading="eager"
-          decoding="async"
-        />
+        {topic.imageUrl && !isPlaceholderImage(topic.imageUrl) ? (
+          <img
+            src={topic.imageUrl}
+            alt={
+              topic.title
+                ? `Illustration for ${topic.title}`
+                : "Topic illustration"
+            }
+            className={styles.heroImage}
+            loading="eager"
+            decoding="async"
+          />
+        ) : (
+          <div
+            className={styles.heroPlaceholder}
+            style={{ background: getSectionTheme(section.slug).gradient }}
+            aria-hidden
+          >
+            <span className={styles.heroPlaceholderIcon}>
+              {getSectionTheme(section.slug).icon}
+            </span>
+          </div>
+        )}
       </figure>
 
       <div className={styles.content}>
@@ -647,19 +632,25 @@ export const LearningTopicDetail: React.FC = () => {
             <Link
               to={`/learning/${section.slug}/${encodeURIComponent(prevTopic.id)}`}
               className={styles.footerNavLink}
+              aria-label={`Previous topic: ${prevTopic.title}`}
             >
               ← {prevTopic.title}
             </Link>
           ) : (
             <span />
           )}
-          <Link to={`/learning/${section.slug}`} className={styles.backLink}>
+          <Link
+            to={`/learning/${section.slug}`}
+            className={styles.backLink}
+            aria-label={`Back to section: ${section.title}`}
+          >
             Back to {section.title}
           </Link>
           {nextTopic ? (
             <Link
               to={`/learning/${section.slug}/${encodeURIComponent(nextTopic.id)}`}
               className={styles.footerNavLink}
+              aria-label={`Next topic: ${nextTopic.title}`}
             >
               {nextTopic.title} →
             </Link>

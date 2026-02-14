@@ -94,8 +94,14 @@ export class ProfileModel implements Profile {
     return this.projects.filter((project) => project.category === category);
   }
 
-  /** Learning sections that are published, ordered by order field */
+  /** Learning sections that are published; sections and items ordered by order field */
   public getPublishedLearningSections(): readonly LearningSection[] {
-    return this.learningSections.filter((s) => s.published);
+    return [...this.learningSections]
+      .filter((s) => s.published)
+      .sort((a, b) => a.order - b.order)
+      .map((sec) => ({
+        ...sec,
+        items: [...(sec.items ?? [])].sort((a, b) => a.order - b.order),
+      }));
   }
 }

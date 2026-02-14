@@ -10,6 +10,16 @@ import styles from "./SkipLinks.module.css";
 export const SkipLinks: React.FC = () => {
   const location = useLocation();
 
+  const getSkipAnnouncement = (targetId: string): string => {
+    if (targetId === "main-content") return "main content";
+    if (targetId === "main-navigation") return "navigation";
+    if (targetId === "contact-form") return "contact form";
+    if (targetId === "learning") return "curriculum";
+    if (targetId === "learning-section") return "section topics";
+    if (targetId === "learning-topic-detail") return "topic content";
+    return targetId;
+  };
+
   const handleSkip = (
     e: React.MouseEvent<HTMLAnchorElement>,
     targetId: string,
@@ -17,7 +27,7 @@ export const SkipLinks: React.FC = () => {
     e.preventDefault();
     const target = document.getElementById(targetId);
     if (target) {
-      target.focus();
+      target.focus({ preventScroll: true });
       const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
@@ -25,13 +35,12 @@ export const SkipLinks: React.FC = () => {
         behavior: reduceMotion ? "auto" : "smooth",
         block: "start",
       });
-      // Announce to screen readers
       const announcement = document.createElement("div");
       announcement.setAttribute("role", "status");
       announcement.setAttribute("aria-live", "polite");
       announcement.setAttribute("aria-atomic", "true");
       announcement.className = "sr-only";
-      announcement.textContent = `Skipped to ${targetId === "main-content" ? "main content" : "navigation"}`;
+      announcement.textContent = `Skipped to ${getSkipAnnouncement(targetId)}`;
       document.body.appendChild(announcement);
       setTimeout(() => document.body.removeChild(announcement), 1000);
     }

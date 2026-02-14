@@ -5,6 +5,13 @@
   isolation: isolate;
 }
 
+/* Skip target: show outline when focused (e.g. after "Skip to curriculum") */
+.section[tabindex="-1"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
 .sectionAlt {
   background-image:
     linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),

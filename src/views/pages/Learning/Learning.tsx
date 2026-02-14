@@ -67,8 +67,10 @@ export const Learning: React.FC = () => {
     return (
       <Section
         id="learning"
+        tabIndex={-1}
         title="Learning"
         subtitle="Structured topics and resources"
+        variant="alt"
       >
         <div className={styles.emptyState}>
           <span className={styles.emptyIcon} aria-hidden="true">
@@ -90,7 +92,10 @@ export const Learning: React.FC = () => {
             </svg>
           </span>
           <Typography variant="body" color="secondary">
-            No learning sections published yet. Check back later.
+            No learning sections published yet.
+          </Typography>
+          <Typography variant="small" color="secondary">
+            Run the seed script to load the curriculum, or check back later.
           </Typography>
         </div>
       </Section>
@@ -100,6 +105,7 @@ export const Learning: React.FC = () => {
   return (
     <Section
       id="learning"
+      tabIndex={-1}
       label="Curriculum"
       title="Learning"
       subtitle="Structured topics: algorithms, frameworks, and best practices."
@@ -145,7 +151,7 @@ export const Learning: React.FC = () => {
           />
         ))}
       </div>
-      {sections.length > 6 && (
+      {sections.length >= 6 && (
         <div className={styles.footerActions}>
           <button
             type="button"
@@ -188,7 +194,7 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
   const shortDescription = section.description
     ? truncateDescription(section.description)
     : null;
-  const sectionUrl = section.slug ? `/learning/${section.slug}` : "#";
+  const sectionUrl = section.slug ? `/learning/${section.slug}` : "/learning";
   const theme = section.slug ? getSectionTheme(section.slug) : null;
 
   return (

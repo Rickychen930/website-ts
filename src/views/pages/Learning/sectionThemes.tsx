@@ -4,6 +4,11 @@
 
 import React from "react";
 
+/** Returns true if image URL is missing or a placeholder (e.g. placehold.co). Use for gradient+icon fallback. */
+export function isPlaceholderImage(url: string | undefined): boolean {
+  return !url || url.includes("placehold.co");
+}
+
 // Icon components as simple SVG paths
 const icons = {
   book: (

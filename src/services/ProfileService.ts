@@ -308,6 +308,7 @@ const FALLBACK_PROFILE: Profile = {
       ],
     },
   ],
+  learningSections: [],
   softSkills: [],
   stats: [],
   technicalSkills: [],
