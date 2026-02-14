@@ -1,10 +1,13 @@
-/* Learning Section Page – list of topics, select then go to detail */
+/* Learning Section Page – list of topics, select then go to detail
+ * Responsive: ≤640px (banner, title, back link), ≤480px (topic row compact). */
 
 .wrapper {
   max-width: 52rem;
   margin-left: auto;
   margin-right: auto;
   padding-bottom: var(--spacing-2xl);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .breadcrumb {
@@ -102,6 +105,8 @@
   display: block;
   margin-bottom: var(--spacing-md);
   color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wide);
 }
@@ -115,6 +120,7 @@
 }
 
 .topicItem {
+  min-height: 5.5rem;
   border-radius: var(--theme-radius-card);
   overflow: hidden;
   border: 1px solid var(--theme-border);
@@ -181,11 +187,56 @@
 .topicLink {
   display: flex;
   align-items: center;
+  min-height: 5.5rem;
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
   color: var(--text-primary);
   text-decoration: none;
   transition: color var(--theme-transition);
+}
+
+@media (width <= 640px) {
+  .sectionBanner {
+    height: 5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .sectionBannerIcon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .title {
+    font-size: clamp(var(--font-size-xl), 5vw, var(--font-size-2xl));
+  }
+
+  .header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .backLink {
+    min-height: 2.75rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    justify-content: center;
+  }
+}
+
+@media (width <= 480px) {
+  .topicLink {
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+    min-height: 2.75rem;
+  }
+
+  .topicThumb {
+    width: 5rem;
+    height: 3.5rem;
+  }
+
+  .topicThumbIcon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
 }
 
 .topicLink:hover {
@@ -195,6 +246,7 @@
 .topicContent {
   flex: 1;
   min-width: 0;
+  padding: var(--spacing-xs) 0;
 }
 
 .topicLink:focus-visible {
@@ -205,8 +257,8 @@
 
 .topicIndex {
   display: flex;
-  width: 2rem;
-  height: 2rem;
+  width: 2.25rem;
+  height: 2.25rem;
   background: var(--color-primary-alpha-15);
   color: var(--color-primary-700);
   font-size: var(--font-size-xs);
@@ -243,28 +295,53 @@
 
 .footer {
   padding-top: var(--spacing-xl);
-  border-top: 1px solid var(--theme-border);
+  border-top: 2px solid var(--theme-border);
+  display: flex;
+  justify-content: center;
 }
 
 .backLink {
   display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--theme-border);
+  background: var(--bg-secondary);
   color: var(--color-primary-600);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   text-decoration: none;
-  transition: color var(--theme-transition);
+  border-radius: var(--radius-md);
+  transition:
+    color var(--theme-transition),
+    background var(--theme-transition),
+    border-color var(--theme-transition),
+    box-shadow var(--theme-transition);
 }
 
 .backLink:hover {
+  background: var(--color-primary-alpha-8);
   color: var(--color-primary-700);
-  text-decoration: underline;
+  border-color: var(--color-primary-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.backLink:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backLink {
+    transition: none;
+  }
 }
 
 .emptyState {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   padding: var(--spacing-2xl) var(--spacing-lg);
   text-align: center;
 }
@@ -275,8 +352,8 @@
 }
 
 .emptyIcon svg {
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
 }
 
 .emptyStateLink {
@@ -293,12 +370,6 @@
 }
 
 .emptyStateLink:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-outline-offset);
-  border-radius: var(--radius-sm);
-}
-
-.backLink:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);

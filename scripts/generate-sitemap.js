@@ -37,6 +37,17 @@ const LEARNING_SECTION_SLUGS = [
   "database-sql",
   "react",
   "interview-preparation",
+  "system-design-devops",
+  "cs-theory",
+  "computer-networks",
+  "operating-systems-concurrency",
+  "security-testing",
+  "software-design",
+  "english-learning",
+  "data-analytics",
+  "ai-ml",
+  "programming-languages",
+  "backend",
 ];
 
 // Define all routes

@@ -222,6 +222,8 @@ const slugToTheme: Record<
     iconKey: "server",
   },
   "computer-networks": { gradient: gradients.teal, iconKey: "network" },
+  "software-design": { gradient: gradients.violet, iconKey: "code" },
+  backend: { gradient: gradients.emerald, iconKey: "server" },
 };
 
 export function getSectionTheme(slug: string): {

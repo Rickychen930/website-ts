@@ -1,4 +1,6 @@
-/* Learning page – design system tokens, learner-friendly layout */
+/* Learning page – design system tokens, learner-friendly layout
+ * Breakpoints (align with Section/layout): ≤640px mobile, 768px tablet, 1024px desktop.
+ * Touch targets: interactive elements min-height 2.75rem (44px) on small screens. */
 .quickNav {
   padding: var(--spacing-md) var(--spacing-lg);
   border: 1px solid var(--theme-border);
@@ -64,8 +66,55 @@
 
 .grid {
   display: grid;
+  align-items: stretch;
   gap: var(--spacing-xl);
   grid-template-columns: 1fr;
+}
+
+/* So section cards in the same row have equal height */
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+@media (width <= 640px) {
+  .grid {
+    gap: var(--spacing-lg);
+  }
+
+  .quickNav {
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .cardBanner {
+    height: 6rem;
+  }
+
+  .cardBannerIcon svg {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .cardHeader {
+    padding: var(--spacing-md);
+  }
+
+  .seeMoreBtn {
+    min-height: 2.75rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    align-items: center;
+  }
+
+  .emptyState {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .backToTop {
+    min-height: 2.75rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+  }
 }
 
 @media (width >= 768px) {
@@ -82,7 +131,10 @@
 }
 
 .cardLink {
-  display: block;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
   color: inherit;
   text-decoration: none;
 }
@@ -109,11 +161,14 @@
 
 .card {
   display: flex;
-  height: 100%;
+  flex: 1;
   flex-direction: column;
+  min-height: 0;
   overflow: hidden;
   border-radius: var(--theme-radius-card);
-  transition: box-shadow var(--theme-transition);
+  transition:
+    box-shadow var(--theme-transition),
+    border-color var(--theme-transition);
 }
 
 .cardBanner {
@@ -144,6 +199,10 @@
 }
 
 .cardHeader {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
   padding: var(--spacing-lg);
   margin-bottom: 0;
 }
@@ -153,7 +212,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-sm) var(--spacing-md);
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
 }
 
 .sectionIndex {
@@ -162,6 +221,11 @@
   font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
   font-family: var(--font-family-mono);
+  line-height: 1.2;
+}
+
+.dark .sectionIndex {
+  color: var(--color-primary-400);
 }
 
 .cardTitle {
@@ -195,6 +259,8 @@
 }
 
 .cardDescription {
+  flex: 1;
+  min-height: 0;
   margin-top: var(--spacing-xs);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -214,7 +280,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-xs);
-  margin-top: var(--spacing-md);
+  margin-top: auto;
   padding: var(--spacing-xs) var(--spacing-sm);
   color: var(--color-primary-600);
   font-size: var(--font-size-sm);

@@ -1,20 +1,21 @@
 /**
  * Learning Seed Structure
  * ─────────────────────────────────────────────────────────────────────────────
- * Struktur seed dirancang agar:
- * 1. Penampilan: konsisten (section → topic → 8 bagian), mudah di-render UI
- * 2. Penyampaian pesan: urutan jelas (flow → material → penjelasan → aplikasi → implementasi → logic → contoh → tambahan)
+ * The seed structure is designed so that:
+ * 1. Presentation: consistent (section → topic → 8 parts), easy to render in the UI
+ * 2. Message flow: clear order (flow → material → explanation → application → implementation → logic → example → additional)
  *
- * Konvensi penulisan:
- * - Section description: 1–2 kalimat untuk kartu; jelas & actionable
- * - Topic id: kebab-case, unik global (untuk URL stabil)
- * - Topic description: satu baris, fokus outcome ("Apa yang didapat pembaca")
- * - Learning flow: 4–6 langkah bernomor; satu kalimat per langkah
- * - Material/Explanation: paragraf singkat atau bullet; gunakan **bold** dan `code` untuk istilah
- * - Example: Problem dan Solution dipisah jelas (Problem: ... Solution: ...)
+ * Writing conventions:
+ * - Section description: 1–2 sentences for the card; clear & actionable
+ * - Topic id: kebab-case, globally unique (for stable URLs)
+ * - Topic description: one line, outcome-focused ("What the reader will get")
+ * - Learning flow: 4–6 numbered steps; one sentence per step
+ * - learningFlowIntro (optional): "Your first step", "Prerequisites", "By the end" — strongly recommended for the first topic of each section
+ * - Material/Explanation: short paragraph or bullets; use **bold** and `code` for terms; clear structure (when to use what)
+ * - Example: Problem and Solution clearly separated (Problem: ... Solution: ...)
  */
 
-/** Label untuk 8 bagian konten — harus sama dengan frontend SECTION_LABELS */
+/** Labels for the 8 content parts — must match frontend SECTION_LABELS */
 export const CONTENT_SECTION_LABELS = {
   1: "Learning flow",
   2: "Material",
@@ -27,40 +28,40 @@ export const CONTENT_SECTION_LABELS = {
 } as const;
 
 /**
- * Konten per topik dalam bentuk terstruktur.
- * Diserialisasi ke string **1. Learning flow:** ... **8. Additional information:** untuk UI yang ada.
+ * Content per topic in structured form.
+ * Serialized to string **1. Learning flow:** ... **8. Additional information:** for the existing UI.
  */
 export interface TopicContentBlocks {
-  /** Langkah belajar (4–6 item); tiap item satu kalimat. */
+  /** Learning steps (4–6 items); one sentence per item. */
   learningFlow: string[];
-  /** Opsional: paragraf tambahan di bawah langkah (e.g. "Your first step:", "Prerequisites:"). */
+  /** Optional: extra paragraph below steps (e.g. "Your first step:", "Prerequisites:"). */
   learningFlowIntro?: string;
-  /** Konsep utama: definisi, notasi, rumus. Boleh paragraf atau bullet. */
+  /** Core concepts: definitions, notation, formulas. Paragraph or bullets. */
   material: string;
-  /** Penjelasan "mengapa" dan cara baca. */
+  /** Explanation of "why" and how to read. */
   explanation: string;
-  /** Kapan dipakai: use case, skenario. */
+  /** When to use: use case, scenario. */
   application: string;
-  /** Langkah implementasi (bernomor atau bullet). */
+  /** Implementation steps (numbered or bullet). */
   howToImplement: string;
-  /** Cara kerja kode / algoritma (bisa bullet). */
+  /** How the code/algorithm works (can be bullets). */
   logicAndCode: string;
-  /** Problem: ... Solution: ... (atau format serupa). */
+  /** Problem: ... Solution: ... (or similar format). */
   example: string;
-  /** Tips, link, common mistakes, interview tip. */
+  /** Tips, links, common mistakes, interview tip. */
   additionalInfo: string;
 }
 
 /**
- * Satu topik dalam authoring format (sebelum diserialisasi).
+ * A single topic in authoring format (before serialization).
  */
 export interface TopicConfig {
   id: string;
   title: string;
-  /** Satu baris untuk kartu & meta; fokus outcome. */
+  /** One line for card & meta; outcome-focused. */
   description: string;
   order: number;
-  /** Key ke image map (lihat learningSeed.ts). */
+  /** Key into image map (see learningSeed.ts). */
   imageKey: string;
   contentBlocks: TopicContentBlocks;
   codeExample?: string;
@@ -68,12 +69,12 @@ export interface TopicConfig {
 }
 
 /**
- * Satu section dalam authoring format.
+ * A single section in authoring format.
  */
 export interface SectionConfig {
   title: string;
   slug: string;
-  /** 1–2 kalimat untuk kartu section; jelas & actionable. */
+  /** 1–2 sentences for the section card; clear & actionable. */
   description: string;
   order: number;
   published: boolean;
@@ -81,7 +82,7 @@ export interface SectionConfig {
 }
 
 /**
- * Mengubah konten terstruktur menjadi string 8-bagian yang dipahami UI.
+ * Converts structured content into an 8-part string understood by the UI.
  * Format: **1. Learning flow:**\n\n(body)\n\n**2. Material:**\n\n(body) ...
  */
 export function serializeContentBlocks(blocks: TopicContentBlocks): string {
@@ -121,9 +122,9 @@ export function serializeContentBlocks(blocks: TopicContentBlocks): string {
 }
 
 /**
- * Mengubah SectionConfig[] + imageMap menjadi array learningSections
- * yang sesuai dengan schema backend (content = string, items dengan id/title/description/order/content/codeExample/codeLanguage/imageUrl).
- * Sections dan items diurutkan by order. Jika imageMap[t.imageKey] tidak ada, imageUrl = undefined (UI pakai gradient fallback).
+ * Converts SectionConfig[] + imageMap into a learningSections array
+ * that matches the backend schema (content = string, items with id/title/description/order/content/codeExample/codeLanguage/imageUrl).
+ * Sections and items are sorted by order. If imageMap[t.imageKey] is missing, imageUrl = undefined (UI uses gradient fallback).
  */
 export function buildLearningSections(
   sections: SectionConfig[],
@@ -168,12 +169,12 @@ export function buildLearningSections(
   return mapped.sort((a, b) => a.order - b.order);
 }
 
-/** Slug dan topic id harus kebab-case (huruf kecil, angka, strip) untuk URL konsisten. */
+/** Section slug and topic id must be kebab-case (lowercase, numbers, hyphens) for consistent URLs. */
 const KEBAB_REGEX = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 /**
- * Validasi konfigurasi seed: slug dan id tidak kosong dan kebab-case; setiap imageKey ada di imageMap.
- * Dipanggil saat build/seed agar typo atau key yang hilang ketahuan cepat.
+ * Validates seed config: slug and id are non-empty and kebab-case; every imageKey exists in imageMap.
+ * Called at build/seed so typos or missing keys are caught early.
  */
 export function validateLearningSeed(
   sections: SectionConfig[],

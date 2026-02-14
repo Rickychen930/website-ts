@@ -198,7 +198,7 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
   const theme = section.slug ? getSectionTheme(section.slug) : null;
 
   return (
-    <ScrollReveal direction="up">
+    <ScrollReveal direction="up" className={styles.gridItem}>
       <Link
         to={sectionUrl}
         className={styles.cardLink}
