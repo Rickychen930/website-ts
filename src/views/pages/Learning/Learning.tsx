@@ -1,6 +1,6 @@
 /**
  * Learning Page - Curriculum and learning resources
- * Cards link to section pages where user selects a topic, then goes to detail
+ * Hero intro + section cards (aligned with Section/Detail design). Cards link to section pages.
  */
 
 import React from "react";
@@ -10,7 +10,6 @@ import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
-import { Card } from "@/views/components/ui/Card";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningSection as LearningSectionType } from "@/types/domain";
@@ -28,6 +27,16 @@ function scrollToLearningTop() {
       block: "start",
     });
   }
+}
+
+const TRUNCATE_LENGTH = 120;
+
+function truncateDescription(
+  text: string,
+  maxLen: number = TRUNCATE_LENGTH,
+): string {
+  if (!text || text.length <= maxLen) return text;
+  return text.slice(0, maxLen).trim() + "…";
 }
 
 export const Learning: React.FC = () => {
@@ -72,86 +81,113 @@ export const Learning: React.FC = () => {
         subtitle="Structured topics and resources"
         variant="alt"
       >
-        <div className={styles.emptyState}>
-          <span className={styles.emptyIcon} aria-hidden="true">
-            <svg
-              width="80"
-              height="80"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+        <div className={styles.wrapper}>
+          <div className={styles.emptyState} role="status">
+            <span className={styles.emptyIcon} aria-hidden="true">
+              <svg
+                width="80"
+                height="80"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                <path d="M8 7h8" />
+                <path d="M8 11h8" />
+                <path d="M8 15h4" />
+              </svg>
+            </span>
+            <Typography
+              variant="h3"
+              weight="semibold"
+              as="h2"
+              className={styles.emptyStateTitle}
             >
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-              <path d="M8 7h8" />
-              <path d="M8 11h8" />
-              <path d="M8 15h4" />
-            </svg>
-          </span>
-          <Typography variant="body" color="secondary">
-            No learning sections published yet.
-          </Typography>
-          <Typography variant="small" color="secondary">
-            Run the seed script to load the curriculum, or check back later.
-          </Typography>
-          <Link to="/" className={styles.emptyStateLink}>
-            Back to Home
-          </Link>
+              No sections yet
+            </Typography>
+            <Typography variant="body" color="secondary">
+              No learning sections published yet. Run the seed script or check
+              back later.
+            </Typography>
+            <Link to="/" className={styles.emptyStateLink}>
+              Back to Home
+            </Link>
+          </div>
         </div>
       </Section>
     );
   }
 
   return (
-    <Section
-      id="learning"
-      tabIndex={-1}
-      label="Curriculum"
-      title="Learning"
-      subtitle="Structured topics: algorithms, frameworks, and best practices."
-      info={`Select a section to view topics, then open a topic for full details. (${sections.length} section${sections.length !== 1 ? "s" : ""})`}
-      variant="alt"
-    >
-      <div className={styles.grid}>
-        {sections.map((sec, sectionIndex) => (
-          <LearningSectionCard
-            key={sec.id}
-            section={sec}
-            sectionIndex={sectionIndex + 1}
-            totalSections={sections.length}
-          />
-        ))}
-      </div>
-      {sections.length >= 4 && (
-        <div className={styles.footerActions}>
-          <button
-            type="button"
-            onClick={scrollToLearningTop}
-            className={styles.backToTop}
-            aria-label="Scroll back to top of Learning"
-          >
-            <Typography variant="small" weight="medium" as="span">
-              Back to top
+    <Section id="learning" tabIndex={-1} variant="alt">
+      <div className={styles.wrapper}>
+        <header className={styles.hero}>
+          <div className={styles.heroGradient} aria-hidden="true" />
+          <div className={styles.heroPattern} aria-hidden="true" />
+          <div className={styles.heroContent}>
+            <span className={styles.heroLabel}>Curriculum</span>
+            <Typography
+              variant="h1"
+              weight="bold"
+              as="h1"
+              className={styles.heroTitle}
+            >
+              Learning
             </Typography>
-          </button>
-        </div>
-      )}
+            <Typography variant="body" as="p" className={styles.heroSubtitle}>
+              Structured topics: algorithms, frameworks, and best practices.
+              Select a section to view topics.
+            </Typography>
+            <div className={styles.heroMeta}>
+              <span className={styles.heroSectionCount}>
+                {sections.length} section{sections.length !== 1 ? "s" : ""}
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <ul className={styles.grid} aria-label="Learning sections">
+          {sections.map((sec, sectionIndex) => (
+            <li
+              key={sec.id}
+              className={styles.gridItem}
+              style={
+                {
+                  animationDelay: `${(sectionIndex - 1) * 60}ms`,
+                } as React.CSSProperties
+              }
+            >
+              <LearningSectionCard
+                section={sec}
+                sectionIndex={sectionIndex + 1}
+                totalSections={sections.length}
+              />
+            </li>
+          ))}
+        </ul>
+
+        {sections.length >= 4 && (
+          <div className={styles.footerActions}>
+            <button
+              type="button"
+              onClick={scrollToLearningTop}
+              className={styles.backToTop}
+              aria-label="Scroll back to top of Learning"
+            >
+              <Typography variant="small" weight="medium" as="span">
+                Back to top
+              </Typography>
+            </button>
+          </div>
+        )}
+      </div>
     </Section>
   );
 };
-
-const TRUNCATE_LENGTH = 120;
-
-function truncateDescription(
-  text: string,
-  maxLen: number = TRUNCATE_LENGTH,
-): string {
-  if (!text || text.length <= maxLen) return text;
-  return text.slice(0, maxLen).trim() + "…";
-}
 
 interface LearningSectionCardProps {
   section: LearningSectionType;
@@ -172,30 +208,13 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
   const theme = section.slug ? getSectionTheme(section.slug) : null;
 
   return (
-    <ScrollReveal
-      direction="up"
-      delay={(sectionIndex - 1) * 80}
-      className={styles.gridItem}
-    >
+    <ScrollReveal direction="up" delay={(sectionIndex - 1) * 80}>
       <Link
         to={sectionUrl}
         className={styles.cardLink}
         aria-label={`Open ${section.title}, ${items.length} topics`}
       >
-        <Card
-          id={section.slug ? `section-${section.slug}` : undefined}
-          variant="elevated"
-          padding="none"
-          className={styles.card}
-        >
-          {theme && (
-            <div
-              className={styles.cardAccent}
-              style={{ background: theme.gradient }}
-              aria-hidden="true"
-            />
-          )}
-          {/* Gradient banner with icon */}
+        <article className={styles.card}>
           {theme && (
             <div
               className={styles.cardBanner}
@@ -204,13 +223,13 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
               <span className={styles.cardBannerIcon} aria-hidden="true">
                 {theme.icon}
               </span>
-            </div>
-          )}
-          <header className={styles.cardHeader}>
-            <div className={styles.cardTitleRow}>
               <span className={styles.sectionIndex} aria-hidden="true">
                 {sectionIndex}/{totalSections}
               </span>
+            </div>
+          )}
+          <div className={styles.cardBody}>
+            <div className={styles.cardTitleRow}>
               <Typography
                 variant="h3"
                 weight="semibold"
@@ -229,22 +248,18 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
               )}
             </div>
             {shortDescription && (
-              <Typography
-                variant="body"
-                color="secondary"
-                className={styles.cardDescription}
-              >
-                {shortDescription}
-              </Typography>
+              <p className={styles.cardDescription}>{shortDescription}</p>
             )}
-            <span className={styles.seeMoreBtn}>
-              View topics
-              <span className={styles.seeMoreArrow} aria-hidden="true">
-                →
+            <div className={styles.cardFooter}>
+              <span className={styles.seeMoreBtn}>
+                View topics
+                <span className={styles.seeMoreArrow} aria-hidden="true">
+                  →
+                </span>
               </span>
-            </span>
-          </header>
-        </Card>
+            </div>
+          </div>
+        </article>
       </Link>
     </ScrollReveal>
   );

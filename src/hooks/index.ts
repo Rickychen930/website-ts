@@ -14,4 +14,5 @@ export {
   useFocusManagement,
   announceToScreenReader,
 } from "./useFocusManagement";
+export { useActiveSection } from "./useActiveSection";
 export type { UseCounterOptions } from "./useCounter";

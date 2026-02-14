@@ -6,10 +6,18 @@
  * Route: /learning/:sectionSlug/:topicId
  */
 
-import React, { useMemo } from "react";
+import React, {
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
+import { useStructuredData, generateStructuredData } from "@/hooks/useSEO";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { CodeBlock } from "@/views/components/ui/CodeBlock";
@@ -301,6 +309,20 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
     [sections],
   );
 
+  const sectionIds = useMemo(() => {
+    const ids: string[] = [];
+    [1, 2, 3, 4, 5, 6].forEach((n) => {
+      if (byNum.get(n)) ids.push(`detail-heading-s${n}`);
+    });
+    if (item.codeExample) ids.push("detail-heading-code");
+    [7, 8].forEach((n) => {
+      if (byNum.get(n)) ids.push(`detail-heading-s${n}`);
+    });
+    return ids;
+  }, [byNum, item.codeExample]);
+
+  const activeSectionId = useActiveSection(sectionIds);
+
   const renderBody = (body: string) => {
     const blocks = body.split(/\n\n+/).filter((b) => b.trim());
     return blocks.map((block, i) => {
@@ -479,16 +501,28 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
           <details className={styles.toc} open>
             <summary className={styles.tocSummary}>On this page</summary>
             <ol className={styles.tocList}>
-              {blockOrder.map(({ key, label }, idx) => (
-                <li key={key}>
-                  <a href={`#detail-heading-${key}`} className={styles.tocLink}>
-                    <span className={styles.tocStep} aria-hidden="true">
-                      {idx + 1}.
-                    </span>{" "}
-                    {label}
-                  </a>
-                </li>
-              ))}
+              {blockOrder.map(({ key, label }, idx) => {
+                const headingId = `detail-heading-${key}`;
+                const isActive = activeSectionId === headingId;
+                return (
+                  <li key={key}>
+                    <a
+                      href={`#${headingId}`}
+                      className={
+                        isActive
+                          ? `${styles.tocLink} ${styles.tocLinkActive}`
+                          : styles.tocLink
+                      }
+                      aria-current={isActive ? "location" : undefined}
+                    >
+                      <span className={styles.tocStep} aria-hidden="true">
+                        {idx + 1}.
+                      </span>{" "}
+                      {label}
+                    </a>
+                  </li>
+                );
+              })}
             </ol>
           </details>
         </nav>
@@ -572,6 +606,89 @@ export const LearningTopicDetail: React.FC = () => {
     return words > 0 ? Math.max(1, Math.ceil(words / 200)) : 0;
   }, [sectionAndTopic?.topic]);
 
+  const articleStructuredData = useMemo(() => {
+    if (!sectionAndTopic || !profile) return null;
+    const { section, topic } = sectionAndTopic;
+    const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${baseUrl}/learning/${section.slug}/${encodeURIComponent(topic.id)}`;
+    const image =
+      topic.imageUrl && !isPlaceholderImage(topic.imageUrl)
+        ? topic.imageUrl.startsWith("http")
+          ? topic.imageUrl
+          : `${baseUrl}${topic.imageUrl}`
+        : undefined;
+    return generateStructuredData({
+      type: "Article",
+      profile,
+      pageData: {
+        headline: topic.title,
+        description: topic.description ?? undefined,
+        image,
+        url,
+        sectionName: section.title,
+      },
+    });
+  }, [sectionAndTopic, profile]);
+
+  useStructuredData(articleStructuredData);
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [articleProgress, setArticleProgress] = useState(0);
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const copyLinkTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleCopyLink = useCallback(() => {
+    if (typeof window === "undefined") return;
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(
+      () => {
+        if (copyLinkTimeoutRef.current)
+          clearTimeout(copyLinkTimeoutRef.current);
+        setLinkCopied(true);
+        copyLinkTimeoutRef.current = setTimeout(() => {
+          setLinkCopied(false);
+          copyLinkTimeoutRef.current = null;
+        }, 2000);
+      },
+      () => {},
+    );
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (copyLinkTimeoutRef.current) clearTimeout(copyLinkTimeoutRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    const reducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const contentTop = rect.top + window.scrollY;
+      const contentHeight = el.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      if (contentHeight <= 0) return;
+      const scrolled =
+        (window.scrollY + viewportHeight - contentTop) / contentHeight;
+      const pct = Math.min(100, Math.max(0, scrolled * 100));
+      setArticleProgress(pct);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [sectionAndTopic?.topic?.id]);
+
   if (isLoading) {
     return <Loading fullScreen message="Loading topic..." />;
   }
@@ -610,6 +727,21 @@ export const LearningTopicDetail: React.FC = () => {
         { "--learning-accent": sectionTheme.gradient } as React.CSSProperties
       }
     >
+      <div
+        className={styles.articleProgressWrap}
+        role="progressbar"
+        aria-valuenow={Math.round(articleProgress)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Article reading progress"
+        data-print="hide"
+      >
+        <div
+          className={styles.articleProgressBar}
+          style={{ width: `${articleProgress}%` }}
+          aria-hidden="true"
+        />
+      </div>
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
         <ol className={styles.breadcrumbList}>
           <li>
@@ -673,16 +805,34 @@ export const LearningTopicDetail: React.FC = () => {
           {topic.title}
         </Typography>
         <div className={styles.headerSub}>
-          {readingMinutes > 0 && (
-            <Typography
-              variant="small"
-              color="tertiary"
-              as="span"
-              className={styles.readingTime}
+          <div className={styles.headerSubMeta}>
+            {readingMinutes > 0 && (
+              <Typography
+                variant="small"
+                color="tertiary"
+                as="span"
+                className={styles.readingTime}
+              >
+                {readingMinutes} min read
+              </Typography>
+            )}
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              className={styles.copyLinkBtn}
+              aria-label={
+                linkCopied ? "Link copied" : "Copy link to this topic"
+              }
+              aria-live="polite"
             >
-              {readingMinutes} min read
-            </Typography>
-          )}
+              {linkCopied ? "Copied!" : "Copy link"}
+            </button>
+            {linkCopied && (
+              <span className="sr-only" role="status" aria-live="polite">
+                Link copied to clipboard
+              </span>
+            )}
+          </div>
           {topic.description && (
             <div className={styles.whatYoullLearn}>
               <span className={styles.whatYoullLearnLabel}>
@@ -728,7 +878,11 @@ export const LearningTopicDetail: React.FC = () => {
         )}
       </figure>
 
-      <div className={styles.content}>
+      <div
+        ref={contentRef}
+        id="learning-topic-content"
+        className={styles.content}
+      >
         {topic.content || topic.codeExample || topic.imageUrl ? (
           isStructuredContent(topic.content ?? "") ? (
             <TopicDetailContent item={topic} />
@@ -787,6 +941,10 @@ export const LearningTopicDetail: React.FC = () => {
             <span aria-hidden="true" />
           )}
         </nav>
+        <p className={styles.footerPrintNote}>
+          Part of {section.title} · /learning/{section.slug}/
+          {encodeURIComponent(topic.id)}
+        </p>
       </footer>
     </Section>
   );

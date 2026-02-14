@@ -47,7 +47,12 @@ const TopicLink: React.FC<TopicLinkProps> = ({
   return (
     <li
       className={styles.topicItem}
-      style={{ "--topic-accent": sectionTheme.gradient } as React.CSSProperties}
+      style={
+        {
+          "--topic-accent": sectionTheme.gradient,
+          animationDelay: `${index * 60}ms`,
+        } as React.CSSProperties
+      }
     >
       <Link
         to={detailUrl}
@@ -56,23 +61,27 @@ const TopicLink: React.FC<TopicLinkProps> = ({
       >
         <div
           className={styles.topicThumb}
-          style={
-            useImage
-              ? { backgroundImage: `url(${item.imageUrl})` }
-              : { background: sectionTheme.gradient }
-          }
+          style={!useImage ? { background: sectionTheme.gradient } : undefined}
           aria-hidden
         >
-          {!useImage && (
+          {useImage ? (
+            <img
+              src={item.imageUrl}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className={styles.topicThumbImg}
+            />
+          ) : (
             <span className={styles.topicThumbIcon} aria-hidden="true">
               {sectionTheme.icon}
             </span>
           )}
+          <span className={styles.topicIndex} aria-hidden="true">
+            {index + 1}
+          </span>
         </div>
-        <span className={styles.topicIndex} aria-hidden="true">
-          {index + 1}
-        </span>
-        <div className={styles.topicContent}>
+        <div className={styles.topicBody}>
           <span className={styles.topicTitle}>{item.title}</span>
           {item.description && (
             <Typography
@@ -83,10 +92,13 @@ const TopicLink: React.FC<TopicLinkProps> = ({
               {item.description}
             </Typography>
           )}
+          <div className={styles.topicFooter}>
+            <span aria-hidden="true" />
+            <span className={styles.topicArrow} aria-hidden="true">
+              →
+            </span>
+          </div>
         </div>
-        <span className={styles.topicArrow} aria-hidden="true">
-          →
-        </span>
       </Link>
     </li>
   );
@@ -172,38 +184,45 @@ export const LearningSectionPage: React.FC = () => {
         </ol>
       </nav>
 
-      <header className={styles.header}>
-        <div
-          className={styles.sectionBanner}
-          style={{ background: sectionTheme.gradient }}
-        >
-          <span className={styles.sectionBannerIcon} aria-hidden="true">
+      <header
+        className={styles.hero}
+        style={
+          {
+            "--section-hero-gradient": sectionTheme.gradient,
+          } as React.CSSProperties
+        }
+      >
+        <div className={styles.heroGradient} aria-hidden="true" />
+        <div className={styles.heroPattern} aria-hidden="true" />
+        <div className={styles.heroContent}>
+          <div className={styles.heroIconWrap} aria-hidden="true">
             {sectionTheme.icon}
-          </span>
+          </div>
+          <Typography
+            variant="h1"
+            weight="bold"
+            as="h1"
+            className={styles.heroTitle}
+          >
+            {section.title}
+          </Typography>
+          <div className={styles.heroMeta}>
+            {items.length > 0 && (
+              <span className={styles.heroTopicCount}>
+                {items.length} topic{items.length !== 1 ? "s" : ""}
+              </span>
+            )}
+          </div>
+          {section.description && (
+            <Typography
+              variant="body"
+              as="p"
+              className={styles.heroDescription}
+            >
+              {section.description}
+            </Typography>
+          )}
         </div>
-        <Typography variant="h1" weight="bold" as="h1" className={styles.title}>
-          {section.title}
-        </Typography>
-        {items.length > 0 && (
-          <Typography
-            variant="small"
-            color="tertiary"
-            as="p"
-            className={styles.topicCount}
-          >
-            {items.length} topic{items.length !== 1 ? "s" : ""}
-          </Typography>
-        )}
-        {section.description && (
-          <Typography
-            variant="body"
-            color="secondary"
-            as="p"
-            className={styles.description}
-          >
-            {section.description}
-          </Typography>
-        )}
       </header>
 
       <div className={styles.content}>
@@ -232,7 +251,7 @@ export const LearningSectionPage: React.FC = () => {
             ))}
           </ul>
         ) : (
-          <div className={styles.emptyState}>
+          <div className={styles.emptyState} role="status">
             <span className={styles.emptyIcon} aria-hidden="true">
               <svg
                 width="80"
@@ -250,8 +269,17 @@ export const LearningSectionPage: React.FC = () => {
                 <path d="M8 11h8" />
               </svg>
             </span>
+            <Typography
+              variant="h3"
+              weight="semibold"
+              as="h2"
+              className={styles.emptyStateTitle}
+            >
+              No topics yet
+            </Typography>
             <Typography variant="body" color="secondary">
-              No topics in this section yet. Check back later.
+              This section doesn&apos;t have any topics yet. Check back later or
+              browse other sections.
             </Typography>
             <Link to="/learning" className={styles.emptyStateLink}>
               Browse other sections

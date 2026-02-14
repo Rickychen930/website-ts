@@ -150,6 +150,37 @@ export const generateStructuredData = (data: {
       };
     }
 
+    case "Article": {
+      if (!data.pageData) return null;
+      const article = data.pageData as {
+        headline: string;
+        description?: string;
+        image?: string;
+        url?: string;
+        sectionName?: string;
+      };
+      const authorName = data.profile?.name || "Ricky Chen";
+      const schema: Record<string, unknown> = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: article.headline,
+        author: {
+          "@type": "Person",
+          name: authorName,
+        },
+        publisher: {
+          "@type": "Person",
+          name: authorName,
+        },
+      };
+      if (article.description) schema.description = article.description;
+      if (article.image) schema.image = article.image;
+      if (article.url)
+        schema.mainEntityOfPage = { "@type": "WebPage", "@id": article.url };
+      if (article.sectionName) schema.articleSection = article.sectionName;
+      return schema;
+    }
+
     default:
       return null;
   }
