@@ -82,8 +82,30 @@ export interface SectionConfig {
 }
 
 /**
+ * Ensures "Problem:" and "Solution:" are separated by newlines so the UI can show
+ * Soal and Pembahasan in separate boxes. Normalizes "Solution (C++):" etc. to "Solution:".
+ */
+function normalizeExampleBlock(example: string): string {
+  const t = example.trim();
+  return t.replace(/\s+Solution\s*(\([^)]*\))?\s*:\s*/gi, "\n\nSolution: ");
+}
+
+/**
+ * Inserts paragraph breaks before bold subheadings ( " **" → "\n\n**" ) so dense
+ * blocks render with clear paragraphs in the UI. Preserves existing newlines.
+ */
+function ensureParagraphBreaks(text: string): string {
+  return text
+    .trim()
+    .replace(/\s+\*\*/g, "\n\n**")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+/**
  * Converts structured content into an 8-part string understood by the UI.
  * Format: **1. Learning flow:**\n\n(body)\n\n**2. Material:**\n\n(body) ...
+ * Example block is normalized so Problem/Solution split correctly; long blocks get paragraph breaks.
  */
 export function serializeContentBlocks(blocks: TopicContentBlocks): string {
   const parts: string[] = [];
@@ -97,25 +119,25 @@ export function serializeContentBlocks(blocks: TopicContentBlocks): string {
   parts.push(`**1. ${CONTENT_SECTION_LABELS[1]}:**\n\n${flowBody}`);
 
   parts.push(
-    `**2. ${CONTENT_SECTION_LABELS[2]}:**\n\n${blocks.material.trim()}`,
+    `**2. ${CONTENT_SECTION_LABELS[2]}:**\n\n${ensureParagraphBreaks(blocks.material)}`,
   );
   parts.push(
-    `**3. ${CONTENT_SECTION_LABELS[3]}:**\n\n${blocks.explanation.trim()}`,
+    `**3. ${CONTENT_SECTION_LABELS[3]}:**\n\n${ensureParagraphBreaks(blocks.explanation)}`,
   );
   parts.push(
-    `**4. ${CONTENT_SECTION_LABELS[4]}:**\n\n${blocks.application.trim()}`,
+    `**4. ${CONTENT_SECTION_LABELS[4]}:**\n\n${ensureParagraphBreaks(blocks.application)}`,
   );
   parts.push(
-    `**5. ${CONTENT_SECTION_LABELS[5]}:**\n\n${blocks.howToImplement.trim()}`,
+    `**5. ${CONTENT_SECTION_LABELS[5]}:**\n\n${ensureParagraphBreaks(blocks.howToImplement)}`,
   );
   parts.push(
-    `**6. ${CONTENT_SECTION_LABELS[6]}:**\n\n${blocks.logicAndCode.trim()}`,
+    `**6. ${CONTENT_SECTION_LABELS[6]}:**\n\n${ensureParagraphBreaks(blocks.logicAndCode)}`,
   );
   parts.push(
-    `**7. ${CONTENT_SECTION_LABELS[7]}:**\n\n${blocks.example.trim()}`,
+    `**7. ${CONTENT_SECTION_LABELS[7]}:**\n\n${normalizeExampleBlock(blocks.example)}`,
   );
   parts.push(
-    `**8. ${CONTENT_SECTION_LABELS[8]}:**\n\n${blocks.additionalInfo.trim()}`,
+    `**8. ${CONTENT_SECTION_LABELS[8]}:**\n\n${ensureParagraphBreaks(blocks.additionalInfo)}`,
   );
 
   return parts.join("\n\n");

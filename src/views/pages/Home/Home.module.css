@@ -597,11 +597,14 @@
 /* Experience preview – list + See more */
 .experienceList {
   display: flex;
-  margin: 0 0 var(--spacing-xl);
-  padding: 0;
-  list-style: none;
   flex-direction: column;
   gap: var(--spacing-xl);
+  width: 100%;
+  max-width: var(--container-md);
+  margin: 0 auto var(--spacing-xl);
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
 }
 
 .experienceItem {

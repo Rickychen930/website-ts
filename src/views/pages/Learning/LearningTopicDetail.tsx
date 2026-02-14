@@ -190,6 +190,57 @@ function isListBlock(block: string): boolean {
   );
 }
 
+/**
+ * For section 7 (Example problem & solution): if body has "Problem:" and "Solution:",
+ * split into two labeled boxes so the content is not cramped and does not look "tertimpa".
+ */
+function renderExampleSectionBody(
+  body: string,
+  renderBody: (b: string) => React.ReactNode[],
+  styles: Record<string, string>,
+): React.ReactNode {
+  const trimmed = body.trim();
+  const hasProblem = /Problem:\s*/i.test(trimmed);
+  const hasSolution = /Solution:\s*/i.test(trimmed);
+
+  if (hasProblem && hasSolution) {
+    const newlineSolution = trimmed.search(/\n\s*Solution:\s*/i);
+    const inlineSolution = trimmed.search(/\sSolution:\s*/i);
+    const solutionStart =
+      newlineSolution >= 0
+        ? newlineSolution
+        : inlineSolution >= 0
+          ? inlineSolution
+          : -1;
+
+    if (solutionStart >= 0) {
+      const problemRaw = trimmed.slice(0, solutionStart);
+      const solutionRaw = trimmed.slice(solutionStart);
+      const problemText = problemRaw.replace(/^Problem:\s*/i, "").trim();
+      const solutionText = solutionRaw.replace(/^Solution:\s*/i, "").trim();
+      if (problemText || solutionText) {
+        return (
+          <>
+            <div className={styles.exampleProblemBox}>
+              <div className={styles.exampleLabel}>Soal</div>
+              <div className={styles.exampleContent}>
+                {renderBody(problemText)}
+              </div>
+            </div>
+            <div className={styles.exampleSolutionBox}>
+              <div className={styles.exampleLabel}>Pembahasan</div>
+              <div className={styles.exampleContent}>
+                {renderBody(solutionText)}
+              </div>
+            </div>
+          </>
+        );
+      }
+    }
+  }
+  return <>{renderBody(body)}</>;
+}
+
 /** Returns true if the block looks like a numbered list: (1) (2) or 1. 2. style (seed format). */
 function isNumberedListBlock(block: string): boolean {
   const trimmed = block.trim();
@@ -381,17 +432,21 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
   [7, 8].forEach((n) => {
     const s = byNum.get(n);
     if (s) {
-      const bodyContent = s.body.trim()
-        ? renderBody(s.body)
-        : [
-            <p key="empty" className={styles.emptySectionHint}>
-              — No content for this section —
-            </p>,
-          ];
+      const node = s.body.trim() ? (
+        n === 7 ? (
+          renderExampleSectionBody(s.body, renderBody, styles)
+        ) : (
+          <>{renderBody(s.body)}</>
+        )
+      ) : (
+        <p key="empty" className={styles.emptySectionHint}>
+          — No content for this section —
+        </p>
+      );
       blockOrder.push({
         key: `s${n}`,
         label: SECTION_LABELS[n] ?? s.title,
-        node: <>{bodyContent}</>,
+        node,
       });
     }
   });
@@ -437,7 +492,12 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
         {blockOrder.map(({ key, label, node }, index) => (
           <section
             key={key}
-            className={styles.detailSection}
+            data-section-key={key}
+            className={
+              key === "s7"
+                ? `${styles.detailSection} ${styles.exampleSection}`
+                : styles.detailSection
+            }
             aria-labelledby={`detail-heading-${key}`}
           >
             <h2 id={`detail-heading-${key}`} className={styles.sectionHeading}>

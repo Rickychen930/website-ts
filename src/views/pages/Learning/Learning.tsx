@@ -115,41 +115,6 @@ export const Learning: React.FC = () => {
       info={`Select a section to view topics, then open a topic for full details. (${sections.length} section${sections.length !== 1 ? "s" : ""})`}
       variant="alt"
     >
-      {sections.length > 1 && (
-        <nav className={styles.quickNav} aria-label="Jump to section">
-          <Typography
-            variant="small"
-            weight="semibold"
-            className={styles.quickNavLabel}
-          >
-            Jump to section
-          </Typography>
-          <ul className={styles.quickNavList}>
-            {sections.map((sec) => {
-              const theme = sec.slug ? getSectionTheme(sec.slug) : null;
-              return sec.slug ? (
-                <li key={sec.id}>
-                  <Link
-                    to={`/learning/${sec.slug}`}
-                    className={styles.quickNavLink}
-                  >
-                    {theme && (
-                      <span className={styles.quickNavIcon} aria-hidden="true">
-                        {theme.icon}
-                      </span>
-                    )}
-                    {sec.title}
-                  </Link>
-                </li>
-              ) : (
-                <li key={sec.id}>
-                  <span className={styles.quickNavPlain}>{sec.title}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      )}
       <div className={styles.grid}>
         {sections.map((sec, sectionIndex) => (
           <LearningSectionCard

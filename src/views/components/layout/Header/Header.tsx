@@ -153,7 +153,7 @@ export const Header: React.FC = () => {
           >
             <button
               type="button"
-              className={`${styles.navDropdownTrigger} ${isDropdownActive ? styles.navLinkActive : ""}`}
+              className={`${styles.navLink} ${styles.navDropdownTrigger} ${isDropdownActive ? styles.navLinkActive : ""}`}
               onClick={() => setIsDropdownOpen((prev) => !prev)}
               aria-expanded={isDropdownOpen}
               aria-haspopup="true"

@@ -71,23 +71,25 @@ const sectionConfigs: SectionConfig[] = [
           ],
           learningFlowIntro: `**Your first step:** Open the Learning page, use Jump to → **Competitive Programming**, then open **Complexity & Strategy**. Read sections 1–8, type the code yourself, then try LeetCode Two Sum.
 
-**Prerequisites:** Basic programming in one language (variables, loops, functions). If you are completely new, start with an introductory programming course first.
+**Prerequisites (operational):** You are ready if you can: write variables, loops (for/while), arrays, and functions; read code that calls itself (recursion). If you have never done recursion, do 2–3 recursion problems on LeetCode before DP and Backtracking. If you are a complete beginner, start with an introductory programming course.
 
 **By the end of this section you will:** Know the recommended study order, how long to spend per topic, and how to use active recall and bookmarks to remember better.`,
           material: `Each topic follows the same structure:
 1. Learning flow → 2. Material → 3. Explanation → 4. Application → 5. How to implement → 6. Logic & code → 7. Example → 8. Additional info.
 
-Suggested order: How to Learn → Competitive Programming → CS Theory → Database & SQL → Computer Networks → OS & Concurrency → System Design → React & Node.js → Security → Interview Preparation.`,
-          explanation: `Order is chosen so foundations (algorithms, theory, DB, networks, OS) come before applied topics (React, Node, security). Interview Prep is useful to read early for planning and again before interviews.`,
-          application: `Use this path for a full curriculum pass or for interview-only focus (CP, CS Theory, Networks, OS, System Design, Interview Prep).`,
+Suggested order (matches the order on the Learning page): How to Learn → Competitive Programming → CS Theory → Database & SQL → Computer Networks → OS & Concurrency → System Design → Software Design Principles → React → Node.js → Backend Development → Security → Interview Preparation → Programming Languages → Data Analytics → AI & Machine Learning → English for IELTS 8.
+
+**In other words:** Follow the order on the Learning page; finish one topic (read → summarize → type code → 1–2 problems) before moving on. Active recall = close the page and write 3 points from memory — this strengthens retention better than re-reading.`,
+          explanation: `Order is chosen so foundations (algorithms, CS theory, DB, networks, OS) come first; then system design and software design; then applied topics (React, Node, Backend, Security). Interview Preparation is best read after core technical sections, then revisited before interviews. Programming Languages, Data Analytics, AI/ML, and English are reference or parallel tracks.`,
+          application: `Use this path for a full curriculum pass or for interview-only focus (Competitive Programming, CS Theory, Database, Networks, OS, System Design, Interview Prep). For backend/full-stack focus, follow through Backend Development and Security.`,
           howToImplement: `- For each topic: read first, then summarize in your own words (1–2 sentences per section).
 - Type the code from the example by hand; avoid copy-paste.
 - Do 1–2 practice problems (e.g. LeetCode). If stuck, re-read the Logic section.
 - Use Jump to and bookmarks to navigate. After each topic, do active recall (3 bullets from memory).`,
           logicAndCode: `The suggested order forms one learning path. Active recall works because retrieving information from memory strengthens long-term retention more than re-reading.`,
           example: `Problem: Forgetting topics after a few days.
-Solution: Active recall — after reading, close the page and write 3 key points or explain to a peer. For coding: type the code yourself. Spaced repetition: revisit with practice problems weekly.`,
-          additionalInfo: `Time: 15–30 min read + 15–30 min practice per topic. Full pass: 2–4 months with practice; interview-only: 2–6 weeks. Use LeetCode or Codeforces for CP.`,
+Solution: Active recall — after reading, close the page and write 3 key points or explain to a peer. For coding: type the code yourself. Spaced repetition: revisit with practice problems weekly. **Why:** Retrieval practice (recalling actively) strengthens memory more than re-reading.`,
+          additionalInfo: `**Takeaway:** Finish one topic at a time; active recall after each topic (3 points from memory); type code don't copy-paste. Time: 15–30 min read + 15–30 min practice per topic. Full pass: 2–4 months; interview-only: 2–6 weeks. LeetCode/Codeforces for CP. **Note for non-C++ learners:** CP examples are in C++; same concepts in Python/JS — type the equivalent or use LeetCode's language switcher.`,
         },
         codeExample: `// Active recall template (after each topic)
 // 1. Close the page
@@ -134,8 +136,12 @@ Solution: Active recall — after reading, close the page and write 3 key points
 - O(n²) = quadratic
 - O(log n) = logarithmic
 
-Time vs space: you can often use extra memory (e.g. hash map) to reduce time.`,
-          explanation: `Big O is an upper bound: we say an algorithm is O(n) if the number of steps is at most proportional to n for large n. One loop over n elements is O(n). Two nested loops over n each is O(n²). In interviews, state your complexity and justify it.`,
+Time vs space: you can often use extra memory (e.g. hash map) to reduce time.
+
+**In other words:** Big O = a short answer to "how much does work grow when input grows". One loop n times → O(n); two nested loops each n → O(n²). Hash map = O(1) lookup on average; trade extra memory for less time.`,
+          explanation: `Big O is an upper bound: we say an algorithm is O(n) if the number of steps is at most proportional to n for large n.
+
+One loop over n elements is O(n). Two nested loops over n each is O(n²). In interviews, state your complexity and justify it.`,
           application: `Use Big O to choose between algorithms (e.g. O(n log n) sort vs O(n²) bubble), to explain your solution in interviews, and to spot bottlenecks (e.g. loop inside a loop → O(n²)).`,
           howToImplement: `(1) Count loops: one pass over n = O(n); two nested loops each over n = O(n²).
 (2) Prefer built-in sort (O(n log n)) unless the problem asks for custom sort.
@@ -146,8 +152,8 @@ Time vs space: you can often use extra memory (e.g. hash map) to reduce time.`,
 - Two Sum O(n): One pass with map. For each x, check if (target - x) is in the map. If yes, pair found. Insert x after check. Lookup O(1) per element.`,
           example: `Problem: Two Sum — Given array nums and target, return indices of two numbers that add up to target. See [LeetCode #1 Two Sum](https://leetcode.com/problems/two-sum/).
 
-Solution (C++): One pass with unordered_map<int,int> (value → index). For each nums[i], if (target - nums[i]) exists in map, return {map[target-nums[i]], i}. Otherwise map[nums[i]] = i. Time O(n), space O(n).`,
-          additionalInfo: `Strategy: practice daily on Codeforces or [LeetCode](https://leetcode.com/); focus on patterns (two pointers, sliding window, DP). Common complexities: O(1), O(log n), O(n), O(n log n), O(n²). Interview tip: State complexity when presenting; explain trade-off (e.g. O(n) time + O(n) space vs O(n²) time + O(1) space).`,
+Solution (C++): Idea: for each number x, the pair we need is (target - x). We store "value → index" for what we've seen. At x, check if (target - x) is in the map; if so, that's the pair. One pass with unordered_map<int,int> (value → index). For each nums[i], if (target - nums[i]) exists in map, return {map[target-nums[i]], i}. Otherwise map[nums[i]] = i. Time O(n), space O(n). **Takeaway:** Big O = how time/space grows as input size grows; one loop + O(1) lookup → O(n).`,
+          additionalInfo: `Strategy: practice daily on Codeforces or [LeetCode](https://leetcode.com/); focus on patterns (two pointers, sliding window, DP). Common complexities: O(1), O(log n), O(n), O(n log n), O(n²). Interview tip: State complexity when presenting; explain trade-off (e.g. O(n) time + O(n) space vs O(n²) time + O(1) space). **Takeaway:** Big O = a concise way to state "how much work grows when input grows" — one loop n times → O(n); two nested loops each n → O(n²).`,
         },
         codeExample: `// C++: Loop O(n) - one pass
 for (int i = 0; i < n; i++) {
@@ -189,8 +195,14 @@ vector<int> twoSum(vector<int>& nums, int target) {
 
 **By the end of this topic you will:** Use built-in sort and know O(n log n), implement binary search and two pointers, and solve Two Sum II and 3Sum-style problems.`,
           material: `**Sorting:** Use built-in sort (C++ \`std::sort\`, Python \`sorted()\`) for O(n log n). Enables two pointers and binary search on the result.
+
 **Binary search:** Find position in sorted array in O(log n). Maintain range [lo, hi]; compute mid = lo + (hi - lo) / 2; compare with target; set lo = mid + 1 or hi = mid - 1 until found or range empty.
-**Two pointers:** Two indices (e.g. i at start, j at end); move based on condition. On sorted array: if sum < target then increase left; if sum > target then decrease right. Often O(n). **When to use:** Sort when order helps (pairs, intervals); binary search for lookup or when answer is monotonic; two pointers for pairs or subarrays.`,
+
+**Two pointers:** Two indices (e.g. i at start, j at end); move based on condition. On sorted array: if sum < target then increase left; if sum > target then decrease right. Often O(n).
+
+**When to use:** Sort when order helps (pairs, intervals); binary search for lookup or when answer is monotonic; two pointers for pairs or subarrays.
+
+**In other words:** After sorting, many problems become easier: two pointers can find a pair with a given sum in O(n); binary search halves the range for O(log n). Always ask if the array is sorted or if you may sort it.`,
           explanation: `After sorting, many problems become easier: two pointers can find pairs with a given sum in O(n). Binary search works on the index space or on the answer space. Always clarify if the array is sorted or if you may sort it.`,
           application: `Sorting when order matters (pairs, merge intervals). Binary search for lookup in sorted data or when the answer is monotonic. Two pointers for pairs, subarrays, or removal in place.`,
           howToImplement: `(1) Sort with std::sort(a.begin(), a.end()) whenever you need ordered data.
@@ -201,8 +213,8 @@ vector<int> twoSum(vector<int>& nums, int target) {
           logicAndCode: `Binary search: Each iteration halves the range → O(log n). Two pointers: i and j move toward each other; each step moves at least one pointer → O(n).`,
           example: `Problem: Two Sum II — Sorted array, find two numbers that add up to target. Return 1-based indices. See [LeetCode #167 Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/).
 
-Solution: Two pointers. i=0, j=n-1; while(i<j) { if(a[i]+a[j]==target) return {i+1,j+1}; if(sum<target) i++; else j--; } Time O(n), space O(1).`,
-          additionalInfo: `LeetCode: [Two Sum](https://leetcode.com/problems/two-sum/), [Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/), [3Sum](https://leetcode.com/problems/3sum/), Binary Search. Use lo + (hi-lo)/2 to avoid overflow. Clarify if array is sorted; if not, ask if you may sort.`,
+Solution: Two pointers. i=0, j=n-1; while(i<j) { if(a[i]+a[j]==target) return {i+1,j+1}; if(sum<target) i++; else j--; } Time O(n), space O(1). **Why:** Array is sorted; if sum too small move left up, too large move right down; each step narrows the range.`,
+          additionalInfo: `**Takeaway:** Sorted array + pair/subarray → two pointers O(n). Value lookup → binary search O(log n); use mid = lo + (hi-lo)/2 to avoid overflow. LeetCode: [Two Sum](https://leetcode.com/problems/two-sum/), [Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/), [3Sum](https://leetcode.com/problems/3sum/). Clarify if array is sorted; if not, ask if you may sort.`,
         },
         codeExample: `// C++: Binary Search - find x in sorted array
 int lo = 0, hi = n - 1;
@@ -244,8 +256,16 @@ vector<int> twoSum(vector<int>& a, int target) {
 **Prerequisites:** Complexity & Strategy, arrays. Sorting helps for "when to use which pattern."
 
 **By the end of this topic you will:** Build and query prefix sum in O(1), implement sliding window (fixed and variable), and solve range-sum and substring problems.`,
-          material: `**Prefix sum:** Precompute pre[i] = a[0]+...+a[i-1] (so pre[0]=0, pre[1]=a[0], ...). Then sum(l..r) = pre[r+1]-pre[l] in O(1). Build in O(n); each range query O(1). **Sliding window:** Maintain contiguous segment [i,j]. Fixed size: move i and j together. Variable size: expand j until condition holds, then shrink i until invalid, update answer at each valid step; each element in/out at most twice → O(n). **When to use:** Prefix sum for range sum, "subarray sum equals K" (with map of prefix sums). Sliding window for "longest subarray with sum ≤ K", "minimum window containing all", max in each window of size k.`,
-          explanation: `Prefix sum turns range-sum queries into two lookups. Sliding window avoids re-scanning by moving the window one step and updating state (e.g. frequency map). Both are one-pass O(n) or O(1) per query.`,
+          material: `**Prefix sum:** Precompute pre[i] = a[0]+...+a[i-1] (so pre[0]=0, pre[1]=a[0], ...). Then sum(l..r) = pre[r+1]-pre[l] in O(1). Build in O(n); each range query O(1).
+
+**Sliding window:** Maintain contiguous segment [i,j]. Fixed size: move i and j together. Variable size: expand j until condition holds, then shrink i until invalid, update answer at each valid step; each element in/out at most twice → O(n).
+
+**When to use:** Prefix sum for range sum, "subarray sum equals K" (with map of prefix sums). Sliding window for "longest subarray with sum ≤ K", "minimum window containing all", max in each window of size k.
+
+**In other words:** Prefix sum = precompute cumulative sums; query sum(l..r) becomes pre[r+1]-pre[l] in O(1). Subarray sum K = for each ending index j, count how many previous prefixes have value (current_sum - K). Sliding window = maintain a valid segment [i,j]; expand right, shrink left; each element enters and leaves at most twice → O(n).`,
+          explanation: `Prefix sum turns range-sum queries into two lookups.
+
+Sliding window avoids re-scanning by moving the window one step and updating state (e.g. frequency map). Both are one-pass O(n) or O(1) per query.`,
           application: `Prefix sum: range sum, count in range, subarray divisibility. Sliding window: max/min in window, longest substring with at most K distinct, minimum window substring.`,
           howToImplement: `(1) Build pre: pre[0]=0, then pre[i+1]=pre[i]+a[i]. Query: sum(l..r) = pre[r+1]-pre[l].
 (2) Sliding window: two pointers i, j; extend j and update state; when invalid, shrink i until valid; update answer at each valid step.
@@ -253,8 +273,8 @@ vector<int> twoSum(vector<int>& a, int target) {
           logicAndCode: `pre[r+1]-pre[l] = a[l]+...+a[r]. Subarray sum K: for subarray ending at j, we want pre[j+1]-pre[i]=K → pre[i]=pre[j+1]-K. Count how many pre[i] we have seen equal to pre[j+1]-K.`,
           example: `Problem: Subarray Sum Equals K — Count subarrays with sum K. See [LeetCode #560](https://leetcode.com/problems/subarray-sum-equals-k/).
 
-Solution: cnt[0]=1. For each x: sum+=x; ans+=cnt[sum-K]; cnt[sum]++. Time O(n), space O(n).`,
-          additionalInfo: `LeetCode: [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/), [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/), [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/). Variable window: expand right, shrink left while valid.`,
+Solution: Idea: prefix sum up to index j is the running sum. Subarray [i..j] has sum = prefix[j] - prefix[i-1]. We want prefix[j] - prefix[i-1] = K, so prefix[i-1] = prefix[j] - K. We count how many previous prefixes have value (current_sum - K); that's the number of subarrays ending here with sum K. cnt[0]=1 (so subarrays starting at index 0 are counted). For each x: sum+=x; ans+=cnt[sum-K]; cnt[sum]++. Time O(n), space O(n). **Why:** Each subarray [i..j] has sum = prefix[j]-prefix[i-1]; we count pairs (i,j) with that difference K. **Common mistake:** Forgetting to initialize cnt[0]=1; subarrays starting at index 0 won't be counted.`,
+          additionalInfo: `**Takeaway:** Range sum O(1) → prefix sum; subarray sum K → map prefix sum, cnt[sum-K]. Sliding window: expand j, shrink i; variable window O(n). LeetCode: [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/), [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/), [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/). Variable window: expand right, shrink left while valid.`,
         },
         codeExample: `// Prefix sum - build and query O(1)
 vector<int> pre(n+1);
@@ -296,9 +316,13 @@ int subarraySum(vector<int>& nums, int k) {
 **Prerequisites:** Complexity & Strategy, recursion, arrays. Sorting and Prefix Sum help for recognizing subproblems.
 
 **By the end of this topic you will:** Define state and recurrence, implement top-down (memo) and bottom-up (table), and solve 1D/2D DP (stairs, knapsack, LCS).`,
-          material: `DP needs optimal substructure (best solution uses best sub-solutions) and overlapping subproblems. Define state (dp[i], dp[i][j]), recurrence, base case, and order. Memoization = top-down + cache; tabulation = bottom-up table.`,
-          explanation: `State encodes the "position" in the problem. Recurrence relates state to smaller states. Fill in order so dependencies are ready. Space can often be optimized (e.g. one row for knapsack).`,
-          application: `Classic: Fibonacci, Climbing Stairs, Coin Change, LIS, 0/1 knapsack, LCS, edit distance. Many string and sequence problems are DP.`,
+          material: `DP needs optimal substructure (best solution uses best sub-solutions) and overlapping subproblems.
+
+Define state (dp[i], dp[i][j]), recurrence, base case, and order. Memoization = top-down + cache; tabulation = bottom-up table.
+
+**In other words:** DP = store answers to subproblems so we don't recompute. Simplest example: Fibonacci — F(i) = F(i-1) + F(i-2); we store F(0), F(1), ... so each F(k) is computed once. Knapsack uses the same idea with a 2D state (which item, capacity).`,
+          explanation: `State encodes the "position" in the problem. Recurrence relates state to smaller states. Fill in order so dependencies are ready. Space can often be optimized (e.g. one row for knapsack). LIS = Longest Increasing Subsequence; LCS = Longest Common Subsequence — keduanya contoh DP klasik.`,
+          application: `Classic: Fibonacci, Climbing Stairs, Coin Change, LIS (Longest Increasing Subsequence), 0/1 knapsack, LCS (Longest Common Subsequence), edit distance. Many string and sequence problems are DP.`,
           howToImplement: `(1) Write recurrence in words: "Best value for first i items with capacity w = max(skip: dp[i-1][w], take: value[i] + dp[i-1][w-weight[i]])."
 (2) Base case: dp[0][w] = 0.
 (3) Order: loop i from 1 to n, w from 0 to W. For space optimization: one row, loop w backwards.
@@ -306,7 +330,7 @@ int subarraySum(vector<int>& nums, int k) {
           logicAndCode: `0/1 Knapsack: dp[i][w] = max value with items 1..i, capacity w. Choices: skip i → dp[i-1][w]; take i (if fits) → val[i] + dp[i-1][w-weight[i]]. Space optimization: only one row; loop w backwards so dp[w-weight[i]] is not yet overwritten.`,
           example: `Problem: 0/1 Knapsack — n items (weight[], value[]), capacity W. Maximize total value. Each item at most once.
 
-Solution: vector<int> dp(W+1, 0); for(i) for(w=W; w>=weight[i]; w--) dp[w]=max(dp[w], value[i]+dp[w-weight[i]]); return dp[W]. Time O(n*W), space O(W).`,
+Solution: Idea: dp[w] = max value achievable with capacity w (using items we've looped over). For each item, we update dp from W down (not 0 up) so the dp[w-weight[i]] we use is still from "before this item was taken" — if we loop upward we could use the same item twice. vector<int> dp(W+1, 0); for(i) for(w=W; w>=weight[i]; w--) dp[w]=max(dp[w], value[i]+dp[w-weight[i]]); return dp[W]. Time O(n*W), space O(W). **Common mistake:** Forgetting to loop w backward; result becomes "unlimited copies" instead of 0/1.`,
           additionalInfo: `LeetCode: [Climbing Stairs #70](https://leetcode.com/problems/climbing-stairs/), [Coin Change](https://leetcode.com/problems/coin-change/), [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/), [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/). **Tip:** Start with brute-force recursion → memoization → tabulation. Space optimization: knapsack iterate w backwards.`,
         },
         codeExample: `// 0/1 Knapsack - tabulation 2D
@@ -347,7 +371,13 @@ return dp[W];`,
 **Prerequisites:** Sorting & Searching; idea of "local choice → global optimum."
 
 **By the end of this topic you will:** Recognize when greedy applies, implement interval and activity selection, and briefly justify the greedy choice.`,
-          material: `**Greedy:** At each step, make the locally best choice; hope it leads to global optimum. **When it works:** (1) Optimal substructure: optimal solution contains optimal solutions to subproblems. (2) Greedy choice property: local best choice is part of some global optimum. **Complexity:** Often O(n log n) if sorting, O(n) if one pass. **Classics:** Activity selection (sort by end time), interval scheduling, Huffman coding, coin change (unlimited coins, greedy if denominations allow). **When it fails:** 0/1 knapsack (need DP), shortest path with negative edges (Bellman–Ford).`,
+          material: `**Greedy:** At each step, make the locally best choice; hope it leads to global optimum.
+
+**When it works:** (1) Optimal substructure: optimal solution contains optimal solutions to subproblems. (2) Greedy choice property: local best choice is part of some global optimum. **Complexity:** Often O(n log n) if sorting, O(n) if one pass.
+
+**Classics:** Activity selection (sort by end time), interval scheduling, Huffman coding, coin change (unlimited coins, greedy if denominations allow). **When it fails:** 0/1 knapsack (need DP), shortest path with negative edges (Bellman–Ford).
+
+**In other words:** Greedy = no backtracking; once you choose, you commit. For it to be safe, the "locally best" choice must be provably part of some optimal solution (e.g. earliest finish → leaves the most time for other activities).`,
           explanation: `Greedy doesn't backtrack; once you choose, you commit. Proof techniques: exchange argument (swap greedy choice into any solution), or induction (greedy choice extends to optimal). In interviews, state "I'll try greedy; we need to prove the greedy choice is safe."`,
           application: `Use for scheduling (earliest deadline first), encoding (Huffman), caching (LRU), and many interval/ordering problems. If the problem has "choose best at each step" and no obvious counterexample, try greedy.`,
           howToImplement: `(1) Sort if needed (e.g. by end time, by ratio).
@@ -357,7 +387,7 @@ return dp[W];`,
           example: `Problem: Activity Selection — n activities [start, end]; max number of non-overlapping activities.
 
 Solution: Sort by end time. Take first activity; for each next, if start >= lastEnd, take it and update lastEnd. Time O(n log n), space O(1). Proof: greedy choice (earliest finishing) leaves maximum room for rest.`,
-          additionalInfo: `LeetCode: [Jump Game](https://leetcode.com/problems/jump-game/), [Merge Intervals](https://leetcode.com/problems/merge-intervals/), [Task Scheduler](https://leetcode.com/problems/task-scheduler/). Complexity: always state O(n) or O(n log n) and why. Interview: say "I'll try greedy" and give a one-line proof.`,
+          additionalInfo: `LeetCode: [Jump Game](https://leetcode.com/problems/jump-game/), [Merge Intervals](https://leetcode.com/problems/merge-intervals/), [Task Scheduler](https://leetcode.com/problems/task-scheduler/). Complexity: always state O(n) or O(n log n) and why. Interview: say "I'll try greedy" and give a one-line proof. **Takeaway:** Greedy = pick the best at each step without backtracking; for "max non-overlapping" intervals, sort by end time then take the one that finishes earliest.`,
         },
         codeExample: `// Activity Selection - O(n log n)
 vector<pair<int,int>> activities; // (end, start)
@@ -395,8 +425,18 @@ return coins;
           learningFlowIntro: `**Your first step:** Read sections 1–2. Build an adjacency list for a small graph (e.g. 4 nodes), run BFS from node 0 and list visit order; then run DFS (recursive) and compare. Solve Number of Islands (LeetCode #200) with BFS or DFS.
 
 **Prerequisites:** Complexity & Strategy, queues, recursion. CS Theory Graphs & Trees gives tree traversal; here we focus on general graphs and grid. **By the end of this topic you will:** Implement BFS/DFS on adj list or grid, use BFS for unweighted shortest path, and solve island/connected-component problems.`,
-          material: `**Graph:** G = (V, E). **Adjacency list:** For each vertex, list of neighbors; space O(V+E); best for sparse graphs. **Adjacency matrix:** O(V²) space; O(1) edge lookup. **BFS:** Queue; explores level by level; **shortest path** in unweighted graph; time O(V+E), space O(V). **DFS:** Stack or recursion; explores depth-first; good for cycles, topological sort, backtracking; time O(V+E), space O(V) (or O(V) recursion stack). **Complexity:** V vertices, E edges; each vertex and edge processed once. **Directed vs undirected:** Undirected each edge stored twice in adj list.`,
-          explanation: `BFS from source gives shortest path lengths in unweighted graph because we visit in order of distance. DFS visits all reachable nodes; use visited set to avoid infinite loop in cycles. For weighted graphs use Dijkstra or Bellman–Ford.`,
+          material: `**Graph:** G = (V, E). V = vertices (nodes), E = edges.
+
+**Adjacency list:** For each vertex, list of neighbors; space O(V+E); good for sparse graphs. **Adjacency matrix:** V×V matrix; space O(V²); edge lookup O(1).
+
+**BFS (Breadth-First Search):** Use a queue; explore level by level; **shortest path** in unweighted graph; time O(V+E), space O(V). **DFS (Depth-First Search):** Use stack or recursion; go deep first; for cycle detection, topological sort, backtracking; time O(V+E), space O(V).
+
+**In other words:** BFS = "layer by layer from the source"; first time we reach a node = shortest distance. DFS = "go deep to the end then backtrack"; must mark visited to avoid infinite loops on graphs with cycles.
+
+**Directed vs undirected:** Undirected = each edge stored in both directions in the adjacency list.`,
+          explanation: `BFS from source gives shortest path lengths in unweighted graph because we visit in order of distance. DFS visits all reachable nodes; use visited set to avoid infinite loop in cycles.
+
+For weighted graphs use Dijkstra or Bellman–Ford.`,
           application: `BFS: shortest path (unweighted), level order, multi-source BFS. DFS: cycle detection, topological sort, count components, path finding, backtracking.`,
           howToImplement: `(1) Build adj list: vector<vector<int>> adj(n); for each edge (u,v) adj[u].push_back(v); (undirected: adj[v].push_back(u)).
 (2) BFS: queue, visited array; push source; while queue not empty: pop, for each neighbor if !visited push and mark.
@@ -404,8 +444,8 @@ return coins;
           logicAndCode: `Each vertex enqueued/pushed once, each edge examined once → O(V+E). Space: queue or stack holds at most O(V) nodes; visited O(V).`,
           example: `Problem: Number of Islands — grid of '1' and '0'; count connected components of '1'. See [LeetCode #200](https://leetcode.com/problems/number-of-islands/).
 
-Solution: For each cell, if '1' and not visited, run BFS or DFS to mark all connected '1', then count++. Time O(rows*cols), space O(rows*cols).`,
-          additionalInfo: `LeetCode: [Number of Islands](https://leetcode.com/problems/number-of-islands/), [Course Schedule](https://leetcode.com/problems/course-schedule/) (topological), [Clone Graph](https://leetcode.com/problems/clone-graph/). Interview: state "BFS for shortest path, DFS for explore all"; complexity O(V+E).`,
+Solution: Idea: each "island" is one connected component (adjacent 1s). For each cell that is '1' and not yet visited, run BFS or DFS from there to mark all connected '1s'; that's one island, count++. Grid = implicit graph (neighbors = up, down, left, right). Time O(rows*cols), space O(rows*cols). **Common mistake:** Forgetting to mark visited or flip '1' to '0' while exploring, so islands get counted multiple times.`,
+          additionalInfo: `LeetCode: [Number of Islands](https://leetcode.com/problems/number-of-islands/), [Course Schedule](https://leetcode.com/problems/course-schedule/) (topological), [Clone Graph](https://leetcode.com/problems/clone-graph/). Interview: state "BFS for shortest path, DFS for explore all"; complexity O(V+E). **Takeaway:** BFS = shortest path unweighted; DFS = explore all + cycle/topological; always use visited.`,
         },
         codeExample: `// BFS - shortest path in unweighted graph
 vector<int> dist(n, -1);
@@ -452,8 +492,12 @@ dfs(0);
 **Prerequisites:** Graphs BFS/DFS (traversal idea). Recursion.
 
 **By the end of this topic you will:** Traverse trees (recursive and iterative), use BST property for O(h) search/LCA, and validate BST.`,
-          material: `**Tree:** Rooted; each node has 0+ children. **Binary tree:** At most 2 children (left, right). **BST:** For every node, left subtree keys < root < right subtree keys; inorder gives sorted order. **Traversal:** Inorder (LNR) = sorted for BST; preorder (NLR) = root first; postorder (LRN) = children before root. **LCA in BST:** If p, q < root go left; if p, q > root go right; else root is LCA. **Complexity:** O(n) for full traversal; O(h) for BST operations (h = height).`,
-          explanation: `BST property lets you discard half the tree per step → O(h). For "validate BST" pass (min, max) allowed range per node. Iterative traversal uses explicit stack to avoid recursion stack overflow.`,
+          material: `**Tree:** Rooted; each node has 0+ children. **Binary tree:** At most 2 children (left, right).
+
+**BST (Binary Search Tree):** For every node, all keys in left subtree < root < all keys in right subtree; inorder (left–root–right) gives sorted order. **Traversal:** Inorder (LNR = Left, Node, Right) = sorted for BST; preorder (NLR) = root first; postorder (LRN) = children first then root. **LCA (Lowest Common Ancestor):** lowest shared ancestor. In BST: if both p and q < root, LCA is in left; both > root, LCA in right; if split (one left one right), root = LCA. **Complexity:** O(n) for full traversal; O(h) for BST operations (h = tree height).`,
+          explanation: `BST property lets you discard half the tree per step → O(h). For "validate BST" pass (min, max) allowed range per node.
+
+Iterative traversal uses explicit stack to avoid recursion stack overflow.`,
           application: `BST: search, insert, delete; Kth smallest (inorder); LCA; range queries. General tree: max depth, diameter, path sum, serialize. Often asked at Google and IMC.`,
           howToImplement: `(1) Inorder recursive: if (!root) return; inorder(root->left); process(root); inorder(root->right).
 (2) Inorder iterative: stack; push left path, pop and process, then go right.
@@ -462,7 +506,7 @@ dfs(0);
           logicAndCode: `Inorder iterative: simulate recursion with stack; go left until null, pop (process), then current = right. Validate BST: range shrinks at each step; if node outside range, invalid. LCA: first node where p and q diverge (one left, one right) is LCA.`,
           example: `Problem: Validate BST — Every node must be in (min, max) for its subtree. See [LeetCode #98](https://leetcode.com/problems/validate-binary-search-tree/).
 
-Solution: bool valid(TreeNode* r, long lo, long hi) { if (!r) return true; if (r->val <= lo || r->val >= hi) return false; return valid(r->left, lo, r->val) && valid(r->right, r->val, hi); } Call with (LONG_MIN, LONG_MAX).`,
+Solution: Idea: for each node, value must be strictly between left bound (lo) and right bound (hi). Left child inherits (lo, root_val); right child inherits (root_val, hi). Recurse left and right; base case: null node = valid. bool valid(TreeNode* r, long lo, long hi) { if (!r) return true; if (r->val <= lo || r->val >= hi) return false; return valid(r->left, lo, r->val) && valid(r->right, r->val, hi); } Call with (LONG_MIN, LONG_MAX). **Takeaway:** BST = left < root < right at every node; validation = pass range (min, max) down.`,
           additionalInfo: `LeetCode: [Validate BST](https://leetcode.com/problems/validate-binary-search-tree/), [LCA of BST](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), [Kth Smallest in BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/), [Binary Tree Level Order](https://leetcode.com/problems/binary-tree-level-order-traversal/), [Max Depth](https://leetcode.com/problems/maximum-depth-of-binary-tree/). **Tip:** Use long for BST range to avoid overflow with INT_MIN/INT_MAX.`,
         },
         codeExample: `// Inorder iterative (BST → sorted)
@@ -508,7 +552,9 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 **Prerequisites:** Trees (binary tree shape). Sorting.
 
 **By the end of this topic you will:** Use heap for top-K, merge K sorted lists, find median; state O(log n) per operation.`,
-          material: `**Heap:** Complete binary tree; min-heap = root is minimum (max-heap = root maximum). **Operations:** insert O(log n), extract-min O(log n), peek O(1). **Array representation:** parent at i → children at 2i+1, 2i+2; child at i → parent at (i-1)/2. **Use cases:** Top K (min-heap of size K), merge K sorted (heap of head of each list), median (two heaps). **Language:** C++ \`priority_queue<int>\` is max-heap; min-heap = \`priority_queue<int, vector<int>, greater<int>>\`. Python \`heapq\` (min-heap only).`,
+          material: `**Heap:** Complete binary tree; min-heap = root is minimum (max-heap = root maximum). **Operations:** insert O(log n), extract-min O(log n), peek O(1). **Array representation:** parent at i → children at 2i+1, 2i+2; child at i → parent at (i-1)/2.
+
+**Use cases:** Top K (min-heap of size K), merge K sorted (heap of head of each list), median (two heaps). **Language:** C++ \`priority_queue<int>\` is max-heap; min-heap = \`priority_queue<int, vector<int>, greater<int>>\`. Python \`heapq\` (min-heap only).`,
           explanation: `Top K: keep only K largest in min-heap; when size > K pop min. Merge K lists: push first node of each list; pop min, push next from same list. Two heaps for median: left = max-heap (first half), right = min-heap (second half); balance sizes.`,
           application: `Top K frequent, top K largest, merge K sorted lists, find median from stream, Dijkstra (priority queue). Frequently asked at Google and trading firms.`,
           howToImplement: `(1) Top K largest: min-heap of size K. For each x: push x; if size > K pop min. Final heap = K largest.
@@ -518,7 +564,7 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
           example: `Problem: Merge K Sorted Lists — K linked lists, each sorted; return one sorted list. See [LeetCode #23](https://leetcode.com/problems/merge-k-sorted-lists/).
 
 Solution: Min-heap of (node->val, list_id). Push head of each list. While heap not empty: pop min, append to result, push next from same list. Time O(N log K) where N = total nodes, K = lists.`,
-          additionalInfo: `LeetCode: [Top K Frequent](https://leetcode.com/problems/top-k-frequent-elements/), [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), [Kth Largest in Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/). **Note:** Optiver/IMC may ask "design a data structure" — two heaps for median is a classic.`,
+          additionalInfo: `LeetCode: [Top K Frequent](https://leetcode.com/problems/top-k-frequent-elements/), [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), [Kth Largest in Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/). **Note:** Optiver/IMC may ask "design a data structure" — two heaps for median is a classic. **Takeaway:** Heap = root is always min (or max); Top K = min-heap of size K (pop the smallest); Merge K sorted = heap holds head of each list, pop min then push next from that list.`,
         },
         codeExample: `// C++: Min-heap for top K largest (keep heap size = K)
 vector<int> topK(vector<int>& nums, int k) {
@@ -568,8 +614,14 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 **Prerequisites:** Graphs BFS/DFS, Heaps (priority queue).
 
 **By the end of this topic you will:** Implement Dijkstra, state when to use it vs BFS, and handle "shortest path with at most K edges" (BFS on state (node, steps)).`,
-          material: `**BFS:** Unweighted graph; shortest path = fewest edges. **Dijkstra:** Weighted graph, non-negative weights; shortest path by total weight. **Idea:** Always relax from the vertex with smallest known distance (greedy). **PQ:** Store (distance, node); pop min; for each neighbor v, if dist[u] + w(u,v) < dist[v] then update dist[v] and push (dist[v], v). **Complexity:** O((V+E) log V) with binary heap. **Negative weights:** Dijkstra fails; use Bellman–Ford. **Variants:** "At most K stops" = BFS over state (node, steps used).`,
-          explanation: `Dijkstra is greedy: the first time we pop a node, we have its final shortest distance (because weights are non-negative). Relaxation: we only update if we found a shorter path.`,
+          material: `**BFS:** Unweighted graph; shortest path = fewest edges. **Dijkstra:** Weighted graph, non-negative weights; shortest path by total weight.
+
+**Idea:** Always relax from the vertex with smallest known distance (greedy). **PQ (priority queue):** data structure that always yields the smallest element; we store (distance, node) and pop the one with smallest distance. **Relaxation:** update distance to neighbor v if we find a shorter path (dist[u] + w < dist[v]); then update dist[v] and push (dist[v], v) to PQ. **Complexity:** O((V+E) log V) with binary heap.
+
+**Negative weights:** Dijkstra fails; use Bellman–Ford. **Variants:** "At most K stops" = BFS over state (node, steps used).
+
+**In other words:** Dijkstra = always relax from the node with smallest known distance (greedy); the first time a node is popped from the PQ, its distance is final (because weights are non-negative). PQ stores (distance, node); we may push the same node multiple times with better distance — when popping, skip if the value is stale.`,
+          explanation: `Dijkstra is greedy: the first time we pop a node, we have its final shortest distance (because weights are non-negative). Relaxation = only update dist[v] when we find a shorter path to v.`,
           application: `Single-source shortest path (routing, network delay). Google/IMC/Optiver may ask "shortest path in a grid with weights" or "cheapest flight with at most K stops".`,
           howToImplement: `(1) Initialize dist[src]=0, else INF. PQ = (0, src).
 (2) While PQ not empty: pop (d, u). If d > dist[u] skip (stale).
@@ -578,8 +630,8 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
           logicAndCode: `Each node can be pushed multiple times (with improved dist); we skip when we pop a stale (larger) distance. First time we pop a node = its distance is final.`,
           example: `Problem: Network Delay Time — n nodes, times[i] = (u, v, w). Signal from node k. Time for all to receive? See [LeetCode #743](https://leetcode.com/problems/network-delay-time/).
 
-Solution: Dijkstra from k. Return max(dist); if any dist remains INF return -1. Time O((V+E) log V).`,
-          additionalInfo: `LeetCode: [Network Delay Time](https://leetcode.com/problems/network-delay-time/), [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) (BFS on (node, stops)). **Important:** Dijkstra does not work with negative edge weights; mention Bellman–Ford if asked.`,
+Solution: Dijkstra from k. Return max(dist); if any dist remains INF return -1. Time O((V+E) log V). **Why:** Once all nodes are reached, last arrival time = max(dist); if any INF remains some node is unreachable.`,
+          additionalInfo: `**Takeaway:** Non-negative weighted graph, shortest path → Dijkstra + PQ (distance, node); relax = update dist[v] if dist[u]+w < dist[v]. Negative weights → Bellman–Ford. "At most K edges" → BFS on (node, steps). LeetCode: [Network Delay Time](https://leetcode.com/problems/network-delay-time/), [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/). **Important:** Dijkstra does not work with negative edge weights; mention Bellman–Ford if asked.`,
         },
         codeExample: `// Dijkstra - single source shortest path (non-negative weights)
 vector<int> dijkstra(int n, vector<vector<pair<int,int>>>& adj, int src) {
@@ -620,7 +672,13 @@ vector<int> dijkstra(int n, vector<vector<pair<int,int>>>& adj, int src) {
 **Prerequisites:** Recursion, arrays. DFS (backtracking is DFS on implicit "choice tree").
 
 **By the end of this topic you will:** Write backtracking with clear base case, choice, recurse, undo; solve subset/permutation/combination problems.`,
-          material: `**Backtracking:** Build solution incrementally; when stuck, undo last choice and try another. **Template:** (1) Base case: add current state to result. (2) For each valid choice: make choice, recurse, undo choice. **Subsets:** 2^n; at each index include or not. **Permutations:** n!; at each position try each unused element (use \`used\` array or swap). **Combinations:** C(n,k); same as subsets but only add when path length = k. **Complexity:** Often exponential; prune invalid branches early.`,
+          material: `**Backtracking:** Build solution incrementally; when stuck, undo last choice and try another.
+
+**Template:** (1) Base case: add current state to result. (2) For each valid choice: make choice, recurse, undo choice. **Subsets:** 2^n; at each index include or not. **Permutations:** n!; at each position try each unused element (use \`used\` array or swap). **Combinations:** C(n,k); same as subsets but only add when path length = k.
+
+**In other words — decision tree:** Imagine a tree: each level = one index. For subsets, each node has two branches: "take this element" and "don't take". dfs(i+1) after push = take branch; dfs(i+1) after pop = don't take branch. Backtrack = after finishing one branch, undo (pop) so the other branch sees the same state.
+
+**Complexity:** Often exponential; prune invalid branches early.`,
           explanation: `The "undo" step restores state so the next sibling branch sees the same state. Used array (or swap) ensures each element used once per path. For "combination sum" allow reuse by not incrementing index; avoid duplicates by sorting and skipping same value.`,
           application: `Subsets, permutations, combinations; letter combinations; palindrome partitioning; Sudoku; N-queens. Very common at Google.`,
           howToImplement: `(1) Subsets: void dfs(int i) { if (i==n) { ans.push_back(path); return; } path.push_back(nums[i]); dfs(i+1); path.pop_back(); dfs(i+1); }
@@ -684,7 +742,13 @@ vector<vector<int>> permute(vector<int>& nums) {
 **Prerequisites:** Sorting, Greedy.
 
 **By the end of this topic you will:** Merge, insert, and minimize removals for interval problems; choose sort by start vs end.`,
-          material: `**Merge:** Sort by start. Result = [first]. For each next: if overlaps result.back() (curr.start <= result.back().end), update result.back().end = max(end, curr.end); else push curr. **Insert:** Add new interval; merge (or binary search for position then merge). **Non-overlapping (min removals):** Sort by end. Greedy: keep interval with smallest end that doesn't overlap previous. Count removals = n - kept. **Overlap:** [a,b] and [c,d] overlap if a <= d and c <= b. **Meeting rooms:** Sort all starts and ends; sweep; count max concurrent.`,
+          material: `**Merge:** Sort by start. Result = [first]. For each next: if overlaps result.back() (curr.start <= result.back().end), update result.back().end = max(end, curr.end); else push curr.
+
+**Insert:** Add new interval; merge (or binary search for position then merge). **Non-overlapping (min removals):** Sort by end. Greedy: keep interval with smallest end that doesn't overlap previous. Count removals = n - kept.
+
+**Overlap:** [a,b] and [c,d] overlap if a <= d and c <= b. **Meeting rooms:** Sort all starts and ends; sweep; count max concurrent.
+
+**In other words:** Merge = sort by start, then merge overlapping intervals (curr.start <= last.end). Non-overlapping (min removals) = sort by end, greedily take the one that finishes earliest so remaining capacity is maximized.`,
           explanation: `Sort by start for merge (process in order). Sort by end for "max non-overlapping" (earliest end leaves most room). Insert = merge with one extra interval.`,
           application: `Merge intervals, insert interval, remove minimum to make non-overlapping, meeting rooms I/II, interval list intersection. Common at Google.`,
           howToImplement: `(1) Merge: sort(intervals by start); out = [intervals[0]]; for each int in intervals[1:]: if int.start <= out.back().end then out.back().end = max(out.back().end, int.end); else out.push_back(int).
@@ -692,8 +756,8 @@ vector<vector<int>> permute(vector<int>& nums) {
           logicAndCode: `Merge: after sort, overlapping intervals are adjacent. Non-overlapping: greedy by end time is optimal (exchange argument).`,
           example: `Problem: Non-overlapping Intervals — min intervals to remove so rest are non-overlapping. See [LeetCode #435](https://leetcode.com/problems/non-overlapping-intervals/).
 
-Solution: Sort by end. Keep intervals with start >= lastEnd; update lastEnd = end. Answer = n - count_kept. Time O(n log n).`,
-          additionalInfo: `LeetCode: [Merge Intervals](https://leetcode.com/problems/merge-intervals/), [Insert Interval](https://leetcode.com/problems/insert-interval/), [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/), [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/). **Tip:** Clarify if [1,2] and [2,3] overlap (often yes for "merge", no for "non-overlapping" depending on problem).`,
+Solution: Sort by end. Keep intervals with start >= lastEnd; update lastEnd = end. Answer = n - count_kept. Time O(n log n). **Why:** Greedy by end leaves maximum room for the rest (exchange argument).`,
+          additionalInfo: `LeetCode: [Merge Intervals](https://leetcode.com/problems/merge-intervals/), [Insert Interval](https://leetcode.com/problems/insert-interval/), [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/), [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/). **Takeaway:** Merge = sort by start, merge if overlapping; non-overlapping = sort by end, greedy keep earliest end. **Tip:** Clarify if [1,2] and [2,3] overlap (often yes for "merge", no for "non-overlapping" depending on problem).`,
         },
         codeExample: `// Merge intervals - sort by start
 vector<vector<int>> merge(vector<vector<int>>& intervals) {
@@ -738,7 +802,13 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 **Prerequisites:** Basic stack. Arrays.
 
 **By the end of this topic you will:** Use stack for matching and monotonic stack for "next greater/smaller" in O(n).`,
-          material: `**Stack:** LIFO; push, pop, top. **Valid parentheses:** For opening push expected closing; for closing pop and check match. **Monotonic stack:** Maintain stack in sorted order (e.g. decreasing). When we see a value greater than stack top, stack top's "next greater" is current; pop until stack empty or top >= current. **Use:** Next greater element (right), next smaller, previous greater (scan left). **Largest rectangle:** For each bar, find left and right boundaries (first smaller); width = right - left - 1; area = height * width.`,
+          material: `**Stack:** LIFO; push, pop, top. **Valid parentheses:** For opening push expected closing; for closing pop and check match.
+
+**Monotonic stack:** Stack whose contents are kept in sorted order (e.g. decreasing). **Next greater element** = for each element, the first element to the right that is larger. When we see a value larger than top, that value is the "next greater" for top; pop until stack is empty or top >= current. **Use:** Next greater (right), next smaller, previous greater (scan left).
+
+**Largest rectangle:** For each bar, find left and right bounds (first smaller element); width = right - left - 1; area = height × width.
+
+**In other words:** Monotonic stack = one pass O(n): keep "candidates" that haven't found their next greater yet; when we see a larger value, it becomes the next greater for what we pop.`,
           explanation: `Monotonic stack: we only keep "candidates" that might be the next greater for future elements. When a larger element comes, it is the next greater for all smaller elements we pop.`,
           application: `Valid parentheses, min stack, next greater element, daily temperatures, largest rectangle in histogram. Google and IMC ask these.`,
           howToImplement: `(1) Next greater (right): for i in 0..n: while stack not empty and a[stack.top()] < a[i], result[stack.top()] = a[i], pop; push i. Then pop remaining → no next greater (-1).
@@ -746,8 +816,8 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
           logicAndCode: `Stack stores indices (to compute width). Monotonic decreasing: when we see larger, everyone in stack smaller than it has "next greater" = current.`,
           example: `Problem: Daily Temperatures — for each day, days until warmer. See [LeetCode #739](https://leetcode.com/problems/daily-temperatures/).
 
-Solution: Monotonic decreasing stack (indices). For each i: while stack not empty and T[stack.top()] < T[i], ans[stack.top()] = i - stack.top(), pop; push i. Time O(n).`,
-          additionalInfo: `LeetCode: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/), [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/). **Tip:** For "min stack" (getMin in O(1)) use two stacks or one stack of (value, min_so_far).`,
+Solution: Monotonic decreasing stack (indices). For each i: while stack not empty and T[stack.top()] < T[i], ans[stack.top()] = i - stack.top(), pop; push i. Time O(n). **Why:** Each element is pushed and popped at most once. **Common mistake:** Forgetting to fill result for remaining items in stack (no next greater → -1 or 0).`,
+          additionalInfo: `LeetCode: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/), [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/). **Takeaway:** Next greater/smaller → monotonic stack one pass O(n); store indices to compute distance/width. **Tip:** For "min stack" (getMin in O(1)) use two stacks or one stack of (value, min_so_far).`,
         },
         codeExample: `// Valid parentheses
 bool isValid(string s) {
@@ -796,7 +866,11 @@ vector<int> nextGreater(vector<int>& a) {
 **Prerequisites:** Integers, binary representation.
 
 **By the end of this topic you will:** Use XOR for "find unique", bit masks for subsets, and count set bits.`,
-          material: `**XOR:** a^a=0, a^0=a; commutative. **Single number:** XOR all → duplicates cancel. **Set bits:** n & (n-1) removes lowest set bit; count while n != 0. **Power of 2:** n > 0 && (n & (n-1)) == 0. **Get/set/clear bit i:** (n >> i) & 1; n |= (1 << i); n &= ~(1 << i). **Subsets via bits:** for mask 0 to 2^n-1, mask's bits = which indices included. **Optiver/IMC:** Sometimes mental math or bit tricks in phone screens.`,
+          material: `**XOR:** a^a=0, a^0=a; commutative. **Single number:** XOR all → duplicates cancel. **Set bits** = bits with value 1. n & (n-1) removes lowest set bit; count while n != 0. **Power of 2:** n > 0 && (n & (n-1)) == 0.
+
+**Get/set/clear bit i:** (n >> i) & 1; n |= (1 << i); n &= ~(1 << i). **Subsets via bits:** for mask 0 to 2^n-1, mask's bits = which indices included. **Optiver/IMC:** Sometimes mental math or bit tricks in phone screens.
+
+**In other words:** XOR all numbers = pairs cancel out (a^a=0), leaving the unique one. n & (n-1) clears the rightmost set bit, so the loop runs once per set bit.`,
           explanation: `XOR is its own inverse; order doesn't matter. So XOR of [a,a,b,b,c] = c. For "two numbers appear once, rest twice": XOR all = x^y; use any set bit in x^y to split array into two groups (that bit set vs not), then XOR each group.`,
           application: `Single number, two single numbers, count 1 bits, power of 2, subset XOR sum. Trading firms (Optiver, IMC) may ask bit tricks.`,
           howToImplement: `(1) Single number: int ans = 0; for (int x : nums) ans ^= x; return ans;
@@ -806,8 +880,8 @@ vector<int> nextGreater(vector<int>& a) {
           logicAndCode: `XOR all cancels pairs. n & (n-1) drops lowest set bit so loop runs once per set bit. Subset iteration: for (int mask = 0; mask < (1<<n); mask++) { for (int i=0; i<n; i++) if (mask>>i&1) include element i; }`,
           example: `Problem: Single Number — every element appears twice except one. See [LeetCode #136](https://leetcode.com/problems/single-number/).
 
-Solution: int x = 0; for (int a : nums) x ^= a; return x; Time O(n), space O(1).`,
-          additionalInfo: `LeetCode: [Single Number](https://leetcode.com/problems/single-number/), [Single Number II](https://leetcode.com/problems/single-number-ii/), [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/), [Reverse Bits](https://leetcode.com/problems/reverse-bits/). **Tip:** Optiver/IMC may ask quick bit or mental math; practice XOR and n&(n-1).`,
+Solution: int x = 0; for (int a : nums) x ^= a; return x; Time O(n), space O(1). **Why:** XOR is commutative; pairs cancel to 0.`,
+          additionalInfo: `LeetCode: [Single Number](https://leetcode.com/problems/single-number/), [Single Number II](https://leetcode.com/problems/single-number-ii/), [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/), [Reverse Bits](https://leetcode.com/problems/reverse-bits/). **Takeaway:** "One unique element, rest in pairs" → XOR all. Count set bits → n &= n-1 in a loop. **Tip:** Optiver/IMC may ask quick bit or mental math; practice XOR and n&(n-1).`,
         },
         codeExample: `// Single number - XOR all (duplicates cancel)
 int singleNumber(vector<int>& nums) {
@@ -848,7 +922,13 @@ bool isPowerOfTwo(int n) {
 **Prerequisites:** Trees, hash map. String handling.
 
 **By the end of this topic you will:** Implement trie insert/search/prefix, use for autocomplete or word search; state O(m) per operation.`,
-          material: `**Trie:** Tree where each path from root to node represents a prefix; root to leaf = full string. **Node:** Array or map of children (e.g. 26 for lowercase letters); boolean \`isEnd\` if node completes a word. **Operations:** insert(word): walk char by char, create child if missing, set isEnd at end. search(word): walk, return true only if isEnd at last. startsWith(prefix): walk, return true if path exists. **Use:** Autocomplete, spell check, word search in grid, IP routing. **Space:** O(total chars in all keys).`,
+          material: `**Trie:** Tree where each path from root to node represents a prefix; root to leaf = full string.
+
+**Node:** Array or map of children (e.g. 26 for lowercase letters); boolean \`isEnd\` = marks that this node ends a word (not just a prefix). **Operations:** insert(word): walk char by char, create child if missing, set isEnd at end. search(word): walk, return true only if isEnd at last char. startsWith(prefix): walk, return true if path exists.
+
+**Use:** Autocomplete, spell check, word search in grid, IP routing. **Space:** O(total chars in all keys).
+
+**In other words:** Trie = prefix tree: one path from root = one string/prefix; many words share the same prefix (one branch). Find prefix = walk from root; find full word = walk + check isEnd.`,
           explanation: `Trie trades space for fast prefix lookup. Multiple words share common prefix (one path). For "design add and search word" with '.', use DFS at each '.' trying all 26 children.`,
           application: `Implement Trie, Add and Search Word, Word Search II (grid + trie of words), prefix search, autocomplete. Often asked in coding rounds.`,
           howToImplement: `(1) Node: array<Node*, 26> or map<char, Node*>; bool isEnd.
@@ -858,8 +938,8 @@ bool isPowerOfTwo(int n) {
           logicAndCode: `Each key is stored along one path. Prefix query = walk path; no need to scan all keys. Word Search II: build trie from words; for each cell DFS in grid, follow trie; when node isEnd add word to result.`,
           example: `Problem: Implement Trie — insert, search, and startsWith. See [LeetCode #208](https://leetcode.com/problems/implement-trie-prefix-tree/).
 
-Solution: Node with child[26] and isEnd. insert: walk and create. search: walk and check isEnd. startsWith: walk and return true. Time O(m) per op, space O(sum of key lengths).`,
-          additionalInfo: `LeetCode: [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/), [Design Add and Search Word](https://leetcode.com/problems/design-add-and-search-words-data-structure/), [Word Search II](https://leetcode.com/problems/word-search-ii/). **Tip:** Use array of size 26 for lowercase; for generic use unordered_map<char, Node*>.`,
+Solution: Node with child[26] and isEnd. insert: walk and create. search: walk and check isEnd. startsWith: walk and return true. Time O(m) per op, space O(sum of key lengths). **Why:** Prefix lookup = follow the path, no need to scan all keys.`,
+          additionalInfo: `LeetCode: [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/), [Design Add and Search Word](https://leetcode.com/problems/design-add-and-search-words-data-structure/), [Word Search II](https://leetcode.com/problems/word-search-ii/). **Takeaway:** Prefix/autocomplete → trie; insert/search/startsWith O(m). Word with '.' → DFS at node, try all 26 children. **Tip:** Use array of size 26 for lowercase; for generic use unordered_map<char, Node*>.`,
         },
         codeExample: `// Trie node and basic operations
 struct TrieNode {
@@ -905,7 +985,13 @@ bool search(TrieNode* root, const string& word) {
 **Prerequisites:** Graphs (connected components). Arrays.
 
 **By the end of this topic you will:** Use DSU for connected components, cycle detection in undirected graph, and "merge sets" problems.`,
-          material: `**DSU:** Each element has a parent; same root = same set. **Find:** Follow parent until root; path compression: set parent[x]=root during find so next find is O(1). **Union:** Link root of one set to root of other; union by rank (attach smaller tree under larger) keeps height small. **Use:** Connected components, cycle in undirected graph, minimum spanning tree (Kruskal), dynamic connectivity. **Complexity:** Amortized O(α(n)) per op with both optimizations.`,
+          material: `**DSU (Disjoint Set Union):** Each element has a parent; **representative** = root of the set (element whose parent is itself). Same root = same set.
+
+**Find:** Follow parent until root; **path compression:** during find, set parent[x]=root so next find is O(1). **Union:** Link root of one set to root of the other; **union by rank** (attach smaller tree under larger) keeps tree height small.
+
+**Use:** Connected components, cycle in undirected graph, minimum spanning tree (Kruskal), dynamic connectivity. **Complexity:** Amortized O(α(n)) per op with both optimizations.
+
+**In other words:** DSU = merge sets and ask "same set or not" via find. Path compression + union by rank make amortized cost nearly O(1) per operation.`,
           explanation: `Path compression makes future finds fast. Union by rank keeps the tree shallow. Together they give near-constant time per operation. For "redundant connection": add edges one by one; if both endpoints already in same set, that edge creates a cycle.`,
           application: `Number of connected components, redundant connection, accounts merge, Kruskal MST. Commonly used for graph and "merge groups" problems.`,
           howToImplement: `(1) parent.resize(n); iota(parent.begin(), parent.end(), 0); rank or size optional.
@@ -915,8 +1001,8 @@ bool search(TrieNode* root, const string& word) {
           logicAndCode: `Find returns the set representative. Union merges two sets. After processing all edges, number of components = number of nodes where find(i)==i.`,
           example: `Problem: Number of Connected Components in Undirected Graph — n nodes, edge list; return number of components. See [LeetCode #323](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) (premium) or same idea in [Redundant Connection](https://leetcode.com/problems/redundant-connection/).
 
-Solution: DSU with n sets. For each edge (u,v): if find(u) != find(v) union(u,v). Return count of i where find(i)==i.`,
-          additionalInfo: `LeetCode: [Redundant Connection](https://leetcode.com/problems/redundant-connection/), [Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/) (add cells one by one, union with neighbors). **Tip:** Template DSU is short; memorize find and union.`,
+Solution: DSU with n sets. For each edge (u,v): if find(u) != find(v) union(u,v). Return count of i where find(i)==i. **Why:** After processing all edges, each component has one root; number of roots = number of components.`,
+          additionalInfo: `LeetCode: [Redundant Connection](https://leetcode.com/problems/redundant-connection/), [Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/) (add cells one by one, union with neighbors). **Takeaway:** Connected components / merge sets → DSU; find + path compression, union by rank. Cycle in undirected graph = when union(u,v) but find(u)==find(v). **Tip:** Template DSU is short; memorize find and union.`,
         },
         codeExample: `// DSU with path compression and rank
 vector<int> parent, rank;
@@ -952,7 +1038,13 @@ void unite(int x, int y) {
 **Prerequisites:** Pointers, recursion. Two pointers.
 
 **By the end of this topic you will:** Reverse, merge, detect cycle, reorder list; use dummy node for cleaner code.`,
-          material: `**Dummy node:** ListNode dummy; dummy.next = head; then work with pointer to current node; return dummy.next. Avoids special case for head. **Reverse:** Iterative: prev=nullptr; while (head) swap next; or recursive: reverse(rest), then rest->next = head, head->next = nullptr. **Merge two sorted:** Compare heads, attach smaller, advance. **Cycle:** Floyd: slow and fast; if they meet there is a cycle. **Reorder list:** Find middle (slow/fast), reverse second half, merge two halves. **Nth from end:** Two pointers, gap n; when front at end, back is n from end.`,
+          material: `**Dummy node:** ListNode dummy; dummy.next = head; then work with a pointer to the current node; return dummy.next. Avoids special handling for the head.
+
+**Reverse:** Iterative: prev=nullptr; while (head) swap next; or recursive: reverse(rest), then rest->next = head, head->next = nullptr. **Merge two sorted:** Compare heads, attach the smaller, advance. **Cycle:** **Floyd (tortoise & hare):** slow and fast; if they meet there is a cycle.
+
+**Reorder list:** Find middle (slow/fast), reverse second half, merge the two halves. **Nth from end:** Two pointers n apart; when front is at end, back is n from end.
+
+**In other words:** Dummy = sentinel node in front of head so the "first node" is treated like any other. Floyd = fast moves 2× slow; if there is a cycle they must meet inside it.`,
           explanation: `Dummy node lets you treat "first node" like any other. Floyd cycle: fast goes 2x speed; if cycle exists they meet inside cycle. Reorder: L0→L1→...→Lmid, Lmid+1→...→Ln; reverse second half then weave.`,
           application: `Reverse linked list, merge two sorted lists, merge K sorted (heap or divide-conquer), cycle detection, reorder list, remove nth from end, palindrome linked list. Very common in coding rounds.`,
           howToImplement: `(1) Reverse: prev=nullptr; while (head) { next=head->next; head->next=prev; prev=head; head=next; } return prev;
@@ -961,8 +1053,8 @@ void unite(int x, int y) {
           logicAndCode: `Reverse: each node's next points to previous. Merge: same as merge in merge sort. Cycle: meeting implies cycle (proof by distance).`,
           example: `Problem: Merge Two Sorted Lists — merge two sorted linked lists. See [LeetCode #21](https://leetcode.com/problems/merge-two-sorted-lists/).
 
-Solution: Dummy node; while both non-null attach smaller; attach remaining. Time O(n+m), space O(1).`,
-          additionalInfo: `LeetCode: [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), [Reorder List](https://leetcode.com/problems/reorder-list/), [Remove Nth Node From End](https://leetcode.com/problems/remove-nth-node-from-end-of-list/). **Tip:** Always consider empty list and single node.`,
+Solution: Dummy node; while both non-null attach smaller; attach remaining. Time O(n+m), space O(1). **Why:** Dummy removes the need to treat head as a special case; merge is the same as in merge sort.`,
+          additionalInfo: `LeetCode: [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), [Reorder List](https://leetcode.com/problems/reorder-list/), [Remove Nth Node From End](https://leetcode.com/problems/remove-nth-node-from-end-of-list/). **Takeaway:** Reverse/merge → dummy node; cycle → Floyd (slow/fast). Reorder = find mid, reverse second half, merge. **Common mistake:** Forgetting to check empty list or single node; check fast->next before accessing fast->next->next.`,
         },
         codeExample: `// Reverse linked list - iterative
 ListNode* reverseList(ListNode* head) {
@@ -1007,7 +1099,13 @@ bool hasCycle(ListNode* head) {
 **Prerequisites:** Hash map, linked list (or list in C++). Stack.
 
 **By the end of this topic you will:** Implement LRU cache and min stack; explain why your design meets the complexity requirement.`,
-          material: `**LRU Cache:** get(key) and put(key, value) in O(1). When capacity full, evict least recently used. **Design:** Map from key to iterator in a list; list stores (key, value) in order of use (front = most recent). get: find in map, move to front (splice), return value. put: if key exists update and move to front; else if size==capacity remove list.back() and its map entry, then push front and set map[key]. **Min Stack:** getMin() in O(1). Option 1: two stacks (value stack + min stack; push min(stack.top(), x) on min stack). Option 2: one stack of pair(value, min_so_far). **Complexity:** LRU get/put O(1); min stack push/pop/getMin O(1).`,
+          material: `**LRU Cache:** get(key) and put(key, value) in O(1). When capacity full, evict least recently used.
+
+**Design:** Map from key to iterator in a list; list stores (key, value) in order of use (front = most recent). get: find in map, move to front (splice), return value. put: if key exists update and move to front; else if size==capacity remove list.back() and its map entry, then push front and set map[key].
+
+**Min Stack:** getMin() in O(1). Option 1: two stacks (value stack + min stack; push min(stack.top(), x) on min stack). Option 2: one stack of pair(value, min_so_far). **Complexity:** LRU get/put O(1); min stack push/pop/getMin O(1).
+
+**In other words:** LRU = list for order of use (front = most recent) + map for O(1) lookup and O(1) move to front. Min stack = each element stores "min so far at this level" so after pop the min stays correct.`,
           explanation: `List gives O(1) move to front (splice) and O(1) remove back. Map gives O(1) lookup. For min stack, we need to know minimum at each "level" so when we pop we know the new min.`,
           application: `LRU cache is a classic design question. Min stack and "stack with getMin" also common. Sometimes asked as "design a cache" or "design a stack that also returns min".`,
           howToImplement: `(1) LRU: list<pair<int,int>> list; unordered_map<int, list<...>::iterator> map; capacity.
@@ -1017,8 +1115,8 @@ bool hasCycle(ListNode* head) {
           logicAndCode: `LRU: list front = most recent, back = least recent. Map points to node so we can move it in O(1). Min stack: each element carries the minimum of all elements below it.`,
           example: `Problem: LRU Cache — get(key), put(key, value); evict LRU when at capacity. See [LeetCode #146](https://leetcode.com/problems/lru-cache/).
 
-Solution: list + map as above. get O(1), put O(1). Eviction: remove last of list and corresponding map entry.`,
-          additionalInfo: `LeetCode: [LRU Cache](https://leetcode.com/problems/lru-cache/), [Min Stack](https://leetcode.com/problems/min-stack/). **Tip:** For LRU state "list for order, map for lookup; splice to move to front." For min stack state "we store min so far with each value so pop still gives correct min."`,
+Solution: list + map as above. get O(1), put O(1). Eviction: remove last of list and corresponding map entry. **Why:** List = order of use; map to iterator = move to front (splice) and remove in O(1).`,
+          additionalInfo: `LeetCode: [LRU Cache](https://leetcode.com/problems/lru-cache/), [Min Stack](https://leetcode.com/problems/min-stack/). **Takeaway:** LRU = list (order) + map (lookup & iterator); evict from back, move to front on access. Min stack = store (value, min_so_far) per element. **Tip:** For LRU state "list for order, map for lookup; splice to move to front." For min stack state "we store min so far with each value so pop still gives correct min."`,
         },
         codeExample: `// Min Stack - each element stores (value, min_so_far)
 class MinStack {
@@ -1056,7 +1154,13 @@ public:
 **Prerequisites:** Two pointers, hash map. Prefix sum/sliding window.
 
 **By the end of this topic you will:** Solve palindrome problems (expand or DP) and substring problems with sliding window.`,
-          material: `**Palindrome:** Same forward and backward. **Expand around center:** For each position (or gap), expand left and right while chars match. Centers: n for odd-length, n-1 for even. Total O(n²). **Longest substring with K distinct:** Sliding window; map char → count; when map.size() > K move left and decrement/remove until size ≤ K. **Minimum window substring:** Find minimum window in s that contains all chars of t; sliding window + count of required chars. **Valid Palindrome II:** One removal allowed; two pointers from both ends, on first mismatch try skip left or skip right.`,
+          material: `**Palindrome:** Same forward and backward. **Expand around center:** For each position (or gap), expand left and right while chars match. Centers: n for odd-length, n-1 for even. Total O(n²).
+
+**Longest substring with K distinct:** Sliding window; map char → count; when map.size() > K move left and decrement/remove until size ≤ K. **Minimum window substring:** Find minimum window in s that contains all chars of t; sliding window + count of required chars.
+
+**Valid Palindrome II:** One removal allowed; two pointers from both ends, on first mismatch try skip left or skip right.
+
+**In other words:** Palindrome substring = for each "center" (character or gap between characters), expand left-right while equal. Substring with K distinct = sliding window + frequency map; if distinct > K, shrink from the left.`,
           explanation: `Expand works because each palindrome has a center. Sliding window for "at most K distinct" keeps a valid window and updates result when window is valid. Minimum window: expand until valid, then shrink from left to minimize.`,
           application: `Longest palindromic substring, palindromic substrings count, longest substring with at most K distinct, minimum window substring, valid palindrome II. Often asked for string problems.`,
           howToImplement: `(1) Expand: for (int i = 0; i < n; i++) { expand(i, i); expand(i, i+1); } expand(l, r): while (l>=0 && r<n && s[l]==s[r]) l--, r++; update best.
@@ -1065,8 +1169,8 @@ public:
           logicAndCode: `Expand: 2n-1 centers (each char + each gap). K distinct: invariant = window has at most K distinct; when we add a char we may need to shrink.`,
           example: `Problem: Longest Palindromic Substring — return longest palindrome in s. See [LeetCode #5](https://leetcode.com/problems/longest-palindromic-substring/).
 
-Solution: Expand around center for each i and (i,i+1). Return substring of max length. Time O(n²), space O(1).`,
-          additionalInfo: `LeetCode: [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/), [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/), [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/), [Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/). **Tip:** For "count palindromic substrings" use expand and at each center count how many expansions (each gives one substring).`,
+Solution: Expand around center for each i and (i,i+1). Return substring of max length. Time O(n²), space O(1). **Why:** Every palindrome has one center; 2n-1 centers (n chars + n-1 gaps).`,
+          additionalInfo: `LeetCode: [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/), [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/), [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/), [Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/). **Takeaway:** Longest palindrome substring → expand around center (2n-1 centers). Substring K distinct / min window → sliding window + frequency map. **Tip:** For "count palindromic substrings" use expand and at each center count how many expansions (each gives one substring).`,
         },
         codeExample: `// Longest palindromic substring - expand around center
 string longestPalindrome(string s) {
@@ -1102,7 +1206,9 @@ string longestPalindrome(string s) {
 **Prerequisites:** All CP topics above (complexity, two pointers, DP, graphs, trees, heaps, design, etc.).
 
 **By the end of this topic you will:** Follow a repeatable flow (clarify → example → approach → code → test) and tailor preparation by pattern.`,
-          material: `**Standard flow:** (1) Clarify: input range, duplicates, sorted? return value? (2) Example: work 1–2 small examples and one edge case. (3) Approach: state brute force and complexity; then optimize and state new complexity. (4) Code: clear variable names; say what you are doing. (5) Test: run through your example and edge case (empty, n=1). **What interviewers look for:** Clear communication, correctness, complexity analysis, edge cases, clean code. **Design problems (e.g. LRU):** Requirements → interface (get, put) → data structures (list + map) → operations and complexity. **Preparation:** Cover all patterns (arrays, two pointers, sliding window, DP, graphs, trees, heaps, backtracking, intervals, stack, design); 2–3 problems per pattern; time yourself.`,
+          material: `**Standard flow:** (1) Clarify: input range, duplicates, sorted? return value? (2) Example: work 1–2 small examples and one edge case. (3) Approach: state brute force and complexity; then optimize and state new complexity. (4) Code: clear variable names; say what you are doing. (5) Test: run through your example and edge case (empty, n=1). **What interviewers look for:** Clear communication, correctness, complexity analysis, edge cases, clean code. **Design problems (e.g. LRU):** Requirements → interface (get, put) → data structures (list + map) → operations and complexity. **Preparation:** Cover all patterns (arrays, two pointers, sliding window, DP, graphs, trees, heaps, backtracking, intervals, stack, design); 2–3 problems per pattern; time yourself.
+
+**In other words:** Don't jump to code. Clarify first (1 min), work a small example (1–2 min), state approach + complexity (2–3 min), then code (15–20 min), then test with your example and edge cases. Saying "I'll start with brute force O(n²), then we can improve with a hash map to O(n)" is better than writing code immediately.`,
           explanation: `Stating brute force shows you can solve it; then optimizing shows you know better. Always state time and space complexity. Testing catches off-by-one and edge cases.`,
           application: `Use this flow in every practice and real interview. Prioritize patterns you see most often: two pointers, hash map, DP, trees, heaps, design (LRU, min stack).`,
           howToImplement: `(1) Always: clarify input (sorted? duplicates? range), state brute force and complexity, then optimize.
@@ -1112,7 +1218,7 @@ string longestPalindrome(string s) {
           example: `Problem: Find two numbers in a sorted array that sum to target.
 
 Clarify: Sorted? Yes. Duplicates? Maybe. Return indices or values? Indices. Approach: Two pointers at start and end; if sum < target move left up, if sum > target move right down. O(n) time, O(1) space. Code, then test with [1,2,3,4], target 6 → (1,3).`,
-          additionalInfo: `Resources: [LeetCode](https://leetcode.com/) (Easy/Medium by pattern), mock interviews (Pramp, Interviewing.io). **Tip:** For "tell me about a hard problem you solved," pick one where you improved from brute force to optimal (e.g. "I used a monotonic stack to get O(n) instead of O(n²)"). Focus on: two pointers, binary search, hash map, DP, graphs, trees, heaps, backtracking, intervals, stack, design (LRU, MinStack), tries, linked list.`,
+          additionalInfo: `**Takeaway:** Flow: clarify → example → approach + complexity → code → test. Prepare 2–3 problems per pattern; practice with a timer. Resources: [LeetCode](https://leetcode.com/) (Easy/Medium by pattern), mock interviews (Pramp, Interviewing.io). **Tip:** For "tell me about a hard problem you solved," pick one where you improved from brute force to optimal. Focus on: two pointers, binary search, hash map, DP, graphs, trees, heaps, backtracking, intervals, stack, design (LRU, MinStack), tries, linked list. For system design and behavioral (STAR), see **Interview Preparation** → System Design & Behavioral.`,
         },
         codeExample: `// Two Sum II (sorted) - clean and correct
 vector<int> twoSum(vector<int>& a, int target) {
@@ -1145,7 +1251,9 @@ vector<int> twoSum(vector<int>& a, int target) {
 **Prerequisites:** Sorting & Searching (binary search on array). Complexity.
 
 **By the end of this topic you will:** Identify when to binary search on the answer; implement check(x) and binary search over range.`,
-          material: `**Idea:** Answer is in range [lo, hi]. For a candidate value \`mid\`, we can check in O(n) whether \`mid\` is feasible (e.g. "can we ship all in \`mid\` days?"). If feasible, try smaller (hi = mid); else try larger (lo = mid + 1). **Template:** lo = min possible, hi = max possible; while (lo < hi) { mid = lo + (hi - lo) / 2; if (check(mid)) hi = mid; else lo = mid + 1; } return lo. **Classic problems:** Koko eating bananas (speed), capacity to ship (capacity), split array largest sum (max subarray sum), minimum in rotated array (index). **Note:** Use when "minimum x such that condition holds" or "maximum x such that condition holds".`,
+          material: `**Idea:** Answer is in range [lo, hi]. For a candidate value \`mid\`, we can check in O(n) whether \`mid\` is feasible (e.g. "can we ship all in \`mid\` days?"). If feasible, try smaller (hi = mid); else try larger (lo = mid + 1). **Template:** lo = min possible, hi = max possible; while (lo < hi) { mid = lo + (hi - lo) / 2; if (check(mid)) hi = mid; else lo = mid + 1; } return lo. **Classic problems:** Koko eating bananas (speed), capacity to ship (capacity), split array largest sum (max subarray sum), minimum in rotated array (index). **Note:** Use when "minimum x such that condition holds" or "maximum x such that condition holds".
+
+**In other words:** We are not binary searching on array index but on the **answer value**. Requirement: we can write check(x) = "can we achieve x?" that is monotonic (if x works then x+1 works, or vice versa). Then binary search over the answer range; O(log R) iterations × O(n) per check = O(n log R).`,
           explanation: `We are not binary searching on the array index — we are binary searching on the value of the answer. The check function is the key: it must be monotonic (if x works, then x+1 works; or if x works, then x-1 works).`,
           application: `Koko eating bananas, capacity to ship packages within D days, split array largest sum, minimum size subarray sum (with binary search on window size), aggressive cows. Very common pattern.`,
           howToImplement: `(1) Identify the range [lo, hi] for the answer.
@@ -1155,8 +1263,8 @@ vector<int> twoSum(vector<int>& a, int target) {
           logicAndCode: `check(mid) is typically O(n): simulate with mid and see if constraint is satisfied. Binary search narrows the range; final lo is the minimum (or maximum) feasible value.`,
           example: `Problem: Koko Eating Bananas — piles[i] = bananas; h = hours. She must finish all. Speed k = bananas per hour. Find minimum k. See [LeetCode #875](https://leetcode.com/problems/koko-eating-bananas/).
 
-Solution: lo=1, hi=max(piles). check(speed): hours = sum(ceil(pile/speed)); return hours <= h. Binary search for smallest speed where check is true. Time O(n log max).`,
-          additionalInfo: `LeetCode: [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), [Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/), [Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/). **Tip:** If "minimum x such that P(x)" use first-true template (hi = mid). If "maximum x such that P(x)" use last-true (lo = mid + 1, return lo - 1).`,
+Solution: lo=1, hi=max(piles). check(speed): hours = sum(ceil(pile/speed)); return hours <= h. Binary search for smallest speed where check is true. Time O(n log max). **Why:** check(speed) is monotonic: if k works, k+1 works too; we find the first value that is true.`,
+          additionalInfo: `LeetCode: [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), [Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/), [Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/). **Takeaway:** "Minimum/maximum x such that P(x)" and check(x) O(n) → binary search on answer; template first-true (hi=mid) or last-true (lo=mid+1). **Tip:** If "minimum x such that P(x)" use first-true template (hi = mid). If "maximum x such that P(x)" use last-true (lo = mid + 1, return lo - 1).`,
         },
         codeExample: `// Binary search on answer - minimum speed to eat all bananas in h hours
 int minEatingSpeed(vector<int>& piles, int h) {
@@ -1182,7 +1290,7 @@ int minEatingSpeed(vector<int>& piles, int h) {
     slug: "nodejs",
     description:
       "Event loop, async/await, Express, REST APIs, and backend best practices.",
-    order: 2,
+    order: 9,
     published: true,
     topics: [
       {
@@ -1204,8 +1312,14 @@ int minEatingSpeed(vector<int>& piles, int h) {
 **Prerequisites:** JavaScript (functions, callbacks); basic idea of I/O (file, network) taking time.
 
 **By the end of this topic you will:** Explain why async code does not block, use async/await with error handling, and run independent async operations in parallel with Promise.all.`,
-          material: `Node.js runs JavaScript on the server with a single-threaded event loop. I/O (file, network) is delegated to the system; when ready, callbacks are queued and run. **Event loop**: run one task from the queue; when the call stack is empty, take the next task. **Async patterns**: callbacks → Promises → async/await.`,
-          explanation: `Blocking the event loop blocks the whole process. So we use async I/O: start the operation, pass a callback or return a Promise; when the operation completes, the callback (or .then) runs. async/await is syntax over Promises: await pauses the function until the Promise resolves.`,
+          material: `Node.js runs JavaScript on the server with a single-threaded event loop. I/O (file, network) is delegated to the system; when ready, callbacks are queued and run.
+
+**Event loop:** Run one task from the queue; when call stack is empty, take the next task. **Async patterns:** callbacks → Promises → async/await.
+
+**In other words:** There is only one thread; when one operation waits on I/O (read file, HTTP), the thread must not block — we use async: "start I/O, continue with other code; when I/O completes, run the callback/Promise." So one thread serves many I/O operations by interleaving.`,
+          explanation: `Blocking the event loop blocks the whole process. So we use async I/O: start the operation, pass a callback or return a Promise; when the operation completes, the callback (or .then) runs.
+
+async/await is syntax over Promises: await pauses the function until the Promise resolves.`,
           application: `Use async/await for any I/O: reading files, HTTP requests, database queries. Use Promise.all when multiple independent async operations can run in parallel.`,
           howToImplement: `(1) Prefer async/await over raw .then() for readability.
 (2) Always handle errors: try/catch around await, or .catch() on the Promise.
@@ -1214,8 +1328,8 @@ int minEatingSpeed(vector<int>& piles, int h) {
           logicAndCode: `Event loop: one thread; queue of "tasks" (callbacks, microtasks). Run current task to completion; then run all microtasks (Promise callbacks); then next task. So await schedules the rest of the function as a microtask.`,
           example: `Problem: Read two files and merge their contents.
 
-Solution: const [a, b] = await Promise.all([fs.promises.readFile('a.txt', 'utf8'), fs.promises.readFile('b.txt', 'utf8')]); return a + b; Use try/catch for missing files.`,
-          additionalInfo: `Avoid blocking: don't use sync APIs (e.g. readFileSync) in request handlers. Use async middleware (express-async-errors or wrap in (fn) => (req, res, next) => fn(req, res, next).catch(next)).`,
+Solution: const [a, b] = await Promise.all([fs.promises.readFile('a.txt', 'utf8'), fs.promises.readFile('b.txt', 'utf8')]); return a + b; Use try/catch for missing files. **Why:** Promise.all runs both file reads in parallel; waits for both to finish then merges.`,
+          additionalInfo: `**Takeaway:** Single thread + event loop; async = non-blocking (I/O delegated). Use async/await + try/catch; independent parallel work → Promise.all. Don't use sync API in request handlers. Use async middleware (express-async-errors or wrap).catch(next).`,
         },
         codeExample: `// async/await with error handling
 async function getData() {
@@ -1252,10 +1366,12 @@ const [users, posts] = await Promise.all([
           ],
           learningFlowIntro: `**Your first step:** Create a new folder, npm init -y, npm install express. Create index.js with the minimal app from the code example; run with node index.js and open http://localhost:4000 in the browser.
 
-**Prerequisites:** Event Loop & Async (Node.js); basic HTTP (from Computer Networks helps).
+**Prerequisites:** Event Loop & Async (Node.js); Computer Networks (HTTP & TCP Basics) — understanding HTTP methods and request/response helps before building REST APIs.
 
 **By the end of this topic you will:** Build a minimal REST API with GET and POST, use express.json() and error middleware, and understand route and middleware order.`,
-          material: `**Express** is a minimal web framework for Node. **Routes:** \`app.get(path, handler)\`, \`app.post(path, handler)\`; handler receives (req, res); use \`res.json(obj)\`, \`res.status(code)\`, \`res.send()\`. **Middleware:** Functions that run in order; \`next()\` passes to the next; \`express.json()\` parses request body into \`req.body\`. **REST:** Use HTTP methods (GET read, POST create, PUT replace, DELETE remove) and noun URLs (\`/api/users\`, \`/api/users/:id\`). **Error handling:** Define (err, req, res, next) middleware to return 500 and message. **Order matters:** Body parser and CORS before routes; error handler last.`,
+          material: `**Express** is a minimal web framework for Node. **Routes:** \`app.get(path, handler)\`, \`app.post(path, handler)\`; handler receives (req, res); use \`res.json(obj)\`, \`res.status(code)\`, \`res.send()\`. **Middleware** = functions that run in order before/after routes; \`next()\` passes to the next; \`express.json()\` parses request body into \`req.body\`. **REST:** Use HTTP methods (GET read, POST create, PUT replace, DELETE remove) and noun URLs (\`/api/users\`, \`/api/users/:id\`). **Error handling:** Middleware (err, req, res, next) returns 500 and message. **Order matters:** Body parser and CORS before routes; error handler last.
+
+**In other words:** Express = routing + middleware. Each request passes through middleware in order; the route that matches path & method handles it. REST = convention: URL = resource, method = action.`,
           explanation: `Middleware runs in order; next() passes to the next middleware or route. res.json(obj) sets Content-Type and sends the body. Status codes: 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Server Error.`,
           application: `Use Express for REST APIs, file uploads, server-rendered pages. Use middleware for auth, logging, CORS, rate limiting.`,
           howToImplement: `(1) const express = require('express'); const app = express(); app.use(express.json()).
@@ -1264,8 +1380,8 @@ const [users, posts] = await Promise.all([
           logicAndCode: `express.json() reads the request body and puts it in req.body. Route handlers run when the path and method match. Order of middleware matters: put body parsers and CORS before routes.`,
           example: `Problem: Expose a list of items as GET /api/items and add one via POST /api/items.
 
-Solution: const items = []; app.get('/api/items', (req, res) => res.json(items)); app.post('/api/items', (req, res) => { const item = { id: Date.now(), ...req.body }; items.push(item); res.status(201).json(item); });`,
-          additionalInfo: `Use environment variables for PORT and secrets. In production use helmet(), rate limiting, and validate input. For async handlers use express-async-errors or wrap in try/catch and next(err).`,
+Solution: const items = []; app.get('/api/items', (req, res) => res.json(items)); app.post('/api/items', (req, res) => { const item = { id: Date.now(), ...req.body }; items.push(item); res.status(201).json(item); }); **Why:** express.json() must be mounted so req.body is populated; 201 = Created for successful POST.`,
+          additionalInfo: `**Takeaway:** Routes + middleware in order; body parser & CORS before routes, error handler last. REST = GET/POST/PUT/DELETE + noun URLs. **Common mistake:** Forgetting app.use(express.json()) so req.body is undefined; async handler without try/catch/next(err). Use environment variables for PORT and secrets. In production use helmet(), rate limiting, and validate input. For async handlers use express-async-errors or wrap in try/catch and next(err).`,
         },
         codeExample: `const express = require('express');
 const app = express();
@@ -1315,10 +1431,15 @@ app.listen(process.env.PORT || 4000);`,
 **Prerequisites:** Basic idea of tables, rows, and columns (spreadsheet or any DB).
 
 **By the end of this topic you will:** Write SELECT with WHERE and JOIN, use GROUP BY with COUNT/SUM, and read or write a simple subquery.`,
-          material: `**SELECT**: choose columns; FROM table; WHERE conditions; ORDER BY; LIMIT.
-**JOIN**: INNER JOIN (only matching rows), LEFT JOIN (all from left, match from right). ON condition.
-**GROUP BY**: group rows by column(s); use with COUNT, SUM, AVG, MAX, MIN. HAVING filters after aggregation.
-**Subquery**: use (SELECT ...) as a value or in IN / EXISTS.`,
+          material: `**SELECT:** Choose columns; FROM table; WHERE condition; ORDER BY; LIMIT.
+
+**JOIN:** Combines tables on a key. **INNER JOIN** = only rows that match in both tables. **LEFT JOIN** = all rows from left table; if no match on right, right columns = NULL. ON = join condition (usually key column).
+
+**GROUP BY:** Group rows by column values; use with COUNT, SUM, AVG, MAX, MIN. **HAVING** = filter after aggregation (e.g. HAVING COUNT(*) > 5).
+
+**Subquery:** (SELECT ...) used as a value or in IN / EXISTS.
+
+**In other words:** JOIN = combine two tables on a common column (e.g. user_id). GROUP BY = "group rows with the same column values" then aggregate (count, sum) per group.`,
           explanation: `JOIN connects tables by a key; INNER keeps only rows that match in both. LEFT JOIN keeps all left rows and fills NULL for right when no match. GROUP BY collapses rows into one per group; aggregates compute over each group.`,
           application: `Use JOIN for related data (users + orders). Use GROUP BY for counts and sums (orders per user, total by category). Use subqueries when you need a list or single value from another table.`,
           howToImplement: `(1) Start with FROM and JOIN to list tables; add ON.
@@ -1329,8 +1450,8 @@ app.listen(process.env.PORT || 4000);`,
           logicAndCode: `SELECT runs in logical order: FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT (aggregates) → ORDER BY → LIMIT. Write in that order when building a query.`,
           example: `Problem: List users with the count of their orders.
 
-Solution: SELECT u.id, u.name, COUNT(o.id) AS order_count FROM users u LEFT JOIN orders o ON o.user_id = u.id GROUP BY u.id, u.name;`,
-          additionalInfo: `Use meaningful aliases (u, o). Prefer JOIN over multiple FROM + WHERE for clarity. Index columns used in WHERE and JOIN. In interviews, state schema and then write the query step by step.`,
+Solution: Idea: join users and orders on user_id (LEFT JOIN so users with no orders still appear), then group by user and count orders. COUNT(o.id) counts orders per user (o.id NULL not counted). SELECT u.id, u.name, COUNT(o.id) AS order_count FROM users u LEFT JOIN orders o ON o.user_id = u.id GROUP BY u.id, u.name; **Takeaway:** JOIN to combine tables; GROUP BY + COUNT/SUM for per-group aggregation.`,
+          additionalInfo: `Use meaningful aliases (u, o). Prefer JOIN over multiple FROM + WHERE for clarity. Index columns used in WHERE and JOIN. In interviews, state schema and then write the query step by step. **Curriculum:** This section is a prerequisite for Backend Development (Auth & Databases) and System Design.`,
         },
         codeExample: `-- Join and filter
 SELECT u.name, o.total
@@ -1366,7 +1487,11 @@ LIMIT 10;`,
 **Prerequisites:** SQL Queries topic (SELECT, JOIN, GROUP BY); you have run queries on a real or sample database.
 
 **By the end of this topic you will:** Choose which columns to index, read EXPLAIN output, and fix N+1 and full scan issues.`,
-          material: `**Index:** Data structure (usually B-tree) that lets the DB find rows by key without scanning the whole table. **When to index:** Columns in WHERE, JOIN ON, ORDER BY; primary key and foreign keys usually auto-indexed. **Composite index:** (a, b) helps WHERE a=? AND b=? or ORDER BY a, b; order of columns matters. **EXPLAIN:** Shows query plan; look for "Seq Scan" (bad) vs "Index Scan" (good). **Cost:** Indexes speed reads but slow writes (insert/update must update index). **Covering index:** Index includes all columns needed so DB doesn't touch table. **Full table scan:** When no index or index not selective; avoid on large tables.`,
+          material: `**Index:** Data structure (usually B-tree) that lets the DB find rows by key without scanning the whole table.
+
+**When to index:** Columns in WHERE, JOIN ON, ORDER BY; primary key and foreign key are usually indexed by default. **Composite index:** (a, b) helps WHERE a=? AND b=? or ORDER BY a, b; column order matters. **EXPLAIN:** Shows query execution plan. **Seq Scan (sequential scan)** = read entire table — avoid on large tables. **Index Scan** = use index to find rows — preferred. **N+1 problem:** 1 query for list + N queries for each item's details; fix with JOIN or IN (SELECT ...) to get 1–2 queries.
+
+**Cost:** Index speeds up reads but slows writes (insert/update must update the index). **Covering index:** Index contains all columns needed so the DB doesn't need to read the table. **Full table scan:** Same as Seq Scan; avoid on large tables.`,
           explanation: `B-tree allows O(log n) lookup by key. Without index, DB scans every row (O(n)). Composite index (a, b) can be used for "a = ?" or "a = ? AND b = ?" but not for "b = ?" alone. EXPLAIN shows which index is used.`,
           application: `Use for production DBs: index columns in frequent filters and joins; run EXPLAIN on slow queries; add index and measure. In interviews: explain why a query is slow and how you'd fix it.`,
           howToImplement: `(1) CREATE INDEX idx_users_email ON users(email); CREATE INDEX idx_orders_user_created ON orders(user_id, created_at); (2) EXPLAIN SELECT * FROM users WHERE email = 'x'; (3) If "Seq Scan", add index on email. (4) Avoid SELECT * when you need few columns; consider covering index.`,
@@ -1374,7 +1499,7 @@ LIMIT 10;`,
           example: `Problem: SELECT * FROM orders WHERE user_id = 123 AND created_at > '2024-01-01' is slow.
 
 Solution: CREATE INDEX idx_orders_user_created ON orders(user_id, created_at); EXPLAIN shows Index Scan using idx_orders_user_created. If still slow, check if table is huge and consider partitioning by date.`,
-          additionalInfo: `PostgreSQL: EXPLAIN ANALYZE runs query and shows actual time. MySQL: EXPLAIN; check "type" (ref good, ALL bad). Index types: B-tree (default), Hash (equality), GIN (array/JSON).`,
+          additionalInfo: `PostgreSQL: EXPLAIN ANALYZE runs query and shows actual time. MySQL: EXPLAIN; check "type" (ref good, ALL bad). Index types: B-tree (default), Hash (equality), GIN (array/JSON). **Curriculum:** Prerequisite for Backend (Auth & Databases) — indexes and N+1 matter in production.`,
         },
         codeExample: `-- Create index
 CREATE INDEX idx_orders_user_id ON orders(user_id);
@@ -1409,13 +1534,21 @@ WHERE o.created_at >= '2024-01-01';
 **Prerequisites:** SQL Queries (SELECT, UPDATE); basic idea of concurrency.
 
 **By the end of this topic you will:** Explain ACID, write BEGIN/COMMIT/ROLLBACK, and name isolation levels and their trade-offs.`,
-          material: `**ACID:** **Atomicity:** Transaction is all-or-nothing; if one statement fails, roll back all. **Consistency:** DB invariants hold before and after (e.g. sum of balances unchanged). **Isolation:** Concurrent transactions do not see each other's uncommitted changes; level controls how much they see. **Durability:** Once committed, data survives crash (WAL, disk). **BEGIN / COMMIT / ROLLBACK:** Start transaction; commit makes changes permanent; rollback undoes. **Isolation levels:** Read Uncommitted (dirty reads); Read Committed (no dirty read, default in many DBs); Repeatable Read (same row same value in transaction); Serializable (strictest, no phantom reads). **Phantom read:** New row appears in range; **dirty read:** see uncommitted data. **SAVEPOINT:** Name a point; ROLLBACK TO savepoint to undo part of transaction.`,
+          material: `**ACID:** **Atomicity:** Transaction is all-or-nothing; if one statement fails, roll back all. **Consistency:** DB invariants hold before and after (e.g. sum of balances unchanged). **Isolation:** Concurrent transactions do not see each other's uncommitted changes; level controls how much they see. **Durability:** Once committed, data survives crash (WAL, disk).
+
+**BEGIN / COMMIT / ROLLBACK:** Start transaction; commit makes changes permanent; rollback undoes. **Isolation levels:** Read Uncommitted (dirty reads); Read Committed (no dirty read, default in many DBs); Repeatable Read (same row same value in transaction); Serializable (strictest, no phantom reads).
+
+**Phantom read:** New row appears in range; **dirty read:** see uncommitted data. **SAVEPOINT:** Name a point; ROLLBACK TO savepoint to undo part of transaction.
+
+**In other words:** ACID = transaction all-or-nothing (Atomicity), invariants hold (Consistency), concurrent transactions don't interfere (Isolation), committed data persists (Durability). Money transfer = BEGIN → two UPDATEs → COMMIT; if either fails ROLLBACK.`,
           explanation: `Atomicity is implemented with a log: either all operations are applied or none. Isolation is implemented with locking or MVCC; higher isolation = less concurrency, fewer anomalies. Durability = write-ahead log + fsync.`,
           application: `Use transactions for multi-step updates (e.g. transfer: debit one account, credit another). Choose isolation: Read Committed often enough; Repeatable Read for reports; Serializable when you need strict consistency.`,
           howToImplement: `(1) BEGIN; (or START TRANSACTION;) (2) Run INSERT/UPDATE/DELETE; (3) On success COMMIT; on error ROLLBACK; (4) In app code: start transaction, run statements, commit or rollback in finally. (5) SET TRANSACTION ISOLATION LEVEL READ COMMITTED; (syntax varies by DB).`,
           logicAndCode: `Commit writes log and makes changes visible. Rollback uses log to undo. Isolation: Read Committed typically releases row locks after read; Repeatable Read holds them until end of transaction.`,
-          example: `Problem: Transfer 100 from A to B. Solution: BEGIN; UPDATE accounts SET balance = balance - 100 WHERE id = A AND balance >= 100; UPDATE accounts SET balance = balance + 100 WHERE id = B; if both rows updated then COMMIT; else ROLLBACK; Use application check or DB constraint to ensure balance never negative.`,
-          additionalInfo: `PostgreSQL: default Read Committed; SERIALIZABLE for strict. MySQL: REPEATABLE READ default. Interview: define ACID; when to use transaction; difference between isolation levels in one sentence each.`,
+          example: `Problem: Transfer 100 from A to B.
+
+Solution: BEGIN; UPDATE accounts SET balance = balance - 100 WHERE id = A AND balance >= 100; UPDATE accounts SET balance = balance + 100 WHERE id = B; if both rows updated then COMMIT; else ROLLBACK. Use application check or DB constraint to ensure balance never negative. **Why:** Without a transaction, if the two UPDATEs are separate we could have debit succeed but credit fail (inconsistent).`,
+          additionalInfo: `**Takeaway:** Multi-step update that must stay consistent → use a transaction (BEGIN/COMMIT/ROLLBACK). ACID = all-or-nothing, invariants, isolation, durability. PostgreSQL: default Read Committed; SERIALIZABLE for strict. MySQL: REPEATABLE READ default. Interview: define ACID; when to use transaction; isolation levels in one sentence. **Curriculum:** Prerequisite for Backend (Auth & Databases) when implementing multi-step updates.`,
         },
         codeExample: `-- Transaction: transfer
 BEGIN;
@@ -1459,8 +1592,12 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 **Prerequisites:** JavaScript (functions, arrays, objects); basic HTML.
 
 **By the end of this topic you will:** Build a component that accepts props, render a list with key, and understand why key is required.`,
-          material: `React is a library for building UIs with components. Each component is a function (or class) that returns JSX. JSX is syntax sugar for React.createElement(type, props, ...children). Components can receive props and render other components.`,
-          explanation: `Components let you split the UI into reusable pieces. JSX looks like HTML but is JavaScript; you can embed expressions with {}. The key prop is required when rendering lists so React can track identity.`,
+          material: `React is a library for building UIs with components. Each component is a function (or class) that returns JSX. JSX is syntax sugar for React.createElement(type, props, ...children). Components can receive props and render other components.
+
+**In other words:** Component = reusable UI block (button, card, form). Props = data passed from parent to child. Key = unique identifier for each list item so React can update only what changed, not the whole list.`,
+          explanation: `Components let you split the UI into reusable pieces. JSX looks like HTML but is JavaScript; you can embed expressions with {}.
+
+The key prop is required when rendering lists so React can track identity.`,
           application: `Use components for buttons, cards, forms, pages. Use props for configuration and data. Use key when mapping over arrays.`,
           howToImplement: `(1) Create a .jsx or .tsx file; export a function that returns JSX.
 (2) Accept props as the first argument; use them inside JSX with {props.name}.
@@ -1468,8 +1605,8 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
           logicAndCode: `React compares the previous and current element tree (virtual DOM). When state or props change, the component re-runs and React updates the real DOM only where needed. key helps React match list items correctly.`,
           example: `Problem: Display a list of users with name and email.
 
-Solution: const UserList = ({ users }) => ( <ul> {users.map(u => <li key={u.id}>{u.name} — {u.email}</li>)} </ul> );`,
-          additionalInfo: `Use PascalCase for components, camelCase for props. Avoid mutating props. Prefer function components + hooks over class components.`,
+Solution: const UserList = ({ users }) => ( <ul> {users.map(u => <li key={u.id}>{u.name} — {u.email}</li>)} </ul> ); Use key={u.id} so React can track list items.`,
+          additionalInfo: `Use PascalCase for components, camelCase for props. Avoid mutating props. Prefer function components + hooks over class components. **Takeaway:** Component = function that returns JSX; props = input from parent; key required in list so React can track items. **Common mistake:** Using index as key when list can be reordered or items removed — use unique id.`,
         },
         codeExample: `// Simple component with props
 function Greeting({ name }) {
@@ -1506,7 +1643,13 @@ function UserList({ users }) {
 **Prerequisites:** React Fundamentals & JSX (components, props, JSX).
 
 **By the end of this topic you will:** Use useState and useEffect correctly, follow the rules of hooks, and write a simple custom hook.`,
-          material: `**Hooks** let you use state and other React features in function components. **useState(initial)** returns [value, setter]; call setter to update and re-render. **useEffect(fn, deps)** runs fn after render; deps = [] runs once (mount), deps = [x] when x changes. Rules: only call hooks at the top level (not inside loops/conditions); only call from React function components or custom hooks.`,
+          material: `**Hooks** let you use state and other React features in function components.
+
+**useState(initial)** returns [value, setter]; call setter to update and re-render. **useEffect(fn, deps)** runs fn after render; deps = [] runs once (mount), deps = [x] when x changes.
+
+**Rules of Hooks:** Only call hooks at the top level (not inside loops/conditions); only from function components or custom hooks.
+
+**In other words:** useState = local state per component; setter triggers re-render. useEffect = "after render, do this" (fetch, subscription, side effect); dependency array controls when it runs. React relies on hook call order, so don't call hooks conditionally.`,
           explanation: `useState keeps state across re-renders; each call to setState schedules an update. useEffect runs after the browser has painted; the cleanup (if you return a function) runs before the next effect or unmount. Custom hooks are functions that call other hooks so you can reuse logic.`,
           application: `Use useState for form fields, toggles, counters. Use useEffect for subscriptions, fetching data, syncing with DOM or external APIs. Use custom hooks to share logic (e.g. useDebounce, useLocalStorage).`,
           howToImplement: `(1) useState: const [value, setValue] = useState(initial); in event handler call setValue(newValue) or setValue(prev => prev + 1).
@@ -1515,8 +1658,8 @@ function UserList({ users }) {
           logicAndCode: `React tracks hooks by call order, so you must not call them conditionally. setState is async; React batches updates. useEffect runs after commit; cleanup runs in reverse order of effect registration.`,
           example: `Problem: Counter that increments and shows document.title in sync.
 
-Solution: const [n, setN] = useState(0); useEffect(() => { document.title = \`Count: \${n}\`; }, [n]); return <button onClick={() => setN(c => c + 1)}>{n}</button>;`,
-          additionalInfo: `Other hooks: useRef (mutable ref), useContext (read context), useMemo/useCallback (memoization). Don't use hooks in class components. ESLint plugin react-hooks enforces the rules.`,
+Solution: const [n, setN] = useState(0); useEffect(() => { document.title = \`Count: \${n}\`; }, [n]); return <button onClick={() => setN(c => c + 1)}>{n}</button>; **Why:** [n] in useEffect = run again when n changes; setter form (c => c + 1) is safe for updates based on latest state.`,
+          additionalInfo: `**Takeaway:** useState for state; useEffect for side effects (fetch, subscription); deps [] = run once on mount, [x] = when x changes. **Common mistake:** Hooks inside if/loop (breaks rules); empty dependency array when you need latest value; forgetting cleanup (interval/listener) in useEffect return. Other hooks: useRef (mutable ref), useContext (read context), useMemo/useCallback (memoization). Don't use hooks in class components. ESLint plugin react-hooks enforces the rules.`,
         },
         codeExample: `// useState
 const [count, setCount] = useState(0);
@@ -1559,15 +1702,19 @@ function useWindowWidth() {
 **Prerequisites:** React Fundamentals and Hooks (useState, useEffect).
 
 **By the end of this topic you will:** Use Context for theme or user, know when to use Context vs lift state vs Redux/Zustand, and avoid unnecessary re-renders (value identity).`,
-          material: `**Context:** Provides a value to all descendants without passing props at every level. CreateContext(default), Provider, useContext. **When to use:** Theme, locale, current user. **State management:** Local state (useState) for component-only; lift state up for sharing between siblings; Context for app-wide but not high-frequency updates; Redux/Zustand for complex global state or many subscribers. **Redux:** Single store, actions, reducers; good for predictable updates and DevTools. **Zustand:** Simpler API, less boilerplate.`,
+          material: `**Context:** Provides one value to all descendants without **prop drilling** (passing props down every level). CreateContext(default), Provider wraps a subtree, useContext in child. **When to use:** Theme, locale, current user.
+
+**State management:** Local state (useState) for a single component; lift state up to share between siblings; Context for app-wide data that changes rarely; Redux/Zustand for complex global state or many subscribers. **Redux:** Single store, actions, reducers; good for predictable updates and DevTools. **Zustand:** Simpler API, less boilerplate.
+
+**In other words:** Context = "broadcast" one value down the component tree. Every consumer re-renders when value changes; don't put frequently changing data in Context (use a state library instead).`,
           explanation: `Context triggers re-render of all consumers when value changes; avoid putting frequently changing data in Context (use state library instead). Context is great for "set once" or "changes rarely" data like theme or user.`,
           application: `Use Context for theme, auth user, locale. Use Redux/Zustand for cart, form state across pages, or when many components need the same data with frequent updates.`,
           howToImplement: `(1) const ThemeContext = createContext('light'); (2) Wrap tree: <ThemeContext.Provider value={theme}>; (3) In child: const theme = useContext(ThemeContext). (4) For global state: consider createContext + useReducer, or add Zustand/Redux.`,
           logicAndCode: `Provider re-renders consumers when value identity changes. So pass value={useMemo(() => ({ user, login }), [user])} to avoid unnecessary re-renders.`,
           example: `Problem: Pass theme (dark/light) to many nested components without prop drilling.
 
-Solution: ThemeContext with default 'light'; App wraps with <ThemeContext.Provider value={theme}>; any child does const theme = useContext(ThemeContext) and uses it.`,
-          additionalInfo: `Don't overuse Context for everything; it re-renders all consumers. For forms: React Hook Form or Formik. For server state: React Query or SWR.`,
+Solution: ThemeContext with default 'light'; App wraps with <ThemeContext.Provider value={theme}>; any child does const theme = useContext(ThemeContext) and uses it. **Why:** Provider value flows down; only the wrapped subtree can read the context.`,
+          additionalInfo: `**Takeaway:** Context = skip prop drilling; Provider value + useContext. To avoid excessive re-renders, stabilize value (useMemo) or split context. **Common mistake:** New value object every render (value={{ user, login }}) so all consumers re-render. Don't overuse Context for everything. For forms: React Hook Form or Formik. For server state: React Query or SWR.`,
         },
         codeExample: `const ThemeContext = createContext('light');
 
@@ -1606,15 +1753,19 @@ function Button() {
 **Prerequisites:** React Fundamentals and Hooks (useState, useEffect).
 
 **By the end of this topic you will:** Set up routes and dynamic segments, fetch data per route and handle loading/error, and optionally use React Query for cache.`,
-          material: `**React Router:** Declarative routing. BrowserRouter, Routes, Route path="/" element={<Home />}, Route path="/user/:id". **Hooks:** useParams() for :id, useNavigate() for programmatic navigation, useLocation() for current path. **Data fetching:** In useEffect, call fetch() or axios; set loading true → fetch → set data and loading false; handle errors. **React Query:** useQuery(key, fetchFn) gives data, isLoading, error, refetch; caching and deduplication built-in. **SWR:** Similar; stale-while-revalidate.`,
+          material: `**React Router:** Declarative routing. BrowserRouter, Routes, Route path="/" element={<Home />}, Route path="/user/:id". **Hooks:** useParams() for :id value, useNavigate() for programmatic navigation, useLocation() for current path.
+
+**Data fetching:** In useEffect call fetch/axios; set loading true → fetch → set data and loading false; handle errors. **React Query:** useQuery(key, fetchFn) gives data, isLoading, error, refetch; cache and deduplication built-in. **SWR:** Similar; stale-while-revalidate.
+
+**In other words:** Route matches URL to component; :id becomes a parameter. Fetch in useEffect with dependency [id] so when the user changes the data is refetched; show loading/error in JSX.`,
           explanation: `Router matches first Route that fits; put specific routes before generic. Fetch in useEffect with empty deps for "on mount"; cleanup with abort controller if component unmounts. React Query avoids duplicate requests and gives cache.`,
           application: `Use Router for multi-page SPA. Use useEffect + fetch for simple cases; React Query for lists, detail pages, and when you need cache/refetch.`,
           howToImplement: `(1) <Routes><Route path="/" element={<Home />} /><Route path="/user/:id" element={<User />} /></Routes>. (2) In User: const { id } = useParams(); useEffect(() => { fetch(\`/api/users/\${id}\`).then(r=>r.json()).then(setUser); }, [id]); (3) Show loading and error in JSX.`,
           logicAndCode: `useEffect runs after paint; so you'll see loading first, then data. For React Query: data is cached by query key; same key = same cache; refetch on window focus or interval if configured.`,
           example: `Problem: User list page and user detail page; fetch user by id on detail.
 
-Solution: Route path="/users/:id"; in component const { id } = useParams(); useEffect(() => { fetch(...).then(setUser); }, [id]); return loading ? <Spinner /> : <Profile user={user} />;`,
-          additionalInfo: `React Router v6: use Routes not Switch; element not component. Lazy load routes with React.lazy and Suspense. For auth: protect routes with a wrapper that checks token and redirects.`,
+Solution: Route path="/users/:id"; in component const { id } = useParams(); useEffect(() => { fetch(...).then(setUser); }, [id]); return loading ? <Spinner /> : <Profile user={user} />; **Why:** [id] in useEffect = refetch when id from URL changes; loading state avoids flashing old data.`,
+          additionalInfo: `**Takeaway:** useParams for :id; fetch in useEffect([id]); always show loading and error. React Query/SWR simplify cache and refetch. React Router v6: use Routes not Switch; element not component. Lazy load routes with React.lazy and Suspense. For auth: protect routes with a wrapper that checks token and redirects. **Curriculum:** Computer Networks (HTTP & TCP) helps when calling REST APIs from fetch().`,
         },
         codeExample: `import { Routes, Route, useParams } from 'react-router-dom';
 
@@ -1666,7 +1817,9 @@ function UserPage() {
 **Prerequisites:** You have done at least a few coding problems; familiarity with one language and basic data structures.
 
 **By the end of this topic you will:** Follow a repeatable interview flow, state time/space complexity, and communicate your approach before coding.`,
-          material: `Typical flow: (1) Clarify problem (inputs, outputs, edge cases). (2) Work through 1–2 examples. (3) Describe approach (brute force first, then optimize). (4) State time/space complexity. (5) Code clearly. (6) Test with examples and edge cases.`,
+          material: `Typical flow: (1) Clarify problem (inputs, outputs, edge cases). (2) Work through 1–2 examples. (3) Describe approach (brute force first, then optimize). (4) State time/space complexity. (5) Code clearly. (6) Test with examples and edge cases.
+
+**In other words:** Repeat the problem in your own words and ask one clarifying question. Work through one small example and one edge case (empty, n=1). State approach and complexity before writing code; the interviewer wants to see structured thinking.`,
           explanation: `Interviewers care about communication and structured thinking. Saying "I'll start with a brute force, then optimize" is better than jumping to code. State your complexity before and after coding.`,
           application: `Use this flow in every practice session. Record yourself or practice with a peer. Focus on clarity and correctness first, then optimization.`,
           howToImplement: `(1) Repeat the problem in your own words and ask one clarifying question.
@@ -1678,7 +1831,7 @@ function UserPage() {
           example: `Problem: "Given an array, find two numbers that add up to target."
 
 Clarify: Sorted? Duplicates? Return indices or values? Then: brute force O(n²) → hash map O(n). Code, test, done.`,
-          additionalInfo: `Practice on [LeetCode](https://leetcode.com/) (Easy/Medium). Do mock interviews (Pramp, Interviewing.io). Review patterns: two pointers, sliding window, DP, BFS/DFS. Start with [Two Sum](https://leetcode.com/problems/two-sum/).`,
+          additionalInfo: `**Takeaway:** Clarify → example → approach + complexity → code → test. Practice speaking while coding; state complexity. Practice on [LeetCode](https://leetcode.com/) (Easy/Medium). Do mock interviews (Pramp, Interviewing.io). Review patterns: two pointers, sliding window, DP, BFS/DFS. Start with [Two Sum](https://leetcode.com/problems/two-sum/). For pattern-by-pattern practice and design (LRU, MinStack), see **Competitive Programming** → Coding Interview Strategy.`,
         },
         codeExample: `// Example: state your approach first
 // "I'll use a hash map: for each number, check if
@@ -1711,10 +1864,16 @@ function twoSum(nums, target) {
           ],
           learningFlowIntro: `**Your first step:** Read sections 1–2. Then pick one design (e.g. URL shortener): on paper, write 3 clarifying questions, estimate QPS and storage, and draw Client → LB → App → DB + Cache.
 
-**Prerequisites:** System Design Basics (or equivalent); you have built or discussed at least one backend or API.
+**Prerequisites:** System Design Basics (in this curriculum); Database & SQL and Computer Networks help for scale and components. You should have built or discussed at least one backend or API.
 
 **By the end of this topic you will:** Run a system design interview (clarify, scale, diagram, deep dive) and answer behavioral questions using STAR with 3–5 prepared stories.`,
-          material: `**System design flow:** (1) Clarify requirements (functional, non-functional, scale). (2) Estimate: QPS, storage, bandwidth. (3) High-level: clients, LB, app servers, DB, cache. (4) Deep dive: one component (e.g. DB schema, cache strategy). (5) Trade-offs and bottlenecks. **Behavioral (STAR):** Situation (context), Task (your goal), Action (what you did), Result (outcome, metric). Prepare stories for: conflict with teammate, missed deadline, leadership, learning something new, failure and recovery. **Common questions:** "Tell me about a time you disagreed with a colleague." "Describe a challenging project." "How do you prioritize?"`,
+          material: `**System design flow:** (1) Clarify requirements (functional, non-functional, scale). (2) Estimate: **QPS** (queries per second), storage, bandwidth. (3) High-level: clients, **LB** (load balancer), app servers, DB, cache. (4) Deep dive: one component (e.g. DB schema, cache strategy). (5) Trade-offs and bottlenecks.
+
+**Behavioral (STAR):** **S**ituation (context), **T**ask (your goal), **A**ction (what you did), **R**esult (outcome, metric). Prepare stories for: conflict with a teammate, missed deadline, leadership, learning something new, failure and recovery.
+
+**Common questions:** "Tell me about a time you disagreed with a colleague." "Describe a challenging project." "How do you prioritize?"
+
+**In other words:** System design = clarify → estimate (QPS, storage) → high-level diagram → deep dive one part → discuss trade-offs. Behavioral = answer with STAR structure so it's concise and concrete (not a long story without outcome).`,
           explanation: `System design shows you can think at scale; no single "correct" answer. Interviewers want structure and trade-off discussion. Behavioral shows soft skills; STAR keeps answers concise and concrete.`,
           application: `Use for any senior or full-stack interview. System design: 30–45 min; practice 5–10 designs. Behavioral: 2–3 min per answer; have 5 stories that you can adapt.`,
           howToImplement: `(1) System design: Start with "Who are the users? What do they do?" Then "What's the scale?" Then draw diagram. Say "I'll focus on X next" and go deep. (2) Behavioral: Pick a story that fits; 1 min situation+task, 1–2 min action, 30 sec result. End with what you learned.`,
@@ -1722,7 +1881,7 @@ function twoSum(nums, target) {
           example: `Problem: "Design a rate limiter."
 
 Clarify: Per user? Per IP? Limit by requests per minute? High-level: Client → API → rate limiter (check counter) → backend. Rate limiter: sliding window or token bucket; store in Redis (key=user_id, value=count or timestamp). Deep dive: token bucket algorithm; Redis INCR + EXPIRE.`,
-          additionalInfo: `Books: Designing Data-Intensive Applications. Practice: ByteByteGo, Exponent. Behavioral: use job description to predict themes; prepare 1 story per theme.`,
+          additionalInfo: `**Takeaway:** System design: clarify → estimate (QPS, storage) → diagram → deep dive one component. Behavioral: STAR (Situation, Task, Action, Result); prepare 3–5 stories you can adapt. Books: Designing Data-Intensive Applications. Practice: ByteByteGo, Exponent. **Curriculum:** For system design flow and scaling deep dives, complete **System Design** section (Basics, Scaling & Caching) first.`,
         },
         codeExample: `// STAR example (structure only)
 // S: "On my previous team we had a legacy API that was causing timeouts."
@@ -1762,10 +1921,14 @@ Clarify: Per user? Per IP? Limit by requests per minute? High-level: Client → 
           ],
           learningFlowIntro: `**Your first step:** Read sections 1–2, then on paper or a whiteboard draw the high-level diagram (Client → LB → App servers → DB, Cache). Try explaining it in one minute.
 
-**Prerequisites:** Basic idea of client-server, databases, and APIs (from Node/Backend or Computer Networks topics).
+**Prerequisites:** Computer Networks (HTTP & TCP), Database & SQL (so you know what DB and APIs are), and ideally Node.js or Backend (you have built or used at least one API).
 
 **By the end of this topic you will:** Clarify requirements and estimate scale (QPS, storage), draw a standard high-level design, and discuss trade-offs (e.g. SQL vs NoSQL, cache strategy).`,
-          material: `**Requirements:** Functional (what the system does), non-functional (latency, availability, consistency). **Scale:** QPS (queries per second), DAU, storage growth. **Components:** Load balancer (distribute traffic), app servers (stateless, scale out), database (persistence), cache (reduce DB load). **CAP:** Consistency, Availability, Partition tolerance — pick two.`,
+          material: `**Requirements:** Functional (what the system does), non-functional (latency, availability, consistency). **Scale:** QPS = queries per second (request load); DAU = daily active users (unique users per day); storage growth = data growth per year.
+
+**Components:** Load balancer (LB) = distributes traffic to multiple app servers; app servers = stateless, can be added (scale out); database = persistent storage; cache = stores frequently read data to reduce DB load. **CAP:** Consistency (all nodes read latest data), Availability (every request gets a response), Partition tolerance (system keeps running when network partitions); in practice you pick two of three.
+
+**In other words:** Clarify first (what we're building, scale, latency); then estimate QPS & storage (back-of-envelope); draw diagram Client → LB → App → DB (+ Cache if read-heavy); deep dive one component. Don't go straight to detail — structure first, then go deep on one part.`,
           explanation: `Start with requirements so you don't over-engineer. Back-of-envelope: 1M DAU → ~10–100 QPS average; peak 2–3×. Load balancer + multiple app servers give horizontal scaling. Cache (e.g. Redis) for hot data reduces DB load. Replication and sharding for DB scale.`,
           application: `Use in system design interviews: clarify scope, estimate numbers, draw diagram, discuss bottlenecks and trade-offs. Common topics: URL shortener, chat, news feed, rate limiter.`,
           howToImplement: `(1) Clarify: "Is this read-heavy or write-heavy? Latency requirement? Consistency vs availability?"
@@ -1775,8 +1938,8 @@ Clarify: Per user? Per IP? Limit by requests per minute? High-level: Client → 
           logicAndCode: `Load balancer: round-robin or least connections. Cache: write-through or cache-aside. DB: primary-replica for reads; sharding by key (e.g. user_id) for write scale.`,
           example: `Problem: Design a URL shortener (e.g. bit.ly).
 
-Solution: (1) API: POST /shorten (long URL → short code), GET /:code (redirect). (2) Short code: base62 of auto-increment ID or hash. (3) Storage: DB (id, long_url, short_code, created_at). (4) Scale: cache short_code → long_url; DB shard by id. (5) Redirect: 301 (permanent) or 302 (track clicks).`,
-          additionalInfo: `Books: Designing Data-Intensive Applications. Practice: ByteByteGo, System Design Interview. Interview: state assumptions, draw clearly, discuss trade-offs.`,
+Solution: (1) API: POST /shorten (long URL → short code), GET /:code (redirect). (2) Short code: base62 from auto-increment ID or hash — base62 for short URL and to decode back to ID. (3) Storage: DB (id, long_url, short_code, created_at). (4) Scale: cache short_code → long_url (read very often); DB shard by id for write scale. (5) Redirect: 301 (permanent, cacheable) or 302 (track clicks per redirect). **Why:** Cache for read path (GET very frequent); shard by id distributes writes; 301 vs 302 = cache vs track. **Takeaway:** Clarify → estimate (QPS, storage) → high-level diagram → deep dive one component.`,
+          additionalInfo: `**Takeaway:** Clarify → estimate → diagram → deep dive. Books: Designing Data-Intensive Applications. Practice: ByteByteGo, System Design Interview. Interview: state assumptions, draw clearly, discuss trade-offs.`,
         },
         codeExample: `// Back-of-envelope: QPS and storage
 // 1M DAU, 10 requests/user/day → 1M * 10 / 86400 ≈ 116 QPS (avg)
@@ -1809,15 +1972,21 @@ Solution: (1) API: POST /shorten (long URL → short code), GET /:code (redirect
 **Prerequisites:** System Design Basics (high-level components, scale, trade-offs).
 
 **By the end of this topic you will:** Choose cache strategy and invalidation, explain replication vs sharding, and when to add a message queue in a design.`,
-          material: `**Cache-aside:** App checks cache; on miss, load from DB and write to cache. **Write-through:** Write to cache and DB together. **Write-behind:** Write to cache; async flush to DB (faster, risk of loss). **Replication:** Primary takes writes; replicas replicate; read from replicas to scale reads. **Sharding:** Partition data by key (e.g. user_id); each shard is a DB; scale writes. **Message queue:** Producer pushes message; consumer(s) process async. Use for: async tasks (email, image processing), decoupling, load leveling. **Kafka/RabbitMQ:** Kafka = log, multiple consumers; RabbitMQ = queues, routing. **Consistency:** Cache invalidation (invalidate on write); eventual consistency when using async replication or queues.`,
+          material: `**Cache-aside:** App checks cache first; on miss, read from DB then write to cache. **Write-through:** Every write goes to cache and DB together. **Write-behind:** Write to cache first; flush to DB async (faster, risk of data loss on crash). **TTL (time-to-live):** How long data may stay in cache before considered stale; reduces stale reads.
+
+**Replication:** Primary accepts writes; replica replicates; read from replica to scale reads. **Sharding:** Partition data by key (e.g. user_id); each shard is one DB; for write scale. **Message queue:** Producer sends messages; consumer processes async. Used for: async tasks (email, image processing), decoupling, smoothing load. **Kafka/RabbitMQ:** Kafka = log, many consumers; RabbitMQ = queue + routing.
+
+**Consistency:** Cache invalidation = on write, delete/update cache; eventual consistency = with replication/queue, data eventually same on all nodes.
+
+**In other words:** Cache-aside = read from cache first; on miss → read DB, fill cache. Write-through = write to cache and DB together. Queue = heavy/async work (email, thumbnail) moved to workers so response stays fast; consumer idempotent so retries are safe. Sharding = partition data by key to scale writes; avoid hot shards.`,
           explanation: `Cache reduces DB load for hot data; invalidation is hard (TTL or invalidate on write). Sharding spreads write load but adds complexity (cross-shard queries, rebalancing). Queues let you process in background and retry on failure.`,
           application: `Use cache for read-heavy (e.g. profile, feed). Use queue for "fire and forget" (send email, generate thumbnail). Use sharding when single DB can't handle write volume. In interviews: draw cache layer and queue in diagram; discuss consistency.`,
           howToImplement: `(1) Cache: Redis; key = entity id, value = JSON; TTL 5–60 min; on write delete key or update. (2) Queue: push job (e.g. { type: 'email', to, body }) to Redis list or RabbitMQ; worker pops and processes. (3) Sharding: choose shard by hash(user_id) % N; store mapping.`,
           logicAndCode: `Cache hit = read from cache; miss = read DB, set cache. Queue: at-least-once (ack after process; redeliver if crash) vs at-most-once. Shard key must distribute evenly; avoid hot shards.`,
           example: `Problem: Design a news feed; millions of users, each follows hundreds; feed = recent posts from followees.
 
-Solution: (1) Write path: on new post, push to queue; worker fans out to each follower's feed cache (list in Redis). (2) Read path: get feed from Redis; if miss, rebuild from DB (or precompute). (3) Alternative: pull model — on read, get followees, fetch recent posts, merge (simpler but slower).`,
-          additionalInfo: `Cache: consider cache stampede (many requests miss at once); use lock or probabilistic early expiry. Queue: idempotent consumers to handle retries. DDIA book: Part II (replication, partitioning).`,
+Solution: (1) Write path: on new post, push to queue; worker fans out to each follower's feed cache (list in Redis). (2) Read path: get feed from Redis; if miss, rebuild from DB (or precompute). (3) Alternative: pull model — on read, get followees, fetch recent posts, merge (simpler but slower). **Why:** Fan-out on write = read feed is very fast (just read cache); trade-off is heavier writes. Pull on read = light writes, slow read when many followees.`,
+          additionalInfo: `**Takeaway:** Read-heavy → cache (cache-aside, TTL, invalidate on write). Write scale → sharding; read scale → replication. Async/decouple → message queue; consumer idempotent. Cache stampede: lock or probabilistic early expiry. DDIA Part II (replication, partitioning). **Curriculum:** Core for system design interviews; practice after System Design Basics.`,
         },
         codeExample: `// Cache-aside (pseudo)
 function get_user(id) {
@@ -1869,13 +2038,17 @@ while (job = queue.pop()) {
 **Prerequisites:** Basic programming (variables, loops, functions). Big O notation helps (see Complexity & Strategy).
 
 **By the end of this topic you will:** State time complexity of access/insert/delete for array, linked list, stack, queue, hash table; choose the right structure for a problem.`,
-          material: `**Array:** Contiguous memory; index access O(1); insert/delete at end O(1) amortized; at middle O(n). **Linked list:** Nodes with next (and prev for doubly); insert/delete at head/tail O(1); access by index O(n). **Stack:** LIFO; push, pop, peek O(1); use for undo, parentheses, DFS. **Queue:** FIFO; enqueue, dequeue O(1); use for BFS, task queue. **Hash table:** Key-value; insert, delete, lookup O(1) average; collision by chaining or open addressing; use for fast lookup, dedup, count. **When to use:** Array when you need index or iteration; linked list when you insert/delete at ends often; stack for LIFO; queue for FIFO; hash for O(1) lookup by key.`,
+          material: `**Array:** Contiguous memory; index access O(1); insert/delete at end O(1) amortized; at middle O(n). **Linked list:** Nodes with next (and prev for doubly); insert/delete at head/tail O(1); access by index O(n). **Stack:** LIFO; push, pop, peek O(1); use for undo, parentheses, DFS. **Queue:** FIFO; enqueue, dequeue O(1); use for BFS, task queue. **Hash table:** Key-value; insert, delete, lookup O(1) average; collision by chaining or open addressing; use for fast lookup, dedup, count. **When to use:** Array when you need index or iteration; linked list when you insert/delete at ends often; stack for LIFO; queue for FIFO; hash for O(1) lookup by key.
+
+**In other words:** Array = fast index access, shifting elements is costly. Linked list = no shifting needed, but access to the i-th node requires walking from head. Stack = last in first out (undo, parentheses, DFS). Queue = first in first out (BFS). Hash = find by key O(1); trade-off is more memory.`,
           explanation: `Array gives fast random access but shifting is costly. Linked list avoids shifting but no random access. Stack and queue are interfaces; implement with array or linked list. Hash table trades space for time; good when you need "find by key" often.`,
           application: `Array: list of items, matrix. Linked list: LRU cache (with hash), queue when you need both ends. Stack: DFS, expression eval, undo. Queue: BFS, level order, producers/consumers. Hash: cache, set, frequency map, two-sum style.`,
           howToImplement: `(1) Array: language built-in; arr[i], arr.push(x), arr.splice(i, 1). (2) Stack: array with push/pop only, or linked list with insert/delete at head. (3) Queue: array with shift (O(n)) or use two stacks; better: linked list with head and tail pointers. (4) Hash: Map, dict, object; get, set, delete.`,
           logicAndCode: `Stack: last in, first out; one pointer (top). Queue: first in, first out; two pointers (front, rear) or head/tail in linked list. Hash: hash(key) → bucket; handle collisions.`,
-          example: `Problem: Check balanced parentheses. Solution: Stack. For each char: if opening, push; if closing, pop and check match. If stack empty at end and no mismatch, balanced. Time O(n), space O(n).`,
-          additionalInfo: `Interview: state "array for random access", "hash for O(1) lookup", "stack for LIFO/DFS", "queue for BFS". LeetCode: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), [Implement Queue using Stacks](https://leetcode.com/problems/implement-queue-using-stacks/).`,
+          example: `Problem: Check balanced parentheses.
+
+Solution: Stack. For each char: if opening, push; if closing, pop and check match. If stack empty at end and no mismatch, balanced. Time O(n), space O(n). **Why:** Open-close order must match; stack holds "what hasn't been closed yet".`,
+          additionalInfo: `**Takeaway:** Array = random access; linked list = insert/delete at ends; stack = LIFO (undo, parentheses, DFS); queue = FIFO (BFS); hash = O(1) lookup. Interview: state "array for random access", "hash for O(1) lookup", "stack for LIFO/DFS", "queue for BFS". LeetCode: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), [Implement Queue using Stacks](https://leetcode.com/problems/implement-queue-using-stacks/).`,
         },
         codeExample: `// Stack (array)
 const stack = [];
@@ -1911,7 +2084,9 @@ map.set('a', 1); map.get('a'); // 1
 **Prerequisites:** Complexity & Strategy and basic data structures (array, queue, stack). Recursion helps for DFS.
 
 **By the end of this topic you will:** Implement BFS and DFS, choose between them for shortest path vs path finding/cycles, and do inorder/preorder/postorder on trees.`,
-          material: `**Graph:** Vertices + edges. Represent as adjacency list (list of neighbors per node) or matrix. **Tree:** Connected acyclic graph; has root. **BFS:** Queue; level-by-level; shortest path in unweighted graph. **DFS:** Stack or recursion; explore depth-first; cycles, topological order. **Tree traversal:** Inorder (left, root, right), preorder (root, left, right), postorder (left, right, root).`,
+          material: `**Graph:** Vertices + edges. Represent as adjacency list (list of neighbors per node) or matrix. **Tree:** Connected acyclic graph; has root. **BFS:** Queue; level-by-level; shortest path in unweighted graph. **DFS:** Stack or recursion; explore depth-first; cycles, topological order. **Tree traversal:** Inorder (left, root, right), preorder (root, left, right), postorder (left, right, root).
+
+**In other words:** BFS = layer by layer from the source; first time we reach a node = shortest distance (unweighted graph). DFS = go deep first; good for "visit all", cycle detection, topological sort. Inorder on BST = sorted order.`,
           explanation: `BFS guarantees shortest path in unweighted graphs because we visit nodes in order of distance. DFS is simpler for "visit all" or when you need to backtrack. Inorder on BST gives sorted order.`,
           application: `BFS: level-order tree, shortest path, word ladder. DFS: cycle detection, topological sort, path finding, connected components. Tree: BST operations, LCA, diameter.`,
           howToImplement: `(1) BFS: queue.push(start); while (queue) { node = queue.shift(); visit(node); for (neighbor of node) queue.push(neighbor); }
@@ -1921,8 +2096,8 @@ map.set('a', 1); map.get('a'); // 1
           logicAndCode: `BFS: first-in-first-out ensures we process by level. DFS: last-in-first-out (stack) or call stack (recursion) goes deep first. Mark visited to avoid cycles in graphs.`,
           example: `Problem: Binary Tree Level Order Traversal (LeetCode #102).
 
-Solution: BFS with queue. While queue not empty: record level size, pop that many nodes, add values to level list, push children. Push each level to result. Time O(n), space O(width).`,
-          additionalInfo: `LeetCode: [Number of Islands](https://leetcode.com/problems/number-of-islands/), [Course Schedule](https://leetcode.com/problems/course-schedule/) (topological), [Binary Tree Level Order](https://leetcode.com/problems/binary-tree-level-order-traversal/), [Max Depth](https://leetcode.com/problems/maximum-depth-of-binary-tree/). Interview: state BFS vs DFS choice; watch for cycles (use visited set).`,
+Solution: BFS with queue. While queue not empty: record level size, pop that many nodes, add values to level list, push children. Push each level to result. Time O(n), space O(width). **Why:** One "batch" of pops = one level; we know how many nodes in that level from the queue size at the start of the level.`,
+          additionalInfo: `**Takeaway:** BFS = shortest path (unweighted), level order; DFS = visit all, cycle, topological. Tree: inorder/preorder/postorder; inorder in BST = sorted. LeetCode: [Number of Islands](https://leetcode.com/problems/number-of-islands/), [Course Schedule](https://leetcode.com/problems/course-schedule/), [Binary Tree Level Order](https://leetcode.com/problems/binary-tree-level-order-traversal/), [Max Depth](https://leetcode.com/problems/maximum-depth-of-binary-tree/). Interview: state BFS vs DFS; use visited for graphs with cycles.`,
         },
         codeExample: `// BFS - level order
 function levelOrder(root) {
@@ -1970,15 +2145,17 @@ function inorder(node) {
 **Prerequisites:** Graphs & Trees (or equivalent); basic trees and complexity.
 
 **By the end of this topic you will:** Use a heap for top K and merge K sorted, implement or use a trie for prefix search, and state time complexity.`,
-          material: `**Heap:** Complete binary tree; min-heap (root = minimum) or max-heap (root = maximum). **Operations:** insert O(log n), extract-min O(log n), peek O(1). **Use:** Priority queue, top K, merge K sorted, Dijkstra. **Language:** C++ priority_queue; Python heapq; Java PriorityQueue. **Trie:** Root to leaf = string; each node has up to 26 (or 256) children. **Operations:** insert O(m), search O(m), prefix search O(m + k) for k matches. **Use:** Autocomplete, spell check, IP routing. **Other:** Segment tree (range queries), Fenwick tree (prefix sum updates), DSU (disjoint set union for connected components). **Complexity:** Heap insert/extract O(log n); trie per key O(m).`,
+          material: `**Heap:** Complete binary tree; min-heap (root = minimum) or max-heap (root = maximum). **Operations:** insert O(log n), extract-min O(log n), peek O(1). **Use:** Priority queue, top K, merge K sorted, Dijkstra. **Language:** C++ priority_queue; Python heapq; Java PriorityQueue. **Trie:** Root to leaf = string; each node has up to 26 (or 256) children. **Operations:** insert O(m), search O(m), prefix search O(m + k) for k matches. **Use:** Autocomplete, spell check, IP routing. **Other:** Segment tree (range queries), Fenwick tree (prefix sum updates), DSU (disjoint set union for connected components). **Complexity:** Heap insert/extract O(log n); trie per key O(m).
+
+**In other words:** Top K = keep a min-heap of size K; if a new element is larger than the heap minimum, replace it. Merge K sorted = heap holds the head of each list; pop min, push the next element from that list. Trie = same prefix shares a branch; find prefix = walk from root.`,
           explanation: `Heap keeps min/max at root; after extract, we heapify (bubble down). Top K: keep min-heap of size K; if new element > min, pop min and push new; at end heap contains K largest. Trie compresses common prefixes; good for "all keys with prefix X".`,
           application: `Heap: Kth largest, merge K lists, task scheduler (by frequency). Trie: autocomplete, word search. In CP: segment tree for range sum/min and point updates.`,
           howToImplement: `(1) Min-heap top K: heap = []; for x in arr: if len(heap) < K: heappush(heap, x); else if x > heap[0]: heapreplace(heap, x). (2) Trie: node has children dict; insert: for char in word, go to child or create; set node.is_end = True. (3) Prefix search: traverse to prefix node; DFS to collect all is_end below.`,
           logicAndCode: `Heap is stored as array; parent at i has children at 2i+1, 2i+2. Heapify: compare with children, swap with smaller (min-heap), repeat. Trie: each node = map char → next node.`,
           example: `Problem: Kth Largest Element in Stream (LeetCode #703).
 
-Solution: Keep min-heap of size K. On add: if heap size < K, push; else if val > heap[0], pop then push val. Return heap[0] for getKthLargest. Time O(log K) per add, space O(K).`,
-          additionalInfo: `LeetCode: [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/), [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), [Kth Largest in Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/). Interview: state "heap for top K" or "trie for prefix"; give complexity.`,
+Solution: Keep min-heap of size K. On add: if heap size < K, push; else if val > heap[0], pop then push val. Return heap[0] for getKthLargest. Time O(log K) per add, space O(K). **Why:** Heap always holds the K largest elements so far; minimum in heap = K-th largest.`,
+          additionalInfo: `**Takeaway:** Top K → min-heap of size K; merge K sorted → heap holds head of each list. Trie → prefix/autocomplete O(m). LeetCode: [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/), [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), [Kth Largest in Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/). Interview: state "heap for top K" or "trie for prefix"; give complexity.`,
         },
         codeExample: `// Python - top K with heapq (min-heap of size K)
 import heapq
@@ -2009,7 +2186,7 @@ def insert(root, word):
     slug: "computer-networks",
     description:
       "HTTP, TCP/IP basics, REST, and networking concepts for backend and system design.",
-    order: 8,
+    order: 4,
     published: true,
     topics: [
       {
@@ -2030,7 +2207,11 @@ def insert(root, word):
 **Prerequisites:** Basic idea of "browser requests a URL and gets a response."
 
 **By the end of this topic you will:** List what happens when you type a URL and press Enter, use HTTP methods and status codes correctly in REST, and distinguish TCP from UDP.`,
-          material: `**HTTP:** Application-layer protocol; request (method, URL, headers, body) and response (status, headers, body). **Methods:** GET (idempotent), POST (create), PUT (replace), DELETE. **Status:** 2xx success, 3xx redirect, 4xx client error, 5xx server error. **TCP:** Connection-oriented, reliable, ordered; three-way handshake. **UDP:** No connection, no guarantee; used for streaming, DNS. **DNS:** Resolves domain to IP; cached at OS and resolver.`,
+          material: `**HTTP:** Application-layer protocol; request (method, URL, headers, body) and response (status, headers, body). **Methods:** GET (idempotent), POST (create), PUT (replace), DELETE. **Status:** 2xx success, 3xx redirect, 4xx client error, 5xx server error.
+
+**TCP:** Connection-oriented, reliable, ordered; three-way handshake. **UDP:** No connection, no guarantee; used for streaming, DNS. **DNS:** Resolves domain to IP; cached at OS and resolver.
+
+**In other words:** Type URL + Enter = DNS (name → IP) → TCP (reliable connection) → TLS (encryption) → HTTP request → server sends response → browser renders. REST uses HTTP method + status code for resource and action.`,
           explanation: `When you type a URL: DNS lookup → TCP connection → HTTP request → server response → render. HTTPS adds TLS (encryption). REST uses HTTP methods and status codes to represent resources and actions.`,
           application: `Use HTTP semantics in REST APIs. Understand TCP for "why connection matters" (latency, keep-alive). DNS for caching and CDN. In interviews: explain "what happens when you hit Enter".`,
           howToImplement: `(1) REST: GET /users (list), GET /users/:id (one), POST /users (create), PUT /users/:id (update), DELETE /users/:id (delete).
@@ -2039,8 +2220,8 @@ def insert(root, word):
           logicAndCode: `HTTP is stateless: each request has everything needed. TCP ensures bytes arrive in order and retransmits on loss. TLS sits on top of TCP and encrypts the payload.`,
           example: `Problem: "What happens when you type https://google.com and press Enter?"
 
-Solution: (1) DNS lookup: google.com → IP. (2) TCP 3-way handshake to IP:443. (3) TLS handshake. (4) HTTP GET / over TLS. (5) Server responds with HTML. (6) Browser parses, loads assets (CSS, JS), renders.`,
-          additionalInfo: `Status codes to know: 200, 201, 204, 301, 302, 400, 401, 403, 404, 500. Idempotent: GET, PUT, DELETE (same result if repeated). Safe: GET (no side effects).`,
+Solution: (1) DNS lookup: google.com → IP. (2) TCP 3-way handshake to IP:443. (3) TLS handshake. (4) HTTP GET / over TLS. (5) Server responds with HTML. (6) Browser parses, loads assets (CSS, JS), renders. **Why:** TCP ensures data arrives in order; TLS encrypts; HTTP defines request/response.`,
+          additionalInfo: `**Takeaway:** URL → DNS → TCP → TLS → HTTP → response. REST: GET/POST/PUT/DELETE + status 2xx/4xx/5xx. Idempotent: GET, PUT, DELETE. Safe: GET. Status codes: 200, 201, 204, 301, 302, 400, 401, 403, 404, 500. **Curriculum:** Prerequisite for Express & REST and REST API Design.`,
         },
         codeExample: `// HTTP request (conceptual)
 // GET /api/users/1
@@ -2065,7 +2246,7 @@ Solution: (1) DNS lookup: google.com → IP. (2) TCP 3-way handshake to IP:443. 
     slug: "operating-systems-concurrency",
     description:
       "Processes, threads, concurrency, and synchronization for system design and backend.",
-    order: 9,
+    order: 5,
     published: true,
     topics: [
       {
@@ -2087,7 +2268,13 @@ Solution: (1) DNS lookup: google.com → IP. (2) TCP 3-way handshake to IP:443. 
 **Prerequisites:** Basic programming; idea of "multiple things running" (async or threads). Node.js/Event Loop topic helps for contrast (single-threaded + async).
 
 **By the end of this topic you will:** Explain process vs thread, race condition and deadlock, and when to use a mutex or avoid shared state.`,
-          material: `**Process:** Independent program in execution; own memory space; created by fork/spawn; heavy (separate memory). **Thread:** Lightweight unit inside a process; shares memory with other threads; cheaper to create. **Race condition:** Result depends on order of execution; occurs when two+ threads read/write shared mutable state without synchronization. **Mutex (lock):** Only one thread holds the lock; others block until it is released; protects critical section. **Deadlock:** Two or more threads each hold a lock and wait for the other's lock → no progress. **Avoiding deadlock:** Lock ordering (always acquire A then B); timeouts; or design without circular wait. **Concurrency vs parallelism:** Concurrency = managing many tasks (e.g. async I/O); parallelism = executing at the same time (multiple cores).`,
+          material: `**Process:** Independent program in execution; own memory space; created by fork/spawn; heavy (separate memory). **Thread:** Lightweight unit inside a process; shares memory with other threads; cheaper to create.
+
+**Race condition:** Result depends on order of execution; occurs when two+ threads read/write shared mutable state without synchronization. **Mutex (lock):** Only one thread holds the lock; others block until it is released; protects critical section. **Deadlock:** Two or more threads each hold a lock and wait for the other's lock → no progress. **Avoiding deadlock:** Lock ordering (always acquire A then B); timeouts; or design without circular wait.
+
+**Concurrency vs parallelism:** Concurrency = managing many tasks (e.g. async I/O); parallelism = executing at the same time (multiple cores).
+
+**In other words:** Process = program with its own memory space; thread = unit inside a process that shares memory. Race condition = two threads update the same variable without synchronization → non-deterministic result. Mutex = only one thread may enter the critical section; others wait. Deadlock = A holds L1 waiting for L2, B holds L2 waiting for L1 → no progress.`,
           explanation: `Processes are isolated (crash in one doesn't kill others) but slower to create and communicate (IPC). Threads share memory so they need synchronization (locks, atomics) to avoid races. In Node.js, one thread runs JS; I/O is delegated. In Go/Java, many goroutines/threads can run concurrently.`,
           application: `Use when designing multi-threaded servers, job queues, or discussing scalability. "Horizontal scaling" often means more processes (or containers); "thread pool" means threads within one process.`,
           howToImplement: `(1) Identify shared state that multiple threads write.
@@ -2097,8 +2284,8 @@ Solution: (1) DNS lookup: google.com → IP. (2) TCP 3-way handshake to IP:443. 
           logicAndCode: `Lock ensures mutual exclusion: only one thread in critical section. If thread A holds L1 and wants L2, and thread B holds L2 and wants L1 → deadlock. Fix: both acquire L1 then L2.`,
           example: `Problem: Thread-safe counter. Multiple threads increment; final count must equal total increments.
 
-Solution: Use a mutex. Before count++, lock(mutex); after count++, unlock(mutex). Or use atomic increment if available (e.g. atomic_int in C++, AtomicInteger in Java).`,
-          additionalInfo: `Concurrency vs parallelism: concurrency = dealing with many things; parallelism = doing many things at once. Node.js: concurrent (async I/O), single-threaded for JS. Interview: explain process vs thread, when you'd use locks.`,
+Solution: Use a mutex. Before count++, lock(mutex); after count++, unlock(mutex). Or use atomic increment if available (e.g. atomic_int in C++, AtomicInteger in Java). **Why:** Without lock, two threads can read the same old value, increment, write — one overwrites; total is wrong.`,
+          additionalInfo: `**Takeaway:** Process = separate memory; thread = shared memory, needs synchronization. Race condition → mutex or atomic. Deadlock → lock ordering (always A then B). Node.js: single JS thread + async I/O. Concurrency vs parallelism: concurrency = many tasks; parallelism = many cores. **Curriculum:** Useful before System Design (scaling, workers, thread pools).`,
         },
         codeExample: `// Pseudocode: mutex for counter
 // shared: count = 0, mutex
@@ -2120,7 +2307,7 @@ Solution: Use a mutex. Before count++, lock(mutex); after count++, unlock(mutex)
     slug: "security-testing",
     description:
       "Authentication, authorization, common vulnerabilities, and secure coding basics.",
-    order: 10,
+    order: 11,
     published: true,
     topics: [
       {
@@ -2139,10 +2326,12 @@ Solution: Use a mutex. Before count++, lock(mutex); after count++, unlock(mutex)
           ],
           learningFlowIntro: `**Your first step:** Read sections 1–2. Then in any project that has a DB, find one query that uses string concatenation with user input and rewrite it as a parameterized query.
 
-**Prerequisites:** Basic backend (routes, database queries) and frontend (displaying user content).
+**Prerequisites:** Node.js (Express & REST) or Backend Development (routes, APIs); Database & SQL (so you can write parameterized queries). Frontend (e.g. React) helps for XSS context.
 
 **By the end of this topic you will:** Explain auth vs authz, why HTTPS and password hashing matter, and how to prevent XSS and SQL injection in code.`,
-          material: `**Authentication:** Verify identity (e.g. password, OAuth). **Authorization:** Check permissions (e.g. role-based access). **HTTPS:** TLS encrypts client-server traffic; prevents eavesdropping and tampering. **XSS:** Attacker injects script into page; prevent by escaping output and Content-Security-Policy. **SQL injection:** User input in query string; prevent with parameterized queries. **Password:** Store hashed (bcrypt, argon2); never plain text. **CSRF:** Forged request from other site; prevent with SameSite cookie or CSRF token.`,
+          material: `**Authentication (authn):** Verifying identity (who you are) — e.g. password, OAuth. **Authorization (authz):** Checking permissions (what you are allowed to do) — e.g. role-based access. **HTTPS:** TLS encrypts client–server traffic; prevents eavesdropping and tampering.
+
+**XSS (Cross-Site Scripting):** Attacker injects script into the page (e.g. via user input); browser runs that script. Prevent: escape output (e.g. < → &lt;) and Content-Security-Policy. **SQL injection:** User input is used as part of the query string; attacker can change the query. Prevent: **parameterized queries** — send values as separate parameters, not concatenated into the SQL string; DB driver handles escaping. **Password:** Store as hash (bcrypt, argon2); never plain text. **CSRF (Cross-Site Request Forgery):** Fake request from another site using victim's cookie; prevent: SameSite cookie or CSRF token.`,
           explanation: `Auth is "login"; authorization is "can this user do X?". Hashing is one-way (can't get password from hash); use salt to avoid rainbow tables. Parameterized queries send input as data, not as part of SQL string.`,
           application: `Use in every web app: HTTPS in production, hash passwords, parameterized queries, validate and sanitize input, set secure headers (e.g. helmet in Express).`,
           howToImplement: `(1) Passwords: hash with bcrypt (cost factor 10–12); compare with bcrypt.compare(plain, hash).
@@ -2173,7 +2362,7 @@ Solution: Never concatenate: "SELECT * FROM users WHERE name = '" + input + "'".
     slug: "software-design",
     description:
       "OOP fundamentals, SOLID, DRY, KISS, design patterns, and clean code.",
-    order: 11,
+    order: 7,
     published: true,
     topics: [
       {
@@ -2195,7 +2384,11 @@ Solution: Never concatenate: "SELECT * FROM users WHERE name = '" + input + "'".
 **Prerequisites:** Basic programming (variables, functions). Any language with classes (Java, C#, TypeScript, Python, C++).
 
 **By the end of this topic you will:** Define encapsulation, inheritance, polymorphism, and abstraction with examples; write a class and subclass; choose composition vs inheritance.`,
-          material: `**Class vs Object:** Class = blueprint; object = instance. **Encapsulation:** Bundle data and methods; hide internal state (private/protected); expose only what callers need (public API). **Inheritance:** Subclass extends superclass; reuse code; override methods. **Polymorphism:** Same interface (method name), different behavior (subclass implementation); callers depend on interface, not concrete type. **Abstraction:** Hide implementation details behind a simple interface (e.g. \`List\` abstracts array vs linked list). **Composition vs Inheritance:** Prefer composition (has-a) when behavior can be combined; use inheritance (is-a) for true subtype and Liskov substitution. **Constructor:** Initialize object state; can call super() in subclass.`,
+          material: `**Class vs Object:** Class = blueprint; object = instance. **Encapsulation:** Bundle data and methods; hide internal state (private/protected); expose only what callers need (public API). **Inheritance:** Subclass extends superclass; reuse code; override methods.
+
+**Polymorphism:** Same interface (method name), different behavior (subclass implementation); caller depends on interface, not concrete type. **Abstraction:** Hide implementation details behind a simple interface (e.g. \`List\` abstracts array vs linked list). **Composition vs Inheritance:** Prefer composition (has-a) when behavior can be combined; use inheritance (is-a) for true subtype and Liskov substitution. **Constructor:** Initialize object state; can call super() in subclass.
+
+**In other words:** Encapsulation = hide details, expose API. Polymorphism = one interface, many implementations (caller doesn't care about concrete type). Composition over inheritance = "has-a" is often more flexible than "is-a".`,
           explanation: `Encapsulation reduces coupling and allows changing internals without breaking callers. Polymorphism lets you add new types without changing existing code (open/closed). Inheritance can lead to fragile base classes; composition is often more flexible.`,
           application: `Use encapsulation in every class (private fields, public API). Use inheritance for clear is-a (e.g. \`Admin\` is a \`User\`). Use polymorphism when you have multiple implementations (e.g. \`PaymentGateway\`: Stripe, PayPal). Prefer composition for "has a" (e.g. \`Car\` has an \`Engine\`).`,
           howToImplement: `(1) Class: define fields (private), constructor, and methods (public for API, private for helpers).
@@ -2205,8 +2398,8 @@ Solution: Never concatenate: "SELECT * FROM users WHERE name = '" + input + "'".
           logicAndCode: `Private fields are only accessible inside the class; getters/setters can validate or compute. Overriding: subclass method is called when instance is subclass type. Composition: A holds reference to B; A delegates to B.`,
           example: `Problem: Model a shape hierarchy. Shape has area(); Circle and Rectangle extend Shape and implement area() differently.
 
-Solution: abstract class Shape { abstract area(): number; } class Circle extends Shape { constructor(private r: number) { super(); } area() { return Math.PI * this.r ** 2; } } class Rectangle extends Shape { constructor(private w: number, private h: number) { super(); } area() { return this.w * this.h; } } Polymorphism: (s: Shape) => s.area() works for Circle and Rectangle.`,
-          additionalInfo: `In interviews: define the four pillars and give a one-line example each. Know the difference between override (replace behavior) and overload (same name, different params). Composition over inheritance is a common design guideline.`,
+Solution: abstract class Shape { abstract area(): number; } class Circle extends Shape { constructor(private r: number) { super(); } area() { return Math.PI * this.r ** 2; } } class Rectangle extends Shape { constructor(private w: number, private h: number) { super(); } area() { return this.w * this.h; } } Polymorphism: (s: Shape) => s.area() works for Circle and Rectangle. **Why:** Caller only calls area(); runtime picks implementation based on object type.`,
+          additionalInfo: `**Takeaway:** Four pillars: encapsulation (hide, expose API), inheritance (reuse), polymorphism (one interface many implementations), abstraction (hide complexity). Composition over inheritance for flexibility. In interviews: define the four pillars and give a one-line example each. Know override vs overload. **Curriculum:** Take before or in parallel with React (components) and Node/Backend (API design) for cleaner structure.`,
         },
         codeExample: `// Encapsulation: private fields, public API
 class BankAccount {
@@ -2247,15 +2440,21 @@ class Circle extends Shape {
 **Prerequisites:** You have written or read object-oriented code (classes, methods) in any language.
 
 **By the end of this topic you will:** Name and apply SOLID (especially S and D), use DRY and KISS in refactors, and explain dependency inversion with an example.`,
-          material: `**OOP:** Encapsulation (bundle data + methods; hide internals). Inheritance (reuse via is-a). Polymorphism (same interface, different behavior). Abstraction (hide complexity behind interface). **SOLID:** (S) One class, one reason to change. (O) Open for extension, closed for modification. (L) Subtypes must be substitutable for base. (I) Many specific interfaces better than one fat. (D) Depend on abstractions, not concretions. **DRY:** Every piece of knowledge in one place. **KISS:** Prefer simple over clever. **YAGNI:** You Aren't Gonna Need It — don't build ahead.`,
+          material: `**OOP:** Encapsulation (bundle data + methods; hide internals). Inheritance (reuse via is-a). Polymorphism (same interface, different behavior). Abstraction (hide complexity behind interface).
+
+**SOLID:** **(S)** Single Responsibility — one class, one reason to change. **(O)** Open/Closed — open for extension (new classes), closed for modification (don't change existing). **(L)** Liskov — subtype must be substitutable for base without breaking. **(I)** Interface Segregation — many small interfaces better than one fat interface. **(D)** Dependency Inversion — depend on abstraction (interface), not concrete (class).
+
+**DRY:** Every piece of knowledge in one place. **KISS:** Simple is better than clever. **YAGNI:** You Aren't Gonna Need It — don't build ahead.
+
+**In other words:** S = one class one job. D = high-level module doesn't import low-level; both depend on interface; inject implementation (dependency injection). DRY = don't copy-paste logic; KISS = don't over-engineer.`,
           explanation: `SOLID reduces coupling and makes code testable and changeable. DRY avoids bugs from updating in multiple places. KISS keeps code readable. Dependency injection (D) lets you swap implementations and test with mocks.`,
           application: `Use in every codebase: small classes (S), extend with new types not by editing old (O), design interfaces so callers don't depend on details (D). Refactor duplicated logic into one function or module (DRY).`,
           howToImplement: `(1) Extract small classes; name by responsibility. (2) Depend on interfaces/abstract classes; inject concrete in main or tests. (3) Replace copy-paste with shared function or component. (4) Simplify: remove unused code, split long functions.`,
           logicAndCode: `Single Responsibility: one class = one job. Dependency Inversion: high-level module imports interface; low-level implements it; inject at runtime. DRY: if you change logic in two places, extract to one.`,
           example: `Problem: Payment module has validation, API call, and email logic in one class.
 
-Solution: Split into Validator, PaymentGateway, and Notifier; PaymentService depends on their interfaces; inject implementations. Each class has one reason to change.`,
-          additionalInfo: `Books: Clean Code (Martin), Design Patterns (GoF). Interview: explain S and D with example; when you refactored for SOLID or DRY.`,
+Solution: Split into Validator, PaymentGateway, and Notifier; PaymentService depends on their interfaces; inject implementations. Each class has one reason to change. **Why:** S = each can be changed/tested independently; D = can swap gateway (Stripe/PayPal) without changing PaymentService.`,
+          additionalInfo: `**Takeaway:** S = one class one responsibility; D = depend on interface, inject concrete. Refactor duplication (DRY) and simplify (KISS). Books: Clean Code (Martin), Design Patterns (GoF). Interview: explain S and D with example; when you refactored for SOLID or DRY.`,
         },
         codeExample: `// Dependency Inversion: depend on abstraction
 interface PaymentGateway {
@@ -2291,7 +2490,13 @@ class PaymentService {
 **Prerequisites:** OOP Fundamentals (classes, interfaces). SOLID helps (depend on abstractions).
 
 **By the end of this topic you will:** Name and apply Singleton, Factory, Observer, Strategy; know when each fits; give a one-line use case in interviews.`,
-          material: `**Creational:** **Singleton:** One instance globally (e.g. DB connection, config). **Factory:** Create objects without calling constructor directly; centralize creation logic (e.g. createUser(type) returns Admin or Customer). **Structural:** **Adapter:** Wrap an incompatible interface to match what callers expect. **Decorator:** Add behavior by wrapping (e.g. logging around a service). **Behavioral:** **Observer:** Subject notifies list of observers on change; decouples publisher and subscribers (events, reactive UI). **Strategy:** Interchangeable algorithm (e.g. SortStrategy: QuickSort, MergeSort); inject at runtime. **When to use:** Singleton for true single instance; Factory when creation is complex or type-dependent; Observer for event-driven; Strategy when you have multiple algorithms. **Interview:** Name pattern, one sentence use case, simple code sketch.`,
+          material: `**Creational:** **Singleton** = only one global instance (e.g. DB connection, config). **Factory** = create objects without calling constructor directly; creation logic centralized (e.g. createUser(type) returns Admin or Customer).
+
+**Structural:** **Adapter** = wrap an incompatible interface to match what callers expect. **Decorator** = add behavior by wrapping (e.g. logging around a service). **Behavioral:** **Observer** = subject notifies list of observers on change; decouples publisher and subscribers (events, reactive UI). **Strategy** = interchangeable algorithm (e.g. SortStrategy: QuickSort, MergeSort); inject at runtime.
+
+**When to use:** Singleton for truly one instance; Factory when creation is complex or type-dependent; Observer for event-driven; Strategy when you have multiple algorithms. **Interview:** Name the pattern, one-sentence use case, short code sketch.
+
+**In other words:** Pattern = common solution to recurring design problems. Singleton = one instance; Factory = hide how objects are created; Observer = publish-subscribe; Strategy = swap algorithm without changing the client.`,
           explanation: `Patterns are common solutions to recurring design problems. Singleton ensures one instance (careful with testing). Factory hides creation and supports polymorphism. Observer enables loose coupling (publish-subscribe). Strategy supports open/closed (add new algorithm without changing client).`,
           application: `Singleton: config, connection pool. Factory: create different handlers by type. Observer: UI events, WebSocket messages, state changes. Strategy: sorting, compression, validation rules. Often asked in system design or OOD interviews.`,
           howToImplement: `(1) Singleton: private constructor, static getInstance() returns same instance.
@@ -2301,8 +2506,8 @@ class PaymentService {
           logicAndCode: `Singleton: store instance in static field; create once in getInstance(). Observer: subject holds list of observers; notify() calls each observer.update(). Strategy: client holds reference to strategy; delegates call to strategy.execute().`,
           example: `Problem: Multiple payment methods (card, PayPal); client should not know creation details.
 
-Solution: PaymentFactory.create('card', params) returns CardPayment; PaymentFactory.create('paypal', params) returns PayPalPayment. Both implement Payment interface. Client uses factory and calls pay() on result.`,
-          additionalInfo: `GoF book: 23 patterns. For interviews focus on: Singleton, Factory (or Abstract Factory), Observer, Strategy, Decorator. Don't over-engineer; use pattern when problem clearly fits. Clean Code and Refactoring (Martin) show when to apply.`,
+Solution: PaymentFactory.create('card', params) returns CardPayment; PaymentFactory.create('paypal', params) returns PayPalPayment. Both implement Payment interface. Client uses factory and calls pay() on result. **Why:** Client doesn't know concrete class; add new payment method = add class + case in factory, without changing client (Open/Closed).`,
+          additionalInfo: `**Takeaway:** Singleton = one instance; Factory = centralize creation, client uses interface; Observer = subject → observers; Strategy = inject algorithm. Use pattern when the problem clearly fits; don't over-engineer. GoF book: 23 patterns. For interviews focus on: Singleton, Factory, Observer, Strategy, Decorator. Clean Code and Refactoring (Martin) show when to apply.`,
         },
         codeExample: `// Singleton
 class Config {
@@ -2361,7 +2566,7 @@ class Client {
           howToImplement: `(1) Before writing/speaking: ask "finished time?" → Yes: past simple. No / result now: present perfect. (2) Noun: first mention / general → a/an or no article; already clear which → the. (3) Advice → should; obligation → must; possibility → may/might. (4) Conditional: real (can happen) → present + will; unreal → past + would.`,
           logicAndCode: `Decision: Specific past time word (yesterday, last week) → past simple. None / this week / so far → consider present perfect. Article: use the only if the listener knows the referent.`,
           example: `Fill in: I ___ (see) that film last year. Answer: saw (past simple — last year = clear time). She ___ (work) here since 2020. Answer: has worked (present perfect — since = from then until now). We need ___ decision. Answer: a (singular, first mention, not the).`,
-          additionalInfo: `Resources: English Grammar in Use (Murphy), Grammarly. When in doubt: present simple for facts; past simple for stories. IELTS: variety of tenses and conditionals raises grammatical range score.`,
+          additionalInfo: `Resources: English Grammar in Use (Murphy), Grammarly. When in doubt: present simple for facts; past simple for stories. IELTS: variety of tenses and conditionals raises grammatical range score. **Curriculum:** Separate language track; take in parallel with technical sections if targeting IELTS or professional English.`,
         },
         codeExample: `// When Present Perfect vs Past Simple
 // Present Perfect: result/experience/unfinished period
@@ -2981,7 +3186,7 @@ Solution: Plan: intro (paraphrase + opinion); body 1 (technology has simplified 
           example: `Problem: Weekly signups by source for the last 12 weeks.
 
 Solution: SQL: SELECT DATE_TRUNC('week', created_at) as week, source, COUNT(*) FROM signups WHERE created_at >= NOW() - INTERVAL '12 weeks' GROUP BY 1, 2 ORDER BY 1, 2. Export to Excel or tool; line chart with week on X, count on Y, one line per source.`,
-          additionalInfo: `Tools: SQL (PostgreSQL, BigQuery), Excel/Google Sheets, Looker Studio, Tableau. Next step: Python (pandas) for larger data and automation.`,
+          additionalInfo: `Tools: SQL (PostgreSQL, BigQuery), Excel/Google Sheets, Looker Studio, Tableau. Next step: Python (pandas) for larger data and automation. **Curriculum:** Optional track; take after Database & SQL if you want analytics; can run in parallel with core backend/frontend.`,
         },
         codeExample: `-- Signups by source and week
 SELECT
@@ -3054,7 +3259,7 @@ print(model.coef_)  # interpretation: unit increase in feature1 → coef1 change
     slug: "ai-ml",
     description:
       "From ML foundations (supervised, unsupervised, regression, classification) to deep learning and NLP.",
-    order: 14,
+    order: 15,
     published: true,
     topics: [
       {
@@ -3084,7 +3289,7 @@ print(model.coef_)  # interpretation: unit increase in feature1 → coef1 change
           example: `Problem: Predict house price from size and bedrooms.
 
 Solution: Linear regression: price = b0 + b1*size + b2*bedrooms. Fit on train; R² on test. Check residuals (should be random). If non-linear, try polynomial features or tree model.`,
-          additionalInfo: `Sklearn: fit/predict API. Next: regularization (Ridge, Lasso), cross-validation, hyperparameter tuning (GridSearchCV). Then: deep learning (PyTorch/TensorFlow).`,
+          additionalInfo: `Sklearn: fit/predict API. Next: regularization (Ridge, Lasso), cross-validation, hyperparameter tuning (GridSearchCV). Then: deep learning (PyTorch/TensorFlow). **Curriculum:** Optional track; take after or in parallel with core backend/frontend; Data Analytics helps for metrics and data handling.`,
         },
         codeExample: `from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression, LogisticRegression
@@ -3150,7 +3355,7 @@ trainer.train()
     slug: "programming-languages",
     description:
       "C++, Python, and TypeScript in depth: syntax, idioms, and use cases for CP, backend, and frontend.",
-    order: 15,
+    order: 13,
     published: true,
     topics: [
       {
@@ -3180,7 +3385,7 @@ trainer.train()
           example: `Problem: Count frequency of each element in array.
 
 Solution: unordered_map<int,int> freq; for (int x : a) freq[x]++; Then iterate or use freq.find(). Time O(n), space O(n). For sorted output use map.`,
-          additionalInfo: `C++17: structured bindings, optional. C++20: ranges. CP: know segment tree, Fenwick, DSU. Books: Competitive Programmer's Handbook, CP-Algorithms.`,
+          additionalInfo: `C++17: structured bindings, optional. C++20: ranges. CP: know segment tree, Fenwick, DSU. Books: Competitive Programmer's Handbook, CP-Algorithms. **Curriculum:** Reference section; use when you need C++ for CP or systems; can be taken in parallel with Competitive Programming.`,
         },
         codeExample: `#include <bits/stdc++.h>
 using namespace std;
@@ -3226,7 +3431,7 @@ int main() {
           example: `Problem: Group list of dicts by key and sum a value.
 
 Solution: from collections import defaultdict; d = defaultdict(int); for item in data: d[item['key']] += item['value']. Or pandas: df.groupby('key')['value'].sum().`,
-          additionalInfo: `Style: PEP 8; black for format. Async: asyncio, async def. Testing: pytest. Packaging: pyproject.toml, pip install -e .`,
+          additionalInfo: `Style: PEP 8; black for format. Async: asyncio, async def. Testing: pytest. Packaging: pyproject.toml, pip install -e . **Curriculum:** Reference section; use for data (pandas, ML) or backend (FastAPI/Flask); can run in parallel with Data Analytics or Backend.`,
         },
         codeExample: `# List/dict
 from collections import defaultdict, Counter
@@ -3272,7 +3477,7 @@ def get_item(id: int):
           example: `Problem: Type a function that fetches a user and returns name or throws.
 
 Solution: async function getUserName(id: number): Promise<string> { const res = await fetch(\`/api/users/\${id}\`); if (!res.ok) throw new Error('Not found'); const user: User = await res.json(); return user.name; }. User interface has name: string.`,
-          additionalInfo: `Handbook: typescriptlang.org/docs. React: use type for props; useState<User | null>. Node: type env with process.env. Zod or io-ts for runtime validation.`,
+          additionalInfo: `Handbook: typescriptlang.org/docs. React: use type for props; useState<User | null>. Node: type env with process.env. Zod or io-ts for runtime validation. **Curriculum:** Reference section; take after React or Node.js when you want type safety in frontend or backend.`,
         },
         codeExample: `interface User {
   id: number;
@@ -3300,7 +3505,7 @@ const Card: FC<{ title: string; onClick?: () => void }> = ({ title, onClick }) =
     slug: "backend",
     description:
       "REST API design, databases, authentication, and deployment beyond a single framework.",
-    order: 16,
+    order: 10,
     published: true,
     topics: [
       {
@@ -3319,18 +3524,20 @@ const Card: FC<{ title: string; onClick?: () => void }> = ({ title, onClick }) =
           ],
           learningFlowIntro: `**Your first step:** Read sections 1–2, then design on paper: 2 resources (e.g. users, tasks), list endpoints (GET/POST/PUT/DELETE) and which status code each returns.
 
-**Prerequisites:** HTTP & TCP Basics or Express & REST; you have built or used at least one API.
+**Prerequisites:** Computer Networks (HTTP & TCP Basics) and Node.js (Express & REST); you should have built or used at least one API so you know how HTTP methods and status codes map to operations.
 
 **By the end of this topic you will:** Design a REST API with clear resources and status codes, and document it (e.g. OpenAPI) for clients and tests.`,
-          material: `**REST:** Representational State Transfer. **Resources:** URL = noun (e.g. /users, /users/1). **Methods:** GET (read), POST (create), PUT (replace), PATCH (partial update), DELETE (remove). **Status:** 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Server Error. **Versioning:** URL /v1/users or header Accept-Version. **Documentation:** OpenAPI (Swagger); describe paths, params, body, responses. **Errors:** JSON body { "error": "code", "message": "human message" }. **Pagination:** ?page=1&limit=20 or cursor-based. **Filtering:** ?status=active&sort=-createdAt.`,
+          material: `**REST:** Representational State Transfer. **Resources:** URL = noun (e.g. /users, /users/1). **Methods:** GET (read), POST (create), PUT (replace), PATCH (partial update), DELETE (remove). **Status:** 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Server Error. **Versioning:** URL /v1/users or header Accept-Version. **Documentation:** OpenAPI (Swagger); describe paths, params, body, responses. **Errors:** JSON body { "error": "code", "message": "human message" }. **Pagination:** ?page=1&limit=20 or cursor-based. **Filtering:** ?status=active&sort=-createdAt.
+
+**In other words:** URL = resource (noun); method = action. GET is safe and idempotent; POST creates; PUT replaces; PATCH updates partially; DELETE removes. Consistent status codes make clients easier; OpenAPI docs enable codegen and testing.`,
           explanation: `REST uses HTTP semantics; clients and caches understand GET is safe and idempotent. Consistent status codes and error format make clients easier to write. OpenAPI enables codegen and testing.`,
           application: `Use for any backend API: mobile app, SPA, or service-to-service. Design first (resources and operations), then implement. Version when you break compatibility.`,
           howToImplement: `(1) GET /users → list; GET /users/:id → one; POST /users → create (body); PUT /users/:id → replace; DELETE /users/:id. (2) Return 201 for POST with Location header. (3) Validate body (e.g. Joi, Zod); return 400 with message. (4) OpenAPI: paths, components/schemas.`,
           logicAndCode: `Idempotent: GET, PUT, DELETE (same result if repeated). Safe: GET (no side effect). POST is neither. Use PUT when client sends full resource; PATCH for partial.`,
           example: `Problem: Design API for "tasks" (title, status, dueDate).
 
-Solution: GET /tasks (list, ?status=open); GET /tasks/:id; POST /tasks (body: title, dueDate); PATCH /tasks/:id (body: status); DELETE /tasks/:id. Return 200 + body for GET/PATCH; 201 + body for POST; 204 for DELETE.`,
-          additionalInfo: `GraphQL is alternative (single endpoint, client queries shape). gRPC for performance. REST is most common; know it well.`,
+Solution: GET /tasks (list, ?status=open); GET /tasks/:id; POST /tasks (body: title, dueDate); PATCH /tasks/:id (body: status); DELETE /tasks/:id. Return 200 + body for GET/PATCH; 201 + body for POST; 204 for DELETE. **Why:** POST returns 201 + the newly created resource; DELETE success with no body = 204.`,
+          additionalInfo: `**Takeaway:** Resource = noun URL; method = GET/POST/PUT/PATCH/DELETE; consistent status; uniform error body; OpenAPI docs. GraphQL is an alternative; gRPC for performance. REST is most common; master it first.`,
         },
         codeExample: `// REST endpoints (conceptual)
 // GET    /api/v1/tasks       → 200 [{ id, title, status }]
@@ -3363,15 +3570,17 @@ Solution: GET /tasks (list, ?status=open); GET /tasks/:id; POST /tasks (body: ti
 **Prerequisites:** REST API Design and one of Node/Express or similar; Security Basics (hashing, JWT idea).
 
 **By the end of this topic you will:** Implement login with JWT or sessions, choose SQL vs NoSQL for a use case, and use an ORM with migrations and avoid N+1.`,
-          material: `**Auth:** Register (hash password, store user); login (verify password, issue JWT or set session cookie). **JWT:** Header.payload.signature; payload has userId, exp; sign with secret; client sends in Authorization: Bearer <token>. **OAuth:** Redirect to provider (Google, GitHub); callback with code; exchange for token; create or link user. **SQL:** Relational; ACID; schema; JOIN; use for structured, transactional data. **NoSQL:** Document (MongoDB), key-value; flexible schema; scale horizontally; use for logs, catalogs. **ORM:** Map tables to classes; migrations for schema changes. **Pooling:** Reuse DB connections; limit pool size. **Indexes:** Speed up WHERE, JOIN; cost on writes. **N+1:** Loop + query per item; fix with eager load or batch.`,
+          material: `**Auth:** Register (hash password, store user); login (verify password, issue JWT or set session cookie). **JWT:** Header.payload.signature; payload has userId, exp; sign with secret; client sends in Authorization: Bearer <token>. **OAuth:** Redirect to provider (Google, GitHub); callback with code; exchange for token; create or link user. **SQL:** Relational; ACID; schema; JOIN; use for structured, transactional data. **NoSQL:** Document (MongoDB), key-value; flexible schema; scale horizontally; use for logs, catalogs. **ORM:** Map tables to classes; migrations for schema changes. **Pooling:** Reuse DB connections; limit pool size. **Indexes:** Speed up WHERE, JOIN; cost on writes. **N+1:** Loop + query per item; fix with eager load or batch.
+
+**In other words:** JWT = stateless token; server only verifies the signature. Session = stateful; ID stored in cookie. Never store password in plain text — hash (bcrypt). N+1 = one query inside a loop; fix with eager load or batch query.`,
           explanation: `JWT is stateless; server verifies signature. Session is stateful; store session id in cookie. SQL gives consistency and relations; NoSQL gives flexibility. ORM abstracts SQL but know the generated queries.`,
           application: `Use JWT for APIs (SPA, mobile); sessions for server-rendered. Use SQL for users, orders, reporting; NoSQL for events, feeds. Always use migrations for schema.`,
           howToImplement: `(1) JWT: on login, sign({ userId, exp }); middleware: verify token, attach user to req. (2) Prisma: schema.prisma with model; prisma migrate; prisma.client.user.findMany(). (3) Index: CREATE INDEX ON users(email); (4) Eager load: include: { posts: true } to avoid N+1.`,
           logicAndCode: `JWT verify: decode, check exp, check signature with same secret. Password: never store plain; bcrypt.hash then bcrypt.compare. Migration: versioned SQL or ORM migration; run in order.`,
           example: `Problem: Protect /api/users/me so only logged-in user gets their data.
 
-Solution: Middleware: extract Bearer token; verify JWT; attach user to req; next(). In route: return req.user. If no token or invalid, return 401.`,
-          additionalInfo: `Refresh token: long-lived, rotate; access token short-lived. Rate limit auth endpoints. DB: use connection string from env; never commit credentials.`,
+Solution: Middleware: extract Bearer token; verify JWT; attach user to req; next(). In route: return req.user. If no token or invalid, return 401. **Why:** One middleware protects all routes that need auth; route just reads req.user.`,
+          additionalInfo: `**Takeaway:** Login → hash password, issue JWT; protect routes = middleware verify JWT, attach user. SQL for structured data & transactions; NoSQL for flexibility & scale. Avoid N+1: eager load or batch. Refresh token: long-lived, rotate; access short-lived. Rate limit auth; never commit credentials.`,
         },
         codeExample: `// JWT (Node.js)
 const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });

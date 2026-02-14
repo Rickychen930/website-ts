@@ -1,101 +1,6 @@
 /* Learning page – design system tokens, learner-friendly layout
  * Breakpoints (align with Section/layout): ≤640px mobile, 768px tablet, 1024px desktop.
  * Touch targets: interactive elements min-height 2.75rem (44px) on small screens. */
-.quickNav {
-  padding: var(--spacing-lg) var(--spacing-xl);
-  border: 1px solid var(--theme-border);
-  background: var(--bg-secondary);
-  margin-bottom: var(--spacing-xl);
-  border-radius: var(--theme-radius-card);
-  box-shadow: var(--theme-shadow);
-}
-
-@media (width >= 1024px) {
-  .quickNav {
-    position: sticky;
-    top: var(--spacing-md);
-    z-index: 10;
-  }
-}
-
-.quickNavLabel {
-  display: block;
-  margin-bottom: var(--spacing-sm);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-}
-
-.quickNavList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm) var(--spacing-md);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.quickNavLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border: 1px solid var(--color-primary-alpha-20);
-  border-radius: var(--radius-full);
-  background: var(--color-primary-alpha-8);
-  color: var(--color-primary-600);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  text-decoration: none;
-  transition:
-    color var(--theme-transition),
-    background var(--theme-transition),
-    border-color var(--theme-transition),
-    transform var(--theme-transition);
-}
-
-.quickNavLink:hover {
-  background: var(--color-primary-alpha-12);
-  border-color: var(--color-primary-alpha-30);
-  color: var(--color-primary-700);
-  text-decoration: none;
-  transform: translateY(-1px);
-}
-
-.quickNavLink:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-outline-offset);
-  border-radius: var(--radius-full);
-}
-
-.quickNavIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary-600);
-}
-
-.quickNavIcon svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .quickNavLink:hover {
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .quickNavLink {
-    transition: none;
-  }
-}
-
-.quickNavPlain {
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-}
-
 .grid {
   display: grid;
   align-items: stretch;
@@ -113,11 +18,6 @@
 @media (width <= 640px) {
   .grid {
     gap: var(--spacing-lg);
-  }
-
-  .quickNav {
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
   }
 
   .cardBanner {
@@ -434,13 +334,6 @@
 
 /* Print: keep section cards on same page when possible */
 @media print {
-  .quickNav {
-    position: static;
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    break-inside: avoid;
-  }
-
   .card {
     break-inside: avoid;
     page-break-inside: avoid;
