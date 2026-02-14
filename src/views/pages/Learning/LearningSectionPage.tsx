@@ -16,37 +16,56 @@ import type { LearningTopicItem } from "@/types/domain";
 import { getSectionTheme, isPlaceholderImage } from "./sectionThemes";
 import styles from "./LearningSectionPage.module.css";
 
+function scrollToSectionTop() {
+  const el = document.getElementById("learning-section");
+  if (el) {
+    const preferReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    el.scrollIntoView({
+      behavior: preferReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }
+}
+
 interface TopicLinkProps {
   item: LearningTopicItem;
   sectionSlug: string;
+  sectionTheme: ReturnType<typeof getSectionTheme>;
   index: number;
-  total: number;
 }
 
 const TopicLink: React.FC<TopicLinkProps> = ({
   item,
   sectionSlug,
+  sectionTheme,
   index,
-  total,
 }) => {
   const detailUrl = `/learning/${sectionSlug}/${encodeURIComponent(item.id)}`;
-  const theme = getSectionTheme(sectionSlug);
   const useImage = item.imageUrl && !isPlaceholderImage(item.imageUrl);
   return (
-    <li className={styles.topicItem}>
-      <Link to={detailUrl} className={styles.topicLink}>
+    <li
+      className={styles.topicItem}
+      style={{ "--topic-accent": sectionTheme.gradient } as React.CSSProperties}
+    >
+      <Link
+        to={detailUrl}
+        className={styles.topicLink}
+        aria-label={`Read topic: ${item.title}`}
+      >
         <div
           className={styles.topicThumb}
           style={
             useImage
               ? { backgroundImage: `url(${item.imageUrl})` }
-              : { background: theme.gradient }
+              : { background: sectionTheme.gradient }
           }
           aria-hidden
         >
           {!useImage && (
             <span className={styles.topicThumbIcon} aria-hidden="true">
-              {theme.icon}
+              {sectionTheme.icon}
             </span>
           )}
         </div>
@@ -77,11 +96,26 @@ export const LearningSectionPage: React.FC = () => {
   const { sectionSlug } = useParams<{ sectionSlug: string }>();
   const { profile, isLoading, error, refetch } = useProfile();
 
-  const section = useMemo(() => {
-    if (!profile || !sectionSlug) return null;
-    const sections = profile.getPublishedLearningSections();
-    return sections.find((s) => s.slug === sectionSlug) ?? null;
+  const { section, sections, sectionIndex } = useMemo(() => {
+    if (!profile || !sectionSlug) {
+      return { section: null, sections: [], sectionIndex: -1 };
+    }
+    const list = profile.getPublishedLearningSections();
+    const idx = list.findIndex((s) => s.slug === sectionSlug);
+    const sec = idx >= 0 ? (list[idx] ?? null) : null;
+    return { section: sec, sections: list, sectionIndex: idx };
   }, [profile, sectionSlug]);
+
+  const prevSection = sectionIndex > 0 ? sections[sectionIndex - 1] : null;
+  const nextSection =
+    sectionIndex >= 0 && sectionIndex < sections.length - 1
+      ? sections[sectionIndex + 1]
+      : null;
+
+  const sectionTheme = useMemo(
+    () => getSectionTheme(section?.slug ?? ""),
+    [section?.slug],
+  );
 
   useSEO({
     title:
@@ -128,7 +162,9 @@ export const LearningSectionPage: React.FC = () => {
             </Link>
           </li>
           <li aria-hidden="true" className={styles.breadcrumbSep}>
-            /
+            <span className={styles.breadcrumbChevron} aria-hidden="true">
+              →
+            </span>
           </li>
           <li aria-current="page">
             <span className={styles.breadcrumbCurrent}>{section.title}</span>
@@ -137,19 +173,27 @@ export const LearningSectionPage: React.FC = () => {
       </nav>
 
       <header className={styles.header}>
-        {section.slug && (
-          <div
-            className={styles.sectionBanner}
-            style={{ background: getSectionTheme(section.slug).gradient }}
-          >
-            <span className={styles.sectionBannerIcon} aria-hidden="true">
-              {getSectionTheme(section.slug).icon}
-            </span>
-          </div>
-        )}
+        <div
+          className={styles.sectionBanner}
+          style={{ background: sectionTheme.gradient }}
+        >
+          <span className={styles.sectionBannerIcon} aria-hidden="true">
+            {sectionTheme.icon}
+          </span>
+        </div>
         <Typography variant="h1" weight="bold" as="h1" className={styles.title}>
           {section.title}
         </Typography>
+        {items.length > 0 && (
+          <Typography
+            variant="small"
+            color="tertiary"
+            as="p"
+            className={styles.topicCount}
+          >
+            {items.length} topic{items.length !== 1 ? "s" : ""}
+          </Typography>
+        )}
         {section.description && (
           <Typography
             variant="body"
@@ -163,13 +207,15 @@ export const LearningSectionPage: React.FC = () => {
       </header>
 
       <div className={styles.content}>
-        <Typography
-          variant="small"
-          weight="semibold"
-          className={styles.topicsLabel}
-        >
-          Select topic ({items.length})
-        </Typography>
+        {items.length > 0 && (
+          <Typography
+            variant="small"
+            weight="semibold"
+            className={styles.topicsLabel}
+          >
+            Topics 1–{items.length} · select one to read
+          </Typography>
+        )}
         {items.length > 0 ? (
           <ul
             className={styles.topicList}
@@ -180,8 +226,8 @@ export const LearningSectionPage: React.FC = () => {
                 key={item.id}
                 item={item}
                 sectionSlug={sectionSlug}
+                sectionTheme={sectionTheme}
                 index={idx}
-                total={items.length}
               />
             ))}
           </ul>
@@ -189,8 +235,8 @@ export const LearningSectionPage: React.FC = () => {
           <div className={styles.emptyState}>
             <span className={styles.emptyIcon} aria-hidden="true">
               <svg
-                width="48"
-                height="48"
+                width="80"
+                height="80"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -215,13 +261,52 @@ export const LearningSectionPage: React.FC = () => {
       </div>
 
       <footer className={styles.footer}>
-        <Link
-          to="/learning"
-          className={styles.backLink}
-          aria-label="Back to Learning overview"
+        {items.length > 8 && (
+          <button
+            type="button"
+            onClick={scrollToSectionTop}
+            className={styles.backToTop}
+            aria-label="Scroll back to top of section"
+          >
+            <Typography variant="small" weight="medium" as="span">
+              Back to top
+            </Typography>
+          </button>
+        )}
+        <nav
+          className={styles.footerNav}
+          aria-label="Section and curriculum navigation"
         >
-          ← Back to Learning
-        </Link>
+          {prevSection?.slug ? (
+            <Link
+              to={`/learning/${prevSection.slug}`}
+              className={styles.footerNavLink}
+              aria-label={`Previous section: ${prevSection.title}`}
+            >
+              ← {prevSection.title}
+            </Link>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+          <Link
+            to="/learning"
+            className={styles.backLink}
+            aria-label="Back to Learning overview"
+          >
+            Back to Learning
+          </Link>
+          {nextSection?.slug ? (
+            <Link
+              to={`/learning/${nextSection.slug}`}
+              className={styles.footerNavLink}
+              aria-label={`Next section: ${nextSection.title}`}
+            >
+              {nextSection.title} →
+            </Link>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+        </nav>
       </footer>
     </Section>
   );

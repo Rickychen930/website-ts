@@ -240,13 +240,9 @@ function parseNestedListLines(
 
 interface TopicDetailContentProps {
   item: LearningTopicItem;
-  sectionSlug: string;
 }
 
-const TopicDetailContent: React.FC<TopicDetailContentProps> = ({
-  item,
-  sectionSlug,
-}) => {
+const TopicDetailContent: React.FC<TopicDetailContentProps> = ({ item }) => {
   const content = item.content ?? "";
   const sections = useMemo(() => parseStructuredContent(content), [content]);
   const byNum = useMemo(
@@ -292,17 +288,17 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({
         );
       }
       if (isListBlock(block)) {
-        const items = parseNestedListLines(block);
+        const listItems = parseNestedListLines(block);
         return (
           <ul key={i} className={styles.bodyList}>
-            {items.map((item, j) => (
+            {listItems.map((entry, j) => (
               <li key={j}>
                 <Typography variant="body" color="secondary" as="span">
-                  {renderInline(item.text)}
+                  {renderInline(entry.text)}
                 </Typography>
-                {item.children.length > 0 && (
+                {entry.children.length > 0 && (
                   <ul className={styles.bodyListNested}>
-                    {item.children.map((child, k) => (
+                    {entry.children.map((child, k) => (
                       <li key={k}>
                         <Typography variant="body" color="secondary" as="span">
                           {renderInline(child)}
@@ -481,6 +477,19 @@ export const LearningTopicDetail: React.FC = () => {
     type: "profile",
   });
 
+  const sectionTheme = useMemo(
+    () => getSectionTheme(sectionAndTopic?.section?.slug ?? ""),
+    [sectionAndTopic?.section?.slug],
+  );
+
+  const readingMinutes = useMemo(() => {
+    const t = sectionAndTopic?.topic;
+    if (!t) return 0;
+    const text = [t.description, t.content].filter(Boolean).join(" ");
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    return words > 0 ? Math.max(1, Math.ceil(words / 200)) : 0;
+  }, [sectionAndTopic?.topic]);
+
   if (isLoading) {
     return <Loading fullScreen message="Loading topic..." />;
   }
@@ -515,6 +524,9 @@ export const LearningTopicDetail: React.FC = () => {
       tabIndex={-1}
       className={styles.wrapper}
       variant="alt"
+      style={
+        { "--learning-accent": sectionTheme.gradient } as React.CSSProperties
+      }
     >
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
         <ol className={styles.breadcrumbList}>
@@ -524,7 +536,9 @@ export const LearningTopicDetail: React.FC = () => {
             </Link>
           </li>
           <li aria-hidden="true" className={styles.breadcrumbSep}>
-            /
+            <span className={styles.breadcrumbChevron} aria-hidden="true">
+              →
+            </span>
           </li>
           <li>
             <Link
@@ -535,7 +549,9 @@ export const LearningTopicDetail: React.FC = () => {
             </Link>
           </li>
           <li aria-hidden="true" className={styles.breadcrumbSep}>
-            /
+            <span className={styles.breadcrumbChevron} aria-hidden="true">
+              →
+            </span>
           </li>
           <li aria-current="page">
             <span className={styles.breadcrumbCurrent}>{topic.title}</span>
@@ -547,16 +563,26 @@ export const LearningTopicDetail: React.FC = () => {
         {section.slug && (
           <div
             className={styles.sectionBanner}
-            style={{ background: getSectionTheme(section.slug).gradient }}
+            style={{ background: sectionTheme.gradient }}
           >
             <span className={styles.sectionBannerIcon} aria-hidden="true">
-              {getSectionTheme(section.slug).icon}
+              {sectionTheme.icon}
             </span>
           </div>
         )}
         <Typography variant="h1" weight="bold" as="h1" className={styles.title}>
           {topic.title}
         </Typography>
+        {readingMinutes > 0 && (
+          <Typography
+            variant="small"
+            color="tertiary"
+            as="p"
+            className={styles.readingTime}
+          >
+            {readingMinutes} min read
+          </Typography>
+        )}
         {topic.description && (
           <Typography
             variant="body"
@@ -581,15 +607,16 @@ export const LearningTopicDetail: React.FC = () => {
             className={styles.heroImage}
             loading="eager"
             decoding="async"
+            fetchPriority="high"
           />
         ) : (
           <div
             className={styles.heroPlaceholder}
-            style={{ background: getSectionTheme(section.slug).gradient }}
+            style={{ background: sectionTheme.gradient }}
             aria-hidden
           >
             <span className={styles.heroPlaceholderIcon}>
-              {getSectionTheme(section.slug).icon}
+              {sectionTheme.icon}
             </span>
           </div>
         )}
@@ -598,7 +625,7 @@ export const LearningTopicDetail: React.FC = () => {
       <div className={styles.content}>
         {topic.content || topic.codeExample || topic.imageUrl ? (
           isStructuredContent(topic.content ?? "") ? (
-            <TopicDetailContent item={topic} sectionSlug={section.slug} />
+            <TopicDetailContent item={topic} />
           ) : (
             <div className={styles.plainContent}>
               {topic.content?.split(/\n\n+/).map((para, i) => (

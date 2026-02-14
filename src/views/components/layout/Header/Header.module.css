@@ -205,7 +205,7 @@
   box-shadow: var(--shadow-glow);
 }
 
-/* Dropdown – desktop (base styles) */
+/* Dropdown – desktop (base styles); trigger matches .navLink visually */
 .navDropdown {
   position: relative;
 }
@@ -230,8 +230,10 @@
   border-radius: var(--radius-md);
   font-family: inherit;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
+/* Same hover/active overlay as .navLink */
 .navDropdownTrigger::before {
   content: "";
   position: absolute;
@@ -258,6 +260,31 @@
 .navDropdownTrigger:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-md);
+}
+
+/* Active state: same as .navLinkActive so "More" matches other nav items */
+.navDropdownTrigger.navLinkActive {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-alpha-10) 0%,
+    var(--color-accent-alpha-10) 100%
+  );
+  color: var(--color-primary-500);
+  font-weight: var(--font-weight-semibold);
+}
+
+.navDropdownTrigger.navLinkActive::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: var(--gradient-primary-accent);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  box-shadow: var(--shadow-glow);
 }
 
 .navDropdownChevron {

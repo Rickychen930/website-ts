@@ -75,8 +75,8 @@ export const Learning: React.FC = () => {
         <div className={styles.emptyState}>
           <span className={styles.emptyIcon} aria-hidden="true">
             <svg
-              width="64"
-              height="64"
+              width="80"
+              height="80"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -97,6 +97,9 @@ export const Learning: React.FC = () => {
           <Typography variant="small" color="secondary">
             Run the seed script to load the curriculum, or check back later.
           </Typography>
+          <Link to="/" className={styles.emptyStateLink}>
+            Back to Home
+          </Link>
         </div>
       </Section>
     );
@@ -109,7 +112,7 @@ export const Learning: React.FC = () => {
       label="Curriculum"
       title="Learning"
       subtitle="Structured topics: algorithms, frameworks, and best practices."
-      info="Select a section to view topics, then open a topic for full details."
+      info={`Select a section to view topics, then open a topic for full details. (${sections.length} section${sections.length !== 1 ? "s" : ""})`}
       variant="alt"
     >
       {sections.length > 1 && (
@@ -119,16 +122,22 @@ export const Learning: React.FC = () => {
             weight="semibold"
             className={styles.quickNavLabel}
           >
-            Jump to:
+            Jump to section
           </Typography>
           <ul className={styles.quickNavList}>
-            {sections.map((sec) =>
-              sec.slug ? (
+            {sections.map((sec) => {
+              const theme = sec.slug ? getSectionTheme(sec.slug) : null;
+              return sec.slug ? (
                 <li key={sec.id}>
                   <Link
                     to={`/learning/${sec.slug}`}
                     className={styles.quickNavLink}
                   >
+                    {theme && (
+                      <span className={styles.quickNavIcon} aria-hidden="true">
+                        {theme.icon}
+                      </span>
+                    )}
                     {sec.title}
                   </Link>
                 </li>
@@ -136,8 +145,8 @@ export const Learning: React.FC = () => {
                 <li key={sec.id}>
                   <span className={styles.quickNavPlain}>{sec.title}</span>
                 </li>
-              ),
-            )}
+              );
+            })}
           </ul>
         </nav>
       )}
@@ -151,7 +160,7 @@ export const Learning: React.FC = () => {
           />
         ))}
       </div>
-      {sections.length >= 6 && (
+      {sections.length >= 4 && (
         <div className={styles.footerActions}>
           <button
             type="button"
@@ -198,7 +207,11 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
   const theme = section.slug ? getSectionTheme(section.slug) : null;
 
   return (
-    <ScrollReveal direction="up" className={styles.gridItem}>
+    <ScrollReveal
+      direction="up"
+      delay={(sectionIndex - 1) * 80}
+      className={styles.gridItem}
+    >
       <Link
         to={sectionUrl}
         className={styles.cardLink}
@@ -210,6 +223,13 @@ const LearningSectionCard: React.FC<LearningSectionCardProps> = ({
           padding="none"
           className={styles.card}
         >
+          {theme && (
+            <div
+              className={styles.cardAccent}
+              style={{ background: theme.gradient }}
+              aria-hidden="true"
+            />
+          )}
           {/* Gradient banner with icon */}
           {theme && (
             <div
