@@ -105,7 +105,7 @@ Solution: Active recall — after reading, close the page and write 3 key points
     title: "Competitive Programming",
     slug: "competitive-programming",
     description:
-      "Foundation for coding interviews: Big O, sorting, binary search, prefix sum, sliding window, greedy, DP, graphs, trees, and more. Start with Complexity & Strategy.",
+      "Big O, two pointers, binary search, prefix sum, sliding window, DP, greedy, graphs, trees, heaps, Dijkstra, backtracking, intervals, stack, bit manipulation, and interview tips.",
     order: 1,
     published: true,
     topics: [
@@ -144,10 +144,10 @@ Time vs space: you can often use extra memory (e.g. hash map) to reduce time.`,
           logicAndCode: `- Loop O(n): Iteration from i=0 to n-1; each iteration does constant work. Total = n → O(n).
 - Nested loop O(n²): Outer n times, inner n times → n×n = n².
 - Two Sum O(n): One pass with map. For each x, check if (target - x) is in the map. If yes, pair found. Insert x after check. Lookup O(1) per element.`,
-          example: `Problem: Two Sum — Given array nums and target, return indices of two numbers that add up to target. (LeetCode #1.)
+          example: `Problem: Two Sum — Given array nums and target, return indices of two numbers that add up to target. See [LeetCode #1 Two Sum](https://leetcode.com/problems/two-sum/).
 
 Solution (C++): One pass with unordered_map<int,int> (value → index). For each nums[i], if (target - nums[i]) exists in map, return {map[target-nums[i]], i}. Otherwise map[nums[i]] = i. Time O(n), space O(n).`,
-          additionalInfo: `Strategy: practice daily on Codeforces or LeetCode; focus on patterns (two pointers, sliding window, DP). Common complexities: O(1), O(log n), O(n), O(n log n), O(n²). Interview tip: State complexity when presenting; explain trade-off (e.g. O(n) time + O(n) space vs O(n²) time + O(1) space).`,
+          additionalInfo: `Strategy: practice daily on Codeforces or [LeetCode](https://leetcode.com/); focus on patterns (two pointers, sliding window, DP). Common complexities: O(1), O(log n), O(n), O(n log n), O(n²). Interview tip: State complexity when presenting; explain trade-off (e.g. O(n) time + O(n) space vs O(n²) time + O(1) space).`,
         },
         codeExample: `// C++: Loop O(n) - one pass
 for (int i = 0; i < n; i++) {
@@ -195,12 +195,14 @@ vector<int> twoSum(vector<int>& nums, int target) {
           application: `Sorting when order matters (pairs, merge intervals). Binary search for lookup in sorted data or when the answer is monotonic. Two pointers for pairs, subarrays, or removal in place.`,
           howToImplement: `(1) Sort with std::sort(a.begin(), a.end()) whenever you need ordered data.
 (2) Binary search: range [lo, hi]; mid = lo + (hi - lo) / 2; compare a[mid] with target; set lo = mid + 1 or hi = mid - 1.
-(3) Two pointers on sorted array: i=0, j=n-1; if a[i]+a[j]==target done; if sum < target then i++; else j--.`,
+(3) Two pointers on sorted array: i=0, j=n-1; if a[i]+a[j]==target done; if sum < target then i++; else j--.
+
+**Note:** Always use mid = lo + (hi - lo) / 2 instead of (lo + hi) / 2 to avoid integer overflow when lo and hi are large.`,
           logicAndCode: `Binary search: Each iteration halves the range → O(log n). Two pointers: i and j move toward each other; each step moves at least one pointer → O(n).`,
-          example: `Problem: Two Sum II — Sorted array, find two numbers that add up to target. Return 1-based indices. (LeetCode #167.)
+          example: `Problem: Two Sum II — Sorted array, find two numbers that add up to target. Return 1-based indices. See [LeetCode #167 Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/).
 
 Solution: Two pointers. i=0, j=n-1; while(i<j) { if(a[i]+a[j]==target) return {i+1,j+1}; if(sum<target) i++; else j--; } Time O(n), space O(1).`,
-          additionalInfo: `LeetCode: Two Sum, 3Sum, Binary Search. Use lo + (hi-lo)/2 to avoid overflow. Clarify if array is sorted; if not, ask if you may sort.`,
+          additionalInfo: `LeetCode: [Two Sum](https://leetcode.com/problems/two-sum/), [Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/), [3Sum](https://leetcode.com/problems/3sum/), Binary Search. Use lo + (hi-lo)/2 to avoid overflow. Clarify if array is sorted; if not, ask if you may sort.`,
         },
         codeExample: `// C++: Binary Search - find x in sorted array
 int lo = 0, hi = n - 1;
@@ -249,10 +251,10 @@ vector<int> twoSum(vector<int>& a, int target) {
 (2) Sliding window: two pointers i, j; extend j and update state; when invalid, shrink i until valid; update answer at each valid step.
 (3) Subarray sum equals K: map that counts prefixes with a given sum; for each j, add count of prefixes with sum = (current_sum - K).`,
           logicAndCode: `pre[r+1]-pre[l] = a[l]+...+a[r]. Subarray sum K: for subarray ending at j, we want pre[j+1]-pre[i]=K → pre[i]=pre[j+1]-K. Count how many pre[i] we have seen equal to pre[j+1]-K.`,
-          example: `Problem: Subarray Sum Equals K — Count subarrays with sum K. (LeetCode #560.)
+          example: `Problem: Subarray Sum Equals K — Count subarrays with sum K. See [LeetCode #560](https://leetcode.com/problems/subarray-sum-equals-k/).
 
 Solution: cnt[0]=1. For each x: sum+=x; ans+=cnt[sum-K]; cnt[sum]++. Time O(n), space O(n).`,
-          additionalInfo: `LeetCode: Subarray Sum Equals K, Longest Substring with At Most K Distinct, Minimum Window Substring. Variable window: expand right, shrink left while valid.`,
+          additionalInfo: `LeetCode: [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/), [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/), [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/). Variable window: expand right, shrink left while valid.`,
         },
         codeExample: `// Prefix sum - build and query O(1)
 vector<int> pre(n+1);
@@ -305,7 +307,7 @@ int subarraySum(vector<int>& nums, int k) {
           example: `Problem: 0/1 Knapsack — n items (weight[], value[]), capacity W. Maximize total value. Each item at most once.
 
 Solution: vector<int> dp(W+1, 0); for(i) for(w=W; w>=weight[i]; w--) dp[w]=max(dp[w], value[i]+dp[w-weight[i]]); return dp[W]. Time O(n*W), space O(W).`,
-          additionalInfo: `LeetCode: Climbing Stairs, Coin Change, LIS, Partition Equal Subset Sum. Interview tip: Start with brute-force recursion → memoization → tabulation. Space optimization: knapsack iterate w backwards.`,
+          additionalInfo: `LeetCode: [Climbing Stairs #70](https://leetcode.com/problems/climbing-stairs/), [Coin Change](https://leetcode.com/problems/coin-change/), [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/), [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/). **Tip:** Start with brute-force recursion → memoization → tabulation. Space optimization: knapsack iterate w backwards.`,
         },
         codeExample: `// 0/1 Knapsack - tabulation 2D
 vector<vector<int>> dp(n+1, vector<int>(W+1, 0));
@@ -355,7 +357,7 @@ return dp[W];`,
           example: `Problem: Activity Selection — n activities [start, end]; max number of non-overlapping activities.
 
 Solution: Sort by end time. Take first activity; for each next, if start >= lastEnd, take it and update lastEnd. Time O(n log n), space O(1). Proof: greedy choice (earliest finishing) leaves maximum room for rest.`,
-          additionalInfo: `LeetCode: Jump Game, Merge Intervals, Task Scheduler. Complexity: always state O(n) or O(n log n) and why. Interview: say "I'll try greedy" and give a one-line proof.`,
+          additionalInfo: `LeetCode: [Jump Game](https://leetcode.com/problems/jump-game/), [Merge Intervals](https://leetcode.com/problems/merge-intervals/), [Task Scheduler](https://leetcode.com/problems/task-scheduler/). Complexity: always state O(n) or O(n log n) and why. Interview: say "I'll try greedy" and give a one-line proof.`,
         },
         codeExample: `// Activity Selection - O(n log n)
 vector<pair<int,int>> activities; // (end, start)
@@ -400,10 +402,10 @@ return coins;
 (2) BFS: queue, visited array; push source; while queue not empty: pop, for each neighbor if !visited push and mark.
 (3) DFS: visited array; function dfs(u): mark u; for v in adj[u]: if !visited[v] dfs(v).`,
           logicAndCode: `Each vertex enqueued/pushed once, each edge examined once → O(V+E). Space: queue or stack holds at most O(V) nodes; visited O(V).`,
-          example: `Problem: Number of Islands (grid of '1' and '0'; count connected components of '1').
+          example: `Problem: Number of Islands — grid of '1' and '0'; count connected components of '1'. See [LeetCode #200](https://leetcode.com/problems/number-of-islands/).
 
 Solution: For each cell, if '1' and not visited, run BFS or DFS to mark all connected '1', then count++. Time O(rows*cols), space O(rows*cols).`,
-          additionalInfo: `LeetCode: Number of Islands, Course Schedule (topological), Clone Graph. Interview: state "BFS for shortest path, DFS for explore all"; complexity O(V+E).`,
+          additionalInfo: `LeetCode: [Number of Islands](https://leetcode.com/problems/number-of-islands/), [Course Schedule](https://leetcode.com/problems/course-schedule/) (topological), [Clone Graph](https://leetcode.com/problems/clone-graph/). Interview: state "BFS for shortest path, DFS for explore all"; complexity O(V+E).`,
         },
         codeExample: `// BFS - shortest path in unweighted graph
 vector<int> dist(n, -1);
@@ -429,6 +431,748 @@ function<void(int)> dfs = [&](int u) {
 };
 dfs(0);
 `,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "trees-and-bst",
+        title: "Trees & Binary Search Tree",
+        description:
+          "Tree traversal, BST property, LCA, validate BST; essential for Google & IMC.",
+        order: 6,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read tree representation: node with left/right (or children); BST = left < root < right for every node.",
+            "Implement inorder (LNR), preorder (NLR), postorder (LRN); iterative with stack.",
+            "Solve Validate BST and Lowest Common Ancestor of a BST.",
+            "Practice: Binary Tree Max Depth, Level Order, Serialize/Deserialize.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Implement inorder traversal (recursive then iterative with stack). Solve [Validate BST](https://leetcode.com/problems/validate-binary-search-tree/) — pass min/max range down; or use inorder and check ascending.
+
+**Prerequisites:** Graphs BFS/DFS (traversal idea). Recursion.
+
+**By the end of this topic you will:** Traverse trees (recursive and iterative), use BST property for O(h) search/LCA, and validate BST.`,
+          material: `**Tree:** Rooted; each node has 0+ children. **Binary tree:** At most 2 children (left, right). **BST:** For every node, left subtree keys < root < right subtree keys; inorder gives sorted order. **Traversal:** Inorder (LNR) = sorted for BST; preorder (NLR) = root first; postorder (LRN) = children before root. **LCA in BST:** If p, q < root go left; if p, q > root go right; else root is LCA. **Complexity:** O(n) for full traversal; O(h) for BST operations (h = height).`,
+          explanation: `BST property lets you discard half the tree per step → O(h). For "validate BST" pass (min, max) allowed range per node. Iterative traversal uses explicit stack to avoid recursion stack overflow.`,
+          application: `BST: search, insert, delete; Kth smallest (inorder); LCA; range queries. General tree: max depth, diameter, path sum, serialize. Often asked at Google and IMC.`,
+          howToImplement: `(1) Inorder recursive: if (!root) return; inorder(root->left); process(root); inorder(root->right).
+(2) Inorder iterative: stack; push left path, pop and process, then go right.
+(3) Validate BST: helper(root, min, max); check root in (min,max); recurse left with (min, root->val), right with (root->val, max). Use long to avoid INT overflow.
+(4) LCA BST: while (root) { if (p->val < root->val && q->val < root->val) root = root->left; else if (p->val > root->val && q->val > root->val) root = root->right; else return root; }`,
+          logicAndCode: `Inorder iterative: simulate recursion with stack; go left until null, pop (process), then current = right. Validate BST: range shrinks at each step; if node outside range, invalid. LCA: first node where p and q diverge (one left, one right) is LCA.`,
+          example: `Problem: Validate BST — Every node must be in (min, max) for its subtree. See [LeetCode #98](https://leetcode.com/problems/validate-binary-search-tree/).
+
+Solution: bool valid(TreeNode* r, long lo, long hi) { if (!r) return true; if (r->val <= lo || r->val >= hi) return false; return valid(r->left, lo, r->val) && valid(r->right, r->val, hi); } Call with (LONG_MIN, LONG_MAX).`,
+          additionalInfo: `LeetCode: [Validate BST](https://leetcode.com/problems/validate-binary-search-tree/), [LCA of BST](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), [Kth Smallest in BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/), [Binary Tree Level Order](https://leetcode.com/problems/binary-tree-level-order-traversal/), [Max Depth](https://leetcode.com/problems/maximum-depth-of-binary-tree/). **Tip:** Use long for BST range to avoid overflow with INT_MIN/INT_MAX.`,
+        },
+        codeExample: `// Inorder iterative (BST → sorted)
+vector<int> inorder(TreeNode* root) {
+  vector<int> out;
+  stack<TreeNode*> st;
+  while (root || !st.empty()) {
+    while (root) { st.push(root); root = root->left; }
+    root = st.top(); st.pop();
+    out.push_back(root->val);
+    root = root->right;
+  }
+  return out;
+}
+
+// LCA in BST - O(h)
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+  while (root) {
+    if (p->val < root->val && q->val < root->val) root = root->left;
+    else if (p->val > root->val && q->val > root->val) root = root->right;
+    else return root;
+  }
+  return nullptr;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "heaps-and-priority-queue",
+        title: "Heaps & Priority Queue",
+        description:
+          "Min/max heap, top K, merge K sorted lists; common at Google and Optiver.",
+        order: 7,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read heap: complete binary tree with heap property (min-heap: parent ≤ children).",
+            "Implement extract-min and insert (bubble up/down); or use language PQ (C++ priority_queue, Python heapq).",
+            "Solve Top K Frequent Elements and Merge K Sorted Lists.",
+            "State complexity: insert/extract O(log n); top K with heap O(n log k).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Solve [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/): count frequencies with map, then keep a min-heap of size K (if heap size > K pop smallest). Result = elements in heap. Time O(n log k).
+
+**Prerequisites:** Trees (binary tree shape). Sorting.
+
+**By the end of this topic you will:** Use heap for top-K, merge K sorted lists, find median; state O(log n) per operation.`,
+          material: `**Heap:** Complete binary tree; min-heap = root is minimum (max-heap = root maximum). **Operations:** insert O(log n), extract-min O(log n), peek O(1). **Array representation:** parent at i → children at 2i+1, 2i+2; child at i → parent at (i-1)/2. **Use cases:** Top K (min-heap of size K), merge K sorted (heap of head of each list), median (two heaps). **Language:** C++ \`priority_queue<int>\` is max-heap; min-heap = \`priority_queue<int, vector<int>, greater<int>>\`. Python \`heapq\` (min-heap only).`,
+          explanation: `Top K: keep only K largest in min-heap; when size > K pop min. Merge K lists: push first node of each list; pop min, push next from same list. Two heaps for median: left = max-heap (first half), right = min-heap (second half); balance sizes.`,
+          application: `Top K frequent, top K largest, merge K sorted lists, find median from stream, Dijkstra (priority queue). Frequently asked at Google and trading firms.`,
+          howToImplement: `(1) Top K largest: min-heap of size K. For each x: push x; if size > K pop min. Final heap = K largest.
+(2) Merge K sorted: heap of (value, listIndex, indexInList). Push (list[i][0], i, 0) for each list. Pop min, append to result; push next from same list if exists.
+(3) C++: priority_queue<T, vector<T>, greater<T>> for min-heap.`,
+          logicAndCode: `Heap maintains invariant: after each op, root is min (or max). Top K: invariant = "heap contains the current K largest seen so far". Merge K: invariant = "heap front is the smallest unprocessed element across all lists".`,
+          example: `Problem: Merge K Sorted Lists — K linked lists, each sorted; return one sorted list. See [LeetCode #23](https://leetcode.com/problems/merge-k-sorted-lists/).
+
+Solution: Min-heap of (node->val, list_id). Push head of each list. While heap not empty: pop min, append to result, push next from same list. Time O(N log K) where N = total nodes, K = lists.`,
+          additionalInfo: `LeetCode: [Top K Frequent](https://leetcode.com/problems/top-k-frequent-elements/), [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), [Kth Largest in Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/). **Note:** Optiver/IMC may ask "design a data structure" — two heaps for median is a classic.`,
+        },
+        codeExample: `// C++: Min-heap for top K largest (keep heap size = K)
+vector<int> topK(vector<int>& nums, int k) {
+  priority_queue<int, vector<int>, greater<int>> pq;
+  for (int x : nums) {
+    pq.push(x);
+    if (pq.size() > k) pq.pop();
+  }
+  vector<int> ans;
+  while (!pq.empty()) { ans.push_back(pq.top()); pq.pop(); }
+  return ans;
+}
+
+// Merge K sorted lists - push (val, list index, node)
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+  auto cmp = [](auto& a, auto& b) { return a.first > b.first; };
+  priority_queue<pair<int,int>, vector<pair<int,int>>, decltype(cmp)> pq(cmp);
+  for (int i = 0; i < lists.size(); i++)
+    if (lists[i]) pq.push({lists[i]->val, i});
+  ListNode dummy; ListNode* tail = &dummy;
+  while (!pq.empty()) {
+    auto [v, i] = pq.top(); pq.pop();
+    tail->next = lists[i]; tail = tail->next;
+    lists[i] = lists[i]->next;
+    if (lists[i]) pq.push({lists[i]->val, i});
+  }
+  return dummy.next;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "dijkstra-shortest-path",
+        title: "Dijkstra & Shortest Paths",
+        description:
+          "Weighted graphs, Dijkstra's algorithm, when to use BFS vs Dijkstra.",
+        order: 8,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read: BFS = unweighted shortest path; Dijkstra = non-negative weighted shortest path.",
+            "Implement Dijkstra with priority queue: (dist, node); relax edges from current node.",
+            "Solve Network Delay Time or Cheapest Flights Within K Stops.",
+            "State: Dijkstra O((V+E) log V) with PQ; negative edges need Bellman–Ford.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Implement Dijkstra from a single source: PQ of (distance, node), start with (0, src). Pop smallest dist; for each neighbor, if dist[u] + w < dist[v] then update and push (dist[v], v). Solve [Network Delay Time](https://leetcode.com/problems/network-delay-time/).
+
+**Prerequisites:** Graphs BFS/DFS, Heaps (priority queue).
+
+**By the end of this topic you will:** Implement Dijkstra, state when to use it vs BFS, and handle "shortest path with at most K edges" (BFS on state (node, steps)).`,
+          material: `**BFS:** Unweighted graph; shortest path = fewest edges. **Dijkstra:** Weighted graph, non-negative weights; shortest path by total weight. **Idea:** Always relax from the vertex with smallest known distance (greedy). **PQ:** Store (distance, node); pop min; for each neighbor v, if dist[u] + w(u,v) < dist[v] then update dist[v] and push (dist[v], v). **Complexity:** O((V+E) log V) with binary heap. **Negative weights:** Dijkstra fails; use Bellman–Ford. **Variants:** "At most K stops" = BFS over state (node, steps used).`,
+          explanation: `Dijkstra is greedy: the first time we pop a node, we have its final shortest distance (because weights are non-negative). Relaxation: we only update if we found a shorter path.`,
+          application: `Single-source shortest path (routing, network delay). Google/IMC/Optiver may ask "shortest path in a grid with weights" or "cheapest flight with at most K stops".`,
+          howToImplement: `(1) Initialize dist[src]=0, else INF. PQ = (0, src).
+(2) While PQ not empty: pop (d, u). If d > dist[u] skip (stale).
+(3) For each edge (u, v, w): if dist[u] + w < dist[v], set dist[v] = dist[u] + w, push (dist[v], v).
+(4) Return dist[target] or max(dist) for "reach all".`,
+          logicAndCode: `Each node can be pushed multiple times (with improved dist); we skip when we pop a stale (larger) distance. First time we pop a node = its distance is final.`,
+          example: `Problem: Network Delay Time — n nodes, times[i] = (u, v, w). Signal from node k. Time for all to receive? See [LeetCode #743](https://leetcode.com/problems/network-delay-time/).
+
+Solution: Dijkstra from k. Return max(dist); if any dist remains INF return -1. Time O((V+E) log V).`,
+          additionalInfo: `LeetCode: [Network Delay Time](https://leetcode.com/problems/network-delay-time/), [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) (BFS on (node, stops)). **Important:** Dijkstra does not work with negative edge weights; mention Bellman–Ford if asked.`,
+        },
+        codeExample: `// Dijkstra - single source shortest path (non-negative weights)
+vector<int> dijkstra(int n, vector<vector<pair<int,int>>>& adj, int src) {
+  vector<int> dist(n, INT_MAX);
+  dist[src] = 0;
+  priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+  pq.push({0, src});
+  while (!pq.empty()) {
+    auto [d, u] = pq.top(); pq.pop();
+    if (d > dist[u]) continue;
+    for (auto [v, w] : adj[u]) {
+      if (dist[u] + w < dist[v]) {
+        dist[v] = dist[u] + w;
+        pq.push({dist[v], v});
+      }
+    }
+  }
+  return dist;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "backtracking-recursion",
+        title: "Backtracking & Recursion",
+        description:
+          "Subsets, permutations, combinations; base case, choice, recurse, undo.",
+        order: 9,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read backtracking template: base case → process; for each choice → try, recurse, undo.",
+            "Implement Subsets (include/exclude each element) and Permutations (swap or used array).",
+            "Solve Combination Sum and Letter Combinations of a Phone Number.",
+            "State time: subsets O(2^n), permutations O(n!).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Solve [Subsets](https://leetcode.com/problems/subsets/): for each index, either include or exclude the element; recurse; backtrack. Solve [Permutations](https://leetcode.com/problems/permutations/): for each position, try every unused element; recurse; undo.
+
+**Prerequisites:** Recursion, arrays. DFS (backtracking is DFS on implicit "choice tree").
+
+**By the end of this topic you will:** Write backtracking with clear base case, choice, recurse, undo; solve subset/permutation/combination problems.`,
+          material: `**Backtracking:** Build solution incrementally; when stuck, undo last choice and try another. **Template:** (1) Base case: add current state to result. (2) For each valid choice: make choice, recurse, undo choice. **Subsets:** 2^n; at each index include or not. **Permutations:** n!; at each position try each unused element (use \`used\` array or swap). **Combinations:** C(n,k); same as subsets but only add when path length = k. **Complexity:** Often exponential; prune invalid branches early.`,
+          explanation: `The "undo" step restores state so the next sibling branch sees the same state. Used array (or swap) ensures each element used once per path. For "combination sum" allow reuse by not incrementing index; avoid duplicates by sorting and skipping same value.`,
+          application: `Subsets, permutations, combinations; letter combinations; palindrome partitioning; Sudoku; N-queens. Very common at Google.`,
+          howToImplement: `(1) Subsets: void dfs(int i) { if (i==n) { ans.push_back(path); return; } path.push_back(nums[i]); dfs(i+1); path.pop_back(); dfs(i+1); }
+(2) Permutations: for (int j=0; j<n; j++) if (!used[j]) { used[j]=true; path.push_back(nums[j]); dfs(); path.pop_back(); used[j]=false; }
+(3) Combination sum: sort; at each step take current or skip; if skip, skip all same values to avoid duplicate sets.`,
+          logicAndCode: `Recursion tree: each node = state; children = choices. Backtrack = undo so parent can try next child. Pruning: if (sum > target) return; or if (path.size() == k) add and return.`,
+          example: `Problem: Subsets — all subsets of distinct integers. See [LeetCode #78](https://leetcode.com/problems/subsets/).
+
+Solution: path = []; dfs(0): if i==n push path and return. path.push_back(nums[i]); dfs(i+1); path.pop_back(); dfs(i+1). Time O(2^n), space O(n).`,
+          additionalInfo: `LeetCode: [Subsets](https://leetcode.com/problems/subsets/), [Permutations](https://leetcode.com/problems/permutations/), [Combination Sum](https://leetcode.com/problems/combination-sum/), [Letter Combinations](https://leetcode.com/problems/letter-combinations-of-a-phone-number/). **Tip:** For "no duplicate subsets" when array has duplicates: sort and in the "skip" branch do while (i+1 < n && nums[i+1]==nums[i]) i++; then dfs(i+1).`,
+        },
+        codeExample: `// Subsets - include or exclude each element
+vector<vector<int>> subsets(vector<int>& nums) {
+  vector<vector<int>> ans;
+  vector<int> path;
+  function<void(int)> dfs = [&](int i) {
+    if (i == nums.size()) { ans.push_back(path); return; }
+    path.push_back(nums[i]);
+    dfs(i + 1);
+    path.pop_back();
+    dfs(i + 1);
+  };
+  dfs(0);
+  return ans;
+}
+
+// Permutations - try each unused element at current position
+vector<vector<int>> permute(vector<int>& nums) {
+  vector<vector<int>> ans;
+  vector<int> path;
+  vector<bool> used(nums.size());
+  function<void()> dfs = [&]() {
+    if (path.size() == nums.size()) { ans.push_back(path); return; }
+    for (int j = 0; j < nums.size(); j++) {
+      if (used[j]) continue;
+      used[j] = true; path.push_back(nums[j]);
+      dfs();
+      path.pop_back(); used[j] = false;
+    }
+  };
+  dfs();
+  return ans;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "intervals",
+        title: "Intervals",
+        description: "Merge, insert, non-overlapping; sort by start or end.",
+        order: 10,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read: interval problems often sort by start or end; merge = sort by start, merge if overlap.",
+            "Implement Merge Intervals and Insert Interval.",
+            "Solve Non-overlapping Intervals (min removals) and Meeting Rooms.",
+            "Clarify: inclusive/exclusive endpoints; overlapping definition.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Solve [Merge Intervals](https://leetcode.com/problems/merge-intervals/): sort by start; if current overlaps last in result (curr.start <= last.end), extend last.end = max(last.end, curr.end); else push new. Then [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/): sort by end; greedy take earliest end, skip overlapping.
+
+**Prerequisites:** Sorting, Greedy.
+
+**By the end of this topic you will:** Merge, insert, and minimize removals for interval problems; choose sort by start vs end.`,
+          material: `**Merge:** Sort by start. Result = [first]. For each next: if overlaps result.back() (curr.start <= result.back().end), update result.back().end = max(end, curr.end); else push curr. **Insert:** Add new interval; merge (or binary search for position then merge). **Non-overlapping (min removals):** Sort by end. Greedy: keep interval with smallest end that doesn't overlap previous. Count removals = n - kept. **Overlap:** [a,b] and [c,d] overlap if a <= d and c <= b. **Meeting rooms:** Sort all starts and ends; sweep; count max concurrent.`,
+          explanation: `Sort by start for merge (process in order). Sort by end for "max non-overlapping" (earliest end leaves most room). Insert = merge with one extra interval.`,
+          application: `Merge intervals, insert interval, remove minimum to make non-overlapping, meeting rooms I/II, interval list intersection. Common at Google.`,
+          howToImplement: `(1) Merge: sort(intervals by start); out = [intervals[0]]; for each int in intervals[1:]: if int.start <= out.back().end then out.back().end = max(out.back().end, int.end); else out.push_back(int).
+(2) Non-overlapping: sort by end; lastEnd = -INF; count = 0; for each [s,e]: if s >= lastEnd then lastEnd = e, count++; return n - count.`,
+          logicAndCode: `Merge: after sort, overlapping intervals are adjacent. Non-overlapping: greedy by end time is optimal (exchange argument).`,
+          example: `Problem: Non-overlapping Intervals — min intervals to remove so rest are non-overlapping. See [LeetCode #435](https://leetcode.com/problems/non-overlapping-intervals/).
+
+Solution: Sort by end. Keep intervals with start >= lastEnd; update lastEnd = end. Answer = n - count_kept. Time O(n log n).`,
+          additionalInfo: `LeetCode: [Merge Intervals](https://leetcode.com/problems/merge-intervals/), [Insert Interval](https://leetcode.com/problems/insert-interval/), [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/), [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/). **Tip:** Clarify if [1,2] and [2,3] overlap (often yes for "merge", no for "non-overlapping" depending on problem).`,
+        },
+        codeExample: `// Merge intervals - sort by start
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+  if (intervals.empty()) return {};
+  sort(intervals.begin(), intervals.end());
+  vector<vector<int>> out = {intervals[0]};
+  for (int i = 1; i < intervals.size(); i++) {
+    if (intervals[i][0] <= out.back()[1])
+      out.back()[1] = max(out.back()[1], intervals[i][1]);
+    else
+      out.push_back(intervals[i]);
+  }
+  return out;
+}
+
+// Non-overlapping - sort by end, greedy keep earliest end
+int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+  sort(intervals.begin(), intervals.end(), [](auto& a, auto& b) { return a[1] < b[1]; });
+  int lastEnd = INT_MIN, kept = 0;
+  for (auto& in : intervals)
+    if (in[0] >= lastEnd) { lastEnd = in[1]; kept++; }
+  return intervals.size() - kept;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "stack-monotonic",
+        title: "Stack & Monotonic Stack",
+        description:
+          "Valid parentheses, next greater element, daily temperatures.",
+        order: 11,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read stack: LIFO; use for matching (parentheses), and monotonic stack for next greater/smaller.",
+            "Implement Valid Parentheses and Next Greater Element I.",
+            "Solve Daily Temperatures and Largest Rectangle in Histogram.",
+            "State: one pass O(n) with monotonic stack.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Solve [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/): stack; for '(' push ')', for '[' push ']', etc.; for close pop and check match. Then [Next Greater Element](https://leetcode.com/problems/next-greater-element-i/): monotonic decreasing stack; when we see larger, pop and record next greater.
+
+**Prerequisites:** Basic stack. Arrays.
+
+**By the end of this topic you will:** Use stack for matching and monotonic stack for "next greater/smaller" in O(n).`,
+          material: `**Stack:** LIFO; push, pop, top. **Valid parentheses:** For opening push expected closing; for closing pop and check match. **Monotonic stack:** Maintain stack in sorted order (e.g. decreasing). When we see a value greater than stack top, stack top's "next greater" is current; pop until stack empty or top >= current. **Use:** Next greater element (right), next smaller, previous greater (scan left). **Largest rectangle:** For each bar, find left and right boundaries (first smaller); width = right - left - 1; area = height * width.`,
+          explanation: `Monotonic stack: we only keep "candidates" that might be the next greater for future elements. When a larger element comes, it is the next greater for all smaller elements we pop.`,
+          application: `Valid parentheses, min stack, next greater element, daily temperatures, largest rectangle in histogram. Google and IMC ask these.`,
+          howToImplement: `(1) Next greater (right): for i in 0..n: while stack not empty and a[stack.top()] < a[i], result[stack.top()] = a[i], pop; push i. Then pop remaining → no next greater (-1).
+(2) Largest rectangle: for each index find prev smaller and next smaller (two monotonic stack passes); area = height * (next_smaller - prev_smaller - 1).`,
+          logicAndCode: `Stack stores indices (to compute width). Monotonic decreasing: when we see larger, everyone in stack smaller than it has "next greater" = current.`,
+          example: `Problem: Daily Temperatures — for each day, days until warmer. See [LeetCode #739](https://leetcode.com/problems/daily-temperatures/).
+
+Solution: Monotonic decreasing stack (indices). For each i: while stack not empty and T[stack.top()] < T[i], ans[stack.top()] = i - stack.top(), pop; push i. Time O(n).`,
+          additionalInfo: `LeetCode: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/), [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/). **Tip:** For "min stack" (getMin in O(1)) use two stacks or one stack of (value, min_so_far).`,
+        },
+        codeExample: `// Valid parentheses
+bool isValid(string s) {
+  stack<char> st;
+  for (char c : s) {
+    if (c == '(') st.push(')');
+    else if (c == '[') st.push(']');
+    else if (c == '{') st.push('}');
+    else if (st.empty() || st.top() != c) return false;
+    else st.pop();
+  }
+  return st.empty();
+}
+
+// Next greater element (monotonic stack)
+vector<int> nextGreater(vector<int>& a) {
+  int n = a.size();
+  vector<int> ans(n, -1);
+  stack<int> st; // indices, stack values decreasing
+  for (int i = 0; i < n; i++) {
+    while (!st.empty() && a[st.top()] < a[i]) {
+      ans[st.top()] = a[i];
+      st.pop();
+    }
+    st.push(i);
+  }
+  return ans;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "bit-manipulation",
+        title: "Bit Manipulation",
+        description: "XOR, masks, count set bits; useful for Optiver and IMC.",
+        order: 12,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read: AND &, OR |, XOR ^, left shift <<, right shift >>; XOR same = 0, XOR with 0 = self.",
+            "Implement Single Number (XOR all) and Count Set Bits (n & (n-1) or __builtin_popcount).",
+            "Solve Subset XOR sum, Reverse Bits, or Power of Two.",
+            "State: XOR for 'appears once'; bit mask for subsets.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Solve [Single Number](https://leetcode.com/problems/single-number/) — XOR all numbers; duplicates cancel (a^a=0), result = single. Solve [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/): while (n) { count += n & 1; n >>= 1; } or n &= n-1 to clear lowest set bit.
+
+**Prerequisites:** Integers, binary representation.
+
+**By the end of this topic you will:** Use XOR for "find unique", bit masks for subsets, and count set bits.`,
+          material: `**XOR:** a^a=0, a^0=a; commutative. **Single number:** XOR all → duplicates cancel. **Set bits:** n & (n-1) removes lowest set bit; count while n != 0. **Power of 2:** n > 0 && (n & (n-1)) == 0. **Get/set/clear bit i:** (n >> i) & 1; n |= (1 << i); n &= ~(1 << i). **Subsets via bits:** for mask 0 to 2^n-1, mask's bits = which indices included. **Optiver/IMC:** Sometimes mental math or bit tricks in phone screens.`,
+          explanation: `XOR is its own inverse; order doesn't matter. So XOR of [a,a,b,b,c] = c. For "two numbers appear once, rest twice": XOR all = x^y; use any set bit in x^y to split array into two groups (that bit set vs not), then XOR each group.`,
+          application: `Single number, two single numbers, count 1 bits, power of 2, subset XOR sum. Trading firms (Optiver, IMC) may ask bit tricks.`,
+          howToImplement: `(1) Single number: int ans = 0; for (int x : nums) ans ^= x; return ans;
+(2) Count set bits: int c = 0; while (n) { c++; n &= n - 1; } return c;
+(3) Power of 2: return n > 0 && !(n & (n - 1));
+(4) Get bit i: (n >> i) & 1. Set: n |= 1 << i. Clear: n &= ~(1 << i).`,
+          logicAndCode: `XOR all cancels pairs. n & (n-1) drops lowest set bit so loop runs once per set bit. Subset iteration: for (int mask = 0; mask < (1<<n); mask++) { for (int i=0; i<n; i++) if (mask>>i&1) include element i; }`,
+          example: `Problem: Single Number — every element appears twice except one. See [LeetCode #136](https://leetcode.com/problems/single-number/).
+
+Solution: int x = 0; for (int a : nums) x ^= a; return x; Time O(n), space O(1).`,
+          additionalInfo: `LeetCode: [Single Number](https://leetcode.com/problems/single-number/), [Single Number II](https://leetcode.com/problems/single-number-ii/), [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/), [Reverse Bits](https://leetcode.com/problems/reverse-bits/). **Tip:** Optiver/IMC may ask quick bit or mental math; practice XOR and n&(n-1).`,
+        },
+        codeExample: `// Single number - XOR all (duplicates cancel)
+int singleNumber(vector<int>& nums) {
+  int x = 0;
+  for (int a : nums) x ^= a;
+  return x;
+}
+
+// Count set bits - n & (n-1) removes lowest 1
+int hammingWeight(uint32_t n) {
+  int c = 0;
+  while (n) { c++; n &= n - 1; }
+  return c;
+}
+
+// Power of 2
+bool isPowerOfTwo(int n) {
+  return n > 0 && (n & (n - 1)) == 0;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "tries-prefix-tree",
+        title: "Tries (Prefix Tree)",
+        description:
+          "Autocomplete, word search, prefix matching; insert, search, prefix search.",
+        order: 13,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read trie structure: root to leaf = string; each node has up to 26 (or 256) children.",
+            "Implement insert(word) and search(word); then searchPrefix(prefix) for autocomplete.",
+            "Solve Implement Trie and Add and Search Word (with '.' wildcard).",
+            "State complexity: insert/search O(m), m = key length.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Implement a trie: struct Node { Node* child[26]; bool isEnd; }. insert: walk and create nodes; set isEnd at last char. search: walk and check isEnd at end. Then solve [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/).
+
+**Prerequisites:** Trees, hash map. String handling.
+
+**By the end of this topic you will:** Implement trie insert/search/prefix, use for autocomplete or word search; state O(m) per operation.`,
+          material: `**Trie:** Tree where each path from root to node represents a prefix; root to leaf = full string. **Node:** Array or map of children (e.g. 26 for lowercase letters); boolean \`isEnd\` if node completes a word. **Operations:** insert(word): walk char by char, create child if missing, set isEnd at end. search(word): walk, return true only if isEnd at last. startsWith(prefix): walk, return true if path exists. **Use:** Autocomplete, spell check, word search in grid, IP routing. **Space:** O(total chars in all keys).`,
+          explanation: `Trie trades space for fast prefix lookup. Multiple words share common prefix (one path). For "design add and search word" with '.', use DFS at each '.' trying all 26 children.`,
+          application: `Implement Trie, Add and Search Word, Word Search II (grid + trie of words), prefix search, autocomplete. Often asked in coding rounds.`,
+          howToImplement: `(1) Node: array<Node*, 26> or map<char, Node*>; bool isEnd.
+(2) insert: Node* cur = root; for (char c : word) { int i = c-'a'; if (!cur->child[i]) cur->child[i] = new Node(); cur = cur->child[i]; } cur->isEnd = true;
+(3) search: walk; at end return cur->isEnd. startsWith: walk; return true if path exists.
+(4) Word with '.': DFS; at '.' try all 26 children.`,
+          logicAndCode: `Each key is stored along one path. Prefix query = walk path; no need to scan all keys. Word Search II: build trie from words; for each cell DFS in grid, follow trie; when node isEnd add word to result.`,
+          example: `Problem: Implement Trie — insert, search, and startsWith. See [LeetCode #208](https://leetcode.com/problems/implement-trie-prefix-tree/).
+
+Solution: Node with child[26] and isEnd. insert: walk and create. search: walk and check isEnd. startsWith: walk and return true. Time O(m) per op, space O(sum of key lengths).`,
+          additionalInfo: `LeetCode: [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/), [Design Add and Search Word](https://leetcode.com/problems/design-add-and-search-words-data-structure/), [Word Search II](https://leetcode.com/problems/word-search-ii/). **Tip:** Use array of size 26 for lowercase; for generic use unordered_map<char, Node*>.`,
+        },
+        codeExample: `// Trie node and basic operations
+struct TrieNode {
+  TrieNode* child[26] = {};
+  bool isEnd = false;
+};
+void insert(TrieNode* root, const string& word) {
+  TrieNode* cur = root;
+  for (char c : word) {
+    int i = c - 'a';
+    if (!cur->child[i]) cur->child[i] = new TrieNode();
+    cur = cur->child[i];
+  }
+  cur->isEnd = true;
+}
+bool search(TrieNode* root, const string& word) {
+  TrieNode* cur = root;
+  for (char c : word) {
+    int i = c - 'a';
+    if (!cur->child[i]) return false;
+    cur = cur->child[i];
+  }
+  return cur->isEnd;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "union-find-dsu",
+        title: "Union-Find (Disjoint Set Union)",
+        description:
+          "Connected components, dynamic connectivity; find with path compression, union by rank.",
+        order: 14,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read DSU: maintain disjoint sets; find(x) returns representative; union(x,y) merges sets.",
+            "Implement find with path compression and union by rank (or size).",
+            "Solve Number of Connected Components and redundant connection (detect cycle in undirected).",
+            "State: amortized O(α(n)) ≈ O(1) per operation.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Implement DSU: parent[i]=i initially; find(x): if parent[x]!=x then parent[x]=find(parent[x]); return parent[x]. union(x,y): link find(x) and find(y). Solve [Number of Connected Components](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/): start with n components; for each edge union(u,v); count distinct roots.
+
+**Prerequisites:** Graphs (connected components). Arrays.
+
+**By the end of this topic you will:** Use DSU for connected components, cycle detection in undirected graph, and "merge sets" problems.`,
+          material: `**DSU:** Each element has a parent; same root = same set. **Find:** Follow parent until root; path compression: set parent[x]=root during find so next find is O(1). **Union:** Link root of one set to root of other; union by rank (attach smaller tree under larger) keeps height small. **Use:** Connected components, cycle in undirected graph, minimum spanning tree (Kruskal), dynamic connectivity. **Complexity:** Amortized O(α(n)) per op with both optimizations.`,
+          explanation: `Path compression makes future finds fast. Union by rank keeps the tree shallow. Together they give near-constant time per operation. For "redundant connection": add edges one by one; if both endpoints already in same set, that edge creates a cycle.`,
+          application: `Number of connected components, redundant connection, accounts merge, Kruskal MST. Commonly used for graph and "merge groups" problems.`,
+          howToImplement: `(1) parent.resize(n); iota(parent.begin(), parent.end(), 0); rank or size optional.
+(2) int find(int x) { return parent[x] == x ? x : parent[x] = find(parent[x]); }
+(3) void unite(int x, int y) { x = find(x); y = find(y); if (x == y) return; if (rank[x] < rank[y]) swap(x,y); parent[y] = x; if (rank[x] == rank[y]) rank[x]++; }
+(4) Components: for (int i = 0; i < n; i++) if (find(i) == i) count++;`,
+          logicAndCode: `Find returns the set representative. Union merges two sets. After processing all edges, number of components = number of nodes where find(i)==i.`,
+          example: `Problem: Number of Connected Components in Undirected Graph — n nodes, edge list; return number of components. See [LeetCode #323](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) (premium) or same idea in [Redundant Connection](https://leetcode.com/problems/redundant-connection/).
+
+Solution: DSU with n sets. For each edge (u,v): if find(u) != find(v) union(u,v). Return count of i where find(i)==i.`,
+          additionalInfo: `LeetCode: [Redundant Connection](https://leetcode.com/problems/redundant-connection/), [Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/) (add cells one by one, union with neighbors). **Tip:** Template DSU is short; memorize find and union.`,
+        },
+        codeExample: `// DSU with path compression and rank
+vector<int> parent, rank;
+int find(int x) {
+  return parent[x] == x ? x : parent[x] = find(parent[x]);
+}
+void unite(int x, int y) {
+  x = find(x); y = find(y);
+  if (x == y) return;
+  if (rank[x] < rank[y]) swap(x, y);
+  parent[y] = x;
+  if (rank[x] == rank[y]) rank[x]++;
+}
+// init: parent[i]=i, rank[i]=0. Components: count i where find(i)==i`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "linked-list-patterns",
+        title: "Linked List: Classic Patterns",
+        description:
+          "Reverse, merge, cycle detection, reorder; dummy node and two pointers.",
+        order: 15,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read: dummy node simplifies edge cases; reverse in-place by changing next pointers.",
+            "Implement reverse list, merge two sorted lists, and detect cycle (Floyd).",
+            "Solve Reorder List (find mid, reverse half, merge) and Remove Nth From End.",
+            "State: reverse O(n); cycle detection O(n) time O(1) space.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Implement reverse: ListNode* prev = nullptr; while (head) { auto next = head->next; head->next = prev; prev = head; head = next; } return prev; Then [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/): dummy node, while (l1 && l2) attach smaller, then attach rest.
+
+**Prerequisites:** Pointers, recursion. Two pointers.
+
+**By the end of this topic you will:** Reverse, merge, detect cycle, reorder list; use dummy node for cleaner code.`,
+          material: `**Dummy node:** ListNode dummy; dummy.next = head; then work with pointer to current node; return dummy.next. Avoids special case for head. **Reverse:** Iterative: prev=nullptr; while (head) swap next; or recursive: reverse(rest), then rest->next = head, head->next = nullptr. **Merge two sorted:** Compare heads, attach smaller, advance. **Cycle:** Floyd: slow and fast; if they meet there is a cycle. **Reorder list:** Find middle (slow/fast), reverse second half, merge two halves. **Nth from end:** Two pointers, gap n; when front at end, back is n from end.`,
+          explanation: `Dummy node lets you treat "first node" like any other. Floyd cycle: fast goes 2x speed; if cycle exists they meet inside cycle. Reorder: L0→L1→...→Lmid, Lmid+1→...→Ln; reverse second half then weave.`,
+          application: `Reverse linked list, merge two sorted lists, merge K sorted (heap or divide-conquer), cycle detection, reorder list, remove nth from end, palindrome linked list. Very common in coding rounds.`,
+          howToImplement: `(1) Reverse: prev=nullptr; while (head) { next=head->next; head->next=prev; prev=head; head=next; } return prev;
+(2) Merge: ListNode dummy; ListNode* t=&dummy; while (l1&&l2) { if (l1->val<=l2->val) { t->next=l1; l1=l1->next; } else { t->next=l2; l2=l2->next; } t=t->next; } t->next=l1?l1:l2; return dummy.next;
+(3) Cycle: slow=fast=head; while (fast&&fast->next) { slow=slow->next; fast=fast->next->next; if (slow==fast) return true; } return false;`,
+          logicAndCode: `Reverse: each node's next points to previous. Merge: same as merge in merge sort. Cycle: meeting implies cycle (proof by distance).`,
+          example: `Problem: Merge Two Sorted Lists — merge two sorted linked lists. See [LeetCode #21](https://leetcode.com/problems/merge-two-sorted-lists/).
+
+Solution: Dummy node; while both non-null attach smaller; attach remaining. Time O(n+m), space O(1).`,
+          additionalInfo: `LeetCode: [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), [Reorder List](https://leetcode.com/problems/reorder-list/), [Remove Nth Node From End](https://leetcode.com/problems/remove-nth-node-from-end-of-list/). **Tip:** Always consider empty list and single node.`,
+        },
+        codeExample: `// Reverse linked list - iterative
+ListNode* reverseList(ListNode* head) {
+  ListNode* prev = nullptr;
+  while (head) {
+    ListNode* next = head->next;
+    head->next = prev;
+    prev = head;
+    head = next;
+  }
+  return prev;
+}
+
+// Cycle detection - Floyd
+bool hasCycle(ListNode* head) {
+  ListNode *slow = head, *fast = head;
+  while (fast && fast->next) {
+    slow = slow->next;
+    fast = fast->next->next;
+    if (slow == fast) return true;
+  }
+  return false;
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "design-lru-minstack",
+        title: "Design: LRU Cache & Min Stack",
+        description:
+          "Design data structure; LRU cache (list + map), min stack in O(1).",
+        order: 16,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read LRU: evict least recently used when full; get and put must be O(1).",
+            "Design LRU: hash map (key → list iterator) + doubly linked list (order of use).",
+            "Design Min Stack: two stacks (values + min-so-far) or one stack of (val, min).",
+            "Solve LRU Cache and Min Stack on LeetCode.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. For LRU: use list (order of use) + unordered_map<key, list<pair<key,value>>::iterator>. get: if not in map return -1; move node to front (splice), return value. put: if exists update and move to front; else if size==capacity evict back, then push front. Solve [LRU Cache](https://leetcode.com/problems/lru-cache/).
+
+**Prerequisites:** Hash map, linked list (or list in C++). Stack.
+
+**By the end of this topic you will:** Implement LRU cache and min stack; explain why your design meets the complexity requirement.`,
+          material: `**LRU Cache:** get(key) and put(key, value) in O(1). When capacity full, evict least recently used. **Design:** Map from key to iterator in a list; list stores (key, value) in order of use (front = most recent). get: find in map, move to front (splice), return value. put: if key exists update and move to front; else if size==capacity remove list.back() and its map entry, then push front and set map[key]. **Min Stack:** getMin() in O(1). Option 1: two stacks (value stack + min stack; push min(stack.top(), x) on min stack). Option 2: one stack of pair(value, min_so_far). **Complexity:** LRU get/put O(1); min stack push/pop/getMin O(1).`,
+          explanation: `List gives O(1) move to front (splice) and O(1) remove back. Map gives O(1) lookup. For min stack, we need to know minimum at each "level" so when we pop we know the new min.`,
+          application: `LRU cache is a classic design question. Min stack and "stack with getMin" also common. Sometimes asked as "design a cache" or "design a stack that also returns min".`,
+          howToImplement: `(1) LRU: list<pair<int,int>> list; unordered_map<int, list<...>::iterator> map; capacity.
+(2) get(key): if map.count(key)==0 return -1; auto it = map[key]; int val = it->second; list.erase(it); list.push_front({key, val}); map[key] = list.begin(); return val;
+(3) put: if key exists erase from list then same as below. If size==cap erase list.back() and map entry. list.push_front({key, value}); map[key] = list.begin();
+(4) Min stack: stack<pair<int,int>> st; push (val, min(val, st.empty()?val:st.top().second)); getMin = st.top().second.`,
+          logicAndCode: `LRU: list front = most recent, back = least recent. Map points to node so we can move it in O(1). Min stack: each element carries the minimum of all elements below it.`,
+          example: `Problem: LRU Cache — get(key), put(key, value); evict LRU when at capacity. See [LeetCode #146](https://leetcode.com/problems/lru-cache/).
+
+Solution: list + map as above. get O(1), put O(1). Eviction: remove last of list and corresponding map entry.`,
+          additionalInfo: `LeetCode: [LRU Cache](https://leetcode.com/problems/lru-cache/), [Min Stack](https://leetcode.com/problems/min-stack/). **Tip:** For LRU state "list for order, map for lookup; splice to move to front." For min stack state "we store min so far with each value so pop still gives correct min."`,
+        },
+        codeExample: `// Min Stack - each element stores (value, min_so_far)
+class MinStack {
+  stack<pair<int,int>> st;
+public:
+  void push(int val) {
+    int m = st.empty() ? val : min(st.top().second, val);
+    st.push({val, m});
+  }
+  void pop() { st.pop(); }
+  int top() { return st.top().first; }
+  int getMin() { return st.top().second; }
+};
+
+// LRU: list<pair<int,int>> + unordered_map<int, list<...>::iterator>
+// get: move node to front, return value. put: if full erase back; push front.`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "strings-palindrome-sliding",
+        title: "Strings: Palindrome & Sliding Window",
+        description:
+          "Longest palindromic substring, substring with K distinct; expand and sliding window.",
+        order: 17,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read: palindrome expand from center (odd and even length); substring with K distinct = sliding window.",
+            "Implement longest palindromic substring (expand around each center) and longest substring with at most K distinct.",
+            "Solve Valid Palindrome II (one removal) and Minimum Window Substring.",
+            "State: expand O(n²); sliding window O(n).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. For longest palindromic substring: for each center i (or pair i, i+1 for even), expand while s[l]==s[r]. Track longest. Solve [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/). For K distinct: sliding window with frequency map; when map.size() > K shrink from left.
+
+**Prerequisites:** Two pointers, hash map. Prefix sum/sliding window.
+
+**By the end of this topic you will:** Solve palindrome problems (expand or DP) and substring problems with sliding window.`,
+          material: `**Palindrome:** Same forward and backward. **Expand around center:** For each position (or gap), expand left and right while chars match. Centers: n for odd-length, n-1 for even. Total O(n²). **Longest substring with K distinct:** Sliding window; map char → count; when map.size() > K move left and decrement/remove until size ≤ K. **Minimum window substring:** Find minimum window in s that contains all chars of t; sliding window + count of required chars. **Valid Palindrome II:** One removal allowed; two pointers from both ends, on first mismatch try skip left or skip right.`,
+          explanation: `Expand works because each palindrome has a center. Sliding window for "at most K distinct" keeps a valid window and updates result when window is valid. Minimum window: expand until valid, then shrink from left to minimize.`,
+          application: `Longest palindromic substring, palindromic substrings count, longest substring with at most K distinct, minimum window substring, valid palindrome II. Often asked for string problems.`,
+          howToImplement: `(1) Expand: for (int i = 0; i < n; i++) { expand(i, i); expand(i, i+1); } expand(l, r): while (l>=0 && r<n && s[l]==s[r]) l--, r++; update best.
+(2) K distinct: i=0; for j in 0..n: add s[j], while len(map)>K remove s[i] and i++; update ans = max(ans, j-i+1).
+(3) Min window: need = count(t); have = 0; when have == need shrink and update min len.`,
+          logicAndCode: `Expand: 2n-1 centers (each char + each gap). K distinct: invariant = window has at most K distinct; when we add a char we may need to shrink.`,
+          example: `Problem: Longest Palindromic Substring — return longest palindrome in s. See [LeetCode #5](https://leetcode.com/problems/longest-palindromic-substring/).
+
+Solution: Expand around center for each i and (i,i+1). Return substring of max length. Time O(n²), space O(1).`,
+          additionalInfo: `LeetCode: [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/), [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/), [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/), [Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/). **Tip:** For "count palindromic substrings" use expand and at each center count how many expansions (each gives one substring).`,
+        },
+        codeExample: `// Longest palindromic substring - expand around center
+string longestPalindrome(string s) {
+  int n = s.size(), start = 0, best = 1;
+  auto expand = [&](int l, int r) {
+    while (l >= 0 && r < n && s[l] == s[r]) l--, r++;
+    if (r - l - 1 > best) { best = r - l - 1; start = l + 1; }
+  };
+  for (int i = 0; i < n; i++) {
+    expand(i, i);
+    if (i + 1 < n) expand(i, i + 1);
+  }
+  return s.substr(start, best);
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "coding-interview-strategy",
+        title: "Coding Interview Strategy",
+        description:
+          "Flow: clarify, example, approach, code, test. How to prepare and present.",
+        order: 18,
+        imageKey: "interview",
+        contentBlocks: {
+          learningFlow: [
+            "Read the standard flow: clarify input, work 1–2 examples, state approach and complexity, code, test.",
+            "Practice 2–3 problems per pattern; time yourself (e.g. 25 min per problem).",
+            "Do mock interviews; record yourself and review clarity and complexity explanation.",
+            "Prepare a few 'I optimized from O(n²) to O(n)' stories for behavioral.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Pick one pattern (e.g. two pointers) and solve 2 problems timed. Practice stating: brute force first, then "we can do better with a hash map in one pass, O(n) time."
+
+**Prerequisites:** All CP topics above (complexity, two pointers, DP, graphs, trees, heaps, design, etc.).
+
+**By the end of this topic you will:** Follow a repeatable flow (clarify → example → approach → code → test) and tailor preparation by pattern.`,
+          material: `**Standard flow:** (1) Clarify: input range, duplicates, sorted? return value? (2) Example: work 1–2 small examples and one edge case. (3) Approach: state brute force and complexity; then optimize and state new complexity. (4) Code: clear variable names; say what you are doing. (5) Test: run through your example and edge case (empty, n=1). **What interviewers look for:** Clear communication, correctness, complexity analysis, edge cases, clean code. **Design problems (e.g. LRU):** Requirements → interface (get, put) → data structures (list + map) → operations and complexity. **Preparation:** Cover all patterns (arrays, two pointers, sliding window, DP, graphs, trees, heaps, backtracking, intervals, stack, design); 2–3 problems per pattern; time yourself.`,
+          explanation: `Stating brute force shows you can solve it; then optimizing shows you know better. Always state time and space complexity. Testing catches off-by-one and edge cases.`,
+          application: `Use this flow in every practice and real interview. Prioritize patterns you see most often: two pointers, hash map, DP, trees, heaps, design (LRU, min stack).`,
+          howToImplement: `(1) Always: clarify input (sorted? duplicates? range), state brute force and complexity, then optimize.
+(2) Write clean, correct code first; mention further optimization if time.
+(3) Talk through 2–3 examples, then code; at the end run through your example and one edge case (empty, n=1).`,
+          logicAndCode: `Interview flow: Read problem → Clarify (1 min) → Example (1–2 min) → Approach + complexity (2–3 min) → Code (15–20 min) → Test (2–3 min). For design: requirements → interface → data structures → operations.`,
+          example: `Problem: Find two numbers in a sorted array that sum to target.
+
+Clarify: Sorted? Yes. Duplicates? Maybe. Return indices or values? Indices. Approach: Two pointers at start and end; if sum < target move left up, if sum > target move right down. O(n) time, O(1) space. Code, then test with [1,2,3,4], target 6 → (1,3).`,
+          additionalInfo: `Resources: [LeetCode](https://leetcode.com/) (Easy/Medium by pattern), mock interviews (Pramp, Interviewing.io). **Tip:** For "tell me about a hard problem you solved," pick one where you improved from brute force to optimal (e.g. "I used a monotonic stack to get O(n) instead of O(n²)"). Focus on: two pointers, binary search, hash map, DP, graphs, trees, heaps, backtracking, intervals, stack, design (LRU, MinStack), tries, linked list.`,
+        },
+        codeExample: `// Two Sum II (sorted) - clean and correct
+vector<int> twoSum(vector<int>& a, int target) {
+  int i = 0, j = (int)a.size() - 1;
+  while (i < j) {
+    int s = a[i] + a[j];
+    if (s == target) return {i + 1, j + 1};
+    if (s < target) i++; else j--;
+  }
+  return {};
+}`,
+        codeLanguage: "cpp",
+      },
+      {
+        id: "binary-search-on-answer",
+        title: "Binary Search on Answer (Search Space)",
+        description:
+          "When the answer is in a range; binary search on the answer value with a check function.",
+        order: 19,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read: when the problem asks for minimum/maximum value and we can check 'can we achieve x?' in O(n), binary search on the answer range.",
+            "Implement check(cap) for 'Capacity to Ship Packages' or check(speed) for 'Koko Eating Bananas'.",
+            "Solve Split Array Largest Sum and Minimum Capacity.",
+            "State: binary search O(log R) iterations, each check O(n); total O(n log R).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. For [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/): answer is in [1, max(piles)]; for mid = speed, check if she can finish in h hours (sum of ceil(pile/mid)); binary search for smallest speed that works.
+
+**Prerequisites:** Sorting & Searching (binary search on array). Complexity.
+
+**By the end of this topic you will:** Identify when to binary search on the answer; implement check(x) and binary search over range.`,
+          material: `**Idea:** Answer is in range [lo, hi]. For a candidate value \`mid\`, we can check in O(n) whether \`mid\` is feasible (e.g. "can we ship all in \`mid\` days?"). If feasible, try smaller (hi = mid); else try larger (lo = mid + 1). **Template:** lo = min possible, hi = max possible; while (lo < hi) { mid = lo + (hi - lo) / 2; if (check(mid)) hi = mid; else lo = mid + 1; } return lo. **Classic problems:** Koko eating bananas (speed), capacity to ship (capacity), split array largest sum (max subarray sum), minimum in rotated array (index). **Note:** Use when "minimum x such that condition holds" or "maximum x such that condition holds".`,
+          explanation: `We are not binary searching on the array index — we are binary searching on the value of the answer. The check function is the key: it must be monotonic (if x works, then x+1 works; or if x works, then x-1 works).`,
+          application: `Koko eating bananas, capacity to ship packages within D days, split array largest sum, minimum size subarray sum (with binary search on window size), aggressive cows. Very common pattern.`,
+          howToImplement: `(1) Identify the range [lo, hi] for the answer.
+(2) Write bool check(int x) that returns true if x is feasible.
+(3) Binary search: while (lo < hi) { mid = lo + (hi-lo)/2; if (check(mid)) hi = mid; else lo = mid+1; } return lo;
+(4) Handle edge: sometimes answer is "first true" (hi = mid) or "last true" (lo = mid+1, then return lo-1).`,
+          logicAndCode: `check(mid) is typically O(n): simulate with mid and see if constraint is satisfied. Binary search narrows the range; final lo is the minimum (or maximum) feasible value.`,
+          example: `Problem: Koko Eating Bananas — piles[i] = bananas; h = hours. She must finish all. Speed k = bananas per hour. Find minimum k. See [LeetCode #875](https://leetcode.com/problems/koko-eating-bananas/).
+
+Solution: lo=1, hi=max(piles). check(speed): hours = sum(ceil(pile/speed)); return hours <= h. Binary search for smallest speed where check is true. Time O(n log max).`,
+          additionalInfo: `LeetCode: [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), [Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/), [Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/). **Tip:** If "minimum x such that P(x)" use first-true template (hi = mid). If "maximum x such that P(x)" use last-true (lo = mid + 1, return lo - 1).`,
+        },
+        codeExample: `// Binary search on answer - minimum speed to eat all bananas in h hours
+int minEatingSpeed(vector<int>& piles, int h) {
+  int lo = 1, hi = *max_element(piles.begin(), piles.end());
+  auto check = [&](int k) {
+    long hours = 0;
+    for (int p : piles) hours += (p + k - 1) / k;
+    return hours <= h;
+  };
+  while (lo < hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (check(mid)) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
         codeLanguage: "cpp",
       },
     ],
@@ -643,6 +1387,47 @@ FROM users u
 JOIN orders o ON o.user_id = u.id
 WHERE o.created_at >= '2024-01-01';
 -- Look for: Index Scan using idx_orders_user_created
+`,
+        codeLanguage: "sql",
+      },
+      {
+        id: "transactions-and-acid",
+        title: "Transactions & ACID",
+        description:
+          "ACID properties, BEGIN/COMMIT/ROLLBACK, isolation levels.",
+        order: 2,
+        imageKey: "database",
+        contentBlocks: {
+          learningFlow: [
+            "Read ACID: Atomicity (all or nothing), Consistency (invariants hold), Isolation (concurrent transactions), Durability (committed data persists).",
+            "Write a transaction: BEGIN; several statements; COMMIT or ROLLBACK on error.",
+            "Read isolation levels: Read Uncommitted, Read Committed, Repeatable Read, Serializable; know phantom read vs dirty read.",
+            "Use a savepoint (SAVEPOINT / ROLLBACK TO) in one exercise.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. In a SQL client run: BEGIN; UPDATE accounts SET balance = balance - 100 WHERE id = 1; UPDATE accounts SET balance = balance + 100 WHERE id = 2; COMMIT; (or ROLLBACK to undo). Then read isolation levels.
+
+**Prerequisites:** SQL Queries (SELECT, UPDATE); basic idea of concurrency.
+
+**By the end of this topic you will:** Explain ACID, write BEGIN/COMMIT/ROLLBACK, and name isolation levels and their trade-offs.`,
+          material: `**ACID:** **Atomicity:** Transaction is all-or-nothing; if one statement fails, roll back all. **Consistency:** DB invariants hold before and after (e.g. sum of balances unchanged). **Isolation:** Concurrent transactions do not see each other's uncommitted changes; level controls how much they see. **Durability:** Once committed, data survives crash (WAL, disk). **BEGIN / COMMIT / ROLLBACK:** Start transaction; commit makes changes permanent; rollback undoes. **Isolation levels:** Read Uncommitted (dirty reads); Read Committed (no dirty read, default in many DBs); Repeatable Read (same row same value in transaction); Serializable (strictest, no phantom reads). **Phantom read:** New row appears in range; **dirty read:** see uncommitted data. **SAVEPOINT:** Name a point; ROLLBACK TO savepoint to undo part of transaction.`,
+          explanation: `Atomicity is implemented with a log: either all operations are applied or none. Isolation is implemented with locking or MVCC; higher isolation = less concurrency, fewer anomalies. Durability = write-ahead log + fsync.`,
+          application: `Use transactions for multi-step updates (e.g. transfer: debit one account, credit another). Choose isolation: Read Committed often enough; Repeatable Read for reports; Serializable when you need strict consistency.`,
+          howToImplement: `(1) BEGIN; (or START TRANSACTION;) (2) Run INSERT/UPDATE/DELETE; (3) On success COMMIT; on error ROLLBACK; (4) In app code: start transaction, run statements, commit or rollback in finally. (5) SET TRANSACTION ISOLATION LEVEL READ COMMITTED; (syntax varies by DB).`,
+          logicAndCode: `Commit writes log and makes changes visible. Rollback uses log to undo. Isolation: Read Committed typically releases row locks after read; Repeatable Read holds them until end of transaction.`,
+          example: `Problem: Transfer 100 from A to B. Solution: BEGIN; UPDATE accounts SET balance = balance - 100 WHERE id = A AND balance >= 100; UPDATE accounts SET balance = balance + 100 WHERE id = B; if both rows updated then COMMIT; else ROLLBACK; Use application check or DB constraint to ensure balance never negative.`,
+          additionalInfo: `PostgreSQL: default Read Committed; SERIALIZABLE for strict. MySQL: REPEATABLE READ default. Interview: define ACID; when to use transaction; difference between isolation levels in one sentence each.`,
+        },
+        codeExample: `-- Transaction: transfer
+BEGIN;
+UPDATE accounts SET balance = balance - 100 WHERE id = 1 AND balance >= 100;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+-- If both succeed:
+COMMIT;
+-- On error:
+-- ROLLBACK;
+
+-- Isolation (PostgreSQL)
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 `,
         codeLanguage: "sql",
       },
@@ -893,7 +1678,7 @@ function UserPage() {
           example: `Problem: "Given an array, find two numbers that add up to target."
 
 Clarify: Sorted? Duplicates? Return indices or values? Then: brute force O(n²) → hash map O(n). Code, test, done.`,
-          additionalInfo: `Practice on LeetCode (Easy/Medium). Do mock interviews (Pramp, Interviewing.io). Review patterns: two pointers, sliding window, DP, BFS/DFS.`,
+          additionalInfo: `Practice on [LeetCode](https://leetcode.com/) (Easy/Medium). Do mock interviews (Pramp, Interviewing.io). Review patterns: two pointers, sliding window, DP, BFS/DFS. Start with [Two Sum](https://leetcode.com/problems/two-sum/).`,
         },
         codeExample: `// Example: state your approach first
 // "I'll use a hash map: for each number, check if
@@ -1061,15 +1846,58 @@ while (job = queue.pop()) {
     title: "CS Theory",
     slug: "cs-theory",
     description:
-      "Graphs, trees, and fundamental data structures for interviews and problem-solving.",
+      "Data structures overview, graphs, trees, heaps, tries for interviews and problem-solving.",
     order: 7,
     published: true,
     topics: [
       {
+        id: "data-structures-overview",
+        title: "Data Structures Overview",
+        description:
+          "Array, linked list, stack, queue, hash table: operations, Big O, when to use.",
+        order: 0,
+        imageKey: "algorithms",
+        contentBlocks: {
+          learningFlow: [
+            "Read the core structures: array, linked list, stack, queue, hash table; note access/insert/delete complexity.",
+            "Compare: array O(1) access vs linked list O(n); linked list O(1) insert at head vs array shift O(n).",
+            "Identify in code: stack for LIFO (undo, paren match); queue for FIFO (BFS); hash for O(1) lookup.",
+            "Implement a simple stack (push/pop) and a queue (enqueue/dequeue) in your language.",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. In your language, create an array and a Map (or dict) and compare: arr[i] vs map.get(key). Then implement a stack with push/pop and a queue with enqueue/dequeue (e.g. using array or linked list).
+
+**Prerequisites:** Basic programming (variables, loops, functions). Big O notation helps (see Complexity & Strategy).
+
+**By the end of this topic you will:** State time complexity of access/insert/delete for array, linked list, stack, queue, hash table; choose the right structure for a problem.`,
+          material: `**Array:** Contiguous memory; index access O(1); insert/delete at end O(1) amortized; at middle O(n). **Linked list:** Nodes with next (and prev for doubly); insert/delete at head/tail O(1); access by index O(n). **Stack:** LIFO; push, pop, peek O(1); use for undo, parentheses, DFS. **Queue:** FIFO; enqueue, dequeue O(1); use for BFS, task queue. **Hash table:** Key-value; insert, delete, lookup O(1) average; collision by chaining or open addressing; use for fast lookup, dedup, count. **When to use:** Array when you need index or iteration; linked list when you insert/delete at ends often; stack for LIFO; queue for FIFO; hash for O(1) lookup by key.`,
+          explanation: `Array gives fast random access but shifting is costly. Linked list avoids shifting but no random access. Stack and queue are interfaces; implement with array or linked list. Hash table trades space for time; good when you need "find by key" often.`,
+          application: `Array: list of items, matrix. Linked list: LRU cache (with hash), queue when you need both ends. Stack: DFS, expression eval, undo. Queue: BFS, level order, producers/consumers. Hash: cache, set, frequency map, two-sum style.`,
+          howToImplement: `(1) Array: language built-in; arr[i], arr.push(x), arr.splice(i, 1). (2) Stack: array with push/pop only, or linked list with insert/delete at head. (3) Queue: array with shift (O(n)) or use two stacks; better: linked list with head and tail pointers. (4) Hash: Map, dict, object; get, set, delete.`,
+          logicAndCode: `Stack: last in, first out; one pointer (top). Queue: first in, first out; two pointers (front, rear) or head/tail in linked list. Hash: hash(key) → bucket; handle collisions.`,
+          example: `Problem: Check balanced parentheses. Solution: Stack. For each char: if opening, push; if closing, pop and check match. If stack empty at end and no mismatch, balanced. Time O(n), space O(n).`,
+          additionalInfo: `Interview: state "array for random access", "hash for O(1) lookup", "stack for LIFO/DFS", "queue for BFS". LeetCode: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), [Implement Queue using Stacks](https://leetcode.com/problems/implement-queue-using-stacks/).`,
+        },
+        codeExample: `// Stack (array)
+const stack = [];
+stack.push(1); stack.push(2);
+console.log(stack.pop()); // 2
+
+// Queue (array - dequeue O(n); for O(1) use linked list)
+const queue = [];
+queue.push(1); queue.push(2);
+console.log(queue.shift()); // 1
+
+// Hash for O(1) lookup
+const map = new Map();
+map.set('a', 1); map.get('a'); // 1
+`,
+        codeLanguage: "javascript",
+      },
+      {
         id: "graphs-and-trees",
         title: "Graphs & Trees",
         description: "BFS, DFS, tree traversal, and when to use each.",
-        order: 0,
+        order: 1,
         imageKey: "algorithms",
         contentBlocks: {
           learningFlow: [
@@ -1094,7 +1922,7 @@ while (job = queue.pop()) {
           example: `Problem: Binary Tree Level Order Traversal (LeetCode #102).
 
 Solution: BFS with queue. While queue not empty: record level size, pop that many nodes, add values to level list, push children. Push each level to result. Time O(n), space O(width).`,
-          additionalInfo: `LeetCode: Number of Islands (DFS/BFS), Course Schedule (topological sort), Binary Tree Max Depth. Interview: state BFS vs DFS choice; watch for cycles (use visited set).`,
+          additionalInfo: `LeetCode: [Number of Islands](https://leetcode.com/problems/number-of-islands/), [Course Schedule](https://leetcode.com/problems/course-schedule/) (topological), [Binary Tree Level Order](https://leetcode.com/problems/binary-tree-level-order-traversal/), [Max Depth](https://leetcode.com/problems/maximum-depth-of-binary-tree/). Interview: state BFS vs DFS choice; watch for cycles (use visited set).`,
         },
         codeExample: `// BFS - level order
 function levelOrder(root) {
@@ -1128,7 +1956,7 @@ function inorder(node) {
         title: "Heaps, Tries & Advanced Structures",
         description:
           "Heap (min/max), trie, when to use; complexity and interview patterns.",
-        order: 1,
+        order: 2,
         imageKey: "algorithms",
         contentBlocks: {
           learningFlow: [
@@ -1150,7 +1978,7 @@ function inorder(node) {
           example: `Problem: Kth Largest Element in Stream (LeetCode #703).
 
 Solution: Keep min-heap of size K. On add: if heap size < K, push; else if val > heap[0], pop then push val. Return heap[0] for getKthLargest. Time O(log K) per add, space O(K).`,
-          additionalInfo: `LeetCode: Top K Frequent, Merge K Sorted Lists, Implement Trie, Word Search II. Interview: state "heap for top K" or "trie for prefix"; give complexity.`,
+          additionalInfo: `LeetCode: [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/), [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), [Kth Largest in Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/). Interview: state "heap for top K" or "trie for prefix"; give complexity.`,
         },
         codeExample: `// Python - top K with heapq (min-heap of size K)
 import heapq
@@ -1325,7 +2153,7 @@ Solution: Use a mutex. Before count++, lock(mutex); after count++, unlock(mutex)
           example: `Problem: Prevent SQL injection when searching users by name.
 
 Solution: Never concatenate: "SELECT * FROM users WHERE name = '" + input + "'". Use parameterized: query("SELECT * FROM users WHERE name = ?", [input]). Driver escapes input.`,
-          additionalInfo: `OWASP Top 10: injection, broken auth, XSS, broken access control, security misconfiguration, etc. Interview: explain auth vs authz, how you'd secure an API, what HTTPS does.`,
+          additionalInfo: `**Important:** Never concatenate user input into SQL — always use parameterized queries. OWASP Top 10: injection, broken auth, XSS, broken access control, security misconfiguration, etc. Interview: explain auth vs authz, how you'd secure an API, what HTTPS does.`,
         },
         codeExample: `// Password hashing (Node.js - bcrypt)
 // const hash = await bcrypt.hash(password, 10);
@@ -1344,16 +2172,68 @@ Solution: Never concatenate: "SELECT * FROM users WHERE name = '" + input + "'".
     title: "Software Design Principles",
     slug: "software-design",
     description:
-      "OOP, SOLID, DRY, KISS, and clean code for maintainable software.",
+      "OOP fundamentals, SOLID, DRY, KISS, design patterns, and clean code.",
     order: 11,
     published: true,
     topics: [
       {
+        id: "oop-fundamentals",
+        title: "OOP Fundamentals",
+        description:
+          "Encapsulation, inheritance, polymorphism, abstraction; class vs object.",
+        order: 0,
+        imageKey: "software",
+        contentBlocks: {
+          learningFlow: [
+            "Read the four pillars: encapsulation (hide data, expose methods), inheritance (reuse via is-a), polymorphism (same interface, different behavior), abstraction (hide complexity).",
+            "Write a small class with private fields and public methods; then a subclass that overrides a method.",
+            "Identify polymorphism in your codebase (e.g. different implementations of the same interface).",
+            "Explain when to use composition (has-a) vs inheritance (is-a).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. In your language, define a class (e.g. \`User\`) with a constructor, private fields, and public getters/setters. Then create a subclass (e.g. \`Admin extends User\`) that overrides one method.
+
+**Prerequisites:** Basic programming (variables, functions). Any language with classes (Java, C#, TypeScript, Python, C++).
+
+**By the end of this topic you will:** Define encapsulation, inheritance, polymorphism, and abstraction with examples; write a class and subclass; choose composition vs inheritance.`,
+          material: `**Class vs Object:** Class = blueprint; object = instance. **Encapsulation:** Bundle data and methods; hide internal state (private/protected); expose only what callers need (public API). **Inheritance:** Subclass extends superclass; reuse code; override methods. **Polymorphism:** Same interface (method name), different behavior (subclass implementation); callers depend on interface, not concrete type. **Abstraction:** Hide implementation details behind a simple interface (e.g. \`List\` abstracts array vs linked list). **Composition vs Inheritance:** Prefer composition (has-a) when behavior can be combined; use inheritance (is-a) for true subtype and Liskov substitution. **Constructor:** Initialize object state; can call super() in subclass.`,
+          explanation: `Encapsulation reduces coupling and allows changing internals without breaking callers. Polymorphism lets you add new types without changing existing code (open/closed). Inheritance can lead to fragile base classes; composition is often more flexible.`,
+          application: `Use encapsulation in every class (private fields, public API). Use inheritance for clear is-a (e.g. \`Admin\` is a \`User\`). Use polymorphism when you have multiple implementations (e.g. \`PaymentGateway\`: Stripe, PayPal). Prefer composition for "has a" (e.g. \`Car\` has an \`Engine\`).`,
+          howToImplement: `(1) Class: define fields (private), constructor, and methods (public for API, private for helpers).
+(2) Inheritance: class Child extends Parent { constructor() { super(); } override method() { ... } }
+(3) Polymorphism: declare variable as interface/abstract type; assign concrete implementation; call method (runtime picks implementation).
+(4) Composition: class A { private b: B; constructor(b: B) { this.b = b; } }`,
+          logicAndCode: `Private fields are only accessible inside the class; getters/setters can validate or compute. Overriding: subclass method is called when instance is subclass type. Composition: A holds reference to B; A delegates to B.`,
+          example: `Problem: Model a shape hierarchy. Shape has area(); Circle and Rectangle extend Shape and implement area() differently.
+
+Solution: abstract class Shape { abstract area(): number; } class Circle extends Shape { constructor(private r: number) { super(); } area() { return Math.PI * this.r ** 2; } } class Rectangle extends Shape { constructor(private w: number, private h: number) { super(); } area() { return this.w * this.h; } } Polymorphism: (s: Shape) => s.area() works for Circle and Rectangle.`,
+          additionalInfo: `In interviews: define the four pillars and give a one-line example each. Know the difference between override (replace behavior) and overload (same name, different params). Composition over inheritance is a common design guideline.`,
+        },
+        codeExample: `// Encapsulation: private fields, public API
+class BankAccount {
+  private balance: number = 0;
+  deposit(amount: number) {
+    if (amount <= 0) throw new Error("Invalid");
+    this.balance += amount;
+  }
+  getBalance(): number { return this.balance; }
+}
+
+// Inheritance & polymorphism
+abstract class Shape {
+  abstract area(): number;
+}
+class Circle extends Shape {
+  constructor(private r: number) { super(); }
+  area() { return Math.PI * this.r * this.r; }
+}
+// Usage: (s: Shape) => s.area() — polymorphism`,
+        codeLanguage: "typescript",
+      },
+      {
         id: "oop-solid-dry-kiss",
         title: "OOP, SOLID, DRY & KISS",
-        description:
-          "Object-oriented design, SOLID principles, and simplicity.",
-        order: 0,
+        description: "SOLID principles, DRY, KISS, and clean code practices.",
+        order: 1,
         imageKey: "software",
         contentBlocks: {
           learningFlow: [
@@ -1392,22 +2272,344 @@ class PaymentService {
 `,
         codeLanguage: "typescript",
       },
+      {
+        id: "design-patterns",
+        title: "Design Patterns: Creational, Structural, Behavioral",
+        description:
+          "Singleton, Factory, Observer, Strategy; when to use and code examples.",
+        order: 2,
+        imageKey: "software",
+        contentBlocks: {
+          learningFlow: [
+            "Read creational: Singleton (one instance), Factory (create without exposing constructor).",
+            "Read behavioral: Observer (notify subscribers), Strategy (interchangeable algorithm).",
+            "Implement one pattern in a small example (e.g. Factory for different payment types).",
+            "Identify a pattern in an existing codebase (e.g. Observer in event systems).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Implement a simple Factory: a function that returns an object based on a type parameter (e.g. createLogger('file') vs createLogger('console')). Then read Observer: one subject, many observers; when subject changes, notify all.
+
+**Prerequisites:** OOP Fundamentals (classes, interfaces). SOLID helps (depend on abstractions).
+
+**By the end of this topic you will:** Name and apply Singleton, Factory, Observer, Strategy; know when each fits; give a one-line use case in interviews.`,
+          material: `**Creational:** **Singleton:** One instance globally (e.g. DB connection, config). **Factory:** Create objects without calling constructor directly; centralize creation logic (e.g. createUser(type) returns Admin or Customer). **Structural:** **Adapter:** Wrap an incompatible interface to match what callers expect. **Decorator:** Add behavior by wrapping (e.g. logging around a service). **Behavioral:** **Observer:** Subject notifies list of observers on change; decouples publisher and subscribers (events, reactive UI). **Strategy:** Interchangeable algorithm (e.g. SortStrategy: QuickSort, MergeSort); inject at runtime. **When to use:** Singleton for true single instance; Factory when creation is complex or type-dependent; Observer for event-driven; Strategy when you have multiple algorithms. **Interview:** Name pattern, one sentence use case, simple code sketch.`,
+          explanation: `Patterns are common solutions to recurring design problems. Singleton ensures one instance (careful with testing). Factory hides creation and supports polymorphism. Observer enables loose coupling (publish-subscribe). Strategy supports open/closed (add new algorithm without changing client).`,
+          application: `Singleton: config, connection pool. Factory: create different handlers by type. Observer: UI events, WebSocket messages, state changes. Strategy: sorting, compression, validation rules. Often asked in system design or OOD interviews.`,
+          howToImplement: `(1) Singleton: private constructor, static getInstance() returns same instance.
+(2) Factory: function create(type) { switch(type) { case 'A': return new ImplA(); case 'B': return new ImplB(); } }
+(3) Observer: subject has addObserver(o), removeObserver(o), notify(); observers have update(data). On change, subject.notify().
+(4) Strategy: interface Strategy { execute(); } class Client { constructor(private s: Strategy) {} setStrategy(s) { this.s = s; } }`,
+          logicAndCode: `Singleton: store instance in static field; create once in getInstance(). Observer: subject holds list of observers; notify() calls each observer.update(). Strategy: client holds reference to strategy; delegates call to strategy.execute().`,
+          example: `Problem: Multiple payment methods (card, PayPal); client should not know creation details.
+
+Solution: PaymentFactory.create('card', params) returns CardPayment; PaymentFactory.create('paypal', params) returns PayPalPayment. Both implement Payment interface. Client uses factory and calls pay() on result.`,
+          additionalInfo: `GoF book: 23 patterns. For interviews focus on: Singleton, Factory (or Abstract Factory), Observer, Strategy, Decorator. Don't over-engineer; use pattern when problem clearly fits. Clean Code and Refactoring (Martin) show when to apply.`,
+        },
+        codeExample: `// Singleton
+class Config {
+  private static instance: Config;
+  private constructor() {}
+  static getInstance(): Config {
+    if (!Config.instance) Config.instance = new Config();
+    return Config.instance;
+  }
+}
+
+// Strategy
+interface SortStrategy {
+  sort(arr: number[]): number[];
+}
+class QuickSort implements SortStrategy { sort(arr) { /* ... */ return arr; } }
+class Client {
+  constructor(private strategy: SortStrategy) {}
+  setStrategy(s: SortStrategy) { this.strategy = s; }
+  sort(arr: number[]) { return this.strategy.sort(arr); }
+}`,
+        codeLanguage: "typescript",
+      },
     ],
   },
   {
     title: "English for IELTS 8",
     slug: "english-learning",
     description:
-      "Complete preparation for IELTS band 8: Listening, Reading, Writing, Speaking, vocabulary and grammar.",
+      "Grammar, vocabulary, listening, reading, writing, speaking — when to use what, accurate implementation, then IELTS band 8.",
     order: 12,
     published: true,
     topics: [
+      {
+        id: "grammar-for-accuracy",
+        title: "Grammar for Accuracy: When to Use What",
+        description:
+          "Tenses (present perfect vs past simple), articles (a/an/the), modals, conditionals — clear rules and examples in context.",
+        order: 0,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Read the rules for Present Perfect vs Past Simple: Perfect = result now / experience / unfinished period; Past = clear past time, completed.",
+            "Read articles: a/an (first mention, singular); the (already known / unique); no article (plural/uncountable in general).",
+            "Modals: can (ability); must (obligation); should (advice); may/might (possibility); would (conditional/polite).",
+            "Conditionals: If + present → will (real); If + past → would (unreal now); If + had done → would have (unreal past). Practise: write 3 sentences in context (when to use which).",
+          ],
+          learningFlowIntro: `**Your first step:** Read sections 1–2. Write two sentences: (1) I have finished the report (present perfect — result now). (2) I finished the report yesterday (past simple — clear time). Understand the difference.
+
+**Prerequisites:** Basic English (subject, verb, object).
+
+**By the end of this topic you will:** Choose the right tense and article from context; use modals and conditionals accurately.`,
+          material: `**Present Perfect vs Past Simple:** Perfect: have/has + past participle. Use when: result still relevant (I have lost my key), life experience (I have been to Japan), unfinished period (this week). Past: verb+ed/irregular. Use when: specific past time (yesterday, in 2019, when I was young). **Articles:** a/an = singular, first mention, non-specific. the = already known or unique (the sun, the report we discussed). No article: plural/uncountable in general (water, people, life). **Modals:** can = ability/permission; must = obligation (strong); should = advice; may/might = possibility; would = conditional/polite request. **Conditionals:** Type 1 (real): If it rains, I will stay. Type 2 (unreal now): If I had time, I would go. Type 3 (unreal past): If I had known, I would have told you. **Accuracy:** Context decides — finished time or not? Specific or general?`,
+          explanation: `Accurate grammar means the reader or listener is not confused. Present perfect links the past to now; past simple cuts it off. The article the signals we already know which one. Modals express level of certainty or obligation.`,
+          application: `Writing: choose tense consistently (past narrative = past; general fact = present). Speaking: I have been working here for 2 years (still); I worked there in 2020 (no longer). Email: Could you send... (polite); You must submit by Friday (formal).`,
+          howToImplement: `(1) Before writing/speaking: ask "finished time?" → Yes: past simple. No / result now: present perfect. (2) Noun: first mention / general → a/an or no article; already clear which → the. (3) Advice → should; obligation → must; possibility → may/might. (4) Conditional: real (can happen) → present + will; unreal → past + would.`,
+          logicAndCode: `Decision: Specific past time word (yesterday, last week) → past simple. None / this week / so far → consider present perfect. Article: use the only if the listener knows the referent.`,
+          example: `Fill in: I ___ (see) that film last year. Answer: saw (past simple — last year = clear time). She ___ (work) here since 2020. Answer: has worked (present perfect — since = from then until now). We need ___ decision. Answer: a (singular, first mention, not the).`,
+          additionalInfo: `Resources: English Grammar in Use (Murphy), Grammarly. When in doubt: present simple for facts; past simple for stories. IELTS: variety of tenses and conditionals raises grammatical range score.`,
+        },
+        codeExample: `// When Present Perfect vs Past Simple
+// Present Perfect: result/experience/unfinished period
+I have finished.  She has been to Tokyo.  We have had three meetings this week.
+
+// Past Simple: clear past time
+I finished yesterday.  She went to Tokyo in 2022.  We had a meeting last Monday.
+
+// Articles: a/an vs the
+I need a laptop. (any)  The laptop you gave me is fast. (already known)
+Life is short. (general, no article)
+
+// Conditional — choose from context
+If you submit today, we will review it. (real)
+If I had more time, I would help. (unreal now)
+If I had known, I would have called. (unreal past)
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "vocabulary-and-collocations",
+        title: "Vocabulary & Collocations: The Right Word at the Right Time",
+        description:
+          "Do vs make, collocations (verb+noun), formal vs informal, synonyms that differ by context.",
+        order: 1,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Learn do vs make patterns: do (task, job, homework, research, your best); make (decision, mistake, plan, money, sense, a difference).",
+            "Learn common collocations: take a break, give feedback, reach a conclusion, draw attention, play a role.",
+            "Register: formal (commence, purchase, assist) vs informal (start, buy, help); choose by context (essay vs chat).",
+            "Synonyms in context: big/large (large for size), great (great idea), major (major problem); use in full sentences.",
+          ],
+          learningFlowIntro: `**Your first step:** Write 5 sentences: do the homework, make a decision, do research, make a mistake, make sense. Read sections 1–2 and add 5 more collocations (take, give, reach, draw, play).
+
+**Prerequisites:** Basic vocabulary (common verbs, nouns).
+
+**By the end of this topic you will:** Choose do/make and collocations correctly; distinguish formal/informal and context-appropriate synonyms.`,
+          material: `**Do vs Make:** Do = activity/task (do homework, do your job, do research, do exercise). Make = create/produce (make a decision, make a mistake, make money, make sense, make a plan, make progress). **Collocations:** Verb+noun often used together: take a break/photo; give feedback/advice; reach a conclusion/agreement; draw attention/conclusion; play a role/part; have an impact/effect; meet a deadline/requirement. **Formal vs informal:** Formal (academic/business writing): commence, purchase, assist, inquire, facilitate. Informal (conversation): start, buy, help, ask. **Synonyms in context:** Big (general); large (size/number); great (excellent); major (important); significant (statistics/research). **Accuracy:** The right word = what natives commonly use in that context; learn from example sentences, not word lists only.`,
+          explanation: `Collocation = words that commonly go together; wrong choice (e.g. make homework) sounds odd. Formal/informal affects tone; IELTS essay = semi-formal. Synonyms are not always interchangeable (large problem vs major problem).`,
+          application: `Writing Task 2: make a difference, have a significant impact, reach a conclusion. Speaking: do my best, make a point. Work email: please advise (formal) vs let me know (informal). Avoid near-misses — check a corpus or examples.`,
+          howToImplement: `(1) When writing: unsure do/make? Remember: create/produce → make; perform task → do. (2) Learn by phrase: write take a break not just take. (3) Read example sentences for each new word. (4) Essay: avoid slang; use assist, demonstrate, significant.`,
+          logicAndCode: `Do + activity/task. Make + result/creation. Collocation: store in Anki/flashcards with full sentence. Test: can you swap a synonym without changing meaning? If not, it is a fixed collocation.`,
+          example: `We need to ___ a decision. Answer: make. I have to ___ my homework. Answer: do. Formal: The study demonstrates that... (not shows). Considerable progress (not big progress) — fits academic style.`,
+          additionalInfo: `Resources: Oxford Collocations Dictionary, AWL (Academic Word List), Lextutor. IELTS: lexical resource is scored on variety + accuracy; correct collocation beats a difficult word used wrongly.`,
+        },
+        codeExample: `// Do vs Make — choose from context
+do: homework, research, your best, the shopping, a favour
+make: a decision, a mistake, money, sense, progress, a difference
+
+// Collocations — learn as phrases
+take a break / take responsibility
+give feedback / give a presentation
+reach a conclusion / reach an agreement
+have an impact / have difficulty (in) -ing
+
+// Formal (essay) vs Informal (speaking)
+conduct research (formal) / do research (ok)
+obtain information / get information
+demonstrate / show
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "listening-and-pronunciation",
+        title: "Listening & Pronunciation: Understand and Be Understood",
+        description:
+          "Listening strategy (predict, keywords), pronunciation (stress, linking) for quick comprehension and accurate answers.",
+        order: 2,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Listening: before audio — read questions, underline keywords, predict answer type (number? name? date?).",
+            "While listening: focus on paraphrase (answers rarely word-for-word); spelling matters (names, places).",
+            "Pronunciation: word stress (PHO-to-graph vs pho-TO-gra-phy); sentence stress (content words vs function words).",
+            "Linking: consonant + vowel (turn off → tur_noff); practise with shadowing (follow audio for 1–2 minutes).",
+          ],
+          learningFlowIntro: `**Your first step:** Play a 1-minute podcast or news clip. Before playing: predict the topic from the title. After: write 3 points you caught. Then read sections 1–2.
+
+**Prerequisites:** Can read English text; basic sound awareness.
+
+**By the end of this topic you will:** Have a listening strategy (predict, keywords) and basics of pronunciation (stress, linking) to understand quickly and be understood.`,
+          material: `**Listening strategy:** Predict — from the question guess answer type (number, name, date). Underline keywords — what you must hear. Paraphrase — answers often use synonyms (e.g. expensive in audio, high cost in question). Spelling — names, places, terms may be spelled out; write correctly. **Pronunciation:** Word stress: one main stress per word (e.g. PHOtograph, phoTOgraphy). Sentence stress: content words (noun, verb, adj) stressed; function words (the, a, of) weak. Linking: consonant end + vowel start → join (an apple → a_napple). **Intonation:** Yes/no questions rise at end; statements fall. **Practice:** Shadowing = listen and speak almost together; record yourself and compare.`,
+          explanation: `Prediction reduces cognitive load — you are listening for a specific type of info. Paraphrase is the IELTS rule; answers are not always word-for-word. Stress and linking make your speech more natural and easier to follow.`,
+          application: `IELTS Listening: read questions first; during breaks read the next set. Meetings/podcasts: note keywords; fill in with paraphrase. Presentations: stress key words; link words for fluency.`,
+          howToImplement: `(1) Every listening: 30 sec read questions, underline, guess number/name/date. (2) While listening: do not write long; keep it short, spell correctly. (3) Pronunciation: pick 5 difficult words, check stress in dictionary (e.g. Cambridge); say 10x. (4) Shadowing: 1 min per day; build up to 2 min.`,
+          logicAndCode: `Flow: Predict → Listen for paraphrase → Write short → Check spelling. Pronunciation: word stress first, then sentence; linking last. Record yourself once a week to track progress.`,
+          example: `Question: The project will be completed by ___. Predict: date or month. Audio: We are aiming to finish by the end of March. Answer: (end of) March. Pronunciation: photograph → PHO-to-graph (first syllable); I want to go → linking want to → wanna (informal) or want_to.`,
+          additionalInfo: `Resources: Cambridge Dictionary (pronunciation), BBC Learning English, IELTS Liz listening. Record Part 2 Speaking and check: is stress clear? Are words linked?`,
+        },
+        codeExample: `// Listening — before audio
+// 1. Read questions
+// 2. Underline: What, When, Who, number?
+// 3. Predict: date / name / number / adjective
+
+// Pronunciation — word stress (CAPS = stress)
+PHOtograph    phoTOgraphy    photoGRAphic
+eCONomy       eCO-nomic
+
+// Linking (consonant + vowel)
+turn off → tur_noff
+an hour → a_nour
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "reading-for-understanding",
+        title: "Reading for Understanding: Fast and Accurate Strategies",
+        description:
+          "Skimming, scanning, inference; question types and when to read fast vs in depth.",
+        order: 3,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Skimming: read quickly for main idea — title, first and last paragraph, first sentence of each paragraph; 1–2 min per text.",
+            "Scanning: look for numbers, names, dates, keywords; move eyes quickly, stop only at relevant words.",
+            "Inference: answer not stated literally; infer from context (tone, cause-effect).",
+            "Question types: headings → match paragraph idea; T/F/NG → note False vs Not Given; summary → fill gap from text (paraphrase).",
+          ],
+          learningFlowIntro: `**Your first step:** Take one 300-word article. Skim for 1 min: title + first sentence of each paragraph. Write one sentence: What is this article about? Then read sections 1–2.
+
+**Prerequisites:** Basic vocabulary; can read full sentences.
+
+**By the end of this topic you will:** Skim for gist, scan for detail, and answer inference questions accurately.`,
+          material: `**Skimming:** Goal = main idea, structure. Read: title, para 1, first sentence of each para, last paragraph. Do not read every word. **Scanning:** Goal = find specific info. Look for numbers, names, years, keywords; move eyes quickly vertically/horizontally. **Inference:** Answer not copy-paste from text; read context — implies, suggests = inference. **True/False/Not Given:** True = matches text. False = contradicts text. Not Given = no info in text (do not guess). **Headings:** Choose heading that covers paragraph idea, not just one sentence. **Summary/Completion:** Fill gap; often paraphrase (wording in question differs from text). **Time:** IELTS Reading ~20 min per passage; skim first, then do questions.`,
+          explanation: `Skimming saves time and gives a map of the text. Scanning is efficient for where X is mentioned. Not Given is often wrong — if the text is silent, answer NG. Paraphrase is the rule: answers use synonyms.`,
+          application: `IELTS: read questions first for one set, then skim text, then scan for answers. Work: read executive summary (skimming); find numbers in report (scanning).`,
+          howToImplement: `(1) Every text: 1–2 min skim (title + first sentence each para). (2) Read questions; identify keywords; scan text for keyword or paraphrase. (3) T/F/NG: find relevant sentence; same = T, opposite = F, no info = NG. (4) Summary: find matching part of text; fill gap with word from text (check grammar).`,
+          logicAndCode: `Flow: Skim → Read questions → Scan for each question → Write answer. Do not read the whole text for every question; jump to the relevant part.`,
+          example: `Question: The writer suggests that X is... Text: Many believe X could improve productivity. Answer: True (suggests = many believe). Question: The experiment was conducted in ___. Scan for experiment, conducted, year or place; fill gap. Not Given: text only says some studies; question asks most studies — no info → NG.`,
+          additionalInfo: `Resources: Cambridge IELTS Reading, IELTS Liz. Time: do not get stuck on one question; skip, return later. Spelling and word form (singular/plural, verb form) must be correct.`,
+        },
+        codeExample: `// Skimming — read only:
+// - Title
+// - Para 1 (full or first sentence)
+// - First sentence of each middle paragraph
+// - Last paragraph
+
+// T/F/NG — decision
+// Text agrees with statement → TRUE
+// Text says the opposite → FALSE
+// Text gives no info → NOT GIVEN (do not infer)
+
+// Summary — fill gap
+// 1. Read summary sentence
+// 2. Find part of text that paraphrases
+// 3. Take word from text; match grammar (singular/plural, tense)
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "writing-structure-and-coherence",
+        title:
+          "Writing: Structure & Coherence — Answer Precisely, Order Clearly",
+        description:
+          "Paragraph structure, linking words, task response; ready-to-use templates for Task 1 and Task 2.",
+        order: 4,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Task response: read the question twice; identify all parts (e.g. agree/disagree + why + example); answer all of them.",
+            "Paragraph structure: intro (paraphrase + thesis); body = topic sentence + 2–3 supporting + example; conclusion = restate + summary.",
+            "Linking: add idea (Furthermore, In addition); contrast (However, On the other hand); cause (Therefore, As a result); order (First, Secondly, Finally); conclusion (In conclusion).",
+            "Task 1: overview first (main trend); then key features with data; no opinion. Task 2: plan 2–3 min; write to plan.",
+          ],
+          learningFlowIntro: `**Your first step:** Take one Task 2 prompt. In 2 minutes write on paper: (1) paraphrase of prompt, (2) thesis (agree/disagree/partly), (3) 2 body points + 1 example. Then read sections 1–2.
+
+**Prerequisites:** Basic grammar, sufficient vocabulary.
+
+**By the end of this topic you will:** Have a fixed template for Task 1 and Task 2; know the right linking words; and always answer every part of the question.`,
+          material: `**Task response (TR):** Top marks = answer every part of the question; develop with explanation + example; clear position (opinion essay). **Coherence:** One idea per paragraph; logical order; linking words between sentences and paragraphs. **Linking:** Addition: Furthermore, Moreover, In addition. Contrast: However, On the other hand, Although. Cause/effect: Therefore, As a result, Consequently. Order: First, Secondly, Finally. Conclusion: In conclusion, To sum up. **Task 1 structure:** Intro: paraphrase + overview (e.g. The graph shows... Overall, X increased while Y decreased.). Body: 2 paragraphs, each key feature + data. No conclusion required; one sentence is fine. **Task 2 structure:** Intro: paraphrase + thesis. Body 1–2 (or 3): topic sentence + support + example. Conclusion: restate thesis + summarise points. **Word count:** Task 1 min 150; Task 2 min 250; under = score penalty.`,
+          explanation: `TR is the first Writing criterion; not answering every part caps your score. Coherence = reader can follow the flow. Right linking (However for contrast, not Furthermore) shows control. Overview in Task 1 is required for a high score.`,
+          application: `Every Task 2: checklist have I answered every part? Every paragraph: topic sentence at the start. Every transition: choose the right linking (add vs contrast vs cause). Task 1: always write overview in the intro.`,
+          howToImplement: `(1) Read prompt twice; circle keywords; write Parts to answer: 1... 2... 3... (2) Plan: intro thesis; body 1 point A + example; body 2 point B + example. (3) Write; each paragraph starts with topic sentence. (4) Before submit: check TR (all parts?), word count, linking.`,
+          logicAndCode: `Intro = paraphrase + thesis. Body = topic sentence + support + example (repeat). Conclusion = restate + summary. Linking: do not overuse (one per paragraph transition is enough). Task 1: overview = 1–2 sentences for main trend.`,
+          example: `Prompt: Technology has made life more complicated. To what extent do you agree? Parts: (1) extent agree/disagree, (2) why, (3) example. Intro: While technology has simplified many tasks, it has also introduced complexity. I partly agree because... Body 1: On the one hand, technology has simplified... For example, online banking... Body 2: On the other hand, it has made... For instance, constant notifications... Conclusion: In conclusion, I partly agree; technology both simplifies and complicates...`,
+          additionalInfo: `Resources: IELTS Liz Writing, E2 IELTS. Avoid: irrelevant template; too many linkers; no example. Check: singular/plural, tense, articles.`,
+        },
+        codeExample: `// Task 2 — template
+// Intro: Paraphrase + Thesis (e.g. I agree / I partly agree because X and Y)
+// Body 1: Topic sentence. Support. For example, ...
+// Body 2: Topic sentence. However, / Furthermore, ... Example.
+// Conclusion: In conclusion, [restate thesis]. To sum up, [points].
+
+// Task 1 — template
+// Intro: The [graph/table] shows ... Overall, [main trend].
+// Body 1: [Feature 1]. In 2020, X was ... while Y ...
+// Body 2: [Feature 2]. By contrast, ...
+
+// Linking — choose one per transition
+// + Furthermore / In addition   - However / On the other hand
+// → Therefore / As a result     # First, Secondly, Finally
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "speaking-fluency-and-real-use",
+        title:
+          "Speaking: Fluency & Real Use — Fluent and Right for the Context",
+        description:
+          "Extend answers, signposting, acceptable fillers; interview, presentation, daily conversation.",
+        order: 5,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Extend: do not answer in one sentence; add reason, example, or comparison. Part 1: 2–3 sentences; Part 3: 2–4 sentences.",
+            "Signposting: Well I think / For example / On the other hand / So to sum up — help the listener follow your flow.",
+            "Acceptable fillers: Well, Let me see, That is a good question (brief); avoid long eee — a short pause is better.",
+            "Context: interview (formal, STAR); presentation (intro, points, conclusion); daily (natural, informal is fine).",
+          ],
+          learningFlowIntro: `**Your first step:** Record yourself answering What do you do in your free time? Listen: is it only one sentence? Add I like X because... For example, last week I... Record again. Then read sections 1–2.
+
+**Prerequisites:** Can form basic sentences; enough vocabulary.
+
+**By the end of this topic you will:** Extend answers, use signposting, and adapt style (formal vs informal) to context.`,
+          material: `**Fluency:** Speak without long pauses; extend = add reason, example, detail. Part 1: 2–3 sentences. Part 2: follow bullet points; 1.5–2 min. Part 3: 2–4 sentences; give opinion + reason + example. **Signposting:** Well, I think... / In my view... / For example... / On the other hand... / So, to sum up... / That is why... **Filler:** Okay, Well, Let me see, That is a good question — use briefly; do not repeat. A 1–2 second pause is better than a long eee. **Context:** Job interview: STAR structure (Situation, Task, Action, Result); formal. Presentation: intro (what I will cover), body (points), conclusion (summary). Daily: natural; I guess, kind of are fine. **Pronunciation:** Stress important words; no need for native accent, but clear. **Coherence:** Logical order; link when you change idea.`,
+          explanation: `Extend shows fluency and lexical resource. Signposting helps coherence — examiner sees you control the flow. Short filler is normal; long silence feels less fluent. Context sets the level of formality.`,
+          application: `IELTS Part 2: use 1 min prep for outline (2–3 points); when speaking follow outline + signposting. Interview: prepare 2–3 STAR stories. Meeting: I would like to make two points. First... Second... So, in summary...`,
+          howToImplement: `(1) Every answer: direct answer + because or for example + one more sentence. (2) Practise: record 5 Part 1 questions; listen; add extend where still short. (3) Memorise 3–5 signposts: Well, For example, On the other hand, So overall. (4) Interview: prepare 2 stories (challenge, success); structure Situation, Task, Action, Result.`,
+          logicAndCode: `Answer = Direct answer + Reason/Example + (optional) Contrast or summary. Signpost at the start of a sentence when you change idea. Do not repeat the question at length; answer then develop.`,
+          example: `Q: Do you like reading? Bad: Yes, I do. Good: Yes, I do. I mainly read non-fiction, especially about technology, because it helps me at work. For example, last month I read a book about AI and used some ideas in a project. Part 2: I would like to talk about... First of all,... Secondly,... So, overall it was a great experience.`,
+          additionalInfo: `Resources: IELTS Liz Speaking, E2. Record yourself once a week; compare with band 8 samples. Interview: practise STAR with a friend or mentor.`,
+        },
+        codeExample: `// Extend — formula
+// Direct answer + Because/For example + One more sentence
+
+// Signposting — use when changing idea
+// Well, I think...   For example...   On the other hand...
+// So, to sum up...   That is why...
+
+// Part 2 — structure (1 min prep)
+// 1. Intro: I would like to talk about...
+// 2. First point (bullet 1)
+// 3. Second point (bullet 2)
+// 4. Third point (bullet 3)
+// 5. Conclusion: So, overall...
+
+// STAR (interview)
+// Situation → Task → Action → Result
+`,
+        codeLanguage: "text",
+      },
       {
         id: "ielts-8-complete-guide",
         title: "IELTS 8 Complete Guide",
         description:
           "Strategies and practice for Listening, Reading, Writing, Speaking to achieve band 8.",
-        order: 0,
+        order: 6,
         imageKey: "english",
         contentBlocks: {
           learningFlow: [
@@ -1418,7 +2620,7 @@ class PaymentService {
           ],
           learningFlowIntro: `**Your first step:** Do one full practice test (e.g. Cambridge IELTS) under timed conditions, then read the band descriptors for Writing and Speaking to see what "8" means.
 
-**Prerequisites:** English at roughly B2–C1 (comfortable reading and speaking); familiarity with exam format helps.
+**Prerequisites:** English at roughly B2–C1 (comfortable reading and speaking); the topics above (Grammar, Vocabulary, Listening, Reading, Writing, Speaking) will help you apply skills at the right moment.
 
 **By the end of this topic you will:** Know the structure and timing of each section, what band 8 requires, and how to plan essays and Part 2 answers.`,
           material: `**Listening (40 min):** 4 sections; note completion, matching, MC; predict and underline keywords; check spelling. **Reading (60 min):** 3 long texts; skimming/scanning; headings, T/F/NG, summary; manage time (e.g. 15–20 min per passage). **Writing:** Task 1 (150 words): describe graph/diagram; Task 2 (250 words): essay (opinion, discuss both, problem/solution); plan 2–3 min; intro, body paragraphs, conclusion. **Speaking (11–14 min):** Part 1 short answers; Part 2 long turn (1 min prep, 2 min speak); Part 3 discussion. **Band 8:** Few errors; wide vocabulary; complex structures; fully addresses task; speaks at length with coherence.`,
@@ -1442,6 +2644,304 @@ Solution: Plan: intro (paraphrase + opinion); body 1 (technology has simplified 
 // 2. "First of all..." - first point with detail
 // 3. "Secondly..." - second point
 // 4. "Finally..." - conclusion or summary
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "common-errors-quick-fixes",
+        title: "Common Errors & Quick Fixes",
+        description:
+          "Since vs for, its vs it's, affect vs effect, prepositions; quick fixes for accuracy.",
+        order: 7,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Since vs for: since + point in time (since 2020, since Monday); for + duration (for 2 years, for three days).",
+            "Its vs it's: its = possessive (the company and its goals); it's = it is (it's clear).",
+            "Affect vs effect: affect = verb (to influence); effect = noun (the impact); affect on is wrong, effect on is correct.",
+            "Prepositions: depend on (not depend from); interested in; good at; different from (or than in US). Check verb+preposition pairs.",
+          ],
+          learningFlowIntro: `**Your first step:** Write 3 sentences: (1) I have lived here since 2020. (2) I have lived here for three years. (3) The report and its conclusions. Read sections 1–2 and memorise since/for and its/it's.
+
+**Prerequisites:** Basic grammar (present perfect, possessive).
+
+**By the end of this topic you will:** Avoid common errors in since/for, its/it's, affect/effect, and prepositions; Writing/Speaking scores more stable.`,
+          material: `**Since vs for:** Since = start of period (since January, since I was young). For = length of period (for two weeks, for a long time). Present perfect: I have been here since Monday / for five days. **Its vs it's:** Its = possessive, no apostrophe (the dog wagged its tail). It's = it is or it has (it's raining, it's been years). **Affect vs effect:** Affect = verb (stress affects health). Effect = noun (the effect of stress); have an effect on. **Prepositions:** depend on; interested in; good at / bad at; different from; responsible for; focus on; consist of; agree with (person), agree on (topic). **Others:** There/their/they're; your/you're; fewer (countable) vs less (uncountable); than vs then. **Quick fix:** Before submit, search for it's and ask: can I replace with it is? If not, use its.`,
+          explanation: `These errors often go unnoticed because they sound or look similar. Wrong since/for = tense becomes ambiguous. Wrong its/it's = looks careless. Wrong preposition = collocation error in lexical resource.`,
+          application: `Writing: before sending, search it's and its; check every since/for and affect/effect. Speaking: practise for two years not since two years. Self-check list: since+point in time, for+duration; its possessive; affect verb, effect noun.`,
+          howToImplement: `(1) Make a list of 10 preposition pairs (depend on, interested in, ...); read once a day for a week. (2) Every time you write: Ctrl+F it's — mentally replace with it is; if it does not fit, use its. (3) Affect/effect: need a verb? Use affect; need a noun? Use effect (the effect). (4) Practise: fill blank — I have worked here ___ 2020 (since); ___ three years (for).`,
+          logicAndCode: `Since = since + date/time point. For = for + number + unit. Its = possessive (like his, her). It's = it is. Affect = verb. Effect = noun (often with the/an). Preposition: learn per verb (interested in, not interested about).`,
+          example: `Wrong: I have been studying since three years. Right: for three years. Wrong: The company announced it's new product. Right: its new product. Wrong: The study examined the affect of sleep. Right: the effect of sleep. Wrong: It depends from the situation. Right: depends on.`,
+          additionalInfo: `Resources: Grammarly, English Grammar in Use. IELTS: frequent errors = grammar band drops. Make a personal checklist (since/for, its/it's, affect/effect, 5 prepositions) and use it every review.`,
+        },
+        codeExample: `// Since vs For
+// since + point: since 2020, since Monday, since I left
+// for + duration: for 2 years, for three days, for a long time
+
+// Its vs It's
+// its = possessive: The app has its limitations.
+// it's = it is: It's important to plan.
+
+// Affect (v) vs Effect (n)
+// Stress affects performance.  The effect of stress is clear.
+
+// Prepositions — learn pairs
+// depend on, interested in, good at, different from, focus on
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "academic-writing-hedging",
+        title: "Academic Writing: Hedging & Formal Style",
+        description:
+          "May, might, could; passive voice; avoid contractions; formal vocabulary for Task 2 and essays.",
+        order: 8,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Hedging: use may, might, could, tend to, it appears that, suggests that — for claims that are not absolute (academic).",
+            "Passive: when the doer is unimportant or you want to focus on the result (The study was conducted; Data were collected).",
+            "Avoid contractions in Writing Task 2: do not not don't; it is not it's; cannot not can't.",
+            "Formal vocabulary: demonstrate (not show); indicate, suggest; significant (not big); obtain (not get); commence (not start) — use consistently.",
+          ],
+          learningFlowIntro: `**Your first step:** Take one paragraph of your Task 2. Replace every show with demonstrate or indicate; replace don't with do not; add one sentence with may or might. Then read sections 1–2.
+
+**Prerequisites:** Writing structure (topic sentence, support); basic grammar.
+
+**By the end of this topic you will:** Write with appropriate hedging, passive when needed, no contractions, and formal vocabulary — ready for band 7–8 Writing.`,
+          material: `**Hedging:** Reduce absolute certainty: may, might, could, tend to, it is possible that, it appears that, the evidence suggests that, research indicates that. Use when: generalisations, research results, predictions. **Passive:** Subject = receiver of action; doer optional (by X). Use when: doer unimportant (Experiments were conducted); focus on process (Data were analysed). **No contractions:** Write do not, cannot, it is, there is, would not. **Formal lexis:** demonstrate, indicate, suggest, reveal; significant, considerable, substantial; obtain, acquire; commence, conclude; facilitate, enable; prior to, subsequent to; however, furthermore, consequently. **Avoid:** get (use obtain/receive); big (use large/significant); thing (use aspect/factor); lots of (use many/significant number of). **Balance:** Do not over-hedge (every sentence with might); 1–2 hedges per body paragraph is enough.`,
+          explanation: `Hedging shows you distinguish fact from interpretation — important in academic writing. Passive makes the tone objective. Contractions are considered informal; Task 2 is semi-formal. Formal vocabulary raises lexical resource score.`,
+          application: `Task 2: every body paragraph at least one hedge (Research suggests...; This may lead to...). Passive for methodology (was conducted, were collected). Proofread: find don't, can't, it's and replace. Use thesaurus for words that are too informal.`,
+          howToImplement: `(1) Draft freely first; when editing: replace show→demonstrate, get→obtain, big→significant. (2) Check: any strong claim without hedging? Add may or research suggests. (3) Check: sentence where focus is on the action (who did it unimportant)? Change to passive. (4) Find: apostrophe → replace contraction with full form.`,
+          logicAndCode: `Hedging = modal (may/might/could) or phrase (it seems, evidence suggests). Passive = be + past participle; past passive = was/were + pp. Formal = one level above conversation; consistent across the essay.`,
+          example: `Without hedging: Technology destroys jobs. With hedging: Technology may lead to job displacement in some sectors. Passive: The survey was conducted in 2023. (not We conducted) Formal: The findings demonstrate that... (not The findings show that...) Informal: It's clear that we don't have enough data. Formal: It is clear that we do not have sufficient data.`,
+          additionalInfo: `Resources: Academic Phrasebank (Manchester), IELTS Liz. Do not use slang (kids, stuff, gonna). Abbreviations: first mention full form (e.g. World Health Organization (WHO)); then WHO.`,
+        },
+        codeExample: `// Hedging — choose by strength of claim
+// may / might / could + verb
+// It is possible that...  Research suggests that...
+// tend to, is likely to, appears to
+
+// Passive — when doer is not the focus
+// The data were collected over six months.
+// A survey was conducted among 500 participants.
+
+// Formal substitutes
+// show → demonstrate, indicate   get → obtain, receive
+// big → significant, considerable   thing → aspect, factor
+// don't → do not   it's → it is
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "ielts-task-1-graphs-charts",
+        title: "IELTS Task 1: Graphs, Charts & Diagrams",
+        description:
+          "Line, bar, pie, table, map, process — what to describe, overview, and key features per type.",
+        order: 9,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Line/bar: trend (increase, decrease, fluctuate); compare lines/bars; overview = main trend (e.g. overall increase).",
+            "Pie/table: compare proportions or largest/smallest figures; overview = dominant category or general pattern.",
+            "Map: change from A to B (new facilities, area development); overview = main changes (e.g. more facilities, expanded).",
+            "Process: sequence of steps from start to end; overview = number of stages and final output; use passive (is produced, are mixed).",
+          ],
+          learningFlowIntro: `**Your first step:** Find one Task 1 image (line graph or bar chart). In 2 minutes write: (1) one overview sentence (main trend), (2) two key features with figures. Then read sections 1–2.
+
+**Prerequisites:** Writing structure (intro, body); number vocabulary (increase, decrease, percentage).
+
+**By the end of this topic you will:** Know what to write for each Task 1 type; overview always included; key features with data.`,
+          material: `**Line graph:** Axis: time vs value. Describe: trend (rise, fall, stability), comparison between lines, turning points. Overview: e.g. overall, X increased while Y decreased. **Bar chart:** Compare categories; note highest/lowest; change over time if two time points. Overview: e.g. A was the highest; B showed the sharpest growth. **Pie chart:** Proportions; compare slices; often two pies = compare over time. Overview: e.g. X accounted for the largest share. **Table:** Rows/columns; identify max, min, patterns. Overview: main pattern or comparison. **Map:** Before/after or two locations; describe new buildings, roads, changes. Overview: e.g. the area became more developed with new facilities. **Process:** Steps from input to output; use sequencing (First, Then, After that); passive (The material is heated). Overview: e.g. the process consists of X stages and produces Y. **Rules:** No opinion; overview in intro or after intro; 2–3 body paragraphs; include specific data (numbers, dates). **Word count:** Minimum 150; aim 160–180.`,
+          explanation: `Overview is a Task Achievement criterion; without it your score is capped. Each type has a pattern: line = trend; pie = proportion; process = sequence. Specific data (numbers, percentages) is required.`,
+          application: `Practise per type: 1 line, 1 bar, 1 pie, 1 table, 1 map, 1 process. Each answer: intro (paraphrase + overview), body (key features + data). Do not list every number; choose what stands out (highest, lowest, biggest change).`,
+          howToImplement: `(1) Read title and axes; identify main trend → write overview. (2) Choose 2–3 key features (e.g. highest value, biggest increase, comparison). (3) Write body: one paragraph per feature or per time period. (4) Process: read left to right / top to bottom; write one sentence per step with passive. (5) Proofread: data included? Overview? No opinion?`,
+          logicAndCode: `Overview = 1–2 sentences answering What is the main trend or pattern? Key features = 2–3 points with numbers. Structure: Intro (paraphrase + overview) → Body 1 (feature 1 + data) → Body 2 (feature 2 + data). Process: First... Then... After that... Finally... (passive).`,
+          example: `Line graph: The line graph shows energy consumption from 1980 to 2020. Overall, renewable energy increased while coal decreased. In 1980, coal accounted for 60%; by 2020 it had fallen to 25%. Renewables rose from 5% to 35% over the same period. Map: The maps show a town in 1990 and 2010. Overall, the town expanded with new housing and a road. In 2010, a new school and hospital had been built in the north, and the main road was extended to the east.`,
+          additionalInfo: `Resources: Cambridge IELTS Task 1, IELTS Liz. Time: 20 minutes for Task 1. Paraphrase the title (The graph shows → The line graph illustrates). Data: round if needed (e.g. about 35% or approximately 40%).`,
+        },
+        codeExample: `// Task 1 — intro + overview
+// The [line graph/bar chart/pie chart/table/map/process diagram]
+// shows/illustrates ... [paraphrase title].
+// Overall, [main trend: X increased / A was highest / the process has N stages].
+
+// Line/bar — key features
+// X rose from ... to ...  Y fell sharply.  Z remained stable.
+// By [year], X had overtaken Y.
+
+// Process — passive
+// First, the raw material is collected. Then, it is heated...
+// After that, ... Finally, the product is packaged.
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "ielts-speaking-parts-deep-dive",
+        title: "IELTS Speaking: Parts 1, 2 & 3 Deep Dive",
+        description:
+          "Common Part 1 topics, Part 2 structure (cue card), Part 3 extended answers; sample questions and answer frames.",
+        order: 10,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Part 1: topics (work, study, hometown, hobbies, daily routine); answer in 2–3 sentences; direct answer + reason or example; natural, do not memorise long scripts.",
+            "Part 2: read cue card; 1 min prep — outline 2–3 points following bullets; speak 1.5–2 min; short intro then follow points; close with So overall.",
+            "Part 3: abstract/general questions (why, how, compare); answer in 3–4 sentences: opinion + reason + example or contrast; use In my view, For instance, On the other hand.",
+            "Practise: record Part 1 (5 questions), Part 2 (1 cue card), Part 3 (3 questions); listen and check: enough extend? Signposting there?",
+          ],
+          learningFlowIntro: `**Your first step:** Practise Part 1: answer Where do you live? in 3 sentences (place + why you like/don't + one detail). Timer 30 seconds. Then read sections 1–2.
+
+**Prerequisites:** Speaking basics (extend, signposting from the Speaking topic above).
+
+**By the end of this topic you will:** Know typical topics per part, answer structure, and frame (intro–points–conclusion) for Part 2 and Part 3.`,
+          material: `**Part 1 (4–5 min):** Topics: work, studies, hometown, home, family, hobbies, food, travel, weather, etc. Format: 2–3 questions per topic. Strategy: direct answer + because/for example + one more sentence. Do not answer in one word. **Part 2 (3–4 min):** Cue card: Describe X. You have 1 min to prepare. Speak 1–2 min. Bullet points on card = outline. Structure: (1) Intro: I would like to talk about... (2) Point 1 (bullet 1). (3) Point 2 (bullet 2). (4) Point 3 (bullet 3). (5) So overall / In conclusion. **Part 3 (4–5 min):** Discussion; more general/abstract questions (Why do people...? How has X changed? Compare A and B). Strategy: state view + reason + example or On the other hand. 3–4 sentences. **Common Part 1:** Do you work or study? Where do you live? What do you do in your free time? **Common Part 2:** Describe a place, person, event, object, experience. **Common Part 3:** Follow-up from Part 2 topic (e.g. after describe a book → Why do people read? How has reading changed?). **Fluency:** Do not stay silent long; use Well, Let me see; extend every answer.`,
+          explanation: `Part 1 = warm-up; examiner scores fluency and range. Part 2 = monologue; outline in prep time helps a lot; follow bullets so you do not forget. Part 3 = discussion; longer answers with reason and example raise your score.`,
+          application: `Prepare 2–3 stories (place, person, experience) that you can reuse for different cue cards. Part 1: practise 10 common questions; every answer at least 2 sentences. Part 3: practise In my view... because... For example... for 5 abstract questions.`,
+          howToImplement: `(1) Part 1: list 20 common questions; answer with 30s timer; check if reason/example is there. (2) Part 2: take 3 cue cards; 1 min prep write outline (3 points); speak 2 min; record and listen. (3) Part 3: take 5 Why/How questions; answer with In my view + because + For example. (4) Full mock: Part 1 → Part 2 → Part 3 with partner or self-record.`,
+          logicAndCode: `Part 1: Answer + Because/For example + 1 sentence. Part 2: Intro → Bullet 1 → Bullet 2 → Bullet 3 → So overall. Part 3: Opinion + Reason + Example (or contrast). Record and check: under 2 sentences in Part 1? Add extend. Part 2 under 1.5 min? Add detail per bullet.`,
+          example: `Part 1 Q: Do you like reading? A: Yes, I do. I mainly read non-fiction, especially about technology, because it helps me at work. For example, last month I read a book about AI and used some ideas in a project. Part 2 (Describe a place): Intro — I would like to talk about a café in my hometown. First of all, it is located... Secondly, I go there because... Finally, the atmosphere is... So overall, it is my favourite place to relax. Part 3 Q: Why do people travel? A: In my view, people travel for different reasons. Some travel to relax and escape routine. Others want to learn about new cultures. For example, I have a friend who...`,
+          additionalInfo: `Resources: IELTS Liz Speaking, British Council. Do not memorise a script; memorise structure and 2–3 flexible stories. Examiner may interrupt Part 2 after 2 min; that is normal. Part 3 may be 2–3 questions; answer fully.`,
+        },
+        codeExample: `// Part 1 — formula
+// Direct answer. [Because / For example] + 1-2 sentences.
+
+// Part 2 — outline (1 min prep)
+// 1. Intro: I would like to talk about...
+// 2. [Bullet 1]: First of all, ...
+// 3. [Bullet 2]: Secondly, ...
+// 4. [Bullet 3]: Finally, ...
+// 5. So overall, ...
+
+// Part 3 — formula
+// In my view, [opinion]. This is because [reason].
+// For example, ... / On the other hand, ...
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "time-management-exam-day",
+        title: "Time Management & Exam Day",
+        description:
+          "Time split for Listening, Reading, Writing; exam day checklist; transfer and proofread tips.",
+        order: 11,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Listening: 4 sections ~30 min; 10 min transfer — use to check spelling and word count; do not leave blanks.",
+            "Reading: 60 min total; 15–20 min per passage; read questions first then skimming/scanning; skip hard questions, return later.",
+            "Writing: Task 1 max 20 min (plan 2, write 16, check 2); Task 2 min 40 min (plan 5, write 32, check 3); Task 2 worth more, prioritise it.",
+            "Exam day: ID, venue, sleep well; read instructions for each section; note word count (Task 1 min 150, Task 2 min 250).",
+          ],
+          learningFlowIntro: `**Your first step:** Do one full Reading (60 min) with a timer. Note: how many minutes per passage? Any passage where you ran out of time? Then read sections 1–2.
+
+**Prerequisites:** Familiar with IELTS format (Listening, Reading, Writing, Speaking).
+
+**By the end of this topic you will:** Have a clear time split per section and a checklist for exam day; avoid running out of time or forgetting to transfer.`,
+          material: `**Listening:** ~30 min audio + 10 min transfer. During audio: write in booklet; keep it short, spell correctly. During transfer: move to answer sheet; check spelling (capitalisation, singular/plural); fill all — blank = wrong. **Reading:** 60 min, 3 passages, 40 questions. Strategy: 15–20 min per passage; read questions first; skim text; scan for answers. Skip stuck questions; note blank numbers; return in the last 5 min. **Writing:** 60 min total. Task 1: 20 min (150+ words). Task 2: 40 min (250+ words). Task 2 = 2/3 of Writing score; do not spend 30 min on Task 1. Plan: Task 1 (2 min), Task 2 (5 min). **Speaking:** Usually on another day; 11–14 min. Bring ID; arrive on time; stay calm, extend answers. **Exam day:** Bring ID/passport; check venue and time; sleep well; eat breakfast; read instructions (e.g. no more than three words). **Word count:** Task 1 under 150 / Task 2 under 250 = penalty; aim 160–180 and 260–280.`,
+          explanation: `Listening: transfer time is part of the test; use it to check. Reading: time is tight; do not read the whole text first. Writing: Task 2 has more weight; if in doubt, cut Task 1 so Task 2 is finished.`,
+          application: `Every practice test: use exact timer (Listening 30+10, Reading 60, Writing 60). Note where you fell behind; adjust strategy (e.g. read questions before text). Exam day: print checklist (ID, location, time); read instructions every section.`,
+          howToImplement: `(1) Listening: practise with 10 min transfer; fill answer sheet; check spelling. (2) Reading: timer 20 min per passage; if passage 1 takes over 20 min, speed up skimming. (3) Writing: set timer Task 1 = 20 min, Task 2 = 40 min; stop at the bell. (4) Checklist: ID, stationery, water; know where toilet is; arrive 30 min early. (5) Proofread: last 2–3 min of Writing for grammar and word count.`,
+          logicAndCode: `Listening: 30 min listen + 10 transfer. Reading: 3 x (read Q → skim → scan). Writing: 20 (Task 1) + 40 (Task 2). Never leave blank: guess. Answer sheet: numbers match; double-check.`,
+          example: `Reading: Passage 1 done 18 min, Passage 2 done 38 min, Passage 3 done 58 min — 2 min to check. Writing: Task 1 done 20 min (170 words); Task 2 start plan; done 58 min (270 words); 2 min proofread. Listening: Section 4 done; 10 min transfer + check accommodation (double m), February (spelling).`,
+          additionalInfo: `Resources: British Council, IDP. Computer-based: timer on screen; word count automatic. Paper: count words (average words per line x lines). Do not write in margin; answers in the correct area.`,
+        },
+        codeExample: `// Time split
+// Listening: 30 min listen, 10 min transfer (check spelling)
+// Reading: 15-20 min per passage; skip hard Q, return later
+// Writing: Task 1 = 20 min, Task 2 = 40 min (prioritise Task 2)
+
+// Exam day checklist
+// [ ] ID/passport   [ ] Know venue & time
+// [ ] Sleep well    [ ] Read instructions (e.g. no more than 3 words)
+// [ ] Task 1 min 150 words   Task 2 min 250 words
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "phrasal-verbs-and-sentence-variety",
+        title: "Phrasal Verbs & Sentence Variety",
+        description:
+          "Common phrasal verbs (take off, look into, carry out); complex sentences and variety for band 7–8.",
+        order: 12,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Phrasal verbs: verb + particle (take off, look into, carry out, find out, set up); meaning often different from the verb alone; learn in sentences.",
+            "When to use: Speaking and informal writing — phrasal verbs sound natural; formal Writing Task 2 — use single verbs (investigate not look into) or phrasal if common (carry out research).",
+            "Sentence variety: mix simple, compound (and, but, so), complex (although, when, because, which); use relative clauses (which, who, that) and participle clauses (Having finished, ...).",
+            "Practise: rewrite 3 simple sentences as one complex sentence; use 2–3 phrasal verbs in a Speaking answer.",
+          ],
+          learningFlowIntro: `**Your first step:** Learn 5 phrasal verbs with example sentences: look into (investigate), carry out (do), find out (discover), set up (establish), take off (succeed or leave). Then read sections 1–2.
+
+**Prerequisites:** Basic grammar (clauses, conjunctions); Vocabulary & Collocations topic.
+
+**By the end of this topic you will:** Use common phrasal verbs appropriately; vary sentence structure (simple, compound, complex) for a higher grammar score.`,
+          material: `**Phrasal verbs:** Verb + adverb/preposition; meaning often idiomatic. Common: look into (investigate), carry out (do/conduct), find out (discover), set up (establish), take off (succeed/leave ground), turn down (refuse), bring about (cause), deal with (handle). **Register:** Speaking: phrasal verbs are natural (I need to find out more). Formal writing: prefer single verb when possible (conduct research, not carry out research; but carry out is acceptable in academic contexts). **Sentence variety:** Simple: one clause. Compound: two independent clauses (and, but, so, or). Complex: main clause + subordinate (although, when, because, which, who). **Complex structures:** Relative clause: The report, which was published in 2023, shows... Participle: Having completed the survey, we analysed the data. **Band 7–8:** Use a mix of sentence types; avoid only simple sentences; use at least one complex structure per paragraph.`,
+          explanation: `Phrasal verbs make speech natural; overusing single verbs in Speaking can sound stiff. Sentence variety shows grammatical range; only simple sentences cap your grammar score. Relative and participle clauses add variety without error if used correctly.`,
+          application: `Speaking: use find out, look into, carry out, set up where they fit. Writing Task 2: one or two complex sentences per body paragraph (e.g. Although X, Y; The trend, which began in 2020, ...). Proofread: do you have at least 2–3 complex sentences in the essay?`,
+          howToImplement: `(1) Learn 10 phrasal verbs with one example each; use 2–3 in your next Speaking practice. (2) Take one Task 2 body paragraph; add one sentence with although or which. (3) Combine two short sentences into one using who/which/that or Having + past participle. (4) Checklist: simple + compound + complex in the same paragraph.`,
+          logicAndCode: `Phrasal verb = verb + particle; meaning in dictionary or corpus. Complex = main + subordinate clause. Relative: which/who/that after noun. Participle: -ing or -ed clause (Having done..., Made of...).`,
+          example: `Phrasal: We need to look into this. (investigate) The project took off after the first year. (succeeded) Formal alternative: We need to investigate this. Complex: Although technology has benefits, it can also create dependency. The data, which was collected in 2023, shows an increase. Having considered both views, I believe that...`,
+          additionalInfo: `Resources: Cambridge Phrasal Verbs Dictionary, English Grammar in Use (complex sentences). IELTS: grammatical range = variety of structures; accuracy still matters — do not use a complex structure you are unsure about.`,
+        },
+        codeExample: `// Phrasal verbs — learn with examples
+// look into = investigate   carry out = do/conduct
+// find out = discover   set up = establish
+// take off = succeed / leave (plane)
+
+// Sentence variety
+// Simple: The rate increased.
+// Compound: The rate increased and costs fell.
+// Complex: Although the rate increased, costs fell.
+// Relative: The rate, which had been stable, increased.
+// Participle: Having risen for two years, the rate then fell.
+`,
+        codeLanguage: "text",
+      },
+      {
+        id: "software-engineering-key-terms",
+        title: "Software Engineering: Key Terms & Professional Language",
+        description:
+          "Essential technical terms, jargon, and professional phrases used in software engineering with clear explanations.",
+        order: 13,
+        imageKey: "english",
+        contentBlocks: {
+          learningFlow: [
+            "Learn core technical terms: API, deployment, scalability, latency, refactoring, stack, repository, sprint, backlog; know what each means and when to use it.",
+            "Learn professional phrases: push back the deadline, scope creep, stakeholder, action items, circle back, touch base, blocker, bandwidth (capacity); use them correctly in meetings and emails.",
+            "Distinguish similar terms: frontend vs backend; bug vs defect; commit vs push; merge vs rebase; staging vs production.",
+            "Practise: write one email using 3 professional phrases; explain one technical term (e.g. API or scalability) in one sentence to a non-technical person.",
+          ],
+          learningFlowIntro: `**Your first step:** Read the material and make a short list of 5 terms you did not know (e.g. API, deployment, latency). Look up each and write one sentence explaining it. Then read the professional phrases section.
+
+**Prerequisites:** Basic programming or interest in software engineering; English at intermediate level.
+
+**By the end of this topic you will:** Understand and use key technical terms and professional language in software engineering contexts; explain terms clearly when needed.`,
+          material: `**Technical terms — Core:** **API (Application Programming Interface):** A way for programs to talk to each other; you call an API to get data or trigger an action (e.g. weather API returns temperature). **Deployment:** Putting your code live so users can use it; deploy to production = release. **Scalability:** How well a system handles more load; scalable = can grow (more users, more data) without breaking. **Latency:** Delay between request and response; low latency = fast. **Throughput:** How much work per unit time; high throughput = many requests per second. **Refactoring:** Improving code structure without changing behaviour; make it cleaner, not new features. **Legacy (code/system):** Old code still in use; often hard to change. **Stack:** The set of technologies you use (e.g. React + Node + PostgreSQL = full stack). **Repository (repo):** Where code is stored (e.g. GitHub repo). **Commit:** Save a snapshot of changes in version control. **Push:** Send your commits to the remote repo. **Merge:** Combine branches (e.g. merge feature branch into main). **Rebase:** Replay your commits on top of another branch; cleaner history. **Sprint:** A short fixed period of work (e.g. 2 weeks) in Agile. **Backlog:** List of work to do; product backlog = all features/tasks. **Staging:** Environment that mirrors production for testing before go-live. **Production (prod):** The live system users use. **Bug:** Defect in code that causes wrong behaviour. **Blocker:** Something that stops you from progressing; I am blocked by X = I cannot continue until X is fixed. **Bandwidth:** In professional talk often means capacity or time (I do not have the bandwidth = I do not have time/capacity). **Professional phrases:** **Push back (the deadline):** Postpone; we need to push back the release. **Scope creep:** When requirements keep growing; the project scope is creeping. **Stakeholder:** Someone with an interest (client, manager, user). **Action items:** Things to do after a meeting; next steps. **Circle back:** Return to a topic later; let us circle back to this next week. **Touch base:** Have a short check-in; let us touch base on Friday. **Follow-up:** Something done after (e.g. follow-up meeting, follow-up email). **ASAP:** As soon as possible. **EOD:** End of day. **ETA:** Estimated time of arrival (or estimated time to complete). **Stand-up:** Short daily meeting where each person says what they did, will do, and any blockers. **Sync (meeting):** Short for synchronise; a meeting to align. **Onboarding:** Process of bringing someone new into the team or project. **Offboarding:** Process when someone leaves. **Best practice:** Recommended way to do something. **Edge case:** Unusual situation that might break the code; we need to handle this edge case.`,
+          explanation: `Technical terms let you communicate precisely with other engineers; using them correctly builds credibility. Professional phrases are standard in emails and meetings; they sound natural and show you understand workplace norms. Mixing up terms (e.g. commit vs push) can cause confusion in code reviews or stand-ups.`,
+          application: `In stand-ups: I am blocked on the API integration; I will push the fix by EOD. In emails: Let us touch base tomorrow to discuss the scope. With non-technical people: An API is like a waiter — you ask for something (request) and get a response. In documentation: Use staging for testing before deployment to production.`,
+          howToImplement: `(1) Add 2–3 new terms to your vocabulary each week; use them in a sentence (written or spoken). (2) In your next meeting or email, use one professional phrase (e.g. action items, circle back). (3) Explain one technical term (API, deployment, latency) in one sentence to a friend or in a note. (4) When you hear an unknown term (e.g. in a meeting), note it and look it up; add to your list with a short explanation.`,
+          logicAndCode: `Technical term = precise meaning in engineering. Professional phrase = common in workplace communication; use in the right context (e.g. blocker in stand-up, touch base in scheduling). When explaining to non-technical people: use an analogy (API = waiter) or outcome (deployment = when the app goes live).`,
+          example: `Technical: Our API has high latency under load — we need to optimise or scale. The feature is in staging; we will deploy to production after QA. Professional: Here are the action items from the call: (1) John to follow up with the stakeholder; (2) we will circle back on the deadline next Monday. I do not have bandwidth this week for the extra task. Explaining to non-technical: Scalability means our app can handle more users without slowing down or crashing.`,
+          additionalInfo: `Resources: Glossaries (e.g. AWS, Martin Fowler), company internal wikis, and observing how senior engineers and managers speak in meetings and emails. In interviews: use terms correctly (e.g. I refactored the legacy module to improve maintainability); avoid jargon if the interviewer is non-technical unless you explain it.`,
+        },
+        codeExample: `// Technical terms — one-line definitions
+// API = way for programs to request data or actions
+// Deployment = releasing code to a live environment
+// Scalability = system can handle more load
+// Latency = delay (e.g. response time)
+// Refactoring = improve code structure, same behaviour
+// Repo = code repository (e.g. GitHub)
+// Commit = save snapshot; Push = send to remote
+// Sprint = short work period (e.g. 2 weeks); Backlog = work to do
+// Staging = test environment; Production = live
+
+// Professional phrases
+// push back = postpone   scope creep = requirements growing
+// stakeholder = person with interest   action items = next steps
+// circle back = return to topic later   touch base = short check-in
+// blocker = something stopping progress   bandwidth = capacity/time
+// EOD = end of day   ASAP = as soon as possible
 `,
         codeLanguage: "text",
       },

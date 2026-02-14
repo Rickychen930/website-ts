@@ -84,16 +84,18 @@ Agar detail page menampilkan konten **lengkap dan terstruktur**, setiap topik se
 
 ## 6. Checklist Cepat per Topik (Seed)
 
-- [ ] Ada **1. Learning flow:** dengan langkah jelas (1)(2)(3)…
-- [ ] Ada **2. Material** dan **3. Explanation** (konsep + penjelasan).
-- [ ] Ada **4. Application** (kapan dipakai).
-- [ ] Ada **5. How to implement** dengan langkah bernomor.
-- [ ] Ada **6. Logic & how the code works** (jalan kode).
-- [ ] Ada **7. Example problem & solution** (nama soal + solusi).
-- [ ] Ada **8. Additional information** (tips, link, referensi).
-- [ ] Jika ada kode: `codeExample` + `codeLanguage` diisi.
-- [ ] Paragraf tidak terlalu panjang; gunakan list di mana cocok.
-- [ ] (Opsional) **Tip:** / **Note:** untuk poin penting; link ke LeetCode/referensi di **8.**
+**Status seed saat ini:** Semua topik memakai struktur 8 bagian (contentBlocks + serializeContentBlocks); learningFlowIntro, link LeetCode, dan callout Tip/Note/Important sudah ditambahkan di topik kunci. Gunakan checklist di bawah untuk topik baru.
+
+- [x] Ada **1. Learning flow:** dengan langkah jelas (1)(2)(3)…
+- [x] Ada **2. Material** dan **3. Explanation** (konsep + penjelasan).
+- [x] Ada **4. Application** (kapan dipakai).
+- [x] Ada **5. How to implement** dengan langkah bernomor.
+- [x] Ada **6. Logic & how the code works** (jalan kode).
+- [x] Ada **7. Example problem & solution** (nama soal + solusi).
+- [x] Ada **8. Additional information** (tips, link, referensi).
+- [x] Jika ada kode: `codeExample` + `codeLanguage` diisi.
+- [x] Paragraf tidak terlalu panjang; gunakan list di mana cocok.
+- [x] (Opsional) **Tip:** / **Note:** untuk poin penting; link ke LeetCode/referensi di **8.**
 
 ---
 

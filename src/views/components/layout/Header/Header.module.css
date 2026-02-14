@@ -212,6 +212,7 @@
 
 .navDropdownTrigger {
   display: inline-flex;
+  position: relative;
   align-items: center;
   gap: var(--spacing-xs);
   padding: var(--spacing-sm) var(--spacing-md);
@@ -220,17 +221,38 @@
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
   cursor: pointer;
+  overflow: hidden;
   transition:
     transform var(--transition-fast) var(--ease-out-expo),
     color var(--transition-normal) var(--ease-out-expo);
   border-radius: var(--radius-md);
   font-family: inherit;
+  box-sizing: border-box;
+}
+
+.navDropdownTrigger::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-alpha-10) 0%,
+    var(--color-accent-alpha-10) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-normal) var(--ease-out-expo);
+  border-radius: var(--radius-md);
 }
 
 .navDropdownTrigger:hover {
   color: var(--color-primary-500);
   transform: translateY(-1px);
+}
+
+.navDropdownTrigger:hover::before {
+  opacity: 1;
 }
 
 .navDropdownTrigger:focus-visible {

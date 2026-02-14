@@ -422,23 +422,19 @@ const TopicDetailContent: React.FC<TopicDetailContentProps> = ({
   return (
     <>
       {blockOrder.length > 2 && (
-        <nav className={styles.toc} aria-label="Table of contents">
-          <Typography
-            variant="small"
-            weight="semibold"
-            className={styles.tocTitle}
-          >
-            On this page
-          </Typography>
-          <ol className={styles.tocList}>
-            {blockOrder.map(({ key, label }) => (
-              <li key={key}>
-                <a href={`#detail-heading-${key}`} className={styles.tocLink}>
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ol>
+        <nav aria-label="Table of contents">
+          <details className={styles.toc}>
+            <summary className={styles.tocSummary}>On this page</summary>
+            <ol className={styles.tocList}>
+              {blockOrder.map(({ key, label }) => (
+                <li key={key}>
+                  <a href={`#detail-heading-${key}`} className={styles.tocLink}>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </details>
         </nav>
       )}
       <article className={styles.article}>
@@ -627,7 +623,7 @@ export const LearningTopicDetail: React.FC = () => {
       </div>
 
       <footer className={styles.footer}>
-        <div className={styles.footerNav}>
+        <nav className={styles.footerNav} aria-label="Topic navigation">
           {prevTopic ? (
             <Link
               to={`/learning/${section.slug}/${encodeURIComponent(prevTopic.id)}`}
@@ -637,7 +633,7 @@ export const LearningTopicDetail: React.FC = () => {
               ← {prevTopic.title}
             </Link>
           ) : (
-            <span />
+            <span aria-hidden="true" />
           )}
           <Link
             to={`/learning/${section.slug}`}
@@ -655,9 +651,9 @@ export const LearningTopicDetail: React.FC = () => {
               {nextTopic.title} →
             </Link>
           ) : (
-            <span />
+            <span aria-hidden="true" />
           )}
-        </div>
+        </nav>
       </footer>
     </Section>
   );

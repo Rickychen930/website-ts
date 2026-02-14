@@ -14,7 +14,7 @@ This document ensures the Learning feature meets the **requested criteria**, is 
 | **Integrated with admin dashboard**          | ✅     | Sidebar Admin: Content → Learning (`/admin/learning`); Dashboard shows section count + link; breadcrumb "Learning".                                   |
 | **New section & new page**                   | ✅     | Public page `/learning` (Learning.tsx); admin page `/admin/learning` (AdminLearning.tsx).                                                             |
 | **English language**                         | ✅     | All UI text and curriculum (section/topic title & description, docs) in English.                                                                      |
-| **Complete & detailed material**             | ✅     | 17 sections, 35 topics in seed; curriculum ready for top-tech interviews; editable in Admin → Learning.                                               |
+| **Complete & detailed material**             | ✅     | 17 sections, 66 topics in seed; curriculum ready for top-tech interviews; editable in Admin → Learning.                                               |
 
 ---
 
@@ -27,7 +27,7 @@ This document ensures the Learning feature meets the **requested criteria**, is 
 | **Profile model**           | `backend/src/models/Profile.ts`                    | `IProfile.learningSections?` (array); schema default `[]`.                                                                                                                     |
 | **Transform**               | `backend/src/utils/transformProfile.ts`            | Reads `profile.learningSections`, maps each section & item, assigns `id` (extractId), outputs to API response.                                                                 |
 | **Update + sanitize**       | `backend/src/controllers/ProfileController.ts`     | `updateProfile`: destructure `learningSections` from body; if array, sanitize (title, slug, order, published, items with fallbacks) then assign to `profile.learningSections`. |
-| **Seed**                    | `backend/src/seed/learningSeed.ts` → `seedData.ts` | `learningSections` built by `buildLearningSections(sectionConfigs, IMG)`; 17 sections, 35 topics.                                                                              |
+| **Seed**                    | `backend/src/seed/learningSeed.ts` → `seedData.ts` | `learningSections` built by `buildLearningSections(sectionConfigs, IMG)`; 17 sections, 66 topics.                                                                              |
 | **ProfileModel (frontend)** | `src/models/ProfileModel.ts`                       | `learningSections` readonly; `getPublishedLearningSections()` returns sections with `published === true`, sorted by `order`; items sorted by `order`.                          |
 
 ---
@@ -77,7 +77,7 @@ This document ensures the Learning feature meets the **requested criteria**, is 
 
 ## F. Curriculum material (complete & detailed)
 
-Current curriculum: **17 sections, 35 topics**. Data is in **`backend/src/seed/learningSeed.ts`** (sectionConfigs) and built by `buildLearningSections`; `seedData.ts` imports `learningSections`. After `npm run seed`, data is stored in MongoDB and shown at `/learning`. Editable via **Admin → Learning**.
+Current curriculum: **17 sections, 66 topics**. Data is in **`backend/src/seed/learningSeed.ts`** (sectionConfigs) and built by `buildLearningSections`; `seedData.ts` imports `learningSections`. After `npm run seed`, data is stored in MongoDB and shown at `/learning`. Editable via **Admin → Learning**.
 
 Each topic has:
 
@@ -107,7 +107,7 @@ See **LEARNING_AUDIT.md §6** for the full list of sections and topics.
 
 1. **Seed**
    - Run in project root: `npm run learning:validate` (then in backend if needed: `npm run seed`).
-   - Ensure: no errors; seed loads 17 sections, 35 topics.
+   - Ensure: no errors; seed loads 17 sections, 66 topics.
 
 2. **Public Learning**
    - Open `/learning`.
@@ -131,7 +131,7 @@ See **LEARNING_AUDIT.md §6** for the full list of sections and topics.
 ## I. Summary
 
 - **Requested criteria**: SOLID, OOP, DRY, KISS; design system & reusable components; seed aligned; integrated admin; new section & page; English; complete and detailed material → **all met**.
-- **Documentation**: Data layer, public site, admin, navigation, curriculum (**17 sections, 35 topics**), code quality, and verification steps are documented above.
-- **Material**: **Complete** (17 sections, 35 topics) with 8-part content + learningFlowIntro + code example per topic; editable in Admin.
+- **Documentation**: Data layer, public site, admin, navigation, curriculum (**17 sections, 66 topics**), code quality, and verification steps are documented above.
+- **Material**: **Complete** (17 sections, 66 topics) with 8-part content + learningFlowIntro + code example per topic; editable in Admin.
 
 After `npm run seed` in the backend (or using the validated learning seed), all material is available at `/learning` and manageable in Admin → Learning.

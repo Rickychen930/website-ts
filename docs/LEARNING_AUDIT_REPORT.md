@@ -2,19 +2,19 @@
 
 **Auditor perspective:** Dosen, Educator, Senior Engineer  
 **Date:** February 13, 2025  
-**Scope:** 16 sections, 87 topics in `/learning` curriculum
+**Scope:** 17 sections, 66 topics in `/learning` curriculum
 
 ---
 
 ## Executive Summary
 
-| Kriteria                          | Status     | Keterangan                                                                                                      |
-| --------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------- |
-| 1. Gambar yang mendukung          | ⚠️ Partial | Semua 87 topik punya `imageUrl` (placehold.co); rekomendasi jangka panjang: ganti dengan diagram edukatif nyata |
-| 2. Penjelasan mudah dipahami      | ✅ Good    | **Semua 87 topik** menggunakan format 9-bagian (Learning flow → Material → … → Supporting image)                |
-| 3. Detail dijelaskan baik & jelas | ✅ Good    | Semua topik punya struktur lengkap; materi diperkaya troubleshooting, real case, dan example problem            |
-| 4. Implementasi & real case       | ✅ Good    | ~70 topik punya `codeExample`; topik tanpa kode (English, Interview Prep, sebagian) sesuai desain               |
-| 5. Kesesuaian materi              | ✅ Good    | Konten sesuai kurikulum wawancara FAANG/top tech; truncasi dan konsistensi sudah diperbaiki                     |
+| Kriteria                          | Status     | Keterangan                                                                                                                                                                                            |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Gambar yang mendukung          | ⚠️ Partial | Semua topik punya `imageUrl` (Unsplash/placeholder); rekomendasi jangka panjang: ganti dengan diagram edukatif. Semua rekomendasi audit lain (TOC, spacing, kontras, link, callout) sudah diterapkan. |
+| 2. Penjelasan mudah dipahami      | ✅ Good    | **Semua topik** menggunakan format 8-bagian (Learning flow → Material → … → Additional information)                                                                                                   |
+| 3. Detail dijelaskan baik & jelas | ✅ Good    | Semua topik punya struktur lengkap; materi diperkaya troubleshooting, real case, dan example problem                                                                                                  |
+| 4. Implementasi & real case       | ✅ Good    | ~70 topik punya `codeExample`; topik tanpa kode (English, Interview Prep, sebagian) sesuai desain                                                                                                     |
+| 5. Kesesuaian materi              | ✅ Good    | Konten sesuai kurikulum wawancara FAANG/top tech; truncasi dan konsistensi sudah diperbaiki                                                                                                           |
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### Status saat ini
 
-- **Semua 87 topik** memiliki `imageUrl`.
+- **Semua topik** memiliki `imageUrl`.
 - Saat ini memakai **placehold.co** dengan overlay teks (mis. `Big+O+%7C+O(1)+O(n)+...`).
 - Placeholder memberi struktur visual, tetapi **bukan diagram edukatif** yang menjelaskan konsep.
 
@@ -84,7 +84,7 @@ https://placehold.co/600x220/1e3a8a/white?text=Big+O+%7C+O(1)+O(n)+O(log+n)+O(n�
 
 ### Temuan
 
-- **Semua 87 topik** sekarang menggunakan format 9-bagian penuh.
+- **Semua topik** sekarang menggunakan format 8-bagian penuh.
 - Tidak ada lagi format "Key idea:" tersisa; semua sudah dikonversi.
 
 ---

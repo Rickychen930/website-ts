@@ -31,6 +31,28 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const rafRef = useRef<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownHoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+
+  const clearDropdownHoverTimeout = () => {
+    if (dropdownHoverTimeoutRef.current !== null) {
+      clearTimeout(dropdownHoverTimeoutRef.current);
+      dropdownHoverTimeoutRef.current = null;
+    }
+  };
+
+  const handleDropdownMouseEnter = () => {
+    clearDropdownHoverTimeout();
+    setIsDropdownOpen(true);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    dropdownHoverTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+      dropdownHoverTimeoutRef.current = null;
+    }, 200);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +87,10 @@ export const Header: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isDropdownOpen]);
+
+  useEffect(() => {
+    return () => clearDropdownHoverTimeout();
+  }, []);
 
   const closeAll = () => {
     setIsMenuOpen(false);
@@ -119,7 +145,12 @@ export const Header: React.FC = () => {
             </Link>
           ))}
 
-          <div ref={dropdownRef} className={styles.navDropdown}>
+          <div
+            ref={dropdownRef}
+            className={styles.navDropdown}
+            onMouseEnter={handleDropdownMouseEnter}
+            onMouseLeave={handleDropdownMouseLeave}
+          >
             <button
               type="button"
               className={`${styles.navDropdownTrigger} ${isDropdownActive ? styles.navLinkActive : ""}`}

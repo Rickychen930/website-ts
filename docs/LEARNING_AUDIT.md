@@ -93,7 +93,7 @@ Summary of the audit and improvements applied so the learning section is more co
 
 ## 5. Recommendations
 
-1. **Seed validation:** In development, consider adding assertions: every topic `imageKey` exists in `IMG`, and every section `slug` exists in `sectionThemes`.
+1. **Seed validation:** In development, consider adding assertions: every topic `imageKey` exists in `IMG`, and every section `slug` exists in `sectionThemes`. _(Done: `validateLearningSeed()` in learningSeedStructure.ts checks imageKey in imageMap and slug kebab-case; sectionThemes.tsx has entries for all 17 section slugs.)_
 2. **Shared constants:** If the monorepo allows, consider a single shared file (e.g. `CONTENT_SECTION_LABELS`) imported by both backend and frontend so labels are truly a single source of truth.
 3. **A11y:** aria-labels are in place on cards, topic lists, and breadcrumb; keep them and test with a screen reader when possible.
 4. **SEO:** Page title/description for Learning and section pages are set via `useSEO`; topic detail uses topic title + section + profile name.
@@ -155,4 +155,4 @@ Summary of the audit and improvements applied so the learning section is more co
 | Backend Development        | REST API Design                      | ✅       | ✅ text       |
 |                            | Auth & Databases in Backend          | ✅       | ✅ javascript |
 
-**Total: 17 sections, 35 topics.** Every topic has 8 content blocks + a code example. Every topic has **learningFlowIntro** (Your first step, Prerequisites, By the end) so content is structured and ready to study. Every `imageKey` exists in `IMG`; every section `slug` exists in sectionThemes and LEARNING_SECTION_SLUGS.
+**Total: 17 sections, 66 topics.** Every topic has 8 content blocks + a code example. (Competitive Programming alone has 20 topics; see `learningSeed.ts` for the full list.) Every topic has **learningFlowIntro** (Your first step, Prerequisites, By the end) so content is structured and ready to study. Every `imageKey` exists in `IMG`; every section `slug` exists in sectionThemes and LEARNING_SECTION_SLUGS.

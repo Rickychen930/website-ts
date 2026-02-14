@@ -460,11 +460,47 @@
     max-height: calc(100vh - var(--spacing-2xl));
     overflow-y: auto;
   }
+
+  /* Desktop: always show TOC list; summary acts as static title */
+  .toc .tocList {
+    display: block !important;
+  }
+
+  .toc .tocSummary {
+    cursor: default;
+    pointer-events: none;
+    list-style: none;
+  }
+
+  .toc .tocSummary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc .tocSummary::marker {
+    display: none;
+  }
 }
 
-.tocTitle {
+.tocSummary {
   margin: 0 0 var(--spacing-sm);
   color: var(--color-primary-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.tocSummary::-webkit-details-marker {
+  display: none;
+}
+
+.tocSummary::marker {
+  display: none;
+}
+
+.tocSummary:hover {
+  color: var(--color-primary-800);
 }
 
 .tocList {
