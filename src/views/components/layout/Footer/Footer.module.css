@@ -1,79 +1,9 @@
 .footer {
   position: relative;
-  background-image:
-    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
-    linear-gradient(
-      165deg,
-      var(--bg-secondary) 0%,
-      var(--bg-primary) 50%,
-      var(--bg-secondary) 100%
-    );
-  background-size:
-    var(--theme-pattern-size) var(--theme-pattern-size),
-    var(--theme-pattern-size) var(--theme-pattern-size),
-    100% 100%;
-  background-repeat: repeat, repeat, no-repeat;
+  background: var(--bg-section-alt);
   color: var(--text-primary);
-  overflow: hidden;
   margin-top: var(--spacing-4xl);
   border-top: 1px solid var(--theme-border);
-}
-
-.dark .footer {
-  background-image:
-    linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
-    linear-gradient(
-      135deg,
-      var(--bg-primary) 0%,
-      var(--bg-secondary) 50%,
-      var(--bg-primary) 100%
-    );
-  background-size:
-    var(--theme-pattern-size) var(--theme-pattern-size),
-    var(--theme-pattern-size) var(--theme-pattern-size),
-    100% 100%;
-  background-repeat: repeat, repeat, no-repeat;
-}
-
-.footer::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-primary-alpha-40) 15%,
-    var(--color-primary-500) 35%,
-    var(--color-accent-500) 50%,
-    var(--color-primary-500) 65%,
-    var(--color-primary-alpha-40) 85%,
-    transparent 100%
-  );
-  content: "";
-  box-shadow: 0 0 20px var(--color-primary-alpha-20);
-}
-
-.footer::after {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at 20% 30%,
-      var(--color-primary-alpha-10) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      var(--color-accent-alpha-10) 0%,
-      transparent 50%
-    );
-  opacity: var(--opacity-decorative);
-  content: "";
-  pointer-events: none;
 }
 
 .footerTop {
@@ -142,6 +72,23 @@
   margin-top: var(--spacing-sm);
 }
 
+.ctaDescription {
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-normal);
+}
+
+.ctaLink {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.ctaLink:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-md);
+}
+
 .sectionTitle {
   color: var(--text-primary);
   margin-bottom: var(--spacing-md);
@@ -172,116 +119,14 @@
 }
 
 .footerLink:hover {
-  color: var(--color-primary-500);
+  color: var(--color-accent-600);
   transform: translateX(var(--spacing-sm));
-  text-shadow: 0 0 8px var(--color-primary-alpha-40);
 }
 
 .footerLink:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
-}
-
-.newsletterDescription {
-  color: var(--text-tertiary);
-  margin-bottom: var(--spacing-md);
-  line-height: var(--line-height-normal);
-}
-
-.newsletterForm {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.newsletterInputGroup {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.newsletterInput {
-  flex: 1;
-  padding: var(--spacing-md) var(--spacing-md);
-  border: 2px solid var(--border-primary);
-  border-radius: var(--radius-md);
-  background: var(--bg-overlay);
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  transition:
-    background-color var(--transition-normal) var(--ease-out-expo),
-    border-color var(--transition-normal) var(--ease-out-expo),
-    color var(--transition-normal) var(--ease-out-expo);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  backdrop-filter: blur(10px) saturate(180%);
-  box-sizing: border-box;
-  min-height: 2.75rem;
-}
-
-.newsletterInput:focus {
-  outline: none;
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
-}
-
-.newsletterInput:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-outline-offset);
-}
-
-.newsletterInput::placeholder {
-  color: var(--text-muted);
-}
-
-.newsletterButton {
-  display: flex;
-  padding: var(--spacing-md) var(--spacing-lg);
-  border: none;
-  background: var(--gradient-primary);
-  color: var(--text-inverse);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-normal);
-  transition:
-    background var(--transition-normal) var(--ease-out-expo),
-    color var(--transition-normal) var(--ease-out-expo),
-    transform var(--transition-fast) var(--ease-out-expo);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  min-width: 3rem;
-  min-height: 2.75rem;
-  box-sizing: border-box;
-}
-
-.newsletterButton:focus-visible {
-  outline: 2px solid var(--text-inverse);
-  outline-offset: 3px;
-  box-shadow:
-    var(--shadow-xl),
-    var(--shadow-glow-strong),
-    0 0 0 4px var(--color-primary-alpha-20);
-}
-
-.newsletterButton:hover {
-  background: var(--gradient-primary);
-  background-size: 100% 100%;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md), var(--shadow-colored);
-}
-
-.newsletterButton:active {
-  transform: scale(0.95);
-  filter: brightness(0.95);
-}
-
-.newsletterSuccess {
-  color: var(--color-accent-500);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  animation: fadeIn var(--transition-fast) var(--ease-out-expo);
 }
 
 .footerBottom {
@@ -313,7 +158,11 @@
 }
 
 .footerBottomLink:hover {
-  color: var(--color-primary-500);
+  color: var(--color-accent-600);
+}
+
+.dark .footerBottomLink:hover {
+  color: var(--color-accent-400);
 }
 
 .separator {
@@ -373,22 +222,6 @@
     text-align: center;
     flex-direction: column;
     gap: var(--spacing-sm);
-  }
-
-  .newsletterInputGroup {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-
-  .newsletterInput {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-sm);
-  }
-
-  .newsletterButton {
-    width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-base);
   }
 }
 

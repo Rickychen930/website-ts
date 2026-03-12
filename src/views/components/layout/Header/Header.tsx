@@ -8,17 +8,18 @@ import { Link, useLocation } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Search } from "@/components/Search";
+import { DownloadResume } from "@/components/DownloadResume";
 import styles from "./Header.module.css";
 
 const MAIN_NAV_ITEMS = [
   { path: "/", label: "Home" },
   { path: "/projects", label: "Projects" },
-  { path: "/learning", label: "Learning" },
+  { path: "/about", label: "About" },
 ];
 
 const DROPDOWN_NAV_ITEMS = [
-  { path: "/about", label: "About" },
   { path: "/experience", label: "Experience" },
+  { path: "/learning", label: "Learning" },
   { path: "/resume", label: "Resume" },
   { path: "/contact", label: "Contact" },
 ];
@@ -189,21 +190,13 @@ export const Header: React.FC = () => {
               ))}
             </ul>
           </div>
-
-          <Link
-            to="/admin/login"
-            className={`${styles.navLink} ${isActive("/admin/login") ? styles.navLinkActive : ""}`}
-            onClick={closeAll}
-            aria-current={isActive("/admin/login") ? "page" : undefined}
-          >
-            Login
-          </Link>
         </nav>
 
         <div className={styles.headerActions} data-print="hide">
           <div className={styles.searchWrapper}>
-            <Search className={styles.headerSearch} />
+            <Search className={styles.headerSearch} placeholder="Search" />
           </div>
+          <DownloadResume compact className={styles.headerDownloadCta} />
           <ThemeToggle />
         </div>
 

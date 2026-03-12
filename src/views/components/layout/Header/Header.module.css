@@ -30,35 +30,14 @@
     backdrop-filter var(--transition-slow) var(--ease-out-expo);
 }
 
-.header::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-primary-alpha-30) 50%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-out-expo);
-  content: "";
-}
-
-.header:hover::after {
-  opacity: 1;
-}
-
 .container {
   display: flex;
   margin: 0 auto;
-  padding: var(--spacing-sm) var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-lg);
   max-width: var(--container-xl);
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .headerActions {
@@ -67,18 +46,30 @@
   gap: var(--spacing-md);
 }
 
+.headerDownloadCta {
+  flex-shrink: 0;
+}
+
 .searchWrapper {
-  display: none; /* Hidden on mobile, shown on desktop */
+  display: none;
 }
 
 @media (width >= 1024px) {
   .searchWrapper {
     display: block;
-    width: 18.75rem; /* 300px - consistent with design scale */
+    width: 10rem;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .headerSearch {
     max-width: 100%;
+  }
+}
+
+@media (width >= 1200px) {
+  .searchWrapper {
+    width: 12rem;
   }
 }
 
@@ -119,8 +110,8 @@
   border-radius: var(--radius-md);
   background: linear-gradient(
     135deg,
-    var(--color-primary-alpha-10) 0%,
-    var(--color-accent-alpha-10) 100%
+    var(--color-accent-alpha-10) 0%,
+    transparent 100%
   );
   opacity: 0;
   transition: opacity var(--transition-normal) var(--ease-out-expo);
@@ -132,7 +123,7 @@
 
 .nav {
   display: flex;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-lg);
   align-items: center;
 }
 
@@ -159,8 +150,8 @@
   inset: 0;
   background: linear-gradient(
     135deg,
-    var(--color-primary-alpha-10) 0%,
-    var(--color-accent-alpha-10) 100%
+    var(--color-accent-alpha-10) 0%,
+    transparent 100%
   );
   opacity: 0;
   transition: opacity var(--transition-normal) var(--ease-out-expo);
@@ -168,7 +159,7 @@
 }
 
 .navLink:hover {
-  color: var(--color-primary-500);
+  color: var(--color-accent-600);
   transform: translateY(-1px);
 }
 
@@ -185,11 +176,15 @@
 .navLinkActive {
   background: linear-gradient(
     135deg,
-    var(--color-primary-alpha-10) 0%,
-    var(--color-accent-alpha-10) 100%
+    var(--color-accent-alpha-10) 0%,
+    rgba(184, 134, 11, 0.06) 100%
   );
-  color: var(--color-primary-500);
+  color: var(--color-accent-600);
   font-weight: var(--font-weight-semibold);
+}
+
+.dark .navLinkActive {
+  color: var(--color-accent-400);
 }
 
 .navLinkActive::after {
@@ -199,10 +194,9 @@
   left: 50%;
   transform: translateX(-50%);
   width: 60%;
-  height: 3px;
-  background: var(--gradient-primary-accent);
+  height: 2px;
+  background: var(--color-accent-500);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  box-shadow: var(--shadow-glow);
 }
 
 /* Dropdown – trigger uses .navLink for same look as other nav items */
@@ -275,8 +269,12 @@
 }
 
 .navDropdownLink:hover {
-  background: var(--color-primary-alpha-10);
-  color: var(--color-primary-600);
+  background: var(--color-accent-alpha-10);
+  color: var(--color-accent-600);
+}
+
+.dark .navDropdownLink:hover {
+  color: var(--color-accent-400);
 }
 
 .navDropdownLink:focus-visible {
@@ -335,6 +333,10 @@
   .container {
     padding: var(--spacing-sm) var(--spacing-lg);
     gap: var(--spacing-md);
+  }
+
+  .headerDownloadCta {
+    display: none;
   }
 
   .headerActions {

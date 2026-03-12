@@ -1,29 +1,18 @@
 /**
- * Footer Component - Creative footer with social links and newsletter
+ * Footer Component - Footer with social links and Get in touch CTA
  */
 
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { Typography } from "@/views/components/ui/Typography";
 import { SocialLinks } from "@/components/SocialLinks";
+import { Button } from "@/views/components/ui/Button";
 import styles from "./Footer.module.css";
 
 export const Footer: React.FC = () => {
   const { profile } = useProfile();
   const currentYear = new Date().getFullYear();
-  const [email, setEmail] = useState("");
-  const [newsletterStatus, setNewsletterStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Newsletter subscription logic here
-    setNewsletterStatus("success");
-    setEmail("");
-    setTimeout(() => setNewsletterStatus("idle"), 3000);
-  };
 
   const footerLinks = [
     { path: "/", label: "Home" },
@@ -105,51 +94,31 @@ export const Footer: React.FC = () => {
               </nav>
             </div>
 
-            {/* Newsletter */}
-            <div className={styles.footerSection} data-print="hide">
+            {/* Get in touch CTA */}
+            <div className={styles.footerSection}>
               <Typography
                 variant="h6"
                 weight="semibold"
                 className={styles.sectionTitle}
               >
-                Stay Updated
+                Get in Touch
               </Typography>
               <Typography
                 variant="small"
                 color="secondary"
-                className={styles.newsletterDescription}
+                className={styles.ctaDescription}
               >
-                Get notified about new projects and updates. (Demo — no backend
-                yet)
+                Have a project in mind or want to connect? Say hello.
               </Typography>
-              <form
-                onSubmit={handleNewsletterSubmit}
-                className={styles.newsletterForm}
+              <Link
+                to="/contact"
+                className={styles.ctaLink}
+                aria-label="Go to contact page"
               >
-                <div className={styles.newsletterInputGroup}>
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={styles.newsletterInput}
-                    aria-label="Newsletter email"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className={styles.newsletterButton}
-                    aria-label="Subscribe"
-                  >
-                    →
-                  </button>
-                </div>
-                {newsletterStatus === "success" && (
-                  <p className={styles.newsletterSuccess} role="alert">
-                    ✓ Subscribed successfully!
-                  </p>
-                )}
-              </form>
+                <Button variant="primary" size="md">
+                  Contact
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -163,11 +132,21 @@ export const Footer: React.FC = () => {
           </Typography>
           <div className={styles.footerBottomLinks}>
             <Link
+              to="/admin/login"
+              className={styles.footerBottomLink}
+              aria-label="Admin login"
+            >
+              Admin
+            </Link>
+            <span className={styles.separator} aria-hidden="true">
+              •
+            </span>
+            <Link
               to="/privacy"
               className={styles.footerBottomLink}
               aria-label="Privacy Policy"
             >
-              Privacy Policy
+              Privacy
             </Link>
             <span className={styles.separator} aria-hidden="true">
               •
@@ -177,7 +156,7 @@ export const Footer: React.FC = () => {
               className={styles.footerBottomLink}
               aria-label="Terms of Service"
             >
-              Terms of Service
+              Terms
             </Link>
           </div>
         </div>
