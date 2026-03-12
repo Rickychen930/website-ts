@@ -84,7 +84,7 @@ export const ProjectDetail: React.FC = () => {
               <div className={styles.imageWrap}>
                 <img
                   src={project.imageUrl}
-                  alt=""
+                  alt={project.title}
                   width={800}
                   height={800}
                   loading="eager"

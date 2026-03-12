@@ -11,10 +11,13 @@ import styles from "./DownloadResume.module.css";
 
 interface DownloadResumeProps {
   className?: string;
+  /** Compact style for header (smaller button, shorter label) */
+  compact?: boolean;
 }
 
 export const DownloadResume: React.FC<DownloadResumeProps> = ({
   className = "",
+  compact = false,
 }) => {
   const { profile } = useProfile();
 
@@ -45,18 +48,20 @@ export const DownloadResume: React.FC<DownloadResumeProps> = ({
   return (
     <Button
       variant="primary"
-      size="lg"
+      size={compact ? "sm" : "lg"}
       onClick={handleDownload}
       className={`${styles.downloadButton} ${className}`}
-      aria-label="Download resume (PDF)"
+      aria-label={compact ? "Download CV (PDF)" : "Download resume (PDF)"}
     >
       <span className={styles.icon} aria-hidden="true">
         📄
       </span>
-      <span>Download Resume</span>
-      <span className={styles.arrow} aria-hidden="true">
-        ↓
-      </span>
+      <span>{compact ? "Download CV" : "Download Resume"}</span>
+      {!compact && (
+        <span className={styles.arrow} aria-hidden="true">
+          ↓
+        </span>
+      )}
     </Button>
   );
 };

@@ -10,6 +10,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
+import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningSection as LearningSectionType } from "@/types/domain";
@@ -113,9 +114,16 @@ export const Learning: React.FC = () => {
               No learning sections published yet. Run the seed script or check
               back later.
             </Typography>
-            <Link to="/" className={styles.emptyStateLink}>
-              Back to Home
-            </Link>
+            <div className={styles.emptyStateActions}>
+              <Link to="/" className={styles.emptyStateLink}>
+                Back to Home
+              </Link>
+              <Link to="/contact" aria-label="Get in touch">
+                <Button variant="primary" size="md">
+                  Get in Touch
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </Section>

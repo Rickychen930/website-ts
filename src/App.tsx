@@ -238,8 +238,6 @@ const AppContent: React.FC = () => {
       <AccessibilityAnnouncer />
       <AccessibilityInfo />
       <div className="app">
-        <div className="texturePaperWrinkle" aria-hidden="true" />
-        <div className="textureNoise" aria-hidden="true" />
         <ParticleBackground />
         <ScrollProgress />
         <CursorEffect />

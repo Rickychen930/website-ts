@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -131,16 +132,26 @@ export const Projects: React.FC = () => {
               ? "Projects will appear here once added. Check back later or explore About and Experience."
               : `No projects in "${selectedCategory}". Try another category or view all.`}
           </Typography>
-          {selectedCategory !== "all" && (
-            <Button
-              onClick={() => setSelectedCategory("all")}
-              variant="outline"
-              className={styles.viewAllButton}
-              aria-label="Clear filter and view all projects"
-            >
-              View All Projects
-            </Button>
-          )}
+          <div className={styles.emptyActions}>
+            {selectedCategory !== "all" ? (
+              <Button
+                onClick={() => setSelectedCategory("all")}
+                variant="outline"
+                aria-label="Clear filter and view all projects"
+              >
+                View All Projects
+              </Button>
+            ) : (
+              <>
+                <Link to="/contact" aria-label="Get in touch">
+                  <Button variant="primary">Get in Touch</Button>
+                </Link>
+                <Link to="/" aria-label="Back to home">
+                  <Button variant="outline">Back to Home</Button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       )}
     </Section>

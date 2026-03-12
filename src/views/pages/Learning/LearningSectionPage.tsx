@@ -67,7 +67,7 @@ const TopicLink: React.FC<TopicLinkProps> = ({
           {useImage ? (
             <img
               src={item.imageUrl}
-              alt=""
+              alt={item.title}
               loading="lazy"
               decoding="async"
               className={styles.topicThumbImg}

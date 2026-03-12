@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -12,6 +13,7 @@ import { Typography } from "@/views/components/ui/Typography";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { ExperienceItem } from "@/views/components/domain/ExperienceItem";
+import { Button } from "@/views/components/ui/Button";
 import styles from "./Experience.module.css";
 
 export const Experience: React.FC = () => {
@@ -92,9 +94,17 @@ export const Experience: React.FC = () => {
             No experience entries yet
           </Typography>
           <Typography variant="body" color="tertiary">
-            Work history will appear here once added. You can explore Projects
-            or Contact in the meantime.
+            Work history will appear here once added. Explore projects or get in
+            touch in the meantime.
           </Typography>
+          <div className={styles.emptyActions}>
+            <Link to="/projects" aria-label="View projects">
+              <Button variant="outline">View Projects</Button>
+            </Link>
+            <Link to="/contact" aria-label="Contact">
+              <Button variant="primary">Get in Touch</Button>
+            </Link>
+          </div>
         </div>
       ) : (
         <ScrollReveal direction="up" delay={0}>

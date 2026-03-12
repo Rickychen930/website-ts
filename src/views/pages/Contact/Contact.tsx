@@ -258,6 +258,7 @@ export const Contact: React.FC = () => {
                       formErrors.name ? "name-error" : undefined
                     }
                     autoComplete="name"
+                    placeholder="Your name"
                     className={formErrors.name ? styles.inputError : ""}
                   />
                   {formErrors.name && touched.name && (
@@ -288,6 +289,7 @@ export const Contact: React.FC = () => {
                       formErrors.email ? "email-error" : undefined
                     }
                     autoComplete="email"
+                    placeholder="you@example.com"
                     className={formErrors.email ? styles.inputError : ""}
                   />
                   {formErrors.email && touched.email && (
@@ -317,6 +319,7 @@ export const Contact: React.FC = () => {
                     aria-describedby={
                       formErrors.message ? "message-error" : undefined
                     }
+                    placeholder="Your message..."
                     className={formErrors.message ? styles.inputError : ""}
                   />
                   {formErrors.message && touched.message && (

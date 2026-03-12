@@ -1,9 +1,20 @@
 /**
  * Performance Monitor - Tracks and logs performance metrics
  * Ready for integration with monitoring services
+ * Logs only in development to avoid polluting production console.
  */
 
 import { useEffect } from "react";
+
+const isDev =
+  typeof process !== "undefined" && process.env.NODE_ENV === "development";
+
+const devLog = (...args: unknown[]) => {
+  if (isDev) console.log(...args);
+};
+const devWarn = (...args: unknown[]) => {
+  if (isDev) console.warn(...args);
+};
 
 export const PerformanceMonitor: React.FC = () => {
   useEffect(() => {
@@ -20,7 +31,7 @@ export const PerformanceMonitor: React.FC = () => {
             const entries = list.getEntries();
             const lastEntry = entries[entries.length - 1] as any;
             if (lastEntry) {
-              console.log("LCP:", lastEntry.renderTime || lastEntry.loadTime);
+              devLog("LCP:", lastEntry.renderTime || lastEntry.loadTime);
               // Send to analytics: lastEntry.renderTime || lastEntry.loadTime
             }
           });
@@ -30,7 +41,7 @@ export const PerformanceMonitor: React.FC = () => {
           const fidObserver = new PerformanceObserver((list) => {
             const entries = list.getEntries();
             entries.forEach((entry: any) => {
-              console.log("FID:", entry.processingStart - entry.startTime);
+              devLog("FID:", entry.processingStart - entry.startTime);
               // Send to analytics: entry.processingStart - entry.startTime
             });
           });
@@ -45,7 +56,7 @@ export const PerformanceMonitor: React.FC = () => {
                 clsValue += entry.value;
               }
             });
-            console.log("CLS:", clsValue);
+            devLog("CLS:", clsValue);
             // Send to analytics: clsValue
           });
           clsObserver.observe({ entryTypes: ["layout-shift"] });
@@ -57,7 +68,7 @@ export const PerformanceMonitor: React.FC = () => {
             clsObserver.disconnect();
           };
         } catch (error) {
-          console.warn("Performance monitoring not supported:", error);
+          devWarn("Performance monitoring not supported:", error);
         }
       }
     };
@@ -78,10 +89,10 @@ export const PerformanceMonitor: React.FC = () => {
 
           // Only log valid positive values
           if (loadTime > 0 && loadTime < Number.MAX_SAFE_INTEGER) {
-            console.log("Page Load Time:", Math.round(loadTime));
+            devLog("Page Load Time:", Math.round(loadTime));
           }
           if (domReady > 0 && domReady < Number.MAX_SAFE_INTEGER) {
-            console.log("DOM Ready:", Math.round(domReady));
+            devLog("DOM Ready:", Math.round(domReady));
           }
         } else {
           // Fallback to legacy API if modern API not available
@@ -93,16 +104,16 @@ export const PerformanceMonitor: React.FC = () => {
 
             // Only log valid positive values
             if (loadTime > 0 && loadTime < Number.MAX_SAFE_INTEGER) {
-              console.log("Page Load Time:", Math.round(loadTime));
+              devLog("Page Load Time:", Math.round(loadTime));
             }
             if (domReady > 0 && domReady < Number.MAX_SAFE_INTEGER) {
-              console.log("DOM Ready:", Math.round(domReady));
+              devLog("DOM Ready:", Math.round(domReady));
             }
           }
         }
         // Send to analytics
       } catch (error) {
-        console.warn("Navigation timing not available:", error);
+        devWarn("Navigation timing not available:", error);
       }
     };
 

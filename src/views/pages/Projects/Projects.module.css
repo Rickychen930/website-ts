@@ -154,6 +154,18 @@
   text-align: center;
 }
 
+.emptyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  justify-content: center;
+}
+
+.emptyActions a {
+  text-decoration: none;
+}
+
 .loading,
 .error {
   display: flex;

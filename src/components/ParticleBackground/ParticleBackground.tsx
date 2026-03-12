@@ -28,8 +28,19 @@ export const ParticleBackground: React.FC = () => {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
 
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth <= 768,
+  );
+
   useEffect(() => {
-    if (reduceMotion) return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handle = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", handle);
+    return () => mq.removeEventListener("change", handle);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion || isMobile) return;
 
     const primaryRgb = hexToRgb(
       isDark ? colors.primary[400] : colors.primary[500],
@@ -119,9 +130,9 @@ export const ParticleBackground: React.FC = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isDark, reduceMotion]);
+  }, [isDark, reduceMotion, isMobile]);
 
-  if (reduceMotion) return null;
+  if (reduceMotion || isMobile) return null;
 
   return (
     <canvas

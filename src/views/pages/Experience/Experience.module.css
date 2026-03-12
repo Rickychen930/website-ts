@@ -95,6 +95,18 @@
   animation: float calc(var(--transition-slow) * 6) ease-in-out infinite;
 }
 
+.emptyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  justify-content: center;
+}
+
+.emptyActions a {
+  text-decoration: none;
+}
+
 @keyframes float {
   0%,
   100% {
