@@ -33,7 +33,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <div className={styles.imageWrap}>
           <img
             src={project.imageUrl}
-            alt=""
+            alt={project.title}
             width={400}
             height={400}
             loading="lazy"

@@ -58,8 +58,8 @@
 /* Variants */
 .button--primary {
   position: relative;
-  border: 1px solid var(--color-primary-alpha-15);
-  background: var(--gradient-primary);
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  background: var(--gradient-accent);
   color: var(--text-inverse);
   font-weight: var(--font-weight-semibold);
   background-size: 200% 200%;
@@ -68,16 +68,16 @@
 }
 
 .button--primary:hover:not(:disabled) {
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   box-shadow: var(--shadow-lg), var(--shadow-colored);
   transform: translateY(-2px);
-  filter: brightness(1.03);
+  filter: brightness(1.05);
 }
 
 .button--primary:active:not(:disabled) {
   transform: translateY(0) scale(1);
   box-shadow:
-    0 2px 4px -1px var(--color-primary-alpha-30),
+    0 2px 4px -1px rgba(184, 134, 11, 0.35),
     var(--shadow-inner);
 }
 
@@ -97,21 +97,20 @@
 }
 
 .button--outline {
-  border: 2px solid var(--color-primary-500);
-  background: var(--bg-overlay);
-  color: var(--color-primary-500);
+  border: 2px solid var(--color-accent-500);
+  background: transparent;
+  color: var(--color-accent-600);
   font-weight: var(--font-weight-semibold);
-  backdrop-filter: blur(10px);
   box-shadow: var(--shadow-sm);
   min-height: inherit;
 }
 
 .button--outline:hover:not(:disabled) {
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   color: var(--text-inverse);
   box-shadow: var(--shadow-md), var(--shadow-colored);
   transform: translateY(-2px);
-  border-color: var(--color-primary-600);
+  border-color: var(--color-accent-500);
   filter: brightness(1.02);
 }
 
