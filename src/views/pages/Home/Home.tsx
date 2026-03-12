@@ -62,7 +62,7 @@ export const Home: React.FC = () => {
     );
   }
 
-  const featuredProjects = profile.getFeaturedProjects(3);
+  const recentProjects = profile.getFeaturedProjects(3);
   const currentExperience = profile.getCurrentExperience();
   const experiencePreview = profile.experiences.slice(0, 3);
 
@@ -84,52 +84,63 @@ export const Home: React.FC = () => {
           >
             {profile.name}
           </Typography>
-          <div className={styles.heroLocation} aria-label="Location">
-            <span className={styles.locationIcon} aria-hidden="true">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                focusable="false"
-              >
-                <path
-                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
-                  fill="currentColor"
-                />
-              </svg>
+          <div className={styles.heroMetaRow}>
+            <div className={styles.heroLocation} aria-label="Location">
+              <span className={styles.locationIcon} aria-hidden="true">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  focusable="false"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <Typography variant="body" color="secondary" as="span">
+                {profile.location}
+              </Typography>
+            </div>
+            <span
+              className={styles.heroOpenToWork}
+              aria-label="Open to job opportunities"
+            >
+              Open to opportunities
             </span>
-            <Typography variant="body" color="secondary" as="span">
-              {profile.location}
-            </Typography>
           </div>
-          <p className={styles.heroMiniInfo} aria-hidden="true">
-            {profile.projects.length} projects in portfolio
-            {profile.stats.length > 0 &&
-              ` · ${profile.stats.length} key metrics`}
-            {" · Open to opportunities"}
-          </p>
           <Typography variant="body" className={styles.heroBio} as="p">
             {profile.bio}
           </Typography>
 
-          {profile.name && (
-            <ScrollReveal direction="fade" delay={200}>
-              <div className={styles.codeSnippet}>
-                <CodeTyping
-                  code={`const developer = new SoftwareEngineer('${profile.name}');`}
-                  speed={60}
-                />
-              </div>
-            </ScrollReveal>
-          )}
-
-          <ScrollReveal direction="up" delay={300}>
-            <div className={styles.socialLinksWrapper}>
-              <SocialLinks />
-            </div>
-          </ScrollReveal>
+          {profile.testimonials.length > 0 &&
+            profile.testimonials[0].content && (
+              <ScrollReveal direction="fade" delay={150}>
+                <blockquote
+                  className={styles.heroTestimonial}
+                  aria-label="Featured testimonial"
+                >
+                  <Typography
+                    variant="body"
+                    color="secondary"
+                    as="span"
+                    className={styles.heroTestimonialQuote}
+                  >
+                    &ldquo;{profile.testimonials[0].content.slice(0, 120)}
+                    {profile.testimonials[0].content.length > 120 ? "…" : ""}
+                    &rdquo;
+                  </Typography>
+                  {profile.testimonials[0].author && (
+                    <cite className={styles.heroTestimonialCite}>
+                      — {profile.testimonials[0].author}
+                    </cite>
+                  )}
+                </blockquote>
+              </ScrollReveal>
+            )}
 
           <div
             className={styles.heroActions}
@@ -150,31 +161,45 @@ export const Home: React.FC = () => {
                 Get In Touch
               </Button>
             </Link>
-            <ScrollReveal direction="scale" delay={400}>
-              <DownloadResume />
-            </ScrollReveal>
+            <DownloadResume />
           </div>
+
+          {profile.name && (
+            <ScrollReveal direction="fade" delay={200}>
+              <div className={styles.codeSnippet}>
+                <CodeTyping
+                  code={`const developer = new SoftwareEngineer('${profile.name}');`}
+                  speed={60}
+                />
+              </div>
+            </ScrollReveal>
+          )}
+
+          <ScrollReveal direction="up" delay={300}>
+            <div className={styles.socialLinksWrapper}>
+              <SocialLinks />
+            </div>
+          </ScrollReveal>
         </div>
       </Section>
 
-      {/* Featured Projects */}
-      {featuredProjects.length > 0 && (
+      {/* Projects – show 2–3 from all */}
+      {recentProjects.length > 0 && (
         <Section
-          label="Selected work"
-          title="Featured Projects"
-          subtitle="A selection of my recent work"
-          info={`${profile.projects.length} projects in portfolio — click for details & live demos`}
-          id="featured-projects"
+          label="Work"
+          title="Projects"
+          subtitle="A few recent projects"
+          id="projects-preview"
           variant="alt"
-          aria-labelledby="featured-projects-title"
+          aria-labelledby="projects-preview-title"
         >
           <ScrollReveal direction="up" delay={0}>
             <div
               className={styles.projectsGrid}
               role="list"
-              aria-label="Featured projects"
+              aria-label="Recent projects"
             >
-              {featuredProjects.map((project) => (
+              {recentProjects.map((project) => (
                 <div key={project.id} role="listitem">
                   <ProjectCard project={project} />
                 </div>
@@ -189,92 +214,14 @@ export const Home: React.FC = () => {
         </Section>
       )}
 
-      {/* Stats Section */}
-      {profile.stats.length > 0 && (
-        <Section
-          label="In numbers"
-          title="By The Numbers"
-          subtitle="Key metrics and achievements"
-          info="A quick snapshot of impact and experience"
-          id="stats"
-          aria-labelledby="stats-title"
-        >
-          <ScrollReveal direction="up" delay={80}>
-            <div
-              className={styles.statsGrid}
-              role="list"
-              aria-label="Statistics"
-            >
-              {profile.stats.map((stat, index) => (
-                <div key={stat.id} role="listitem">
-                  <StatItem stat={stat} index={index} />
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
-
-      {/* Testimonials Section */}
-      {profile.testimonials.length > 0 && (
-        <Section
-          label="Kind words"
-          title="Testimonials"
-          subtitle="What others say about my work"
-          info="From colleagues, clients, and collaborators"
-          className={styles.testimonialsSection}
-          id="testimonials"
-          aria-labelledby="testimonials-title"
-        >
-          <ScrollReveal direction="up" delay={80}>
-            <div
-              className={styles.testimonialsGrid}
-              role="list"
-              aria-label="Testimonials"
-            >
-              {profile.testimonials.map((testimonial) => (
-                <div key={testimonial.id} role="listitem">
-                  <TestimonialCard testimonial={testimonial} />
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
-
-      {/* Current Role */}
-      {currentExperience && (
-        <Section className={styles.currentRole} variant="alt">
-          <ScrollReveal direction="up" delay={0}>
-            <div className={styles.currentRoleContent}>
-              <Typography variant="h3" weight="semibold">
-                Currently working as
-              </Typography>
-              <Typography variant="h4" weight="semibold" color="primary">
-                {currentExperience.position}
-              </Typography>
-              <Typography variant="body" color="secondary">
-                at {currentExperience.company}
-              </Typography>
-              <Link
-                to="/experience"
-                className={styles.currentRoleCta}
-                aria-label="View full experience and career timeline"
-              >
-                View full experience →
-              </Link>
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
-
-      {/* Experience preview – for HR */}
+      {/* Experience preview – for recruiters, before stats */}
       {experiencePreview.length > 0 && (
         <Section
           label="Career"
           title="Experience"
-          subtitle="Recent roles and impact"
+          subtitle="Recent roles"
           id="experience-preview"
+          variant="alt"
           aria-labelledby="experience-preview-title"
         >
           <ScrollReveal direction="up" delay={0}>
@@ -322,18 +269,96 @@ export const Home: React.FC = () => {
                 className={styles.experienceSeeMoreLink}
                 aria-label="See full experience and career timeline"
               >
-                See more experience →
+                View full experience →
               </Link>
             </div>
           </ScrollReveal>
         </Section>
       )}
 
-      {/* Explore: About, Experience, Learning, Resume, Contact */}
+      {/* Stats Section */}
+      {profile.stats.length > 0 && (
+        <Section
+          label="Impact"
+          title="By The Numbers"
+          subtitle="Key metrics"
+          id="stats"
+          aria-labelledby="stats-title"
+        >
+          <ScrollReveal direction="up" delay={80}>
+            <div
+              className={styles.statsGrid}
+              role="list"
+              aria-label="Statistics"
+            >
+              {profile.stats.map((stat, index) => (
+                <div key={stat.id} role="listitem">
+                  <StatItem stat={stat} index={index} />
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </Section>
+      )}
+
+      {/* Testimonials Section */}
+      {profile.testimonials.length > 0 && (
+        <Section
+          label="Testimonials"
+          title="What Others Say"
+          subtitle="From colleagues and collaborators"
+          className={styles.testimonialsSection}
+          id="testimonials"
+          variant="alt"
+          aria-labelledby="testimonials-title"
+        >
+          <ScrollReveal direction="up" delay={80}>
+            <div
+              className={styles.testimonialsGrid}
+              role="list"
+              aria-label="Testimonials"
+            >
+              {profile.testimonials.map((testimonial) => (
+                <div key={testimonial.id} role="listitem">
+                  <TestimonialCard testimonial={testimonial} />
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </Section>
+      )}
+
+      {/* Current Role - prominent for recruiters */}
+      {currentExperience && (
+        <Section className={styles.currentRole} variant="alt">
+          <ScrollReveal direction="up" delay={0}>
+            <div className={styles.currentRoleContent}>
+              <Typography variant="h3" weight="semibold">
+                Currently
+              </Typography>
+              <Typography variant="h4" weight="semibold" color="primary">
+                {currentExperience.position}
+              </Typography>
+              <Typography variant="body" color="secondary">
+                {currentExperience.company}
+              </Typography>
+              <Link
+                to="/experience"
+                className={styles.currentRoleCta}
+                aria-label="View full experience"
+              >
+                View full experience →
+              </Link>
+            </div>
+          </ScrollReveal>
+        </Section>
+      )}
+
+      {/* Explore: Resume & Contact first for recruiters */}
       <Section
-        label="Discover more"
-        title="Explore"
-        subtitle="Skills, career timeline, curriculum, and how to get in touch"
+        label="Next steps"
+        title="Resume & Contact"
+        subtitle="Download CV or get in touch"
         id="explore"
         aria-labelledby="explore-title"
       >
@@ -343,107 +368,9 @@ export const Home: React.FC = () => {
             aria-label="Explore portfolio sections"
           >
             <Link
-              to="/about"
-              className={styles.exploreCard}
-              aria-label="Go to About page – skills, education, certifications"
-            >
-              <span className={styles.exploreIcon} aria-hidden="true">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </span>
-              <Typography
-                variant="h5"
-                weight="semibold"
-                className={styles.exploreTitle}
-              >
-                About
-              </Typography>
-              <Typography variant="small" color="secondary" as="p">
-                Skills, education, certifications & philosophy
-              </Typography>
-              <span className={styles.exploreLink}>Learn more →</span>
-            </Link>
-            <Link
-              to="/experience"
-              className={styles.exploreCard}
-              aria-label="Go to Experience page – work history and timeline"
-            >
-              <span className={styles.exploreIcon} aria-hidden="true">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-              </span>
-              <Typography
-                variant="h5"
-                weight="semibold"
-                className={styles.exploreTitle}
-              >
-                Experience
-              </Typography>
-              <Typography variant="small" color="secondary" as="p">
-                Career timeline and roles
-              </Typography>
-              <span className={styles.exploreLink}>View timeline →</span>
-            </Link>
-            <Link
-              to="/learning"
-              className={styles.exploreCard}
-              aria-label="Go to Learning page – curriculum and topics"
-            >
-              <span className={styles.exploreIcon} aria-hidden="true">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  <path d="M8 7h8" />
-                  <path d="M8 11h8" />
-                </svg>
-              </span>
-              <Typography
-                variant="h5"
-                weight="semibold"
-                className={styles.exploreTitle}
-              >
-                Learning
-              </Typography>
-              <Typography variant="small" color="secondary" as="p">
-                Curriculum: algorithms, React, system design & more
-              </Typography>
-              <span className={styles.exploreLink}>Browse curriculum →</span>
-            </Link>
-            <Link
               to="/resume"
-              className={styles.exploreCard}
-              aria-label="Go to Resume page – CV and experience summary"
+              className={`${styles.exploreCard} ${styles.exploreCardHighlight}`}
+              aria-label="View resume and download CV"
             >
               <span className={styles.exploreIcon} aria-hidden="true">
                 <svg
@@ -471,14 +398,14 @@ export const Home: React.FC = () => {
                 Resume
               </Typography>
               <Typography variant="small" color="secondary" as="p">
-                CV, skills summary & download
+                CV & download
               </Typography>
               <span className={styles.exploreLink}>View resume →</span>
             </Link>
             <Link
               to="/contact"
-              className={styles.exploreCard}
-              aria-label="Go to Contact page – get in touch"
+              className={`${styles.exploreCard} ${styles.exploreCardHighlight}`}
+              aria-label="Get in touch"
             >
               <span className={styles.exploreIcon} aria-hidden="true">
                 <svg
@@ -503,9 +430,107 @@ export const Home: React.FC = () => {
                 Contact
               </Typography>
               <Typography variant="small" color="secondary" as="p">
-                Say hello, ask a question, or start a conversation
+                Get in touch
               </Typography>
-              <span className={styles.exploreLink}>Get in touch →</span>
+              <span className={styles.exploreLink}>Say hello →</span>
+            </Link>
+            <Link
+              to="/about"
+              className={styles.exploreCard}
+              aria-label="About – skills, education"
+            >
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
+              >
+                About
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                Skills & education
+              </Typography>
+              <span className={styles.exploreLink}>Learn more →</span>
+            </Link>
+            <Link
+              to="/experience"
+              className={styles.exploreCard}
+              aria-label="Work experience timeline"
+            >
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
+              >
+                Experience
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                Career timeline
+              </Typography>
+              <span className={styles.exploreLink}>View timeline →</span>
+            </Link>
+            <Link
+              to="/learning"
+              className={styles.exploreCard}
+              aria-label="Learning curriculum"
+            >
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  <path d="M8 7h8" />
+                  <path d="M8 11h8" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
+              >
+                Learning
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                Curriculum & topics
+              </Typography>
+              <span className={styles.exploreLink}>Browse →</span>
             </Link>
           </nav>
         </ScrollReveal>
