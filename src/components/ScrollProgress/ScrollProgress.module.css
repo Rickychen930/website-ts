@@ -13,24 +13,22 @@
 
 .progressBar {
   height: 100%;
-  background: var(--gradient-primary-accent);
-  background-size: 200% 100%;
-  animation: gradientShift var(--transition-slow) var(--transition-ease)
-    infinite;
-  box-shadow: var(--shadow-glow-strong);
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-500),
+    var(--color-accent-400)
+  );
+  box-shadow: 0 0 12px rgba(184, 134, 11, 0.4);
   transition: width var(--transition-fast) ease-out;
   transform: translateZ(0);
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
+.dark .progressBar {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-500),
+    var(--color-accent-300)
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {

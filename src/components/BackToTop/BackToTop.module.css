@@ -9,7 +9,7 @@
   min-width: 3rem;
   min-height: 3rem;
   border: none;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   color: var(--text-inverse);
   font-size: var(--font-size-xl);
   transition: all var(--transition-normal) var(--transition-ease);
@@ -23,23 +23,9 @@
 }
 
 .backToTop:hover {
-  background: var(--gradient-primary);
-  background-size: 200% 200%;
-  animation: gradientShift var(--transition-slow) var(--transition-ease)
-    infinite;
-  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.1);
+  filter: brightness(1.08);
+  transform: translateY(calc(var(--spacing-xs) * -4)) scale(1.08);
   box-shadow: var(--shadow-xl), var(--shadow-glow-strong);
-}
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
 }
 
 .backToTop:focus-visible {
@@ -48,7 +34,7 @@
   box-shadow:
     var(--shadow-xl),
     var(--shadow-glow-strong),
-    0 0 0 4px var(--color-primary-alpha-20);
+    0 0 0 4px var(--color-accent-alpha-20);
 }
 
 .backToTop:active {

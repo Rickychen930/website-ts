@@ -25,7 +25,7 @@ interface SearchProps {
 
 export const Search: React.FC<SearchProps> = ({
   onResultClick,
-  placeholder = "Search projects, skills, experience...",
+  placeholder = "Search",
   className = "",
 }) => {
   const { profile } = useProfile();
