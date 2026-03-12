@@ -125,15 +125,24 @@ main[role="main"]:focus {
   outline-offset: -2px;
 }
 
-/* Better link contrast - only for text links, not buttons */
-a:not(button, [role="button"]) {
+/* Better link contrast - only for inline text links (not nav, buttons, cards) */
+#main-content p a,
+#main-content li a,
+#main-content .section p a,
+#main-content .section li a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
-a:not(button, [role="button"]):hover,
-a:not(button, [role="button"]):focus {
+#main-content p a:hover,
+#main-content p a:focus,
+#main-content li a:hover,
+#main-content li a:focus,
+#main-content .section p a:hover,
+#main-content .section p a:focus,
+#main-content .section li a:hover,
+#main-content .section li a:focus {
   text-decoration-thickness: 2px;
 }
 
@@ -247,9 +256,9 @@ select {
 
 /* Ensure all interactive elements have proper touch targets on mobile */
 @media (width <= 768px) {
-  button,
+  button:not([type="checkbox"], [type="radio"]),
   a,
-  input,
+  input:not([type="checkbox"], [type="radio"]),
   select,
   textarea,
   [role="button"],
@@ -286,14 +295,18 @@ button,
 a,
 input[type="button"],
 input[type="submit"],
-input[type="checkbox"],
-input[type="radio"],
 .navLink {
   min-height: 2.75rem;
   min-width: 2.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: 1.25rem;
+  min-width: 1.25rem;
 }
 
 /* Color contrast improvements - Using design tokens */

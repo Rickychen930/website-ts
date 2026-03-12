@@ -69,18 +69,18 @@
 
 /* Buttons dark mode */
 .dark .button--primary {
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   box-shadow: var(--shadow-md), var(--shadow-glow);
 }
 
 .dark .button--outline {
-  background: var(--bg-overlay);
-  border-color: var(--color-primary-500);
-  color: var(--color-primary-400);
+  background: transparent;
+  border-color: var(--color-accent-500);
+  color: var(--color-accent-400);
 }
 
 .dark .button--outline:hover {
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   color: var(--text-inverse);
 }
 
@@ -90,16 +90,16 @@
 }
 
 .dark .navLink:hover {
-  color: var(--color-primary-400);
+  color: var(--color-accent-400);
 }
 
 .dark .navLinkActive {
   background: linear-gradient(
     135deg,
-    var(--color-primary-alpha-20) 0%,
-    var(--color-accent-alpha-10) 100%
+    var(--color-accent-alpha-20) 0%,
+    rgba(184, 134, 11, 0.08) 100%
   );
-  color: var(--color-primary-400);
+  color: var(--color-accent-400);
 }
 
 /* Section dark mode */
@@ -167,8 +167,8 @@
 
 /* Selection dark mode */
 .dark ::selection {
-  background: var(--color-primary-alpha-30);
-  color: var(--text-inverse);
+  background: var(--color-accent-alpha-20);
+  color: var(--text-primary);
 }
 
 /* Code blocks dark mode */
@@ -231,7 +231,6 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-primary-400) 50%,
     var(--color-accent-500) 50%,
     transparent 100%
   );
@@ -242,14 +241,18 @@
 .dark .backToTop {
   background: var(--gradient-card);
   border-color: var(--border-secondary);
-  color: var(--color-primary-400);
+  color: var(--color-accent-400);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
 .dark .backToTop:hover {
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   color: var(--text-inverse);
   box-shadow: var(--shadow-2xl), var(--shadow-glow-strong);
+}
+
+.dark .footerLink:hover {
+  color: var(--color-accent-400);
 }
 
 /* Loading dark mode */

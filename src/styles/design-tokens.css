@@ -1,14 +1,117 @@
 /**
- * Design Tokens – Single source of truth
- * TEMA: "Modern Tech Paper" – profesional, grid, tekstur kertas, satu tema untuk semua komponen
- * Semua komponen WAJIB pakai token di bawah; jangan hardcode warna/spacing/radius.
+ * Design Tokens – Personal & Friendly
+ * TEMA: "Portfolio" – hangat, punya identitas, tidak template
  */
 
 :root {
-  /* ========== TEMA (semua komponen mengacu ke sini) ========== */
-  --theme-name: "Modern Tech Paper";
-  --theme-primary: var(--color-primary-500);
-  --theme-primary-strong: var(--color-primary-600);
+  --theme-name: "Portfolio";
+
+  /* ========== LUXURY PALETTE ========== */
+
+  /* Primary: Deep navy / charcoal (authority, trust) */
+  --color-primary-50: #f0f4f8;
+  --color-primary-100: #d9e2ec;
+  --color-primary-200: #bcccdc;
+  --color-primary-300: #9fb3c8;
+  --color-primary-400: #829ab1;
+  --color-primary-500: #627d98;
+  --color-primary-600: #486581;
+  --color-primary-700: #334e68;
+  --color-primary-800: #243b53;
+  --color-primary-900: #102a43;
+
+  /* Accent: Warm gold (luxury, premium) */
+  --color-accent-50: #fdf8e6;
+  --color-accent-100: #f9e9b8;
+  --color-accent-200: #f4d98a;
+  --color-accent-300: #ecc94b;
+  --color-accent-400: #d4af37;
+  --color-accent-500: #b8860b;
+  --color-accent-600: #9a7209;
+  --color-accent-700: #7d5d07;
+
+  /* Neutrals – warm grays */
+  --color-neutral-50: #fafaf8;
+  --color-neutral-100: #f5f4f0;
+  --color-neutral-200: #e8e6e1;
+  --color-neutral-300: #d4d1c9;
+  --color-neutral-400: #9c9890;
+  --color-neutral-500: #6b6760;
+  --color-neutral-600: #4a4742;
+  --color-neutral-700: #33312e;
+  --color-neutral-800: #1f1e1c;
+  --color-neutral-900: #141413;
+
+  /* Semantic */
+  --color-success: #0d9488;
+  --color-success-50: #ccfbf1;
+  --color-error: #b91c1c;
+  --color-error-50: #fef2f2;
+  --color-warning: #b45309;
+  --color-warning-50: #fffbeb;
+
+  /* Backgrounds – Light (cream/ivory) */
+  --bg-primary: #fafaf8;
+  --bg-secondary: #f5f4f0;
+  --bg-tertiary: #ebe9e4;
+  --bg-card: #fff;
+  --bg-overlay: rgba(250, 250, 248, 0.92);
+  --overlay-backdrop: rgba(20, 20, 19, 0.6);
+
+  /* Text */
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4742;
+  --text-tertiary: #6b6760;
+  --text-inverse: #fafaf8;
+  --text-muted: #9c9890;
+
+  /* Borders */
+  --border-primary: rgba(26, 26, 26, 0.08);
+  --border-secondary: rgba(26, 26, 26, 0.12);
+  --border-focus: var(--color-accent-500);
+
+  /* Section alt */
+  --bg-section-alt: #f5f4f0;
+  --pattern-line-color: rgba(26, 26, 26, 0.03);
+  --pattern-grid-size: 24px;
+
+  /* Spacing – generous for luxury feel */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
+  --spacing-5xl: 8rem;
+  --spacing-6xl: 10rem;
+
+  /* Radius – refined, not too round */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows – soft, layered, premium */
+  --shadow-sm: 0 1px 2px rgba(26, 26, 26, 0.04);
+  --shadow-md: 0 4px 12px rgba(26, 26, 26, 0.06), 0 2px 4px rgba(26, 26, 26, 0.04);
+  --shadow-lg: 0 12px 28px rgba(26, 26, 26, 0.08), 0 4px 12px rgba(26, 26, 26, 0.04);
+  --shadow-xl: 0 20px 40px rgba(26, 26, 26, 0.1), 0 8px 16px rgba(26, 26, 26, 0.06);
+  --shadow-2xl: 0 32px 64px rgba(26, 26, 26, 0.12);
+  --shadow-card-edge: none;
+  --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.8);
+  --shadow-glow: 0 0 24px rgba(184, 134, 11, 0.12);
+  --shadow-glow-strong: 0 0 40px rgba(184, 134, 11, 0.18);
+  --shadow-colored: 0 8px 24px rgba(184, 134, 11, 0.08);
+  --shadow-soft: 0 2px 12px rgba(26, 26, 26, 0.05);
+  --shadow-inner: inset 0 2px 4px rgba(26, 26, 26, 0.06);
+
+  /* Theme aliases */
+  --theme-primary: var(--color-primary-800);
+  --theme-primary-strong: var(--color-primary-900);
   --theme-accent: var(--color-accent-500);
   --theme-surface: var(--bg-primary);
   --theme-surface-alt: var(--bg-section-alt);
@@ -16,166 +119,34 @@
   --theme-text: var(--text-primary);
   --theme-text-muted: var(--text-secondary);
   --theme-border: var(--border-primary);
-  --theme-radius: var(--radius-xl);
+  --theme-radius: var(--radius-lg);
   --theme-radius-card: var(--radius-xl);
   --theme-shadow: var(--shadow-md);
   --theme-shadow-hover: var(--shadow-lg);
-  --theme-transition: var(--transition-normal) var(--ease-out-expo);
+  --theme-transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   --theme-font: var(--font-family-sans);
   --theme-font-display: var(--font-family-display);
   --theme-pattern: var(--pattern-line-color);
   --theme-pattern-size: var(--pattern-grid-size);
 
-  /* Primary Colors */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-
-  /* Accent Colors */
-  --color-accent-50: #f0fdf4;
-  --color-accent-100: #dcfce7;
-  --color-accent-200: #bbf7d0;
-  --color-accent-300: #86efac;
-  --color-accent-400: #4ade80;
-  --color-accent-500: #22c55e;
-  --color-accent-600: #16a34a;
-  --color-accent-700: #15803d;
-
-  /* Neutral Colors */
-  --color-neutral-50: #fafafa;
-  --color-neutral-100: #f5f5f5;
-  --color-neutral-200: #e5e5e5;
-  --color-neutral-300: #d4d4d4;
-  --color-neutral-400: #a3a3a3;
-  --color-neutral-500: #737373;
-  --color-neutral-600: #525252;
-  --color-neutral-700: #404040;
-  --color-neutral-800: #262626;
-  --color-neutral-900: #171717;
-
-  /* Semantic Colors */
-  --color-success: var(--color-accent-500);
-  --color-success-50: #f0fdf4;
-  --color-success-500: #22c55e;
-  --color-success-600: #16a34a;
-  --color-success-700: #15803d;
-  --color-success-light: #dcfce7;
-  --color-success-dark: #15803d;
-  --color-error: #ef4444;
-  --color-error-50: #fef2f2;
-  --color-error-500: #ef4444;
-  --color-error-600: #dc2626;
-  --color-error-700: #b91c1c;
-  --color-error-light: #fef2f2;
-  --color-error-dark: #dc2626;
-  --color-warning: #f59e0b;
-  --color-warning-50: #fffbeb;
-  --color-warning-500: #f59e0b;
-  --color-warning-600: #d97706;
-  --color-warning-700: #b45309;
-  --color-warning-light: #fffbeb;
-  --color-warning-dark: #d97706;
-
-  /* Background Colors - Light Mode */
-  --bg-primary: #fff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --bg-card: #fff;
-  --bg-overlay: rgba(255, 255, 255, 0.9);
-  --overlay-backdrop: rgba(23, 23, 23, 0.5);
-
-  /* Text Colors - Light Mode */
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-tertiary: #64748b;
-  --text-inverse: #fff;
-  --text-muted: #94a3b8;
-
-  /* Border Colors - Light Mode */
-  --border-primary: #e2e8f0;
-  --border-secondary: #cbd5e1;
-  --border-focus: #3b82f6;
-
-  /* Spacing */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 3rem; /* 48px */
-  --spacing-3xl: 4rem; /* 64px */
-  --spacing-4xl: 6rem; /* 96px */
-  --spacing-5xl: 8rem; /* 128px */
-
-  /* Section alternate (subtle band for alternating sections) */
-  --bg-section-alt: #f1f5f9;
-  --bg-section-alt-subtle: rgba(241, 245, 249, 0.6);
-
-  /* Patterns & texture – subtle agar tidak pusing; satu token untuk semua komponen */
-  --pattern-line-color: rgba(0, 0, 0, 0.04);
-  --pattern-grid-size: 40px;
-  --texture-noise-opacity: 0.05;
-  --texture-paper-wrinkle-opacity: 0.02;
-
-  /* Border Radius */
-  --radius-sm: 0.25rem; /* 4px */
-  --radius-md: 0.5rem; /* 8px */
-  --radius-lg: 0.75rem; /* 12px */
-  --radius-xl: 1rem; /* 16px */
-  --radius-2xl: 1.5rem; /* 24px */
-  --radius-full: 9999px;
-
-  /* Shadows - deeper, more premium */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-  --shadow-md:
-    0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05),
-    0 0 0 1px rgba(0, 0, 0, 0.02);
-  --shadow-lg:
-    0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(0, 0, 0, 0.02);
-  --shadow-xl:
-    0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(0, 0, 0, 0.02);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.03);
-  --shadow-card-edge: 0 1px 0 0 rgba(255, 255, 255, 0.6);
-  --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.5);
-
-  /* Subtle glow system (premium, less "neon") */
-  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.12);
-  --shadow-glow-strong: 0 0 32px rgba(59, 130, 246, 0.2);
-  --shadow-glow-accent: 0 0 20px rgba(34, 197, 94, 0.12);
-  --shadow-card-hover: 0 12px 24px -8px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(59, 130, 246, 0.08);
-  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-  --shadow-soft: 0 2px 10px rgba(15, 23, 42, 0.06);
-  --shadow-colored: 0 8px 24px rgba(59, 130, 246, 0.08);
-
-  /* Focus ring (accessibility) */
+  /* Focus */
   --focus-outline-width: 2px;
-  --focus-outline-offset: var(--spacing-xs);
-  --focus-ring-color: var(--color-primary-500);
-  --focus-ring-glow: var(--color-primary-alpha-10);
-
-  /* High contrast: thicker outline for better visibility */
+  --focus-outline-offset: 2px;
+  --focus-ring-color: var(--color-accent-500);
+  --focus-ring-glow: rgba(184, 134, 11, 0.2);
   --focus-outline-width-high: 3px;
 
-  /* State opacity */
-  --opacity-disabled: 0.6;
-  --opacity-loading-overlay: 0.5;
-  --opacity-decorative: 0.6;
-  --opacity-ripple: 0.5;
+  /* Opacity */
+  --opacity-disabled: 0.5;
+  --opacity-loading-overlay: 0.4;
+  --opacity-decorative: 0.5;
+  --opacity-ripple: 0.4;
 
   /* Transitions */
-  --transition-fast: 150ms;
-  --transition-normal: 300ms;
+  --transition-fast: 200ms;
+  --transition-normal: 350ms;
   --transition-slow: 500ms;
-  --transition-smooth: 450ms;
+  --transition-smooth: 400ms;
   --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
@@ -193,63 +164,19 @@
   --z-cursor: 9998;
   --z-progress: 9999;
 
-  /* Gradients - Enhanced with more sophisticated color stops */
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--color-primary-600) 0%,
-    var(--color-primary-500) 100%
-  );
-  --gradient-accent: linear-gradient(
-    135deg,
-    var(--color-accent-500) 0%,
-    var(--color-accent-600) 50%,
-    var(--color-accent-700) 100%
-  );
-  --gradient-primary-accent: linear-gradient(
-    135deg,
-    var(--color-primary-500) 0%,
-    var(--color-primary-600) 25%,
-    var(--color-accent-500) 50%,
-    var(--color-accent-600) 75%,
-    var(--color-primary-600) 100%
-  );
-  --gradient-text: linear-gradient(
-    135deg,
-    var(--text-primary) 0%,
-    var(--color-primary-600) 100%
-  );
-  --gradient-card: linear-gradient(
-    165deg,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 45%,
-    var(--bg-primary) 100%
-  );
-  --gradient-hero: linear-gradient(
-    160deg,
-    var(--color-primary-50) 0%,
-    var(--bg-primary) 40%,
-    var(--color-primary-100) 100%
-  );
-  --gradient-section-alt: linear-gradient(
-    180deg,
-    var(--bg-section-alt) 0%,
-    var(--bg-primary) 100%
-  );
-  --gradient-glass: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  --gradient-glow: radial-gradient(
-    circle,
-    var(--color-primary-alpha-40) 0%,
-    var(--color-primary-alpha-20) 40%,
-    transparent 70%
-  );
+  /* Gradients – luxury */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-800) 0%, var(--color-primary-700) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-400) 0%, var(--color-accent-600) 100%);
+  --gradient-primary-accent: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-accent-500) 100%);
+  --gradient-text: linear-gradient(135deg, var(--text-primary) 0%, var(--color-primary-800) 100%);
+  --gradient-hero: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+  --gradient-section-alt: linear-gradient(180deg, var(--bg-section-alt) 0%, var(--bg-primary) 100%);
+  --gradient-card: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
 
-  /* Additional color utilities for gradients and effects */
-  --color-primary-rgb: 59, 130, 246;
-  --color-accent-rgb: 34, 197, 94;
+  /* Alpha */
+  --color-primary-rgb: 16, 42, 67;
+  --color-accent-rgb: 184, 134, 11;
   --color-primary-alpha-5: rgba(var(--color-primary-rgb), 0.05);
   --color-primary-alpha-10: rgba(var(--color-primary-rgb), 0.1);
   --color-primary-alpha-15: rgba(var(--color-primary-rgb), 0.15);
@@ -257,128 +184,74 @@
   --color-primary-alpha-30: rgba(var(--color-primary-rgb), 0.3);
   --color-primary-alpha-40: rgba(var(--color-primary-rgb), 0.4);
   --color-primary-alpha-50: rgba(var(--color-primary-rgb), 0.5);
-  --color-primary-alpha-60: rgba(var(--color-primary-rgb), 0.6);
   --color-accent-alpha-10: rgba(var(--color-accent-rgb), 0.1);
   --color-accent-alpha-20: rgba(var(--color-accent-rgb), 0.2);
-  --color-accent-alpha-60: rgba(var(--color-accent-rgb), 0.6);
-  --color-accent-alpha-80: rgba(var(--color-accent-rgb), 0.8);
 }
 
-/* Dark Mode Variables */
+/* Dark Mode – luxury dark */
 .dark {
-  /* Background Colors - Dark Mode */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-card: #1e293b;
-  --bg-overlay: rgba(30, 41, 59, 0.9);
-  --overlay-backdrop: rgba(15, 23, 42, 0.75);
-
-  /* Text Colors - Dark Mode */
-  --text-primary: #e2e8f0;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --text-inverse: #0f172a;
-  --text-muted: #64748b;
-
-  /* Border Colors - Dark Mode */
-  --border-primary: rgba(148, 163, 184, 0.2);
-  --border-secondary: rgba(148, 163, 184, 0.3);
-  --border-focus: #60a5fa;
-
-  /* Primary Colors - Adjusted for Dark Mode */
-  --color-primary-500: #60a5fa;
-  --color-primary-600: #3b82f6;
-  --color-primary-700: #2563eb;
-
-  /* Accent Colors - Adjusted for Dark Mode */
-  --color-accent-500: #4ade80;
-  --color-accent-600: #22c55e;
-  --color-accent-700: #16a34a;
-
-  /* Gradients - Dark Mode */
-  --gradient-hero: linear-gradient(
-    135deg,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 100%
-  );
-  --bg-section-alt: #1a2332;
-  --gradient-card: linear-gradient(
-    165deg,
-    var(--bg-secondary) 0%,
-    var(--bg-primary) 45%,
-    var(--bg-secondary) 100%
-  );
-  --gradient-section-alt: linear-gradient(
-    180deg,
-    var(--bg-section-alt) 0%,
-    var(--bg-primary) 100%
-  );
-
-  /* Dark: pattern & texture lebih halus */
-  --pattern-line-color: rgba(255, 255, 255, 0.04);
-  --texture-noise-opacity: 0.05;
-  --texture-paper-wrinkle-opacity: 0.025;
-
-  /* Dark: hero title uses lighter primary for better contrast */
-  --gradient-text: linear-gradient(
-    135deg,
-    var(--text-primary) 0%,
-    var(--color-primary-400) 60%,
-    var(--color-primary-300) 100%
-  );
-  --gradient-glass: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  --shadow-card-edge: 0 1px 0 0 rgba(255, 255, 255, 0.08);
-  --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --bg-primary: #0c0c0c;
+  --bg-secondary: #141413;
+  --bg-tertiary: #1f1e1c;
+  --bg-card: #1a1a18;
+  --bg-section-alt: #141413;
+  --bg-overlay: rgba(20, 20, 19, 0.92);
+  --overlay-backdrop: rgba(0, 0, 0, 0.7);
+  --text-primary: #e8e6e3;
+  --text-secondary: #b8b5ae;
+  --text-tertiary: #9c9890;
+  --text-inverse: #0c0c0c;
+  --text-muted: #6b6760;
+  --border-primary: rgba(232, 230, 227, 0.1);
+  --border-secondary: rgba(232, 230, 227, 0.15);
+  --color-primary-500: #829ab1;
+  --color-primary-600: #9fb3c8;
+  --color-primary-700: #bcccdc;
+  --color-primary-800: #d9e2ec;
+  --color-accent-400: #d4af37;
+  --color-accent-500: #ecc94b;
+  --color-accent-600: #f4d98a;
+  --gradient-hero: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  --gradient-card: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  --gradient-text: linear-gradient(135deg, var(--text-primary) 0%, var(--color-accent-400) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  --shadow-card-edge: none;
+  --shadow-badge-ring: 0 0 0 1px rgba(0,0,0,0.2);
 }
 
-/* Container Max Widths and Typography Scale */
+/* Container & Typography */
 :root {
-  /* Container Max Widths */
   --container-sm: 640px;
   --container-md: 768px;
   --container-lg: 1024px;
-  --container-xl: 1280px;
-  --container-2xl: 1536px;
-
-  /* Font Families - Display for impact, sans for body */
-  --font-family-sans:
-    "Plus Jakarta Sans", "Inter", -apple-system, blinkmacsystemfont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Helvetica Neue",
-    sans-serif;
-  --font-family-mono:
-    "JetBrains Mono", "Fira Code", "Menlo", "Monaco", "Consolas",
-    "Liberation Mono", "Courier New", monospace;
-  --font-family-display:
-    "Plus Jakarta Sans", "Inter", -apple-system, blinkmacsystemfont, "Segoe UI",
-    "Roboto", sans-serif;
-  --font-family-quote:
-    georgia, "Times New Roman", times, serif;
-
-  /* Typography Scale */
-  --font-size-xs: 0.75rem; /* 12px */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-base: 1rem; /* 16px */
-  --font-size-lg: 1.125rem; /* 18px */
-  --font-size-xl: 1.25rem; /* 20px */
-  --font-size-2xl: 1.5rem; /* 24px */
-  --font-size-3xl: 1.875rem; /* 30px */
-  --font-size-4xl: 2.25rem; /* 36px */
-  --font-size-5xl: 3rem; /* 48px */
-  --font-size-6xl: 3.75rem; /* 60px */
+  --container-xl: 1200px;
+  --container-2xl: 1400px;
+  --font-family-sans: "DM Sans", "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", sans-serif;
+  --font-family-mono: "JetBrains Mono", "Menlo", "Monaco", monospace;
+  --font-family-display: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
+  --font-family-quote: "Cormorant Garamond", "Georgia", serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  --font-size-8xl: 6rem;
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
   --line-height-relaxed: 1.75;
-  --letter-spacing-tight: -0.025em;
+  --letter-spacing-tight: -0.02em;
   --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wide: 0.04em;
+  --letter-spacing-luxury: 0.05em;
 }
