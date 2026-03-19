@@ -13,11 +13,7 @@
 .hero::before {
   position: absolute;
   z-index: 0;
-  background: radial-gradient(
-    ellipse 70% 40% at 50% 0%,
-    var(--color-accent-alpha-10) 0%,
-    transparent 55%
-  );
+  background: var(--gradient-hero-glow);
   inset: 0;
   content: "";
   pointer-events: none;
@@ -59,7 +55,7 @@
 
 .heroTitle {
   position: relative;
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-family: var(--font-family-display);
   font-size: clamp(2.75rem, 7vw, 5.5rem);
   font-weight: var(--font-weight-bold);

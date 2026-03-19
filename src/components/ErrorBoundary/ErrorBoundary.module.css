@@ -1,5 +1,6 @@
 .errorBoundary {
   display: flex;
+  position: relative;
   margin: 0 auto;
   padding: var(--spacing-xl);
   color: var(--text-primary);
@@ -13,8 +14,20 @@
   box-sizing: border-box;
 }
 
+.errorBoundary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 3px;
+  background: var(--gradient-accent);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
 .errorTitle {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);

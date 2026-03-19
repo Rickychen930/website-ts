@@ -40,8 +40,8 @@
   height: 3.75rem;
   background: linear-gradient(
     135deg,
-    var(--item-color, var(--color-primary-500)) 0%,
-    var(--item-color, var(--color-primary-600)) 100%
+    var(--item-color, var(--color-accent-500)) 0%,
+    var(--item-color, var(--color-accent-600)) 100%
   );
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: 50%;
@@ -69,8 +69,8 @@
   height: calc(100% + var(--spacing-3xl));
   background: linear-gradient(
     180deg,
-    var(--item-color, var(--color-primary-500)) 0%,
-    var(--color-primary-alpha-30) 50%,
+    var(--item-color, var(--color-accent-500)) 0%,
+    var(--color-accent-alpha-20) 50%,
     transparent 100%
   );
   border-radius: var(--radius-sm);
@@ -108,29 +108,28 @@
   height: 100%;
   background: linear-gradient(
     180deg,
-    var(--item-color, var(--color-primary-500)) 0%,
-    var(--item-color, var(--color-primary-600)) 100%
+    var(--item-color, var(--color-accent-600)) 0%,
+    var(--item-color, var(--color-accent-400)) 100%
   );
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--transition-normal) var(--transition-ease);
+  opacity: 0.4;
+  transition: opacity var(--transition-normal) var(--transition-ease);
 }
 
 .timelineItem:hover .timelineCard::before {
-  transform: scaleY(1);
+  opacity: 1;
 }
 
 .timelineItem:hover .timelineCard {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg), var(--shadow-colored);
-  border-color: var(--color-primary-500);
+  border-color: var(--color-accent-400);
 }
 
 .timelineCard:focus-within {
-  border-color: var(--color-primary-500);
+  border-color: var(--color-accent-500);
   box-shadow:
     var(--shadow-md),
-    0 0 0 3px var(--color-primary-alpha-10);
+    0 0 0 3px var(--color-accent-alpha-20);
   outline: none;
 }
 
@@ -143,7 +142,7 @@
 }
 
 .itemTitle {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-normal);
@@ -244,8 +243,8 @@
     transform: translateY(-50%);
     background: linear-gradient(
       90deg,
-      var(--item-color, var(--color-primary-500)) 0%,
-      var(--color-primary-alpha-30) 50%,
+      var(--item-color, var(--color-accent-500)) 0%,
+      var(--color-accent-alpha-20) 50%,
       transparent 100%
     );
   }

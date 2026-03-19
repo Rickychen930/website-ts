@@ -24,14 +24,13 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: var(--gradient-primary-accent);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--transition-slow) var(--transition-ease);
+  background: var(--gradient-accent);
+  opacity: 0.4;
+  transition: opacity var(--transition-normal) var(--transition-ease);
 }
 
 .academicItem:hover::before {
-  transform: scaleY(1);
+  opacity: 1;
 }
 
 .academicItem:hover {
@@ -53,7 +52,7 @@
 }
 
 .headerTitle {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);

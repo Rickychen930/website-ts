@@ -21,6 +21,19 @@
   contain: layout style paint;
 }
 
+.skillBadge::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gradient-accent);
+  opacity: 0.4;
+  transition: opacity var(--transition-normal) var(--transition-ease);
+  content: "";
+  pointer-events: none;
+}
+
 .skillBadge::before {
   position: absolute;
   z-index: 0;
@@ -40,17 +53,21 @@
   opacity: 1;
 }
 
+.skillBadge:hover::after {
+  opacity: 1;
+}
+
 .skillBadge:hover {
-  border-color: var(--color-primary-500);
+  border-color: var(--color-accent-400);
   box-shadow: var(--shadow-xl), var(--shadow-glow);
   transform: translateY(calc(var(--spacing-md) * -1.5)) scale(1.03);
 }
 
 .skillBadge:focus-within {
-  border-color: var(--color-primary-500);
+  border-color: var(--color-accent-500);
   box-shadow:
     var(--shadow-md),
-    0 0 0 3px var(--color-primary-alpha-10);
+    0 0 0 3px var(--color-accent-alpha-20);
   outline: none;
 }
 
@@ -61,7 +78,7 @@
 }
 
 .name {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
@@ -84,7 +101,7 @@
 
 .proficiencyFill {
   height: 100%;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   border-radius: var(--radius-sm);
   transition: width var(--transition-normal) var(--transition-ease);
   box-shadow: var(--shadow-glow);

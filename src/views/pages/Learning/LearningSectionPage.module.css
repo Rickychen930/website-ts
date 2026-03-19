@@ -215,7 +215,7 @@
 }
 
 .topicItem {
-  --topic-accent: var(--color-primary-500);
+  --topic-accent: var(--color-accent-500);
 
   position: relative;
   border: 1px solid var(--theme-border);
@@ -237,7 +237,7 @@
 }
 
 .topicItem:hover {
-  border-color: var(--color-primary-200);
+  border-color: var(--color-accent-300);
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-3px);
 }

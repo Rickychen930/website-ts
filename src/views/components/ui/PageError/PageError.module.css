@@ -1,5 +1,6 @@
 .pageError {
   display: flex;
+  position: relative;
   width: 100%;
   margin: 0 auto;
   padding: var(--spacing-xl);
@@ -11,6 +12,18 @@
   min-height: 50vh;
   max-width: var(--container-md);
   box-sizing: border-box;
+}
+
+.pageError::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 3px;
+  background: var(--gradient-accent);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
 
 .tip {

@@ -22,10 +22,8 @@
   left: 0;
   z-index: 1;
   height: 3px;
-  background: var(--gradient-primary-accent);
+  background: var(--gradient-accent);
   content: "";
-  background-size: 100% 100%;
-  animation: none;
   pointer-events: none;
 }
 
@@ -67,7 +65,7 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: var(--gradient-primary-accent);
+  background: var(--gradient-accent);
   transform: scaleY(0);
   transform-origin: top;
   transition: transform var(--transition-slow) var(--transition-ease);
@@ -93,7 +91,7 @@
 .categoryTitle {
   display: inline-block;
   position: relative;
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
@@ -107,9 +105,9 @@
   left: 0;
   width: 3rem;
   height: 2px;
-  background: var(--gradient-primary-accent);
+  background: var(--gradient-accent);
   border-radius: var(--radius-sm);
-  opacity: var(--opacity-decorative);
+  opacity: 0.9;
 }
 
 .skillsGrid {

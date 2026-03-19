@@ -1,4 +1,5 @@
 .codeBlock {
+  position: relative;
   background-color: var(--bg-secondary);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -6,6 +7,18 @@
   margin: var(--spacing-2xl) 0;
   border: 1px solid var(--border-primary);
   box-sizing: border-box;
+}
+
+.codeBlock::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0.5;
+  content: "";
 }
 
 .header {
@@ -61,9 +74,9 @@
 }
 
 .copyBtn:hover {
-  background: var(--color-primary-alpha-10);
-  color: var(--color-primary-600);
-  border-color: var(--color-primary-200);
+  background: var(--color-accent-alpha-10);
+  color: var(--color-accent-600);
+  border-color: var(--color-accent-300);
 }
 
 .copyBtn:focus-visible {
@@ -108,7 +121,7 @@
 }
 
 .code::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-500);
+  background: var(--color-accent-500);
 }
 
 .code code {

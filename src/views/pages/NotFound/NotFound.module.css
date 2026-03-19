@@ -9,6 +9,7 @@
 .path {
   padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--bg-secondary);
+  border-left: 3px solid var(--color-accent-500);
   border-radius: var(--radius-sm);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);

@@ -1,6 +1,10 @@
 /**
- * Design Tokens - Single source of truth for design system
- * Follows atomic design principles
+ * Design Tokens - For JS/canvas and theme context only.
+ *
+ * Visual styling source of truth: src/styles/design-tokens.css (Portfolio theme: navy/gold).
+ * This file is used by: ParticleBackground, InteractiveBackground (hexToRgb), and theme.ts.
+ * Do not use these hex values in CSS; use CSS variables from design-tokens.css instead.
+ * See src/styles/DESIGN_TOKENS.md for when to use which.
  */
 
 export const colors = {

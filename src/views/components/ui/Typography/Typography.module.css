@@ -2,7 +2,16 @@
   margin: 0;
 }
 
-/* Variants */
+/* Variants – headings use theme color for stronger identity */
+.typography--h1,
+.typography--h2,
+.typography--h3,
+.typography--h4,
+.typography--h5,
+.typography--h6 {
+  color: var(--theme-heading);
+}
+
 .typography--h1 {
   font-family: var(--font-family-display);
   font-size: var(--font-size-5xl);

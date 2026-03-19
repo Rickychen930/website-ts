@@ -28,19 +28,25 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg, var(--color-accent-500), var(--color-accent-400));
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.5s var(--ease-out-expo);
+  background: linear-gradient(
+    180deg,
+    var(--color-accent-600),
+    var(--color-accent-400)
+  );
+  opacity: 0.4;
+  transition: opacity 0.4s var(--ease-out-expo);
 }
 
 .dark .testimonialCard::before {
-  background: linear-gradient(180deg, var(--color-accent-500), var(--color-accent-300));
+  background: linear-gradient(
+    180deg,
+    var(--color-accent-500),
+    var(--color-accent-300)
+  );
 }
 
 .testimonialCard:hover::before {
-  transform: scaleY(1);
-  animation: none;
+  opacity: 1;
 }
 
 .testimonialCard:hover {
@@ -116,7 +122,7 @@
 }
 
 .authorName {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);

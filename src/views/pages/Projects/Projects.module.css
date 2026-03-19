@@ -26,10 +26,8 @@
   left: 0;
   z-index: 1;
   height: 3px;
-  background: var(--gradient-primary-accent);
+  background: var(--gradient-accent);
   content: "";
-  background-size: 100% 100%;
-  animation: none;
   pointer-events: none;
 }
 

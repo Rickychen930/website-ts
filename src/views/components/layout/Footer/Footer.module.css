@@ -6,6 +6,17 @@
   border-top: 1px solid var(--theme-border);
 }
 
+.footer::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0.9;
+  content: "";
+}
+
 .footerTop {
   position: relative;
   z-index: 1;

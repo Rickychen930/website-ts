@@ -22,25 +22,11 @@
   left: 2rem;
   z-index: 0;
   width: 3px;
-  background: var(--gradient-primary-accent);
-  opacity: 0.3;
+  background: var(--gradient-accent);
+  opacity: 0.4;
   content: "";
-  background-size: 100% 200%;
-  animation: gradientShift calc(var(--transition-slow) * 10)
-    var(--transition-ease) infinite;
   border-radius: var(--radius-full);
   pointer-events: none;
-}
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 0% 100%;
-  }
 }
 
 @media (width <= 768px) {

@@ -27,19 +27,15 @@
   right: 0;
   left: 0;
   height: 4px;
-  background: var(--gradient-primary-accent);
-  transition: transform var(--transition-slow) var(--transition-ease);
+  background: var(--gradient-accent);
+  opacity: 0.4;
+  transition: opacity var(--transition-normal) var(--transition-ease);
   content: "";
-  background-size: 200% 100%;
-  transform: scaleX(0);
-  transform-origin: left;
   box-shadow: var(--shadow-glow);
 }
 
 .honorCard:hover::before {
-  transform: scaleX(1);
-  animation: gradientShift calc(var(--transition-slow) * 4)
-    var(--transition-ease) infinite;
+  opacity: 1;
 }
 
 .honorCard::after {
@@ -75,23 +71,12 @@
   outline: none;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 .header {
   margin-bottom: var(--spacing-md);
 }
 
 .headerTitle {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);

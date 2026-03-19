@@ -27,7 +27,7 @@
 
 .spinner {
   border: 3px solid var(--border-primary);
-  border-top-color: var(--color-primary-500);
+  border-top-color: var(--color-accent-500);
   border-radius: var(--radius-full);
   animation: spin var(--transition-normal) linear infinite;
 }
@@ -62,7 +62,7 @@
   .spinner--md,
   .spinner--lg {
     animation: none;
-    border-top-color: var(--color-primary-500);
+    border-top-color: var(--color-accent-500);
   }
 }
 

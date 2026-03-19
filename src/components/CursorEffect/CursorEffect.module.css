@@ -3,7 +3,7 @@
   z-index: var(--z-cursor);
   width: 2.5rem;
   height: 2.5rem;
-  border: 2px solid var(--color-primary-alpha-50);
+  border: 2px solid var(--color-accent-alpha-40);
   transition:
     width var(--transition-normal) var(--transition-ease),
     height var(--transition-normal) var(--transition-ease),
@@ -27,7 +27,7 @@
   z-index: calc(var(--z-cursor) + 1);
   width: 0.375rem;
   height: 0.375rem;
-  background: var(--color-primary-500);
+  background: var(--color-accent-500);
   transition:
     background var(--transition-normal) var(--transition-ease),
     transform var(--transition-fast) var(--transition-ease);

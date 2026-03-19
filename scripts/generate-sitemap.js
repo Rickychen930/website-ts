@@ -6,26 +6,22 @@
 const fs = require("fs");
 const path = require("path");
 
-// Get base URL from environment or use default
+// Get base URL from environment or use default.
+// Production build (prebuild) should set REACT_APP_SITE_URL or NODE_ENV=production so sitemap uses production domain.
 const getBaseUrl = () => {
-  // Check for REACT_APP_API_URL first (from CI/CD)
-  if (process.env.REACT_APP_API_URL) {
-    // Extract base URL from API URL (remove /api if present)
-    const apiUrl = process.env.REACT_APP_API_URL;
-    // If it's an API URL, convert to base URL
-    if (apiUrl.includes("/api")) {
-      return apiUrl.replace("/api", "");
-    }
-    // If it's already a base URL, use it
-    return apiUrl;
+  if (process.env.REACT_APP_SITE_URL) {
+    return process.env.REACT_APP_SITE_URL.replace(/\/$/, "");
   }
-
-  // Check for production domain
+  if (process.env.REACT_APP_API_URL) {
+    const apiUrl = process.env.REACT_APP_API_URL;
+    if (apiUrl.includes("/api")) {
+      return apiUrl.replace("/api", "").replace(/\/$/, "");
+    }
+    return apiUrl.replace(/\/$/, "");
+  }
   if (process.env.NODE_ENV === "production") {
     return "https://rickychen930.cloud";
   }
-
-  // Default to localhost for development
   return "http://localhost:3000";
 };
 

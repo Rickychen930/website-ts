@@ -34,7 +34,7 @@
 
 .articleProgressBar {
   height: 100%;
-  background: var(--learning-accent, var(--color-primary-500));
+  background: var(--learning-accent, var(--color-accent-500));
   transition: width var(--transition-fast) ease-out;
 }
 
@@ -209,11 +209,11 @@
 .whatYoullLearn {
   padding: var(--spacing-lg) var(--spacing-xl);
   border-radius: var(--radius-xl);
-  border-left: 4px solid var(--learning-accent, var(--color-primary-500));
+  border-left: 4px solid var(--learning-accent, var(--color-accent-500));
   background: linear-gradient(
     135deg,
-    var(--color-primary-alpha-8) 0%,
-    var(--color-primary-alpha-5) 100%
+    var(--color-accent-alpha-10) 0%,
+    var(--color-accent-alpha-5) 100%
   );
   margin-top: var(--spacing-xs);
   box-shadow: var(--shadow-sm);
@@ -436,7 +436,7 @@
   bottom: 0;
   left: 0;
   width: 6px;
-  background: var(--learning-accent, var(--color-primary-500));
+  background: var(--learning-accent, var(--color-accent-500));
   content: "";
   border-radius: var(--radius-xl) 0 0 var(--radius-xl);
   pointer-events: none;

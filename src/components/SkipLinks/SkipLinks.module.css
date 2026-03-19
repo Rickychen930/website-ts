@@ -15,7 +15,7 @@
   left: 0;
   z-index: var(--z-tooltip);
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--color-primary-600);
+  background: var(--color-accent-600);
   color: var(--text-inverse);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
@@ -37,7 +37,7 @@
 }
 
 .skipLink:hover {
-  background: var(--color-primary-700);
+  background: var(--color-accent-700);
 }
 
 /* Use global .sr-only from accessibility.css */

@@ -3,7 +3,7 @@
   width: 3.5rem;
   height: 2rem;
   padding: 0;
-  border: 2px solid var(--color-primary-alpha-30);
+  border: 2px solid var(--color-accent-alpha-20);
   background: var(--bg-overlay);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-full);
@@ -13,7 +13,7 @@
 }
 
 .themeToggle:hover {
-  border-color: var(--color-primary-alpha-40);
+  border-color: var(--color-accent-alpha-30);
   box-shadow: var(--shadow-glow);
   transform: scale(1.05);
 }
@@ -62,7 +62,7 @@
   z-index: 1;
   width: 1.5rem;
   height: 1.5rem;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   transition: all var(--transition-normal) var(--transition-ease);
   transform: translateY(-50%);
   border-radius: var(--radius-full);

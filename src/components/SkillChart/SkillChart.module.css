@@ -34,11 +34,11 @@
 }
 
 .circularProgress {
-  stroke: var(--skill-color, var(--color-primary-500));
+  stroke: var(--skill-color, var(--color-accent-500));
   stroke-linecap: round;
   transition: stroke-dashoffset calc(var(--transition-slow) * 2)
     var(--transition-ease);
-  filter: drop-shadow(0 0 4px var(--skill-color, var(--color-primary-500)));
+  filter: drop-shadow(0 0 4px var(--skill-color, var(--color-accent-alpha-20)));
 }
 
 .circularContent {
@@ -57,7 +57,7 @@
 }
 
 .skillPercentage {
-  color: var(--skill-color, var(--color-primary-500));
+  color: var(--skill-color, var(--color-accent-600));
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
@@ -96,14 +96,14 @@
 }
 
 .barName {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);
 }
 
 .barPercentage {
-  color: var(--skill-color, var(--color-primary-500));
+  color: var(--skill-color, var(--color-accent-600));
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-normal);
@@ -124,8 +124,8 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    var(--skill-color, var(--color-primary-500)) 0%,
-    var(--skill-color, var(--color-primary-600)) 100%
+    var(--skill-color, var(--color-accent-500)) 0%,
+    var(--skill-color, var(--color-accent-600)) 100%
   );
   transition: width var(--transition-slow) var(--transition-ease);
   border-radius: var(--radius-lg);
@@ -142,7 +142,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-primary-alpha-30) 100%
+    var(--color-accent-alpha-20) 100%
   );
   animation: shimmer var(--transition-slow) infinite;
 }

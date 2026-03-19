@@ -31,14 +31,22 @@
   transform: translateX(-50%);
   width: 3.75rem;
   height: 4px;
-  background: linear-gradient(90deg, var(--color-accent-500), var(--color-accent-400));
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-600),
+    var(--color-accent-400)
+  );
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-out-expo);
+  opacity: 0.4;
+  transition: opacity 0.4s var(--ease-out-expo);
 }
 
 .dark .statItem::before {
-  background: linear-gradient(90deg, var(--color-accent-500), var(--color-accent-300));
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-500),
+    var(--color-accent-300)
+  );
 }
 
 .statItem:hover::before {
@@ -100,7 +108,7 @@
 
 .label {
   margin-bottom: var(--spacing-sm);
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-normal);

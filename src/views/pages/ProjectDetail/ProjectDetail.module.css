@@ -6,6 +6,7 @@
 }
 
 .card {
+  position: relative;
   padding: 0;
   border: 1px solid var(--border-primary);
   background: var(--gradient-card);
@@ -15,6 +16,17 @@
   backdrop-filter: blur(10px);
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  background: var(--gradient-accent);
+  content: "";
 }
 
 /* Gambar persegi di atas card */
@@ -87,7 +99,7 @@
 
 .sectionTitle {
   margin-bottom: var(--spacing-md);
-  color: var(--color-primary-500);
+  color: var(--theme-heading);
 }
 
 .description {

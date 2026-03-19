@@ -78,22 +78,35 @@ website-ts/
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - React 19
 - TypeScript
 - React Router
 - CSS Modules
 
 ### Backend
+
 - Express 5
 - TypeScript
 - MongoDB (Mongoose)
 - PM2 (Process Manager)
 
 ### DevOps
+
 - Docker & Docker Compose
 - GitHub Actions
 - PM2
 - Nginx (optional)
+
+## ⚡ Performance & Accessibility
+
+- **Code splitting:** All page routes are loaded with `React.lazy()` and `<Suspense>`, so only the current route’s chunk is fetched.
+- **Images:** Project cards, testimonials, and learning sections use `loading="lazy"` and `decoding="async"`. Run `npm run optimize:images` to compress `public/logo512.png` (OG image) with Sharp.
+- **Monitoring:** `PerformanceMonitor` records LCP, FID, and CLS (Core Web Vitals); optional integration with analytics.
+- **Accessibility:** Skip links, `:focus-visible` styles, ARIA labels and roles on nav, forms, and lists; touch targets ≥ 44px on small viewports; `prefers-reduced-motion` respected for animations and particles.
+- **Semantic HTML:** `<main>`, `<nav>`, `<section>`, `<article>` and heading hierarchy are used for structure and screen readers.
+
+To analyze bundle size after a production build: `npm run build && npm run analyze:bundle` (requires `source-map-explorer`).
 
 ## 📚 Documentation
 
@@ -112,23 +125,30 @@ Lihat [docs/README.md](./docs/README.md) untuk daftar lengkap dokumentasi.
 ## 🔧 Available Scripts
 
 ### Development
+
 - `npm start` - Start React development server
 - `npm run dev` - Start frontend + backend concurrently
 - `npm run server` - Start backend only
 - `npm run server:watch` - Start backend with hot reload
 
 ### Build
+
 - `npm run build` - Build React app for production
 - `npm run backend:build` - Build backend TypeScript
 - `npm run build:all` - Build both frontend and backend
+- `npm run analyze:bundle` - Analyze bundle size (run after `npm run build`)
+- `npm run optimize:images` - Optimize `public/logo512.png` for OG/social (requires Sharp)
+- `npm run sitemap:generate` - Regenerate `public/sitemap.xml` (runs automatically on prebuild)
 
 ### Deployment
+
 - `npm run backend:pm2` - Start backend with PM2 (production)
 - `npm run docker:build` - Build Docker image
 - `npm run docker:run` - Start with Docker Compose
 - `npm run docker:stop` - Stop Docker containers
 
 ### Database
+
 - `npm run seed` - Seed database with sample data
 
 ## 🌐 Environment Variables

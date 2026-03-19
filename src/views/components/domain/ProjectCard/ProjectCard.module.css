@@ -28,20 +28,26 @@
   left: 0;
   z-index: 1;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-accent-500), var(--color-accent-400));
-  transition: transform 0.5s var(--ease-out-expo);
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-600),
+    var(--color-accent-400)
+  );
+  opacity: 0.4;
+  transition: opacity 0.4s var(--ease-out-expo);
   content: "";
-  transform: scaleX(0);
-  transform-origin: left;
 }
 
 .dark .projectCard::before {
-  background: linear-gradient(90deg, var(--color-accent-500), var(--color-accent-300));
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-500),
+    var(--color-accent-300)
+  );
 }
 
 .projectCard:hover::before {
-  transform: scaleX(1);
-  animation: none;
+  opacity: 1;
 }
 
 .projectCard::after {

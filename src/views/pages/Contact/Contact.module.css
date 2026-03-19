@@ -25,17 +25,15 @@
   left: 0;
   z-index: 1;
   height: 3px;
-  background: var(--gradient-primary-accent);
-  background-size: 100% 100%;
+  background: var(--gradient-accent);
   content: "";
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-  animation: none;
 }
 
 /* Removed gradientShift keyframes (no longer used) */
 
 .cardTitle {
-  color: var(--text-primary);
+  color: var(--theme-heading);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
@@ -57,7 +55,7 @@
   display: inline-block;
   position: relative;
   padding: var(--spacing-sm) 0;
-  color: var(--color-primary-500);
+  color: var(--color-accent-600);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);
@@ -81,12 +79,12 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   transition: width var(--transition-normal) var(--transition-ease);
 }
 
 .contactLink:hover {
-  color: var(--color-primary-600);
+  color: var(--color-accent-600);
   transform: translateX(var(--spacing-xs));
 }
 
@@ -95,7 +93,7 @@
 }
 
 .contactItem a {
-  color: var(--color-primary-500);
+  color: var(--color-accent-600);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);

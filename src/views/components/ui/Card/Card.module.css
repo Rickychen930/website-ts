@@ -17,13 +17,13 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(
     90deg,
-    var(--color-accent-500),
+    var(--color-accent-600),
     var(--color-accent-400)
   );
-  opacity: 0;
+  opacity: 0.4;
   transition: opacity 0.25s ease;
   content: "";
 }
