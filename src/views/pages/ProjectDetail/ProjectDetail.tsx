@@ -2,7 +2,7 @@
  * ProjectDetail Page - Full project details (no dropdown)
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
@@ -13,6 +13,7 @@ import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { formatDateRange } from "@/utils/dateUtils";
+import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
 import type { Project } from "@/types/domain";
 import styles from "./ProjectDetail.module.css";
 
@@ -23,6 +24,14 @@ export const ProjectDetail: React.FC = () => {
   const project: Project | undefined = profile?.projects.find(
     (p) => p.id === projectId,
   );
+
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [project?.id, project?.imageUrl]);
+
+  const resolvedImageSrc = resolveProjectImageSrc(project?.imageUrl);
 
   useSEO({
     title: project
@@ -46,6 +55,8 @@ export const ProjectDetail: React.FC = () => {
       />
     );
   }
+
+  const showProjectImage = Boolean(resolvedImageSrc) && !imageFailed;
 
   if (!project) {
     return (
@@ -87,13 +98,14 @@ export const ProjectDetail: React.FC = () => {
             aria-labelledby="project-detail-title"
           >
             <div className={styles.imageWrap}>
-              {project.imageUrl ? (
+              {showProjectImage ? (
                 <img
-                  src={project.imageUrl}
+                  src={resolvedImageSrc}
                   alt={project.title}
                   width={800}
                   height={800}
                   loading="eager"
+                  onError={() => setImageFailed(true)}
                 />
               ) : (
                 <span className={styles.imagePlaceholder} aria-hidden="true">

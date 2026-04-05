@@ -248,6 +248,8 @@ export const seedProfileData = {
       startDate: "2025-12-01",
       isActive: true,
       liveUrl: "https://web-architech.com.au",
+      imageUrl:
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built production-ready company website with modern tech stack",
         "Implemented contact and inquiry flows with backend API",
@@ -275,6 +277,8 @@ export const seedProfileData = {
       startDate: "2025-12-01",
       isActive: true,
       liveUrl: "https://jbitservices.com.au",
+      imageUrl:
+        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built production-ready service and store front with modern tech stack",
         "Implemented secure authentication and payment integration",
@@ -302,6 +306,8 @@ export const seedProfileData = {
       startDate: "2025-12-01",
       isActive: true,
       liveUrl: "https://christina-sings4you.com.au",
+      imageUrl:
+        "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built production-ready personal branding and booking site",
         "Implemented contact and booking flows",
@@ -330,6 +336,8 @@ export const seedProfileData = {
       isActive: true,
       githubUrl: "https://github.com/rickychen930/giftforyou.idn",
       liveUrl: "https://giftforyou-idn.cloud",
+      imageUrl:
+        "https://images.unsplash.com/photo-1455659772879-8d850ea80e7c?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built production-ready e-commerce platform with modern tech stack",
         "Implemented secure authentication and payment integration",
@@ -355,6 +363,8 @@ export const seedProfileData = {
       startDate: "2023-05-01",
       endDate: "2024-05-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1593359677879-a4bb92f829d8?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Enabled device discovery and remote control for smart TVs",
         "Improved user experience for millions of SmartThings users worldwide",
@@ -373,6 +383,8 @@ export const seedProfileData = {
       startDate: "2022-08-01",
       endDate: "2022-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Integrated IoT devices for real-time soil monitoring",
         "Implemented automated irrigation control system",
@@ -397,6 +409,8 @@ export const seedProfileData = {
       endDate: "2023-12-31",
       isActive: false,
       githubUrl: "https://github.com/rickychen930/kabisa",
+      imageUrl:
+        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Preserved traditional Sundanese script through gamification",
         "Presented research at academic forums and published in IEEE",
@@ -421,6 +435,8 @@ export const seedProfileData = {
       startDate: "2022-03-01",
       endDate: "2022-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Implemented real-time GPS tracking and location sharing",
         "Created emergency SOS functionality for user safety",
@@ -439,6 +455,8 @@ export const seedProfileData = {
       startDate: "2022-03-01",
       endDate: "2022-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Created comprehensive photography learning platform",
         "Implemented video tutorial system",
@@ -464,6 +482,8 @@ export const seedProfileData = {
       startDate: "2022-01-01",
       endDate: "2022-06-30",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Implemented real-time license plate recognition using OpenCV",
         "Integrated computer vision with embedded systems",
@@ -482,6 +502,8 @@ export const seedProfileData = {
       startDate: "2022-01-01",
       endDate: "2022-06-30",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built custom hardware solution for smart lighting",
         "Implemented wireless control via Bluetooth",

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useProfile } from "@/contexts/ProfileContext";
 import { adminService } from "@/services/AdminService";
 import { Button } from "@/views/components/ui/Button";
+import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
 import styles from "./Admin.module.css";
 
 type Project = {
@@ -82,6 +83,7 @@ export const AdminProjects: React.FC = () => {
         category: "other",
         startDate: new Date().toISOString().slice(0, 10),
         isActive: false,
+        imageUrl: undefined,
         achievements: [],
       },
     ]);
@@ -321,6 +323,48 @@ export const AdminProjects: React.FC = () => {
                             }
                             className={styles.input}
                           />
+                        </div>
+                        <div
+                          className={`${styles.formGroup} ${styles.gridFullWidth}`}
+                        >
+                          <label htmlFor={`project-image-${i}`}>
+                            Image URL (thumbnail)
+                          </label>
+                          <p className={styles.fieldHint}>
+                            Full URL (https://…) or path to file in{" "}
+                            <code>public</code>: e.g.{" "}
+                            <code>/images/my-project.png</code>. Save all after
+                            editing.
+                          </p>
+                          <input
+                            id={`project-image-${i}`}
+                            type="text"
+                            autoComplete="off"
+                            value={p.imageUrl ?? ""}
+                            onChange={(e) =>
+                              updateOne(
+                                i,
+                                "imageUrl",
+                                e.target.value.trim() || undefined,
+                              )
+                            }
+                            className={styles.input}
+                            placeholder="https://… or /images/…"
+                          />
+                          {p.imageUrl?.trim() &&
+                          resolveProjectImageSrc(p.imageUrl) ? (
+                            <div className={styles.imagePreviewWrap}>
+                              <img
+                                src={resolveProjectImageSrc(p.imageUrl)!}
+                                alt=""
+                                className={styles.imagePreview}
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).style.display =
+                                    "none";
+                                }}
+                              />
+                            </div>
+                          ) : null}
                         </div>
                         <div
                           className={`${styles.formGroup} ${styles.gridFullWidth}`}

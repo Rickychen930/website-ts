@@ -3,13 +3,14 @@
  * Displays project summary; "View Details" links to project detail page.
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Project } from "@/types/domain";
 import { Card } from "@/views/components/ui/Card";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
 import { formatDateRange } from "@/utils/dateUtils";
+import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
 import styles from "./ProjectCard.module.css";
 
 export interface ProjectCardProps {
@@ -21,6 +22,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onViewDetails,
 }) => {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [project.id, project.imageUrl]);
+
+  const resolvedSrc = resolveProjectImageSrc(project.imageUrl);
+  const showImage = Boolean(resolvedSrc) && !imageFailed;
+
   return (
     <Card
       variant="elevated"
@@ -30,13 +40,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       aria-labelledby={`project-${project.id}-title`}
     >
       <div className={styles.imageWrap}>
-        {project.imageUrl ? (
+        {showImage ? (
           <img
-            src={project.imageUrl}
+            src={resolvedSrc}
             alt={project.title}
             width={400}
             height={400}
             loading="lazy"
+            onError={() => setImageFailed(true)}
           />
         ) : (
           <span className={styles.imagePlaceholder} aria-hidden="true">

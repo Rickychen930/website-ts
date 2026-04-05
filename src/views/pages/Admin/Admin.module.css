@@ -1460,6 +1460,33 @@
   border-radius: 4px;
 }
 
+.fieldHint {
+  margin: 0 0 0.5rem;
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.fieldHint code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  font-size: 0.7rem;
+}
+
+.imagePreviewWrap {
+  margin-top: 0.5rem;
+}
+
+.imagePreview {
+  display: block;
+  max-width: 12rem;
+  max-height: 8rem;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
 /* ========== ADMIN LEARNING ========== */
 .label {
   display: block;

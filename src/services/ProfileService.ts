@@ -147,6 +147,8 @@ const FALLBACK_PROFILE: Profile = {
       category: "fullstack",
       startDate: "2025-01-01",
       isActive: true,
+      imageUrl:
+        "https://images.unsplash.com/photo-1455659772879-8d850ea80e7c?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built production-ready e-commerce platform with modern tech stack",
         "Implemented secure authentication and payment integration",
@@ -173,6 +175,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2023-05-01",
       endDate: "2024-05-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1593359677879-a4bb92f829d8?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Enabled device discovery and remote control for smart TVs",
         "Improved user experience for millions of SmartThings users worldwide",
@@ -192,6 +196,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2022-08-01",
       endDate: "2022-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Integrated IoT devices for real-time soil monitoring",
         "Implemented automated irrigation control system",
@@ -216,6 +222,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2023-01-01",
       endDate: "2023-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Preserved traditional Sundanese script through gamification",
         "Presented research at academic forums and published in IEEE",
@@ -241,6 +249,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2022-03-01",
       endDate: "2022-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Implemented real-time GPS tracking and location sharing",
         "Created emergency SOS functionality for user safety",
@@ -260,6 +270,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2022-03-01",
       endDate: "2022-12-31",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Created comprehensive photography learning platform",
         "Implemented video tutorial system",
@@ -286,6 +298,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2022-01-01",
       endDate: "2022-06-30",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Implemented real-time license plate recognition using OpenCV",
         "Integrated computer vision with embedded systems",
@@ -305,6 +319,8 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2022-01-01",
       endDate: "2022-06-30",
       isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=800&fit=crop&auto=format",
       achievements: [
         "Built custom hardware solution for smart lighting",
         "Implemented wireless control via Bluetooth",
