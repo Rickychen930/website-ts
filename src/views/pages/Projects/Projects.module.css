@@ -100,6 +100,27 @@
   opacity: 1;
 }
 
+:global(.dark) .filterButton {
+  border-color: var(--border-primary);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+:global(.dark) .filterButton:hover:not(.filterButtonActive) {
+  border-color: var(--color-accent-500);
+  color: var(--text-primary);
+}
+
+:global(.dark) .filterButtonActive {
+  border-color: var(--color-accent-500);
+  color: var(--text-inverse);
+}
+
+:global(.dark) .filters {
+  background: var(--bg-card);
+  border-color: var(--border-primary);
+}
+
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(21.25rem, 1fr));
@@ -139,7 +160,16 @@
 
 .emptyIcon {
   display: flex;
-  color: var(--color-primary-300);
+  color: var(--color-primary-500);
+  opacity: var(--opacity-decorative, 0.85);
+}
+
+:global(.dark) .empty {
+  color: var(--text-secondary);
+}
+
+:global(.dark) .emptyIcon {
+  color: var(--color-accent-400);
 }
 
 .emptyIcon svg {

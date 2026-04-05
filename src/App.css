@@ -15,6 +15,7 @@
 @import url("./styles/base.css");
 @import url("./styles/animations.css");
 @import url("./styles/accessibility.css");
+@import url("./styles/mobile-enhancements.css");
 
 /* Dark mode overrides (component-level; tokens already define .dark vars) */
 @import url("./styles/dark-mode.css");

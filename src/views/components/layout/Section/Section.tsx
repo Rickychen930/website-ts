@@ -17,6 +17,10 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   id?: string;
   /** Use alternate background band for visual rhythm */
   variant?: "default" | "alt";
+  /** Center (default) or left-aligned header for editorial rhythm */
+  headerAlign?: "center" | "start";
+  /** Gold underlines on label/title; `none` reduces repetition on dense pages */
+  titleDecoration?: "underline" | "none";
 }
 
 export const Section: React.FC<SectionProps> = ({
@@ -28,9 +32,14 @@ export const Section: React.FC<SectionProps> = ({
   children,
   className = "",
   variant = "default",
+  headerAlign = "center",
+  titleDecoration = "underline",
   ...props
 }) => {
   const titleId = id ? `${id}-title` : undefined;
+  const headerClass =
+    headerAlign === "start" ? styles.headerStart : styles.header;
+  const plainClass = titleDecoration === "none" ? ` ${styles.headerPlain}` : "";
 
   return (
     <section
@@ -41,7 +50,7 @@ export const Section: React.FC<SectionProps> = ({
     >
       <div className={styles.container}>
         {(label || title || subtitle || info) && (
-          <header className={styles.header}>
+          <header className={`${headerClass}${plainClass}`.trim()}>
             {label && (
               <span className={styles.label} aria-hidden="true">
                 {label}

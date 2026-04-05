@@ -80,6 +80,17 @@
 
 /* Dark mode - handled automatically via CSS variables */
 
+@media (prefers-reduced-motion: reduce) {
+  .socialLink:hover,
+  .socialLink:active {
+    transform: none;
+  }
+
+  .socialLink:hover .icon {
+    transform: none;
+  }
+}
+
 /* Responsive Design */
 @media (width <= 640px) {
   .socialLinks {

@@ -91,6 +91,7 @@
 
 .content {
   color: var(--text-secondary);
+  font-family: var(--font-family-quote, var(--font-family-display));
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
   flex: 1 1 0;

@@ -15,6 +15,7 @@ import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningSection as LearningSectionType } from "@/types/domain";
 import { getSectionTheme } from "./sectionThemes";
+import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Learning.module.css";
 
 function scrollToLearningTop() {
@@ -46,7 +47,7 @@ export const Learning: React.FC = () => {
   useSEO({
     title: profile
       ? `${profile.name} - Learning | Portfolio`
-      : "Learning | Ricky Chen Portfolio",
+      : sitePageTitle("Learning"),
     description:
       "Structured curriculum for software engineer interviews: competitive programming, React, Node.js, database, CS theory, OS & concurrency, computer networks, system design, security, AI/ML, interview preparation (coding, OOD, behavioral), and more.",
     keywords:
@@ -81,6 +82,7 @@ export const Learning: React.FC = () => {
         title="Learning"
         subtitle="Structured topics and resources"
         variant="alt"
+        headerAlign="start"
       >
         <div className={styles.wrapper}>
           <div className={styles.emptyState} role="status">
@@ -147,8 +149,8 @@ export const Learning: React.FC = () => {
               Learning
             </Typography>
             <Typography variant="body" as="p" className={styles.heroSubtitle}>
-              Structured topics: algorithms, frameworks, and best practices.
-              Select a section to view topics.
+              Interview prep and deep dives—how I level up. Select a section to
+              browse topics.
             </Typography>
             <div className={styles.heroMeta}>
               <span className={styles.heroSectionCount}>

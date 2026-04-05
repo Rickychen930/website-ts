@@ -19,7 +19,6 @@ import { Loading } from "@/views/components/ui/Loading";
 import { BackToTop } from "@/components/BackToTop";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { ParticleBackground } from "@/components/ParticleBackground";
-import { CursorEffect } from "@/components/CursorEffect";
 import { PageTransition } from "@/components/PageTransition";
 import { Analytics } from "@/components/Analytics";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
@@ -240,7 +239,6 @@ const AppContent: React.FC = () => {
       <div className="app">
         <ParticleBackground />
         <ScrollProgress />
-        <CursorEffect />
         <SkipLinks />
         <Header />
         <main id="main-content" className="app-main" role="main" tabIndex={-1}>

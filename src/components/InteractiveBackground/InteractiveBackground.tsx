@@ -26,7 +26,7 @@ export const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({
     if (variant !== "mesh" || !canvasRef.current) return;
 
     const primaryRgb = hexToRgb(
-      isDark ? colors.primary[400] : colors.primary[500],
+      isDark ? colors.primary[400] : colors.primary[800],
     );
     const accentRgb = hexToRgb(
       isDark ? colors.accent[400] : colors.accent[500],

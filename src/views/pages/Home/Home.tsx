@@ -19,8 +19,12 @@ import { PageError } from "@/views/components/ui/PageError";
 import { ProjectCard } from "@/views/components/domain/ProjectCard";
 import { TestimonialCard } from "@/views/components/domain/TestimonialCard";
 import { StatItem } from "@/views/components/domain/StatItem";
-import { CodeTyping } from "@/components/CodeTyping";
 import { SocialLinks } from "@/components/SocialLinks";
+import {
+  SITE_BRAND_NAME,
+  SITE_DEFAULT_DESCRIPTION,
+  SITE_DEFAULT_KEYWORDS,
+} from "@/config/site-defaults";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { DownloadResume } from "@/components/DownloadResume";
 import styles from "./Home.module.css";
@@ -31,13 +35,10 @@ export const Home: React.FC = () => {
   // SEO Configuration
   useSEO({
     title: profile
-      ? `${profile.name} - ${profile.title} | Portfolio`
-      : "Ricky Chen - Software Engineer & AI Researcher | Portfolio",
-    description:
-      profile?.bio ||
-      "Portfolio of Ricky Chen, Software Engineer & AI Researcher. Specializing in full-stack development, machine learning, and modern web technologies.",
-    keywords:
-      "Software Engineer, Full-Stack Developer, AI Researcher, Web Developer, TypeScript, React, Python, Machine Learning, Portfolio",
+      ? `${profile.name} - ${profile.title} | ${SITE_BRAND_NAME}`
+      : `${SITE_BRAND_NAME} | Professional portfolio`,
+    description: profile?.bio || SITE_DEFAULT_DESCRIPTION,
+    keywords: SITE_DEFAULT_KEYWORDS,
     type: "website",
   });
 
@@ -63,8 +64,8 @@ export const Home: React.FC = () => {
   }
 
   const recentProjects = profile.getFeaturedProjects(3);
-  const currentExperience = profile.getCurrentExperience();
   const experiencePreview = profile.experiences.slice(0, 3);
+  const showOpenBadge = profile.openToOpportunities !== false;
 
   return (
     <>
@@ -85,62 +86,48 @@ export const Home: React.FC = () => {
             {profile.name}
           </Typography>
           <div className={styles.heroMetaRow}>
-            <div className={styles.heroLocation} aria-label="Location">
-              <span className={styles.locationIcon} aria-hidden="true">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  focusable="false"
-                >
-                  <path
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
-                    fill="currentColor"
-                  />
-                </svg>
+            {profile.location?.trim() ? (
+              <div className={styles.heroLocation} aria-label="Location">
+                <span className={styles.locationIcon} aria-hidden="true">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    focusable="false"
+                  >
+                    <path
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <Typography variant="body" color="secondary" as="span">
+                  {profile.location}
+                </Typography>
+              </div>
+            ) : null}
+            {showOpenBadge && (
+              <span
+                className={styles.heroOpenToWork}
+                aria-label="Open to job opportunities"
+              >
+                Open to opportunities
               </span>
-              <Typography variant="body" color="secondary" as="span">
-                {profile.location}
-              </Typography>
-            </div>
-            <span
-              className={styles.heroOpenToWork}
-              aria-label="Open to job opportunities"
-            >
-              Open to opportunities
-            </span>
+            )}
           </div>
           <Typography variant="body" className={styles.heroBio} as="p">
             {profile.bio}
           </Typography>
 
-          {profile.testimonials.length > 0 &&
-            profile.testimonials[0].content && (
-              <ScrollReveal direction="fade" delay={150}>
-                <blockquote
-                  className={styles.heroTestimonial}
-                  aria-label="Featured testimonial"
-                >
-                  <Typography
-                    variant="body"
-                    color="secondary"
-                    as="span"
-                    className={styles.heroTestimonialQuote}
-                  >
-                    &ldquo;{profile.testimonials[0].content.slice(0, 120)}
-                    {profile.testimonials[0].content.length > 120 ? "…" : ""}
-                    &rdquo;
-                  </Typography>
-                  {profile.testimonials[0].author && (
-                    <cite className={styles.heroTestimonialCite}>
-                      — {profile.testimonials[0].author}
-                    </cite>
-                  )}
-                </blockquote>
-              </ScrollReveal>
-            )}
+          {profile.heroTagline && profile.heroTagline.trim() !== "" && (
+            <ScrollReveal direction="fade" delay={120}>
+              <p className={styles.heroTagline} aria-label="Professional focus">
+                {profile.heroTagline}
+              </p>
+            </ScrollReveal>
+          )}
 
           <div
             className={styles.heroActions}
@@ -164,18 +151,7 @@ export const Home: React.FC = () => {
             <DownloadResume />
           </div>
 
-          {profile.name && (
-            <ScrollReveal direction="fade" delay={200}>
-              <div className={styles.codeSnippet}>
-                <CodeTyping
-                  code={`const developer = new SoftwareEngineer('${profile.name}');`}
-                  speed={60}
-                />
-              </div>
-            </ScrollReveal>
-          )}
-
-          <ScrollReveal direction="up" delay={300}>
+          <ScrollReveal direction="up" delay={200}>
             <div className={styles.socialLinksWrapper}>
               <SocialLinks />
             </div>
@@ -191,6 +167,7 @@ export const Home: React.FC = () => {
           subtitle="A few recent projects"
           id="projects-preview"
           variant="alt"
+          headerAlign="start"
           aria-labelledby="projects-preview-title"
         >
           <ScrollReveal direction="up" delay={0}>
@@ -283,6 +260,7 @@ export const Home: React.FC = () => {
           title="By The Numbers"
           subtitle="Key metrics"
           id="stats"
+          headerAlign="start"
           aria-labelledby="stats-title"
         >
           <ScrollReveal direction="up" delay={80}>
@@ -310,6 +288,7 @@ export const Home: React.FC = () => {
           className={styles.testimonialsSection}
           id="testimonials"
           variant="alt"
+          headerAlign="start"
           aria-labelledby="testimonials-title"
         >
           <ScrollReveal direction="up" delay={80}>
@@ -328,38 +307,13 @@ export const Home: React.FC = () => {
         </Section>
       )}
 
-      {/* Current Role - prominent for recruiters */}
-      {currentExperience && (
-        <Section className={styles.currentRole} variant="alt">
-          <ScrollReveal direction="up" delay={0}>
-            <div className={styles.currentRoleContent}>
-              <Typography variant="h3" weight="semibold">
-                Currently
-              </Typography>
-              <Typography variant="h4" weight="semibold" color="primary">
-                {currentExperience.position}
-              </Typography>
-              <Typography variant="body" color="secondary">
-                {currentExperience.company}
-              </Typography>
-              <Link
-                to="/experience"
-                className={styles.currentRoleCta}
-                aria-label="View full experience"
-              >
-                View full experience →
-              </Link>
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
-
-      {/* Explore: Resume & Contact first for recruiters */}
+      {/* Explore: primary CTAs + learning */}
       <Section
         label="Next steps"
         title="Resume & Contact"
         subtitle="Download CV or get in touch"
         id="explore"
+        headerAlign="start"
         aria-labelledby="explore-title"
       >
         <ScrollReveal direction="up" delay={0}>

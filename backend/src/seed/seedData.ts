@@ -13,6 +13,9 @@ export const seedProfileData = {
   title: "Software Engineer & AI Researcher",
   location: "Sydney, Australia",
   bio: "Experienced in backend, mobile, and frontend development, with hands-on projects at Samsung R&D and Apple Developer Academy. Strong foundation in algorithms and competitive programming. Currently preparing for a Master of Artificial Intelligence at UTS, driven to build scalable tech with real-world impact.",
+  heroTagline:
+    "Shipping end-to-end products—from systems design to deployed interfaces—with research-grade rigor.",
+  openToOpportunities: true,
 
   academics: [
     {

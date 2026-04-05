@@ -1,0 +1,1 @@
+export { ContactChannelIcon } from "./ContactChannelIcon";

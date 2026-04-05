@@ -49,7 +49,12 @@ export const ProjectDetail: React.FC = () => {
 
   if (!project) {
     return (
-      <Section title="Project not found" id="project-detail" variant="alt">
+      <Section
+        title="Project not found"
+        id="project-detail"
+        variant="alt"
+        headerAlign="start"
+      >
         <div className={styles.wrap}>
           <div className={styles.notFound} role="status">
             <Typography
@@ -73,6 +78,7 @@ export const ProjectDetail: React.FC = () => {
       subtitle={formatDateRange(project.startDate, project.endDate)}
       id="project-detail"
       variant="alt"
+      headerAlign="start"
     >
       <ScrollReveal direction="up" delay={0}>
         <div className={styles.wrap}>
@@ -80,8 +86,8 @@ export const ProjectDetail: React.FC = () => {
             className={styles.card}
             aria-labelledby="project-detail-title"
           >
-            {project.imageUrl && (
-              <div className={styles.imageWrap}>
+            <div className={styles.imageWrap}>
+              {project.imageUrl ? (
                 <img
                   src={project.imageUrl}
                   alt={project.title}
@@ -89,8 +95,12 @@ export const ProjectDetail: React.FC = () => {
                   height={800}
                   loading="eager"
                 />
-              </div>
-            )}
+              ) : (
+                <span className={styles.imagePlaceholder} aria-hidden="true">
+                  {project.title.trim().charAt(0).toUpperCase() || "·"}
+                </span>
+              )}
+            </div>
             <header className={styles.header}>
               <div className={styles.meta}>
                 <span

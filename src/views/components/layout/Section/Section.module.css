@@ -38,6 +38,43 @@
   margin-bottom: var(--spacing-3xl);
 }
 
+.headerStart {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  margin-bottom: var(--spacing-3xl);
+  align-self: flex-start;
+}
+
+.headerStart .label::after {
+  left: 0;
+  transform: none;
+}
+
+.headerStart .title::after {
+  left: 0;
+  transform: none;
+}
+
+.headerStart .subtitle {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* No gold rules under label/title — for editorial variety */
+.headerPlain .label::after,
+.headerPlain .title::after {
+  display: none;
+}
+
+.headerPlain .label {
+  padding-bottom: 0;
+}
+
+.headerPlain .title {
+  margin-bottom: var(--spacing-sm);
+}
+
 .label {
   display: inline-block;
   position: relative;
@@ -126,6 +163,11 @@
 
   .container {
     padding: 0 var(--spacing-md);
+  }
+
+  .headerStart .subtitle {
+    padding-left: 0;
+    padding-right: var(--spacing-sm);
   }
 
   .header {

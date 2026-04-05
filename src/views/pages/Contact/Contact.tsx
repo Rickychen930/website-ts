@@ -9,6 +9,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { contactService } from "@/services/ContactService";
 import { validateContactForm } from "@/utils/formValidation";
 import { trackEvent } from "@/utils/analytics";
+import { ContactChannelIcon } from "@/components/ContactChannelIcon";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
@@ -16,8 +17,8 @@ import { Button } from "@/views/components/ui/Button";
 import { Card } from "@/views/components/ui/Card";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
-import type { Contact as ContactType } from "@/types/domain";
 import styles from "./Contact.module.css";
+import { CONTACT_SEO_DESCRIPTION, sitePageTitle } from "@/config/site-defaults";
 
 export const Contact: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
@@ -36,23 +37,11 @@ export const Contact: React.FC = () => {
   useSEO({
     title: profile
       ? `${profile.name} - Contact | Portfolio`
-      : "Contact | Ricky Chen Portfolio",
-    description: "Get in touch: contact form, email, and social links.",
-    keywords: "contact, get in touch, hire, software engineer",
+      : sitePageTitle("Contact"),
+    description: CONTACT_SEO_DESCRIPTION,
+    keywords: "contact, get in touch, portfolio",
     type: "website",
   });
-
-  const getContactIcon = (type: ContactType["type"]): string => {
-    const icons: Record<ContactType["type"], string> = {
-      email: "✉️",
-      phone: "📞",
-      linkedin: "💼",
-      github: "💻",
-      website: "🌐",
-      other: "🔗",
-    };
-    return icons[type] || "🔗";
-  };
 
   const handleBlur = (field: string) => {
     setTouched({ ...touched, [field]: true });
@@ -137,6 +126,7 @@ export const Contact: React.FC = () => {
       title="Get In Touch"
       subtitle="Let's connect and discuss opportunities"
       variant="alt"
+      headerAlign="start"
     >
       <ScrollReveal direction="up" delay={0}>
         <div className={styles.container}>
@@ -155,8 +145,12 @@ export const Contact: React.FC = () => {
               <>
                 {primaryContact && (
                   <div className={styles.contactItem}>
-                    <Typography variant="body" weight="medium">
-                      {getContactIcon(primaryContact.type)}{" "}
+                    <Typography
+                      variant="body"
+                      weight="medium"
+                      className={styles.contactLabelRow}
+                    >
+                      <ContactChannelIcon type={primaryContact.type} />
                       {primaryContact.label}
                     </Typography>
                     <a
@@ -211,9 +205,7 @@ export const Contact: React.FC = () => {
                           }
                           className={styles.socialLink}
                         >
-                          <span aria-hidden="true">
-                            {getContactIcon(contact.type)}{" "}
-                          </span>
+                          <ContactChannelIcon type={contact.type} />
                           {contact.label}
                         </a>
                       );

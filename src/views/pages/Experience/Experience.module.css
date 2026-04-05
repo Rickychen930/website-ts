@@ -74,11 +74,16 @@
 }
 
 .emptyIcon {
-  font-size: var(--font-size-5xl);
+  display: inline-flex;
+  color: var(--text-tertiary);
   line-height: 1;
   opacity: var(--opacity-decorative);
   margin-bottom: var(--spacing-sm);
   animation: float calc(var(--transition-slow) * 6) ease-in-out infinite;
+}
+
+.emptyIcon svg {
+  display: block;
 }
 
 .emptyActions {

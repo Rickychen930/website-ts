@@ -27,27 +27,43 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     const element = elementRef.current;
     if (!element) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              setIsVisible(true);
-            }, delay);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      },
-    );
+    const bottomInsetPx = () =>
+      Math.min(50, Math.max(24, Math.round(window.innerHeight * 0.08)));
 
+    const createObserver = () => {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                setIsVisible(true);
+              }, delay);
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: `0px 0px -${bottomInsetPx()}px 0px`,
+        },
+      );
+      return obs;
+    };
+
+    let observer = createObserver();
     observer.observe(element);
 
+    const onResize = () => {
+      observer.disconnect();
+      observer = createObserver();
+      observer.observe(element);
+    };
+
+    window.addEventListener("resize", onResize);
+
     return () => {
-      observer.unobserve(element);
+      window.removeEventListener("resize", onResize);
+      observer.disconnect();
     };
   }, [delay]);
 

@@ -5,6 +5,11 @@
 
 import { ProfileModel } from "@/models/ProfileModel";
 import type { Profile } from "@/types/domain";
+import {
+  SITE_BRAND_NAME,
+  SITE_DEFAULT_DESCRIPTION,
+  SITE_DEFAULT_TAGLINE,
+} from "@/config/site-defaults";
 
 interface CacheEntry {
   data: ProfileModel;
@@ -15,34 +20,36 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
 
-// Fallback profile data when backend is unavailable
+// Fallback profile when backend is unavailable (development only). Generic copy — replace via API/seed for production.
 const FALLBACK_PROFILE: Profile = {
   id: "fallback-profile",
-  name: "Ricky Chen",
-  title: "Software Engineer & AI Researcher",
-  location: "Sydney, Australia",
-  bio: "Experienced in backend, mobile, and frontend development, with hands-on projects at Samsung R&D and Apple Developer Academy. Strong foundation in algorithms and competitive programming. Currently preparing for a Master of Artificial Intelligence at UTS, driven to build scalable tech with real-world impact.",
+  name: SITE_BRAND_NAME,
+  title: SITE_DEFAULT_TAGLINE,
+  location: "",
+  bio: SITE_DEFAULT_DESCRIPTION,
+  heroTagline: "",
+  openToOpportunities: true,
   academics: [],
   certifications: [],
   contacts: [
     {
       id: "contact-1",
       type: "email",
-      value: "rickychen930@gmail.com",
+      value: "contact@example.com",
       label: "Email",
       isPrimary: true,
     },
     {
       id: "contact-2",
       type: "linkedin",
-      value: "https://www.linkedin.com/in/rickychen930",
+      value: "https://www.linkedin.com/",
       label: "LinkedIn",
       isPrimary: false,
     },
     {
       id: "contact-3",
       type: "github",
-      value: "https://github.com/rickychen930",
+      value: "https://github.com/",
       label: "GitHub",
       isPrimary: false,
     },
@@ -140,7 +147,6 @@ const FALLBACK_PROFILE: Profile = {
       category: "fullstack",
       startDate: "2025-01-01",
       isActive: true,
-      githubUrl: "https://github.com/rickychen930/giftforyou.idn",
       achievements: [
         "Built production-ready e-commerce platform with modern tech stack",
         "Implemented secure authentication and payment integration",
@@ -210,7 +216,6 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2023-01-01",
       endDate: "2023-12-31",
       isActive: false,
-      githubUrl: "https://github.com/rickychen930/kabisa",
       achievements: [
         "Preserved traditional Sundanese script through gamification",
         "Presented research at academic forums and published in IEEE",

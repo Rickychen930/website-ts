@@ -14,6 +14,7 @@ import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
 import { PageError } from "@/views/components/ui/PageError";
 import { ProjectCard } from "@/views/components/domain/ProjectCard";
+import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Projects.module.css";
 
 export const Projects: React.FC = () => {
@@ -23,7 +24,7 @@ export const Projects: React.FC = () => {
   useSEO({
     title: profile
       ? `${profile.name} - Projects | Portfolio`
-      : "Projects | Ricky Chen Portfolio",
+      : sitePageTitle("Projects"),
     description: profile
       ? `Projects by ${profile.name}: ${profile.projects.length} projects in web, mobile, AI, and more.`
       : "Portfolio projects: web, mobile, AI, and full-stack development.",
@@ -64,6 +65,8 @@ export const Projects: React.FC = () => {
       title="Projects"
       subtitle="A collection of my work and side projects"
       variant="alt"
+      headerAlign="start"
+      id="projects"
     >
       <ScrollReveal direction="up" delay={0}>
         <div

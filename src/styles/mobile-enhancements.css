@@ -13,7 +13,16 @@
     .navButton,
     .dot
   ),
-  a:not(.navLink, .footerLink, .contactLink, .socialLink, .badgeLink),
+  a:not(
+    .navLink,
+    .footerLink,
+    .contactLink,
+    .socialLink,
+    .badgeLink,
+    .experienceSeeMoreLink,
+    .exploreLink,
+    .currentRoleCta
+  ),
   input:not([type="checkbox"], [type="radio"]),
   select,
   textarea {

@@ -14,6 +14,7 @@ import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { ExperienceItem } from "@/views/components/domain/ExperienceItem";
 import { Button } from "@/views/components/ui/Button";
+import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Experience.module.css";
 
 export const Experience: React.FC = () => {
@@ -22,7 +23,7 @@ export const Experience: React.FC = () => {
   useSEO({
     title: profile
       ? `${profile.name} - Experience | Portfolio`
-      : "Experience | Ricky Chen Portfolio",
+      : sitePageTitle("Experience"),
     description: profile
       ? `Work experience of ${profile.name}: ${profile.experiences.length} positions.`
       : "Work experience timeline: software engineering and development roles.",
@@ -74,6 +75,7 @@ export const Experience: React.FC = () => {
       title="Experience"
       subtitle="My professional journey"
       variant="alt"
+      headerAlign="start"
     >
       {sortedExperiences.length === 0 ? (
         <div
@@ -82,9 +84,21 @@ export const Experience: React.FC = () => {
           aria-live="polite"
           aria-labelledby="experience-empty-title"
         >
-          <div className={styles.emptyIcon} aria-hidden>
-            💼
-          </div>
+          <span className={styles.emptyIcon} aria-hidden>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+          </span>
           <Typography
             id="experience-empty-title"
             variant="h4"

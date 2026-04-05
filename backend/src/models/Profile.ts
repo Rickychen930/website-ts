@@ -9,6 +9,8 @@ export interface IProfile extends Document {
   title: string;
   location: string;
   bio: string;
+  heroTagline?: string;
+  openToOpportunities?: boolean;
   academics: Array<{
     institution: string;
     degree: string;
@@ -139,6 +141,8 @@ const ProfileSchema = new Schema<IProfile>(
     title: { type: String, required: true },
     location: { type: String, required: true },
     bio: { type: String, required: true },
+    heroTagline: { type: String, required: false },
+    openToOpportunities: { type: Boolean, required: false, default: true },
     academics: { type: Array, default: [] } as any,
     certifications: { type: Array, default: [] } as any,
     contacts: { type: Array, default: [] } as any,

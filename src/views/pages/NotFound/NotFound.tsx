@@ -27,6 +27,7 @@ export const NotFound: React.FC = () => {
       title="Page not found"
       subtitle="The page you are looking for does not exist or has been moved."
       variant="alt"
+      headerAlign="start"
     >
       <div className={styles.content}>
         {location.pathname !== "/" && (

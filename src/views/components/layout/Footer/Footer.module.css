@@ -134,6 +134,10 @@
   transform: translateX(var(--spacing-sm));
 }
 
+.dark .footerLink:hover {
+  color: var(--color-accent-400);
+}
+
 .footerLink:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-outline-offset);

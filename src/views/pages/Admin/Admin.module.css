@@ -137,8 +137,8 @@
 .loginInput:focus,
 .loginInput:focus-visible {
   outline: none;
-  border-color: var(--color-primary-600);
-  box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
+  border-color: var(--color-accent-500);
+  box-shadow: 0 0 0 3px var(--focus-ring-glow);
 }
 
 .loginError {

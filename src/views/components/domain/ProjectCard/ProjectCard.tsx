@@ -29,8 +29,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       role="article"
       aria-labelledby={`project-${project.id}-title`}
     >
-      {project.imageUrl && (
-        <div className={styles.imageWrap}>
+      <div className={styles.imageWrap}>
+        {project.imageUrl ? (
           <img
             src={project.imageUrl}
             alt={project.title}
@@ -38,8 +38,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             height={400}
             loading="lazy"
           />
-        </div>
-      )}
+        ) : (
+          <span className={styles.imagePlaceholder} aria-hidden="true">
+            {project.title.trim().charAt(0).toUpperCase() || "·"}
+          </span>
+        )}
+      </div>
       <div className={styles.header}>
         <div className={styles.category}>
           <span

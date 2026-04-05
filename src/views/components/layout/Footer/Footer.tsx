@@ -8,6 +8,7 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { Typography } from "@/views/components/ui/Typography";
 import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/views/components/ui/Button";
+import { SITE_BRAND_NAME, SITE_DEFAULT_TAGLINE } from "@/config/site-defaults";
 import styles from "./Footer.module.css";
 
 export const Footer: React.FC = () => {
@@ -36,37 +37,42 @@ export const Footer: React.FC = () => {
                 weight="bold"
                 className={styles.footerBrand}
               >
-                {profile?.name || "Ricky Chen"}
+                {profile?.name || SITE_BRAND_NAME}
               </Typography>
               <Typography
                 variant="body"
                 color="secondary"
                 className={styles.footerTagline}
               >
-                {profile?.title || "Software Engineer & AI Researcher"}
+                {profile?.title || SITE_DEFAULT_TAGLINE}
               </Typography>
-              <Typography
-                variant="small"
-                color="tertiary"
-                className={styles.footerLocation}
-              >
-                <span className={styles.footerLocationIcon} aria-hidden="true">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              {profile?.location ? (
+                <Typography
+                  variant="small"
+                  color="tertiary"
+                  className={styles.footerLocation}
+                >
+                  <span
+                    className={styles.footerLocationIcon}
+                    aria-hidden="true"
                   >
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                    <circle cx="12" cy="9" r="2.5" />
-                  </svg>
-                </span>
-                {profile?.location || "Sydney, Australia"}
-              </Typography>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                      <circle cx="12" cy="9" r="2.5" />
+                    </svg>
+                  </span>
+                  {profile.location}
+                </Typography>
+              ) : null}
               <div className={styles.socialLinksWrapper}>
                 <SocialLinks />
               </div>
@@ -127,20 +133,10 @@ export const Footer: React.FC = () => {
       <div className={styles.footerBottom}>
         <div className={styles.container}>
           <Typography variant="small" color="tertiary" as="p">
-            © {currentYear} {profile?.name || "Portfolio"}. All rights
+            © {currentYear} {profile?.name || SITE_BRAND_NAME}. All rights
             reserved.
           </Typography>
           <div className={styles.footerBottomLinks}>
-            <Link
-              to="/admin/login"
-              className={styles.footerBottomLink}
-              aria-label="Admin login"
-            >
-              Admin
-            </Link>
-            <span className={styles.separator} aria-hidden="true">
-              •
-            </span>
             <Link
               to="/privacy"
               className={styles.footerBottomLink}

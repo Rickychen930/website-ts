@@ -73,6 +73,12 @@ export const transformProfile = (profile: IProfile): Profile => {
     title: profile.title || "",
     location: profile.location || "",
     bio: profile.bio || "",
+    heroTagline:
+      typeof profile.heroTagline === "string" &&
+      profile.heroTagline.trim() !== ""
+        ? profile.heroTagline.trim()
+        : undefined,
+    openToOpportunities: profile.openToOpportunities !== false,
     academics: academics.map((academic, index) => ({
       id: extractId(academic, `academic-${index}`),
       institution: academic.institution || "",

@@ -9,11 +9,12 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
+import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Terms.module.css";
 
 export const Terms: React.FC = () => {
   useSEO({
-    title: "Terms of Service | Portfolio",
+    title: sitePageTitle("Terms of Service"),
     description: "Use of this portfolio site. No warranty.",
     type: "website",
   });
@@ -24,6 +25,7 @@ export const Terms: React.FC = () => {
       subtitle="Use of this portfolio site"
       id="terms"
       variant="alt"
+      headerAlign="start"
     >
       <ScrollReveal direction="up" delay={0}>
         <div className={styles.content}>

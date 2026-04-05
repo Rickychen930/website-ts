@@ -18,6 +18,7 @@
   align-items: center;
   justify-content: center;
   background-color: var(--bg-overlay);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   transform: translateZ(0);
   min-height: 100vh;

@@ -171,6 +171,10 @@ export interface Profile {
   readonly title: string;
   readonly location: string;
   readonly bio: string;
+  /** One-line hero hook (replaces generic code-typing gimmick). */
+  readonly heroTagline?: string;
+  /** Shown in hero when true; omit or false = no “open to work” badge. */
+  readonly openToOpportunities?: boolean;
   readonly academics: readonly Academic[];
   readonly certifications: readonly Certification[];
   readonly contacts: readonly Contact[];

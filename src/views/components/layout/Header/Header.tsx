@@ -9,6 +9,7 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Search } from "@/components/Search";
 import { DownloadResume } from "@/components/DownloadResume";
+import { SITE_BRAND_NAME } from "@/config/site-defaults";
 import styles from "./Header.module.css";
 
 const MAIN_NAV_ITEMS = [
@@ -116,11 +117,11 @@ export const Header: React.FC = () => {
         <Link
           to="/"
           className={styles.logo}
-          aria-label={`${profile?.name || "Home"} - Home`}
+          aria-label={`${profile?.name || SITE_BRAND_NAME} - Home`}
         >
           <img
             src="/logo192.png"
-            alt={`${profile?.name || "Ricky Chen"} logo - Home`}
+            alt={`${profile?.name || SITE_BRAND_NAME} — home`}
             className={styles.logoImage}
             width="48"
             height="48"

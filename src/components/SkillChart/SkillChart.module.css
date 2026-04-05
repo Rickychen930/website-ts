@@ -61,6 +61,11 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.dark .skillPercentage {
+  color: var(--skill-color, var(--color-accent-400));
 }
 
 .skillName {
@@ -99,13 +104,6 @@
   color: var(--theme-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-normal);
-}
-
-.barPercentage {
-  color: var(--skill-color, var(--color-accent-600));
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-normal);
 }
 
@@ -154,6 +152,13 @@
 
   100% {
     transform: translateX(200%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barGlow {
+    animation: none;
+    opacity: 0;
   }
 }
 

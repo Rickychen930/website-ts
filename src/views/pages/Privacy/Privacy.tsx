@@ -9,11 +9,12 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
+import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Privacy.module.css";
 
 export const Privacy: React.FC = () => {
   useSEO({
-    title: "Privacy Policy | Portfolio",
+    title: sitePageTitle("Privacy Policy"),
     description: "How we handle your data. Contact form and site usage.",
     type: "website",
   });
@@ -24,6 +25,7 @@ export const Privacy: React.FC = () => {
       subtitle="How we handle your data"
       id="privacy"
       variant="alt"
+      headerAlign="start"
     >
       <ScrollReveal direction="up" delay={0}>
         <div className={styles.content}>

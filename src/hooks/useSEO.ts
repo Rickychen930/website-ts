@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
+import { SITE_BRAND_NAME } from "@/config/site-defaults";
 
 interface SEOData {
   title: string;
@@ -24,7 +25,7 @@ export const useSEO = (seoData: SEOData) => {
     const baseUrl = window.location.origin;
     const currentUrl = `${baseUrl}${location.pathname}`;
     const imageUrl = seoData.image || `${baseUrl}/logo512.png`;
-    const siteName = profile?.name || "Ricky Chen Portfolio";
+    const siteName = profile?.name || SITE_BRAND_NAME;
 
     // Update document title
     document.title = seoData.title;
@@ -118,12 +119,12 @@ export const generateStructuredData = (data: {
       return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: data.profile?.name || "Ricky Chen Portfolio",
+        name: data.profile?.name || SITE_BRAND_NAME,
         url: baseUrl,
         description: data.profile?.bio || "",
         publisher: {
           "@type": "Person",
-          name: data.profile?.name || "Ricky Chen",
+          name: data.profile?.name || SITE_BRAND_NAME,
         },
       };
     }
@@ -145,7 +146,7 @@ export const generateStructuredData = (data: {
         },
         creator: {
           "@type": "Person",
-          name: data.profile?.name || "Ricky Chen",
+          name: data.profile?.name || SITE_BRAND_NAME,
         },
       };
     }
@@ -159,7 +160,7 @@ export const generateStructuredData = (data: {
         url?: string;
         sectionName?: string;
       };
-      const authorName = data.profile?.name || "Ricky Chen";
+      const authorName = data.profile?.name || SITE_BRAND_NAME;
       const schema: Record<string, unknown> = {
         "@context": "https://schema.org",
         "@type": "Article",

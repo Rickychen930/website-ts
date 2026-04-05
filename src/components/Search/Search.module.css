@@ -233,6 +233,13 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .results,
+  .noResults {
+    animation: none;
+  }
+}
+
 /* Scrollbar styling for results */
 .results::-webkit-scrollbar {
   width: 6px;

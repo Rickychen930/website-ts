@@ -175,6 +175,8 @@ export class ProfileController {
         title,
         location,
         bio,
+        heroTagline,
+        openToOpportunities,
         academics,
         certifications,
         contacts,
@@ -210,6 +212,13 @@ export class ProfileController {
       if (title !== undefined) profile.title = String(title);
       if (location !== undefined) profile.location = String(location);
       if (bio !== undefined) profile.bio = String(bio);
+      if (heroTagline !== undefined) {
+        profile.heroTagline =
+          typeof heroTagline === "string" ? heroTagline.trim() : undefined;
+      }
+      if (openToOpportunities !== undefined) {
+        profile.openToOpportunities = Boolean(openToOpportunities);
+      }
       if (Array.isArray(academics)) profile.academics = academics;
       if (Array.isArray(certifications))
         profile.certifications = certifications;

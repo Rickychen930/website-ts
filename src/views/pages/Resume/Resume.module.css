@@ -200,8 +200,15 @@
 }
 
 @media print {
+  .resumePage {
+    min-height: auto;
+    background: #fff !important;
+    color: #000;
+  }
+
   .section {
     padding: 0;
+    max-width: none;
   }
 
   .backLink,

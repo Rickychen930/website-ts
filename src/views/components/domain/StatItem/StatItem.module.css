@@ -85,6 +85,7 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   transform: translateZ(0);
+  font-variant-numeric: tabular-nums;
 }
 
 @keyframes gradientShift {

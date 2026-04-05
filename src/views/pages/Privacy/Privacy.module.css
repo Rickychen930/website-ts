@@ -1,13 +1,14 @@
 .content {
-  max-width: var(--container-md);
+  max-width: min(var(--container-md), 70ch);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
   box-sizing: border-box;
 }
 
 .content p {
-  margin-bottom: var(--spacing-xl);
+  color: var(--text-secondary);
   line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-xl);
 }
 
 .actions {

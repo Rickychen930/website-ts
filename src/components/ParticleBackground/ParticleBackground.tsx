@@ -43,8 +43,21 @@ export const ParticleBackground: React.FC = () => {
     if (reduceMotion || isMobile) return;
 
     const primaryRgb = hexToRgb(
-      isDark ? colors.primary[400] : colors.primary[500],
+      isDark ? colors.primary[400] : colors.primary[800],
     );
+    const accentRgb = hexToRgb(
+      isDark ? colors.accent[400] : colors.accent[600],
+    );
+    const mixRgb = (
+      a: [number, number, number],
+      b: [number, number, number],
+      t: number,
+    ): [number, number, number] => [
+      Math.round(a[0] * (1 - t) + b[0] * t),
+      Math.round(a[1] * (1 - t) + b[1] * t),
+      Math.round(a[2] * (1 - t) + b[2] * t),
+    ];
+    const lineRgb = mixRgb(primaryRgb, accentRgb, isDark ? 0.2 : 0.28);
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -109,10 +122,12 @@ export const ParticleBackground: React.FC = () => {
 
           if (distanceSq < connectionDistanceSq) {
             const distance = Math.sqrt(distanceSq);
+            const lineAlpha =
+              0.045 * (1 - distance / 100) * (isDark ? 1 : 0.85);
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(${primaryRgb[0]}, ${primaryRgb[1]}, ${primaryRgb[2]}, ${0.05 * (1 - distance / 100)})`;
+            ctx.strokeStyle = `rgba(${lineRgb[0]}, ${lineRgb[1]}, ${lineRgb[2]}, ${lineAlpha})`;
             ctx.lineWidth = 0.5; // Thinner lines
             ctx.stroke();
           }

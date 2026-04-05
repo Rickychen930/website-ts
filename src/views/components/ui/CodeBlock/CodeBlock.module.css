@@ -1,7 +1,7 @@
 .codeBlock {
   position: relative;
   background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  border-radius: var(--theme-radius-card, var(--radius-xl));
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   margin: var(--spacing-2xl) 0;

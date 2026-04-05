@@ -17,6 +17,10 @@ import { SoftSkillBadge } from "@/views/components/domain/SoftSkillBadge";
 import { CertificationCard } from "@/views/components/domain/CertificationCard";
 import { AcademicItem } from "@/views/components/domain/AcademicItem";
 import { HonorCard } from "@/views/components/domain/HonorCard";
+import {
+  SITE_DEFAULT_DESCRIPTION,
+  sitePageTitle,
+} from "@/config/site-defaults";
 import styles from "./About.module.css";
 
 const categoryLabels: Record<SoftSkill["category"], string> = {
@@ -34,11 +38,10 @@ export const About: React.FC = () => {
   useSEO({
     title: profile
       ? `${profile.name} - About | Portfolio`
-      : "About | Ricky Chen Portfolio",
-    description:
-      profile?.bio ||
-      "About me: skills, education, certifications, and honors.",
-    keywords: "Software Engineer, skills, education, certifications, portfolio",
+      : sitePageTitle("About"),
+    description: profile?.bio || SITE_DEFAULT_DESCRIPTION,
+    keywords:
+      "about, skills, education, certifications, portfolio, professional",
     type: "profile",
   });
 
@@ -70,7 +73,11 @@ export const About: React.FC = () => {
 
   return (
     <>
-      <Section title="About Me" subtitle="A brief introduction">
+      <Section
+        title="About Me"
+        subtitle="A brief introduction"
+        headerAlign="start"
+      >
         <ScrollReveal direction="up" delay={0}>
           <div className={styles.content}>
             <Typography variant="body" className={styles.bio}>
@@ -84,6 +91,7 @@ export const About: React.FC = () => {
         title="Technical Skills"
         subtitle="Technologies and tools I work with"
         variant="alt"
+        headerAlign="start"
       >
         {skillCategories.every(
           ({ category }) =>
@@ -163,7 +171,12 @@ export const About: React.FC = () => {
       </Section>
 
       {profile.languages.length > 0 && (
-        <Section title="Languages" className={styles.languagesSection}>
+        <Section
+          title="Languages"
+          className={styles.languagesSection}
+          headerAlign="start"
+          titleDecoration="none"
+        >
           <div className={styles.languages} role="list" aria-label="Languages">
             {profile.languages.map((language) => (
               <div
@@ -192,6 +205,8 @@ export const About: React.FC = () => {
         <Section
           title="Education"
           subtitle="Academic background and qualifications"
+          headerAlign="start"
+          titleDecoration="none"
         >
           <div
             className={styles.academicsList}
@@ -211,6 +226,7 @@ export const About: React.FC = () => {
         <Section
           title="Certifications"
           subtitle="Professional certifications and credentials"
+          headerAlign="start"
         >
           <div
             className={styles.certificationsGrid}
@@ -232,6 +248,8 @@ export const About: React.FC = () => {
           subtitle="Recognition and achievements"
           className={styles.honorsSection}
           variant="alt"
+          headerAlign="start"
+          titleDecoration="none"
         >
           <div
             className={styles.honorsGrid}
@@ -252,6 +270,7 @@ export const About: React.FC = () => {
           title="Soft Skills"
           subtitle="Personal attributes and abilities"
           className={styles.softSkillsSection}
+          headerAlign="start"
         >
           <div
             className={styles.softSkillsContainer}

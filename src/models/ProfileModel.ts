@@ -25,6 +25,8 @@ export class ProfileModel implements Profile {
   public readonly title: string;
   public readonly location: string;
   public readonly bio: string;
+  public readonly heroTagline?: string;
+  public readonly openToOpportunities?: boolean;
   public readonly academics: readonly Academic[];
   public readonly certifications: readonly Certification[];
   public readonly contacts: readonly Contact[];
@@ -46,6 +48,8 @@ export class ProfileModel implements Profile {
     this.title = data.title;
     this.location = data.location;
     this.bio = data.bio;
+    this.heroTagline = data.heroTagline;
+    this.openToOpportunities = data.openToOpportunities !== false;
     this.academics = Object.freeze([...data.academics]);
     this.certifications = Object.freeze([...data.certifications]);
     this.contacts = Object.freeze([...data.contacts]);
