@@ -11,6 +11,7 @@ export interface IProfile extends Document {
   bio: string;
   heroTagline?: string;
   openToOpportunities?: boolean;
+  avatarUrl?: string;
   academics: Array<{
     institution: string;
     degree: string;
@@ -143,6 +144,7 @@ const ProfileSchema = new Schema<IProfile>(
     bio: { type: String, required: true },
     heroTagline: { type: String, required: false },
     openToOpportunities: { type: Boolean, required: false, default: true },
+    avatarUrl: { type: String, required: false },
     academics: { type: Array, default: [] } as any,
     certifications: { type: Array, default: [] } as any,
     contacts: { type: Array, default: [] } as any,

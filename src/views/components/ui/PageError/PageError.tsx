@@ -36,22 +36,24 @@ export const PageError: React.FC<PageErrorProps> = ({
     role="alert"
     aria-live="assertive"
   >
-    <Typography variant="h3">{title}</Typography>
-    <Typography variant="body" color="secondary">
-      {message}
-    </Typography>
-    {tip && (
-      <Typography variant="small" color="tertiary" className={styles.tip}>
-        {tip}
+    <div className={styles.inner}>
+      <Typography variant="h3">{title}</Typography>
+      <Typography variant="body" color="secondary">
+        {message}
       </Typography>
-    )}
-    <Button
-      onClick={onRetry}
-      variant="primary"
-      className={styles.retryButton}
-      aria-label={retryLabel}
-    >
-      {retryLabel}
-    </Button>
+      {tip && (
+        <Typography variant="small" color="tertiary" className={styles.tip}>
+          {tip}
+        </Typography>
+      )}
+      <Button
+        onClick={onRetry}
+        variant="primary"
+        className={styles.retryButton}
+        aria-label={retryLabel}
+      >
+        {retryLabel}
+      </Button>
+    </div>
   </div>
 );

@@ -18,7 +18,7 @@
     var(--color-accent-500),
     var(--color-accent-400)
   );
-  box-shadow: 0 0 12px rgba(184, 134, 11, 0.4);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.38);
   transition: width var(--transition-fast) ease-out;
   transform: translateZ(0);
 }

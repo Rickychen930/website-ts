@@ -1,6 +1,6 @@
 /**
- * ATS Readability Report – menilai apakah resume dapat dibaca sistem (ATS) secara otomatis.
- * Menghasilkan skor, checklist, dan preview teks seperti yang diekstrak ATS dari PDF.
+ * ATS readability report — evaluates whether a resume can be parsed by applicant tracking systems.
+ * Produces a score, checklist, and plain-text preview similar to ATS PDF extraction.
  */
 
 import type { ResumePrintData } from "./resumePrint";
@@ -12,7 +12,7 @@ import {
   trimResumeText,
 } from "./resumeFormat";
 
-/** Nama section standar yang umum dikenali ATS */
+/** Standard section headings commonly recognized by ATS engines */
 const ATS_SECTION_HEADINGS = [
   "PROFESSIONAL SUMMARY",
   "EXPERIENCE",
@@ -37,17 +37,17 @@ export interface AtsCheckItem {
 }
 
 export interface ResumeAtsReport {
-  /** Skor keseluruhan 0–100 (ATS + HR best practice) */
+  /** Overall score 0–100 (ATS + common HR practice) */
   score: number;
-  /** Apakah resume dinilai dapat dibaca ATS dengan baik */
+  /** Whether the resume is considered ATS-parseable */
   atsReadable: boolean;
-  /** Checklist item per item */
+  /** Per-item checklist results */
   checks: AtsCheckItem[];
-  /** Rekomendasi perbaikan (jika ada) */
+  /** Improvement suggestions when applicable */
   recommendations: string[];
-  /** Preview teks seperti yang akan diekstrak ATS dari PDF (untuk tes) */
+  /** Plain-text preview approximating ATS extraction from PDF (for testing) */
   plainTextPreview: string;
-  /** Ringkasan singkat */
+  /** Short human-readable summary */
   summary: string;
 }
 
@@ -220,8 +220,8 @@ function buildPlainTextPreview(data: ResumePrintData): string {
 }
 
 /**
- * Menghasilkan laporan keterbacaan ATS dan skor resume.
- * Gunakan untuk mengetes apakah sistem dapat membaca resume Anda secara otomatis.
+ * Builds an ATS readability report and resume score.
+ * Use it to verify that automated systems can parse the resume content.
  */
 export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
   const checks: AtsCheckItem[] = [];
@@ -255,7 +255,7 @@ export function getResumeAtsReport(data: ResumePrintData): ResumeAtsReport {
   if (!hasContact)
     recommendations.push("Add at least Email or Phone in Profile.");
 
-  // 3. Section headings standar (semua section kita pakai nama standar)
+  // 3. Standard section headings (resume uses ATS-recognizable names)
   const usedHeadings = [
     data.bio && "PROFESSIONAL SUMMARY",
     data.experiences.length > 0 && "EXPERIENCE",

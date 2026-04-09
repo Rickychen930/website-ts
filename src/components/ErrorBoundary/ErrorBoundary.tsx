@@ -54,20 +54,26 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className={styles.errorBoundary}>
-          <Typography variant="h2" weight="bold">
-            Something went wrong
-          </Typography>
-          <Typography variant="body" color="secondary">
-            {this.state.error?.message || "An unexpected error occurred"}
-          </Typography>
-          <Button
-            onClick={this.handleReset}
-            variant="primary"
-            className={styles.resetButton}
-          >
-            Try Again
-          </Button>
+        <div
+          className={styles.errorBoundary}
+          role="alert"
+          aria-live="assertive"
+        >
+          <div className={styles.inner}>
+            <Typography variant="h2" weight="bold">
+              Something went wrong
+            </Typography>
+            <Typography variant="body" color="secondary">
+              {this.state.error?.message || "An unexpected error occurred"}
+            </Typography>
+            <Button
+              onClick={this.handleReset}
+              variant="primary"
+              className={styles.resetButton}
+            >
+              Try Again
+            </Button>
+          </div>
         </div>
       );
     }

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
+import { PageError } from "@/views/components/ui/PageError";
 import { downloadResumePdf } from "@/utils/resumePdfDownload";
 import { getResumeAtsReport } from "@/utils/resumeAtsReport";
 import {
@@ -63,23 +64,18 @@ export const Resume: React.FC = () => {
   if (error && !profile) {
     return (
       <div className={styles.resumePage}>
-        <section
-          className={styles.section}
-          aria-labelledby="resume-error-heading"
-        >
-          <Link to="/" className={styles.backLink}>
+        <div className={styles.resumeAmbientOrbs} aria-hidden="true" />
+        <div className={styles.resumeStateWrap}>
+          <Link to="/" className={styles.resumeBackLink}>
             ← Back to home
           </Link>
-          <h1 id="resume-error-heading" className={styles.title}>
-            Resume
-          </h1>
-          <p className={styles.error} role="alert">
-            {error.message}
-          </p>
-          <Button variant="secondary" onClick={() => refetch()}>
-            Retry
-          </Button>
-        </section>
+          <PageError
+            title="Couldn't load resume"
+            message={error.message}
+            onRetry={refetch}
+            retryLabel="Retry"
+          />
+        </div>
       </div>
     );
   }
@@ -87,21 +83,18 @@ export const Resume: React.FC = () => {
   if (!profile) {
     return (
       <div className={styles.resumePage}>
-        <section className={styles.section} aria-labelledby="resume-no-data">
-          <Link to="/" className={styles.backLink}>
+        <div className={styles.resumeAmbientOrbs} aria-hidden="true" />
+        <div className={styles.resumeStateWrap}>
+          <Link to="/" className={styles.resumeBackLink}>
             ← Back to home
           </Link>
-          <h1 id="resume-no-data" className={styles.title}>
-            Resume
-          </h1>
-          <p className={styles.intro}>
-            No profile data available. The profile may still be loading or could
-            not be loaded.
-          </p>
-          <Button variant="secondary" onClick={() => refetch()}>
-            Retry
-          </Button>
-        </section>
+          <PageError
+            title="Resume unavailable"
+            message="No profile data is available yet. The profile may still be loading or could not be loaded."
+            onRetry={refetch}
+            retryLabel="Retry"
+          />
+        </div>
       </div>
     );
   }
@@ -147,10 +140,12 @@ export const Resume: React.FC = () => {
 
   return (
     <div className={styles.resumePage}>
+      <div className={styles.resumeAmbientOrbs} aria-hidden="true" />
       <section className={styles.section} aria-labelledby="resume-heading">
         <Link to="/" className={styles.backLink}>
           ← Back to home
         </Link>
+        <div className={styles.trackAccent} aria-hidden="true" />
         <h1 id="resume-heading" className={styles.title}>
           Resume
         </h1>
@@ -181,11 +176,11 @@ export const Resume: React.FC = () => {
             aria-labelledby="ats-report-heading"
           >
             <h2 id="ats-report-heading" className={styles.atsReportTitle}>
-              Laporan Keterbacaan ATS
+              ATS readability report
             </h2>
             <p className={styles.atsSummary}>{atsReport.summary}</p>
             <div className={styles.atsScoreRow}>
-              <span className={styles.atsScoreLabel}>Skor:</span>
+              <span className={styles.atsScoreLabel}>Score:</span>
               <span className={styles.atsScoreValue}>
                 {atsReport.score}/100
               </span>
@@ -196,7 +191,7 @@ export const Resume: React.FC = () => {
                     : styles.atsBadgeWarn
                 }
               >
-                {atsReport.atsReadable ? "Dapat dibaca ATS" : "Perlu perbaikan"}
+                {atsReport.atsReadable ? "ATS-parseable" : "Needs improvement"}
               </span>
             </div>
             <ul className={styles.atsChecks}>
@@ -215,7 +210,7 @@ export const Resume: React.FC = () => {
             </ul>
             {atsReport.recommendations.length > 0 && (
               <div className={styles.atsRecs}>
-                <strong>Rekomendasi:</strong>
+                <strong>Recommendations:</strong>
                 <ul>
                   {atsReport.recommendations.map((rec, i) => (
                     <li key={i}>{rec}</li>

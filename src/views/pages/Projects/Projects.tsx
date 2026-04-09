@@ -15,6 +15,7 @@ import { Button } from "@/views/components/ui/Button";
 import { PageError } from "@/views/components/ui/PageError";
 import { ProjectCard } from "@/views/components/domain/ProjectCard";
 import { sitePageTitle } from "@/config/site-defaults";
+import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import styles from "./Projects.module.css";
 
 export const Projects: React.FC = () => {
@@ -62,101 +63,151 @@ export const Projects: React.FC = () => {
 
   return (
     <Section
+      label="Work"
       title="Projects"
-      subtitle="A collection of my work and side projects"
-      variant="alt"
+      subtitle="Case studies and shipped work — from studio sites and commerce to mobile and platform plugins. Use filters to scan by stack, like a public portfolio grid."
+      info={`${profile.projects.length} project${profile.projects.length !== 1 ? "s" : ""} · filter by category`}
       headerAlign="start"
       id="projects"
+      surface="hero"
     >
-      <ScrollReveal direction="up" delay={0}>
-        <div
-          className={styles.filters}
-          role="group"
-          aria-label="Filter projects by category"
-        >
-          {categories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              className={`${styles.filterButton} ${selectedCategory === category ? styles.filterButtonActive : ""}`}
-              onClick={() => setSelectedCategory(category)}
-              aria-pressed={selectedCategory === category}
-              aria-label={`Filter by ${category}`}
-            >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        <div className={styles.projectsGrid} role="list" aria-label="Projects">
-          {filteredProjects.map((project) => (
-            <div key={project.id} role="listitem">
-              <ProjectCard project={project} />
-            </div>
-          ))}
-        </div>
-      </ScrollReveal>
-
-      {filteredProjects.length === 0 && (
-        <div
-          className={styles.empty}
-          role="status"
-          aria-live="polite"
-          aria-labelledby="projects-empty-title"
-        >
-          <span className={styles.emptyIcon} aria-hidden="true">
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <path d="M3 9h18" />
-              <path d="M9 21V9" />
-            </svg>
-          </span>
-          <Typography
-            id="projects-empty-title"
-            variant="h4"
-            weight="semibold"
-            color="secondary"
+      <div className={styles.inner}>
+        <div className={styles.trackAccent} aria-hidden="true" />
+        <ScrollReveal direction="up" delay={0}>
+          <div
+            className={styles.filters}
+            role="group"
+            aria-label="Filter projects by category"
           >
-            {selectedCategory === "all"
-              ? "No projects yet"
-              : "No projects in this category"}
-          </Typography>
-          <Typography variant="body" color="tertiary">
-            {selectedCategory === "all"
-              ? "Projects will appear here once added. Check back later or explore About and Experience."
-              : `No projects in "${selectedCategory}". Try another category or view all.`}
-          </Typography>
-          <div className={styles.emptyActions}>
-            {selectedCategory !== "all" ? (
-              <Button
-                onClick={() => setSelectedCategory("all")}
-                variant="outline"
-                aria-label="Clear filter and view all projects"
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                className={`${styles.filterButton} ${selectedCategory === category ? styles.filterButtonActive : ""}`}
+                onClick={() => setSelectedCategory(category)}
+                aria-pressed={selectedCategory === category}
+                aria-label={`Filter by ${category}`}
               >
-                View All Projects
-              </Button>
-            ) : (
-              <>
-                <Link to="/contact" aria-label="Get in touch">
-                  <Button variant="primary">Get in Touch</Button>
-                </Link>
-                <Link to="/" aria-label="Back to home">
-                  <Button variant="outline">Back to Home</Button>
-                </Link>
-              </>
-            )}
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+            ))}
           </div>
-        </div>
-      )}
+
+          <div
+            className={styles.projectsGrid}
+            role="list"
+            aria-label="Projects"
+          >
+            {filteredProjects.map((project) => (
+              <div key={project.id} role="listitem">
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        {filteredProjects.length > 0 && (
+          <aside
+            className={styles.ctaBand}
+            aria-labelledby="projects-cta-heading"
+          >
+            <Typography
+              id="projects-cta-heading"
+              variant="h4"
+              weight="semibold"
+              className={styles.ctaTitle}
+            >
+              Planning something similar?
+            </Typography>
+            <Typography
+              variant="body"
+              color="secondary"
+              className={styles.ctaBody}
+            >
+              Whether you need a marketing or portfolio site, e‑commerce,
+              booking-led flows, or internal tooling — every build starts with
+              goals and constraints. Happy to talk scope, stack, and timeline.
+            </Typography>
+            <div className={styles.ctaActions}>
+              <Link
+                to="/contact"
+                aria-label="Start a conversation on the contact page"
+              >
+                <Button variant="primary">Get in touch</Button>
+              </Link>
+              <Link to="/about" aria-label="Read more on the about page">
+                <Button variant="outline">About &amp; background</Button>
+              </Link>
+            </div>
+            <Typography
+              variant="small"
+              color="tertiary"
+              className={styles.ctaAttribution}
+            >
+              Additional public case blurbs and industry-filtered samples:{" "}
+              <a
+                href="https://www.web-architech.com.au/portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.ctaExternalLink}
+              >
+                web-architech.com.au/portfolio
+              </a>
+            </Typography>
+          </aside>
+        )}
+
+        {filteredProjects.length === 0 && (
+          <div
+            className={styles.empty}
+            role="status"
+            aria-live="polite"
+            aria-labelledby="projects-empty-title"
+          >
+            <div className={styles.emptyArt} aria-hidden="true">
+              <EmptyStateArt
+                variant="projects"
+                className={styles.emptyArtSvg}
+              />
+            </div>
+            <Typography
+              id="projects-empty-title"
+              variant="h4"
+              weight="semibold"
+              color="secondary"
+            >
+              {selectedCategory === "all"
+                ? "No projects yet"
+                : "No projects in this category"}
+            </Typography>
+            <Typography variant="body" color="tertiary">
+              {selectedCategory === "all"
+                ? "Projects will appear here once added. Check back later or explore About and Experience."
+                : `No projects in "${selectedCategory}". Try another category or view all.`}
+            </Typography>
+            <div className={styles.emptyActions}>
+              {selectedCategory !== "all" ? (
+                <Button
+                  onClick={() => setSelectedCategory("all")}
+                  variant="outline"
+                  aria-label="Clear filter and view all projects"
+                >
+                  View All Projects
+                </Button>
+              ) : (
+                <>
+                  <Link to="/contact" aria-label="Get in touch">
+                    <Button variant="primary">Get in Touch</Button>
+                  </Link>
+                  <Link to="/" aria-label="Back to home">
+                    <Button variant="outline">Back to Home</Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </Section>
   );
 };

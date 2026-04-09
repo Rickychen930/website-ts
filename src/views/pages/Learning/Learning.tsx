@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
@@ -79,31 +80,21 @@ export const Learning: React.FC = () => {
       <Section
         id="learning"
         tabIndex={-1}
+        label="Curriculum"
         title="Learning"
-        subtitle="Structured topics and resources"
-        variant="alt"
+        subtitle="Structured topics and resources will appear here once published."
         headerAlign="start"
+        surface="hero"
       >
         <div className={styles.wrapper}>
+          <div className={styles.trackAccent} aria-hidden="true" />
           <div className={styles.emptyState} role="status">
-            <span className={styles.emptyIcon} aria-hidden="true">
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                <path d="M8 7h8" />
-                <path d="M8 11h8" />
-                <path d="M8 15h4" />
-              </svg>
-            </span>
+            <div className={styles.emptyArt} aria-hidden="true">
+              <EmptyStateArt
+                variant="learning"
+                className={styles.emptyArtSvg}
+              />
+            </div>
             <Typography
               variant="h3"
               weight="semibold"
@@ -133,33 +124,18 @@ export const Learning: React.FC = () => {
   }
 
   return (
-    <Section id="learning" tabIndex={-1} variant="alt">
+    <Section
+      id="learning"
+      tabIndex={-1}
+      label="Curriculum"
+      title="Learning"
+      subtitle="Interview prep, systems thinking, and deep dives — pick a track to open topics."
+      info={`${sections.length} section${sections.length !== 1 ? "s" : ""} published`}
+      headerAlign="start"
+      surface="hero"
+    >
       <div className={styles.wrapper}>
-        <header className={styles.hero}>
-          <div className={styles.heroGradient} aria-hidden="true" />
-          <div className={styles.heroPattern} aria-hidden="true" />
-          <div className={styles.heroContent}>
-            <span className={styles.heroLabel}>Curriculum</span>
-            <Typography
-              variant="h1"
-              weight="bold"
-              as="h1"
-              className={styles.heroTitle}
-            >
-              Learning
-            </Typography>
-            <Typography variant="body" as="p" className={styles.heroSubtitle}>
-              Interview prep and deep dives—how I level up. Select a section to
-              browse topics.
-            </Typography>
-            <div className={styles.heroMeta}>
-              <span className={styles.heroSectionCount}>
-                {sections.length} section{sections.length !== 1 ? "s" : ""}
-              </span>
-            </div>
-          </div>
-        </header>
-
+        <div className={styles.trackAccent} aria-hidden="true" />
         <ul className={styles.grid} aria-label="Learning sections">
           {sections.map((sec, sectionIndex) => (
             <li

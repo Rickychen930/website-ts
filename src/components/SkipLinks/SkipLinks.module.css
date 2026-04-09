@@ -15,7 +15,7 @@
   left: 0;
   z-index: var(--z-tooltip);
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--color-accent-600);
+  background: var(--gradient-accent);
   color: var(--text-inverse);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
@@ -23,21 +23,22 @@
   transition: top var(--transition-fast) var(--transition-ease);
   text-decoration: none;
   border-radius: 0 0 var(--radius-md) 0;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
   min-height: 2.75rem;
   align-items: center;
   box-sizing: border-box;
 }
 
-.skipLink:focus {
+.skipLink:focus,
+.skipLink:focus-visible {
   top: 0;
   outline: 3px solid var(--text-inverse);
   outline-offset: 2px;
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-xl), var(--shadow-glow-strong);
 }
 
 .skipLink:hover {
-  background: var(--color-accent-700);
+  filter: brightness(1.06);
 }
 
 /* Use global .sr-only from accessibility.css */

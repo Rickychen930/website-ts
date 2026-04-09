@@ -120,244 +120,258 @@ export const Contact: React.FC = () => {
 
   const primaryContact = profile.getPrimaryContact();
   const contacts = profile.contacts.filter((c) => !c.isPrimary);
+  const listedChannels = (primaryContact ? 1 : 0) + contacts.length;
 
   return (
     <Section
-      title="Get In Touch"
-      subtitle="Let's connect and discuss opportunities"
-      variant="alt"
+      label="Contact"
+      title="Get in touch"
+      subtitle="Direct channels and a short form — I read every message."
+      info={
+        listedChannels > 0
+          ? `${listedChannels} channel${listedChannels !== 1 ? "s" : ""} listed · secure form below`
+          : "Secure form — add channels in your profile to show them here"
+      }
       headerAlign="start"
+      surface="hero"
     >
       <ScrollReveal direction="up" delay={0}>
-        <div className={styles.container}>
-          <div className={styles.contactInfo}>
-            <Card variant="elevated" className={styles.contactCard}>
-              <div className={styles.cardHeader}>
+        <div className={styles.inner}>
+          <div className={styles.trackAccent} aria-hidden="true" />
+          <div className={styles.container}>
+            <div className={styles.contactInfo}>
+              <Card variant="elevated" className={styles.contactCard}>
+                <div className={styles.cardHeader}>
+                  <Typography
+                    variant="h4"
+                    weight="semibold"
+                    className={styles.cardTitle}
+                  >
+                    Contact Information
+                  </Typography>
+                </div>
+
+                <>
+                  {primaryContact && (
+                    <div className={styles.contactItem}>
+                      <Typography
+                        variant="body"
+                        weight="medium"
+                        className={styles.contactLabelRow}
+                      >
+                        <ContactChannelIcon type={primaryContact.type} />
+                        {primaryContact.label}
+                      </Typography>
+                      <a
+                        href={
+                          primaryContact.type === "email"
+                            ? `mailto:${primaryContact.value}`
+                            : primaryContact.type === "phone"
+                              ? `tel:${primaryContact.value}`
+                              : primaryContact.value
+                        }
+                        target={
+                          primaryContact.type === "email" ||
+                          primaryContact.type === "phone"
+                            ? undefined
+                            : "_blank"
+                        }
+                        rel={
+                          primaryContact.type === "email" ||
+                          primaryContact.type === "phone"
+                            ? undefined
+                            : "noopener noreferrer"
+                        }
+                        className={styles.contactLink}
+                      >
+                        {primaryContact.value}
+                      </a>
+                    </div>
+                  )}
+                  {contacts.length > 0 && (
+                    <div className={styles.socialLinks}>
+                      {contacts.map((contact) => {
+                        const href =
+                          contact.type === "email"
+                            ? `mailto:${contact.value}`
+                            : contact.type === "phone"
+                              ? `tel:${contact.value}`
+                              : contact.value;
+
+                        return (
+                          <a
+                            key={contact.id}
+                            href={href}
+                            target={
+                              contact.type === "email" ||
+                              contact.type === "phone"
+                                ? undefined
+                                : "_blank"
+                            }
+                            rel={
+                              contact.type === "email" ||
+                              contact.type === "phone"
+                                ? undefined
+                                : "noopener noreferrer"
+                            }
+                            className={styles.socialLink}
+                          >
+                            <ContactChannelIcon type={contact.type} />
+                            {contact.label}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
+              </Card>
+            </div>
+
+            <div className={styles.formContainer}>
+              <Card variant="elevated" className={styles.formCard}>
                 <Typography
                   variant="h4"
                   weight="semibold"
                   className={styles.cardTitle}
                 >
-                  Contact Information
+                  Send a Message
                 </Typography>
-              </div>
-
-              <>
-                {primaryContact && (
-                  <div className={styles.contactItem}>
-                    <Typography
-                      variant="body"
-                      weight="medium"
-                      className={styles.contactLabelRow}
-                    >
-                      <ContactChannelIcon type={primaryContact.type} />
-                      {primaryContact.label}
-                    </Typography>
-                    <a
-                      href={
-                        primaryContact.type === "email"
-                          ? `mailto:${primaryContact.value}`
-                          : primaryContact.type === "phone"
-                            ? `tel:${primaryContact.value}`
-                            : primaryContact.value
-                      }
-                      target={
-                        primaryContact.type === "email" ||
-                        primaryContact.type === "phone"
-                          ? undefined
-                          : "_blank"
-                      }
-                      rel={
-                        primaryContact.type === "email" ||
-                        primaryContact.type === "phone"
-                          ? undefined
-                          : "noopener noreferrer"
-                      }
-                      className={styles.contactLink}
-                    >
-                      {primaryContact.value}
-                    </a>
-                  </div>
-                )}
-                {contacts.length > 0 && (
-                  <div className={styles.socialLinks}>
-                    {contacts.map((contact) => {
-                      const href =
-                        contact.type === "email"
-                          ? `mailto:${contact.value}`
-                          : contact.type === "phone"
-                            ? `tel:${contact.value}`
-                            : contact.value;
-
-                      return (
-                        <a
-                          key={contact.id}
-                          href={href}
-                          target={
-                            contact.type === "email" || contact.type === "phone"
-                              ? undefined
-                              : "_blank"
-                          }
-                          rel={
-                            contact.type === "email" || contact.type === "phone"
-                              ? undefined
-                              : "noopener noreferrer"
-                          }
-                          className={styles.socialLink}
-                        >
-                          <ContactChannelIcon type={contact.type} />
-                          {contact.label}
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
-            </Card>
-          </div>
-
-          <div className={styles.formContainer}>
-            <Card variant="elevated" className={styles.formCard}>
-              <Typography
-                variant="h4"
-                weight="semibold"
-                className={styles.cardTitle}
-              >
-                Send a Message
-              </Typography>
-              <form
-                id="contact-form"
-                onSubmit={handleSubmit}
-                className={styles.form}
-                aria-label="Contact form"
-                noValidate
-              >
-                <div className={styles.formGroup}>
-                  <label htmlFor="name">
-                    Name <span aria-label="required">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    onBlur={() => handleBlur("name")}
-                    required
-                    aria-required="true"
-                    aria-invalid={formErrors.name ? "true" : "false"}
-                    aria-describedby={
-                      formErrors.name ? "name-error" : undefined
-                    }
-                    autoComplete="name"
-                    placeholder="Your name"
-                    className={formErrors.name ? styles.inputError : ""}
-                  />
-                  {formErrors.name && touched.name && (
-                    <span
-                      id="name-error"
-                      className={styles.errorText}
-                      role="alert"
-                    >
-                      {formErrors.name}
-                    </span>
-                  )}
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="email">
-                    Email <span aria-label="required">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    onBlur={() => handleBlur("email")}
-                    required
-                    aria-required="true"
-                    aria-invalid={formErrors.email ? "true" : "false"}
-                    aria-describedby={
-                      formErrors.email ? "email-error" : undefined
-                    }
-                    autoComplete="email"
-                    placeholder="you@example.com"
-                    className={formErrors.email ? styles.inputError : ""}
-                  />
-                  {formErrors.email && touched.email && (
-                    <span
-                      id="email-error"
-                      className={styles.errorText}
-                      role="alert"
-                    >
-                      {formErrors.email}
-                    </span>
-                  )}
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="message">
-                    Message <span aria-label="required">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    value={formData.message}
-                    onChange={(e) => handleChange("message", e.target.value)}
-                    onBlur={() => handleBlur("message")}
-                    required
-                    aria-required="true"
-                    aria-invalid={formErrors.message ? "true" : "false"}
-                    aria-describedby={
-                      formErrors.message ? "message-error" : undefined
-                    }
-                    placeholder="Your message..."
-                    className={formErrors.message ? styles.inputError : ""}
-                  />
-                  {formErrors.message && touched.message && (
-                    <span
-                      id="message-error"
-                      className={styles.errorText}
-                      role="alert"
-                    >
-                      {formErrors.message}
-                    </span>
-                  )}
-                </div>
-                {submitStatus === "success" && (
-                  <div
-                    className={styles.successMessage}
-                    role="alert"
-                    aria-live="polite"
-                    aria-atomic="true"
-                  >
-                    ✓ Message sent successfully! I&apos;ll get back to you as
-                    soon as possible.
-                  </div>
-                )}
-                {submitStatus === "error" && (
-                  <div
-                    className={styles.errorMessage}
-                    role="alert"
-                    aria-live="assertive"
-                    aria-atomic="true"
-                  >
-                    ✗{" "}
-                    {formErrors.submit ||
-                      "I couldn't send your message. Please try again or reach me via the primary contact above."}
-                  </div>
-                )}
-                <Button
-                  type="submit"
-                  variant="primary"
-                  fullWidth
-                  isLoading={isSubmitting}
-                  aria-label={isSubmitting ? "Sending message" : "Send message"}
+                <form
+                  id="contact-form"
+                  onSubmit={handleSubmit}
+                  className={styles.form}
+                  aria-label="Contact form"
+                  noValidate
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </Card>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="name">
+                      Name <span aria-label="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      onBlur={() => handleBlur("name")}
+                      required
+                      aria-required="true"
+                      aria-invalid={formErrors.name ? "true" : "false"}
+                      aria-describedby={
+                        formErrors.name ? "name-error" : undefined
+                      }
+                      autoComplete="name"
+                      placeholder="Your name"
+                      className={formErrors.name ? styles.inputError : ""}
+                    />
+                    {formErrors.name && touched.name && (
+                      <span
+                        id="name-error"
+                        className={styles.errorText}
+                        role="alert"
+                      >
+                        {formErrors.name}
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="email">
+                      Email <span aria-label="required">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                      onBlur={() => handleBlur("email")}
+                      required
+                      aria-required="true"
+                      aria-invalid={formErrors.email ? "true" : "false"}
+                      aria-describedby={
+                        formErrors.email ? "email-error" : undefined
+                      }
+                      autoComplete="email"
+                      placeholder="you@example.com"
+                      className={formErrors.email ? styles.inputError : ""}
+                    />
+                    {formErrors.email && touched.email && (
+                      <span
+                        id="email-error"
+                        className={styles.errorText}
+                        role="alert"
+                      >
+                        {formErrors.email}
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="message">
+                      Message <span aria-label="required">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={6}
+                      value={formData.message}
+                      onChange={(e) => handleChange("message", e.target.value)}
+                      onBlur={() => handleBlur("message")}
+                      required
+                      aria-required="true"
+                      aria-invalid={formErrors.message ? "true" : "false"}
+                      aria-describedby={
+                        formErrors.message ? "message-error" : undefined
+                      }
+                      placeholder="Your message..."
+                      className={formErrors.message ? styles.inputError : ""}
+                    />
+                    {formErrors.message && touched.message && (
+                      <span
+                        id="message-error"
+                        className={styles.errorText}
+                        role="alert"
+                      >
+                        {formErrors.message}
+                      </span>
+                    )}
+                  </div>
+                  {submitStatus === "success" && (
+                    <div
+                      className={styles.successMessage}
+                      role="alert"
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
+                      ✓ Message sent successfully! I&apos;ll get back to you as
+                      soon as possible.
+                    </div>
+                  )}
+                  {submitStatus === "error" && (
+                    <div
+                      className={styles.errorMessage}
+                      role="alert"
+                      aria-live="assertive"
+                      aria-atomic="true"
+                    >
+                      ✗{" "}
+                      {formErrors.submit ||
+                        "I couldn't send your message. Please try again or reach me via the primary contact above."}
+                    </div>
+                  )}
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    fullWidth
+                    isLoading={isSubmitting}
+                    aria-label={
+                      isSubmitting ? "Sending message" : "Send message"
+                    }
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              </Card>
+            </div>
           </div>
         </div>
       </ScrollReveal>

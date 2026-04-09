@@ -61,203 +61,225 @@ export const ProjectDetail: React.FC = () => {
   if (!project) {
     return (
       <Section
+        label="Projects"
         title="Project not found"
+        info="This ID is not in the current profile"
         id="project-detail"
-        variant="alt"
         headerAlign="start"
+        surface="hero"
       >
-        <div className={styles.wrap}>
-          <div className={styles.notFound} role="status">
-            <Typography
-              variant="h4"
-              weight="semibold"
-              color="secondary"
-              className={styles.notFoundTitle}
-            >
-              This project could not be found or may have been removed. Use the
-              navigation to go back to Projects.
-            </Typography>
+        <div className={styles.inner}>
+          <div className={styles.trackAccent} aria-hidden="true" />
+          <div className={styles.wrap}>
+            <div className={styles.notFound} role="status">
+              <Typography
+                variant="h4"
+                weight="semibold"
+                color="secondary"
+                className={styles.notFoundTitle}
+              >
+                This project could not be found or may have been removed. Use
+                the navigation to go back to Projects.
+              </Typography>
+            </div>
           </div>
         </div>
       </Section>
     );
   }
 
+  const detailInfo = [
+    project.category,
+    project.isActive ? "Active" : null,
+    project.technologies.length > 0
+      ? `${project.technologies.length} technologies`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <Section
+      label="Case study"
       title={project.title}
       subtitle={formatDateRange(project.startDate, project.endDate)}
+      info={detailInfo}
       id="project-detail"
-      variant="alt"
       headerAlign="start"
+      surface="hero"
     >
       <ScrollReveal direction="up" delay={0}>
-        <div className={styles.wrap}>
-          <article
-            className={styles.card}
-            aria-labelledby="project-detail-title"
-          >
-            <div className={styles.imageWrap}>
-              {showProjectImage ? (
-                <img
-                  src={resolvedImageSrc}
-                  alt={project.title}
-                  width={800}
-                  height={800}
-                  loading="eager"
-                  onError={() => setImageFailed(true)}
-                />
-              ) : (
-                <span className={styles.imagePlaceholder} aria-hidden="true">
-                  {project.title.trim().charAt(0).toUpperCase() || "·"}
-                </span>
-              )}
-            </div>
-            <header className={styles.header}>
-              <div className={styles.meta}>
-                <span
-                  className={styles.categoryBadge}
-                  aria-label={`Category: ${project.category}`}
-                >
-                  {project.category}
-                </span>
-                {project.isActive && (
-                  <span
-                    className={styles.activeBadge}
-                    aria-label="Active project"
-                  >
-                    Active
+        <div className={styles.inner}>
+          <div className={styles.trackAccent} aria-hidden="true" />
+          <div className={styles.wrap}>
+            <article
+              className={styles.card}
+              aria-labelledby="project-detail-title"
+            >
+              <div className={styles.imageWrap}>
+                {showProjectImage ? (
+                  <img
+                    src={resolvedImageSrc}
+                    alt={project.title}
+                    width={800}
+                    height={800}
+                    loading="eager"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    onError={() => setImageFailed(true)}
+                  />
+                ) : (
+                  <span className={styles.imagePlaceholder} aria-hidden="true">
+                    {project.title.trim().charAt(0).toUpperCase() || "·"}
                   </span>
                 )}
-                <Typography
-                  variant="small"
-                  color="tertiary"
-                  as="time"
-                  dateTime={project.startDate}
-                  className={styles.date}
-                >
-                  {formatDateRange(project.startDate, project.endDate)}
-                </Typography>
               </div>
-              <Typography
-                variant="h2"
-                weight="bold"
-                as="h1"
-                id="project-detail-title"
-              >
-                {project.title}
-              </Typography>
-            </header>
-
-            <Typography
-              variant="body"
-              color="secondary"
-              className={styles.description}
-            >
-              {project.description}
-            </Typography>
-
-            {project.longDescription && (
-              <div className={styles.section}>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  as="h2"
-                  className={styles.sectionTitle}
-                >
-                  Overview
-                </Typography>
-                <Typography
-                  variant="body"
-                  color="secondary"
-                  className={styles.description}
-                >
-                  {project.longDescription}
-                </Typography>
-              </div>
-            )}
-
-            {project.technologies.length > 0 && (
-              <div className={styles.section}>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  as="h2"
-                  className={styles.sectionTitle}
-                >
-                  Technologies
-                </Typography>
-                <div className={styles.technologies}>
-                  {project.technologies.map((tech, index) => (
-                    <span key={index} className={styles.techTag}>
-                      {tech}
+              <header className={styles.header}>
+                <div className={styles.meta}>
+                  <span
+                    className={styles.categoryBadge}
+                    aria-label={`Category: ${project.category}`}
+                  >
+                    {project.category}
+                  </span>
+                  {project.isActive && (
+                    <span
+                      className={styles.activeBadge}
+                      aria-label="Active project"
+                    >
+                      Active
                     </span>
-                  ))}
+                  )}
+                  <Typography
+                    variant="small"
+                    color="tertiary"
+                    as="time"
+                    dateTime={project.startDate}
+                    className={styles.date}
+                  >
+                    {formatDateRange(project.startDate, project.endDate)}
+                  </Typography>
                 </div>
-              </div>
-            )}
-
-            {project.achievements.length > 0 && (
-              <div className={styles.section}>
                 <Typography
-                  variant="h5"
-                  weight="semibold"
-                  as="h2"
-                  className={styles.sectionTitle}
+                  variant="h2"
+                  weight="bold"
+                  as="h1"
+                  id="project-detail-title"
                 >
-                  Achievements
+                  {project.title}
                 </Typography>
-                <ul className={styles.achievements}>
-                  {project.achievements.map((achievement, index) => (
-                    <li key={index}>
-                      <Typography variant="body" color="secondary">
-                        {achievement}
-                      </Typography>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              </header>
 
-            {project.architecture && (
-              <div className={styles.section}>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  as="h2"
-                  className={styles.sectionTitle}
-                >
-                  Architecture
-                </Typography>
-                <pre className={styles.architecture}>
-                  {project.architecture}
-                </pre>
-              </div>
-            )}
+              <Typography
+                variant="body"
+                color="secondary"
+                className={styles.description}
+              >
+                {project.description}
+              </Typography>
 
-            <div
-              className={styles.actions}
-              role="group"
-              aria-label="Project links"
-            >
-              {project.liveUrl && (
-                <Button
-                  variant="primary"
-                  size="md"
-                  onClick={() =>
-                    window.open(
-                      project.liveUrl,
-                      "_blank",
-                      "noopener,noreferrer",
-                    )
-                  }
-                  aria-label={`View live demo of ${project.title}`}
-                >
-                  Live Demo
-                </Button>
+              {project.longDescription && (
+                <div className={styles.section}>
+                  <Typography
+                    variant="h5"
+                    weight="semibold"
+                    as="h2"
+                    className={styles.sectionTitle}
+                  >
+                    Overview
+                  </Typography>
+                  <Typography
+                    variant="body"
+                    color="secondary"
+                    className={styles.description}
+                  >
+                    {project.longDescription}
+                  </Typography>
+                </div>
               )}
-            </div>
-          </article>
+
+              {project.technologies.length > 0 && (
+                <div className={styles.section}>
+                  <Typography
+                    variant="h5"
+                    weight="semibold"
+                    as="h2"
+                    className={styles.sectionTitle}
+                  >
+                    Technologies
+                  </Typography>
+                  <div className={styles.technologies}>
+                    {project.technologies.map((tech, index) => (
+                      <span key={index} className={styles.techTag}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {project.achievements.length > 0 && (
+                <div className={styles.section}>
+                  <Typography
+                    variant="h5"
+                    weight="semibold"
+                    as="h2"
+                    className={styles.sectionTitle}
+                  >
+                    Achievements
+                  </Typography>
+                  <ul className={styles.achievements}>
+                    {project.achievements.map((achievement, index) => (
+                      <li key={index}>
+                        <Typography variant="body" color="secondary">
+                          {achievement}
+                        </Typography>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {project.architecture && (
+                <div className={styles.section}>
+                  <Typography
+                    variant="h5"
+                    weight="semibold"
+                    as="h2"
+                    className={styles.sectionTitle}
+                  >
+                    Architecture
+                  </Typography>
+                  <pre className={styles.architecture}>
+                    {project.architecture}
+                  </pre>
+                </div>
+              )}
+
+              <div
+                className={styles.actions}
+                role="group"
+                aria-label="Project links"
+              >
+                {project.liveUrl && (
+                  <Button
+                    variant="primary"
+                    size="md"
+                    onClick={() =>
+                      window.open(
+                        project.liveUrl,
+                        "_blank",
+                        "noopener,noreferrer",
+                      )
+                    }
+                    aria-label={`View live demo of ${project.title}`}
+                  >
+                    Live Demo
+                  </Button>
+                )}
+              </div>
+            </article>
+          </div>
         </div>
       </ScrollReveal>
     </Section>

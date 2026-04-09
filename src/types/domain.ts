@@ -175,6 +175,8 @@ export interface Profile {
   readonly heroTagline?: string;
   /** Shown in hero when true; omit or false = no “open to work” badge. */
   readonly openToOpportunities?: boolean;
+  /** Profile / About portrait; site-relative (e.g. /images/…) or absolute URL. */
+  readonly avatarUrl?: string;
   readonly academics: readonly Academic[];
   readonly certifications: readonly Certification[];
   readonly contacts: readonly Contact[];

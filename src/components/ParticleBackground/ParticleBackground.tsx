@@ -40,7 +40,7 @@ export const ParticleBackground: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion || isMobile) return;
+    if (reduceMotion) return;
 
     const primaryRgb = hexToRgb(
       isDark ? colors.primary[400] : colors.primary[800],
@@ -72,22 +72,21 @@ export const ParticleBackground: React.FC = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Create particles - Reduced count for better performance
-    const particleCount = Math.min(
-      30, // Reduced from 50
-      Math.floor((window.innerWidth * window.innerHeight) / 25000), // Increased divisor
-    );
+    const area = window.innerWidth * window.innerHeight;
+    const particleCount = isMobile
+      ? Math.min(20, Math.max(10, Math.floor(area / 42000)))
+      : Math.min(52, Math.max(24, Math.floor(area / 16000)));
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3, // Slower movement
-      vy: (Math.random() - 0.5) * 0.3,
-      radius: Math.random() * 1.5 + 0.5, // Smaller particles
-      opacity: Math.random() * 0.3 + 0.1, // Lower opacity
+      vx: (Math.random() - 0.5) * (isMobile ? 0.42 : 0.36),
+      vy: (Math.random() - 0.5) * (isMobile ? 0.42 : 0.36),
+      radius: Math.random() * (isMobile ? 1.35 : 1.6) + 0.55,
+      opacity: Math.random() * (isMobile ? 0.35 : 0.4) + 0.14,
     }));
 
-    // Optimized connection distance check - avoid expensive sqrt
-    const connectionDistanceSq = 100 * 100; // 100px squared
+    const connectionDistanceSq = isMobile ? 72 * 72 : 110 * 110;
+    const drawConnections = !isMobile;
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -111,25 +110,27 @@ export const ParticleBackground: React.FC = () => {
         ctx.fill();
       });
 
-      // Draw connections - optimized with distance squared check
-      for (let i = 0; i < particlesRef.current.length; i++) {
-        const particle = particlesRef.current[i];
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const otherParticle = particlesRef.current[j];
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distanceSq = dx * dx + dy * dy; // Use squared distance
+      if (drawConnections) {
+        const maxDist = Math.sqrt(connectionDistanceSq);
+        for (let i = 0; i < particlesRef.current.length; i++) {
+          const particle = particlesRef.current[i];
+          for (let j = i + 1; j < particlesRef.current.length; j++) {
+            const otherParticle = particlesRef.current[j];
+            const dx = particle.x - otherParticle.x;
+            const dy = particle.y - otherParticle.y;
+            const distanceSq = dx * dx + dy * dy;
 
-          if (distanceSq < connectionDistanceSq) {
-            const distance = Math.sqrt(distanceSq);
-            const lineAlpha =
-              0.045 * (1 - distance / 100) * (isDark ? 1 : 0.85);
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(${lineRgb[0]}, ${lineRgb[1]}, ${lineRgb[2]}, ${lineAlpha})`;
-            ctx.lineWidth = 0.5; // Thinner lines
-            ctx.stroke();
+            if (distanceSq < connectionDistanceSq) {
+              const distance = Math.sqrt(distanceSq);
+              const lineAlpha =
+                0.058 * (1 - distance / maxDist) * (isDark ? 1.05 : 0.92);
+              ctx.beginPath();
+              ctx.moveTo(particle.x, particle.y);
+              ctx.lineTo(otherParticle.x, otherParticle.y);
+              ctx.strokeStyle = `rgba(${lineRgb[0]}, ${lineRgb[1]}, ${lineRgb[2]}, ${lineAlpha})`;
+              ctx.lineWidth = 0.55;
+              ctx.stroke();
+            }
           }
         }
       }
@@ -147,7 +148,7 @@ export const ParticleBackground: React.FC = () => {
     };
   }, [isDark, reduceMotion, isMobile]);
 
-  if (reduceMotion || isMobile) return null;
+  if (reduceMotion) return null;
 
   return (
     <canvas

@@ -177,6 +177,7 @@ export class ProfileController {
         bio,
         heroTagline,
         openToOpportunities,
+        avatarUrl,
         academics,
         certifications,
         contacts,
@@ -218,6 +219,12 @@ export class ProfileController {
       }
       if (openToOpportunities !== undefined) {
         profile.openToOpportunities = Boolean(openToOpportunities);
+      }
+      if (avatarUrl !== undefined) {
+        profile.avatarUrl =
+          typeof avatarUrl === "string" && avatarUrl.trim() !== ""
+            ? String(avatarUrl).trim()
+            : undefined;
       }
       if (Array.isArray(academics)) profile.academics = academics;
       if (Array.isArray(certifications))

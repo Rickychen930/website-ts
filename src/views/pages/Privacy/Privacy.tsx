@@ -21,27 +21,31 @@ export const Privacy: React.FC = () => {
 
   return (
     <Section
+      label="Legal"
       title="Privacy Policy"
-      subtitle="How we handle your data"
+      subtitle="How this site handles data and contact information."
       id="privacy"
-      variant="alt"
       headerAlign="start"
+      surface="hero"
     >
       <ScrollReveal direction="up" delay={0}>
-        <div className={styles.content}>
-          <Typography variant="body" color="secondary" as="p">
-            This portfolio site may collect minimal data (e.g. contact form
-            submissions) to respond to your inquiries. No data is sold or shared
-            with third parties for marketing. A full privacy policy will be
-            published here when applicable.
-          </Typography>
-          <div className={styles.actions}>
-            <Link to="/contact" aria-label="Contact me">
-              <Button variant="outline">Contact</Button>
-            </Link>
-            <Link to="/" aria-label="Back to home">
-              <Button variant="ghost">Back to Home</Button>
-            </Link>
+        <div className={styles.inner}>
+          <div className={styles.trackAccent} aria-hidden="true" />
+          <div className={styles.content}>
+            <Typography variant="body" color="secondary" as="p">
+              This portfolio site may collect minimal data (e.g. contact form
+              submissions) to respond to your inquiries. No data is sold or
+              shared with third parties for marketing. A full privacy policy
+              will be published here when applicable.
+            </Typography>
+            <div className={styles.actions}>
+              <Link to="/contact" aria-label="Contact me">
+                <Button variant="outline">Contact</Button>
+              </Link>
+              <Link to="/" aria-label="Back to home">
+                <Button variant="ghost">Back to Home</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </ScrollReveal>

@@ -1,5 +1,5 @@
 /**
- * Testimonial Carousel - Smooth carousel dengan autoplay
+ * Testimonial Carousel — smooth carousel with optional autoplay
  */
 
 import React, { useState, useEffect, useRef } from "react";

@@ -46,6 +46,14 @@ export const Footer: React.FC = () => {
               >
                 {profile?.title || SITE_DEFAULT_TAGLINE}
               </Typography>
+              <p className={styles.footerPresence}>
+                <span className={styles.footerPulse} aria-hidden="true" />
+                <span>
+                  {profile?.openToOpportunities !== false
+                    ? "Open to the right conversations — say hello anytime."
+                    : "Thanks for visiting — new work lands here first."}
+                </span>
+              </p>
               {profile?.location ? (
                 <Typography
                   variant="small"

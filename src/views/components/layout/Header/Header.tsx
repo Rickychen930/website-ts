@@ -167,7 +167,21 @@ export const Header: React.FC = () => {
                 className={`${styles.navDropdownChevron} ${isDropdownOpen ? styles.navDropdownChevronOpen : ""}`}
                 aria-hidden="true"
               >
-                ▾
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    strokeWidth="2.25"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </span>
             </button>
             <ul

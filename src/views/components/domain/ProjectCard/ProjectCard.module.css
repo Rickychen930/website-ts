@@ -70,7 +70,7 @@
     var(--shadow-xl),
     var(--shadow-colored),
     0 0 0 1px var(--color-accent-alpha-10),
-    0 20px 40px -12px rgba(184, 134, 11, 0.12);
+    0 20px 40px -12px rgba(var(--color-accent-rgb), 0.14);
   border-color: var(--color-accent-300);
 }
 
@@ -78,7 +78,7 @@
   border-color: var(--color-accent-500);
 }
 
-/* Gambar persegi di atas card – full width, aspect ratio 1:1 */
+/* Square image on top of card — full width, 1:1 aspect ratio */
 .imageWrap {
   position: relative;
   width: 100%;
@@ -141,7 +141,7 @@
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-10) 0%,
-    rgba(184, 134, 11, 0.05) 100%
+    rgba(var(--color-accent-rgb), 0.06) 100%
   );
   color: var(--color-accent-600);
   font-size: var(--font-size-xs);

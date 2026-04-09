@@ -5,6 +5,7 @@
 
 const path = require("path");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   webpack: {
@@ -68,6 +69,13 @@ module.exports = {
       requiredExtensions.forEach((ext) => {
         if (!webpackConfig.resolve.extensions.includes(ext)) {
           webpackConfig.resolve.extensions.unshift(ext);
+        }
+      });
+
+      // Avoid noisy "Conflicting order" warnings from CSS chunk split order (CSS Modules are scoped).
+      (webpackConfig.plugins || []).forEach((plugin) => {
+        if (plugin instanceof MiniCssExtractPlugin) {
+          plugin.options.ignoreOrder = true;
         }
       });
 

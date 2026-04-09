@@ -79,6 +79,10 @@ export const transformProfile = (profile: IProfile): Profile => {
         ? profile.heroTagline.trim()
         : undefined,
     openToOpportunities: profile.openToOpportunities !== false,
+    avatarUrl:
+      typeof profile.avatarUrl === "string" && profile.avatarUrl.trim() !== ""
+        ? profile.avatarUrl.trim()
+        : undefined,
     academics: academics.map((academic, index) => ({
       id: extractId(academic, `academic-${index}`),
       institution: academic.institution || "",

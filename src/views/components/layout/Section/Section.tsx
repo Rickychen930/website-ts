@@ -21,6 +21,14 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   headerAlign?: "center" | "start";
   /** Gold underlines on label/title; `none` reduces repetition on dense pages */
   titleDecoration?: "underline" | "none";
+  /** Full-width gradient + grid intro (inner pages, matches home aesthetic) */
+  surface?: "default" | "hero";
+  /** Use semantic h1 for the section title (e.g. article / topic pages) */
+  titleHeadingLevel?: 1 | 2;
+  /** Omit soft orbs when this section already has custom art (e.g. Home hero) */
+  suppressAmbientOrbs?: boolean;
+  /** Drop inner horizontal padding + max-width so the section controls inset (e.g. Home hero). */
+  containerBleed?: boolean;
 }
 
 export const Section: React.FC<SectionProps> = ({
@@ -34,9 +42,15 @@ export const Section: React.FC<SectionProps> = ({
   variant = "default",
   headerAlign = "center",
   titleDecoration = "underline",
+  surface = "default",
+  titleHeadingLevel = 2,
+  suppressAmbientOrbs = false,
+  containerBleed = false,
   ...props
 }) => {
   const titleId = id ? `${id}-title` : undefined;
+  const titleVariant = titleHeadingLevel === 1 ? "h1" : "h2";
+  const titleTag = titleHeadingLevel === 1 ? "h1" : "h2";
   const headerClass =
     headerAlign === "start" ? styles.headerStart : styles.header;
   const plainClass = titleDecoration === "none" ? ` ${styles.headerPlain}` : "";
@@ -44,11 +58,24 @@ export const Section: React.FC<SectionProps> = ({
   return (
     <section
       id={id}
-      className={`${styles.section} ${variant === "alt" ? styles.sectionAlt : ""} ${className}`.trim()}
+      className={`${styles.section} ${variant === "alt" ? styles.sectionAlt : ""} ${surface === "hero" ? styles.sectionSurfaceHero : ""} ${className}`.trim()}
       aria-labelledby={title ? titleId : undefined}
       {...props}
     >
-      <div className={styles.container}>
+      {surface === "hero" ? (
+        <div className={styles.surfaceHeroAccentOrbs} aria-hidden="true" />
+      ) : null}
+      {variant === "alt" && surface !== "hero" && !suppressAmbientOrbs ? (
+        <div className={styles.sectionAltAccentOrbs} aria-hidden="true" />
+      ) : null}
+      {variant === "default" &&
+      surface === "default" &&
+      !suppressAmbientOrbs ? (
+        <div className={styles.sectionDefaultAccentOrbs} aria-hidden="true" />
+      ) : null}
+      <div
+        className={`${styles.container}${containerBleed ? ` ${styles.containerBleed}` : ""}`}
+      >
         {(label || title || subtitle || info) && (
           <header className={`${headerClass}${plainClass}`.trim()}>
             {label && (
@@ -58,10 +85,14 @@ export const Section: React.FC<SectionProps> = ({
             )}
             {title && (
               <Typography
-                variant="h2"
+                variant={titleVariant}
                 weight="bold"
-                className={styles.title}
-                as="h2"
+                className={
+                  titleHeadingLevel === 1
+                    ? `${styles.title} ${styles.titleAsPageH1}`
+                    : styles.title
+                }
+                as={titleTag}
                 id={titleId}
               >
                 {title}

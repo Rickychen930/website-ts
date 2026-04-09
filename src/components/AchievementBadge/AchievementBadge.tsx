@@ -1,5 +1,5 @@
 /**
- * Achievement Badge Component - Showcase achievements dan certifications
+ * Achievement Badge Component — highlights achievements and certifications
  */
 
 import React from "react";

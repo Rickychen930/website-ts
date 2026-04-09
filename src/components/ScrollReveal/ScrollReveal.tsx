@@ -43,7 +43,9 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
           });
         },
         {
-          threshold: 0.1,
+          /* 0 = any pixel visible. A single tall wrapper (e.g. Projects: filters + full grid)
+             can fail 0.1 threshold when only the top is on screen — content stays opacity:0. */
+          threshold: 0,
           rootMargin: `0px 0px -${bottomInsetPx()}px 0px`,
         },
       );

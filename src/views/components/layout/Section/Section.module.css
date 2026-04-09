@@ -12,6 +12,7 @@
 
 .sectionAlt {
   position: relative;
+  overflow: hidden;
   background: var(--bg-section-alt);
 }
 
@@ -24,12 +25,206 @@
   pointer-events: none;
 }
 
+/* Muted orbs on alternate bands (About, Home mid-page, etc.) */
+.sectionAltAccentOrbs {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sectionAltAccentOrbs::before,
+.sectionAltAccentOrbs::after {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+}
+
+.sectionAltAccentOrbs::before {
+  top: -28%;
+  right: -12%;
+  width: min(22rem, 62vw);
+  height: min(22rem, 62vw);
+  background: radial-gradient(
+    circle,
+    rgba(var(--color-accent-rgb), 0.11) 0%,
+    rgba(var(--color-violet-rgb), 0.05) 50%,
+    transparent 72%
+  );
+  opacity: 0.95;
+}
+
+.sectionAltAccentOrbs::after {
+  bottom: -34%;
+  left: -14%;
+  width: min(18rem, 52vw);
+  height: min(18rem, 52vw);
+  background: radial-gradient(
+    circle,
+    rgba(var(--color-violet-rgb), 0.09) 0%,
+    rgba(var(--color-accent-rgb), 0.04) 48%,
+    transparent 74%
+  );
+  opacity: 0.88;
+}
+
+/* Very light orbs on default-surface sections (stats, explore, dense About blocks) */
+.sectionDefaultAccentOrbs {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sectionDefaultAccentOrbs::before,
+.sectionDefaultAccentOrbs::after {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+}
+
+.sectionDefaultAccentOrbs::before {
+  top: -40%;
+  right: -18%;
+  width: min(18rem, 55vw);
+  height: min(18rem, 55vw);
+  background: radial-gradient(
+    circle,
+    rgba(var(--color-accent-rgb), 0.07) 0%,
+    transparent 65%
+  );
+  opacity: 0.85;
+}
+
+.sectionDefaultAccentOrbs::after {
+  bottom: -45%;
+  left: -20%;
+  width: min(15rem, 48vw);
+  height: min(15rem, 48vw);
+  background: radial-gradient(
+    circle,
+    rgba(var(--color-violet-rgb), 0.06) 0%,
+    transparent 68%
+  );
+  opacity: 0.8;
+}
+
+/* Inner-page hero — same language as Home (gradient, glow, tech grid) */
+.sectionSurfaceHero {
+  padding-top: clamp(3rem, 9vw, 5.5rem);
+  padding-bottom: var(--spacing-4xl);
+  background: var(--gradient-hero);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sectionSurfaceHero.sectionAlt {
+  background: var(--gradient-hero);
+}
+
+.sectionSurfaceHero.sectionAlt::before {
+  display: none;
+}
+
+.sectionSurfaceHero::before {
+  position: absolute;
+  z-index: 0;
+  background: var(--gradient-hero-glow);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+}
+
+.sectionSurfaceHero::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  opacity: 0.48;
+  background-image:
+    linear-gradient(rgba(var(--color-primary-rgb), 0.045) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      rgba(var(--color-primary-rgb), 0.045) 1px,
+      transparent 1px
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size:
+    40px 40px,
+    40px 40px,
+    auto;
+  content: "";
+  pointer-events: none;
+}
+
+/* Soft cyan / violet orbs — shared across inner pages using surface="hero" */
+.surfaceHeroAccentOrbs {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.surfaceHeroAccentOrbs::before,
+.surfaceHeroAccentOrbs::after {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+}
+
+.surfaceHeroAccentOrbs::before {
+  top: -32%;
+  right: -14%;
+  width: min(26rem, 70vw);
+  height: min(26rem, 70vw);
+  background: radial-gradient(
+    circle,
+    rgba(var(--color-accent-rgb), 0.16) 0%,
+    rgba(var(--color-violet-rgb), 0.07) 48%,
+    transparent 70%
+  );
+  opacity: 0.9;
+}
+
+.surfaceHeroAccentOrbs::after {
+  bottom: -38%;
+  left: -16%;
+  width: min(22rem, 58vw);
+  height: min(22rem, 58vw);
+  background: radial-gradient(
+    circle,
+    rgba(var(--color-violet-rgb), 0.12) 0%,
+    rgba(var(--color-accent-rgb), 0.05) 45%,
+    transparent 72%
+  );
+  opacity: 0.85;
+}
+
+.section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionSurfaceHero::after {
+    opacity: 0.22;
+  }
+}
+
 .container {
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-xl);
   max-width: var(--container-xl);
   box-sizing: border-box;
+}
+
+.containerBleed {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .header {
@@ -46,9 +241,8 @@
   align-self: flex-start;
 }
 
-.headerStart .label::after {
-  left: 0;
-  transform: none;
+.headerStart .label {
+  border-left-color: var(--color-accent-600);
 }
 
 .headerStart .title::after {
@@ -59,6 +253,11 @@
 .headerStart .subtitle {
   margin-left: 0;
   margin-right: 0;
+}
+
+.headerStart .info {
+  margin-left: 0;
+  margin-right: auto;
 }
 
 /* No gold rules under label/title — for editorial variety */
@@ -78,28 +277,19 @@
 .label {
   display: inline-block;
   position: relative;
-  padding-bottom: var(--spacing-xs);
+  padding: 0.125rem 0 0.125rem var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  border-left: 3px solid var(--color-accent-600);
+  color: var(--color-accent-700);
   font-family: var(--font-family-sans);
-  letter-spacing: var(--letter-spacing-wide);
-  color: var(--color-accent-600);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--spacing-sm);
-}
-
-.label::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2rem;
-  height: 2px;
-  background: var(--gradient-accent);
-  border-radius: var(--radius-full);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
 }
 
 .dark .label {
+  border-left-color: var(--color-accent-500);
   color: var(--color-accent-400);
 }
 
@@ -120,6 +310,12 @@
   line-height: var(--line-height-tight);
   margin-bottom: var(--spacing-md);
   letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Page-level article / topic title on hero surface */
+.titleAsPageH1 {
+  font-size: clamp(1.875rem, 5vw, 2.75rem);
+  line-height: 1.15;
 }
 
 .title::after {
@@ -165,6 +361,11 @@
     padding: 0 var(--spacing-md);
   }
 
+  .container.containerBleed {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .headerStart .subtitle {
     padding-left: 0;
     padding-right: var(--spacing-sm);
@@ -196,6 +397,11 @@
     padding: 0 var(--spacing-lg);
   }
 
+  .container.containerBleed {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .header {
     margin-bottom: var(--spacing-2xl);
   }
@@ -208,5 +414,10 @@
 
   .container {
     padding: 0 var(--spacing-xl);
+  }
+
+  .container.containerBleed {
+    padding-left: 0;
+    padding-right: 0;
   }
 }

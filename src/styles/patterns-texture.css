@@ -1,9 +1,9 @@
 /**
- * Patterns & texture – grid, paper grain (noise), paper wrinkle
- * Semua komponen mengandalkan token yang sama; supports satu sama lain
+ * Patterns & texture — grid, paper grain (noise), paper wrinkle.
+ * Components share the same design tokens for a consistent surface language.
  */
 
-/* Paper grain – noise halus seperti kertas (requires #noiseFilter) */
+/* Paper grain — soft noise (requires #noiseFilter) */
 .textureNoise {
   position: fixed;
   inset: 0;

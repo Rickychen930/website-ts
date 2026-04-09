@@ -13,11 +13,24 @@ interface DownloadResumeProps {
   className?: string;
   /** Compact style for header (smaller button, shorter label) */
   compact?: boolean;
+  variant?: "primary" | "outline";
+  size?: "sm" | "md" | "lg";
+  /** Overrides default "Download Resume" / "Download CV" text */
+  label?: string;
+  /** When false, hides the leading icon and trailing arrow */
+  showDecorations?: boolean;
+  /** Skip DownloadResume.module.css extras (use plain Button styles only) */
+  plain?: boolean;
 }
 
 export const DownloadResume: React.FC<DownloadResumeProps> = ({
   className = "",
   compact = false,
+  variant = "primary",
+  size: sizeProp,
+  label,
+  showDecorations = true,
+  plain = false,
 }) => {
   const { profile } = useProfile();
 
@@ -45,23 +58,28 @@ export const DownloadResume: React.FC<DownloadResumeProps> = ({
     }
   };
 
+  const size = sizeProp ?? (compact ? "sm" : "lg");
+  const text = label ?? (compact ? "Download CV" : "Download Resume");
+
   return (
     <Button
-      variant="primary"
-      size={compact ? "sm" : "lg"}
+      variant={variant}
+      size={size}
       onClick={handleDownload}
-      className={`${styles.downloadButton} ${className}`}
-      aria-label={compact ? "Download CV (PDF)" : "Download resume (PDF)"}
+      className={`${plain ? "" : styles.downloadButton} ${className}`.trim()}
+      aria-label={`${text} (PDF)`}
     >
-      <span className={styles.icon} aria-hidden="true">
-        📄
-      </span>
-      <span>{compact ? "Download CV" : "Download Resume"}</span>
-      {!compact && (
+      {showDecorations ? (
+        <span className={styles.icon} aria-hidden="true">
+          📄
+        </span>
+      ) : null}
+      <span>{text}</span>
+      {showDecorations && !compact && size === "lg" ? (
         <span className={styles.arrow} aria-hidden="true">
           ↓
         </span>
-      )}
+      ) : null}
     </Button>
   );
 };

@@ -1,6 +1,6 @@
 /**
- * Timeline Component - Visual timeline untuk experience dan education
- * Creative design dengan interactive elements
+ * Timeline Component — visual timeline for experience and education
+ * Interactive, editorial layout
  */
 
 import React, { useState } from "react";

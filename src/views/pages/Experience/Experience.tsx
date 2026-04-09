@@ -12,6 +12,7 @@ import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
+import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import { ExperienceItem } from "@/views/components/domain/ExperienceItem";
 import { Button } from "@/views/components/ui/Button";
 import { sitePageTitle } from "@/config/site-defaults";
@@ -72,73 +73,76 @@ export const Experience: React.FC = () => {
 
   return (
     <Section
+      label="Career"
       title="Experience"
-      subtitle="My professional journey"
-      variant="alt"
+      subtitle="Roles, scope, and outcomes — newest and current work first."
+      info={
+        sortedExperiences.length === 0
+          ? "No timeline entries yet"
+          : `${sortedExperiences.length} position${sortedExperiences.length !== 1 ? "s" : ""} · newest & current first`
+      }
       headerAlign="start"
+      surface="hero"
     >
       {sortedExperiences.length === 0 ? (
-        <div
-          className={styles.empty}
-          role="status"
-          aria-live="polite"
-          aria-labelledby="experience-empty-title"
-        >
-          <span className={styles.emptyIcon} aria-hidden>
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-            </svg>
-          </span>
-          <Typography
-            id="experience-empty-title"
-            variant="h4"
-            weight="semibold"
-            color="secondary"
+        <div className={styles.inner}>
+          <div className={styles.trackAccent} aria-hidden="true" />
+          <div
+            className={styles.empty}
+            role="status"
+            aria-live="polite"
+            aria-labelledby="experience-empty-title"
           >
-            No experience entries yet
-          </Typography>
-          <Typography variant="body" color="tertiary">
-            Work history will appear here once added. Explore projects or get in
-            touch in the meantime.
-          </Typography>
-          <div className={styles.emptyActions}>
-            <Link to="/projects" aria-label="View projects">
-              <Button variant="outline">View Projects</Button>
-            </Link>
-            <Link to="/contact" aria-label="Contact">
-              <Button variant="primary">Get in Touch</Button>
-            </Link>
+            <div className={styles.emptyArt} aria-hidden="true">
+              <EmptyStateArt
+                variant="experience"
+                className={styles.emptyArtSvg}
+              />
+            </div>
+            <Typography
+              id="experience-empty-title"
+              variant="h4"
+              weight="semibold"
+              color="secondary"
+            >
+              No experience entries yet
+            </Typography>
+            <Typography variant="body" color="tertiary">
+              Work history will appear here once added. Explore projects or get
+              in touch in the meantime.
+            </Typography>
+            <div className={styles.emptyActions}>
+              <Link to="/projects" aria-label="View projects">
+                <Button variant="outline">View Projects</Button>
+              </Link>
+              <Link to="/contact" aria-label="Contact">
+                <Button variant="primary">Get in Touch</Button>
+              </Link>
+            </div>
           </div>
         </div>
       ) : (
         <ScrollReveal direction="up" delay={0}>
-          <div
-            className={styles.timeline}
-            role="list"
-            aria-label="Work experience timeline"
-          >
-            {sortedExperiences.map((experience) => (
-              <div
-                key={experience.id}
-                className={styles.timelineItem}
-                role="listitem"
-              >
-                <ExperienceItem
-                  experience={experience}
-                  technicalSkills={profile.technicalSkills}
-                />
-              </div>
-            ))}
+          <div className={styles.inner}>
+            <div className={styles.trackAccent} aria-hidden="true" />
+            <div
+              className={styles.timeline}
+              role="list"
+              aria-label="Work experience timeline"
+            >
+              {sortedExperiences.map((experience) => (
+                <div
+                  key={experience.id}
+                  className={styles.timelineItem}
+                  role="listitem"
+                >
+                  <ExperienceItem
+                    experience={experience}
+                    technicalSkills={profile.technicalSkills}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </ScrollReveal>
       )}

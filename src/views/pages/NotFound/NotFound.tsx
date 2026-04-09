@@ -24,25 +24,30 @@ export const NotFound: React.FC = () => {
   return (
     <Section
       id="not-found"
+      label="404"
       title="Page not found"
-      subtitle="The page you are looking for does not exist or has been moved."
-      variant="alt"
+      subtitle="That route is not mapped — the URL may be outdated or mistyped."
+      info="Client-side route · use navigation or home"
       headerAlign="start"
+      surface="hero"
     >
-      <div className={styles.content}>
-        {location.pathname !== "/" && (
-          <Typography variant="small" color="secondary" as="p">
-            Requested path:{" "}
-            <code className={styles.path}>{location.pathname}</code>
-          </Typography>
-        )}
-        <div className={styles.actions}>
-          <Link to="/" aria-label="Back to home">
-            <Button variant="primary">Back to Home</Button>
-          </Link>
-          <Link to="/learning" aria-label="Go to Learning">
-            <Button variant="outline">Learning</Button>
-          </Link>
+      <div className={styles.inner}>
+        <div className={styles.trackAccent} aria-hidden="true" />
+        <div className={styles.content}>
+          {location.pathname !== "/" && (
+            <Typography variant="small" color="secondary" as="p">
+              Requested path:{" "}
+              <code className={styles.path}>{location.pathname}</code>
+            </Typography>
+          )}
+          <div className={styles.actions}>
+            <Link to="/" aria-label="Back to home">
+              <Button variant="primary">Back to Home</Button>
+            </Link>
+            <Link to="/learning" aria-label="Go to Learning">
+              <Button variant="outline">Learning</Button>
+            </Link>
+          </div>
         </div>
       </div>
     </Section>

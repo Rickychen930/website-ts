@@ -1,22 +1,21 @@
 /* Learning Topic Detail – Senior redesign: reader-first, clear hierarchy, sticky TOC
  * Breakpoints: ≤640px mobile, 768px tablet, 1024px desktop. */
 
-.wrapper {
+.inner {
+  width: 100%;
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--spacing-lg);
-  padding-right: var(--spacing-lg);
   padding-bottom: var(--spacing-3xl);
-  width: 100%;
   box-sizing: border-box;
 }
 
-@media (width >= 768px) {
-  .wrapper {
-    padding-left: var(--spacing-xl);
-    padding-right: var(--spacing-xl);
-  }
+.trackAccent {
+  width: 100%;
+  height: 3px;
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-full);
+  opacity: 0.92;
 }
 
 /* ----- Article reading progress (below global scroll bar) ----- */
@@ -98,7 +97,7 @@
   font-weight: var(--font-weight-semibold);
 }
 
-/* ----- Header: badge, title, reading time, what you'll learn ----- */
+/* ----- Below hero: badge, copy link, what you'll learn ----- */
 .header {
   margin-bottom: var(--spacing-2xl);
 }
@@ -146,16 +145,6 @@
 
 .topicProgress {
   font-weight: 500;
-}
-
-.title {
-  margin: 0 0 var(--spacing-md);
-  color: var(--text-primary);
-  font-family: var(--theme-font-display);
-  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
 }
 
 .headerSub {
@@ -854,7 +843,7 @@
 }
 
 @media (width <= 640px) {
-  .wrapper {
+  .inner {
     padding-bottom: var(--spacing-2xl);
   }
 
@@ -865,10 +854,6 @@
   .sectionBadge {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: 0.65rem;
-  }
-
-  .title {
-    font-size: clamp(1.35rem, 5vw, 1.75rem);
   }
 
   .heroFigure {
@@ -939,7 +924,7 @@
 
 /* Print */
 @media print {
-  .wrapper {
+  .inner {
     max-width: 100%;
     padding-bottom: var(--spacing-lg);
   }

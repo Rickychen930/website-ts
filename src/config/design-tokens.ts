@@ -1,45 +1,42 @@
 /**
  * Design Tokens - For JS/canvas and theme context only.
- *
- * Visual styling source of truth: src/styles/design-tokens.css (Portfolio: navy / gold).
- * This file must stay aligned with that palette for canvas-driven visuals.
- * Do not use these hex values in CSS; use CSS variables from design-tokens.css instead.
+ * Aligned with src/styles/design-tokens.css — modern AI / IT (slate + sky cyan + violet hints).
  */
 
 export const colors = {
   primary: {
-    50: "#f0f4f8",
-    100: "#d9e2ec",
-    200: "#bcccdc",
-    300: "#9fb3c8",
-    400: "#829ab1",
-    500: "#627d98",
-    600: "#486581",
-    700: "#334e68",
-    800: "#243b53",
-    900: "#102a43",
+    50: "#f8fafc",
+    100: "#f1f5f9",
+    200: "#e2e8f0",
+    300: "#cbd5e1",
+    400: "#94a3b8",
+    500: "#64748b",
+    600: "#475569",
+    700: "#334155",
+    800: "#1e293b",
+    900: "#0f172a",
   },
   accent: {
-    50: "#fdf8e6",
-    100: "#f9e9b8",
-    200: "#f4d98a",
-    300: "#ecc94b",
-    400: "#d4af37",
-    500: "#b8860b",
-    600: "#9a7209",
-    700: "#7d5d07",
+    50: "#f0f9ff",
+    100: "#e0f2fe",
+    200: "#bae6fd",
+    300: "#7dd3fc",
+    400: "#38bdf8",
+    500: "#0ea5e9",
+    600: "#0284c7",
+    700: "#0369a1",
   },
   neutral: {
-    50: "#fafaf8",
-    100: "#f5f4f0",
-    200: "#e8e6e1",
-    300: "#d4d1c9",
-    400: "#9c9890",
-    500: "#6b6760",
-    600: "#4a4742",
-    700: "#33312e",
-    800: "#1f1e1c",
-    900: "#141413",
+    50: "#fafafa",
+    100: "#f4f4f5",
+    200: "#e4e4e7",
+    300: "#d4d4d8",
+    400: "#a1a1aa",
+    500: "#71717a",
+    600: "#52525b",
+    700: "#3f3f46",
+    800: "#27272a",
+    900: "#18181b",
   },
   success: {
     50: "#f0fdfa",
@@ -49,15 +46,15 @@ export const colors = {
   },
   error: {
     50: "#fef2f2",
-    500: "#b91c1c",
-    600: "#991b1b",
-    700: "#7f1d1d",
+    500: "#dc2626",
+    600: "#b91c1c",
+    700: "#991b1b",
   },
   warning: {
     50: "#fffbeb",
-    500: "#b45309",
-    600: "#92400e",
-    700: "#78350f",
+    500: "#d97706",
+    600: "#b45309",
+    700: "#92400e",
   },
 } as const;
 
@@ -86,15 +83,9 @@ export const spacing = {
 export const typography = {
   fontFamily: {
     sans: [
-      "DM Sans",
-      "Inter",
-      "-apple-system",
-      "BlinkMacSystemFont",
+      "Plus Jakarta Sans",
       "Segoe UI",
-      "Roboto",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
+      "system-ui",
       "sans-serif",
     ],
     mono: [
@@ -108,10 +99,10 @@ export const typography = {
       "monospace",
     ],
     display: [
-      "Cormorant Garamond",
-      "Georgia",
-      "Times New Roman",
-      "serif",
+      "Space Grotesk",
+      "Segoe UI",
+      "system-ui",
+      "sans-serif",
     ],
   },
   fontSize: {
@@ -156,31 +147,31 @@ export const shadows = {
   lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
   xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
   "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-  glow: "0 0 20px rgba(184, 134, 11, 0.25)",
-  glowStrong: "0 0 30px rgba(184, 134, 11, 0.35)",
+  glow: "0 0 28px rgba(14, 165, 233, 0.25)",
+  glowStrong: "0 0 42px rgba(14, 165, 233, 0.32)",
   inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
 } as const;
 
 export const gradients = {
   primary:
-    "linear-gradient(135deg, #243b53 0%, #334e68 50%, #486581 100%)",
+    "linear-gradient(135deg, #0f172a 0%, #334155 100%)",
   primarySoft:
-    "linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 50%, #bcccdc 100%)",
-  accent: "linear-gradient(135deg, #d4af37 0%, #b8860b 100%)",
-  hero: "linear-gradient(135deg, #fafaf8 0%, #ffffff 40%, #f5f4f0 100%)",
+    "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)",
+  accent: "linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%)",
+  hero: "linear-gradient(165deg, #f8fafc 0%, #f1f5f9 40%, #e0f2fe 100%)",
   heroDark:
-    "linear-gradient(135deg, #102a43 0%, #243b53 50%, #334e68 100%)",
+    "linear-gradient(165deg, #020617 0%, #0f172a 100%)",
   glass:
     "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
-  card: "linear-gradient(135deg, #ffffff 0%, #fafaf8 100%)",
+  card: "linear-gradient(165deg, #ffffff 0%, #f8fafc 100%)",
   heroModern:
-    "linear-gradient(135deg, #f5f4f0 0%, #fafaf8 35%, #ffffff 60%, #f0f4f8 100%)",
+    "linear-gradient(165deg, #f1f5f9 0%, #f8fafc 50%, #ffffff 70%, #e0f2fe 100%)",
   textGradient:
-    "linear-gradient(135deg, #102a43 0%, #243b53 45%, #b8860b 100%)",
+    "linear-gradient(135deg, #0f172a 0%, #0284c7 55%, #6366f1 100%)",
   textGradientBlue:
-    "linear-gradient(135deg, #334e68 0%, #243b53 50%, #102a43 100%)",
-  glow: "radial-gradient(circle, rgba(184, 134, 11, 0.12) 0%, transparent 70%)",
-  mesh: "radial-gradient(at 0% 0%, rgba(16, 42, 67, 0.06) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(184, 134, 11, 0.06) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(16, 42, 67, 0.06) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(184, 134, 11, 0.06) 0px, transparent 50%)",
+    "linear-gradient(135deg, #334155 0%, #1e293b 50%, #0f172a 100%)",
+  glow: "radial-gradient(circle, rgba(14, 165, 233, 0.14) 0%, transparent 70%)",
+  mesh: "radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.08) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.07) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.06) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(14, 165, 233, 0.05) 0px, transparent 50%)",
 } as const;
 
 export const breakpoints = {

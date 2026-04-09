@@ -1,5 +1,5 @@
 /**
- * Project Filter Component - Advanced filtering dan sorting untuk projects
+ * Project Filter Component — filtering and sorting for project lists
  */
 
 import React, { useState, useMemo } from "react";

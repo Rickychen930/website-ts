@@ -97,7 +97,7 @@
   background: linear-gradient(
     135deg,
     var(--color-accent-alpha-20) 0%,
-    rgba(184, 134, 11, 0.08) 100%
+    rgba(var(--color-accent-rgb), 0.1) 100%
   );
   color: var(--color-accent-400);
 }

@@ -24,7 +24,13 @@ export const useSEO = (seoData: SEOData) => {
   useEffect(() => {
     const baseUrl = window.location.origin;
     const currentUrl = `${baseUrl}${location.pathname}`;
-    const imageUrl = seoData.image || `${baseUrl}/logo512.png`;
+    const resolveOgImage = (raw?: string): string => {
+      if (!raw || raw.trim() === "") return `${baseUrl}/logo512.png`;
+      const s = raw.trim();
+      if (s.startsWith("http://") || s.startsWith("https://")) return s;
+      return `${baseUrl}${s.startsWith("/") ? "" : "/"}${s}`;
+    };
+    const imageUrl = resolveOgImage(seoData.image);
     const siteName = profile?.name || SITE_BRAND_NAME;
 
     // Update document title
@@ -95,6 +101,13 @@ export const generateStructuredData = (data: {
     case "Person": {
       if (!data.profile) return null;
       const profile = data.profile;
+      const avatar = profile.avatarUrl as string | undefined;
+      const image =
+        typeof avatar === "string" && avatar.trim() !== ""
+          ? avatar.startsWith("http://") || avatar.startsWith("https://")
+            ? avatar.trim()
+            : `${baseUrl}${avatar.trim().startsWith("/") ? "" : "/"}${avatar.trim()}`
+          : undefined;
       return {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -102,6 +115,7 @@ export const generateStructuredData = (data: {
         jobTitle: profile.title,
         description: profile.bio,
         url: baseUrl,
+        ...(image ? { image: { "@type": "ImageObject", url: image } } : {}),
         sameAs: profile.socialLinks?.map((link: any) => link.url) || [],
         address: {
           "@type": "PostalAddress",

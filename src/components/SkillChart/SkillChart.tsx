@@ -1,6 +1,6 @@
 /**
  * Skill Chart Component - Interactive skill visualization
- * Creative circular progress dan bar charts
+ * Circular progress and bar chart visualizations
  */
 
 import React from "react";

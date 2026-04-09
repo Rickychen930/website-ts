@@ -13,6 +13,7 @@ import { Typography } from "@/views/components/ui/Typography";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningTopicItem } from "@/types/domain";
+import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import { getSectionTheme, isPlaceholderImage } from "./sectionThemes";
 import styles from "./LearningSectionPage.module.css";
 
@@ -159,183 +160,158 @@ export const LearningSectionPage: React.FC = () => {
 
   const items = section.items ?? [];
 
+  const sectionInfoParts: string[] = [];
+  if (sections.length > 1 && sectionIndex >= 0) {
+    sectionInfoParts.push(`Part ${sectionIndex + 1} of ${sections.length}`);
+  }
+  if (items.length > 0) {
+    sectionInfoParts.push(
+      `${items.length} topic${items.length !== 1 ? "s" : ""}`,
+    );
+  }
+  const sectionInfo =
+    sectionInfoParts.length > 0 ? sectionInfoParts.join(" · ") : undefined;
+
   return (
     <Section
       id="learning-section"
       tabIndex={-1}
-      className={styles.wrapper}
-      variant="alt"
+      label="Curriculum"
+      title={section.title}
+      subtitle={
+        section.description?.trim() ||
+        "Choose a topic below to open the full write-up."
+      }
+      info={sectionInfo}
+      headerAlign="start"
+      surface="hero"
+      titleDecoration="none"
     >
-      <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-        <ol className={styles.breadcrumbList}>
-          <li>
-            <Link to="/learning" className={styles.breadcrumbLink}>
-              Learning
-            </Link>
-          </li>
-          <li aria-hidden="true" className={styles.breadcrumbSep}>
-            <span className={styles.breadcrumbChevron} aria-hidden="true">
-              →
-            </span>
-          </li>
-          <li aria-current="page">
-            <span className={styles.breadcrumbCurrent}>{section.title}</span>
-          </li>
-        </ol>
-      </nav>
-
-      <header
-        className={styles.hero}
-        style={
-          {
-            "--section-hero-gradient": sectionTheme.gradient,
-          } as React.CSSProperties
-        }
-      >
-        <div className={styles.heroGradient} aria-hidden="true" />
-        <div className={styles.heroPattern} aria-hidden="true" />
-        <div className={styles.heroContent}>
-          <div className={styles.heroIconWrap} aria-hidden="true">
-            {sectionTheme.icon}
-          </div>
-          <Typography
-            variant="h1"
-            weight="bold"
-            as="h1"
-            className={styles.heroTitle}
-          >
-            {section.title}
-          </Typography>
-          <div className={styles.heroMeta}>
-            {items.length > 0 && (
-              <span className={styles.heroTopicCount}>
-                {items.length} topic{items.length !== 1 ? "s" : ""}
+      <div className={styles.inner}>
+        <div
+          className={styles.trackAccent}
+          style={{ background: sectionTheme.gradient }}
+          aria-hidden="true"
+        />
+        <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+          <ol className={styles.breadcrumbList}>
+            <li>
+              <Link to="/learning" className={styles.breadcrumbLink}>
+                Learning
+              </Link>
+            </li>
+            <li aria-hidden="true" className={styles.breadcrumbSep}>
+              <span className={styles.breadcrumbChevron} aria-hidden="true">
+                →
               </span>
-            )}
-          </div>
-          {section.description && (
+            </li>
+            <li aria-current="page">
+              <span className={styles.breadcrumbCurrent}>{section.title}</span>
+            </li>
+          </ol>
+        </nav>
+
+        <div className={styles.content}>
+          {items.length > 0 && (
             <Typography
-              variant="body"
-              as="p"
-              className={styles.heroDescription}
+              variant="small"
+              weight="semibold"
+              className={styles.topicsLabel}
             >
-              {section.description}
+              Topics 1–{items.length} · select one to read
             </Typography>
+          )}
+          {items.length > 0 ? (
+            <ul
+              className={styles.topicList}
+              aria-label={`Topics in ${section.title}`}
+            >
+              {items.map((item, idx) => (
+                <TopicLink
+                  key={item.id}
+                  item={item}
+                  sectionSlug={sectionSlug}
+                  sectionTheme={sectionTheme}
+                  index={idx}
+                />
+              ))}
+            </ul>
+          ) : (
+            <div className={styles.emptyState} role="status">
+              <div className={styles.emptyArt} aria-hidden="true">
+                <EmptyStateArt
+                  variant="learning"
+                  className={styles.emptyArtSvg}
+                />
+              </div>
+              <Typography
+                variant="h3"
+                weight="semibold"
+                as="h2"
+                className={styles.emptyStateTitle}
+              >
+                No topics yet
+              </Typography>
+              <Typography variant="body" color="secondary">
+                This section doesn&apos;t have any topics yet. Check back later
+                or browse other sections.
+              </Typography>
+              <Link to="/learning" className={styles.emptyStateLink}>
+                Browse other sections
+              </Link>
+            </div>
           )}
         </div>
-      </header>
 
-      <div className={styles.content}>
-        {items.length > 0 && (
-          <Typography
-            variant="small"
-            weight="semibold"
-            className={styles.topicsLabel}
+        <footer className={styles.footer}>
+          {items.length > 8 && (
+            <button
+              type="button"
+              onClick={scrollToSectionTop}
+              className={styles.backToTop}
+              aria-label="Scroll back to top of section"
+            >
+              <Typography variant="small" weight="medium" as="span">
+                Back to top
+              </Typography>
+            </button>
+          )}
+          <nav
+            className={styles.footerNav}
+            aria-label="Section and curriculum navigation"
           >
-            Topics 1–{items.length} · select one to read
-          </Typography>
-        )}
-        {items.length > 0 ? (
-          <ul
-            className={styles.topicList}
-            aria-label={`Topics in ${section.title}`}
-          >
-            {items.map((item, idx) => (
-              <TopicLink
-                key={item.id}
-                item={item}
-                sectionSlug={sectionSlug}
-                sectionTheme={sectionTheme}
-                index={idx}
-              />
-            ))}
-          </ul>
-        ) : (
-          <div className={styles.emptyState} role="status">
-            <span className={styles.emptyIcon} aria-hidden="true">
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {prevSection?.slug ? (
+              <Link
+                to={`/learning/${prevSection.slug}`}
+                className={styles.footerNavLink}
+                aria-label={`Previous section: ${prevSection.title}`}
               >
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                <path d="M8 7h8" />
-                <path d="M8 11h8" />
-              </svg>
-            </span>
-            <Typography
-              variant="h3"
-              weight="semibold"
-              as="h2"
-              className={styles.emptyStateTitle}
+                ← {prevSection.title}
+              </Link>
+            ) : (
+              <span aria-hidden="true" />
+            )}
+            <Link
+              to="/learning"
+              className={styles.backLink}
+              aria-label="Back to Learning overview"
             >
-              No topics yet
-            </Typography>
-            <Typography variant="body" color="secondary">
-              This section doesn&apos;t have any topics yet. Check back later or
-              browse other sections.
-            </Typography>
-            <Link to="/learning" className={styles.emptyStateLink}>
-              Browse other sections
+              Back to Learning
             </Link>
-          </div>
-        )}
+            {nextSection?.slug ? (
+              <Link
+                to={`/learning/${nextSection.slug}`}
+                className={styles.footerNavLink}
+                aria-label={`Next section: ${nextSection.title}`}
+              >
+                {nextSection.title} →
+              </Link>
+            ) : (
+              <span aria-hidden="true" />
+            )}
+          </nav>
+        </footer>
       </div>
-
-      <footer className={styles.footer}>
-        {items.length > 8 && (
-          <button
-            type="button"
-            onClick={scrollToSectionTop}
-            className={styles.backToTop}
-            aria-label="Scroll back to top of section"
-          >
-            <Typography variant="small" weight="medium" as="span">
-              Back to top
-            </Typography>
-          </button>
-        )}
-        <nav
-          className={styles.footerNav}
-          aria-label="Section and curriculum navigation"
-        >
-          {prevSection?.slug ? (
-            <Link
-              to={`/learning/${prevSection.slug}`}
-              className={styles.footerNavLink}
-              aria-label={`Previous section: ${prevSection.title}`}
-            >
-              ← {prevSection.title}
-            </Link>
-          ) : (
-            <span aria-hidden="true" />
-          )}
-          <Link
-            to="/learning"
-            className={styles.backLink}
-            aria-label="Back to Learning overview"
-          >
-            Back to Learning
-          </Link>
-          {nextSection?.slug ? (
-            <Link
-              to={`/learning/${nextSection.slug}`}
-              className={styles.footerNavLink}
-              aria-label={`Next section: ${nextSection.title}`}
-            >
-              {nextSection.title} →
-            </Link>
-          ) : (
-            <span aria-hidden="true" />
-          )}
-        </nav>
-      </footer>
     </Section>
   );
 };

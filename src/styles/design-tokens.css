@@ -1,82 +1,83 @@
 /**
- * Design Tokens – Personal & Friendly
- * TEMA: "Portfolio" – hangat, punya identitas, tidak template
+ * Design Tokens — modern AI / engineering product theme
+ * Deep slate base, electric sky cyan primary accent, soft violet in gradients (signal + intelligence).
  */
 
 :root {
-  --theme-name: "Portfolio";
+  --theme-name: "Signal";
 
-  /* ========== LUXURY PALETTE ========== */
+  /* Primary: cool slate — interfaces, terminals, clarity */
+  --color-primary-50: #f8fafc;
+  --color-primary-100: #f1f5f9;
+  --color-primary-200: #e2e8f0;
+  --color-primary-300: #cbd5e1;
+  --color-primary-400: #94a3b8;
+  --color-primary-500: #64748b;
+  --color-primary-600: #475569;
+  --color-primary-700: #334155;
+  --color-primary-800: #1e293b;
+  --color-primary-900: #0f172a;
 
-  /* Primary: Deep navy / charcoal (authority, trust) */
-  --color-primary-50: #f0f4f8;
-  --color-primary-100: #d9e2ec;
-  --color-primary-200: #bcccdc;
-  --color-primary-300: #9fb3c8;
-  --color-primary-400: #829ab1;
-  --color-primary-500: #627d98;
-  --color-primary-600: #486581;
-  --color-primary-700: #334e68;
-  --color-primary-800: #243b53;
-  --color-primary-900: #102a43;
+  /* Accent: sky cyan — data flow, compute, modern SaaS */
+  --color-accent-50: #f0f9ff;
+  --color-accent-100: #e0f2fe;
+  --color-accent-200: #bae6fd;
+  --color-accent-300: #7dd3fc;
+  --color-accent-400: #38bdf8;
+  --color-accent-500: #0ea5e9;
+  --color-accent-600: #0284c7;
+  --color-accent-700: #0369a1;
 
-  /* Accent: Warm gold (luxury, premium) */
-  --color-accent-50: #fdf8e6;
-  --color-accent-100: #f9e9b8;
-  --color-accent-200: #f4d98a;
-  --color-accent-300: #ecc94b;
-  --color-accent-400: #d4af37;
-  --color-accent-500: #b8860b;
-  --color-accent-600: #9a7209;
-  --color-accent-700: #7d5d07;
-
-  /* Neutrals – warm grays */
-  --color-neutral-50: #fafaf8;
-  --color-neutral-100: #f5f4f0;
-  --color-neutral-200: #e8e6e1;
-  --color-neutral-300: #d4d1c9;
-  --color-neutral-400: #9c9890;
-  --color-neutral-500: #6b6760;
-  --color-neutral-600: #4a4742;
-  --color-neutral-700: #33312e;
-  --color-neutral-800: #1f1e1c;
-  --color-neutral-900: #141413;
+  /* Neutrals — cool zinc */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
 
   /* Semantic */
   --color-success: #0d9488;
   --color-success-50: #ccfbf1;
-  --color-error: #b91c1c;
+  --color-success-500: #0d9488;
+  --color-error: #dc2626;
   --color-error-50: #fef2f2;
-  --color-warning: #b45309;
+  --color-error-500: #dc2626;
+  --color-error-600: #b91c1c;
+  --color-warning: #d97706;
   --color-warning-50: #fffbeb;
 
-  /* Backgrounds – Light (cream/ivory) */
-  --bg-primary: #fafaf8;
-  --bg-secondary: #f5f4f0;
-  --bg-tertiary: #ebe9e4;
+  /* Backgrounds — frosted lab / cloud console light */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
   --bg-card: #fff;
-  --bg-overlay: rgba(250, 250, 248, 0.92);
-  --overlay-backdrop: rgba(20, 20, 19, 0.6);
+  --bg-overlay: rgba(248, 250, 252, 0.92);
+  --overlay-backdrop: rgba(15, 23, 42, 0.55);
 
   /* Text */
-  --text-primary: #1a1a1a;
-  --text-secondary: #4a4742;
-  --text-tertiary: #6b6760;
-  --text-inverse: #fafaf8;
-  --text-muted: #9c9890;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
+  --text-inverse: #f8fafc;
+  --text-muted: #94a3b8;
 
   /* Borders */
-  --border-primary: rgba(26, 26, 26, 0.08);
-  --border-secondary: rgba(26, 26, 26, 0.12);
+  --border-primary: rgba(15, 23, 42, 0.08);
+  --border-secondary: rgba(15, 23, 42, 0.12);
   --border-focus: var(--color-accent-500);
 
-  /* Section alt – warm tint for stronger theme */
-  --bg-section-alt: #f5f4f0;
-  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.02) 0%, transparent 100%);
-  --pattern-line-color: rgba(26, 26, 26, 0.03);
-  --pattern-grid-size: 24px;
+  /* Section alt — faint cool band */
+  --bg-section-alt: #f1f5f9;
+  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.05) 0%, transparent 100%);
+  --pattern-line-color: rgba(14, 165, 233, 0.06);
+  --pattern-grid-size: 32px;
 
-  /* Spacing – generous for luxury feel */
+  /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -88,32 +89,32 @@
   --spacing-5xl: 8rem;
   --spacing-6xl: 10rem;
 
-  /* Radius – refined, not too round */
+  /* Radius */
   --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
   --radius-full: 9999px;
 
-  /* Shadows – soft, layered, premium (strengthened for clearer depth) */
-  --shadow-sm: 0 1px 3px rgba(26, 26, 26, 0.06);
-  --shadow-md: 0 6px 16px rgba(26, 26, 26, 0.08), 0 2px 6px rgba(26, 26, 26, 0.05);
-  --shadow-lg: 0 14px 32px rgba(26, 26, 26, 0.1), 0 6px 14px rgba(26, 26, 26, 0.06);
-  --shadow-xl: 0 24px 48px rgba(26, 26, 26, 0.12), 0 8px 18px rgba(26, 26, 26, 0.07);
-  --shadow-2xl: 0 32px 64px rgba(26, 26, 26, 0.14);
+  /* Shadows — cool tint */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.07), 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.08), 0 6px 16px rgba(15, 23, 42, 0.05);
+  --shadow-xl: 0 24px 56px rgba(15, 23, 42, 0.09), 0 8px 20px rgba(15, 23, 42, 0.05);
+  --shadow-2xl: 0 32px 72px rgba(15, 23, 42, 0.1);
   --shadow-card-edge: 0 1px 0 0 var(--border-primary);
-  --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.8);
-  --shadow-glow: 0 0 28px rgba(184, 134, 11, 0.16);
-  --shadow-glow-strong: 0 0 48px rgba(184, 134, 11, 0.22);
-  --shadow-colored: 0 8px 28px rgba(184, 134, 11, 0.12);
-  --shadow-soft: 0 2px 14px rgba(26, 26, 26, 0.06);
-  --shadow-inner: inset 0 2px 4px rgba(26, 26, 26, 0.06);
+  --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.9);
+  --shadow-glow: 0 0 36px rgba(var(--color-accent-rgb), 0.22);
+  --shadow-glow-strong: 0 0 56px rgba(var(--color-accent-rgb), 0.28);
+  --shadow-colored: 0 12px 40px rgba(var(--color-accent-rgb), 0.18);
+  --shadow-soft: 0 2px 16px rgba(15, 23, 42, 0.04);
+  --shadow-inner: inset 0 2px 4px rgba(15, 23, 42, 0.04);
 
   /* Theme aliases */
   --theme-primary: var(--color-primary-800);
   --theme-primary-strong: var(--color-primary-900);
-  --theme-accent: var(--color-accent-500);
+  --theme-accent: var(--color-accent-600);
   --theme-surface: var(--bg-primary);
   --theme-surface-alt: var(--bg-section-alt);
   --theme-surface-card: var(--bg-card);
@@ -135,7 +136,7 @@
   --focus-outline-width: 2px;
   --focus-outline-offset: 2px;
   --focus-ring-color: var(--color-accent-500);
-  --focus-ring-glow: rgba(184, 134, 11, 0.2);
+  --focus-ring-glow: rgba(var(--color-accent-rgb), 0.25);
   --focus-outline-width-high: 3px;
 
   /* Opacity */
@@ -166,23 +167,26 @@
   --z-cursor: 9998;
   --z-progress: 9999;
 
-  /* Gradients – luxury (strengthened identity) */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary-800) 0%, var(--color-primary-700) 100%);
-  --gradient-accent: linear-gradient(135deg, var(--color-accent-400) 0%, var(--color-accent-600) 100%);
-  --gradient-primary-accent: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-accent-500) 100%);
-  --gradient-text: linear-gradient(135deg, var(--theme-heading) 0%, var(--color-primary-800) 100%);
-  --gradient-hero: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 35%, var(--bg-secondary) 65%, var(--bg-primary) 100%);
-  --gradient-hero-glow: radial-gradient(ellipse 80% 50% at 50% -10%, var(--color-accent-alpha-10) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 30% at 80% 100%, rgba(var(--color-primary-rgb), 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 30% at 20% 100%, rgba(var(--color-primary-rgb), 0.06) 0%, transparent 50%);
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-700) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-violet-500) 100%);
+  --gradient-primary-accent: linear-gradient(135deg, var(--color-primary-800) 0%, var(--color-accent-600) 100%);
+  --gradient-text: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-accent-700) 100%);
+  --gradient-hero: linear-gradient(165deg, #f8fafc 0%, #f1f5f9 40%, #e0f2fe 100%);
+  --gradient-hero-glow:
+    radial-gradient(ellipse 85% 50% at 8% -5%, rgba(var(--color-accent-rgb), 0.14) 0%, transparent 52%),
+    radial-gradient(ellipse 55% 45% at 95% 5%, rgba(var(--color-violet-rgb), 0.1) 0%, transparent 48%),
+    radial-gradient(ellipse 50% 38% at 50% 100%, rgba(var(--color-primary-rgb), 0.06) 0%, transparent 55%);
   --gradient-section-alt: linear-gradient(180deg, var(--bg-section-alt) 0%, var(--bg-primary) 100%);
-  --gradient-card: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
+  --gradient-card: linear-gradient(165deg, #fff 0%, #f8fafc 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%);
   --gradient-accent-subtle: linear-gradient(135deg, var(--color-accent-alpha-10) 0%, transparent 100%);
 
-  /* Alpha */
-  --color-primary-rgb: 16, 42, 67;
-  --color-accent-rgb: 184, 134, 11;
+  /* RGB channels for rgba() */
+  --color-primary-rgb: 15, 23, 42;
+  --color-accent-rgb: 14, 165, 233;
+  --color-violet-rgb: 99, 102, 241;
+  --color-violet-500: #6366f1;
   --color-primary-alpha-5: rgba(var(--color-primary-rgb), 0.05);
   --color-primary-alpha-10: rgba(var(--color-primary-rgb), 0.1);
   --color-primary-alpha-15: rgba(var(--color-primary-rgb), 0.15);
@@ -194,51 +198,53 @@
   --color-accent-alpha-20: rgba(var(--color-accent-rgb), 0.2);
 }
 
-/* Dark Mode – luxury dark */
+/* Dark — IDE / inference stack at night */
 .dark {
-  --bg-primary: #0c0c0c;
-  --bg-secondary: #141413;
-  --bg-tertiary: #1f1e1c;
-  --bg-card: #1a1a18;
-  --bg-section-alt: #141413;
-  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.03) 0%, transparent 100%);
-  --bg-overlay: rgba(20, 20, 19, 0.92);
-  --overlay-backdrop: rgba(0, 0, 0, 0.7);
-  --text-primary: #e8e6e3;
-  --text-secondary: #b8b5ae;
-  --text-tertiary: #9c9890;
-  --text-inverse: #0c0c0c;
-  --text-muted: #6b6760;
-  --theme-heading: #e8e6e3;
-  --border-primary: rgba(232, 230, 227, 0.1);
-  --border-secondary: rgba(232, 230, 227, 0.15);
-  --color-primary-500: #829ab1;
-  --color-primary-600: #9fb3c8;
-  --color-primary-700: #bcccdc;
-  --color-primary-800: #d9e2ec;
-  --color-accent-400: #d4af37;
-  --color-accent-500: #ecc94b;
-  --color-accent-600: #f4d98a;
-  --gradient-hero: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  --gradient-hero-glow: radial-gradient(ellipse 80% 50% at 50% -10%, var(--color-accent-alpha-10) 0%, transparent 55%);
-  --gradient-card: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
-  --gradient-text: linear-gradient(135deg, var(--text-primary) 0%, var(--color-accent-400) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-section-alt: #0f172a;
+  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.08) 0%, transparent 100%);
+  --bg-overlay: rgba(2, 6, 23, 0.92);
+  --overlay-backdrop: rgba(0, 0, 0, 0.75);
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #020617;
+  --text-muted: #64748b;
+  --theme-heading: #f8fafc;
+  --border-primary: rgba(148, 163, 184, 0.12);
+  --border-secondary: rgba(148, 163, 184, 0.18);
+  --color-primary-500: #64748b;
+  --color-primary-600: #94a3b8;
+  --color-primary-700: #cbd5e1;
+  --color-primary-800: #e2e8f0;
+  --color-accent-400: #38bdf8;
+  --color-accent-500: #0ea5e9;
+  --color-accent-600: #7dd3fc;
+  --gradient-hero: linear-gradient(165deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  --gradient-hero-glow:
+    radial-gradient(ellipse 80% 48% at 50% -8%, rgba(var(--color-accent-rgb), 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 35% at 100% 20%, rgba(var(--color-violet-rgb), 0.14) 0%, transparent 50%);
+  --gradient-card: linear-gradient(165deg, var(--bg-card) 0%, #0f172a 100%);
+  --gradient-text: linear-gradient(135deg, #f8fafc 0%, var(--color-accent-400) 55%, #a5b4fc 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
   --shadow-card-edge: none;
-  --shadow-badge-ring: 0 0 0 1px rgba(0,0,0,0.2);
+  --shadow-badge-ring: 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 
-/* Container & Typography */
+/* Layout & typography */
 :root {
   --container-sm: 640px;
   --container-md: 768px;
   --container-lg: 1024px;
   --container-xl: 1200px;
   --container-2xl: 1400px;
-  --font-family-sans: "DM Sans", "Inter", -apple-system, blinkmacsystemfont, "Segoe UI", sans-serif;
+  --font-family-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
   --font-family-mono: "JetBrains Mono", "Menlo", "Monaco", monospace;
-  --font-family-display: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
-  --font-family-quote: "Cormorant Garamond", "Georgia", serif;
+  --font-family-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-family-quote: "Space Grotesk", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -261,6 +267,6 @@
   --line-height-relaxed: 1.75;
   --letter-spacing-tight: -0.02em;
   --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.04em;
-  --letter-spacing-luxury: 0.05em;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-luxury: 0.06em;
 }

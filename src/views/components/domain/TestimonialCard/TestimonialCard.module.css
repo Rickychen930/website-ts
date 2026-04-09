@@ -26,6 +26,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
   width: 4px;
   height: 100%;
   background: linear-gradient(
@@ -54,7 +55,7 @@
     var(--shadow-xl),
     var(--shadow-colored),
     0 0 0 1px var(--color-accent-alpha-10),
-    0 16px 32px -10px rgba(184, 134, 11, 0.12);
+    0 16px 32px -10px rgba(var(--color-accent-rgb), 0.14);
   transform: translateY(-5px);
   border-color: var(--color-accent-300);
 }
@@ -71,9 +72,25 @@
   outline: none;
 }
 
+.testimonialCard::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 55% at 100% 100%,
+    rgba(var(--color-violet-rgb), 0.08) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+  opacity: 0.75;
+}
+
 .quote {
-  margin-bottom: var(--spacing-md);
   display: flex;
+  position: relative;
+  z-index: 1;
+  margin-bottom: var(--spacing-md);
   align-items: flex-start;
   gap: var(--spacing-sm);
 }
@@ -102,6 +119,8 @@
 
 .footer {
   display: flex;
+  position: relative;
+  z-index: 1;
   justify-content: space-between;
   align-items: center;
   gap: var(--spacing-md);

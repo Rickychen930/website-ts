@@ -169,6 +169,7 @@ export interface Profile {
   readonly bio: string;
   readonly heroTagline?: string;
   readonly openToOpportunities?: boolean;
+  readonly avatarUrl?: string;
   readonly academics: readonly Academic[];
   readonly certifications: readonly Certification[];
   readonly contacts: readonly Contact[];
