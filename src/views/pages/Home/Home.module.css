@@ -898,15 +898,27 @@
 
 .testimonialsSection {
   position: relative;
+  background-color: var(--bg-secondary);
   background-image:
     linear-gradient(to right, var(--theme-pattern) 1px, transparent 1px),
     linear-gradient(to bottom, var(--theme-pattern) 1px, transparent 1px),
-    var(--gradient-card);
+    radial-gradient(
+      ellipse 120% 80% at 50% -20%,
+      rgba(var(--color-accent-rgb), 0.12) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      125deg,
+      var(--bg-overlay) 0%,
+      var(--bg-secondary) 45%,
+      var(--color-primary-alpha-10) 100%
+    );
   background-size:
     var(--theme-pattern-size) var(--theme-pattern-size),
     var(--theme-pattern-size) var(--theme-pattern-size),
+    100% 100%,
     100% 100%;
-  background-repeat: repeat, repeat, no-repeat;
+  background-repeat: repeat, repeat, no-repeat, no-repeat;
   overflow: hidden;
   isolation: isolate;
   padding: var(--spacing-4xl) 0;
@@ -915,10 +927,26 @@
 .testimonialsSection::before {
   position: absolute;
   z-index: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-600),
+    var(--color-accent-500),
+    rgba(var(--color-violet-rgb), 0.55)
+  );
+  inset: 0 0 auto;
+  content: "";
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.testimonialsSection::after {
+  position: absolute;
+  z-index: 0;
   background: radial-gradient(
-    circle at 30% 20%,
-    var(--color-primary-alpha-10) 0%,
-    transparent 50%
+    circle at 80% 60%,
+    var(--color-accent-alpha-10) 0%,
+    transparent 42%
   );
   inset: 0;
   content: "";
@@ -927,8 +955,8 @@
 
 .testimonialsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
-  gap: var(--spacing-2xl);
+  grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
+  gap: var(--spacing-xl);
   position: relative;
   z-index: 1;
   padding: 0 var(--spacing-md);
@@ -944,6 +972,31 @@
 .testimonialsGrid > * > * {
   flex: 1 1 0;
   min-height: 0;
+}
+
+@media (width <= 720px) {
+  .testimonialsGrid {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: 0 var(--spacing-md) var(--spacing-sm);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--spacing-md);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable;
+  }
+
+  .testimonialsGrid > * {
+    flex: 0 0 min(88vw, 22rem);
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonialsGrid {
+    scroll-snap-type: none;
+  }
 }
 
 .experienceList {

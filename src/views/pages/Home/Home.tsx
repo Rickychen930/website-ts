@@ -424,7 +424,7 @@ export const Home: React.FC = () => {
         <Section
           label="Voices"
           title="What collaborators say"
-          subtitle="People who have shipped work alongside this profile — presented plainly."
+          subtitle="Short endorsements with names and context — readable quotes, not wall-of-italic."
           className={styles.testimonialsSection}
           id="testimonials"
           variant="alt"

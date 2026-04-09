@@ -1297,7 +1297,7 @@ export const seedProfileData = {
       role: "Data Scientist",
       company: "Apple Developer Academy | Digital Talent Scholarship Awardee",
       content:
-        "I had the pleasure of working alongside Ricky at Apple Developer Academy. As a highly skilled programmer with a strong background in competitive programming and IoT, Ricky consistently impressed me with his technical abilities. He is a dedicated problem solver who is always eager to explore the most effective solutions, striking a balance between design and development considerations. Ricky is an excellent communicator and collaborator. He actively listens to the ideas of others, particularly during design team meetings, and is always open to learning new techniques from colleagues, regardless of seniority. His confident and innovative approach to problem-solving makes him a valuable asset to any team.",
+        "Strong programmer with a CP and IoT background; balances design and development well. Great collaborator who listens in design meetings and solves problems with confidence.",
       date: "2024-11-01",
     },
     {
@@ -1305,7 +1305,7 @@ export const seedProfileData = {
       role: "Master of IT Student @ UTS",
       company: "Apple Developer Academy",
       content:
-        "I highly recommend Ricky for his outstanding skills in iOS development, collaboration, critical thinking, and problem-solving. We have worked together on an internship project, and I found him highly passionate and dedicated to his profession in tackling every task. He has a fun personality that makes me enjoy working with him every time. His contribution to the team as a developer is highly considerable as it helped our team to build our first app. Ricky definitely would become an appreciated member of any team.",
+        "Outstanding at iOS development, collaboration, and problem-solving. Passionate on our internship project, fun to work with, and his work helped us ship our first app.",
       date: "2023-05-01",
     },
     {
@@ -1313,7 +1313,7 @@ export const seedProfileData = {
       role: "Software Engineer",
       company: "Apple Developer Academy",
       content:
-        "I am delighted to recommend my friend Ricky Chen, who I had the pleasure of working with me at the same team at Apple Developer Academy. Ricky Chen is a highly skilled software engineer who excels at competitive programming and has a natural talent for learning new technologies, as I witnessed firsthand when we were building iOS apps using SwiftUI. His ability to grasp complex concepts and implement them quickly and efficiently is remarkable. Ricky Chen is a critical thinker who brings a fresh perspective to ideation and is always willing to contribute ideas to the project. He takes his responsibilities seriously, always ensuring that the quality of work meets the highest standards. His positive attitude and fun personality make him a joy to work with, and his commitment to getting things done is second to none. Overall, I have no doubt that Ricky Chen would be an asset to any team or organization that he joins, and I wholeheartedly recommend him for any software engineering or development role.",
+        "Highly skilled engineer with strong competitive programming chops; picked up SwiftUI fast and shipped quality iOS work. Critical thinker, positive teammate — I’d recommend him for any software role.",
       date: "2023-05-01",
     },
     {
@@ -1321,7 +1321,7 @@ export const seedProfileData = {
       role: "Graphic Designer | UI/UX Designer",
       company: "Apple Developer Academy",
       content:
-        "Ricky is a talented developer with excellent collaboration skills. Working with him on design and development projects was a great experience. He understands the importance of balancing technical implementation with user experience, making him a valuable team member.",
+        "Talented developer and strong collaborator; balances implementation with UX and is a reliable team member.",
       date: "2023-05-01",
     },
     {
@@ -1329,7 +1329,7 @@ export const seedProfileData = {
       role: "Product Designer",
       company: "Apple Developer Academy",
       content:
-        "Based on my experience working with Ricky on an iOS project app, I would highly recommend him as a skilled and dedicated software engineer. Ricky's expertise in Swift and iOS frameworks was instrumental in the success of our project, and his ability to work collaboratively with our team was invaluable. He consistently demonstrated strong communication skills, providing clear and concise updates on his progress and effectively addressing any issues that arose.",
+        "Skilled with Swift and iOS; his collaboration and clear, steady communication were key to our app project.",
       date: "2023-04-01",
     },
   ],

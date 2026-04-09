@@ -316,7 +316,7 @@ export const About: React.FC = () => {
         id="about-stack"
         label="Capabilities"
         title="Stack & languages"
-        subtitle="What I reach for in production — grouped the way hiring managers scan a CV."
+        subtitle="One surface: categories as bands and each skill as a compact chip — level and tenure at a glance."
         variant="alt"
         headerAlign="start"
       >
@@ -371,41 +371,52 @@ export const About: React.FC = () => {
               </Typography>
             </div>
           ) : (
-            <div className={styles.skillDeck}>
-              {skillCategories.map(({ category, label }) => {
-                const skills = profile.getSkillsByCategory(category as any);
-                if (skills.length === 0) return null;
-                return (
-                  <ScrollReveal key={category} direction="up" delay={40}>
+            <ScrollReveal direction="up" delay={40}>
+              <div
+                className={styles.skillMatrix}
+                role="region"
+                aria-label="Technical skills by category"
+              >
+                {skillCategories.map(({ category, label }) => {
+                  const skills = profile.getSkillsByCategory(category as any);
+                  if (skills.length === 0) return null;
+                  return (
                     <section
-                      className={styles.skillPanel}
+                      key={category}
+                      className={styles.skillMatrixBlock}
                       aria-labelledby={`ab-sk-${category}`}
                     >
-                      <Typography
-                        variant="h4"
-                        weight="semibold"
-                        className={styles.skillPanelTitle}
-                        as="h3"
-                        id={`ab-sk-${category}`}
-                      >
-                        {label}
-                      </Typography>
-                      <div
-                        className={styles.skillPanelGrid}
-                        role="list"
-                        aria-label={`${label}`}
-                      >
-                        {skills.map((skill) => (
-                          <div key={skill.id} role="listitem">
-                            <SkillBadge skill={skill} showProficiency />
-                          </div>
-                        ))}
+                      <div className={styles.skillMatrixBlockHead}>
+                        <span
+                          className={styles.skillMatrixAccent}
+                          aria-hidden="true"
+                        />
+                        <Typography
+                          variant="h4"
+                          weight="semibold"
+                          className={styles.skillMatrixTitle}
+                          as="h3"
+                          id={`ab-sk-${category}`}
+                        >
+                          {label}
+                        </Typography>
                       </div>
+                      <ul className={styles.skillMatrixList} aria-label={label}>
+                        {skills.map((skill) => (
+                          <li key={skill.id} className={styles.skillMatrixItem}>
+                            <SkillBadge
+                              skill={skill}
+                              showProficiency
+                              variant="chip"
+                            />
+                          </li>
+                        ))}
+                      </ul>
                     </section>
-                  </ScrollReveal>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            </ScrollReveal>
           )}
         </div>
       </Section>

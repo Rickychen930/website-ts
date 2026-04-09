@@ -3,6 +3,12 @@
  * Version 4: Added fallback data when backend is unavailable
  */
 
+import {
+  DUMMY_HUMAN_LANGUAGES,
+  DUMMY_TECHNICAL_SKILLS,
+  DUMMY_TESTIMONIALS,
+  VISUAL_DESIGN_DUMMY_PROFILE,
+} from "@/data/visualDesignDummyProfile";
 import { ProfileModel } from "@/models/ProfileModel";
 import type { Profile } from "@/types/domain";
 interface CacheEntry {
@@ -169,7 +175,6 @@ const FALLBACK_PROFILE: Profile = {
     },
   ],
   honors: [],
-  languages: [],
   projects: [
     {
       id: "project-architech",
@@ -1015,8 +1020,9 @@ const FALLBACK_PROFILE: Profile = {
   learningSections: [],
   softSkills: [],
   stats: [],
-  technicalSkills: [],
-  testimonials: [],
+  languages: DUMMY_HUMAN_LANGUAGES.map((l) => ({ ...l })),
+  technicalSkills: DUMMY_TECHNICAL_SKILLS.map((s) => ({ ...s })),
+  testimonials: DUMMY_TESTIMONIALS.map((t) => ({ ...t })),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
@@ -1107,6 +1113,13 @@ export class ProfileService {
   }
 
   public async fetchProfile(): Promise<ProfileModel> {
+    if (process.env.REACT_APP_DESIGN_DUMMY_PROFILE === "true") {
+      const designProfile = ProfileModel.create(VISUAL_DESIGN_DUMMY_PROFILE);
+      this.profile = designProfile;
+      this.cache = { data: designProfile, timestamp: Date.now() };
+      return designProfile;
+    }
+
     // Return cached data if valid
     if (this.isCacheValid() && this.cache) {
       return this.cache.data;
@@ -1163,6 +1176,39 @@ export class ProfileService {
             ...profilePayload,
             projects: FALLBACK_PROFILE.projects.map((p) => ({ ...p })),
           };
+        }
+
+        const supplementVisualLists =
+          process.env.REACT_APP_SUPPLEMENT_EMPTY_PROFILE_LISTS !== "false";
+        if (supplementVisualLists) {
+          const missing: string[] = [];
+          if (!profilePayload.technicalSkills?.length) {
+            missing.push("technicalSkills");
+            profilePayload = {
+              ...profilePayload,
+              technicalSkills: DUMMY_TECHNICAL_SKILLS.map((s) => ({ ...s })),
+            };
+          }
+          if (!profilePayload.languages?.length) {
+            missing.push("languages");
+            profilePayload = {
+              ...profilePayload,
+              languages: DUMMY_HUMAN_LANGUAGES.map((l) => ({ ...l })),
+            };
+          }
+          if (!profilePayload.testimonials?.length) {
+            missing.push("testimonials");
+            profilePayload = {
+              ...profilePayload,
+              testimonials: DUMMY_TESTIMONIALS.map((t) => ({ ...t })),
+            };
+          }
+          if (missing.length > 0) {
+            console.warn(
+              `[ProfileService] Profile from API missing ${missing.join(", ")} — using bundled dummy stack, spoken languages, and/or testimonials. ` +
+                "Set REACT_APP_SUPPLEMENT_EMPTY_PROFILE_LISTS=false to keep empty lists.",
+            );
+          }
         }
 
         this.profile = ProfileModel.create(profilePayload);

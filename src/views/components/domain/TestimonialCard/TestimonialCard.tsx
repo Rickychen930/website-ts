@@ -3,9 +3,8 @@
  * Displays client/colleague testimonial
  */
 
-import React from "react";
+import React, { useMemo } from "react";
 import type { Testimonial } from "@/types/domain";
-import { Card } from "@/views/components/ui/Card";
 import { Typography } from "@/views/components/ui/Typography";
 import { formatDate } from "@/utils/dateUtils";
 import styles from "./TestimonialCard.module.css";
@@ -14,50 +13,79 @@ export interface TestimonialCardProps {
   testimonial: Testimonial;
 }
 
+function authorInitials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) {
+    const w = parts[0]!;
+    return w.slice(0, 2).toUpperCase();
+  }
+  const first = parts[0]![0] ?? "";
+  const last = parts[parts.length - 1]![0] ?? "";
+  return `${first}${last}`.toUpperCase();
+}
+
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   testimonial,
 }) => {
+  const initials = useMemo(
+    () => authorInitials(testimonial.author),
+    [testimonial.author],
+  );
+
   return (
-    <Card variant="elevated" className={styles.testimonialCard}>
-      <div className={styles.quote}>
-        <svg
-          className={styles.quoteIcon}
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.984zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-        </svg>
+    <article
+      className={styles.card}
+      aria-labelledby={`tm-author-${testimonial.id}`}
+    >
+      <div className={styles.decorQuote} aria-hidden="true">
+        “
       </div>
 
-      <Typography variant="body" color="secondary" className={styles.content}>
-        {testimonial.content}
-      </Typography>
-
-      <div className={styles.footer}>
-        <div className={styles.author}>
-          {testimonial.avatarUrl && (
-            <img
-              src={testimonial.avatarUrl}
-              alt={testimonial.author}
-              className={styles.avatar}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-          <div>
-            <Typography variant="small" weight="semibold">
-              {testimonial.author}
-            </Typography>
-            <Typography variant="caption" color="tertiary">
-              {testimonial.role} at {testimonial.company}
-            </Typography>
-          </div>
+      <header className={styles.header}>
+        {testimonial.avatarUrl ? (
+          <img
+            src={testimonial.avatarUrl}
+            alt=""
+            className={styles.avatar}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span className={styles.avatarFallback} aria-hidden="true">
+            {initials}
+          </span>
+        )}
+        <div className={styles.headerText}>
+          <Typography
+            variant="small"
+            weight="semibold"
+            className={styles.authorName}
+            as="p"
+            id={`tm-author-${testimonial.id}`}
+          >
+            {testimonial.author}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="tertiary"
+            className={styles.meta}
+          >
+            {testimonial.role}
+            {testimonial.company ? ` · ${testimonial.company}` : ""}
+          </Typography>
         </div>
-        <Typography variant="caption" color="tertiary">
+      </header>
+
+      <blockquote className={styles.quote}>
+        <p className={styles.quoteBody}>{testimonial.content}</p>
+      </blockquote>
+
+      <footer className={styles.footer}>
+        <time className={styles.date} dateTime={testimonial.date}>
           {formatDate(testimonial.date)}
-        </Typography>
-      </div>
-    </Card>
+        </time>
+      </footer>
+    </article>
   );
 };
