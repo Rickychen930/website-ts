@@ -22,7 +22,7 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   /** Gold underlines on label/title; `none` reduces repetition on dense pages */
   titleDecoration?: "underline" | "none";
   /** Full-width gradient + grid intro (inner pages, matches home aesthetic) */
-  surface?: "default" | "hero";
+  surface?: "default" | "hero" | "minimal";
   /** Use semantic h1 for the section title (e.g. article / topic pages) */
   titleHeadingLevel?: 1 | 2;
   /** Omit soft orbs when this section already has custom art (e.g. Home hero) */
@@ -58,18 +58,22 @@ export const Section: React.FC<SectionProps> = ({
   return (
     <section
       id={id}
-      className={`${styles.section} ${variant === "alt" ? styles.sectionAlt : ""} ${surface === "hero" ? styles.sectionSurfaceHero : ""} ${className}`.trim()}
+      className={`${styles.section} ${variant === "alt" ? styles.sectionAlt : ""} ${surface === "hero" ? styles.sectionSurfaceHero : ""} ${surface === "minimal" ? styles.sectionSurfaceMinimal : ""} ${className}`.trim()}
       aria-labelledby={title ? titleId : undefined}
       {...props}
     >
       {surface === "hero" ? (
         <div className={styles.surfaceHeroAccentOrbs} aria-hidden="true" />
       ) : null}
-      {variant === "alt" && surface !== "hero" && !suppressAmbientOrbs ? (
+      {surface !== "hero" &&
+      surface !== "minimal" &&
+      variant === "alt" &&
+      !suppressAmbientOrbs ? (
         <div className={styles.sectionAltAccentOrbs} aria-hidden="true" />
       ) : null}
-      {variant === "default" &&
-      surface === "default" &&
+      {surface !== "hero" &&
+      surface !== "minimal" &&
+      variant === "default" &&
       !suppressAmbientOrbs ? (
         <div className={styles.sectionDefaultAccentOrbs} aria-hidden="true" />
       ) : null}

@@ -400,6 +400,10 @@
     box-shadow var(--transition-fast) var(--ease-out-expo);
 }
 
+.heroQuickPrimary {
+  grid-column: 1 / -1;
+}
+
 .heroQuickItem:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-outline-offset);
@@ -439,7 +443,7 @@
   box-sizing: border-box;
   hyphens: auto;
   overflow-wrap: break-word;
-  text-align: justify;
+  text-align: left;
   text-wrap: pretty;
 }
 
@@ -455,7 +459,7 @@
   max-width: none;
   font-size: var(--font-size-base);
   line-height: 1.62;
-  text-align: justify;
+  text-align: left;
 }
 
 .bioParagraphLead {

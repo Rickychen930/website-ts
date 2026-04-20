@@ -3,7 +3,6 @@
  */
 
 import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
@@ -20,6 +19,7 @@ import { AcademicItem } from "@/views/components/domain/AcademicItem";
 import { HonorCard } from "@/views/components/domain/HonorCard";
 import { DownloadResume } from "@/components/DownloadResume";
 import btn from "@/views/components/ui/Button/Button.module.css";
+import { LinkButton } from "@/views/components/ui/Button";
 import { EmptyStateArt, HeroMeshArt } from "@/components/PortfolioVisuals";
 import {
   SITE_DEFAULT_DESCRIPTION,
@@ -100,7 +100,6 @@ export const About: React.FC = () => {
   const showOpen = profile.openToOpportunities !== false;
   const linkedinContact = profile.contacts.find((c) => c.type === "linkedin");
   const githubContact = profile.contacts.find((c) => c.type === "github");
-  const outlineMd = `${btn.button} ${btn["button--outline"]} ${btn["button--md"]}`;
 
   const heroContainerVariants = prefersReducedMotion
     ? undefined
@@ -224,19 +223,28 @@ export const About: React.FC = () => {
             role="group"
             aria-label="Profile actions"
           >
+            {/* Primary CTA */}
+            <LinkButton
+              to="/contact"
+              variant="primary"
+              className={`${styles.heroQuickItem} ${styles.heroQuickPrimary}`}
+            >
+              Get in touch
+            </LinkButton>
             <DownloadResume
               plain
               variant="outline"
               size="md"
-              label="Download"
+              label="Download CV"
               showDecorations={false}
             />
+            {/* Secondary links */}
             {linkedinContact ? (
               <a
                 href={linkedinContact.value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${outlineMd} ${styles.heroQuickItem}`}
+                className={`${btn.button} ${btn["button--ghost"]} ${btn["button--md"]} ${styles.heroQuickItem}`}
               >
                 LinkedIn
               </a>
@@ -246,23 +254,11 @@ export const About: React.FC = () => {
                 href={githubContact.value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${outlineMd} ${styles.heroQuickItem}`}
+                className={`${btn.button} ${btn["button--ghost"]} ${btn["button--md"]} ${styles.heroQuickItem}`}
               >
                 GitHub
               </a>
             ) : null}
-            <Link
-              to="/projects"
-              className={`${outlineMd} ${styles.heroQuickItem}`}
-            >
-              View project
-            </Link>
-            <Link
-              to="/contact"
-              className={`${outlineMd} ${styles.heroQuickItem}`}
-            >
-              Get in touch
-            </Link>
           </motion.div>
 
           <motion.div

@@ -149,6 +149,19 @@ export const Contact: React.FC = () => {
                   >
                     Contact Information
                   </Typography>
+                  <Typography
+                    variant="small"
+                    color="secondary"
+                    as="p"
+                    className={styles.contactMeta}
+                  >
+                    I reply within 1–2 business days.
+                    {profile.location
+                      ? ` Based in ${profile.location}.`
+                      : ""}{" "}
+                    Include a short description of your project or intent for a
+                    faster, more useful reply.
+                  </Typography>
                 </div>
 
                 <>

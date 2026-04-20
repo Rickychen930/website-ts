@@ -150,8 +150,7 @@ export const Resume: React.FC = () => {
           Resume
         </h1>
         <p className={styles.intro}>
-          Click the button below to download your resume as PDF (one click,
-          under 2 MB).
+          Download the PDF below, or preview the full content on this page.
         </p>
 
         <div className={resumeStyles.resumeActions}>

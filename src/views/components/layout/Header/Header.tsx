@@ -15,14 +15,14 @@ import styles from "./Header.module.css";
 const MAIN_NAV_ITEMS = [
   { path: "/", label: "Home" },
   { path: "/projects", label: "Projects" },
+  { path: "/experience", label: "Experience" },
   { path: "/about", label: "About" },
+  { path: "/contact", label: "Contact" },
 ];
 
 const DROPDOWN_NAV_ITEMS = [
-  { path: "/experience", label: "Experience" },
   { path: "/learning", label: "Learning" },
   { path: "/resume", label: "Resume" },
-  { path: "/contact", label: "Contact" },
 ];
 
 export const Header: React.FC = () => {

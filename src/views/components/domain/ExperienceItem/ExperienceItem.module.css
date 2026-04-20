@@ -31,22 +31,25 @@
   backdrop-filter: none;
 }
 
-.experienceItem:hover {
-  transform: translateX(var(--spacing-md));
-}
-
 .experienceItem:focus-within {
   outline: none;
 }
 
-.experienceItem:focus-within::before {
-  opacity: 1;
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--focus-ring-glow);
-}
+@media (hover: hover) and (pointer: fine) {
+  .experienceItem:hover {
+    transform: translateX(var(--spacing-md));
+  }
 
-.experienceItem:hover::before {
-  opacity: 1;
+  .experienceItem:hover::before {
+    opacity: 1;
+  }
+
+  .experienceItem:hover .timelineDot {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 0 2px var(--color-primary-500),
+      0 0 0 4px var(--color-primary-alpha-20);
+  }
 }
 
 .timeline {
@@ -71,6 +74,12 @@
   transition:
     transform var(--transition-fast) var(--ease-out-expo),
     box-shadow var(--transition-normal) var(--ease-out-expo);
+}
+
+.experienceItem:focus-within::before {
+  opacity: 1;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--focus-ring-glow);
 }
 
 .experienceItem:hover .timelineDot {
