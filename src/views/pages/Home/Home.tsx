@@ -13,7 +13,7 @@ import {
 } from "@/hooks/useSEO";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
-import { Button } from "@/views/components/ui/Button";
+import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { ProjectCard } from "@/views/components/domain/ProjectCard";
@@ -193,20 +193,22 @@ export const Home: React.FC = () => {
               role="group"
               aria-label="Call to action buttons"
             >
-              <Link
+              <LinkButton
                 to="/projects"
-                className={styles.heroCtaPrimary}
+                variant="primary"
+                size="lg"
                 aria-label="View all projects"
               >
-                <Button variant="primary" size="lg">
-                  View projects
-                </Button>
-              </Link>
-              <Link to="/contact" aria-label="Get in touch">
-                <Button variant="outline" size="lg">
-                  Get in touch
-                </Button>
-              </Link>
+                View projects
+              </LinkButton>
+              <LinkButton
+                to="/contact"
+                variant="outline"
+                size="lg"
+                aria-label="Get in touch"
+              >
+                Get in touch
+              </LinkButton>
               <DownloadResume />
             </div>
 
@@ -319,9 +321,13 @@ export const Home: React.FC = () => {
                 ))}
               </div>
               <div className={styles.viewAll}>
-                <Link to="/projects" aria-label="View all projects">
-                  <Button variant="outline">All projects</Button>
-                </Link>
+                <LinkButton
+                  to="/projects"
+                  variant="outline"
+                  aria-label="View all projects"
+                >
+                  All projects
+                </LinkButton>
               </div>
             </div>
           </ScrollReveal>

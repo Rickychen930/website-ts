@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { Typography } from "@/views/components/ui/Typography";
 import { SocialLinks } from "@/components/SocialLinks";
-import { Button } from "@/views/components/ui/Button";
+import { LinkButton } from "@/views/components/ui/Button";
 import { SITE_BRAND_NAME, SITE_DEFAULT_TAGLINE } from "@/config/site-defaults";
 import styles from "./Footer.module.css";
 
@@ -124,15 +124,15 @@ export const Footer: React.FC = () => {
               >
                 Have a project in mind or want to connect? Say hello.
               </Typography>
-              <Link
+              <LinkButton
                 to="/contact"
+                variant="primary"
+                size="md"
                 className={styles.ctaLink}
                 aria-label="Go to contact page"
               >
-                <Button variant="primary" size="md">
-                  Contact
-                </Button>
-              </Link>
+                Contact
+              </LinkButton>
             </div>
           </div>
         </div>

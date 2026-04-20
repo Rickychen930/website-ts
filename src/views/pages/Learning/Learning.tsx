@@ -11,7 +11,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
-import { Button } from "@/views/components/ui/Button";
+import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import type { LearningSection as LearningSectionType } from "@/types/domain";
@@ -111,11 +111,14 @@ export const Learning: React.FC = () => {
               <Link to="/" className={styles.emptyStateLink}>
                 Back to Home
               </Link>
-              <Link to="/contact" aria-label="Get in touch">
-                <Button variant="primary" size="md">
-                  Get in Touch
-                </Button>
-              </Link>
+              <LinkButton
+                to="/contact"
+                variant="primary"
+                size="md"
+                aria-label="Get in touch"
+              >
+                Get in Touch
+              </LinkButton>
             </div>
           </div>
         </div>

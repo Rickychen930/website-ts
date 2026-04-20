@@ -1,28 +1,14 @@
 /**
- * Mobile Enhancements - Better touch interactions and mobile UX
+ * Mobile Enhancements – touch interactions and mobile UX.
+ *
+ * NOTE: CSS Modules hashes all local class names.  Rules targeting bare class
+ * names like `.button`, `.navLink` etc. will NOT match the DOM.
+ * Use only element selectors, pseudo-classes, and global utility names here.
  */
 
-/* Touch-friendly targets */
+/* ── Touch-friendly targets ─────────────────────────────────────────────── */
 @media (width <= 768px) {
-  /* Larger touch targets - but respect component-specific min-heights */
-  button:not(
-    .backToTop,
-    .clearButton,
-    .menuToggle,
-    .themeToggle,
-    .navButton,
-    .dot
-  ),
-  a:not(
-    .navLink,
-    .footerLink,
-    .contactLink,
-    .socialLink,
-    .badgeLink,
-    .experienceSeeMoreLink,
-    .exploreLink,
-    .currentRoleCta
-  ),
+  button,
   input:not([type="checkbox"], [type="radio"]),
   select,
   textarea {
@@ -30,19 +16,19 @@
     min-width: 3rem;
   }
 
-  /* Better spacing for touch */
-  .button + .button,
-  .navLink + .navLink {
-    margin-left: var(--spacing-md);
+  a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
   }
 
-  /* Swipe gestures support */
+  /* ── Swipe / overflow helpers ──────────────────────────────────────────── */
   .swipeable {
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Pull to refresh indicator - Using design tokens */
+  /* ── Pull-to-refresh indicator ─────────────────────────────────────────── */
   .pull-to-refresh {
     position: fixed;
     top: -60px;
@@ -61,17 +47,17 @@
     top: 0;
   }
 
-  /* Better form inputs on mobile */
+  /* ── Form inputs: prevent iOS auto-zoom ────────────────────────────────── */
   input[type="text"],
   input[type="email"],
   input[type="tel"],
   input[type="url"],
   textarea {
     padding: var(--spacing-md);
-    font-size: 16px; /* Prevents zoom on iOS - must be 16px */
+    font-size: 16px; /* must be 16px to prevent iOS auto-zoom */
   }
 
-  /* Mobile menu enhancements - Using design tokens */
+  /* ── Mobile menu overlay ────────────────────────────────────────────────── */
   .mobile-menu {
     position: fixed;
     z-index: var(--z-modal);
@@ -82,41 +68,36 @@
     animation: fadeIn var(--transition-normal) var(--transition-ease);
   }
 
-  /* Safe area insets for notched devices */
+  /* ── Safe area insets (notched devices) ─────────────────────────────────── */
   .safe-area-top {
     padding-top: env(safe-area-inset-top);
   }
-
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
-
   .safe-area-left {
     padding-left: env(safe-area-inset-left);
   }
-
   .safe-area-right {
     padding-right: env(safe-area-inset-right);
   }
 
-  /* Better scrolling on mobile */
+  /* ── Native scroll momentum ─────────────────────────────────────────────── */
   body {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
   }
 
-  /* Prevent text selection on buttons - Better UX */
-  button,
-  .button {
+  /* ── Tap highlight / selection suppression ──────────────────────────────── */
+  button {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     user-select: none;
-    touch-action: manipulation; /* Prevents double-tap zoom */
+    touch-action: manipulation;
   }
 
-  /* Better active states for touch - Immediate feedback */
+  /* ── Active-state scale feedback ────────────────────────────────────────── */
   button:active,
-  .button:active,
   a:active {
     transform: scale(0.95);
     opacity: 0.85;
@@ -125,7 +106,7 @@
       opacity var(--transition-fast) var(--transition-ease);
   }
 
-  /* Enhanced touch feedback with ripple effect */
+  /* ── Ripple helper ──────────────────────────────────────────────────────── */
   .touch-ripple {
     position: relative;
     overflow: hidden;
@@ -151,15 +132,8 @@
     height: 300px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .touch-ripple::after {
-      transition: none;
-    }
-  }
-
-  /* Better focus states for touch devices */
+  /* ── Focus-visible for touch ─────────────────────────────────────────────── */
   button:focus-visible,
-  .button:focus-visible,
   a:focus-visible {
     outline: var(--focus-outline-width) solid var(--focus-ring-color);
     outline-offset: var(--focus-outline-offset);
@@ -167,20 +141,18 @@
   }
 }
 
-/* Tablet optimizations */
+/* ── Tablet optimisations ───────────────────────────────────────────────── */
 @media (width >= 769px) and (width <= 1024px) {
-  /* Optimize spacing for tablet */
   .container {
     padding: 0 var(--spacing-3xl);
   }
 
-  /* Better grid layouts */
   .grid-tablet {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Landscape mobile */
+/* ── Landscape mobile ───────────────────────────────────────────────────── */
 @media (width <= 768px) and (orientation: landscape) {
   .hero {
     min-height: 100vh;
@@ -192,16 +164,15 @@
   }
 }
 
-/* High DPI displays */
+/* ── High DPI ───────────────────────────────────────────────────────────── */
 @media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
-  /* Sharper borders and shadows */
   .card,
-  .button {
+  button {
     border-width: 0.5px;
   }
 }
 
-/* Dark mode mobile - Using design tokens */
+/* ── Dark mode mobile ───────────────────────────────────────────────────── */
 @media (width <= 768px) {
   .dark .mobile-menu {
     background: var(--bg-overlay);
@@ -209,17 +180,18 @@
   }
 }
 
-/* Reduced motion support for mobile */
+/* ── Reduced motion ─────────────────────────────────────────────────────── */
 @media (width <= 768px) and (prefers-reduced-motion: reduce) {
   button:active,
-  .button:active,
   a:active {
     transform: none;
     transition: none;
   }
 
-  .pull-to-refresh {
+  .pull-to-refresh,
+  .touch-ripple::after {
     transition: none;
+    animation: none;
   }
 
   .mobile-menu {

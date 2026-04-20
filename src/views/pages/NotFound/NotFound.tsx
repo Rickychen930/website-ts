@@ -4,11 +4,11 @@
  */
 
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
-import { Button } from "@/views/components/ui/Button";
+import { LinkButton } from "@/views/components/ui/Button";
 import styles from "./NotFound.module.css";
 
 export const NotFound: React.FC = () => {
@@ -41,12 +41,16 @@ export const NotFound: React.FC = () => {
             </Typography>
           )}
           <div className={styles.actions}>
-            <Link to="/" aria-label="Back to home">
-              <Button variant="primary">Back to Home</Button>
-            </Link>
-            <Link to="/learning" aria-label="Go to Learning">
-              <Button variant="outline">Learning</Button>
-            </Link>
+            <LinkButton to="/" variant="primary" aria-label="Back to home">
+              Back to Home
+            </LinkButton>
+            <LinkButton
+              to="/learning"
+              variant="outline"
+              aria-label="Go to Learning"
+            >
+              Learning
+            </LinkButton>
           </div>
         </div>
       </div>

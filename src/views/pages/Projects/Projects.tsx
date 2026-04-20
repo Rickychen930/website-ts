@@ -4,14 +4,13 @@
  */
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Loading } from "@/views/components/ui/Loading";
 import { Typography } from "@/views/components/ui/Typography";
-import { Button } from "@/views/components/ui/Button";
+import { Button, LinkButton } from "@/views/components/ui/Button";
 import { PageError } from "@/views/components/ui/PageError";
 import { ProjectCard } from "@/views/components/domain/ProjectCard";
 import { sitePageTitle } from "@/config/site-defaults";
@@ -129,15 +128,20 @@ export const Projects: React.FC = () => {
               goals and constraints. Happy to talk scope, stack, and timeline.
             </Typography>
             <div className={styles.ctaActions}>
-              <Link
+              <LinkButton
                 to="/contact"
+                variant="primary"
                 aria-label="Start a conversation on the contact page"
               >
-                <Button variant="primary">Get in touch</Button>
-              </Link>
-              <Link to="/about" aria-label="Read more on the about page">
-                <Button variant="outline">About &amp; background</Button>
-              </Link>
+                Get in touch
+              </LinkButton>
+              <LinkButton
+                to="/about"
+                variant="outline"
+                aria-label="Read more on the about page"
+              >
+                About &amp; background
+              </LinkButton>
             </div>
             <Typography
               variant="small"
@@ -196,12 +200,20 @@ export const Projects: React.FC = () => {
                 </Button>
               ) : (
                 <>
-                  <Link to="/contact" aria-label="Get in touch">
-                    <Button variant="primary">Get in Touch</Button>
-                  </Link>
-                  <Link to="/" aria-label="Back to home">
-                    <Button variant="outline">Back to Home</Button>
-                  </Link>
+                  <LinkButton
+                    to="/contact"
+                    variant="primary"
+                    aria-label="Get in touch"
+                  >
+                    Get in Touch
+                  </LinkButton>
+                  <LinkButton
+                    to="/"
+                    variant="outline"
+                    aria-label="Back to home"
+                  >
+                    Back to Home
+                  </LinkButton>
                 </>
               )}
             </div>

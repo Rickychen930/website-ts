@@ -36,7 +36,7 @@ export const StatItem: React.FC<StatItemProps> = ({ stat, index = 0 }) => {
       ref={elementRef as React.RefObject<HTMLDivElement>}
       className={`${styles.statItem} scroll-reveal ${isVisible ? "revealed" : ""}`}
     >
-      <Typography variant="h2" weight="bold" className={styles.value}>
+      <Typography variant="h2" as="p" weight="bold" className={styles.value}>
         {displayValue}
         {stat.unit && <span className={styles.unit}>{stat.unit}</span>}
       </Typography>

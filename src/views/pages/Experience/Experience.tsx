@@ -4,7 +4,6 @@
  */
 
 import React from "react";
-import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -14,7 +13,7 @@ import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import { ExperienceItem } from "@/views/components/domain/ExperienceItem";
-import { Button } from "@/views/components/ui/Button";
+import { LinkButton } from "@/views/components/ui/Button";
 import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Experience.module.css";
 
@@ -40,8 +39,8 @@ export const Experience: React.FC = () => {
     const isProfileNotFound = error?.message?.includes("Profile not found");
     const tip = isProfileNotFound ? (
       <>
-        💡 Tip: Make sure the database is seeded. Run <code>npm run seed</code>{" "}
-        in the backend directory.
+        Tip: Make sure the database is seeded. Run <code>npm run seed</code> in
+        the backend directory.
       </>
     ) : undefined;
 
@@ -112,12 +111,16 @@ export const Experience: React.FC = () => {
               in touch in the meantime.
             </Typography>
             <div className={styles.emptyActions}>
-              <Link to="/projects" aria-label="View projects">
-                <Button variant="outline">View Projects</Button>
-              </Link>
-              <Link to="/contact" aria-label="Contact">
-                <Button variant="primary">Get in Touch</Button>
-              </Link>
+              <LinkButton
+                to="/projects"
+                variant="outline"
+                aria-label="View projects"
+              >
+                View Projects
+              </LinkButton>
+              <LinkButton to="/contact" variant="primary" aria-label="Contact">
+                Get in Touch
+              </LinkButton>
             </div>
           </div>
         </div>

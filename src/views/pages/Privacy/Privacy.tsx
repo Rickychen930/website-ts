@@ -3,12 +3,11 @@
  */
 
 import React from "react";
-import { Link } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
-import { Button } from "@/views/components/ui/Button";
+import { LinkButton } from "@/views/components/ui/Button";
 import { sitePageTitle } from "@/config/site-defaults";
 import styles from "./Privacy.module.css";
 
@@ -39,12 +38,16 @@ export const Privacy: React.FC = () => {
               will be published here when applicable.
             </Typography>
             <div className={styles.actions}>
-              <Link to="/contact" aria-label="Contact me">
-                <Button variant="outline">Contact</Button>
-              </Link>
-              <Link to="/" aria-label="Back to home">
-                <Button variant="ghost">Back to Home</Button>
-              </Link>
+              <LinkButton
+                to="/contact"
+                variant="outline"
+                aria-label="Contact me"
+              >
+                Contact
+              </LinkButton>
+              <LinkButton to="/" variant="ghost" aria-label="Back to home">
+                Back to Home
+              </LinkButton>
             </div>
           </div>
         </div>

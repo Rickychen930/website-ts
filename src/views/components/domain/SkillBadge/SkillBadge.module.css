@@ -49,18 +49,20 @@
   pointer-events: none;
 }
 
-.skillBadge:hover::before {
-  opacity: 1;
-}
+@media (hover: hover) and (pointer: fine) {
+  .skillBadge:hover::before {
+    opacity: 1;
+  }
 
-.skillBadge:hover::after {
-  opacity: 1;
-}
+  .skillBadge:hover::after {
+    opacity: 1;
+  }
 
-.skillBadge:hover {
-  border-color: var(--color-accent-400);
-  box-shadow: var(--shadow-xl), var(--shadow-glow);
-  transform: translateY(calc(var(--spacing-md) * -1.5)) scale(1.03);
+  .skillBadge:hover {
+    border-color: var(--color-accent-400);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    transform: translateY(calc(var(--spacing-md) * -1.5)) scale(1.03);
+  }
 }
 
 .skillBadge:focus-within {
