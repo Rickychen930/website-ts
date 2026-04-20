@@ -6,14 +6,12 @@ import React, { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
-import type { SoftSkill } from "@/types/domain";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { SkillBadge } from "@/views/components/domain/SkillBadge";
-import { SoftSkillBadge } from "@/views/components/domain/SoftSkillBadge";
 import { CertificationCard } from "@/views/components/domain/CertificationCard";
 import { AcademicItem } from "@/views/components/domain/AcademicItem";
 import { HonorCard } from "@/views/components/domain/HonorCard";
@@ -26,15 +24,6 @@ import {
   sitePageTitle,
 } from "@/config/site-defaults";
 import styles from "./About.module.css";
-
-const categoryLabels: Record<SoftSkill["category"], string> = {
-  leadership: "Leadership",
-  communication: "Communication",
-  "problem-solving": "Problem Solving",
-  collaboration: "Collaboration",
-  adaptability: "Adaptability",
-  other: "Other",
-};
 
 function initialsFromName(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -490,59 +479,6 @@ export const About: React.FC = () => {
               </div>
             </div>
           )}
-        </Section>
-      )}
-
-      {profile.softSkills.length > 0 && (
-        <Section
-          id="about-collab"
-          label="Collaboration"
-          title="How I work with others"
-          subtitle="How I show up in teams, handle ambiguity, and communicate across disciplines."
-          variant="alt"
-          headerAlign="start"
-          titleDecoration="none"
-        >
-          <div className={styles.softShell}>
-            {Object.entries(
-              profile.softSkills.reduce(
-                (acc, skill) => {
-                  if (!acc[skill.category]) acc[skill.category] = [];
-                  acc[skill.category].push(skill);
-                  return acc;
-                },
-                {} as Record<SoftSkill["category"], SoftSkill[]>,
-              ),
-            ).map(([category, skills]) => (
-              <section
-                key={category}
-                className={styles.softGroup}
-                aria-labelledby={`ab-soft-${category}`}
-              >
-                <Typography
-                  variant="h4"
-                  weight="semibold"
-                  className={styles.softGroupTitle}
-                  as="h3"
-                  id={`ab-soft-${category}`}
-                >
-                  {categoryLabels[category as SoftSkill["category"]] ||
-                    category}
-                </Typography>
-                <div
-                  className={styles.softCloud}
-                  role="list"
-                  aria-label={`${category} soft skills`}
-                >
-                  {skills.map((skill) => (
-                    <div key={skill.id} role="listitem">
-                      <SoftSkillBadge softSkill={skill} showCategory={false} />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
         </Section>
       )}
     </div>

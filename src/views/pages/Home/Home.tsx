@@ -26,7 +26,6 @@ import {
   SITE_DEFAULT_KEYWORDS,
 } from "@/config/site-defaults";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { DownloadResume } from "@/components/DownloadResume";
 import { HeroMeshArt } from "@/components/PortfolioVisuals";
 import styles from "./Home.module.css";
 
@@ -194,7 +193,6 @@ export const Home: React.FC = () => {
               >
                 Get in touch
               </LinkButton>
-              <DownloadResume />
             </div>
 
             {marqueeLabels.length > 0 && (
@@ -304,55 +302,52 @@ export const Home: React.FC = () => {
           aria-labelledby="experience-preview-title"
         >
           <ScrollReveal direction="up" delay={0}>
-            <div className={styles.sectionRail}>
-              <div className={styles.trackAccent} aria-hidden="true" />
-              <ul
-                className={styles.experienceList}
-                aria-label="Recent experience"
+            <ul
+              className={styles.experienceList}
+              aria-label="Recent experience"
+            >
+              {experiencePreview.map((exp) => (
+                <li key={exp.id} className={styles.experienceItem}>
+                  <div className={styles.experienceItemHeader}>
+                    <Typography
+                      variant="h5"
+                      weight="semibold"
+                      className={styles.experiencePosition}
+                    >
+                      {exp.position}
+                    </Typography>
+                    <Typography variant="body" color="secondary" as="span">
+                      {exp.company}
+                      {exp.location ? ` · ${exp.location}` : ""}
+                    </Typography>
+                    <Typography variant="small" color="tertiary" as="span">
+                      {exp.startDate}
+                      {exp.endDate
+                        ? ` – ${exp.endDate}`
+                        : exp.isCurrent
+                          ? " – Present"
+                          : ""}
+                    </Typography>
+                  </div>
+                  {(exp.description || exp.achievements?.[0]) && (
+                    <p className={styles.experienceSnippet}>
+                      {exp.achievements?.[0] ||
+                        (exp.description.length > 160
+                          ? `${exp.description.slice(0, 160)}…`
+                          : exp.description)}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div className={styles.experienceSeeMore}>
+              <Link
+                to="/experience"
+                className={styles.experienceSeeMoreLink}
+                aria-label="See full experience and career timeline"
               >
-                {experiencePreview.map((exp) => (
-                  <li key={exp.id} className={styles.experienceItem}>
-                    <div className={styles.experienceItemHeader}>
-                      <Typography
-                        variant="h5"
-                        weight="semibold"
-                        className={styles.experiencePosition}
-                      >
-                        {exp.position}
-                      </Typography>
-                      <Typography variant="body" color="secondary" as="span">
-                        {exp.company}
-                        {exp.location ? ` · ${exp.location}` : ""}
-                      </Typography>
-                      <Typography variant="small" color="tertiary" as="span">
-                        {exp.startDate}
-                        {exp.endDate
-                          ? ` – ${exp.endDate}`
-                          : exp.isCurrent
-                            ? " – Present"
-                            : ""}
-                      </Typography>
-                    </div>
-                    {(exp.description || exp.achievements?.[0]) && (
-                      <p className={styles.experienceSnippet}>
-                        {exp.achievements?.[0] ||
-                          (exp.description.length > 160
-                            ? `${exp.description.slice(0, 160)}…`
-                            : exp.description)}
-                      </p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <div className={styles.experienceSeeMore}>
-                <Link
-                  to="/experience"
-                  className={styles.experienceSeeMoreLink}
-                  aria-label="See full experience and career timeline"
-                >
-                  Full timeline →
-                </Link>
-              </div>
+                Full timeline →
+              </Link>
             </div>
           </ScrollReveal>
         </Section>
@@ -368,19 +363,16 @@ export const Home: React.FC = () => {
           aria-labelledby="stats-title"
         >
           <ScrollReveal direction="up" delay={80}>
-            <div className={styles.sectionRail}>
-              <div className={styles.trackAccent} aria-hidden="true" />
-              <div
-                className={styles.statsGrid}
-                role="list"
-                aria-label="Statistics"
-              >
-                {profile.stats.map((stat, index) => (
-                  <div key={stat.id} role="listitem">
-                    <StatItem stat={stat} index={index} />
-                  </div>
-                ))}
-              </div>
+            <div
+              className={styles.statsGrid}
+              role="list"
+              aria-label="Statistics"
+            >
+              {profile.stats.map((stat, index) => (
+                <div key={stat.id} role="listitem">
+                  <StatItem stat={stat} index={index} />
+                </div>
+              ))}
             </div>
           </ScrollReveal>
         </Section>
@@ -398,19 +390,16 @@ export const Home: React.FC = () => {
           aria-labelledby="testimonials-title"
         >
           <ScrollReveal direction="up" delay={80}>
-            <div className={styles.sectionRail}>
-              <div className={styles.trackAccent} aria-hidden="true" />
-              <div
-                className={styles.testimonialsGrid}
-                role="list"
-                aria-label="Testimonials"
-              >
-                {profile.testimonials.map((testimonial) => (
-                  <div key={testimonial.id} role="listitem">
-                    <TestimonialCard testimonial={testimonial} />
-                  </div>
-                ))}
-              </div>
+            <div
+              className={styles.testimonialsGrid}
+              role="list"
+              aria-label="Testimonials"
+            >
+              {profile.testimonials.map((testimonial) => (
+                <div key={testimonial.id} role="listitem">
+                  <TestimonialCard testimonial={testimonial} />
+                </div>
+              ))}
             </div>
           </ScrollReveal>
         </Section>

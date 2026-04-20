@@ -30,15 +30,6 @@ export const AcademicItem: React.FC<AcademicItemProps> = ({ academic }) => {
           {formatDateRange(academic.startDate, academic.endDate)}
         </Typography>
       </div>
-      {academic.description && (
-        <Typography
-          variant="body"
-          color="secondary"
-          className={styles.description}
-        >
-          {academic.description}
-        </Typography>
-      )}
     </div>
   );
 };

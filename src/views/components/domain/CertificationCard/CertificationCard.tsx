@@ -37,11 +37,6 @@ export const CertificationCard: React.FC<CertificationCardProps> = ({
             Expires: {formatDate(certification.expiryDate)}
           </Typography>
         )}
-        {certification.credentialId && (
-          <Typography variant="caption" color="tertiary">
-            Credential ID: {certification.credentialId}
-          </Typography>
-        )}
       </div>
 
       {certification.credentialUrl && (
