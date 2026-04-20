@@ -778,20 +778,6 @@
   flex-shrink: 0;
 }
 
-.heroActions a.heroCtaPrimary {
-  font-weight: var(--font-weight-semibold);
-}
-
-.heroActions a.heroCtaPrimary :global(button) {
-  box-shadow:
-    var(--shadow-md),
-    0 0 0 1px rgba(var(--color-accent-rgb), 0.18);
-}
-
-.heroActions a.heroCtaPrimary:hover :global(button) {
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
-}
-
 .heroActions a:hover {
   transform: translateY(-2px);
   filter: brightness(1.02);
@@ -1245,6 +1231,29 @@
 
 .dark .exploreCard:hover .exploreLink {
   color: var(--color-accent-300);
+}
+
+.ctaSecondaryLinks {
+  display: flex;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-sm);
+  margin-top: var(--spacing-2xl);
+}
+
+.ctaSecondaryLinks a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctaSecondaryLinks a:hover {
+    color: var(--color-accent-500);
+  }
 }
 
 @media (width <= 640px) {

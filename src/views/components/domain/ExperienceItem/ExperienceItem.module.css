@@ -211,11 +211,6 @@
   margin-top: var(--spacing-md);
 }
 
-.technologiesLabel {
-  width: 100%;
-  margin-bottom: var(--spacing-xs);
-}
-
 .techTag {
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-md);
@@ -259,11 +254,6 @@
   border-color: var(--color-primary-alpha-50);
   background-color: var(--bg-secondary);
   color: var(--color-primary-300);
-}
-
-.skillsLabel {
-  display: block;
-  margin-bottom: var(--spacing-sm);
 }
 
 .skillsGrid {

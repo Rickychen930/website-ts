@@ -122,14 +122,6 @@ export const ExperienceItem: React.FC<ExperienceItemProps> = ({
 
         {experience.technologies.length > 0 && (
           <div className={styles.technologies}>
-            <Typography
-              variant="small"
-              weight="semibold"
-              color="secondary"
-              className={styles.technologiesLabel}
-            >
-              Technologies:
-            </Typography>
             {experience.technologies.map((tech, index) => (
               <span key={index} className={styles.techTag}>
                 {tech}
@@ -140,14 +132,6 @@ export const ExperienceItem: React.FC<ExperienceItemProps> = ({
 
         {relatedSkills.length > 0 && (
           <div className={styles.relatedSkills}>
-            <Typography
-              variant="small"
-              weight="semibold"
-              color="secondary"
-              className={styles.skillsLabel}
-            >
-              Related Skills:
-            </Typography>
             <div className={styles.skillsGrid}>
               {relatedSkills.map((skill) => (
                 <SkillBadge

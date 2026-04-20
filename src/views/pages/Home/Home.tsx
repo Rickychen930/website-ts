@@ -458,185 +458,91 @@ export const Home: React.FC = () => {
 
       <Section
         label="Next"
-        title="Keep going"
-        subtitle="Explicit paths forward — the same clarity you would expect from a well-designed product surface."
+        title="What's next?"
+        subtitle="Start a conversation or explore the full body of work."
         id="explore"
-        headerAlign="start"
+        headerAlign="center"
         aria-labelledby="explore-title"
       >
         <ScrollReveal direction="up" delay={0}>
-          <div className={styles.sectionRail}>
-            <div className={styles.trackAccent} aria-hidden="true" />
-            <nav
-              className={styles.exploreGrid}
-              aria-label="Explore portfolio sections"
+          <nav className={styles.exploreGrid} aria-label="Primary actions">
+            <Link
+              to="/contact"
+              className={`${styles.exploreCard} ${styles.exploreCardHighlight}`}
+              aria-label="Get in touch"
             >
-              <Link
-                to="/resume"
-                className={`${styles.exploreCard} ${styles.exploreCardHighlight}`}
-                aria-label="View resume and download CV"
-              >
-                <span className={styles.exploreIcon} aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <path d="M14 2v6h6" />
-                    <path d="M16 13H8" />
-                    <path d="M16 17H8" />
-                    <path d="M10 9H8" />
-                  </svg>
-                </span>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  className={styles.exploreTitle}
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  Resume
-                </Typography>
-                <Typography variant="small" color="secondary" as="p">
-                  CV & download
-                </Typography>
-                <span className={styles.exploreLink}>Open resume →</span>
-              </Link>
-              <Link
-                to="/contact"
-                className={`${styles.exploreCard} ${styles.exploreCardHighlight}`}
-                aria-label="Get in touch"
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <path d="m22 6-10 7L2 6" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
               >
-                <span className={styles.exploreIcon} aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <path d="m22 6-10 7L2 6" />
-                  </svg>
-                </span>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  className={styles.exploreTitle}
+                Get in touch
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                Open to new projects and roles. I reply within 1–2 business
+                days.
+              </Typography>
+              <span className={styles.exploreLink}>Start a conversation →</span>
+            </Link>
+            <Link
+              to="/projects"
+              className={styles.exploreCard}
+              aria-label="Browse all projects"
+            >
+              <span className={styles.exploreIcon} aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  Contact
-                </Typography>
-                <Typography variant="small" color="secondary" as="p">
-                  Start a conversation
-                </Typography>
-                <span className={styles.exploreLink}>Say hello →</span>
-              </Link>
-              <Link
-                to="/about"
-                className={styles.exploreCard}
-                aria-label="About – skills, education"
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
+              </span>
+              <Typography
+                variant="h5"
+                weight="semibold"
+                className={styles.exploreTitle}
               >
-                <span className={styles.exploreIcon} aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                </span>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  className={styles.exploreTitle}
-                >
-                  About
-                </Typography>
-                <Typography variant="small" color="secondary" as="p">
-                  Skills & education
-                </Typography>
-                <span className={styles.exploreLink}>Learn more →</span>
-              </Link>
-              <Link
-                to="/experience"
-                className={styles.exploreCard}
-                aria-label="Work experience timeline"
-              >
-                <span className={styles.exploreIcon} aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                  </svg>
-                </span>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  className={styles.exploreTitle}
-                >
-                  Experience
-                </Typography>
-                <Typography variant="small" color="secondary" as="p">
-                  Career timeline
-                </Typography>
-                <span className={styles.exploreLink}>View timeline →</span>
-              </Link>
-              <Link
-                to="/learning"
-                className={styles.exploreCard}
-                aria-label="Learning curriculum"
-              >
-                <span className={styles.exploreIcon} aria-hidden="true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                    <path d="M8 7h8" />
-                    <path d="M8 11h8" />
-                  </svg>
-                </span>
-                <Typography
-                  variant="h5"
-                  weight="semibold"
-                  className={styles.exploreTitle}
-                >
-                  Learning
-                </Typography>
-                <Typography variant="small" color="secondary" as="p">
-                  Curriculum & topics
-                </Typography>
-                <span className={styles.exploreLink}>Browse →</span>
-              </Link>
-            </nav>
+                Projects
+              </Typography>
+              <Typography variant="small" color="secondary" as="p">
+                Mobile apps, web platforms, and systems work — all with source
+                and context.
+              </Typography>
+              <span className={styles.exploreLink}>Browse projects →</span>
+            </Link>
+          </nav>
+          <div className={styles.ctaSecondaryLinks}>
+            <Link to="/about">About</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/experience">Experience</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/learning">Learning</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/resume">Resume</Link>
           </div>
         </ScrollReveal>
       </Section>

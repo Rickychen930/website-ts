@@ -319,11 +319,6 @@
   filter: drop-shadow(0 14px 36px rgba(var(--color-accent-rgb), 0.22));
 }
 
-.viewAllButton {
-  margin-top: var(--spacing-xl);
-  text-align: center;
-}
-
 .emptyActions {
   display: flex;
   flex-wrap: wrap;
@@ -334,26 +329,6 @@
 
 .emptyActions a {
   text-decoration: none;
-}
-
-.loading,
-.error {
-  display: flex;
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--spacing-xl);
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-lg);
-  min-height: 50vh;
-  max-width: var(--container-md);
-  box-sizing: border-box;
-}
-
-.retryButton {
-  margin-top: var(--spacing-md);
 }
 
 /* Responsive Design */
