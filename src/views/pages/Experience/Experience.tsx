@@ -68,8 +68,8 @@ export const Experience: React.FC = () => {
       subtitle="Roles, scope, and outcomes — newest and current work first."
       info={
         sortedExperiences.length === 0
-          ? "No timeline entries yet"
-          : `${sortedExperiences.length} position${sortedExperiences.length !== 1 ? "s" : ""} · newest & current first`
+          ? undefined
+          : `${sortedExperiences.length} position${sortedExperiences.length !== 1 ? "s" : ""}`
       }
       headerAlign="start"
       surface="hero"

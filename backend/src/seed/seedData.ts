@@ -54,13 +54,6 @@ export const seedProfileData = {
       credentialId: "ORACLE-DB-DEV-2021",
       credentialUrl: "https://www.oracle.com",
     },
-    {
-      name: "Multiple Programming Languages Certification",
-      issuer: "SoloLearn",
-      issueDate: "2020-02-01",
-      credentialId: "SOLOLEARN-MULTI-LANG-2020",
-      credentialUrl: "https://www.sololearn.com",
-    },
   ],
 
   contacts: [
@@ -201,35 +194,19 @@ export const seedProfileData = {
 
   honors: [
     {
-      title: "LeetCode",
-      issuer: "LeetCode Platform",
-      date: "2024-01-01",
-      description:
-        "Solved 84+ problems covering data structures, algorithms, and system design. Skilled in C++, Python, and Java. Focused on improving problem-solving efficiency and code optimization.",
-      url: "https://leetcode.com/rickychen930",
-    },
-    {
-      title: "Kattis Competitive Programmer",
-      issuer: "Kattis Platform",
-      date: "2024-01-01",
-      description:
-        "Solved 500+ algorithmic problems with a Kattis score of 220.4 (global rank 5510). Strong foundation in competitive programming using C++, Python, and Java — covering dynamic programming, graphs, and data structures.",
-      url: "https://open.kattis.com/users/rickychen930",
-    },
-    {
-      title: "Codeforces Specialist",
-      issuer: "Codeforces Platform",
-      date: "2024-01-01",
-      description:
-        "Achieved Specialist rating (1450) with 171 problems solved. Actively participates in contests and algorithmic challenges. Consistently solving problems across various difficulty levels including dynamic programming, graph algorithms, and data structures.",
-      url: "https://codeforces.com/profile/rickychen930",
-    },
-    {
       title: "3rd Place – Competitive Programming",
       issuer: "Widyatama International Coding Competition",
       date: "2021-01-15",
       description:
         "Ranked 3rd in a Southeast Asia-wide coding competition. Collaborated in a team to solve advanced algorithmic challenges using C++, Python, and Java under time pressure. Demonstrated strong problem-solving skills and algorithmic thinking.",
+    },
+    {
+      title: "Competitive Programming",
+      issuer: "LeetCode · Kattis · Codeforces",
+      date: "2024-01-01",
+      description:
+        "Active on multiple competitive programming platforms: 84+ problems on LeetCode, 500+ on Kattis (score 220.4, rank 5510 globally), and Specialist rating (1450) with 171 problems on Codeforces. Strong in C++, Python, and Java across dynamic programming, graphs, and data structures.",
+      url: "https://codeforces.com/profile/rickychen930",
     },
   ],
 

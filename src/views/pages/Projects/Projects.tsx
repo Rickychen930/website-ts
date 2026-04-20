@@ -64,8 +64,8 @@ export const Projects: React.FC = () => {
     <Section
       label="Work"
       title="Projects"
-      subtitle="Case studies and shipped work — from studio sites and commerce to mobile and platform plugins. Use filters to scan by stack, like a public portfolio grid."
-      info={`${profile.projects.length} project${profile.projects.length !== 1 ? "s" : ""} · filter by category`}
+      subtitle="Case studies and shipped work — studio sites, e-commerce, mobile, and platform plugins."
+      info={`${profile.projects.length} project${profile.projects.length !== 1 ? "s" : ""}`}
       headerAlign="start"
       id="projects"
       surface="hero"

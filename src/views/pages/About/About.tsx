@@ -137,11 +137,6 @@ export const About: React.FC = () => {
         label="Profile"
         title="About"
         subtitle="Who I am, what I build with, and how I collaborate."
-        info={
-          showOpen
-            ? "Open to relevant opportunities · details below"
-            : "Focused on current commitments"
-        }
         headerAlign="start"
         titleDecoration="none"
         surface="hero"
@@ -363,7 +358,7 @@ export const About: React.FC = () => {
                 Technical skills not listed yet
               </Typography>
               <Typography variant="body" color="tertiary">
-                Add skills in your profile — they will appear here by category.
+                No technical skills listed yet.
               </Typography>
             </div>
           ) : (
@@ -421,7 +416,7 @@ export const About: React.FC = () => {
         <Section
           id="about-credentials"
           label="Credentials"
-          title="Education & proof"
+          title="Education"
           subtitle="Degrees, certifications, and recognition."
           headerAlign="start"
           titleDecoration="none"

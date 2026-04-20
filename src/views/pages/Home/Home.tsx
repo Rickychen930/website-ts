@@ -260,7 +260,7 @@ export const Home: React.FC = () => {
         <Section
           label="Work"
           title="Selected projects"
-          subtitle="Shipped work across mobile, web, and platform — filtered by category."
+          subtitle="Recent shipped work across mobile, web, and platform."
           id="projects-preview"
           variant="alt"
           headerAlign="start"

@@ -129,8 +129,8 @@ export const Contact: React.FC = () => {
       subtitle="Direct channels and a short form — I read every message."
       info={
         listedChannels > 0
-          ? `${listedChannels} channel${listedChannels !== 1 ? "s" : ""} listed · secure form below`
-          : "Secure form — add channels in your profile to show them here"
+          ? `${listedChannels} channel${listedChannels !== 1 ? "s" : ""}`
+          : undefined
       }
       headerAlign="start"
       surface="hero"

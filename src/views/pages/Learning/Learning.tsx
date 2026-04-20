@@ -104,8 +104,7 @@ export const Learning: React.FC = () => {
               No sections yet
             </Typography>
             <Typography variant="body" color="secondary">
-              No learning sections published yet. Run the seed script or check
-              back later.
+              No learning sections published yet. Check back later.
             </Typography>
             <div className={styles.emptyStateActions}>
               <Link to="/" className={styles.emptyStateLink}>
