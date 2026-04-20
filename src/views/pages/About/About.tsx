@@ -312,7 +312,7 @@ export const About: React.FC = () => {
         id="about-stack"
         label="Capabilities"
         title="Stack & languages"
-        subtitle="One surface: categories as bands and each skill as a compact chip — level and tenure at a glance."
+        subtitle="From languages and frameworks to tooling and cloud — organized by category."
         variant="alt"
         headerAlign="start"
       >
@@ -422,7 +422,7 @@ export const About: React.FC = () => {
           id="about-credentials"
           label="Credentials"
           title="Education & proof"
-          subtitle="Formal training, certifications, and recognition — in one place."
+          subtitle="Degrees, certifications, and recognition."
           headerAlign="start"
           titleDecoration="none"
         >
@@ -503,7 +503,7 @@ export const About: React.FC = () => {
           id="about-collab"
           label="Collaboration"
           title="How I work with others"
-          subtitle="Soft skills grouped — the glue next to the stack."
+          subtitle="How I show up in teams, handle ambiguity, and communicate across disciplines."
           variant="alt"
           headerAlign="start"
           titleDecoration="none"

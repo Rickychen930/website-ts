@@ -30,21 +30,6 @@ import { DownloadResume } from "@/components/DownloadResume";
 import { HeroMeshArt } from "@/components/PortfolioVisuals";
 import styles from "./Home.module.css";
 
-const STORY_BEATS = [
-  {
-    title: "Context",
-    body: "Understand the problem space before touching code or pixels — so solutions stay grounded in real constraints.",
-  },
-  {
-    title: "Build",
-    body: "Ship tangible artifacts: prototypes, systems, and interfaces — including the page you are reading now.",
-  },
-  {
-    title: "Measure",
-    body: "Let usage and feedback guide refinement — not feature sprawl for its own sake.",
-  },
-] as const;
-
 export const Home: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
   const prefersReducedMotion = useReducedMotion();
@@ -271,36 +256,11 @@ export const Home: React.FC = () => {
         </div>
       </Section>
 
-      <section
-        className={styles.storyBand}
-        aria-labelledby="home-story-heading"
-      >
-        <div className={styles.storyBandInner}>
-          <h2 id="home-story-heading" className={styles.storyBandTitle}>
-            How this site is organized
-          </h2>
-          <p className={styles.storyBandLead}>
-            Each section exists on purpose — not as filler. The flow from
-            introduction through work, experience, impact, and next steps is one
-            continuous thread, not a generic card grid.
-          </p>
-          <ul className={styles.storySteps}>
-            {STORY_BEATS.map((beat) => (
-              <li key={beat.title} className={styles.storyStep}>
-                <span className={styles.storyStepMark} aria-hidden="true" />
-                <span className={styles.storyStepTitle}>{beat.title}</span>
-                <p className={styles.storyStepBody}>{beat.body}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       {recentProjects.length > 0 && (
         <Section
           label="Work"
           title="Selected projects"
-          subtitle="Concrete slices of work — chosen to inform, not to pad a portfolio."
+          subtitle="Shipped work across mobile, web, and platform — filtered by category."
           id="projects-preview"
           variant="alt"
           headerAlign="start"
@@ -402,7 +362,7 @@ export const Home: React.FC = () => {
         <Section
           label="Impact"
           title="Numbers that matter"
-          subtitle="Metrics included because they tell a story — not vanity counters."
+          subtitle="Outcomes across projects, products, and platforms."
           id="stats"
           headerAlign="start"
           aria-labelledby="stats-title"

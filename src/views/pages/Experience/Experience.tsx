@@ -36,14 +36,6 @@ export const Experience: React.FC = () => {
   }
 
   if (error || !profile) {
-    const isProfileNotFound = error?.message?.includes("Profile not found");
-    const tip = isProfileNotFound ? (
-      <>
-        Tip: Make sure the database is seeded. Run <code>npm run seed</code> in
-        the backend directory.
-      </>
-    ) : undefined;
-
     return (
       <PageError
         title="Failed to load experience"
@@ -51,7 +43,6 @@ export const Experience: React.FC = () => {
           error?.message ||
           "Something went wrong while loading your experience. Please try again shortly."
         }
-        tip={tip}
         onRetry={refetch}
         retryLabel="Retry"
       />

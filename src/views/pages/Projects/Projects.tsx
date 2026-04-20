@@ -116,16 +116,16 @@ export const Projects: React.FC = () => {
               weight="semibold"
               className={styles.ctaTitle}
             >
-              Planning something similar?
+              Want to work together?
             </Typography>
             <Typography
               variant="body"
               color="secondary"
               className={styles.ctaBody}
             >
-              Whether you need a marketing or portfolio site, e‑commerce,
-              booking-led flows, or internal tooling — every build starts with
-              goals and constraints. Happy to talk scope, stack, and timeline.
+              Open to full-time engineering roles and interesting projects.
+              Whether you're recruiting, building a product, or exploring a
+              collaboration — I'd love to hear what you're working on.
             </Typography>
             <div className={styles.ctaActions}>
               <LinkButton

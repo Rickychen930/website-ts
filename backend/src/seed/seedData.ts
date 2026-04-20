@@ -209,11 +209,11 @@ export const seedProfileData = {
       url: "https://leetcode.com/rickychen930",
     },
     {
-      title: "Top Global Programmer",
+      title: "Kattis Competitive Programmer",
       issuer: "Kattis Platform",
       date: "2024-01-01",
       description:
-        "Ranked 5510 globally with a score of 220.4. Ranked among top global programmers. Skilled in C++, Python, and Java. Demonstrates proficiency in competitive programming and algorithmic problem-solving.",
+        "Solved 500+ algorithmic problems with a Kattis score of 220.4 (global rank 5510). Strong foundation in competitive programming using C++, Python, and Java — covering dynamic programming, graphs, and data structures.",
       url: "https://open.kattis.com/users/rickychen930",
     },
     {
