@@ -1,66 +1,18 @@
-/* Learning index — section hero via Section surface; cards keep per-track themes. */
+/* Learning index — pf-page shell via page-patterns.css */
 
-.trackAccent {
-  width: 100%;
-  height: 3px;
-  background: var(--gradient-accent);
-  opacity: 0.92;
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-full);
-}
-
-.wrapper {
+.page {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: var(--spacing-3xl);
   width: 100%;
-  box-sizing: border-box;
 }
 
-.wrapper::before,
-.wrapper::after {
-  position: absolute;
-  z-index: 0;
-  border-radius: 50%;
-  content: "";
-  pointer-events: none;
+.heroStatsBar {
+  /* layout from page-patterns pf-hero-stats */
 }
 
-.wrapper::before {
-  top: -22%;
-  right: -8%;
-  width: min(19rem, 50vw);
-  height: min(19rem, 50vw);
-  background: radial-gradient(
-    circle,
-    rgba(var(--color-accent-rgb), 0.09) 0%,
-    transparent 68%
-  );
-  opacity: 0.9;
-}
-
-.wrapper::after {
-  bottom: -28%;
-  left: -10%;
-  width: min(15rem, 42vw);
-  height: min(15rem, 42vw);
-  background: radial-gradient(
-    circle,
-    rgba(var(--color-violet-rgb), 0.07) 0%,
-    transparent 70%
-  );
-  opacity: 0.85;
-}
-
-.wrapper > * {
-  position: relative;
-  z-index: 1;
+.workspaceInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
 }
 
 /* ----- Grid ----- */
@@ -209,7 +161,7 @@
   width: 2.5rem;
   height: 2.5rem;
   background: rgba(255, 255, 255, 0.3);
-  color: #fff;
+  color: var(--text-inverse);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   font-weight: 700;
@@ -303,7 +255,7 @@
 .startHereBadge {
   padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--color-accent-500);
-  color: #fff;
+  color: var(--text-inverse);
   font-size: var(--font-size-xs);
   font-weight: 600;
   border-radius: var(--radius-full);
@@ -448,7 +400,7 @@
 
 :global(.dark) .sectionIndex {
   background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  color: var(--text-inverse);
 }
 
 /* ----- Print ----- */

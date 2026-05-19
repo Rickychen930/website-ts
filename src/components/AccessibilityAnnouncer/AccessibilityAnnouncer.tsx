@@ -12,7 +12,6 @@ export const AccessibilityAnnouncer: React.FC = () => {
     // Announce page change to screen readers
     const pageNames: Record<string, string> = {
       "/": "Home page",
-      "/about": "About page",
       "/projects": "Projects page",
       "/experience": "Experience page",
       "/contact": "Contact page",

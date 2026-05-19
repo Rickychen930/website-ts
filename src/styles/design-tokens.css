@@ -44,6 +44,13 @@
   --color-success: #0d9488;
   --color-success-50: #ccfbf1;
   --color-success-500: #0d9488;
+  --color-success-light: #a7f3d0;
+  --text-on-accent: #f8fafc;
+  --text-on-success: #0f766e;
+  --mask-fade-solid: #000;
+  --print-bg: #fff;
+  --print-text: #0f172a;
+  --print-border: #0f172a;
   --color-error: #dc2626;
   --color-error-50: #fef2f2;
   --color-error-500: #dc2626;

@@ -1,20 +1,18 @@
-/* Learning section index — content inside Section surface hero */
+/* Learning section index — pf-page shell via page-patterns.css */
 
-.inner {
+.page {
+  position: relative;
   width: 100%;
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: var(--spacing-3xl);
-  box-sizing: border-box;
 }
 
-.trackAccent {
-  width: 100%;
-  height: 3px;
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-full);
-  opacity: 0.92;
+.heroStatsBar {
+  /* layout from page-patterns pf-hero-stats */
+}
+
+.workspaceInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
 }
 
 /* ----- Breadcrumb: minimal, high contrast ----- */
@@ -206,7 +204,7 @@
   width: 2.5rem;
   height: 2.5rem;
   background: var(--topic-accent);
-  color: #fff;
+  color: var(--text-inverse);
   font-size: var(--font-size-sm);
   font-weight: 700;
   align-items: center;
@@ -512,5 +510,5 @@
 }
 
 :global(.dark) .topicIndex {
-  color: #fff;
+  color: var(--text-inverse);
 }

@@ -1,27 +1,38 @@
 /**
- * Contact Page - Contact form and social links
- * Version 2: Uses ProfileContext
+ * Contact — direct channels and message form.
  */
 
-import React, { useState, FormEvent } from "react";
+import React, { useState, type FormEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { contactService } from "@/services/ContactService";
 import { validateContactForm } from "@/utils/formValidation";
 import { trackEvent } from "@/utils/analytics";
-import { ContactChannelIcon } from "@/components/ContactChannelIcon";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { Section } from "@/views/components/layout/Section";
-import { Typography } from "@/views/components/ui/Typography";
+import { sortChannelsForDisplay } from "@/utils/contactChannels";
+import { ContactChannelsPanel } from "@/views/components/domain/ContactChannelsPanel";
+import { PageHeroVisual } from "@/views/components/layout/PageHeroVisual";
 import { Button } from "@/views/components/ui/Button";
-import { Card } from "@/views/components/ui/Card";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
+import {
+  CONTACT_SEO_DESCRIPTION,
+  SITE_BRAND_NAME,
+} from "@/config/site-defaults";
 import styles from "./Contact.module.css";
-import { CONTACT_SEO_DESCRIPTION, sitePageTitle } from "@/config/site-defaults";
+
+const fadeUp = (reduced: boolean, delay = 0) =>
+  reduced
+    ? {}
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
+      };
 
 export const Contact: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
+  const reduced = useReducedMotion() ?? false;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,8 +47,8 @@ export const Contact: React.FC = () => {
 
   useSEO({
     title: profile
-      ? `${profile.name} - Contact | Portfolio`
-      : sitePageTitle("Contact"),
+      ? `${profile.name} — Contact`
+      : `${SITE_BRAND_NAME} — Contact`,
     description: CONTACT_SEO_DESCRIPTION,
     keywords: "contact, get in touch, portfolio",
     type: "website",
@@ -49,26 +60,23 @@ export const Contact: React.FC = () => {
     if (validation.errors[field]) {
       setFormErrors({ ...formErrors, [field]: validation.errors[field] });
     } else {
-      const newErrors = { ...formErrors };
-      delete newErrors[field];
-      setFormErrors(newErrors);
+      const next = { ...formErrors };
+      delete next[field];
+      setFormErrors(next);
     }
   };
 
   const handleChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
-    // Clear error when user starts typing
     if (formErrors[field] && touched[field]) {
-      const newErrors = { ...formErrors };
-      delete newErrors[field];
-      setFormErrors(newErrors);
+      const next = { ...formErrors };
+      delete next[field];
+      setFormErrors(next);
     }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    // Client-side validation
     const validation = validateContactForm(formData);
     if (!validation.isValid) {
       setFormErrors(validation.errors);
@@ -89,15 +97,15 @@ export const Contact: React.FC = () => {
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
       setTouched({});
-      setFormErrors({});
       trackEvent("contact_submit");
-    } catch (error) {
+    } catch (err) {
       setSubmitStatus("error");
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "I couldn't send your message. Please try again in a moment or use the primary contact above.";
-      setFormErrors({ submit: errorMessage });
+      setFormErrors({
+        submit:
+          err instanceof Error
+            ? err.message
+            : "I couldn't send your message. Please try again or use a direct channel.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -118,276 +126,224 @@ export const Contact: React.FC = () => {
     );
   }
 
-  const primaryContact = profile.getPrimaryContact();
-  const contacts = profile.contacts.filter((c) => !c.isPrimary);
-  const listedChannels = (primaryContact ? 1 : 0) + contacts.length;
+  const channels = sortChannelsForDisplay(profile.contacts);
+  const openToWork = profile.openToOpportunities !== false;
 
   return (
-    <Section
-      label="Contact"
-      title="Get in touch"
-      subtitle="Direct channels and a short form — I read every message."
-      info={
-        listedChannels > 0
-          ? `${listedChannels} channel${listedChannels !== 1 ? "s" : ""}`
-          : undefined
-      }
-      headerAlign="start"
-      surface="hero"
+    <motion.div
+      className={`pf-page ${styles.contact}`}
+      initial={reduced ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.35 }}
     >
-      <ScrollReveal direction="up" delay={0}>
-        <div className={styles.inner}>
-          <div className={styles.trackAccent} aria-hidden="true" />
-          <div className={styles.container}>
-            <div className={styles.contactInfo}>
-              <Card variant="elevated" className={styles.contactCard}>
-                <div className={styles.cardHeader}>
-                  <Typography
-                    variant="h4"
-                    weight="semibold"
-                    className={styles.cardTitle}
-                  >
-                    Contact Information
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color="secondary"
-                    as="p"
-                    className={styles.contactMeta}
-                  >
-                    I reply within 1–2 business days.
-                    {profile.location
-                      ? ` Based in ${profile.location}.`
-                      : ""}{" "}
-                    Include a short description of your project or intent for a
-                    faster, more useful reply.
-                  </Typography>
+      <header className="pf-hero" aria-labelledby="contact-hero-title">
+        <div className="pf-hero-mesh" aria-hidden="true" />
+        <motion.div
+          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
+        >
+          <motion.div className="pf-hero-main">
+            <motion.div
+              className={`pf-hero-copy ${styles.heroContent}`}
+              {...fadeUp(reduced)}
+            >
+              <p className="pf-eyebrow">Contact</p>
+              <h1 id="contact-hero-title" className="pf-hero-title">
+                Get in touch
+              </h1>
+              <p className={`pf-hero-lead ${styles.heroLead}`}>
+                Hiring, internships, collaborations, or project inquiries —
+                email, LinkedIn, or the form below. I usually reply within one
+                to two business days.
+              </p>
+            </motion.div>
+
+            <motion.ul
+              className={`pf-hero-stats pf-hero-stats--three ${styles.heroStatsBar}`}
+              aria-label="Contact overview"
+              {...fadeUp(reduced, 0.08)}
+            >
+              <li>
+                <span className="pf-stat-value">{channels.length}</span>
+                <span className="pf-stat-label">Direct channels</span>
+              </li>
+              {profile.location?.trim() ? (
+                <li>
+                  <span className="pf-stat-value">Based in</span>
+                  <span className="pf-stat-label">{profile.location}</span>
+                </li>
+              ) : null}
+              <li>
+                <span className="pf-stat-value">
+                  {openToWork ? "Open" : "Selective"}
+                </span>
+                <span className="pf-stat-label">Availability</span>
+              </li>
+            </motion.ul>
+          </motion.div>
+
+          <PageHeroVisual pageKey="contact" priority />
+        </motion.div>
+      </header>
+
+      <div className="pf-workspace">
+        <div className="pf-workspace-inner">
+          <div className={styles.layout}>
+            <ContactChannelsPanel
+              channels={channels}
+              headingId="contact-channels-title"
+              title="Direct channels"
+              lead={
+                profile.location?.trim()
+                  ? `Based in ${profile.location}. I reply within 1–2 business days.`
+                  : "I reply within 1–2 business days."
+              }
+              variant="sidebar"
+              showQuickLinks
+            />
+
+            <motion.div className={styles.formPanel} {...fadeUp(reduced, 0.06)}>
+              <h2 className={styles.formTitle}>Send a message</h2>
+              <p className={styles.formLead}>
+                Share a bit about your project or role — the more context, the
+                better I can help.
+              </p>
+
+              <form
+                id="contact-form"
+                onSubmit={handleSubmit}
+                className={styles.form}
+                aria-label="Contact form"
+                noValidate
+              >
+                <div className={styles.formGroup}>
+                  <label htmlFor="name">
+                    Name <span className={styles.required}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={(e) => handleChange("name", e.target.value)}
+                    onBlur={() => handleBlur("name")}
+                    required
+                    aria-required="true"
+                    aria-invalid={formErrors.name ? "true" : "false"}
+                    aria-describedby={
+                      formErrors.name ? "name-error" : undefined
+                    }
+                    autoComplete="name"
+                    placeholder="Your name"
+                    className={formErrors.name ? styles.inputError : ""}
+                  />
+                  {formErrors.name && touched.name ? (
+                    <span
+                      id="name-error"
+                      className={styles.errorText}
+                      role="alert"
+                    >
+                      {formErrors.name}
+                    </span>
+                  ) : null}
                 </div>
 
-                <>
-                  {primaryContact && (
-                    <div className={styles.contactItem}>
-                      <Typography
-                        variant="body"
-                        weight="medium"
-                        className={styles.contactLabelRow}
-                      >
-                        <ContactChannelIcon type={primaryContact.type} />
-                        {primaryContact.label}
-                      </Typography>
-                      <a
-                        href={
-                          primaryContact.type === "email"
-                            ? `mailto:${primaryContact.value}`
-                            : primaryContact.type === "phone"
-                              ? `tel:${primaryContact.value}`
-                              : primaryContact.value
-                        }
-                        target={
-                          primaryContact.type === "email" ||
-                          primaryContact.type === "phone"
-                            ? undefined
-                            : "_blank"
-                        }
-                        rel={
-                          primaryContact.type === "email" ||
-                          primaryContact.type === "phone"
-                            ? undefined
-                            : "noopener noreferrer"
-                        }
-                        className={styles.contactLink}
-                      >
-                        {primaryContact.value}
-                      </a>
-                    </div>
-                  )}
-                  {contacts.length > 0 && (
-                    <div className={styles.socialLinks}>
-                      {contacts.map((contact) => {
-                        const href =
-                          contact.type === "email"
-                            ? `mailto:${contact.value}`
-                            : contact.type === "phone"
-                              ? `tel:${contact.value}`
-                              : contact.value;
-
-                        return (
-                          <a
-                            key={contact.id}
-                            href={href}
-                            target={
-                              contact.type === "email" ||
-                              contact.type === "phone"
-                                ? undefined
-                                : "_blank"
-                            }
-                            rel={
-                              contact.type === "email" ||
-                              contact.type === "phone"
-                                ? undefined
-                                : "noopener noreferrer"
-                            }
-                            className={styles.socialLink}
-                          >
-                            <ContactChannelIcon type={contact.type} />
-                            {contact.label}
-                          </a>
-                        );
-                      })}
-                    </div>
-                  )}
-                </>
-              </Card>
-            </div>
-
-            <div className={styles.formContainer}>
-              <Card variant="elevated" className={styles.formCard}>
-                <Typography
-                  variant="h4"
-                  weight="semibold"
-                  className={styles.cardTitle}
-                >
-                  Send a Message
-                </Typography>
-                <form
-                  id="contact-form"
-                  onSubmit={handleSubmit}
-                  className={styles.form}
-                  aria-label="Contact form"
-                  noValidate
-                >
-                  <div className={styles.formGroup}>
-                    <label htmlFor="name">
-                      Name <span aria-label="required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={(e) => handleChange("name", e.target.value)}
-                      onBlur={() => handleBlur("name")}
-                      required
-                      aria-required="true"
-                      aria-invalid={formErrors.name ? "true" : "false"}
-                      aria-describedby={
-                        formErrors.name ? "name-error" : undefined
-                      }
-                      autoComplete="name"
-                      placeholder="Your name"
-                      className={formErrors.name ? styles.inputError : ""}
-                    />
-                    {formErrors.name && touched.name && (
-                      <span
-                        id="name-error"
-                        className={styles.errorText}
-                        role="alert"
-                      >
-                        {formErrors.name}
-                      </span>
-                    )}
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label htmlFor="email">
-                      Email <span aria-label="required">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={(e) => handleChange("email", e.target.value)}
-                      onBlur={() => handleBlur("email")}
-                      required
-                      aria-required="true"
-                      aria-invalid={formErrors.email ? "true" : "false"}
-                      aria-describedby={
-                        formErrors.email ? "email-error" : undefined
-                      }
-                      autoComplete="email"
-                      placeholder="you@example.com"
-                      className={formErrors.email ? styles.inputError : ""}
-                    />
-                    {formErrors.email && touched.email && (
-                      <span
-                        id="email-error"
-                        className={styles.errorText}
-                        role="alert"
-                      >
-                        {formErrors.email}
-                      </span>
-                    )}
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label htmlFor="message">
-                      Message <span aria-label="required">*</span>
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={6}
-                      value={formData.message}
-                      onChange={(e) => handleChange("message", e.target.value)}
-                      onBlur={() => handleBlur("message")}
-                      required
-                      aria-required="true"
-                      aria-invalid={formErrors.message ? "true" : "false"}
-                      aria-describedby={
-                        formErrors.message ? "message-error" : undefined
-                      }
-                      placeholder="Your message..."
-                      className={formErrors.message ? styles.inputError : ""}
-                    />
-                    {formErrors.message && touched.message && (
-                      <span
-                        id="message-error"
-                        className={styles.errorText}
-                        role="alert"
-                      >
-                        {formErrors.message}
-                      </span>
-                    )}
-                  </div>
-                  {submitStatus === "success" && (
-                    <div
-                      className={styles.successMessage}
-                      role="alert"
-                      aria-live="polite"
-                      aria-atomic="true"
-                    >
-                      ✓ Message sent successfully! I&apos;ll get back to you as
-                      soon as possible.
-                    </div>
-                  )}
-                  {submitStatus === "error" && (
-                    <div
-                      className={styles.errorMessage}
-                      role="alert"
-                      aria-live="assertive"
-                      aria-atomic="true"
-                    >
-                      ✗{" "}
-                      {formErrors.submit ||
-                        "I couldn't send your message. Please try again or reach me via the primary contact above."}
-                    </div>
-                  )}
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    fullWidth
-                    isLoading={isSubmitting}
-                    aria-label={
-                      isSubmitting ? "Sending message" : "Send message"
+                <div className={styles.formGroup}>
+                  <label htmlFor="email">
+                    Email <span className={styles.required}>*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    onBlur={() => handleBlur("email")}
+                    required
+                    aria-required="true"
+                    aria-invalid={formErrors.email ? "true" : "false"}
+                    aria-describedby={
+                      formErrors.email ? "email-error" : undefined
                     }
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    className={formErrors.email ? styles.inputError : ""}
+                  />
+                  {formErrors.email && touched.email ? (
+                    <span
+                      id="email-error"
+                      className={styles.errorText}
+                      role="alert"
+                    >
+                      {formErrors.email}
+                    </span>
+                  ) : null}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="message">
+                    Message <span className={styles.required}>*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    value={formData.message}
+                    onChange={(e) => handleChange("message", e.target.value)}
+                    onBlur={() => handleBlur("message")}
+                    required
+                    aria-required="true"
+                    aria-invalid={formErrors.message ? "true" : "false"}
+                    aria-describedby={
+                      formErrors.message ? "message-error" : undefined
+                    }
+                    placeholder="What are you building or hiring for?"
+                    className={formErrors.message ? styles.inputError : ""}
+                  />
+                  {formErrors.message && touched.message ? (
+                    <span
+                      id="message-error"
+                      className={styles.errorText}
+                      role="alert"
+                    >
+                      {formErrors.message}
+                    </span>
+                  ) : null}
+                </div>
+
+                {submitStatus === "success" ? (
+                  <div
+                    className={styles.successMessage}
+                    role="alert"
+                    aria-live="polite"
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </Button>
-                </form>
-              </Card>
-            </div>
+                    Message sent — I&apos;ll get back to you soon.
+                  </div>
+                ) : null}
+
+                {submitStatus === "error" ? (
+                  <div
+                    className={styles.errorMessage}
+                    role="alert"
+                    aria-live="assertive"
+                  >
+                    {formErrors.submit ||
+                      "Couldn't send your message. Please try again."}
+                  </div>
+                ) : null}
+
+                <Button
+                  type="submit"
+                  variant="primary"
+                  fullWidth
+                  isLoading={isSubmitting}
+                >
+                  {isSubmitting ? "Sending…" : "Send message"}
+                </Button>
+              </form>
+            </motion.div>
           </div>
         </div>
-      </ScrollReveal>
-    </Section>
+      </div>
+    </motion.div>
   );
 };

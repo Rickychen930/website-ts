@@ -3,6 +3,7 @@
  * Immutable, type-safe representation of profile data
  */
 
+import { pickFeaturedProjects } from "@/utils/projectSort";
 import type {
   Profile,
   Academic,
@@ -83,9 +84,7 @@ export class ProfileModel implements Profile {
   }
 
   public getFeaturedProjects(count: number = 3): readonly Project[] {
-    return this.projects
-      .filter((project) => project.isActive || !project.endDate)
-      .slice(0, count);
+    return pickFeaturedProjects(this.projects, count);
   }
 
   public getSkillsByCategory(

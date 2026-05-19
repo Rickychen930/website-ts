@@ -18,7 +18,6 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
 import { useStructuredData, generateStructuredData } from "@/hooks/useSEO";
 import { useActiveSection } from "@/hooks/useActiveSection";
-import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { CodeBlock } from "@/views/components/ui/CodeBlock";
 import { Loading } from "@/views/components/ui/Loading";
@@ -40,21 +39,6 @@ const SECTION_LABELS: Record<number, string> = {
 };
 
 const CODE_SECTION_LABEL = "Code example";
-
-function topicMetaInfoLine(
-  itemsLength: number,
-  currentIndex: number,
-  readingMinutes: number,
-): string | undefined {
-  const parts: string[] = [];
-  if (itemsLength > 0 && currentIndex >= 0) {
-    parts.push(`Topic ${currentIndex + 1} of ${itemsLength}`);
-  }
-  if (readingMinutes > 0) {
-    parts.push(`${readingMinutes} min read`);
-  }
-  return parts.length > 0 ? parts.join(" · ") : undefined;
-}
 
 /**
  * Parses 8-part structured content. Expected format in markdown-style:
@@ -732,227 +716,252 @@ export const LearningTopicDetail: React.FC = () => {
       ? items[currentIndex + 1]
       : null;
 
-  const topicMetaInfo = topicMetaInfoLine(
-    items.length,
-    currentIndex,
-    readingMinutes,
-  );
-
   return (
-    <Section
+    <div
+      className={`pf-page ${styles.page}`}
       id="learning-topic-detail"
       tabIndex={-1}
-      label={section.title}
-      title={topic.title}
-      info={topicMetaInfo}
-      headerAlign="start"
-      surface="hero"
-      titleDecoration="none"
-      titleHeadingLevel={1}
       style={
         { "--learning-accent": sectionTheme.gradient } as React.CSSProperties
       }
     >
-      <div
-        className={styles.articleProgressWrap}
-        role="progressbar"
-        aria-valuenow={Math.round(articleProgress)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="Article reading progress"
-        data-print="hide"
-      >
-        <div
-          className={styles.articleProgressBar}
-          style={{ width: `${articleProgress}%` }}
-          aria-hidden="true"
-        />
-      </div>
-      <div className={styles.inner}>
-        <div
-          className={styles.trackAccent}
-          style={{ background: sectionTheme.gradient }}
-          aria-hidden="true"
-        />
-        <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <ol className={styles.breadcrumbList}>
-            <li>
-              <Link to="/learning" className={styles.breadcrumbLink}>
-                Learning
-              </Link>
-            </li>
-            <li aria-hidden="true" className={styles.breadcrumbSep}>
-              <span className={styles.breadcrumbChevron} aria-hidden="true">
-                →
-              </span>
-            </li>
-            <li>
-              <Link
-                to={`/learning/${section.slug}`}
-                className={styles.breadcrumbLink}
-              >
-                {section.title}
-              </Link>
-            </li>
-            <li aria-hidden="true" className={styles.breadcrumbSep}>
-              <span className={styles.breadcrumbChevron} aria-hidden="true">
-                →
-              </span>
-            </li>
-            <li aria-current="page">
-              <span className={styles.breadcrumbCurrent}>{topic.title}</span>
-            </li>
-          </ol>
-        </nav>
-
-        <header className={styles.header}>
-          <div className={styles.headerMeta}>
-            {section.slug && (
-              <span
-                className={styles.sectionBadge}
-                style={{ background: sectionTheme.gradient }}
-                aria-hidden="true"
-              >
-                <span className={styles.sectionBadgeIcon}>
-                  {sectionTheme.icon}
-                </span>
-                {section.title}
-              </span>
-            )}
+      <header className="pf-hero" aria-labelledby="topic-hero-title">
+        <div className="pf-hero-mesh" aria-hidden="true" />
+        <div className="pf-hero-inner">
+          <div className="pf-hero-copy">
+            <p className="pf-eyebrow">{section.title}</p>
+            <h1 id="topic-hero-title" className="pf-hero-title">
+              {topic.title}
+            </h1>
+            {topic.description ? (
+              <p className="pf-hero-lead">{topic.description}</p>
+            ) : null}
           </div>
-          <div className={styles.headerSub}>
-            <div className={styles.headerSubMeta}>
-              <button
-                type="button"
-                onClick={handleCopyLink}
-                className={styles.copyLinkBtn}
-                aria-label={
-                  linkCopied ? "Link copied" : "Copy link to this topic"
-                }
-                aria-live="polite"
-              >
-                {linkCopied ? "Copied!" : "Copy link"}
-              </button>
-              {linkCopied && (
-                <span className="sr-only" role="status" aria-live="polite">
-                  Link copied to clipboard
+          <ul
+            className={`pf-hero-stats pf-hero-stats--two ${styles.heroStatsBar}`}
+            aria-label="Topic overview"
+          >
+            {items.length > 0 && currentIndex >= 0 ? (
+              <li>
+                <span className="pf-stat-value">
+                  {currentIndex + 1}/{items.length}
+                </span>
+                <span className="pf-stat-label">Topic</span>
+              </li>
+            ) : null}
+            {readingMinutes > 0 ? (
+              <li>
+                <span className="pf-stat-value">{readingMinutes}</span>
+                <span className="pf-stat-label">Min read</span>
+              </li>
+            ) : null}
+          </ul>
+        </div>
+      </header>
+      <div className="pf-workspace">
+        <div
+          className={`pf-workspace-inner pf-workspace-inner--narrow ${styles.workspaceInner}`}
+        >
+          <div
+            className={styles.articleProgressWrap}
+            role="progressbar"
+            aria-valuenow={Math.round(articleProgress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Article reading progress"
+            data-print="hide"
+          >
+            <div
+              className={styles.articleProgressBar}
+              style={{ width: `${articleProgress}%` }}
+              aria-hidden="true"
+            />
+          </div>
+          <div
+            className="track-accent"
+            style={{ background: sectionTheme.gradient }}
+            aria-hidden="true"
+          />
+          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+            <ol className={styles.breadcrumbList}>
+              <li>
+                <Link to="/learning" className={styles.breadcrumbLink}>
+                  Learning
+                </Link>
+              </li>
+              <li aria-hidden="true" className={styles.breadcrumbSep}>
+                <span className={styles.breadcrumbChevron} aria-hidden="true">
+                  →
+                </span>
+              </li>
+              <li>
+                <Link
+                  to={`/learning/${section.slug}`}
+                  className={styles.breadcrumbLink}
+                >
+                  {section.title}
+                </Link>
+              </li>
+              <li aria-hidden="true" className={styles.breadcrumbSep}>
+                <span className={styles.breadcrumbChevron} aria-hidden="true">
+                  →
+                </span>
+              </li>
+              <li aria-current="page">
+                <span className={styles.breadcrumbCurrent}>{topic.title}</span>
+              </li>
+            </ol>
+          </nav>
+
+          <header className={styles.header}>
+            <div className={styles.headerMeta}>
+              {section.slug && (
+                <span
+                  className={styles.sectionBadge}
+                  style={{ background: sectionTheme.gradient }}
+                  aria-hidden="true"
+                >
+                  <span className={styles.sectionBadgeIcon}>
+                    {sectionTheme.icon}
+                  </span>
+                  {section.title}
                 </span>
               )}
             </div>
-            {topic.description && (
-              <div className={styles.whatYoullLearn}>
-                <span className={styles.whatYoullLearnLabel}>
-                  What you&apos;ll learn
-                </span>
-                <Typography
-                  variant="body"
-                  color="secondary"
-                  as="p"
-                  className={styles.description}
+            <div className={styles.headerSub}>
+              <div className={styles.headerSubMeta}>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className={styles.copyLinkBtn}
+                  aria-label={
+                    linkCopied ? "Link copied" : "Copy link to this topic"
+                  }
+                  aria-live="polite"
                 >
-                  {topic.description}
-                </Typography>
-              </div>
-            )}
-          </div>
-        </header>
-
-        <figure className={styles.heroFigure}>
-          {topic.imageUrl && !isPlaceholderImage(topic.imageUrl) ? (
-            <img
-              src={topic.imageUrl}
-              alt={
-                topic.title
-                  ? `Illustration for ${topic.title}`
-                  : "Topic illustration"
-              }
-              className={styles.heroImage}
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-            />
-          ) : (
-            <div
-              className={styles.heroPlaceholder}
-              style={{ background: sectionTheme.gradient }}
-              aria-hidden
-            >
-              <span className={styles.heroPlaceholderIcon}>
-                {sectionTheme.icon}
-              </span>
-            </div>
-          )}
-        </figure>
-
-        <div
-          ref={contentRef}
-          id="learning-topic-content"
-          className={styles.content}
-        >
-          {topic.content || topic.codeExample || topic.imageUrl ? (
-            isStructuredContent(topic.content ?? "") ? (
-              <TopicDetailContent item={topic} />
-            ) : (
-              <div className={styles.plainContent}>
-                {topic.content?.split(/\n\n+/).map((para, i) => (
-                  <Typography key={i} variant="body" color="secondary" as="p">
-                    {renderInline(para.trim())}
-                  </Typography>
-                ))}
-                {topic.codeExample && (
-                  <CodeBlock
-                    code={topic.codeExample}
-                    language={topic.codeLanguage ?? "text"}
-                    className={styles.codeBlock}
-                  />
+                  {linkCopied ? "Copied!" : "Copy link"}
+                </button>
+                {linkCopied && (
+                  <span className="sr-only" role="status" aria-live="polite">
+                    Link copied to clipboard
+                  </span>
                 )}
               </div>
-            )
-          ) : (
-            <Typography variant="body" color="secondary">
-              No content for this topic yet.
-            </Typography>
-          )}
-        </div>
+              {topic.description && (
+                <div className={styles.whatYoullLearn}>
+                  <span className={styles.whatYoullLearnLabel}>
+                    What you&apos;ll learn
+                  </span>
+                  <Typography
+                    variant="body"
+                    color="secondary"
+                    as="p"
+                    className={styles.description}
+                  >
+                    {topic.description}
+                  </Typography>
+                </div>
+              )}
+            </div>
+          </header>
 
-        <footer className={styles.footer}>
-          <nav className={styles.footerNav} aria-label="Topic navigation">
-            {prevTopic ? (
-              <Link
-                to={`/learning/${section.slug}/${encodeURIComponent(prevTopic.id)}`}
-                className={styles.footerNavLink}
-                aria-label={`Previous topic: ${prevTopic.title}`}
-              >
-                ← {prevTopic.title}
-              </Link>
+          <figure className={styles.heroFigure}>
+            {topic.imageUrl && !isPlaceholderImage(topic.imageUrl) ? (
+              <img
+                src={topic.imageUrl}
+                alt={
+                  topic.title
+                    ? `Illustration for ${topic.title}`
+                    : "Topic illustration"
+                }
+                className={styles.heroImage}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+              />
             ) : (
-              <span aria-hidden="true" />
-            )}
-            <Link
-              to={`/learning/${section.slug}`}
-              className={styles.backLink}
-              aria-label={`Back to section: ${section.title}`}
-            >
-              Back to {section.title}
-            </Link>
-            {nextTopic ? (
-              <Link
-                to={`/learning/${section.slug}/${encodeURIComponent(nextTopic.id)}`}
-                className={styles.footerNavLink}
-                aria-label={`Next topic: ${nextTopic.title}`}
+              <div
+                className={styles.heroPlaceholder}
+                style={{ background: sectionTheme.gradient }}
+                aria-hidden
               >
-                {nextTopic.title} →
-              </Link>
-            ) : (
-              <span aria-hidden="true" />
+                <span className={styles.heroPlaceholderIcon}>
+                  {sectionTheme.icon}
+                </span>
+              </div>
             )}
-          </nav>
-          <p className={styles.footerPrintNote}>
-            Part of {section.title} · /learning/{section.slug}/
-            {encodeURIComponent(topic.id)}
-          </p>
-        </footer>
+          </figure>
+
+          <div
+            ref={contentRef}
+            id="learning-topic-content"
+            className={styles.content}
+          >
+            {topic.content || topic.codeExample || topic.imageUrl ? (
+              isStructuredContent(topic.content ?? "") ? (
+                <TopicDetailContent item={topic} />
+              ) : (
+                <div className={styles.plainContent}>
+                  {topic.content?.split(/\n\n+/).map((para, i) => (
+                    <Typography key={i} variant="body" color="secondary" as="p">
+                      {renderInline(para.trim())}
+                    </Typography>
+                  ))}
+                  {topic.codeExample && (
+                    <CodeBlock
+                      code={topic.codeExample}
+                      language={topic.codeLanguage ?? "text"}
+                      className={styles.codeBlock}
+                    />
+                  )}
+                </div>
+              )
+            ) : (
+              <Typography variant="body" color="secondary">
+                No content for this topic yet.
+              </Typography>
+            )}
+          </div>
+
+          <footer className={styles.footer}>
+            <nav className={styles.footerNav} aria-label="Topic navigation">
+              {prevTopic ? (
+                <Link
+                  to={`/learning/${section.slug}/${encodeURIComponent(prevTopic.id)}`}
+                  className={styles.footerNavLink}
+                  aria-label={`Previous topic: ${prevTopic.title}`}
+                >
+                  ← {prevTopic.title}
+                </Link>
+              ) : (
+                <span aria-hidden="true" />
+              )}
+              <Link
+                to={`/learning/${section.slug}`}
+                className={styles.backLink}
+                aria-label={`Back to section: ${section.title}`}
+              >
+                Back to {section.title}
+              </Link>
+              {nextTopic ? (
+                <Link
+                  to={`/learning/${section.slug}/${encodeURIComponent(nextTopic.id)}`}
+                  className={styles.footerNavLink}
+                  aria-label={`Next topic: ${nextTopic.title}`}
+                >
+                  {nextTopic.title} →
+                </Link>
+              ) : (
+                <span aria-hidden="true" />
+              )}
+            </nav>
+            <p className={styles.footerPrintNote}>
+              Part of {section.title} · /learning/{section.slug}/
+              {encodeURIComponent(topic.id)}
+            </p>
+          </footer>
+        </div>
       </div>
-    </Section>
+    </div>
   );
 };

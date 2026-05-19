@@ -21,6 +21,8 @@ export interface PageErrorProps {
   onRetry: () => void;
   /** Optional class name */
   className?: string;
+  /** When false, skip full-bleed hero wash (e.g. nested in Resume) */
+  fullBleed?: boolean;
 }
 
 export const PageError: React.FC<PageErrorProps> = ({
@@ -30,19 +32,22 @@ export const PageError: React.FC<PageErrorProps> = ({
   retryLabel = "Retry",
   onRetry,
   className,
+  fullBleed = true,
 }) => (
   <div
-    className={[styles.pageError, className].filter(Boolean).join(" ")}
+    className={[fullBleed ? "page-error-shell" : "", className]
+      .filter(Boolean)
+      .join(" ")}
     role="alert"
     aria-live="assertive"
   >
-    <div className={styles.inner}>
+    <div className="page-error-panel">
       <Typography variant="h3">{title}</Typography>
       <Typography variant="body" color="secondary">
         {message}
       </Typography>
       {tip && (
-        <Typography variant="small" color="tertiary" className={styles.tip}>
+        <Typography variant="small" color="tertiary" className="page-error-tip">
           {tip}
         </Typography>
       )}

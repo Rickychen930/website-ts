@@ -127,9 +127,9 @@ main[role="main"]:focus {
 
 /* Better link contrast - only for inline text links (not nav, buttons, cards) */
 #main-content p a,
-#main-content li a,
+#main-content li a:not([data-link-kind="card"]),
 #main-content .section p a,
-#main-content .section li a {
+#main-content .section li a:not([data-link-kind="card"]) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
@@ -137,12 +137,12 @@ main[role="main"]:focus {
 
 #main-content p a:hover,
 #main-content p a:focus,
-#main-content li a:hover,
-#main-content li a:focus,
+#main-content li a:not([data-link-kind="card"]):hover,
+#main-content li a:not([data-link-kind="card"]):focus,
 #main-content .section p a:hover,
 #main-content .section p a:focus,
-#main-content .section li a:hover,
-#main-content .section li a:focus {
+#main-content .section li a:not([data-link-kind="card"]):hover,
+#main-content .section li a:not([data-link-kind="card"]):focus {
   text-decoration-thickness: 2px;
 }
 

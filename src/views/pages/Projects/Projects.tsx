@@ -1,36 +1,81 @@
 /**
- * Projects Page - Showcase all projects
- * Version 2: Uses ProfileContext
+ * Projects — portfolio catalog.
  */
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useSEO } from "@/hooks/useSEO";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { Section } from "@/views/components/layout/Section";
+import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
-import { Typography } from "@/views/components/ui/Typography";
-import { Button, LinkButton } from "@/views/components/ui/Button";
 import { PageError } from "@/views/components/ui/PageError";
-import { ProjectCard } from "@/views/components/domain/ProjectCard";
-import { sitePageTitle } from "@/config/site-defaults";
+import { PageHeroVisual } from "@/views/components/layout/PageHeroVisual";
+import { ProjectSpotlight } from "@/views/components/domain/ProjectSpotlight";
+import { ProjectCatalogRow } from "@/views/components/domain/ProjectCatalogRow";
 import { EmptyStateArt } from "@/components/PortfolioVisuals";
+import {
+  pickFeaturedProjects,
+  sortProjectsByRecency,
+} from "@/utils/projectSort";
+import { SITE_BRAND_NAME } from "@/config/site-defaults";
+import type { Project } from "@/types/domain";
 import styles from "./Projects.module.css";
+
+const fadeUp = (reduced: boolean, delay = 0) =>
+  reduced
+    ? {}
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
+      };
+
+function formatCategory(category: string): string {
+  if (!category.trim()) return "Project";
+  return category.charAt(0).toUpperCase() + category.slice(1);
+}
 
 export const Projects: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
+  const reduced = useReducedMotion() ?? false;
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   useSEO({
     title: profile
-      ? `${profile.name} - Projects | Portfolio`
-      : sitePageTitle("Projects"),
-    description: profile
-      ? `Projects by ${profile.name}: ${profile.projects.length} projects in web, mobile, AI, and more.`
-      : "Portfolio projects: web, mobile, AI, and full-stack development.",
+      ? `${profile.name} — Projects`
+      : `${SITE_BRAND_NAME} — Projects`,
+    description:
+      profile?.bio ||
+      "Portfolio projects: web, mobile, AI, and full-stack development.",
     keywords: "projects, portfolio, web development, mobile, software",
     type: "website",
   });
+
+  const projectData = useMemo(() => {
+    if (!profile) {
+      return {
+        sorted: [] as Project[],
+        categories: ["all"] as string[],
+        counts: { all: 0 } as Record<string, number>,
+        activeCount: 0,
+        featured: [] as Project[],
+      };
+    }
+    const sorted = sortProjectsByRecency(profile.projects);
+    const categorySet = new Set(
+      profile.projects.map((p) => p.category).filter(Boolean),
+    );
+    const categories = ["all", ...Array.from(categorySet).sort()];
+    const counts: Record<string, number> = { all: profile.projects.length };
+    for (const cat of categorySet) {
+      counts[cat] = profile.getProjectsByCategory(
+        cat as Project["category"],
+      ).length;
+    }
+    const activeCount = profile.projects.filter((p) => p.isActive).length;
+    const featured = pickFeaturedProjects(profile.projects, 3);
+    return { sorted, categories, counts, activeCount, featured };
+  }, [profile]);
 
   if (isLoading) {
     return <Loading fullScreen message="Loading projects..." />;
@@ -40,186 +85,206 @@ export const Projects: React.FC = () => {
     return (
       <PageError
         title="Failed to load projects"
-        message={
-          error?.message ||
-          "Something went wrong while loading projects. Please try again in a moment."
-        }
+        message={error?.message || "Please try again later."}
         onRetry={refetch}
         retryLabel="Retry"
       />
     );
   }
 
-  const categories = [
-    "all",
-    ...Array.from(new Set(profile.projects.map((p) => p.category))),
-  ];
-
+  const { categories, counts, activeCount, featured } = projectData;
   const filteredProjects =
     selectedCategory === "all"
-      ? profile.projects
-      : profile.getProjectsByCategory(selectedCategory as any);
+      ? projectData.sorted
+      : sortProjectsByRecency(
+          profile.getProjectsByCategory(
+            selectedCategory as Project["category"],
+          ),
+        );
+
+  const showSpotlight =
+    selectedCategory === "all" &&
+    featured.length > 0 &&
+    filteredProjects.length > 0;
+
+  const catalogProjects = showSpotlight
+    ? filteredProjects.filter((p) => !featured.some((f) => f.id === p.id))
+    : filteredProjects;
+
+  const categoryLabel = formatCategory(selectedCategory);
 
   return (
-    <Section
-      label="Work"
-      title="Projects"
-      subtitle="Case studies and shipped work — studio sites, e-commerce, mobile, and platform plugins."
-      info={`${profile.projects.length} project${profile.projects.length !== 1 ? "s" : ""}`}
-      headerAlign="start"
-      id="projects"
-      surface="hero"
+    <motion.div
+      className={`pf-page ${styles.page}`}
+      initial={reduced ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.35 }}
     >
-      <div className={styles.inner}>
-        <div className={styles.trackAccent} aria-hidden="true" />
-        <ScrollReveal direction="up" delay={0}>
-          <div
-            className={styles.filters}
-            role="group"
-            aria-label="Filter projects by category"
-          >
-            {categories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                className={`${styles.filterButton} ${selectedCategory === category ? styles.filterButtonActive : ""}`}
-                onClick={() => setSelectedCategory(category)}
-                aria-pressed={selectedCategory === category}
-                aria-label={`Filter by ${category}`}
-              >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </button>
-            ))}
-          </div>
+      <header className="pf-hero" aria-labelledby="projects-hero-title">
+        <div className="pf-hero-mesh" aria-hidden="true" />
+        <div
+          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
+        >
+          <motion.div className="pf-hero-main">
+            <motion.div
+              className={`pf-hero-copy ${styles.heroCopy}`}
+              {...fadeUp(reduced)}
+            >
+              <p className="pf-eyebrow">Portfolio</p>
+              <h1 id="projects-hero-title" className="pf-hero-title">
+                Projects
+              </h1>
+              <p className={`pf-hero-lead ${styles.heroLead}`}>
+                AI tools, client platforms, and product case studies — from
+                Decode Capital and Web Architech to Samsung-scale plugins.
+              </p>
+            </motion.div>
 
-          <div
-            className={styles.projectsGrid}
-            role="list"
-            aria-label="Projects"
-          >
-            {filteredProjects.map((project) => (
-              <div key={project.id} role="listitem">
-                <ProjectCard project={project} />
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
+            <motion.ul
+              className={`pf-hero-stats pf-hero-stats--three ${styles.heroStatsBar}`}
+              aria-label="Project overview"
+              {...fadeUp(reduced, 0.08)}
+            >
+              <li>
+                <span className="pf-stat-value">{profile.projects.length}</span>
+                <span className="pf-stat-label">Shipped</span>
+              </li>
+              <li>
+                <span className="pf-stat-value">{categories.length - 1}</span>
+                <span className="pf-stat-label">Disciplines</span>
+              </li>
+              <li>
+                <span className="pf-stat-value">{activeCount}</span>
+                <span className="pf-stat-label">Active</span>
+              </li>
+            </motion.ul>
+          </motion.div>
 
-        {filteredProjects.length > 0 && (
-          <aside
-            className={styles.ctaBand}
-            aria-labelledby="projects-cta-heading"
-          >
-            <Typography
-              id="projects-cta-heading"
-              variant="h4"
-              weight="semibold"
-              className={styles.ctaTitle}
-            >
-              Want to work together?
-            </Typography>
-            <Typography
-              variant="body"
-              color="secondary"
-              className={styles.ctaBody}
-            >
-              Open to full-time engineering roles and interesting projects.
-              Whether you're recruiting, building a product, or exploring a
-              collaboration — I'd love to hear what you're working on.
-            </Typography>
-            <div className={styles.ctaActions}>
-              <LinkButton
-                to="/contact"
-                variant="primary"
-                aria-label="Start a conversation on the contact page"
-              >
-                Get in touch
-              </LinkButton>
-              <LinkButton
-                to="/about"
-                variant="outline"
-                aria-label="Read more on the about page"
-              >
-                About &amp; background
-              </LinkButton>
-            </div>
-            <Typography
-              variant="small"
-              color="tertiary"
-              className={styles.ctaAttribution}
-            >
-              Additional public case blurbs and industry-filtered samples:{" "}
-              <a
-                href="https://www.web-architech.com.au/portfolio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.ctaExternalLink}
-              >
-                web-architech.com.au/portfolio
-              </a>
-            </Typography>
+          <PageHeroVisual pageKey="projects" priority />
+        </div>
+      </header>
+
+      <motion.div className={`pf-workspace ${styles.workspace}`}>
+        <motion.div className={`pf-workspace-inner ${styles.workspaceInner}`}>
+          <aside className={styles.sidebar} aria-label="Filter by category">
+            <p className={styles.sidebarTitle}>Category</p>
+            <ul className={styles.filterList}>
+              {categories.map((cat) => (
+                <li key={cat}>
+                  <button
+                    type="button"
+                    className={`${styles.filterItem} ${
+                      selectedCategory === cat ? styles.filterItemActive : ""
+                    }`}
+                    aria-pressed={selectedCategory === cat}
+                    onClick={() => setSelectedCategory(cat)}
+                  >
+                    <span>
+                      {cat === "all" ? "All projects" : formatCategory(cat)}
+                    </span>
+                    <span className={styles.filterCount}>
+                      {counts[cat] ?? 0}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </aside>
-        )}
 
-        {filteredProjects.length === 0 && (
-          <div
-            className={styles.empty}
-            role="status"
-            aria-live="polite"
-            aria-labelledby="projects-empty-title"
-          >
-            <div className={styles.emptyArt} aria-hidden="true">
-              <EmptyStateArt
-                variant="projects"
-                className={styles.emptyArtSvg}
-              />
-            </div>
-            <Typography
-              id="projects-empty-title"
-              variant="h4"
-              weight="semibold"
-              color="secondary"
-            >
-              {selectedCategory === "all"
-                ? "No projects yet"
-                : "No projects in this category"}
-            </Typography>
-            <Typography variant="body" color="tertiary">
-              {selectedCategory === "all"
-                ? "Projects will appear here once added. Check back later or explore About and Experience."
-                : `No projects in "${selectedCategory}". Try another category or view all.`}
-            </Typography>
-            <div className={styles.emptyActions}>
-              {selectedCategory !== "all" ? (
-                <Button
-                  onClick={() => setSelectedCategory("all")}
-                  variant="outline"
-                  aria-label="Clear filter and view all projects"
-                >
-                  View All Projects
-                </Button>
-              ) : (
-                <>
-                  <LinkButton
-                    to="/contact"
-                    variant="primary"
-                    aria-label="Get in touch"
+          <motion.div className={styles.main}>
+            <header className={styles.mainHeader}>
+              <div>
+                <p className={styles.mainEyebrow}>
+                  {selectedCategory === "all" ? "Full catalog" : categoryLabel}
+                </p>
+                <h2 className={styles.mainTitle}>
+                  {selectedCategory === "all"
+                    ? "All shipped work"
+                    : `${categoryLabel} projects`}
+                </h2>
+              </div>
+              <p className={styles.mainCount}>
+                {filteredProjects.length} project
+                {filteredProjects.length !== 1 ? "s" : ""}
+              </p>
+            </header>
+
+            {filteredProjects.length === 0 ? (
+              <div className={styles.empty} role="status">
+                <div className={styles.emptyArt} aria-hidden="true">
+                  <EmptyStateArt variant="projects" />
+                </div>
+                <p className={styles.emptyText}>
+                  No projects in this category yet. Try another filter or check
+                  back later.
+                </p>
+                <div className={styles.emptyActions}>
+                  <button
+                    type="button"
+                    className={styles.filterItem}
+                    onClick={() => setSelectedCategory("all")}
                   >
-                    Get in Touch
-                  </LinkButton>
-                  <LinkButton
-                    to="/"
-                    variant="outline"
-                    aria-label="Back to home"
+                    Show all projects
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {showSpotlight ? (
+                  <section
+                    className={styles.spotlightSection}
+                    aria-label="Featured projects"
                   >
-                    Back to Home
-                  </LinkButton>
-                </>
-              )}
-            </div>
+                    <h3 className={styles.sectionLabel}>Featured</h3>
+                    <ProjectSpotlight projects={featured} />
+                  </section>
+                ) : null}
+
+                {catalogProjects.length > 0 ? (
+                  <section
+                    className={styles.catalogSection}
+                    aria-label="Project catalog"
+                  >
+                    {showSpotlight ? (
+                      <h3 className={styles.sectionLabel}>More projects</h3>
+                    ) : null}
+                    <ul className={styles.catalogList}>
+                      {catalogProjects.map((project, index) => (
+                        <li key={project.id}>
+                          <ProjectCatalogRow project={project} index={index} />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ) : null}
+              </>
+            )}
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+      <section
+        className={`pf-cta ${styles.cta}`}
+        aria-labelledby="projects-cta-title"
+      >
+        <div className="page-cta-band">
+          <h2 id="projects-cta-title" className={styles.ctaTitle}>
+            Want to work together?
+          </h2>
+          <p className="page-cta-body">
+            Open to full-time engineering roles and strong collaborations. Tell
+            me what you&apos;re building.
+          </p>
+          <div className="page-cta-actions">
+            <LinkButton to="/contact" variant="primary" size="lg">
+              Get in touch
+            </LinkButton>
+            <LinkButton to="/resume" variant="outline" size="lg">
+              View resume
+            </LinkButton>
           </div>
-        )}
-      </div>
-    </Section>
+        </div>
+      </section>
+    </motion.div>
   );
 };

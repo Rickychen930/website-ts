@@ -1,1 +1,0 @@
-export { AccessibilityInfo } from "./AccessibilityInfo";

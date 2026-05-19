@@ -34,7 +34,7 @@
   pointer-events: none;
 }
 
-.dark .card::before {
+:global(.dark) .card::before {
   background: linear-gradient(
     180deg,
     var(--color-accent-500),
@@ -57,7 +57,7 @@
   user-select: none;
 }
 
-.dark .decorQuote {
+:global(.dark) .decorQuote {
   color: var(--color-accent-400);
   opacity: 0.09;
 }
@@ -116,7 +116,7 @@
   letter-spacing: 0.02em;
 }
 
-.dark .avatarFallback {
+:global(.dark) .avatarFallback {
   color: var(--color-accent-300);
 }
 

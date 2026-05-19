@@ -1,67 +1,39 @@
 /**
- * Header Component - Layout Component
- * Main navigation header
+ * Header Component - Portfolio navigation
  */
 
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Search } from "@/components/Search";
 import { DownloadResume } from "@/components/DownloadResume";
 import { SITE_BRAND_NAME } from "@/config/site-defaults";
 import styles from "./Header.module.css";
 
-const MAIN_NAV_ITEMS = [
+const NAV_ITEMS = [
   { path: "/", label: "Home" },
   { path: "/projects", label: "Projects" },
   { path: "/experience", label: "Experience" },
-  { path: "/about", label: "About" },
-  { path: "/contact", label: "Contact" },
-];
-
-const DROPDOWN_NAV_ITEMS = [
-  { path: "/learning", label: "Learning" },
   { path: "/resume", label: "Resume" },
-];
+  { path: "/contact", label: "Contact" },
+] as const;
 
 export const Header: React.FC = () => {
   const { profile } = useProfile();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const rafRef = useRef<number | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const dropdownHoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null,
-  );
 
-  const clearDropdownHoverTimeout = () => {
-    if (dropdownHoverTimeoutRef.current !== null) {
-      clearTimeout(dropdownHoverTimeoutRef.current);
-      dropdownHoverTimeoutRef.current = null;
-    }
-  };
-
-  const handleDropdownMouseEnter = () => {
-    clearDropdownHoverTimeout();
-    setIsDropdownOpen(true);
-  };
-
-  const handleDropdownMouseLeave = () => {
-    dropdownHoverTimeoutRef.current = setTimeout(() => {
-      setIsDropdownOpen(false);
-      dropdownHoverTimeoutRef.current = null;
-    }, 200);
-  };
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
       if (rafRef.current === null) {
         rafRef.current = requestAnimationFrame(() => {
           setIsScrolled(window.scrollY > 20);
-          setIsDropdownOpen(false);
           rafRef.current = null;
         });
       }
@@ -76,36 +48,12 @@ export const Header: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        isDropdownOpen &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isDropdownOpen]);
-
-  useEffect(() => {
-    return () => clearDropdownHoverTimeout();
-  }, []);
-
-  const closeAll = () => {
-    setIsMenuOpen(false);
-    setIsDropdownOpen(false);
-  };
-
   const isActive = (path: string): boolean => {
-    return location.pathname === path;
+    if (path === "/") return location.pathname === "/";
+    return (
+      location.pathname === path || location.pathname.startsWith(`${path}/`)
+    );
   };
-
-  const isDropdownActive = DROPDOWN_NAV_ITEMS.some((item) =>
-    isActive(item.path),
-  );
 
   return (
     <header
@@ -135,82 +83,20 @@ export const Header: React.FC = () => {
           aria-label="Main navigation"
           data-print="hide"
         >
-          {MAIN_NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               className={`${styles.navLink} ${isActive(item.path) ? styles.navLinkActive : ""}`}
-              onClick={closeAll}
+              onClick={() => setIsMenuOpen(false)}
               aria-current={isActive(item.path) ? "page" : undefined}
             >
               {item.label}
             </Link>
           ))}
-
-          <div
-            ref={dropdownRef}
-            className={styles.navDropdown}
-            onMouseEnter={handleDropdownMouseEnter}
-            onMouseLeave={handleDropdownMouseLeave}
-          >
-            <button
-              type="button"
-              className={`${styles.navLink} ${styles.navDropdownTrigger} ${isDropdownActive ? styles.navLinkActive : ""}`}
-              onClick={() => setIsDropdownOpen((prev) => !prev)}
-              aria-expanded={isDropdownOpen}
-              aria-haspopup="true"
-              aria-controls="nav-dropdown-menu"
-              id="nav-dropdown-trigger"
-            >
-              More
-              <span
-                className={`${styles.navDropdownChevron} ${isDropdownOpen ? styles.navDropdownChevronOpen : ""}`}
-                aria-hidden="true"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 9l6 6 6-6"
-                    stroke="currentColor"
-                    strokeWidth="2.25"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </button>
-            <ul
-              id="nav-dropdown-menu"
-              className={`${styles.navDropdownMenu} ${isDropdownOpen ? styles.navDropdownMenuOpen : ""}`}
-              role="menu"
-              aria-labelledby="nav-dropdown-trigger"
-            >
-              {DROPDOWN_NAV_ITEMS.map((item) => (
-                <li key={item.path} role="none">
-                  <Link
-                    to={item.path}
-                    className={`${styles.navDropdownLink} ${isActive(item.path) ? styles.navLinkActive : ""}`}
-                    role="menuitem"
-                    onClick={closeAll}
-                    aria-current={isActive(item.path) ? "page" : undefined}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
         </nav>
 
         <div className={styles.headerActions} data-print="hide">
-          <div className={styles.searchWrapper}>
-            <Search className={styles.headerSearch} placeholder="Search" />
-          </div>
           <DownloadResume compact className={styles.headerDownloadCta} />
           <ThemeToggle />
         </div>
@@ -221,7 +107,6 @@ export const Header: React.FC = () => {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
           aria-controls="main-navigation"
-          aria-haspopup="true"
           type="button"
           data-print="hide"
         >

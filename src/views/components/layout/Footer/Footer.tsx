@@ -17,10 +17,8 @@ export const Footer: React.FC = () => {
 
   const footerLinks = [
     { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
     { path: "/projects", label: "Projects" },
     { path: "/experience", label: "Experience" },
-    { path: "/learning", label: "Learning" },
     { path: "/resume", label: "Resume" },
     { path: "/contact", label: "Contact" },
   ];
@@ -44,7 +42,9 @@ export const Footer: React.FC = () => {
                 color="secondary"
                 className={styles.footerTagline}
               >
-                {profile?.title || SITE_DEFAULT_TAGLINE}
+                {profile?.heroTagline?.trim() ||
+                  profile?.title ||
+                  SITE_DEFAULT_TAGLINE}
               </Typography>
               <p className={styles.footerPresence}>
                 <span className={styles.footerPulse} aria-hidden="true" />

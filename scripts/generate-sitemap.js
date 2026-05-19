@@ -49,7 +49,6 @@ const LEARNING_SECTION_SLUGS = [
 // Define all routes
 const routes = [
   { path: "/", priority: "1.0", changefreq: "daily" },
-  { path: "/about", priority: "0.9", changefreq: "weekly" },
   { path: "/projects", priority: "0.9", changefreq: "weekly" },
   { path: "/experience", priority: "0.9", changefreq: "weekly" },
   { path: "/contact", priority: "0.8", changefreq: "monthly" },

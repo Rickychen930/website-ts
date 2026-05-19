@@ -341,22 +341,6 @@ const navGroups: {
     items: [{ to: "/admin/dashboard", label: "Dashboard", icon: "dashboard" }],
   },
   {
-    label: "Job hunt",
-    items: [
-      { to: "/admin/companies", label: "Companies", icon: "building" },
-      { to: "/admin/saved-jobs", label: "Saved jobs", icon: "bookmark" },
-      { to: "/admin/cover-letter", label: "Cover letter", icon: "file-text" },
-    ],
-  },
-  {
-    label: "Personal",
-    items: [
-      { to: "/admin/tasks", label: "Tasks", icon: "check-square" },
-      { to: "/admin/goals", label: "Goals", icon: "target" },
-      { to: "/admin/notes", label: "Notes", icon: "sticky-note" },
-    ],
-  },
-  {
     label: "Portfolio",
     items: [
       { to: "/admin/profile", label: "Profile", icon: "user" },
@@ -378,12 +362,11 @@ const navGroups: {
         icon: "certificate",
       },
       { to: "/admin/honors", label: "Honors", icon: "trophy" },
-      { to: "/admin/learning", label: "Learning", icon: "book-open" },
       { to: "/admin/contacts", label: "Contact info", icon: "mail" },
     ],
   },
   {
-    label: "Support",
+    label: "Inbox",
     items: [{ to: "/admin/messages", label: "Messages", icon: "mail" }],
   },
 ];
@@ -392,12 +375,6 @@ const routeTitles: Record<string, string> = {
   "/admin/dashboard": "Dashboard",
   "/admin/profile": "Profile",
   "/admin/resume": "Resume",
-  "/admin/companies": "Companies applied",
-  "/admin/saved-jobs": "Saved jobs",
-  "/admin/cover-letter": "Cover letter",
-  "/admin/tasks": "Tasks",
-  "/admin/goals": "Goals",
-  "/admin/notes": "Notes",
   "/admin/projects": "Projects",
   "/admin/experience": "Experience",
   "/admin/skills": "Skills",
@@ -406,7 +383,6 @@ const routeTitles: Record<string, string> = {
   "/admin/academics": "Academics",
   "/admin/certifications": "Certifications",
   "/admin/honors": "Honors & Awards",
-  "/admin/learning": "Learning",
   "/admin/contacts": "Contact info",
   "/admin/messages": "Messages",
 };

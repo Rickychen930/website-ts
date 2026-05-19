@@ -1,1 +1,0 @@
-export { InteractiveBackground } from "./InteractiveBackground";

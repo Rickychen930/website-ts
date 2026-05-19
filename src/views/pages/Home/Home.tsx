@@ -1,8 +1,8 @@
 /**
- * Home — landing narrative: context, build, measure — structured like a product story, not a template stack.
+ * Home — portfolio landing (full redesign).
  */
 
-import React, { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useProfile } from "@/contexts/ProfileContext";
@@ -11,32 +11,114 @@ import {
   useStructuredData,
   generateStructuredData,
 } from "@/hooks/useSEO";
-import { Section } from "@/views/components/layout/Section";
-import { Typography } from "@/views/components/ui/Typography";
 import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
-import { ProjectCard } from "@/views/components/domain/ProjectCard";
+import { ProjectSpotlight } from "@/views/components/domain/ProjectSpotlight";
+import { ExperienceRoleCard } from "@/views/components/domain/ExperienceRoleCard";
 import { TestimonialCard } from "@/views/components/domain/TestimonialCard";
-import { StatItem } from "@/views/components/domain/StatItem";
-import { SocialLinks } from "@/components/SocialLinks";
+import {
+  getCurrentExperiences,
+  sortExperiencesByRecency,
+} from "@/utils/experienceSort";
+import { ContactChannelIcon } from "@/components/ContactChannelIcon";
+import {
+  contactHref,
+  formatChannelDisplay,
+  sortChannelsForDisplay,
+} from "@/utils/contactChannels";
 import {
   SITE_BRAND_NAME,
   SITE_DEFAULT_DESCRIPTION,
   SITE_DEFAULT_KEYWORDS,
 } from "@/config/site-defaults";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { HeroMeshArt } from "@/components/PortfolioVisuals";
+import type { Stat } from "@/types/domain";
 import styles from "./Home.module.css";
+
+const fadeUp = (reduced: boolean, delay = 0) =>
+  reduced
+    ? {}
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
+      };
+
+const EXPLORE_LINKS = [
+  {
+    to: "/projects",
+    title: "Projects",
+    description: "Case studies, stacks, and shipped outcomes.",
+  },
+  {
+    to: "/experience",
+    title: "Experience",
+    description: "Decode Capital, Web Architech, and prior roles.",
+  },
+  {
+    to: "/contact",
+    title: "Contact",
+    description: "Email, LinkedIn, and a short message form.",
+  },
+  {
+    to: "/resume",
+    title: "Resume",
+    description: "PDF download and ATS-friendly preview.",
+  },
+] as const;
+
+function computeCareerYears(
+  experiences: ReadonlyArray<{ startDate: string }>,
+): number {
+  const starts = experiences
+    .map((e) => new Date(e.startDate).getTime())
+    .filter((t) => !Number.isNaN(t));
+  if (starts.length === 0) return 0;
+  const earliest = Math.min(...starts);
+  const years = (Date.now() - earliest) / (365.25 * 24 * 60 * 60 * 1000);
+  return Math.max(1, Math.round(years));
+}
+
+function buildHighlightStats(
+  stats: readonly Stat[],
+  projectsCount: number,
+  skillsCount: number,
+  companiesCount: number,
+  careerYears: number,
+): Stat[] {
+  if (stats.length >= 2) {
+    return stats.slice(0, 4).map((s) => ({ ...s }));
+  }
+  return [
+    {
+      id: "hl-projects",
+      label: "Projects",
+      value: projectsCount,
+    },
+    {
+      id: "hl-skills",
+      label: "Skills",
+      value: skillsCount,
+    },
+    {
+      id: "hl-companies",
+      label: "Companies",
+      value: companiesCount,
+    },
+    {
+      id: "hl-years",
+      label: "Years building",
+      value: careerYears > 0 ? `${careerYears}+` : "—",
+    },
+  ];
+}
 
 export const Home: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
-  const prefersReducedMotion = useReducedMotion();
+  const reduced = useReducedMotion() ?? false;
 
   useSEO({
-    title: profile
-      ? `${profile.name} - ${profile.title} | ${SITE_BRAND_NAME}`
-      : `${SITE_BRAND_NAME} | Professional portfolio`,
+    title: profile ? `${profile.name} — ${profile.title}` : SITE_BRAND_NAME,
     description: profile?.bio || SITE_DEFAULT_DESCRIPTION,
     keywords: SITE_DEFAULT_KEYWORDS,
     type: "website",
@@ -46,26 +128,6 @@ export const Home: React.FC = () => {
     ? generateStructuredData({ type: "Person", profile })
     : null;
   useStructuredData(structuredData);
-
-  const marqueeLabels = useMemo(() => {
-    const fromProfile = (profile?.technicalSkills ?? [])
-      .map((s) => s.name?.trim())
-      .filter((n): n is string => Boolean(n));
-    const fallback = [
-      "TypeScript",
-      "React",
-      "Node.js",
-      "System design",
-      "REST APIs",
-      "MongoDB",
-      "PostgreSQL",
-      "Git",
-      "UI engineering",
-      "Performance",
-      "Accessibility",
-    ];
-    return [...new Set([...fromProfile, ...fallback])].slice(0, 22);
-  }, [profile?.technicalSkills]);
 
   if (isLoading) {
     return <Loading fullScreen message="Loading profile..." />;
@@ -82,419 +144,294 @@ export const Home: React.FC = () => {
     );
   }
 
-  const recentProjects = profile.getFeaturedProjects(3);
-  const experiencePreview = profile.experiences.slice(0, 3);
-  const showOpenBadge = profile.openToOpportunities !== false;
-  const heroBioLead =
+  const heroBio =
     profile.bio
       .split(/\n\n+/)
       .map((p) => p.trim())
       .find(Boolean) ?? profile.bio;
 
-  const heroMotion = {
-    initial: prefersReducedMotion ? false : { opacity: 0, y: 28 },
-    animate: prefersReducedMotion ? false : { opacity: 1, y: 0 },
-    transition: prefersReducedMotion
-      ? undefined
-      : { duration: 0.58, ease: [0.16, 1, 0.3, 1] as const },
-  };
+  const featuredProjects = profile.getFeaturedProjects(3);
+  const currentRoles = getCurrentExperiences(profile.experiences);
+  const earlierRole = sortExperiencesByRecency(profile.experiences).find(
+    (e) => !e.isCurrent,
+  );
+  const homeTestimonials = profile.testimonials.slice(0, 3);
+  const openToWork = profile.openToOpportunities !== false;
+  const contactChannels = sortChannelsForDisplay(profile.contacts);
+
+  const companiesCount = new Set(
+    profile.experiences.map((e) => e.company.trim()).filter(Boolean),
+  ).size;
+  const careerYears = computeCareerYears(profile.experiences);
+  const highlightStats = buildHighlightStats(
+    profile.stats,
+    profile.projects.length,
+    profile.technicalSkills.length,
+    companiesCount,
+    careerYears,
+  );
+
+  const heroStatCols =
+    highlightStats.length >= 4 ? "pf-hero-stats--four" : "pf-hero-stats--three";
 
   return (
-    <>
-      <Section
-        className={styles.hero}
-        aria-label="Introduction"
-        suppressAmbientOrbs
-        containerBleed
-      >
-        <div className={styles.heroBackdropOrbs} aria-hidden="true" />
-        <div
-          className={`${styles.heroInner} ${profile.avatarUrl ? styles.heroInnerWithPortrait : ""}`}
-        >
-          <motion.div className={styles.heroMain} {...heroMotion}>
-            {profile.title && (
-              <span className={styles.heroBadge} aria-hidden="true">
-                {profile.title}
-              </span>
-            )}
-            <Typography
-              variant="h1"
-              weight="bold"
-              className={styles.heroTitle}
-              as="h1"
-            >
-              {profile.name}
-            </Typography>
-            <div className={styles.heroMetaRow}>
+    <motion.div
+      className={`pf-page ${styles.home}`}
+      initial={reduced ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.35 }}
+    >
+      <header className="pf-hero" aria-label="Introduction">
+        <div className="pf-hero-mesh" aria-hidden="true" />
+        <div className={styles.heroGridBg} aria-hidden="true" />
+        <div className={`pf-hero-inner ${styles.heroInner}`}>
+          <motion.div
+            className={`pf-hero-copy ${styles.heroCopy}`}
+            {...fadeUp(reduced)}
+          >
+            {profile.title ? (
+              <p className="pf-eyebrow">{profile.title}</p>
+            ) : null}
+            <h1 className="pf-hero-title">{profile.name}</h1>
+
+            <div className={styles.heroMeta}>
               {profile.location?.trim() ? (
-                <div className={styles.heroLocation} aria-label="Location">
-                  <span className={styles.locationIcon} aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      focusable="false"
-                    >
-                      <path
-                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </span>
-                  <Typography variant="body" color="secondary" as="span">
-                    {profile.location}
-                  </Typography>
-                </div>
+                <span>{profile.location}</span>
               ) : null}
-              {showOpenBadge && (
-                <span
-                  className={styles.heroOpenToWork}
-                  aria-label="Open to job opportunities"
-                >
-                  Open to opportunities
-                </span>
-              )}
+              {openToWork ? (
+                <span className={styles.openBadge}>Open to opportunities</span>
+              ) : null}
             </div>
-            <Typography variant="body" className={styles.heroBio} as="p">
-              {heroBioLead}
-            </Typography>
 
-            {profile.heroTagline && profile.heroTagline.trim() !== "" && (
-              <ScrollReveal direction="fade" delay={120}>
-                <p
-                  className={styles.heroTagline}
-                  aria-label="Professional focus"
-                >
-                  {profile.heroTagline}
-                </p>
-              </ScrollReveal>
-            )}
+            <p className={`pf-hero-lead ${styles.heroBio}`}>{heroBio}</p>
 
-            <div
-              className={styles.heroActions}
-              role="group"
-              aria-label="Call to action buttons"
-            >
-              <LinkButton
-                to="/projects"
-                variant="primary"
-                size="lg"
-                aria-label="View all projects"
-              >
+            <div className={styles.heroActions}>
+              <LinkButton to="/projects" variant="primary" size="lg">
                 View projects
               </LinkButton>
-              <LinkButton
-                to="/contact"
-                variant="outline"
-                size="lg"
-                aria-label="Get in touch"
-              >
-                Get in touch
+              <LinkButton to="/contact" variant="outline" size="lg">
+                Contact
               </LinkButton>
             </div>
-
-            {marqueeLabels.length > 0 && (
-              <div className={styles.heroMarquee} aria-hidden="true">
-                <div className={styles.heroMarqueeTrack}>
-                  {[...marqueeLabels, ...marqueeLabels].map((label, i) => (
-                    <span
-                      key={`marquee-${i}-${label}`}
-                      className={styles.heroMarqueeItem}
-                    >
-                      {label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <ScrollReveal direction="up" delay={200}>
-              <div className={styles.socialLinksWrapper}>
-                <SocialLinks />
-              </div>
-            </ScrollReveal>
           </motion.div>
 
-          <aside
-            className={`${styles.heroAside} ${profile.avatarUrl ? styles.heroAsidePortrait : ""}`}
-            {...(profile.avatarUrl
-              ? { "aria-label": `Portrait — ${profile.name}` }
-              : { "aria-hidden": true })}
-          >
-            {profile.avatarUrl ? (
-              <figure className={styles.heroPortrait}>
-                <img
-                  src={profile.avatarUrl}
-                  alt={`${profile.name} — professional portrait`}
-                  className={styles.heroPortraitImage}
-                  width={480}
-                  height={600}
-                  decoding="async"
-                  fetchPriority="high"
-                />
-              </figure>
-            ) : (
-              <>
-                <div className={styles.heroArt}>
-                  <HeroMeshArt className={styles.heroMeshSvg} />
-                  <div className={styles.signalSculpture}>
-                    <span className={styles.signalLine} />
-                    <span className={styles.signalNode} />
-                    <span className={styles.signalGlow} />
-                  </div>
-                </div>
-                <p className={styles.signalCaption}>
-                  Signal through the stack — intent, implementation, evidence.
-                </p>
-              </>
-            )}
-          </aside>
-        </div>
-      </Section>
-
-      {recentProjects.length > 0 && (
-        <Section
-          label="Work"
-          title="Selected projects"
-          subtitle="Recent shipped work across mobile, web, and platform."
-          id="projects-preview"
-          variant="alt"
-          headerAlign="start"
-          aria-labelledby="projects-preview-title"
-        >
-          <ScrollReveal direction="up" delay={0}>
-            <div className={styles.sectionRail}>
-              <div className={styles.trackAccent} aria-hidden="true" />
-              <div
-                className={styles.projectsGrid}
-                role="list"
-                aria-label="Recent projects"
-              >
-                {recentProjects.map((project) => (
-                  <div key={project.id} role="listitem">
-                    <ProjectCard project={project} />
-                  </div>
-                ))}
-              </div>
-              <div className={styles.viewAll}>
-                <LinkButton
-                  to="/projects"
-                  variant="outline"
-                  aria-label="View all projects"
-                >
-                  All projects
-                </LinkButton>
-              </div>
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
-
-      {experiencePreview.length > 0 && (
-        <Section
-          label="Path"
-          title="Experience"
-          subtitle="Recent roles at a glance — the full timeline lives on the experience page."
-          id="experience-preview"
-          variant="alt"
-          aria-labelledby="experience-preview-title"
-        >
-          <ScrollReveal direction="up" delay={0}>
-            <ul
-              className={styles.experienceList}
-              aria-label="Recent experience"
+          {profile.avatarUrl ? (
+            <motion.figure
+              className={styles.portrait}
+              {...fadeUp(reduced, 0.1)}
             >
-              {experiencePreview.map((exp) => (
-                <li key={exp.id} className={styles.experienceItem}>
-                  <div className={styles.experienceItemHeader}>
-                    <Typography
-                      variant="h5"
-                      weight="semibold"
-                      className={styles.experiencePosition}
-                    >
-                      {exp.position}
-                    </Typography>
-                    <Typography variant="body" color="secondary" as="span">
-                      {exp.company}
-                      {exp.location ? ` · ${exp.location}` : ""}
-                    </Typography>
-                    <Typography variant="small" color="tertiary" as="span">
-                      {exp.startDate}
-                      {exp.endDate
-                        ? ` – ${exp.endDate}`
-                        : exp.isCurrent
-                          ? " – Present"
-                          : ""}
-                    </Typography>
-                  </div>
-                  {(exp.description || exp.achievements?.[0]) && (
-                    <p className={styles.experienceSnippet}>
-                      {exp.achievements?.[0] ||
-                        (exp.description.length > 160
-                          ? `${exp.description.slice(0, 160)}…`
-                          : exp.description)}
-                    </p>
-                  )}
+              <img
+                src={profile.avatarUrl}
+                alt={`${profile.name} — portrait`}
+                width={520}
+                height={650}
+                decoding="async"
+                fetchPriority="high"
+              />
+            </motion.figure>
+          ) : null}
+        </div>
+
+        <ul
+          className={`pf-hero-stats ${heroStatCols} ${styles.heroStatsBar}`}
+          aria-label="At a glance"
+        >
+          {highlightStats.map((stat) => (
+            <li key={stat.id}>
+              <span className="pf-stat-value">
+                {stat.value}
+                {stat.unit ?? ""}
+              </span>
+              <span className="pf-stat-label">{stat.label}</span>
+              {stat.description ? (
+                <span className={styles.statHint}>{stat.description}</span>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </header>
+
+      <div className={`pf-workspace ${styles.workspace}`}>
+        <div className="pf-workspace-inner">
+          {featuredProjects.length > 0 ? (
+            <section id="work" className="pf-block">
+              <header className="pf-block-head">
+                <div>
+                  <p className="pf-block-eyebrow">Portfolio</p>
+                  <h2 className="pf-block-title">Selected work</h2>
+                  <p className="pf-block-lead">
+                    AI tools, client platforms, and shipped products with
+                    measurable outcomes.
+                  </p>
+                </div>
+                <LinkButton to="/projects" variant="outline">
+                  All {profile.projects.length} projects
+                </LinkButton>
+              </header>
+              <ProjectSpotlight projects={featuredProjects} />
+            </section>
+          ) : null}
+
+          {currentRoles.length > 0 || earlierRole ? (
+            <section id="experience" className="pf-block">
+              <header className="pf-block-head">
+                <div>
+                  <p className="pf-block-eyebrow">Experience</p>
+                  <h2 className="pf-block-title">Where I&apos;ve built</h2>
+                  <p className="pf-block-lead">
+                    IT intern at Decode Capital, founder at Web Architech, and
+                    earlier engineering at scale.
+                  </p>
+                </div>
+                <LinkButton to="/experience" variant="outline">
+                  Full timeline
+                </LinkButton>
+              </header>
+              <ul className={styles.roleList}>
+                {currentRoles.map((role) => (
+                  <li key={role.id}>
+                    <ExperienceRoleCard experience={role} emphasis />
+                  </li>
+                ))}
+                {earlierRole ? (
+                  <li>
+                    <ExperienceRoleCard experience={earlierRole} />
+                  </li>
+                ) : null}
+              </ul>
+            </section>
+          ) : null}
+
+          {homeTestimonials.length > 0 ? (
+            <section id="testimonials" className="pf-block">
+              <header className="pf-block-head">
+                <div>
+                  <p className="pf-block-eyebrow">Endorsements</p>
+                  <h2 className="pf-block-title">What people say</h2>
+                  <p className="pf-block-lead">
+                    Feedback from collaborators and clients.
+                  </p>
+                </div>
+              </header>
+              <ul className={styles.testimonials}>
+                {homeTestimonials.map((t) => (
+                  <li key={t.id}>
+                    <TestimonialCard testimonial={t} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
+          <section id="explore" className="pf-block">
+            <header className="pf-block-head">
+              <div>
+                <p className="pf-block-eyebrow">Explore</p>
+                <h2 className="pf-block-title">Jump into the portfolio</h2>
+                <p className="pf-block-lead">
+                  Projects, experience, contact, and resume — pick a
+                  destination.
+                </p>
+              </div>
+            </header>
+            <ul className={styles.exploreGrid}>
+              {EXPLORE_LINKS.map(({ to, title, description }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className={styles.exploreCard}
+                    data-link-kind="card"
+                  >
+                    <span className={styles.exploreCardBody}>
+                      <span className={styles.exploreCardTitle}>{title}</span>
+                      <span className={styles.exploreCardDesc}>
+                        {description}
+                      </span>
+                    </span>
+                    <span className={styles.exploreCardFooter} aria-hidden>
+                      <span className={styles.exploreCardCta}>View</span>
+                      <span className={styles.exploreCardArrow}>→</span>
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <div className={styles.experienceSeeMore}>
-              <Link
-                to="/experience"
-                className={styles.experienceSeeMoreLink}
-                aria-label="See full experience and career timeline"
-              >
-                Full timeline →
-              </Link>
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
+          </section>
 
-      {profile.stats.length > 0 && (
-        <Section
-          label="Impact"
-          title="Numbers that matter"
-          subtitle="Outcomes across projects, products, and platforms."
-          id="stats"
-          headerAlign="start"
-          aria-labelledby="stats-title"
-        >
-          <ScrollReveal direction="up" delay={80}>
-            <div
-              className={styles.statsGrid}
-              role="list"
-              aria-label="Statistics"
-            >
-              {profile.stats.map((stat, index) => (
-                <div key={stat.id} role="listitem">
-                  <StatItem stat={stat} index={index} />
+          {contactChannels.length > 0 ? (
+            <section id="contact" className="pf-block">
+              <header className="pf-block-head">
+                <div>
+                  <p className="pf-block-eyebrow">Contact</p>
+                  <h2 className="pf-block-title">Let&apos;s talk</h2>
+                  <p className="pf-block-lead">
+                    Hiring, internships, or collaborations — I usually reply
+                    within one to two business days.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
+                <LinkButton to="/contact" variant="primary">
+                  Open contact page
+                </LinkButton>
+              </header>
+              <ul className={styles.contactRow}>
+                {contactChannels.map((channel) => {
+                  const { href, external } = contactHref(channel);
+                  return (
+                    <li key={channel.id}>
+                      <a
+                        href={href}
+                        data-link-kind="card"
+                        className={
+                          channel.isPrimary
+                            ? styles.contactCardPrimary
+                            : styles.contactCard
+                        }
+                        {...(external
+                          ? {
+                              target: "_blank",
+                              rel: "noopener noreferrer",
+                            }
+                          : {})}
+                      >
+                        <span className={styles.contactIcon} aria-hidden>
+                          <ContactChannelIcon type={channel.type} />
+                        </span>
+                        <span className={styles.contactLabel}>
+                          {channel.label}
+                        </span>
+                        <span className={styles.contactValue}>
+                          {formatChannelDisplay(channel.type, channel.value)}
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ) : null}
+        </div>
+      </div>
 
-      {profile.testimonials.length > 0 && (
-        <Section
-          label="Voices"
-          title="What collaborators say"
-          subtitle="Short endorsements with names and context — readable quotes, not wall-of-italic."
-          className={styles.testimonialsSection}
-          id="testimonials"
-          variant="alt"
-          headerAlign="start"
-          aria-labelledby="testimonials-title"
-        >
-          <ScrollReveal direction="up" delay={80}>
-            <div
-              className={styles.testimonialsGrid}
-              role="list"
-              aria-label="Testimonials"
-            >
-              {profile.testimonials.map((testimonial) => (
-                <div key={testimonial.id} role="listitem">
-                  <TestimonialCard testimonial={testimonial} />
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </Section>
-      )}
-
-      <Section
-        label="Next"
-        title="What's next?"
-        subtitle="Start a conversation or explore the full body of work."
-        id="explore"
-        headerAlign="center"
-        aria-labelledby="explore-title"
-      >
-        <ScrollReveal direction="up" delay={0}>
-          <nav className={styles.exploreGrid} aria-label="Primary actions">
-            <Link
-              to="/contact"
-              className={`${styles.exploreCard} ${styles.exploreCardHighlight}`}
-              aria-label="Get in touch"
-            >
-              <span className={styles.exploreIcon} aria-hidden="true">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <path d="m22 6-10 7L2 6" />
-                </svg>
-              </span>
-              <Typography
-                variant="h5"
-                weight="semibold"
-                className={styles.exploreTitle}
-              >
-                Get in touch
-              </Typography>
-              <Typography variant="small" color="secondary" as="p">
-                Open to new projects and roles. I reply within 1–2 business
-                days.
-              </Typography>
-              <span className={styles.exploreLink}>Start a conversation →</span>
-            </Link>
-            <Link
-              to="/projects"
-              className={styles.exploreCard}
-              aria-label="Browse all projects"
-            >
-              <span className={styles.exploreIcon} aria-hidden="true">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="3" y="3" width="7" height="7" rx="1" />
-                  <rect x="14" y="3" width="7" height="7" rx="1" />
-                  <rect x="3" y="14" width="7" height="7" rx="1" />
-                  <rect x="14" y="14" width="7" height="7" rx="1" />
-                </svg>
-              </span>
-              <Typography
-                variant="h5"
-                weight="semibold"
-                className={styles.exploreTitle}
-              >
-                Projects
-              </Typography>
-              <Typography variant="small" color="secondary" as="p">
-                Mobile apps, web platforms, and systems work — all with source
-                and context.
-              </Typography>
-              <span className={styles.exploreLink}>Browse projects →</span>
-            </Link>
-          </nav>
-          <div className={styles.ctaSecondaryLinks}>
-            <Link to="/about">About</Link>
-            <span aria-hidden="true">·</span>
-            <Link to="/experience">Experience</Link>
-            <span aria-hidden="true">·</span>
-            <Link to="/learning">Learning</Link>
-            <span aria-hidden="true">·</span>
-            <Link to="/resume">Resume</Link>
+      <section className="pf-cta" aria-labelledby="home-cta-title">
+        <div className="page-cta-band">
+          <h2 id="home-cta-title" className={styles.ctaHeading}>
+            Let&apos;s work together
+          </h2>
+          <p className="page-cta-body">
+            Open to full-time roles and strong collaborations. Tell me what
+            you&apos;re building — I typically reply within one to two business
+            days.
+          </p>
+          <div className="page-cta-actions">
+            <LinkButton to="/contact" variant="primary" size="lg">
+              Get in touch
+            </LinkButton>
+            <LinkButton to="/resume" variant="outline" size="lg">
+              View resume
+            </LinkButton>
           </div>
-        </ScrollReveal>
-      </Section>
-    </>
+        </div>
+      </section>
+    </motion.div>
   );
 };

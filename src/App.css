@@ -12,6 +12,7 @@
 /* Design system */
 @import url("./styles/design-tokens.css");
 @import url("./styles/layout-system.css");
+@import url("./styles/page-patterns.css");
 @import url("./styles/base.css");
 @import url("./styles/animations.css");
 @import url("./styles/accessibility.css");

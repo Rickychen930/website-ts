@@ -29,6 +29,8 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   suppressAmbientOrbs?: boolean;
   /** Drop inner horizontal padding + max-width so the section controls inset (e.g. Home hero). */
   containerBleed?: boolean;
+  /** Accent rail below header (default: true when surface is hero). */
+  showTrackAccent?: boolean;
 }
 
 export const Section: React.FC<SectionProps> = ({
@@ -46,8 +48,13 @@ export const Section: React.FC<SectionProps> = ({
   titleHeadingLevel = 2,
   suppressAmbientOrbs = false,
   containerBleed = false,
+  showTrackAccent,
   ...props
 }) => {
+  const renderTrackAccent =
+    showTrackAccent ??
+    ((surface === "hero" && !containerBleed) ||
+      (variant === "alt" && surface !== "hero" && surface !== "minimal"));
   const titleId = id ? `${id}-title` : undefined;
   const titleVariant = titleHeadingLevel === 1 ? "h1" : "h2";
   const titleTag = titleHeadingLevel === 1 ? "h1" : "h2";
@@ -124,7 +131,12 @@ export const Section: React.FC<SectionProps> = ({
             )}
           </header>
         )}
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content}>
+          {renderTrackAccent ? (
+            <div className={styles.trackAccent} aria-hidden="true" />
+          ) : null}
+          {children}
+        </div>
       </div>
     </section>
   );

@@ -1,1 +1,0 @@
-export { CursorEffect } from "./CursorEffect";

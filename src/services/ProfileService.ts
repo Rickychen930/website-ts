@@ -24,11 +24,11 @@ const RETRY_DELAY = 1000; // 1 second
 const FALLBACK_PROFILE: Profile = {
   id: "fallback-profile",
   name: "Ricky Chen",
-  title: "Fullstack Engineer · MSc Artificial Intelligence (UTS)",
+  title: "Fullstack Engineer · IT Intern, Decode Capital · MSc AI (UTS)",
   location: "Sydney, Australia",
-  bio: "I build across backend, mobile, and web—from high-scale connected products to polished interfaces—applying a competitive-programming mindset to design, delivery, and outcomes.\n\nI'm a fullstack engineer and founder at Web Architech in Sydney, owning work from discovery through deployment with clear architecture, observable systems, and maintainable code. Previously: Samsung R&D Jakarta (SmartThings, One UI) and Apple Developer Academy (Swift/SwiftUI). MSc Artificial Intelligence at UTS (in progress). Open to roles where technical depth, reliability, and UX craft align.",
+  bio: "I build across backend, mobile, and web—from high-scale connected products to polished interfaces—applying a competitive-programming mindset to design, delivery, and outcomes.\n\nCurrently IT intern at Decode Capital, building an AI chatbot and AI summariser using PHP frameworks and WordPress within the firm's web stack. Also founder at Web Architech in Sydney (discovery through deployment). Previously: Samsung R&D Jakarta (SmartThings, One UI) and Apple Developer Academy (Swift/SwiftUI). MSc Artificial Intelligence at UTS (in progress).",
   heroTagline:
-    "Shipping end-to-end products—from systems design to deployed interfaces—with research-grade rigor.",
+    "IT intern at Decode Capital — AI chatbot & summariser on PHP and WordPress; shipping full-stack products with research-grade rigor.",
   openToOpportunities: true,
   avatarUrl: "/images/ricky-chen-portrait.png",
   academics: [],
@@ -64,6 +64,33 @@ const FALLBACK_PROFILE: Profile = {
     },
   ],
   experiences: [
+    {
+      id: "exp-decode",
+      company: "Decode Capital",
+      position: "IT Intern",
+      location: "Sydney, Australia",
+      startDate: "2026-02-01",
+      isCurrent: true,
+      description:
+        "IT intern at Decode Capital, delivering AI-powered features on the company's PHP and WordPress stack. Own development of an AI chatbot for guided Q&A and workflow support, plus an AI summariser that turns long-form content into concise briefs for internal and client use.",
+      achievements: [
+        "Built and integrated an AI chatbot into the WordPress-based site and related PHP services",
+        "Developed an AI summariser pipeline for documents and research inputs with review-friendly output",
+        "Shipped features using PHP frameworks and WordPress plugins/themes following existing architecture and security practices",
+        "Collaborated with the team on API design, testing, and deployment for production releases",
+      ],
+      technologies: [
+        "PHP",
+        "WordPress",
+        "JavaScript",
+        "MySQL",
+        "REST APIs",
+        "LLMs",
+        "OpenAI API",
+        "Git",
+      ],
+      skillIds: ["PHP", "Python", "JavaScript", "MySQL"],
+    },
     {
       id: "exp-wa",
       company: "Web Architech",

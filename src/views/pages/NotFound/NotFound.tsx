@@ -1,15 +1,13 @@
 /**
- * NotFound Page - Shown for unknown routes (catch-all)
- * Keeps the invalid URL visible and offers navigation back.
+ * NotFound — unknown routes with navigation back to portfolio.
  */
 
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
-import { Section } from "@/views/components/layout/Section";
 import { Typography } from "@/views/components/ui/Typography";
 import { LinkButton } from "@/views/components/ui/Button";
-import styles from "./NotFound.module.css";
+import { EmptyStateArt } from "@/components/PortfolioVisuals";
 
 export const NotFound: React.FC = () => {
   const location = useLocation();
@@ -22,38 +20,58 @@ export const NotFound: React.FC = () => {
   });
 
   return (
-    <Section
-      id="not-found"
-      label="404"
-      title="Page not found"
-      subtitle="That route is not mapped — the URL may be outdated or mistyped."
-      info="Client-side route · use navigation or home"
-      headerAlign="start"
-      surface="hero"
-    >
-      <div className={styles.inner}>
-        <div className={styles.trackAccent} aria-hidden="true" />
-        <div className={styles.content}>
-          {location.pathname !== "/" && (
-            <Typography variant="small" color="secondary" as="p">
-              Requested path:{" "}
-              <code className={styles.path}>{location.pathname}</code>
+    <div className="pf-page">
+      <header className="pf-hero" aria-labelledby="not-found-title">
+        <div className="pf-hero-mesh" aria-hidden="true" />
+        <div className="pf-hero-inner">
+          <div className="pf-hero-copy">
+            <p className="pf-eyebrow">404</p>
+            <h1 id="not-found-title" className="pf-hero-title">
+              Page not found
+            </h1>
+            <p className="pf-hero-lead">
+              That route is not mapped — the URL may be outdated or mistyped.
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <div className="pf-workspace">
+        <div className="pf-workspace-inner pf-workspace-inner--narrow">
+          <div className="page-empty" role="status">
+            <div className="page-empty-art" aria-hidden="true">
+              <EmptyStateArt
+                variant="projects"
+                className="page-empty-art-svg"
+              />
+            </div>
+            {location.pathname !== "/" ? (
+              <Typography variant="small" color="secondary" as="p">
+                Requested path:{" "}
+                <code className="page-code">{location.pathname}</code>
+              </Typography>
+            ) : null}
+            <Typography variant="body" color="secondary">
+              Head back to the portfolio home or browse projects and experience.
             </Typography>
-          )}
-          <div className={styles.actions}>
-            <LinkButton to="/" variant="primary" aria-label="Back to home">
-              Back to Home
-            </LinkButton>
-            <LinkButton
-              to="/learning"
-              variant="outline"
-              aria-label="Go to Learning"
-            >
-              Learning
-            </LinkButton>
+            <div className="page-actions">
+              <LinkButton to="/" variant="primary" aria-label="Back to home">
+                Back to home
+              </LinkButton>
+              <LinkButton
+                to="/projects"
+                variant="outline"
+                aria-label="View projects"
+              >
+                Projects
+              </LinkButton>
+              <LinkButton to="/contact" variant="ghost" aria-label="Contact">
+                Contact
+              </LinkButton>
+            </div>
           </div>
         </div>
       </div>
-    </Section>
+    </div>
   );
 };

@@ -54,12 +54,8 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div
-          className={styles.errorBoundary}
-          role="alert"
-          aria-live="assertive"
-        >
-          <div className={styles.inner}>
+        <div className="page-error-shell" role="alert" aria-live="assertive">
+          <div className="page-error-panel">
             <Typography variant="h2" weight="bold">
               Something went wrong
             </Typography>

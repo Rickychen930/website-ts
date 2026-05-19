@@ -1,0 +1,88 @@
+/* PageHeroVisual — hero editorial photo */
+
+.figure {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  background: var(--bg-tertiary);
+  max-height: min(28rem, 52vh);
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px var(--theme-border);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    transparent 35%,
+    rgba(var(--color-primary-rgb), 0.12) 100%
+  );
+  pointer-events: none;
+}
+
+.fallback {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 70% 20%,
+      var(--color-accent-alpha-20) 0%,
+      transparent 55%
+    ),
+    var(--gradient-accent-subtle);
+}
+
+.fallback[data-page="resume"] {
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 80% 30%,
+      var(--color-primary-alpha-15) 0%,
+      transparent 50%
+    ),
+    linear-gradient(145deg, var(--bg-tertiary), var(--bg-secondary));
+}
+
+.fallback[data-page="projects"] {
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 20% 80%,
+      var(--color-accent-alpha-20) 0%,
+      transparent 50%
+    ),
+    linear-gradient(145deg, var(--bg-tertiary), var(--bg-secondary));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, transparent 40%);
+  }
+}
+
+@media (width >= 960px) {
+  :global(.pf-hero-inner--visual) > .pf-hero-visual {
+    height: 100%;
+    max-height: none;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (width <= 959px) {
+  .figure {
+    max-height: none;
+    aspect-ratio: 16 / 10;
+    max-width: 36rem;
+  }
+}

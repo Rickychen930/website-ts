@@ -1,22 +1,14 @@
 /**
- * Admin Dashboard - Overview stats + job tracking reminders
+ * Admin Dashboard — portfolio content overview
  */
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  adminService,
-  type AdminStats,
-  type AppliedCompanyItem,
-} from "@/services/AdminService";
+import { adminService, type AdminStats } from "@/services/AdminService";
 import styles from "./Admin.module.css";
-
-const now = () => new Date().getTime();
-const dayMs = 24 * 60 * 60 * 1000;
 
 export const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<AdminStats | null>(null);
-  const [companies, setCompanies] = useState<AppliedCompanyItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,13 +31,6 @@ export const AdminDashboard: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    adminService
-      .getCompanies({ limit: 200 })
-      .then((res) => setCompanies(res.items))
-      .catch(() => {});
-  }, []);
-
   if (loading) {
     return <p className={styles.loadingState}>Loading…</p>;
   }
@@ -66,48 +51,24 @@ export const AdminDashboard: React.FC = () => {
 
   const { counts, profileUpdatedAt } = stats;
 
-  const followUpsDue = companies.filter((c) => {
-    if (!c.followUpAt) return false;
-    const t = new Date(c.followUpAt).getTime();
-    return t <= now() + 7 * dayMs;
-  });
-  const upcomingInterviews = companies.filter((c) => {
-    if (!c.nextInterviewAt) return false;
-    const t = new Date(c.nextInterviewAt).getTime();
-    return t >= now() && t <= now() + 14 * dayMs;
-  });
-
   const quickStats = [
+    { label: "Projects", value: counts.projects, to: "/admin/projects" },
     {
-      label: "Companies applied",
-      value: counts.appliedCompanies ?? 0,
-      to: "/admin/companies",
+      label: "Experience",
+      value: counts.experiences,
+      to: "/admin/experience",
     },
-    { label: "Tasks", value: counts.tasks ?? 0, to: "/admin/tasks" },
-    { label: "Messages", value: counts.contactMessages, to: "/admin/messages" },
+    { label: "Skills", value: counts.skills, to: "/admin/skills" },
     {
-      label: "Saved jobs",
-      value: counts.savedJobs ?? 0,
-      to: "/admin/saved-jobs",
+      label: "Messages",
+      value: counts.contactMessages,
+      to: "/admin/messages",
     },
   ];
 
   const shortcuts = [
-    {
-      label: "Companies",
-      value: counts.appliedCompanies ?? 0,
-      to: "/admin/companies",
-    },
-    {
-      label: "Saved jobs",
-      value: counts.savedJobs ?? 0,
-      to: "/admin/saved-jobs",
-    },
-    { label: "Cover letter", value: "—", to: "/admin/cover-letter" },
-    { label: "Tasks", value: counts.tasks ?? 0, to: "/admin/tasks" },
-    { label: "Goals", value: counts.goals ?? 0, to: "/admin/goals" },
-    { label: "Notes", value: counts.notes ?? 0, to: "/admin/notes" },
     { label: "Profile", value: "—", to: "/admin/profile" },
+    { label: "Resume", value: "—", to: "/admin/resume" },
     { label: "Projects", value: counts.projects, to: "/admin/projects" },
     { label: "Experience", value: counts.experiences, to: "/admin/experience" },
     { label: "Skills", value: counts.skills, to: "/admin/skills" },
@@ -129,11 +90,6 @@ export const AdminDashboard: React.FC = () => {
     },
     { label: "Honors", value: counts.honors ?? 0, to: "/admin/honors" },
     {
-      label: "Learning",
-      value: counts.learningSections ?? 0,
-      to: "/admin/learning",
-    },
-    {
       label: "Contact info",
       value: counts.profileContacts ?? 0,
       to: "/admin/contacts",
@@ -152,7 +108,7 @@ export const AdminDashboard: React.FC = () => {
     <>
       <header className={styles.dashboardWelcome}>
         <p className={styles.dashboardGreeting}>{greeting}</p>
-        <h1 className={styles.pageTitle}>Overview</h1>
+        <h1 className={styles.pageTitle}>Portfolio CMS</h1>
         {profileUpdatedAt && (
           <p className={styles.dashboardMeta}>
             Profile last updated: {new Date(profileUpdatedAt).toLocaleString()}
@@ -174,80 +130,8 @@ export const AdminDashboard: React.FC = () => {
         ))}
       </section>
 
-      {(followUpsDue.length > 0 || upcomingInterviews.length > 0) && (
-        <div className={styles.jobTrackingCard}>
-          <h2 className={styles.formSectionTitle}>Job tracking</h2>
-          <div className={styles.jobTrackingGrid}>
-            {followUpsDue.length > 0 && (
-              <div className={styles.jobTrackingBlock}>
-                <Link
-                  to="/admin/companies"
-                  className={`${styles.jobTrackingLink} ${styles.jobTrackingBlockTitle}`}
-                >
-                  Follow-ups due ({followUpsDue.length})
-                </Link>
-                <ul className={styles.jobTrackingList}>
-                  {followUpsDue.slice(0, 5).map((c) => (
-                    <li key={c.id} className={styles.jobTrackingItem}>
-                      {c.companyName}
-                      <span className={styles.jobTrackingItemDate}>
-                        {" "}
-                        –{" "}
-                        {c.followUpAt
-                          ? new Date(c.followUpAt).toLocaleDateString()
-                          : ""}
-                      </span>
-                    </li>
-                  ))}
-                  {followUpsDue.length > 5 && (
-                    <li className={styles.jobTrackingMore}>
-                      +{followUpsDue.length - 5} more
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
-            {upcomingInterviews.length > 0 && (
-              <div className={styles.jobTrackingBlock}>
-                <Link
-                  to="/admin/companies"
-                  className={`${styles.jobTrackingLink} ${styles.jobTrackingBlockTitle}`}
-                >
-                  Upcoming interviews ({upcomingInterviews.length})
-                </Link>
-                <ul className={styles.jobTrackingList}>
-                  {upcomingInterviews.slice(0, 5).map((c) => (
-                    <li key={c.id} className={styles.jobTrackingItem}>
-                      {c.companyName}
-                      <span className={styles.jobTrackingItemDate}>
-                        {" "}
-                        –{" "}
-                        {c.nextInterviewAt
-                          ? new Date(c.nextInterviewAt).toLocaleString(
-                              undefined,
-                              {
-                                dateStyle: "short",
-                                timeStyle: "short",
-                              },
-                            )
-                          : ""}
-                      </span>
-                    </li>
-                  ))}
-                  {upcomingInterviews.length > 5 && (
-                    <li className={styles.jobTrackingMore}>
-                      +{upcomingInterviews.length - 5} more
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
       <section className={styles.dashboardSection} aria-label="Shortcuts">
-        <h2 className={styles.dashboardSectionTitle}>Shortcuts</h2>
+        <h2 className={styles.dashboardSectionTitle}>Manage content</h2>
         <div className={styles.shortcutsGrid}>
           {shortcuts.map((card) => (
             <Link key={card.to} to={card.to} className={styles.statCard}>

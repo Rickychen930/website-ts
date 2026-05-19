@@ -39,6 +39,13 @@ export const DUMMY_TECHNICAL_SKILLS: TechnicalSkill[] = [
     yearsOfExperience: 3,
   },
   {
+    id: "d-skill-php",
+    name: "PHP",
+    category: "language",
+    proficiency: "intermediate",
+    yearsOfExperience: 1,
+  },
+  {
     id: "d-skill-react",
     name: "React",
     category: "framework",
@@ -58,6 +65,13 @@ export const DUMMY_TECHNICAL_SKILLS: TechnicalSkill[] = [
     category: "framework",
     proficiency: "advanced",
     yearsOfExperience: 3,
+  },
+  {
+    id: "d-skill-wp",
+    name: "WordPress",
+    category: "framework",
+    proficiency: "intermediate",
+    yearsOfExperience: 1,
   },
   {
     id: "d-skill-pg",

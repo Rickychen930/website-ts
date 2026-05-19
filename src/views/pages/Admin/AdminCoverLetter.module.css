@@ -344,11 +344,11 @@
     padding: 0.5in 0.6in;
     border: none;
     box-shadow: none;
-    background: #fff;
-    color: #1a1a1a;
+    background: var(--print-bg);
+    color: var(--print-text);
   }
 
   .letterhead {
-    border-bottom-color: #1a1a1a;
+    border-bottom-color: var(--print-border);
   }
 }
