@@ -1,8 +1,9 @@
 /**
- * ExperienceRoleCard — full role panel for the experience page timeline.
+ * ExperienceRoleCard — full role panel with optional 3D tilt.
  */
 
 import React from "react";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
 import type { Experience, TechnicalSkill } from "@/types/domain";
 import { formatDateRange, getDuration } from "@/utils/dateUtils";
 import styles from "./ExperienceRoleCard.module.css";
@@ -20,7 +21,7 @@ export const ExperienceRoleCard: React.FC<ExperienceRoleCardProps> = ({
   const achievements = experience.achievements.slice(0, 4);
   const tech = experience.technologies.slice(0, 8);
 
-  return (
+  const content = (
     <article
       className={`${styles.card} ${emphasis ? styles.cardEmphasis : ""}`}
       aria-labelledby={`role-${experience.id}-title`}
@@ -64,5 +65,15 @@ export const ExperienceRoleCard: React.FC<ExperienceRoleCardProps> = ({
         </ul>
       ) : null}
     </article>
+  );
+
+  return (
+    <TiltCard
+      className={styles.tiltWrap}
+      maxTilt={emphasis ? 10 : 7}
+      glare={emphasis}
+    >
+      {content}
+    </TiltCard>
   );
 };

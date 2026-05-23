@@ -7,7 +7,7 @@ import React, { useId } from "react";
 export interface EmptyStateArtProps {
   className?: string;
   /** Slightly different silhouette per context */
-  variant?: "projects" | "learning" | "experience";
+  variant?: "projects" | "experience";
 }
 
 export const EmptyStateArt: React.FC<EmptyStateArtProps> = ({
@@ -15,7 +15,7 @@ export const EmptyStateArt: React.FC<EmptyStateArtProps> = ({
   variant = "projects",
 }) => {
   const uid = useId().replace(/:/g, "");
-  const shift = variant === "learning" ? 8 : variant === "experience" ? -4 : 0;
+  const shift = variant === "experience" ? -4 : 0;
 
   return (
     <svg

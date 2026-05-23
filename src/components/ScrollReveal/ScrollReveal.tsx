@@ -20,54 +20,49 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   className = "",
   style,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [isVisible, setIsVisible] = useState(reducedMotion);
   const elementRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (reducedMotion) return undefined;
+
     const element = elementRef.current;
-    if (!element) return;
+    if (!element) return undefined;
 
-    const bottomInsetPx = () =>
-      Math.min(50, Math.max(24, Math.round(window.innerHeight * 0.08)));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-    const createObserver = () => {
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setTimeout(() => {
-                setIsVisible(true);
-              }, delay);
-              obs.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          /* 0 = any pixel visible. A single tall wrapper (e.g. Projects: filters + full grid)
-             can fail 0.1 threshold when only the top is on screen — content stays opacity:0. */
-          threshold: 0,
-          rootMargin: `0px 0px -${bottomInsetPx()}px 0px`,
-        },
-      );
-      return obs;
-    };
+          const reveal = () => setIsVisible(true);
 
-    let observer = createObserver();
+          if (delay > 0) {
+            timeoutRef.current = window.setTimeout(reveal, delay);
+          } else {
+            reveal();
+          }
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.01,
+        rootMargin: "0px 0px -8% 0px",
+      },
+    );
+
     observer.observe(element);
 
-    const onResize = () => {
-      observer.disconnect();
-      observer = createObserver();
-      observer.observe(element);
-    };
-
-    window.addEventListener("resize", onResize);
-
     return () => {
-      window.removeEventListener("resize", onResize);
       observer.disconnect();
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
+      }
     };
-  }, [delay]);
+  }, [delay, reducedMotion]);
 
   return (
     <div

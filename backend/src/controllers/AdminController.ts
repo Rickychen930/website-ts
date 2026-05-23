@@ -111,7 +111,6 @@ export class AdminController {
       const honorsCount = profile?.honors?.length ?? 0;
       const profileContactsCount = profile?.contacts?.length ?? 0;
       const languagesCount = profile?.languages?.length ?? 0;
-      const learningSectionsCount = profile?.learningSections?.length ?? 0;
 
       res.json({
         profileExists: !!profile,
@@ -131,7 +130,6 @@ export class AdminController {
           academics: academicsCount,
           certifications: certificationsCount,
           honors: honorsCount,
-          learningSections: learningSectionsCount,
           profileContacts: profileContactsCount,
           languages: languagesCount,
         },

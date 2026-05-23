@@ -7,6 +7,7 @@ import { Button } from "@/views/components/ui/Button";
 import { trackEvent } from "@/utils/analytics";
 import { useProfile } from "@/contexts/ProfileContext";
 import { downloadResumePdf } from "@/utils/resumePdfDownload";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import styles from "./DownloadResume.module.css";
 
 interface DownloadResumeProps {
@@ -62,24 +63,26 @@ export const DownloadResume: React.FC<DownloadResumeProps> = ({
   const text = label ?? (compact ? "Download CV" : "Download Resume");
 
   return (
-    <Button
-      variant={variant}
-      size={size}
-      onClick={handleDownload}
-      className={`${plain ? "" : styles.downloadButton} ${className}`.trim()}
-      aria-label={`${text} (PDF)`}
-    >
-      {showDecorations ? (
-        <span className={styles.icon} aria-hidden="true">
-          📄
-        </span>
-      ) : null}
-      <span>{text}</span>
-      {showDecorations && !compact && size === "lg" ? (
-        <span className={styles.arrow} aria-hidden="true">
-          ↓
-        </span>
-      ) : null}
-    </Button>
+    <Magnetic strength={compact ? 0.12 : 0.18}>
+      <Button
+        variant={variant}
+        size={size}
+        onClick={handleDownload}
+        className={`${plain ? "" : styles.downloadButton} ${className}`.trim()}
+        aria-label={`${text} (PDF)`}
+      >
+        {showDecorations ? (
+          <span className={styles.icon} aria-hidden="true">
+            📄
+          </span>
+        ) : null}
+        <span>{text}</span>
+        {showDecorations && !compact && size === "lg" ? (
+          <span className={styles.arrow} aria-hidden="true">
+            ↓
+          </span>
+        ) : null}
+      </Button>
+    </Magnetic>
   );
 };

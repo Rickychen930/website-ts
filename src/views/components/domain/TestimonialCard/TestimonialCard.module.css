@@ -3,8 +3,10 @@
   position: relative;
   height: 100%;
   padding: var(--spacing-xl);
-  border: 1px solid var(--border-primary);
-  background: var(--bg-overlay);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   transition:
     border-color 0.3s var(--ease-out-expo),
     box-shadow 0.35s var(--ease-out-expo),
@@ -25,21 +27,10 @@
   z-index: 1;
   width: 4px;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    var(--color-accent-600),
-    var(--color-primary-500)
-  );
+  background: var(--gradient-holographic);
   opacity: 0.85;
   pointer-events: none;
-}
-
-:global(.dark) .card::before {
-  background: linear-gradient(
-    180deg,
-    var(--color-accent-500),
-    var(--color-accent-300)
-  );
+  box-shadow: var(--shadow-glow);
 }
 
 .decorQuote {

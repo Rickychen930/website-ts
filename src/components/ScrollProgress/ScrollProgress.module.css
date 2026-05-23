@@ -13,22 +13,16 @@
 
 .progressBar {
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-500),
-    var(--color-accent-400)
-  );
-  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.38);
+  background: var(--gradient-holographic);
+  background-size: 200% auto;
+  animation: nx-shimmer 4s ease-in-out infinite;
+  box-shadow: 0 0 16px rgba(var(--color-accent-rgb), 0.5);
   transition: width var(--transition-fast) ease-out;
   transform: translateZ(0);
 }
 
 .dark .progressBar {
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-500),
-    var(--color-accent-300)
-  );
+  box-shadow: 0 0 20px rgba(var(--color-accent-rgb), 0.6);
 }
 
 @media (prefers-reduced-motion: reduce) {

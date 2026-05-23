@@ -1,21 +1,26 @@
 .themeToggle {
   position: relative;
-  width: 3.5rem;
-  height: 2rem;
+  width: 3.75rem;
+  height: 2.125rem;
   padding: 0;
-  border: 2px solid var(--color-accent-alpha-20);
-  background: var(--bg-overlay);
-  transition: all var(--transition-normal) var(--transition-ease);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-card);
+  transition:
+    border-color var(--transition-normal) var(--ease-out-expo),
+    box-shadow var(--transition-normal) var(--ease-out-expo),
+    transform var(--transition-fast) var(--ease-out-expo);
   border-radius: var(--radius-full);
   cursor: pointer;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: var(--shadow-sm);
 }
 
 .themeToggle:hover {
-  border-color: var(--color-accent-alpha-30);
+  border-color: rgba(var(--color-accent-rgb), 0.45);
   box-shadow: var(--shadow-glow);
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .themeToggle:focus-visible {
@@ -25,7 +30,7 @@
 }
 
 .themeToggle:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
 .toggleContainer {
@@ -41,18 +46,21 @@
 .icon {
   position: relative;
   z-index: 2;
-  font-size: var(--font-size-base);
-  transition: all var(--transition-normal) var(--transition-ease);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  transition: all var(--transition-normal) var(--ease-out-expo);
 }
 
 .sunIcon {
   opacity: 1;
   transform: scale(1) rotate(0deg);
+  filter: drop-shadow(0 0 6px rgba(var(--color-gold-rgb), 0.5));
 }
 
 .moonIcon {
-  opacity: 0.3;
-  transform: scale(0.8) rotate(180deg);
+  opacity: 0.35;
+  transform: scale(0.85) rotate(180deg);
+  filter: drop-shadow(0 0 6px rgba(var(--color-accent-rgb), 0.4));
 }
 
 .slider {
@@ -60,30 +68,32 @@
   top: 50%;
   left: var(--spacing-xs);
   z-index: 1;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: var(--gradient-accent);
-  transition: all var(--transition-normal) var(--transition-ease);
+  width: 1.625rem;
+  height: 1.625rem;
+  background: var(--gradient-holographic);
+  background-size: 200% auto;
+  animation: nx-shimmer 6s ease-in-out infinite;
+  transition: all var(--transition-normal) var(--ease-out-expo);
   transform: translateY(-50%);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-md), var(--shadow-glow);
 }
 
 .sliderDark {
-  left: calc(100% - 1.75rem);
+  left: calc(100% - 2rem);
   background: linear-gradient(
     135deg,
-    var(--bg-secondary) 0%,
-    var(--bg-primary) 100%
+    var(--color-primary-800) 0%,
+    var(--color-accent-600) 100%
   );
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    var(--shadow-md),
+    0 0 20px rgba(var(--color-accent-rgb), 0.4);
 }
 
-/* Dark mode - handled automatically via CSS variables */
-
 .dark .sunIcon {
-  opacity: 0.3;
-  transform: scale(0.8) rotate(-180deg);
+  opacity: 0.35;
+  transform: scale(0.85) rotate(-180deg);
 }
 
 .dark .moonIcon {
@@ -95,5 +105,9 @@
   .themeToggle:hover,
   .themeToggle:active {
     transform: none;
+  }
+
+  .slider {
+    animation: none;
   }
 }

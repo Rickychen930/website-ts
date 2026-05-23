@@ -9,9 +9,13 @@ import { useSEO } from "@/hooks/useSEO";
 import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
-import { PageHeroVisual } from "@/views/components/layout/PageHeroVisual";
+import { PageHeroFx } from "@/components/PageHeroFx";
+import { NexusSection } from "@/components/NexusSection";
 import { ExperienceRoleCard } from "@/views/components/domain/ExperienceRoleCard";
 import { EmptyStateArt } from "@/components/PortfolioVisuals";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
+import { SplitText } from "@/components/SplitText/SplitText";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import {
   getCurrentExperiences,
   sortExperiencesByRecency,
@@ -116,9 +120,8 @@ export const Experience: React.FC = () => {
     >
       <header className="pf-hero" aria-labelledby="experience-hero-title">
         <div className="pf-hero-mesh" aria-hidden="true" />
-        <div
-          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
-        >
+        <PageHeroFx />
+        <div className={`pf-hero-inner ${styles.heroInner}`}>
           <div className="pf-hero-main">
             <motion.div
               className={`pf-hero-copy ${styles.heroCopy}`}
@@ -126,7 +129,7 @@ export const Experience: React.FC = () => {
             >
               <p className="pf-eyebrow">Career</p>
               <h1 id="experience-hero-title" className="pf-hero-title">
-                Where I&apos;ve built
+                <SplitText text="Where I've built" stagger={0.028} />
               </h1>
               <p className={`pf-hero-lead ${styles.heroLead}`}>
                 IT intern at Decode Capital (AI chatbot & summariser on PHP /
@@ -142,28 +145,34 @@ export const Experience: React.FC = () => {
                 {...fadeUp(reduced, 0.08)}
               >
                 <li>
-                  <span className="pf-stat-value">{sorted.length}</span>
-                  <span className="pf-stat-label">Roles</span>
+                  <TiltCard className={styles.statCard} maxTilt={8}>
+                    <span className="pf-stat-value">{sorted.length}</span>
+                    <span className="pf-stat-label">Roles</span>
+                  </TiltCard>
                 </li>
                 <li>
-                  <span className="pf-stat-value">{companyCount}</span>
-                  <span className="pf-stat-label">Companies</span>
+                  <TiltCard className={styles.statCard} maxTilt={8}>
+                    <span className="pf-stat-value">{companyCount}</span>
+                    <span className="pf-stat-label">Companies</span>
+                  </TiltCard>
                 </li>
                 <li>
-                  <span className="pf-stat-value">{careerYears}+</span>
-                  <span className="pf-stat-label">Years</span>
+                  <TiltCard className={styles.statCard} maxTilt={8}>
+                    <span className="pf-stat-value">{careerYears}+</span>
+                    <span className="pf-stat-label">Years</span>
+                  </TiltCard>
                 </li>
                 {currentCount > 0 ? (
                   <li>
-                    <span className="pf-stat-value">{currentCount}</span>
-                    <span className="pf-stat-label">Active now</span>
+                    <TiltCard className={styles.statCard} maxTilt={8}>
+                      <span className="pf-stat-value">{currentCount}</span>
+                      <span className="pf-stat-label">Active now</span>
+                    </TiltCard>
                   </li>
                 ) : null}
               </motion.ul>
             ) : null}
           </div>
-
-          <PageHeroVisual pageKey="experience" priority />
         </div>
       </header>
 
@@ -188,9 +197,18 @@ export const Experience: React.FC = () => {
               </div>
             </div>
           ) : (
-            <>
+            <NexusSection
+              id="experience-timeline"
+              eyebrow="Timeline"
+              title={
+                <>
+                  Career <span className="nx-gradient-text">journey</span>
+                </>
+              }
+              lead={`${sorted.length} roles across ${companyCount} companies — filter by current or past.`}
+            >
               <div
-                className={styles.tabs}
+                className={`nx-tabs ${styles.tabs}`}
                 role="tablist"
                 aria-label="Filter experience"
               >
@@ -200,7 +218,7 @@ export const Experience: React.FC = () => {
                     type="button"
                     role="tab"
                     aria-selected={filter === key}
-                    className={`${styles.tab} ${filter === key ? styles.tabActive : ""}`}
+                    className={`nx-tab ${filter === key ? "nx-tab-active" : ""} ${styles.tab}`}
                     onClick={() => setFilter(key)}
                   >
                     {label}
@@ -269,7 +287,7 @@ export const Experience: React.FC = () => {
                   ) : null}
                 </div>
               )}
-            </>
+            </NexusSection>
           )}
         </div>
       </div>
@@ -287,12 +305,16 @@ export const Experience: React.FC = () => {
             collaborations.
           </p>
           <div className="page-cta-actions">
-            <LinkButton to="/contact" variant="primary" size="lg">
-              Contact me
-            </LinkButton>
-            <LinkButton to="/resume" variant="outline" size="lg">
-              View resume
-            </LinkButton>
+            <Magnetic strength={0.2}>
+              <LinkButton to="/contact" variant="primary" size="lg">
+                Contact me
+              </LinkButton>
+            </Magnetic>
+            <Magnetic strength={0.16}>
+              <LinkButton to="/resume" variant="outline" size="lg">
+                View resume
+              </LinkButton>
+            </Magnetic>
           </div>
         </div>
       </section>

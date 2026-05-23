@@ -2,20 +2,16 @@
  * ProjectSpotlight — featured projects grid (equal editorial cards).
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import type { Project } from "@/types/domain";
 import { formatDateRange } from "@/utils/dateUtils";
-import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
+import { formatProjectCategory } from "@/utils/projectFormat";
+import { ProjectMedia } from "@/views/components/domain/ProjectMedia";
 import styles from "./ProjectSpotlight.module.css";
 
 export interface ProjectSpotlightProps {
   projects: readonly Project[];
-}
-
-function formatCategory(category: string): string {
-  if (!category.trim()) return "Project";
-  return category.charAt(0).toUpperCase() + category.slice(1);
 }
 
 function SpotlightCard({
@@ -25,14 +21,6 @@ function SpotlightCard({
   project: Project;
   featured: boolean;
 }) {
-  const [imageFailed, setImageFailed] = useState(false);
-
-  useEffect(() => {
-    setImageFailed(false);
-  }, [project.id, project.imageUrl]);
-
-  const resolvedSrc = resolveProjectImageSrc(project.imageUrl);
-  const showImage = Boolean(resolvedSrc) && !imageFailed;
   const highlight = project.achievements[0] ?? project.description;
 
   return (
@@ -48,28 +36,21 @@ function SpotlightCard({
           {featured ? (
             <span className={styles.featuredBadge}>Featured</span>
           ) : null}
-          {showImage ? (
-            <img
-              src={resolvedSrc}
-              alt=""
-              width={640}
-              height={427}
-              loading={featured ? "eager" : "lazy"}
-              decoding="async"
-              referrerPolicy="no-referrer"
-              onError={() => setImageFailed(true)}
-            />
-          ) : (
-            <span className={styles.mediaFallback} aria-hidden>
-              {project.title.trim().charAt(0).toUpperCase() || "·"}
-            </span>
-          )}
+          <ProjectMedia
+            projectId={project.id}
+            imageUrl={project.imageUrl}
+            title={project.title}
+            loading={featured ? "eager" : "lazy"}
+            width={640}
+            height={427}
+            fallbackClassName={styles.mediaFallback}
+          />
         </div>
 
         <div className={styles.cardBody}>
           <div className={styles.cardMeta}>
             <span className={styles.category}>
-              {formatCategory(project.category)}
+              {formatProjectCategory(project.category)}
             </span>
             {project.isActive ? (
               <span className={styles.active}>Active</span>

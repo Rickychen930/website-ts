@@ -1044,7 +1044,6 @@ const FALLBACK_PROFILE: Profile = {
       ],
     },
   ],
-  learningSections: [],
   softSkills: [],
   stats: [],
   languages: DUMMY_HUMAN_LANGUAGES.map((l) => ({ ...l })),

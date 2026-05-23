@@ -7,7 +7,7 @@ export const SITE_BRAND_NAME = "Portfolio";
 export const SITE_SEO_TITLE_SUFFIX = "Portfolio";
 export const SITE_DEFAULT_TAGLINE = "Professional profile";
 export const SITE_DEFAULT_DESCRIPTION =
-  "Professional portfolio: projects, experience, learning, and contact.";
+  "Professional portfolio: projects, experience, and contact.";
 export const SITE_DEFAULT_KEYWORDS =
   "portfolio, developer, projects, experience, contact";
 

@@ -21,8 +21,15 @@ import { PageTransition } from "@/components/PageTransition";
 import { Analytics } from "@/components/Analytics";
 import { SkipLinks } from "@/components/SkipLinks";
 import { AccessibilityAnnouncer } from "@/components/AccessibilityAnnouncer";
+import { GlowCursor } from "@/components/GlowCursor/GlowCursor";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import "./App.css";
+
+const NexusScene = React.lazy(() =>
+  import("@/components/NexusScene/NexusScene").then((m) => ({
+    default: m.NexusScene,
+  })),
+);
 
 const Home = React.lazy(() =>
   import("@/views/pages/Home").then((m) => ({ default: m.Home })),
@@ -146,7 +153,6 @@ const AppContent: React.FC = () => {
         <Route path="contacts" element={<AdminContacts />} />
         <Route path="messages" element={<AdminMessages />} />
       </Route>
-      <Route path="/learning/*" element={<Navigate to="/" replace />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
@@ -164,10 +170,31 @@ const AppContent: React.FC = () => {
     );
   }
 
+  if (isAdminLoginPage) {
+    return (
+      <>
+        <SkipLinks />
+        <Suspense fallback={null}>
+          <NexusScene />
+        </Suspense>
+        <GlowCursor />
+        <div className="app app-admin-login">
+          <Suspense fallback={<Loading fullScreen message="Loading..." />}>
+            {routes}
+          </Suspense>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Analytics />
       <AccessibilityAnnouncer />
+      <Suspense fallback={null}>
+        <NexusScene />
+      </Suspense>
+      <GlowCursor />
       <div className="app">
         <ScrollProgress />
         <SkipLinks />

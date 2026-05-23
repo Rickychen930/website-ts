@@ -9,8 +9,8 @@
   min-width: 3rem;
   min-height: 3rem;
   border: none;
-  background: var(--gradient-accent);
-  color: var(--text-inverse);
+  background: var(--gradient-holographic);
+  color: var(--text-on-accent);
   font-size: var(--font-size-xl);
   transition: all var(--transition-normal) var(--transition-ease);
   border-radius: var(--radius-full);

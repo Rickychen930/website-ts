@@ -1,12 +1,7 @@
 /**
  * Seed Data - Ricky Chen Profile
  * Improved and normalized structure matching the backend schema
- *
- * learningSections: imported from ./learningSeed (validated by npm run learning:validate).
- * Do not inline; add or edit sections/topics in learningSeed.ts and keep CONTENT_SECTION_LABELS in sync.
  */
-
-import { learningSections } from "./learningSeed";
 
 export const seedProfileData = {
   name: "Ricky Chen",
@@ -1348,6 +1343,4 @@ export const seedProfileData = {
       date: "2023-04-01",
     },
   ],
-
-  learningSections,
 };

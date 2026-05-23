@@ -15,6 +15,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   font-size: 16px;
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -25,6 +26,7 @@ html {
 
 body {
   min-height: 100vh;
+  overflow-x: clip;
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--theme-font);
@@ -123,8 +125,10 @@ img {
 
 /* App shell */
 .app {
-  min-height: 100vh;
   display: flex;
+  position: relative;
+  z-index: var(--z-content);
+  min-height: 100vh;
   flex-direction: column;
 }
 
@@ -138,6 +142,19 @@ img {
 }
 
 .app-admin > * {
+  flex: 1;
+  min-height: 0;
+}
+
+.app-admin-login {
+  display: flex;
+  position: relative;
+  z-index: var(--z-content);
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-admin-login > * {
   flex: 1;
   min-height: 0;
 }

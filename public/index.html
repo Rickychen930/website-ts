@@ -2,16 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("theme") !== "light") {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
     <link rel="alternate icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#050508" />
+    <meta name="theme-color" content="#f0f2f8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#050508" media="(prefers-color-scheme: dark)" />
     
     <!-- Primary Meta Tags (overridden at runtime by useSEO on each route) -->
     <title>Portfolio | Projects, experience & contact</title>
     <meta name="title" content="Portfolio | Projects, experience & contact" />
-    <meta name="description" content="Professional portfolio: projects, experience, learning, and contact." />
+    <meta name="description" content="Professional portfolio: projects, experience, and contact." />
     <meta name="keywords" content="portfolio, developer, projects, experience, contact" />
     <meta name="author" content="Portfolio" />
     <meta name="robots" content="index, follow" />
@@ -21,14 +33,14 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Portfolio | Professional profile" />
-    <meta property="og:description" content="Professional portfolio: projects, experience, learning, and contact." />
+    <meta property="og:description" content="Professional portfolio: projects, experience, and contact." />
     <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
     <meta property="og:site_name" content="Portfolio" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Portfolio | Professional profile" />
-    <meta property="twitter:description" content="Professional portfolio: projects, experience, learning, and contact." />
+    <meta property="twitter:description" content="Professional portfolio: projects, experience, and contact." />
     <meta property="twitter:image" content="%PUBLIC_URL%/logo512.png" />
     
     <!-- Additional Meta Tags -->

@@ -77,7 +77,18 @@ function checkPublicPages() {
       if (content.includes("<Section") || content.includes("Section ")) {
         hasSection = true;
       }
-      if (content.includes("page-inner") || content.includes("PageShell")) {
+      if (
+        content.includes("pf-block") ||
+        content.includes("pf-hero") ||
+        content.includes("pf-workspace")
+      ) {
+        hasSection = true;
+      }
+      if (
+        content.includes("page-inner") ||
+        content.includes("PageShell") ||
+        content.includes("pf-page")
+      ) {
         hasPageInner = true;
       }
       if (

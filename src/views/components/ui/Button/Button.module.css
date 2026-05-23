@@ -58,20 +58,33 @@
 /* Variants */
 .button--primary {
   position: relative;
-  border: 1px solid rgba(var(--color-accent-rgb), 0.28);
-  background: var(--gradient-accent);
-  color: var(--text-inverse);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.4);
+  background: var(--gradient-holographic);
+  color: var(--text-on-accent);
   font-weight: var(--font-weight-semibold);
   background-size: 200% 200%;
   box-shadow: var(--shadow-md), var(--shadow-glow);
   overflow: hidden;
+  animation: btnShimmer 6s ease-in-out infinite;
+}
+
+@keyframes btnShimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .button--primary:hover:not(:disabled) {
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-lg), var(--shadow-colored);
-  transform: translateY(-2px);
-  filter: brightness(1.05);
+  background: var(--gradient-holographic);
+  box-shadow:
+    var(--shadow-lg), var(--shadow-glow-strong), var(--shadow-magenta);
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.08);
 }
 
 .button--primary:active:not(:disabled) {
@@ -97,21 +110,23 @@
 }
 
 .button--outline {
-  border: 2px solid var(--color-accent-500);
-  background: transparent;
+  border: 2px solid rgba(var(--color-accent-rgb), 0.5);
+  background: rgba(var(--color-accent-rgb), 0.05);
   color: var(--color-accent-600);
   font-weight: var(--font-weight-semibold);
   box-shadow: var(--shadow-sm);
   min-height: inherit;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .button--outline:hover:not(:disabled) {
-  background: var(--gradient-accent);
-  color: var(--text-inverse);
-  box-shadow: var(--shadow-md), var(--shadow-colored);
-  transform: translateY(-2px);
-  border-color: var(--color-accent-500);
-  filter: brightness(1.02);
+  background: var(--gradient-holographic);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+  transform: translateY(-3px);
+  border-color: transparent;
+  filter: brightness(1.05);
 }
 
 .button--outline:active:not(:disabled) {
@@ -179,4 +194,8 @@
   }
 }
 
-/* Use global .visually-hidden from accessibility.css */
+@media (prefers-reduced-motion: reduce) {
+  .button--primary {
+    animation: none;
+  }
+}

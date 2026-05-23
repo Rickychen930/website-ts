@@ -1,34 +1,34 @@
 /**
- * Design Tokens — modern AI / engineering product theme
- * Deep slate base, electric sky cyan primary accent, soft violet in gradients (signal + intelligence).
+ * Design Tokens — Quantum Nexus theme
+ * Cosmic void base, holographic cyan + magenta accents, crystalline glass surfaces.
  */
 
 :root {
-  --theme-name: "Signal";
+  --theme-name: "Nexus";
 
-  /* Primary: cool slate — interfaces, terminals, clarity */
-  --color-primary-50: #f8fafc;
-  --color-primary-100: #f1f5f9;
-  --color-primary-200: #e2e8f0;
-  --color-primary-300: #cbd5e1;
-  --color-primary-400: #94a3b8;
-  --color-primary-500: #64748b;
-  --color-primary-600: #475569;
-  --color-primary-700: #334155;
-  --color-primary-800: #1e293b;
-  --color-primary-900: #0f172a;
+  /* Primary — deep void slate */
+  --color-primary-50: #f4f6fb;
+  --color-primary-100: #e8ecf4;
+  --color-primary-200: #c9d2e3;
+  --color-primary-300: #9aa8c4;
+  --color-primary-400: #6b7a9a;
+  --color-primary-500: #4a5670;
+  --color-primary-600: #323b52;
+  --color-primary-700: #222a3d;
+  --color-primary-800: #141a28;
+  --color-primary-900: #0a0e18;
 
-  /* Accent: sky cyan — data flow, compute, modern SaaS */
-  --color-accent-50: #f0f9ff;
-  --color-accent-100: #e0f2fe;
-  --color-accent-200: #bae6fd;
-  --color-accent-300: #7dd3fc;
-  --color-accent-400: #38bdf8;
-  --color-accent-500: #0ea5e9;
-  --color-accent-600: #0284c7;
-  --color-accent-700: #0369a1;
+  /* Accent — holographic cyan */
+  --color-accent-50: #ecfeff;
+  --color-accent-100: #cffafe;
+  --color-accent-200: #a5f3fc;
+  --color-accent-300: #67e8f9;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #00e5ff;
+  --color-accent-600: #06b6d4;
+  --color-accent-700: #0891b2;
 
-  /* Neutrals — cool zinc */
+  /* Neutrals */
   --color-neutral-50: #fafafa;
   --color-neutral-100: #f4f4f5;
   --color-neutral-200: #e4e4e7;
@@ -41,48 +41,48 @@
   --color-neutral-900: #18181b;
 
   /* Semantic */
-  --color-success: #0d9488;
-  --color-success-50: #ccfbf1;
-  --color-success-500: #0d9488;
-  --color-success-light: #a7f3d0;
-  --text-on-accent: #f8fafc;
-  --text-on-success: #0f766e;
+  --color-success: #10b981;
+  --color-success-50: #d1fae5;
+  --color-success-500: #10b981;
+  --color-success-light: #6ee7b7;
+  --text-on-accent: #050508;
+  --text-on-success: #065f46;
   --mask-fade-solid: #000;
   --print-bg: #fff;
-  --print-text: #0f172a;
-  --print-border: #0f172a;
-  --color-error: #dc2626;
-  --color-error-50: #fef2f2;
-  --color-error-500: #dc2626;
-  --color-error-600: #b91c1c;
-  --color-warning: #d97706;
+  --print-text: #0a0e18;
+  --print-border: #0a0e18;
+  --color-error: #f43f5e;
+  --color-error-50: #fff1f2;
+  --color-error-500: #f43f5e;
+  --color-error-600: #e11d48;
+  --color-warning: #f59e0b;
   --color-warning-50: #fffbeb;
 
-  /* Backgrounds — frosted lab / cloud console light */
-  --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-tertiary: #e2e8f0;
-  --bg-card: #fff;
-  --bg-overlay: rgba(248, 250, 252, 0.92);
-  --overlay-backdrop: rgba(15, 23, 42, 0.55);
+  /* Backgrounds — dawn void (light) */
+  --bg-primary: #f0f2f8;
+  --bg-secondary: #e4e8f2;
+  --bg-tertiary: #d4dae8;
+  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-overlay: rgba(240, 242, 248, 0.82);
+  --overlay-backdrop: rgba(10, 14, 24, 0.65);
 
   /* Text */
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-tertiary: #64748b;
-  --text-inverse: #f8fafc;
-  --text-muted: #94a3b8;
+  --text-primary: #0a0e18;
+  --text-secondary: #323b52;
+  --text-tertiary: #6b7a9a;
+  --text-inverse: #f4f6fb;
+  --text-muted: #9aa8c4;
 
   /* Borders */
-  --border-primary: rgba(15, 23, 42, 0.08);
-  --border-secondary: rgba(15, 23, 42, 0.12);
+  --border-primary: rgba(10, 14, 24, 0.08);
+  --border-secondary: rgba(10, 14, 24, 0.14);
   --border-focus: var(--color-accent-500);
 
-  /* Section alt — faint cool band */
-  --bg-section-alt: #f1f5f9;
-  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.05) 0%, transparent 100%);
-  --pattern-line-color: rgba(14, 165, 233, 0.06);
-  --pattern-grid-size: 32px;
+  /* Section alt */
+  --bg-section-alt: #e8ecf4;
+  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.06) 0%, transparent 100%);
+  --pattern-line-color: rgba(0, 229, 255, 0.08);
+  --pattern-grid-size: 40px;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -97,26 +97,27 @@
   --spacing-6xl: 10rem;
 
   /* Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.625rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
   --radius-full: 9999px;
 
-  /* Shadows — cool tint */
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.07), 0 2px 8px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.08), 0 6px 16px rgba(15, 23, 42, 0.05);
-  --shadow-xl: 0 24px 56px rgba(15, 23, 42, 0.09), 0 8px 20px rgba(15, 23, 42, 0.05);
-  --shadow-2xl: 0 32px 72px rgba(15, 23, 42, 0.1);
-  --shadow-card-edge: 0 1px 0 0 var(--border-primary);
+  /* Shadows — holographic glow */
+  --shadow-sm: 0 2px 8px rgba(10, 14, 24, 0.06);
+  --shadow-md: 0 8px 32px rgba(10, 14, 24, 0.08), 0 2px 8px rgba(10, 14, 24, 0.04);
+  --shadow-lg: 0 20px 48px rgba(10, 14, 24, 0.1), 0 8px 20px rgba(10, 14, 24, 0.06);
+  --shadow-xl: 0 32px 64px rgba(10, 14, 24, 0.12), 0 12px 28px rgba(10, 14, 24, 0.07);
+  --shadow-2xl: 0 48px 96px rgba(10, 14, 24, 0.14);
+  --shadow-card-edge: 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
   --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.9);
-  --shadow-glow: 0 0 36px rgba(var(--color-accent-rgb), 0.22);
-  --shadow-glow-strong: 0 0 56px rgba(var(--color-accent-rgb), 0.28);
-  --shadow-colored: 0 12px 40px rgba(var(--color-accent-rgb), 0.18);
-  --shadow-soft: 0 2px 16px rgba(15, 23, 42, 0.04);
-  --shadow-inner: inset 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-glow: 0 0 40px rgba(var(--color-accent-rgb), 0.28);
+  --shadow-glow-strong: 0 0 64px rgba(var(--color-accent-rgb), 0.38);
+  --shadow-colored: 0 16px 48px rgba(var(--color-accent-rgb), 0.22);
+  --shadow-soft: 0 4px 24px rgba(10, 14, 24, 0.05);
+  --shadow-inner: inset 0 2px 6px rgba(10, 14, 24, 0.05);
+  --shadow-magenta: 0 0 48px rgba(var(--color-magenta-rgb), 0.25);
 
   /* Theme aliases */
   --theme-primary: var(--color-primary-800);
@@ -133,7 +134,7 @@
   --theme-radius-card: var(--radius-xl);
   --theme-shadow: var(--shadow-md);
   --theme-shadow-hover: var(--shadow-lg);
-  --theme-transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --theme-font: var(--font-family-sans);
   --theme-font-display: var(--font-family-display);
   --theme-pattern: var(--pattern-line-color);
@@ -141,26 +142,27 @@
 
   /* Focus */
   --focus-outline-width: 2px;
-  --focus-outline-offset: 2px;
+  --focus-outline-offset: 3px;
   --focus-ring-color: var(--color-accent-500);
-  --focus-ring-glow: rgba(var(--color-accent-rgb), 0.25);
+  --focus-ring-glow: rgba(var(--color-accent-rgb), 0.35);
   --focus-outline-width-high: 3px;
 
   /* Opacity */
-  --opacity-disabled: 0.5;
-  --opacity-loading-overlay: 0.4;
-  --opacity-decorative: 0.5;
-  --opacity-ripple: 0.4;
+  --opacity-disabled: 0.45;
+  --opacity-loading-overlay: 0.5;
+  --opacity-decorative: 0.55;
+  --opacity-ripple: 0.35;
 
   /* Transitions */
-  --transition-fast: 200ms;
-  --transition-normal: 350ms;
-  --transition-slow: 500ms;
-  --transition-smooth: 400ms;
+  --transition-fast: 180ms;
+  --transition-normal: 380ms;
+  --transition-slow: 600ms;
+  --transition-smooth: 480ms;
   --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Z-Index */
   --z-base: 0;
@@ -171,29 +173,42 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+  --z-scene: 1;
+  --z-content: 2;
   --z-cursor: 9998;
   --z-progress: 9999;
 
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-700) 100%);
-  --gradient-accent: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-violet-500) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-magenta-500) 100%);
   --gradient-primary-accent: linear-gradient(135deg, var(--color-primary-800) 0%, var(--color-accent-600) 100%);
-  --gradient-text: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-accent-700) 100%);
-  --gradient-hero: linear-gradient(165deg, #f8fafc 0%, #f1f5f9 40%, #e0f2fe 100%);
+  --gradient-text: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-accent-600) 45%, var(--color-magenta-500) 100%);
+  --gradient-hero: linear-gradient(165deg, #f0f2f8 0%, #e4e8f2 35%, #dce4f4 100%);
   --gradient-hero-glow:
-    radial-gradient(ellipse 85% 50% at 8% -5%, rgba(var(--color-accent-rgb), 0.14) 0%, transparent 52%),
-    radial-gradient(ellipse 55% 45% at 95% 5%, rgba(var(--color-violet-rgb), 0.1) 0%, transparent 48%),
-    radial-gradient(ellipse 50% 38% at 50% 100%, rgba(var(--color-primary-rgb), 0.06) 0%, transparent 55%);
+    radial-gradient(ellipse 90% 60% at 15% -10%, rgba(var(--color-accent-rgb), 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 95% 10%, rgba(var(--color-magenta-rgb), 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 100%, rgba(var(--color-gold-rgb), 0.08) 0%, transparent 55%);
   --gradient-section-alt: linear-gradient(180deg, var(--bg-section-alt) 0%, var(--bg-primary) 100%);
-  --gradient-card: linear-gradient(165deg, #fff 0%, #f8fafc 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%);
+  --gradient-card: linear-gradient(165deg, rgba(255, 255, 255, 0.85) 0%, rgba(240, 242, 248, 0.65) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 100%);
   --gradient-accent-subtle: linear-gradient(135deg, var(--color-accent-alpha-10) 0%, transparent 100%);
+  --gradient-holographic: linear-gradient(
+    125deg,
+    var(--color-accent-500) 0%,
+    var(--color-magenta-500) 35%,
+    var(--color-gold-500) 70%,
+    var(--color-accent-400) 100%
+  );
 
-  /* RGB channels for rgba() */
-  --color-primary-rgb: 15, 23, 42;
-  --color-accent-rgb: 14, 165, 233;
-  --color-violet-rgb: 99, 102, 241;
-  --color-violet-500: #6366f1;
+  /* RGB channels */
+  --color-primary-rgb: 10, 14, 24;
+  --color-accent-rgb: 0, 229, 255;
+  --color-magenta-rgb: 255, 45, 146;
+  --color-violet-rgb: 139, 92, 246;
+  --color-gold-rgb: 255, 184, 0;
+  --color-magenta-500: #ff2d92;
+  --color-gold-500: #ffb800;
+  --color-violet-500: #8b5cf6;
   --color-primary-alpha-5: rgba(var(--color-primary-rgb), 0.05);
   --color-primary-alpha-10: rgba(var(--color-primary-rgb), 0.1);
   --color-primary-alpha-15: rgba(var(--color-primary-rgb), 0.15);
@@ -202,43 +217,54 @@
   --color-primary-alpha-40: rgba(var(--color-primary-rgb), 0.4);
   --color-primary-alpha-50: rgba(var(--color-primary-rgb), 0.5);
   --color-accent-alpha-10: rgba(var(--color-accent-rgb), 0.1);
+  --color-accent-alpha-15: rgba(var(--color-accent-rgb), 0.15);
   --color-accent-alpha-20: rgba(var(--color-accent-rgb), 0.2);
+  --color-magenta-alpha-15: rgba(var(--color-magenta-rgb), 0.15);
+
+  /* 3D / glass */
+  --glass-blur: 16px;
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --perspective: 1200px;
+  --tilt-max: 12deg;
 }
 
-/* Dark — IDE / inference stack at night */
+/* Dark — deep cosmic void */
 .dark {
-  --bg-primary: #020617;
-  --bg-secondary: #0f172a;
-  --bg-tertiary: #1e293b;
-  --bg-card: #1e293b;
-  --bg-section-alt: #0f172a;
-  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.08) 0%, transparent 100%);
-  --bg-overlay: rgba(2, 6, 23, 0.92);
-  --overlay-backdrop: rgba(0, 0, 0, 0.75);
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --text-inverse: #020617;
-  --text-muted: #64748b;
-  --theme-heading: #f8fafc;
-  --border-primary: rgba(148, 163, 184, 0.12);
-  --border-secondary: rgba(148, 163, 184, 0.18);
-  --color-primary-500: #64748b;
-  --color-primary-600: #94a3b8;
-  --color-primary-700: #cbd5e1;
-  --color-primary-800: #e2e8f0;
-  --color-accent-400: #38bdf8;
-  --color-accent-500: #0ea5e9;
-  --color-accent-600: #7dd3fc;
-  --gradient-hero: linear-gradient(165deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  --bg-primary: #050508;
+  --bg-secondary: #0a0e18;
+  --bg-tertiary: #141a28;
+  --bg-card: rgba(20, 26, 40, 0.65);
+  --bg-section-alt: #0a0e18;
+  --bg-section-alt-tint: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.06) 0%, transparent 100%);
+  --bg-overlay: rgba(5, 5, 8, 0.78);
+  --overlay-backdrop: rgba(0, 0, 0, 0.82);
+  --text-primary: #f4f6fb;
+  --text-secondary: #c9d2e3;
+  --text-tertiary: #9aa8c4;
+  --text-inverse: #050508;
+  --text-muted: #6b7a9a;
+  --theme-heading: #fff;
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.14);
+  --color-primary-500: #9aa8c4;
+  --color-primary-600: #c9d2e3;
+  --color-primary-700: #e8ecf4;
+  --color-primary-800: #f4f6fb;
+  --color-accent-400: #67e8f9;
+  --color-accent-500: #00e5ff;
+  --color-accent-600: #22d3ee;
+  --gradient-hero: linear-gradient(165deg, #050508 0%, #0a0e18 50%, #141a28 100%);
   --gradient-hero-glow:
-    radial-gradient(ellipse 80% 48% at 50% -8%, rgba(var(--color-accent-rgb), 0.18) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 35% at 100% 20%, rgba(var(--color-violet-rgb), 0.14) 0%, transparent 50%);
-  --gradient-card: linear-gradient(165deg, var(--bg-card) 0%, #0f172a 100%);
-  --gradient-text: linear-gradient(135deg, #f8fafc 0%, var(--color-accent-400) 55%, #a5b4fc 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-  --shadow-card-edge: none;
-  --shadow-badge-ring: 0 0 0 1px rgba(0, 0, 0, 0.35);
+    radial-gradient(ellipse 85% 55% at 20% -5%, rgba(var(--color-accent-rgb), 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 100% 15%, rgba(var(--color-magenta-rgb), 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 45% 35% at 50% 100%, rgba(var(--color-gold-rgb), 0.1) 0%, transparent 55%);
+  --gradient-card: linear-gradient(165deg, rgba(30, 38, 58, 0.75) 0%, rgba(10, 14, 24, 0.85) 100%);
+  --gradient-text: linear-gradient(135deg, #fff 0%, var(--color-accent-400) 40%, var(--color-magenta-500) 75%, var(--color-gold-500) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --shadow-card-edge: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
+  --shadow-badge-ring: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --pattern-line-color: rgba(0, 229, 255, 0.06);
 }
 
 /* Layout & typography */
@@ -248,10 +274,10 @@
   --container-lg: 1024px;
   --container-xl: 1200px;
   --container-2xl: 1400px;
-  --font-family-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
-  --font-family-mono: "JetBrains Mono", "Menlo", "Monaco", monospace;
-  --font-family-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-  --font-family-quote: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-family-sans: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-family-mono: "IBM Plex Mono", "Menlo", monospace;
+  --font-family-display: "Syne", "Segoe UI", system-ui, sans-serif;
+  --font-family-quote: "Syne", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -269,11 +295,12 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.6;
-  --line-height-relaxed: 1.75;
-  --letter-spacing-tight: -0.02em;
+  --font-weight-black: 800;
+  --line-height-tight: 1.15;
+  --line-height-normal: 1.65;
+  --line-height-relaxed: 1.8;
+  --letter-spacing-tight: -0.03em;
   --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.05em;
-  --letter-spacing-luxury: 0.06em;
+  --letter-spacing-wide: 0.08em;
+  --letter-spacing-luxury: 0.12em;
 }

@@ -10,8 +10,12 @@ import { contactService } from "@/services/ContactService";
 import { validateContactForm } from "@/utils/formValidation";
 import { trackEvent } from "@/utils/analytics";
 import { sortChannelsForDisplay } from "@/utils/contactChannels";
+import { PageHeroFx } from "@/components/PageHeroFx";
+import { NexusSection } from "@/components/NexusSection";
 import { ContactChannelsPanel } from "@/views/components/domain/ContactChannelsPanel";
-import { PageHeroVisual } from "@/views/components/layout/PageHeroVisual";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
+import { SplitText } from "@/components/SplitText/SplitText";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import { Button } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
@@ -138,17 +142,16 @@ export const Contact: React.FC = () => {
     >
       <header className="pf-hero" aria-labelledby="contact-hero-title">
         <div className="pf-hero-mesh" aria-hidden="true" />
-        <motion.div
-          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
-        >
-          <motion.div className="pf-hero-main">
+        <PageHeroFx />
+        <div className={`pf-hero-inner ${styles.heroInner}`}>
+          <div className="pf-hero-main">
             <motion.div
               className={`pf-hero-copy ${styles.heroContent}`}
               {...fadeUp(reduced)}
             >
               <p className="pf-eyebrow">Contact</p>
               <h1 id="contact-hero-title" className="pf-hero-title">
-                Get in touch
+                <SplitText text="Get in touch" stagger={0.03} />
               </h1>
               <p className={`pf-hero-lead ${styles.heroLead}`}>
                 Hiring, internships, collaborations, or project inquiries —
@@ -163,41 +166,54 @@ export const Contact: React.FC = () => {
               {...fadeUp(reduced, 0.08)}
             >
               <li>
-                <span className="pf-stat-value">{channels.length}</span>
-                <span className="pf-stat-label">Direct channels</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{channels.length}</span>
+                  <span className="pf-stat-label">Direct channels</span>
+                </TiltCard>
               </li>
               {profile.location?.trim() ? (
                 <li>
-                  <span className="pf-stat-value">Based in</span>
-                  <span className="pf-stat-label">{profile.location}</span>
+                  <TiltCard className={styles.statCard} maxTilt={8}>
+                    <span className="pf-stat-value">Based in</span>
+                    <span className="pf-stat-label">{profile.location}</span>
+                  </TiltCard>
                 </li>
               ) : null}
               <li>
-                <span className="pf-stat-value">
-                  {openToWork ? "Open" : "Selective"}
-                </span>
-                <span className="pf-stat-label">Availability</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">
+                    {openToWork ? "Open" : "Selective"}
+                  </span>
+                  <span className="pf-stat-label">Availability</span>
+                </TiltCard>
               </li>
             </motion.ul>
-          </motion.div>
-
-          <PageHeroVisual pageKey="contact" priority />
-        </motion.div>
+          </div>
+        </div>
       </header>
 
       <div className="pf-workspace">
         <div className="pf-workspace-inner">
-          <div className={styles.layout}>
+          <NexusSection
+            id="contact-workspace"
+            eyebrow="Reach out"
+            title={
+              <>
+                Direct <span className="nx-gradient-text">channels</span>
+              </>
+            }
+            lead={
+              profile.location?.trim()
+                ? `Based in ${profile.location}. I reply within 1–2 business days.`
+                : "I reply within 1–2 business days."
+            }
+            contentClassName={styles.layout}
+          >
             <ContactChannelsPanel
               channels={channels}
               headingId="contact-channels-title"
-              title="Direct channels"
-              lead={
-                profile.location?.trim()
-                  ? `Based in ${profile.location}. I reply within 1–2 business days.`
-                  : "I reply within 1–2 business days."
-              }
-              variant="sidebar"
+              variant="embedded"
+              hideHeader
               showQuickLinks
             />
 
@@ -331,17 +347,19 @@ export const Contact: React.FC = () => {
                   </div>
                 ) : null}
 
-                <Button
-                  type="submit"
-                  variant="primary"
-                  fullWidth
-                  isLoading={isSubmitting}
-                >
-                  {isSubmitting ? "Sending…" : "Send message"}
-                </Button>
+                <Magnetic strength={0.15}>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    fullWidth
+                    isLoading={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending…" : "Send message"}
+                  </Button>
+                </Magnetic>
               </form>
             </motion.div>
-          </div>
+          </NexusSection>
         </div>
       </div>
     </motion.div>

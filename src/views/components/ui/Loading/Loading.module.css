@@ -86,10 +86,12 @@
 }
 
 .spinner {
-  border: 3px solid var(--border-primary);
+  border: 3px solid var(--glass-border);
   border-top-color: var(--color-accent-500);
+  border-right-color: var(--color-magenta-500);
   border-radius: var(--radius-full);
   animation: spin var(--transition-normal) linear infinite;
+  box-shadow: var(--shadow-glow);
 }
 
 .spinner--sm {

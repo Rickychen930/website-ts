@@ -14,10 +14,6 @@ export const SkipLinks: React.FC = () => {
     if (targetId === "main-content") return "main content";
     if (targetId === "main-navigation") return "navigation";
     if (targetId === "contact-form") return "contact form";
-    if (targetId === "learning") return "curriculum";
-    if (targetId === "learning-section") return "section topics";
-    if (targetId === "learning-topic-detail") return "topic page";
-    if (targetId === "learning-topic-content") return "article content";
     return targetId;
   };
 
@@ -78,43 +74,6 @@ export const SkipLinks: React.FC = () => {
         >
           Skip to contact form
         </a>
-      )}
-      {(location.pathname === "/learning" ||
-        location.pathname.startsWith("/learning/")) && (
-        <>
-          <a
-            href={
-              location.pathname === "/learning"
-                ? "#learning"
-                : /^\/learning\/[^/]+$/.test(location.pathname)
-                  ? "#learning-section"
-                  : "#learning-topic-detail"
-            }
-            className={styles.skipLink}
-            onClick={(e) => {
-              const target =
-                location.pathname === "/learning"
-                  ? "learning"
-                  : /^\/learning\/[^/]+$/.test(location.pathname)
-                    ? "learning-section"
-                    : "learning-topic-detail";
-              handleSkip(e, target);
-            }}
-            aria-label="Skip to curriculum"
-          >
-            Skip to curriculum
-          </a>
-          {/^\/learning\/[^/]+\/[^/]+$/.test(location.pathname) && (
-            <a
-              href="#learning-topic-content"
-              className={styles.skipLink}
-              onClick={(e) => handleSkip(e, "learning-topic-content")}
-              aria-label="Skip to article content"
-            >
-              Skip to article
-            </a>
-          )}
-        </>
       )}
     </nav>
   );

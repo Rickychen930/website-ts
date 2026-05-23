@@ -1,23 +1,27 @@
-/* Contact — layout + form (channels: ContactChannelsPanel) */
+/* Contact — Nexus glass form + layout */
 
 .contact {
   position: relative;
 }
 
-.heroInner {
-  max-width: var(--container-xl);
+.heroStatsBar li {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
 }
 
-.heroContent {
-  max-width: 42rem;
+.heroStatsBar li:hover {
+  transform: none;
+  box-shadow: none;
 }
 
-.heroLead {
-  max-width: 40ch;
-}
-
-.heroStatsBar {
-  /* layout from page-patterns pf-hero-stats */
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  height: 100%;
+  padding: var(--spacing-lg);
 }
 
 .layout {
@@ -35,19 +39,35 @@
 }
 
 .formPanel {
+  position: relative;
   padding: var(--spacing-xl);
-  border: 1px solid var(--border-primary);
-  background: var(--theme-surface-card);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md), var(--shadow-card-edge);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.formPanel::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-holographic);
+  content: "";
 }
 
 .formTitle {
   margin: 0 0 var(--spacing-xs);
-  color: var(--theme-heading);
+  background: var(--gradient-text);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-family: var(--theme-font-display);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
 }
 
@@ -84,8 +104,8 @@
 .formGroup textarea {
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
-  border: 1px solid var(--border-primary);
-  background: var(--bg-primary);
+  border: 1px solid var(--glass-border);
+  background: rgba(var(--color-primary-rgb), 0.04);
   color: var(--text-primary);
   font-size: var(--font-size-base);
   font-family: inherit;
@@ -94,7 +114,8 @@
   box-sizing: border-box;
   transition:
     border-color var(--transition-fast) var(--transition-ease),
-    box-shadow var(--transition-fast) var(--transition-ease);
+    box-shadow var(--transition-fast) var(--transition-ease),
+    background var(--transition-fast) var(--transition-ease);
 }
 
 .formGroup textarea {
@@ -105,8 +126,11 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: var(--color-accent-500);
-  box-shadow: 0 0 0 3px var(--focus-ring-glow);
+  border-color: rgba(var(--color-accent-rgb), 0.55);
+  background: rgba(var(--color-accent-rgb), 0.04);
+  box-shadow:
+    0 0 0 3px var(--focus-ring-glow),
+    var(--shadow-glow);
 }
 
 .formGroup input:focus-visible,
@@ -117,6 +141,7 @@
 
 .inputError {
   border-color: var(--color-error-500) !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2) !important;
 }
 
 .errorText {
@@ -128,7 +153,7 @@
 .successMessage {
   padding: var(--spacing-md) var(--spacing-lg);
   border: 1px solid var(--color-success-500);
-  background: var(--color-success-50);
+  background: rgba(16, 185, 129, 0.12);
   color: var(--color-success-700);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -139,7 +164,7 @@
 .errorMessage {
   padding: var(--spacing-md) var(--spacing-lg);
   border: 1px solid var(--color-error-500);
-  background: var(--color-error-50);
+  background: rgba(244, 63, 94, 0.1);
   color: var(--color-error-600);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -148,15 +173,19 @@
 }
 
 :global(.dark) .successMessage {
-  background: rgba(13, 148, 136, 0.18);
   color: var(--color-success-500);
 }
 
 :global(.dark) .errorMessage {
-  background: rgba(185, 28, 28, 0.2);
   color: var(--color-error-500);
 }
 
 .ctaTitle {
   margin: 0;
+  background: var(--gradient-text);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: var(--theme-font-display);
+  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-bold);
 }

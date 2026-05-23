@@ -1,0 +1,376 @@
+/* Home experience timeline — content inside NexusSection */
+
+.layout {
+  display: grid;
+  gap: var(--spacing-xl);
+  align-items: start;
+  grid-template-columns: 1fr;
+}
+
+@media (width >= 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.35fr) minmax(14rem, 0.65fr);
+    gap: var(--spacing-2xl);
+  }
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--spacing-md) var(--spacing-lg);
+  align-items: stretch;
+}
+
+.timelineRail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1.25rem;
+  padding-top: var(--spacing-xl);
+}
+
+.timelineNode {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid rgba(var(--color-accent-rgb), 0.55);
+  background: var(--bg-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35);
+}
+
+.timelineItemCurrent .timelineNode {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-color: var(--color-accent-500);
+  background: var(--gradient-accent);
+  box-shadow: var(--shadow-glow);
+  animation: home-exp-pulse 2s infinite ease-in-out;
+}
+
+@keyframes home-exp-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--color-accent-rgb), 0.45);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(var(--color-accent-rgb), 0);
+  }
+}
+
+.timelineLine {
+  flex: 1;
+  width: 2px;
+  min-height: 1.5rem;
+  margin-top: var(--spacing-xs);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--color-accent-rgb), 0.55) 0%,
+    rgba(var(--color-magenta-rgb), 0.25) 55%,
+    transparent 100%
+  );
+}
+
+.timelineItemLast .timelineLine {
+  display: none;
+}
+
+/* Role cards */
+.roleCard {
+  margin-bottom: var(--spacing-lg);
+}
+
+.roleCardPast {
+  opacity: 0.92;
+}
+
+.roleCardCurrent {
+  border-color: rgba(var(--color-accent-rgb), 0.4);
+}
+
+.roleHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.roleHeaderMain {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.liveBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.35);
+  background: rgba(var(--color-accent-rgb), 0.1);
+  color: var(--color-accent-500);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent-500);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.8);
+  animation: home-exp-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes home-exp-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.roleCompany {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-accent-500);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+.roleTitle {
+  margin: 0;
+  color: var(--theme-heading);
+  font-family: var(--theme-font-display);
+  font-size: clamp(var(--font-size-lg), 2.2vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.roleCardPast .roleTitle {
+  font-size: var(--font-size-lg);
+}
+
+.roleLocation {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+}
+
+.roleMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+  text-align: right;
+}
+
+.roleDates {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.roleDuration {
+  color: var(--theme-accent);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.roleSummary {
+  margin: 0 0 var(--spacing-md);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.roleHighlights {
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  list-style: none;
+}
+
+.roleHighlights li {
+  position: relative;
+  padding-left: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.roleHighlights li::before {
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--gradient-holographic);
+  content: "";
+  border-radius: var(--radius-full);
+}
+
+.roleTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  list-style: none;
+}
+
+.roleTech li {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(var(--color-accent-rgb), 0.06);
+  color: var(--text-secondary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-md);
+}
+
+.roleLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--transition-fast) var(--transition-ease);
+}
+
+.roleLink:hover {
+  color: var(--color-accent-500);
+}
+
+.roleLink:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Metrics panel */
+.metricsPanel {
+  display: flex;
+  position: sticky;
+  top: calc(var(--header-height, 4rem) + var(--spacing-md));
+  padding: var(--spacing-lg);
+  flex-direction: column;
+  gap: var(--spacing-md);
+  border-radius: var(--radius-xl);
+}
+
+.metricsLabel {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+}
+
+.metricsList {
+  display: grid;
+  gap: var(--spacing-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.metricCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-lg);
+  min-height: 4.5rem;
+}
+
+.metricValue {
+  color: var(--theme-heading);
+  font-family: var(--theme-font-display);
+  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.metricLabel {
+  color: var(--color-accent-500);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+.metricsFoot {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+@media (width <= 768px) {
+  .metricsPanel {
+    position: static;
+  }
+
+  .metricsList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .metricCard {
+    padding: var(--spacing-sm);
+    min-height: 4rem;
+  }
+
+  .metricValue {
+    font-size: var(--font-size-xl);
+  }
+
+  .metricLabel {
+    font-size: 0.625rem;
+  }
+
+  .roleMeta {
+    width: 100%;
+    text-align: left;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timelineItemCurrent .timelineNode,
+  .liveDot {
+    animation: none;
+  }
+}

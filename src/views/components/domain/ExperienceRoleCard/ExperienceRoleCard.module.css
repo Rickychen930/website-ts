@@ -1,21 +1,28 @@
-/* ExperienceRoleCard — timeline / current role panel */
+/* ExperienceRoleCard — Nexus glass + 3D tilt shell */
 
-.card {
-  padding: var(--spacing-xl);
-  border: 1px solid var(--border-primary);
-  background: var(--theme-surface-card);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm), var(--shadow-card-edge);
+.tiltWrap {
+  height: 100%;
 }
 
-.cardEmphasis {
-  border-color: var(--color-accent-400);
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-alpha-10) 0%,
-    var(--theme-surface-card) 55%
-  );
-  box-shadow: var(--shadow-md), var(--shadow-glow);
+.tiltWrap .card {
+  padding: var(--spacing-xl);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.card {
+  box-sizing: border-box;
+}
+
+.cardEmphasis .position {
+  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+}
+
+.tiltWrap:has(.cardEmphasis) {
+  border-color: rgba(var(--color-accent-rgb), 0.45);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
 .header {
@@ -30,14 +37,20 @@
   display: inline-block;
   margin-bottom: var(--spacing-xs);
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--color-accent-alpha-15);
-  color: var(--color-accent-700);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.35);
+  background: rgba(var(--color-accent-rgb), 0.12);
+  color: var(--color-accent-600);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
   border-radius: var(--radius-full);
+  box-shadow: var(--shadow-glow);
+}
+
+.dark .badge {
+  color: var(--color-accent-400);
 }
 
 .position {
@@ -47,10 +60,6 @@
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-}
-
-.cardEmphasis .position {
-  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
 }
 
 .company {
@@ -82,6 +91,7 @@
 
 .duration {
   color: var(--theme-accent);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
 }
@@ -114,9 +124,10 @@
   left: 0;
   width: 6px;
   height: 6px;
-  background: var(--color-accent-500);
+  background: var(--gradient-holographic);
   content: "";
   border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.5);
 }
 
 .tech {
@@ -130,10 +141,16 @@
 
 .tech li {
   padding: var(--spacing-xs) var(--spacing-sm);
-  border: 1px solid var(--border-secondary);
-  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  background: rgba(var(--color-accent-rgb), 0.06);
   color: var(--text-secondary);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   border-radius: var(--radius-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tiltWrap {
+    transform: none !important;
+  }
 }

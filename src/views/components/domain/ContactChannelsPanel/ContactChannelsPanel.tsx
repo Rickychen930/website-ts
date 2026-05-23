@@ -19,7 +19,9 @@ export interface ContactChannelsPanelProps {
   headingId?: string;
   title?: string;
   lead?: string;
-  variant?: "sidebar" | "compact";
+  variant?: "sidebar" | "compact" | "embedded";
+  /** Omit title/lead when parent section already provides them (e.g. NexusSection). */
+  hideHeader?: boolean;
   showQuickLinks?: boolean;
   className?: string;
 }
@@ -39,6 +41,7 @@ export const ContactChannelsPanel: React.FC<ContactChannelsPanelProps> = ({
   title = "Direct channels",
   lead = "Fastest path for hiring, partnerships, or project inquiries.",
   variant = "sidebar",
+  hideHeader = false,
   showQuickLinks = false,
   className,
 }) => {
@@ -47,7 +50,11 @@ export const ContactChannelsPanel: React.FC<ContactChannelsPanelProps> = ({
 
   const rootClass = [
     styles.panel,
-    variant === "compact" ? styles.panelCompact : styles.panelSidebar,
+    variant === "embedded"
+      ? styles.panelEmbedded
+      : variant === "compact"
+        ? styles.panelCompact
+        : styles.panelSidebar,
     className,
   ]
     .filter(Boolean)
@@ -68,7 +75,7 @@ export const ContactChannelsPanel: React.FC<ContactChannelsPanelProps> = ({
     );
   }
 
-  const showHead = Boolean(title.trim() || lead.trim());
+  const showHead = !hideHeader && Boolean(title.trim() || lead.trim());
 
   return (
     <div

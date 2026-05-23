@@ -1,0 +1,11 @@
+.magnetic {
+  display: inline-flex;
+  transition: transform 0.2s var(--ease-out-expo);
+  will-change: transform;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .magnetic {
+    will-change: auto;
+  }
+}

@@ -399,58 +399,6 @@ export const VISUAL_DESIGN_DUMMY_PROFILE: Profile = {
     },
   ],
   languages: cloneLanguages(),
-  learningSections: [
-    {
-      id: "d-learn-react",
-      title: "React (dummy section)",
-      slug: "react",
-      description: "Dua topik contoh dengan thumbnail gambar dan tanpa gambar.",
-      order: 1,
-      published: true,
-      items: [
-        {
-          id: "d-topic-hooks",
-          title: "Hooks & state patterns",
-          description: "Ringkasan dummy untuk kartu topik di daftar.",
-          order: 1,
-          imageUrl: "https://picsum.photos/seed/learndummy1/600/400",
-          content:
-            "Ini isi artikel dummy singkat. Tambahkan paragraf lain di CMS atau seed sungguhan nanti.\n\n- Poin pertama\n- Poin kedua",
-          codeExample: "const [x, setX] = useState(0);",
-          codeLanguage: "tsx",
-        },
-        {
-          id: "d-topic-a11y",
-          title: "Aksesibilitas form",
-          description: "Tanpa imageUrl — tema gradient dari slug section.",
-          order: 2,
-          content: "Topik kedua memakai ikon default bila tidak ada gambar.",
-        },
-      ],
-    },
-    {
-      id: "d-learn-dsa",
-      title: "Competitive programming (dummy)",
-      slug: "competitive-programming",
-      description: "Section kedua untuk memeriksa grid kurikulum.",
-      order: 2,
-      published: true,
-      items: [
-        {
-          id: "d-topic-graph",
-          title: "Graf — BFS dummy",
-          description: "Thumbnail + cuplikan teks.",
-          order: 1,
-          imageUrl: "https://picsum.photos/seed/learndummy2/600/400",
-          content:
-            "**1. Learning flow:**\n\nBaca soal, identifikasi model graf.\n\n**2. Material:**\n\nAdjacency list dan queue.\n\n**3. Explanation:**\n\nBFS menelusuri level per level.",
-          codeExample:
-            "from collections import deque\n\ndef bfs(g, s):\n    q = deque([s])",
-          codeLanguage: "python",
-        },
-      ],
-    },
-  ],
   createdAt: now,
   updatedAt: now,
 };

@@ -23,7 +23,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
       const timer = setTimeout(() => {
         setDisplayLocation(location);
         setTransitionStage("entered");
-      }, 380);
+      }, 280);
       return () => clearTimeout(timer);
     }
   }, [location, displayLocation]);

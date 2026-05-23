@@ -9,14 +9,19 @@ import { useSEO } from "@/hooks/useSEO";
 import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
-import { PageHeroVisual } from "@/views/components/layout/PageHeroVisual";
+import { PageHeroFx } from "@/components/PageHeroFx";
+import { NexusSection } from "@/components/NexusSection";
 import { ProjectSpotlight } from "@/views/components/domain/ProjectSpotlight";
 import { ProjectCatalogRow } from "@/views/components/domain/ProjectCatalogRow";
 import { EmptyStateArt } from "@/components/PortfolioVisuals";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
+import { SplitText } from "@/components/SplitText/SplitText";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import {
   pickFeaturedProjects,
   sortProjectsByRecency,
 } from "@/utils/projectSort";
+import { formatProjectCategory } from "@/utils/projectFormat";
 import { SITE_BRAND_NAME } from "@/config/site-defaults";
 import type { Project } from "@/types/domain";
 import styles from "./Projects.module.css";
@@ -29,11 +34,6 @@ const fadeUp = (reduced: boolean, delay = 0) =>
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
       };
-
-function formatCategory(category: string): string {
-  if (!category.trim()) return "Project";
-  return category.charAt(0).toUpperCase() + category.slice(1);
-}
 
 export const Projects: React.FC = () => {
   const { profile, isLoading, error, refetch } = useProfile();
@@ -111,7 +111,7 @@ export const Projects: React.FC = () => {
     ? filteredProjects.filter((p) => !featured.some((f) => f.id === p.id))
     : filteredProjects;
 
-  const categoryLabel = formatCategory(selectedCategory);
+  const categoryLabel = formatProjectCategory(selectedCategory);
 
   return (
     <motion.div
@@ -122,9 +122,8 @@ export const Projects: React.FC = () => {
     >
       <header className="pf-hero" aria-labelledby="projects-hero-title">
         <div className="pf-hero-mesh" aria-hidden="true" />
-        <div
-          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
-        >
+        <PageHeroFx />
+        <div className={`pf-hero-inner ${styles.heroInner}`}>
           <motion.div className="pf-hero-main">
             <motion.div
               className={`pf-hero-copy ${styles.heroCopy}`}
@@ -132,7 +131,7 @@ export const Projects: React.FC = () => {
             >
               <p className="pf-eyebrow">Portfolio</p>
               <h1 id="projects-hero-title" className="pf-hero-title">
-                Projects
+                <SplitText text="Projects" stagger={0.04} />
               </h1>
               <p className={`pf-hero-lead ${styles.heroLead}`}>
                 AI tools, client platforms, and product case studies — from
@@ -146,122 +145,137 @@ export const Projects: React.FC = () => {
               {...fadeUp(reduced, 0.08)}
             >
               <li>
-                <span className="pf-stat-value">{profile.projects.length}</span>
-                <span className="pf-stat-label">Shipped</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">
+                    {profile.projects.length}
+                  </span>
+                  <span className="pf-stat-label">Shipped</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">{categories.length - 1}</span>
-                <span className="pf-stat-label">Disciplines</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{categories.length - 1}</span>
+                  <span className="pf-stat-label">Disciplines</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">{activeCount}</span>
-                <span className="pf-stat-label">Active</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{activeCount}</span>
+                  <span className="pf-stat-label">Active</span>
+                </TiltCard>
               </li>
             </motion.ul>
           </motion.div>
-
-          <PageHeroVisual pageKey="projects" priority />
         </div>
       </header>
 
-      <motion.div className={`pf-workspace ${styles.workspace}`}>
-        <motion.div className={`pf-workspace-inner ${styles.workspaceInner}`}>
-          <aside className={styles.sidebar} aria-label="Filter by category">
-            <p className={styles.sidebarTitle}>Category</p>
-            <ul className={styles.filterList}>
-              {categories.map((cat) => (
-                <li key={cat}>
-                  <button
-                    type="button"
-                    className={`${styles.filterItem} ${
-                      selectedCategory === cat ? styles.filterItemActive : ""
-                    }`}
-                    aria-pressed={selectedCategory === cat}
-                    onClick={() => setSelectedCategory(cat)}
-                  >
-                    <span>
-                      {cat === "all" ? "All projects" : formatCategory(cat)}
-                    </span>
-                    <span className={styles.filterCount}>
-                      {counts[cat] ?? 0}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </aside>
+      <div className={`pf-workspace ${styles.workspace}`}>
+        <div className="pf-workspace-inner">
+          <NexusSection
+            id="projects-catalog"
+            eyebrow={
+              selectedCategory === "all" ? "Full catalog" : categoryLabel
+            }
+            title={
+              selectedCategory === "all" ? (
+                <>
+                  All shipped <span className="nx-gradient-text">work</span>
+                </>
+              ) : (
+                <>
+                  {categoryLabel}{" "}
+                  <span className="nx-gradient-text">projects</span>
+                </>
+              )
+            }
+            lead={`${filteredProjects.length} project${filteredProjects.length !== 1 ? "s" : ""} in this view.`}
+            contentClassName={styles.catalogLayout}
+          >
+            <aside className={styles.sidebar} aria-label="Filter by category">
+              <p className={styles.sidebarTitle}>Category</p>
+              <ul className={styles.filterList}>
+                {categories.map((cat) => (
+                  <li key={cat}>
+                    <button
+                      type="button"
+                      className={`${styles.filterItem} ${
+                        selectedCategory === cat ? styles.filterItemActive : ""
+                      }`}
+                      aria-pressed={selectedCategory === cat}
+                      onClick={() => setSelectedCategory(cat)}
+                    >
+                      <span>
+                        {cat === "all"
+                          ? "All projects"
+                          : formatProjectCategory(cat)}
+                      </span>
+                      <span className={styles.filterCount}>
+                        {counts[cat] ?? 0}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </aside>
 
-          <motion.div className={styles.main}>
-            <header className={styles.mainHeader}>
-              <div>
-                <p className={styles.mainEyebrow}>
-                  {selectedCategory === "all" ? "Full catalog" : categoryLabel}
-                </p>
-                <h2 className={styles.mainTitle}>
-                  {selectedCategory === "all"
-                    ? "All shipped work"
-                    : `${categoryLabel} projects`}
-                </h2>
-              </div>
-              <p className={styles.mainCount}>
-                {filteredProjects.length} project
-                {filteredProjects.length !== 1 ? "s" : ""}
-              </p>
-            </header>
-
-            {filteredProjects.length === 0 ? (
-              <div className={styles.empty} role="status">
-                <div className={styles.emptyArt} aria-hidden="true">
-                  <EmptyStateArt variant="projects" />
+            <div className={styles.main}>
+              {filteredProjects.length === 0 ? (
+                <div className={styles.empty} role="status">
+                  <div className={styles.emptyArt} aria-hidden="true">
+                    <EmptyStateArt variant="projects" />
+                  </div>
+                  <p className={styles.emptyText}>
+                    No projects in this category yet. Try another filter or
+                    check back later.
+                  </p>
+                  <div className={styles.emptyActions}>
+                    <button
+                      type="button"
+                      className={styles.filterItem}
+                      onClick={() => setSelectedCategory("all")}
+                    >
+                      Show all projects
+                    </button>
+                  </div>
                 </div>
-                <p className={styles.emptyText}>
-                  No projects in this category yet. Try another filter or check
-                  back later.
-                </p>
-                <div className={styles.emptyActions}>
-                  <button
-                    type="button"
-                    className={styles.filterItem}
-                    onClick={() => setSelectedCategory("all")}
-                  >
-                    Show all projects
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <>
-                {showSpotlight ? (
-                  <section
-                    className={styles.spotlightSection}
-                    aria-label="Featured projects"
-                  >
-                    <h3 className={styles.sectionLabel}>Featured</h3>
-                    <ProjectSpotlight projects={featured} />
-                  </section>
-                ) : null}
+              ) : (
+                <>
+                  {showSpotlight ? (
+                    <section
+                      className={styles.spotlightSection}
+                      aria-label="Featured projects"
+                    >
+                      <h3 className={styles.sectionLabel}>Featured</h3>
+                      <ProjectSpotlight projects={featured} />
+                    </section>
+                  ) : null}
 
-                {catalogProjects.length > 0 ? (
-                  <section
-                    className={styles.catalogSection}
-                    aria-label="Project catalog"
-                  >
-                    {showSpotlight ? (
-                      <h3 className={styles.sectionLabel}>More projects</h3>
-                    ) : null}
-                    <ul className={styles.catalogList}>
-                      {catalogProjects.map((project, index) => (
-                        <li key={project.id}>
-                          <ProjectCatalogRow project={project} index={index} />
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
-              </>
-            )}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+                  {catalogProjects.length > 0 ? (
+                    <section
+                      className={styles.catalogSection}
+                      aria-label="Project catalog"
+                    >
+                      {showSpotlight ? (
+                        <h3 className={styles.sectionLabel}>More projects</h3>
+                      ) : null}
+                      <ul className={styles.catalogList}>
+                        {catalogProjects.map((project, index) => (
+                          <li key={project.id}>
+                            <ProjectCatalogRow
+                              project={project}
+                              index={index}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ) : null}
+                </>
+              )}
+            </div>
+          </NexusSection>
+        </div>
+      </div>
 
       <section
         className={`pf-cta ${styles.cta}`}
@@ -276,12 +290,16 @@ export const Projects: React.FC = () => {
             me what you&apos;re building.
           </p>
           <div className="page-cta-actions">
-            <LinkButton to="/contact" variant="primary" size="lg">
-              Get in touch
-            </LinkButton>
-            <LinkButton to="/resume" variant="outline" size="lg">
-              View resume
-            </LinkButton>
+            <Magnetic strength={0.2}>
+              <LinkButton to="/contact" variant="primary" size="lg">
+                Get in touch
+              </LinkButton>
+            </Magnetic>
+            <Magnetic strength={0.16}>
+              <LinkButton to="/resume" variant="outline" size="lg">
+                View resume
+              </LinkButton>
+            </Magnetic>
           </div>
         </div>
       </section>

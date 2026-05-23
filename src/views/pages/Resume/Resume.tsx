@@ -9,7 +9,8 @@ import { useSEO } from "@/hooks/useSEO";
 import { Button, LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
-import { PageHeroVisual } from "@/views/components/layout/PageHeroVisual";
+import { PageHeroFx } from "@/components/PageHeroFx";
+import { NexusSection } from "@/components/NexusSection";
 import { downloadResumePdf } from "@/utils/resumePdfDownload";
 import { getResumeAtsReport } from "@/utils/resumeAtsReport";
 import { sortExperiencesByRecency } from "@/utils/experienceSort";
@@ -25,6 +26,9 @@ import {
   SITE_DEFAULT_DESCRIPTION,
 } from "@/config/site-defaults";
 import type { Profile } from "@/types/domain";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
+import { SplitText } from "@/components/SplitText/SplitText";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import styles from "./Resume.module.css";
 
 const fadeUp = (reduced: boolean, delay = 0) =>
@@ -188,9 +192,8 @@ export const Resume: React.FC = () => {
     >
       <header className="pf-hero" aria-labelledby="resume-hero-title">
         <div className="pf-hero-mesh" aria-hidden="true" />
-        <div
-          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
-        >
+        <PageHeroFx />
+        <div className={`pf-hero-inner ${styles.heroInner}`}>
           <div className="pf-hero-main">
             <motion.div
               className={`pf-hero-copy ${styles.heroContent}`}
@@ -198,7 +201,7 @@ export const Resume: React.FC = () => {
             >
               <p className="pf-eyebrow">Document</p>
               <h1 id="resume-hero-title" className="pf-hero-title">
-                Resume
+                <SplitText text="Resume" stagger={0.05} />
               </h1>
               <p className={`pf-hero-lead ${styles.heroLead}`}>
                 Synced with your portfolio — Decode Capital, Web Architech, and
@@ -208,18 +211,26 @@ export const Resume: React.FC = () => {
                   : " Run the ATS report before applying."}
               </p>
               <div className={styles.toolbar}>
-                <Button variant="primary" size="lg" onClick={handleDownloadPdf}>
-                  Download PDF
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => setShowAtsReport((v) => !v)}
-                  aria-expanded={showAtsReport}
-                  aria-controls="ats-report"
-                >
-                  {showAtsReport ? "Hide ATS report" : "ATS readability test"}
-                </Button>
+                <Magnetic strength={0.2}>
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    onClick={handleDownloadPdf}
+                  >
+                    Download PDF
+                  </Button>
+                </Magnetic>
+                <Magnetic strength={0.16}>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => setShowAtsReport((v) => !v)}
+                    aria-expanded={showAtsReport}
+                    aria-controls="ats-report"
+                  >
+                    {showAtsReport ? "Hide ATS report" : "ATS readability test"}
+                  </Button>
+                </Magnetic>
               </div>
             </motion.div>
 
@@ -228,27 +239,33 @@ export const Resume: React.FC = () => {
               aria-label="Resume overview"
             >
               <li>
-                <span className="pf-stat-value">{filledSections}</span>
-                <span className="pf-stat-label">Sections filled</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{filledSections}</span>
+                  <span className="pf-stat-label">Sections filled</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">
-                  {sortedExperiences.length}
-                </span>
-                <span className="pf-stat-label">Roles listed</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">
+                    {sortedExperiences.length}
+                  </span>
+                  <span className="pf-stat-label">Roles listed</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">{currentCount}</span>
-                <span className="pf-stat-label">Current roles</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{currentCount}</span>
+                  <span className="pf-stat-label">Current roles</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">{atsReport.score}</span>
-                <span className="pf-stat-label">ATS score</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{atsReport.score}</span>
+                  <span className="pf-stat-label">ATS score</span>
+                </TiltCard>
               </li>
             </ul>
           </div>
-
-          <PageHeroVisual pageKey="resume" priority />
         </div>
       </header>
 
@@ -257,249 +274,269 @@ export const Resume: React.FC = () => {
           className={`pf-workspace-inner pf-workspace-inner--narrow ${styles.workspaceInner}`}
         >
           {showAtsReport ? (
-            <section
+            <NexusSection
               id="ats-report"
-              className={styles.atsReport}
-              aria-labelledby="ats-report-heading"
+              eyebrow="Quality check"
+              title={
+                <>
+                  ATS <span className="nx-gradient-text">readability</span>
+                </>
+              }
+              lead={atsReport.summary}
             >
-              <h2 id="ats-report-heading" className={styles.atsTitle}>
-                ATS readability report
-              </h2>
-              <p className={styles.atsSummary}>{atsReport.summary}</p>
-              <div className={styles.atsScoreRow}>
-                <span className={styles.atsScoreLabel}>Score:</span>
-                <span className={styles.atsScoreValue}>
-                  {atsReport.score}/100
-                </span>
-                <span
-                  className={
-                    atsReport.atsReadable
-                      ? styles.atsBadgeOk
-                      : styles.atsBadgeWarn
-                  }
-                >
-                  {atsReport.atsReadable
-                    ? "ATS-parseable"
-                    : "Needs improvement"}
-                </span>
-              </div>
-              <ul className={styles.atsChecks}>
-                {atsReport.checks.map((c) => (
-                  <li
-                    key={c.id}
+              <section
+                className={styles.atsReport}
+                aria-labelledby="ats-report-heading"
+              >
+                <h2 id="ats-report-heading" className="visually-hidden">
+                  ATS readability report
+                </h2>
+                <div className={styles.atsScoreRow}>
+                  <span className={styles.atsScoreLabel}>Score:</span>
+                  <span className={styles.atsScoreValue}>
+                    {atsReport.score}/100
+                  </span>
+                  <span
                     className={
-                      c.passed ? styles.atsCheckOk : styles.atsCheckFail
+                      atsReport.atsReadable
+                        ? styles.atsBadgeOk
+                        : styles.atsBadgeWarn
                     }
                   >
-                    <span aria-hidden>{c.passed ? "✓" : "✗"}</span> {c.label}
-                    {c.detail ? (
-                      <span className={styles.atsCheckDetail}>
-                        {" "}
-                        — {c.detail}
-                      </span>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-              {atsReport.recommendations.length > 0 ? (
-                <div className={styles.atsRecs}>
-                  <strong>Recommendations:</strong>
-                  <ul>
-                    {atsReport.recommendations.map((rec, i) => (
-                      <li key={i}>{rec}</li>
-                    ))}
-                  </ul>
+                    {atsReport.atsReadable
+                      ? "ATS-parseable"
+                      : "Needs improvement"}
+                  </span>
                 </div>
-              ) : null}
-              <details className={styles.atsPreviewDetails}>
-                <summary>Preview text (as read by ATS)</summary>
-                <pre className={styles.atsPreviewPre}>
-                  {atsReport.plainTextPreview}
-                </pre>
-              </details>
-            </section>
+                <ul className={styles.atsChecks}>
+                  {atsReport.checks.map((c) => (
+                    <li
+                      key={c.id}
+                      className={
+                        c.passed ? styles.atsCheckOk : styles.atsCheckFail
+                      }
+                    >
+                      <span aria-hidden>{c.passed ? "✓" : "✗"}</span> {c.label}
+                      {c.detail ? (
+                        <span className={styles.atsCheckDetail}>
+                          {" "}
+                          — {c.detail}
+                        </span>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+                {atsReport.recommendations.length > 0 ? (
+                  <div className={styles.atsRecs}>
+                    <strong>Recommendations:</strong>
+                    <ul>
+                      {atsReport.recommendations.map((rec, i) => (
+                        <li key={i}>{rec}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                <details className={styles.atsPreviewDetails}>
+                  <summary>Preview text (as read by ATS)</summary>
+                  <pre className={styles.atsPreviewPre}>
+                    {atsReport.plainTextPreview}
+                  </pre>
+                </details>
+              </section>
+            </NexusSection>
           ) : null}
 
-          <article className={styles.document} aria-label="Resume preview">
-            <h2 className={styles.documentName}>{name}</h2>
-            {(title || location) && (
-              <p className={styles.documentTagline}>
-                {title ? <strong>{title}</strong> : null}
-                {title && location ? <br /> : null}
-                {location}
-              </p>
-            )}
-            {contactParts.length > 0 ? (
-              <p className={styles.documentContact}>
-                {contactParts.map((part, i) => (
-                  <span key={i}>
-                    {i > 0 ? " | " : null}
-                    {part}
-                  </span>
-                ))}
-              </p>
-            ) : null}
-
-            {bio ? (
+          <NexusSection
+            id="resume-preview"
+            eyebrow="Live preview"
+            title={
               <>
-                <h3 className={styles.documentH2}>Professional Summary</h3>
-                <p className={styles.summary}>{bio}</p>
+                Resume <span className="nx-gradient-text">document</span>
               </>
-            ) : null}
+            }
+            lead="Synced with portfolio data — download PDF or print from browser."
+          >
+            <article className={styles.document} aria-label="Resume preview">
+              <h2 className={styles.documentName}>{name}</h2>
+              {(title || location) && (
+                <p className={styles.documentTagline}>
+                  {title ? <strong>{title}</strong> : null}
+                  {title && location ? <br /> : null}
+                  {location}
+                </p>
+              )}
+              {contactParts.length > 0 ? (
+                <p className={styles.documentContact}>
+                  {contactParts.map((part, i) => (
+                    <span key={i}>
+                      {i > 0 ? " | " : null}
+                      {part}
+                    </span>
+                  ))}
+                </p>
+              ) : null}
 
-            {experiences.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Experience</h3>
-                {experiences.map((exp, i) => (
-                  <div
-                    key={exp.id ?? `${exp.company}-${i}`}
-                    className={styles.sectionBlock}
-                  >
-                    <h4 className={styles.documentH3}>
-                      {exp.position} |{" "}
-                      {formatExperienceCompanyLine(exp.company, exp.location)}
-                    </h4>
-                    <p className={styles.jobMeta}>
-                      {exp.startDate}
-                      {exp.endDate
-                        ? ` – ${exp.endDate}`
-                        : exp.isCurrent
-                          ? " – Present"
+              {bio ? (
+                <>
+                  <h3 className={styles.documentH2}>Professional Summary</h3>
+                  <p className={styles.summary}>{bio}</p>
+                </>
+              ) : null}
+
+              {experiences.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Experience</h3>
+                  {experiences.map((exp, i) => (
+                    <div
+                      key={exp.id ?? `${exp.company}-${i}`}
+                      className={styles.sectionBlock}
+                    >
+                      <h4 className={styles.documentH3}>
+                        {exp.position} |{" "}
+                        {formatExperienceCompanyLine(exp.company, exp.location)}
+                      </h4>
+                      <p className={styles.jobMeta}>
+                        {exp.startDate}
+                        {exp.endDate
+                          ? ` – ${exp.endDate}`
+                          : exp.isCurrent
+                            ? " – Present"
+                            : ""}
+                      </p>
+                      {exp.description ? (
+                        <p className={styles.summary}>{exp.description}</p>
+                      ) : null}
+                      {exp.achievements?.length ? (
+                        <ul>
+                          {exp.achievements.map((a, j) => (
+                            <li key={j}>{a}</li>
+                          ))}
+                        </ul>
+                      ) : null}
+                      {exp.technologies?.length ? (
+                        <p className={styles.tech}>
+                          Technologies: {exp.technologies.join(", ")}
+                        </p>
+                      ) : null}
+                    </div>
+                  ))}
+                </>
+              ) : null}
+
+              {academics.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Education</h3>
+                  {academics.map((a, i) => (
+                    <div key={a.id ?? i} className={styles.sectionBlock}>
+                      <h4 className={styles.documentH3}>
+                        {a.degree}
+                        {a.field ? ` in ${a.field}` : ""}
+                      </h4>
+                      <p className={styles.jobMeta}>
+                        {a.institution}
+                        {[a.startDate, a.endDate].filter(Boolean).join(" – ")
+                          ? ` | ${[a.startDate, a.endDate].filter(Boolean).join(" – ")}`
                           : ""}
-                    </p>
-                    {exp.description ? (
-                      <p className={styles.summary}>{exp.description}</p>
-                    ) : null}
-                    {exp.achievements?.length ? (
-                      <ul>
-                        {exp.achievements.map((a, j) => (
-                          <li key={j}>{a}</li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    {exp.technologies?.length ? (
-                      <p className={styles.tech}>
-                        Technologies: {exp.technologies.join(", ")}
                       </p>
-                    ) : null}
-                  </div>
-                ))}
-              </>
-            ) : null}
+                      {a.description ? (
+                        <p className={styles.summary}>{a.description}</p>
+                      ) : null}
+                    </div>
+                  ))}
+                </>
+              ) : null}
 
-            {academics.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Education</h3>
-                {academics.map((a, i) => (
-                  <div key={a.id ?? i} className={styles.sectionBlock}>
-                    <h4 className={styles.documentH3}>
-                      {a.degree}
-                      {a.field ? ` in ${a.field}` : ""}
-                    </h4>
-                    <p className={styles.jobMeta}>
-                      {a.institution}
-                      {[a.startDate, a.endDate].filter(Boolean).join(" – ")
-                        ? ` | ${[a.startDate, a.endDate].filter(Boolean).join(" – ")}`
-                        : ""}
+              {technicalSkills.length > 0 || softSkills.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Skills</h3>
+                  {technicalSkills.length > 0 ? (
+                    <p>
+                      <strong>Technical:</strong>{" "}
+                      {technicalSkills.map((s) => s.name).join(", ")}
                     </p>
-                    {a.description ? (
-                      <p className={styles.summary}>{a.description}</p>
-                    ) : null}
-                  </div>
-                ))}
-              </>
-            ) : null}
+                  ) : null}
+                  {softSkills.length > 0 ? (
+                    <p>
+                      <strong>Soft:</strong>{" "}
+                      {softSkills.map((s) => s.name).join(", ")}
+                    </p>
+                  ) : null}
+                </>
+              ) : null}
 
-            {technicalSkills.length > 0 || softSkills.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Skills</h3>
-                {technicalSkills.length > 0 ? (
+              {projects.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Projects</h3>
+                  {projects.slice(0, 8).map((proj, i) => (
+                    <div key={proj.id ?? i} className={styles.sectionBlock}>
+                      <h4 className={styles.documentH3}>{proj.title}</h4>
+                      {proj.description ? (
+                        <p className={styles.summary}>{proj.description}</p>
+                      ) : null}
+                      {proj.technologies?.length ? (
+                        <p className={styles.tech}>
+                          {proj.technologies.join(", ")}
+                        </p>
+                      ) : null}
+                    </div>
+                  ))}
+                </>
+              ) : null}
+
+              {certifications.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Certifications</h3>
+                  {certifications.map((c, i) => (
+                    <p key={c.id ?? i}>
+                      {c.name}
+                      {c.issuer ? ` | ${c.issuer}` : ""}
+                      {c.issueDate ? ` | ${c.issueDate}` : ""}
+                    </p>
+                  ))}
+                </>
+              ) : null}
+
+              {honors.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Honors &amp; Awards</h3>
+                  {honors.map((h, i) => (
+                    <p key={h.id ?? i}>
+                      {h.title}
+                      {h.issuer ? ` | ${h.issuer}` : ""}
+                      {h.date ? ` | ${h.date}` : ""}
+                    </p>
+                  ))}
+                </>
+              ) : null}
+
+              {stats.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Highlights</h3>
                   <p>
-                    <strong>Technical:</strong>{" "}
-                    {technicalSkills.map((s) => s.name).join(", ")}
+                    {stats
+                      .map((s) => `${s.label}: ${s.value}${s.unit ?? ""}`)
+                      .join(" · ")}
                   </p>
-                ) : null}
-                {softSkills.length > 0 ? (
+                </>
+              ) : null}
+
+              {languages.length > 0 ? (
+                <>
+                  <h3 className={styles.documentH2}>Languages</h3>
                   <p>
-                    <strong>Soft:</strong>{" "}
-                    {softSkills.map((s) => s.name).join(", ")}
+                    {languages
+                      .map((l) => `${l.name} (${l.proficiency})`)
+                      .join(" | ")}
                   </p>
-                ) : null}
-              </>
-            ) : null}
+                </>
+              ) : null}
 
-            {projects.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Projects</h3>
-                {projects.slice(0, 8).map((proj, i) => (
-                  <div key={proj.id ?? i} className={styles.sectionBlock}>
-                    <h4 className={styles.documentH3}>{proj.title}</h4>
-                    {proj.description ? (
-                      <p className={styles.summary}>{proj.description}</p>
-                    ) : null}
-                    {proj.technologies?.length ? (
-                      <p className={styles.tech}>
-                        {proj.technologies.join(", ")}
-                      </p>
-                    ) : null}
-                  </div>
-                ))}
-              </>
-            ) : null}
-
-            {certifications.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Certifications</h3>
-                {certifications.map((c, i) => (
-                  <p key={c.id ?? i}>
-                    {c.name}
-                    {c.issuer ? ` | ${c.issuer}` : ""}
-                    {c.issueDate ? ` | ${c.issueDate}` : ""}
-                  </p>
-                ))}
-              </>
-            ) : null}
-
-            {honors.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Honors &amp; Awards</h3>
-                {honors.map((h, i) => (
-                  <p key={h.id ?? i}>
-                    {h.title}
-                    {h.issuer ? ` | ${h.issuer}` : ""}
-                    {h.date ? ` | ${h.date}` : ""}
-                  </p>
-                ))}
-              </>
-            ) : null}
-
-            {stats.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Highlights</h3>
-                <p>
-                  {stats
-                    .map((s) => `${s.label}: ${s.value}${s.unit ?? ""}`)
-                    .join(" · ")}
-                </p>
-              </>
-            ) : null}
-
-            {languages.length > 0 ? (
-              <>
-                <h3 className={styles.documentH2}>Languages</h3>
-                <p>
-                  {languages
-                    .map((l) => `${l.name} (${l.proficiency})`)
-                    .join(" | ")}
-                </p>
-              </>
-            ) : null}
-
-            <p className={styles.printHint}>
-              Use Download PDF for an ATS-friendly file, or browser print
-              (Ctrl+P / Cmd+P).
-            </p>
-          </article>
+              <p className={styles.printHint}>
+                Use Download PDF for an ATS-friendly file, or browser print
+                (Ctrl+P / Cmd+P).
+              </p>
+            </article>
+          </NexusSection>
         </div>
       </div>
 
@@ -513,12 +550,16 @@ export const Resume: React.FC = () => {
           </h2>
           <p className="page-cta-body">{SITE_DEFAULT_DESCRIPTION}</p>
           <div className="page-cta-actions">
-            <LinkButton to="/contact" variant="primary" size="lg">
-              Get in touch
-            </LinkButton>
-            <LinkButton to="/projects" variant="outline" size="lg">
-              View projects
-            </LinkButton>
+            <Magnetic strength={0.2}>
+              <LinkButton to="/contact" variant="primary" size="lg">
+                Get in touch
+              </LinkButton>
+            </Magnetic>
+            <Magnetic strength={0.16}>
+              <LinkButton to="/projects" variant="outline" size="lg">
+                View projects
+              </LinkButton>
+            </Magnetic>
           </div>
         </div>
       </section>

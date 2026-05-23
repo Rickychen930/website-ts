@@ -1,7 +1,9 @@
 .card {
   position: relative;
-  border: 1px solid var(--theme-border);
+  border: 1px solid var(--glass-border);
   background: var(--bg-card);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
   box-shadow: var(--theme-shadow);
   transition:
     box-shadow 0.25s var(--ease-out-expo),
@@ -18,22 +20,10 @@
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-600),
-    var(--color-accent-400)
-  );
-  opacity: 0.4;
+  background: var(--gradient-holographic);
+  opacity: 0.55;
   transition: opacity 0.25s ease;
   content: "";
-}
-
-.dark .card::before {
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-500),
-    var(--color-accent-300)
-  );
 }
 
 .card:hover::before {

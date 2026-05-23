@@ -1,10 +1,13 @@
 .footer {
   position: relative;
+  z-index: var(--z-content);
   overflow: hidden;
   background: var(--bg-section-alt);
   color: var(--text-primary);
   margin-top: var(--spacing-4xl);
-  border-top: 1px solid var(--theme-border);
+  border-top: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
 }
 
 .footer::before {
@@ -12,17 +15,11 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-accent-600) 12%,
-    var(--color-accent-400) 50%,
-    var(--color-accent-600) 88%,
-    transparent 100%
-  );
-  opacity: 0.85;
+  height: 3px;
+  background: var(--gradient-holographic);
+  opacity: 0.9;
   content: "";
+  box-shadow: var(--shadow-glow);
 }
 
 .footer::after {
@@ -33,12 +30,12 @@
   background:
     radial-gradient(
       ellipse 85% 55% at 100% 0%,
-      rgba(var(--color-accent-rgb), 0.1) 0%,
+      rgba(var(--color-accent-rgb), 0.14) 0%,
       transparent 58%
     ),
     radial-gradient(
       ellipse 75% 50% at 0% 100%,
-      rgba(var(--color-violet-rgb), 0.08) 0%,
+      rgba(var(--color-magenta-rgb), 0.1) 0%,
       transparent 55%
     );
   content: "";

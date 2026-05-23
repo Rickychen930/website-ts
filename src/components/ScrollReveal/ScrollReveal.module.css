@@ -1,58 +1,63 @@
 .scrollReveal {
   opacity: 0;
   transition:
-    opacity 0.6s var(--ease-out-expo),
-    transform 0.6s var(--ease-out-expo);
+    opacity 0.45s var(--ease-out-expo),
+    transform 0.45s var(--ease-out-expo);
 }
 
 .scrollReveal.visible {
   opacity: 1;
+  will-change: auto;
 }
 
 .scrollReveal.up {
-  transform: translateY(4rem);
+  transform: translate3d(0, 1.25rem, 0);
 }
 
 .scrollReveal.up.visible {
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .scrollReveal.down {
-  transform: translateY(-4rem);
+  transform: translate3d(0, -1.25rem, 0);
 }
 
 .scrollReveal.down.visible {
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .scrollReveal.left {
-  transform: translateX(4rem);
+  transform: translate3d(1.25rem, 0, 0);
 }
 
 .scrollReveal.left.visible {
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .scrollReveal.right {
-  transform: translateX(-4rem);
+  transform: translate3d(-1.25rem, 0, 0);
 }
 
 .scrollReveal.right.visible {
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .scrollReveal.fade {
   transform: none;
 }
 
-.scrollReveal.fade.visible {
-  opacity: 1;
-}
-
 .scrollReveal.scale {
-  transform: scale(0.92);
+  transform: scale(0.98);
 }
 
 .scrollReveal.scale.visible {
   transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollReveal {
+    opacity: 1;
+    transform: none !important;
+    transition: none;
+  }
 }

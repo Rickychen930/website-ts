@@ -6,6 +6,7 @@
 import React from "react";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import styles from "./PageError.module.css";
 
 export interface PageErrorProps {
@@ -51,14 +52,16 @@ export const PageError: React.FC<PageErrorProps> = ({
           {tip}
         </Typography>
       )}
-      <Button
-        onClick={onRetry}
-        variant="primary"
-        className={styles.retryButton}
-        aria-label={retryLabel}
-      >
-        {retryLabel}
-      </Button>
+      <Magnetic strength={0.18}>
+        <Button
+          onClick={onRetry}
+          variant="primary"
+          className={styles.retryButton}
+          aria-label={retryLabel}
+        >
+          {retryLabel}
+        </Button>
+      </Magnetic>
     </div>
   </div>
 );

@@ -6,6 +6,7 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Typography } from "@/views/components/ui/Typography";
 import { Button } from "@/views/components/ui/Button";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import styles from "./ErrorBoundary.module.css";
 
 interface Props {
@@ -62,13 +63,15 @@ export class ErrorBoundary extends Component<Props, State> {
             <Typography variant="body" color="secondary">
               {this.state.error?.message || "An unexpected error occurred"}
             </Typography>
-            <Button
-              onClick={this.handleReset}
-              variant="primary"
-              className={styles.resetButton}
-            >
-              Try Again
-            </Button>
+            <Magnetic strength={0.18}>
+              <Button
+                onClick={this.handleReset}
+                variant="primary"
+                className={styles.resetButton}
+              >
+                Try Again
+              </Button>
+            </Magnetic>
           </div>
         </div>
       );

@@ -15,23 +15,25 @@ import { LinkButton } from "@/views/components/ui/Button";
 import { Loading } from "@/views/components/ui/Loading";
 import { PageError } from "@/views/components/ui/PageError";
 import { ProjectSpotlight } from "@/views/components/domain/ProjectSpotlight";
-import { ExperienceRoleCard } from "@/views/components/domain/ExperienceRoleCard";
+import { HomeExperienceSection } from "./HomeExperienceSection";
 import { TestimonialCard } from "@/views/components/domain/TestimonialCard";
 import {
   getCurrentExperiences,
   sortExperiencesByRecency,
 } from "@/utils/experienceSort";
-import { ContactChannelIcon } from "@/components/ContactChannelIcon";
-import {
-  contactHref,
-  formatChannelDisplay,
-  sortChannelsForDisplay,
-} from "@/utils/contactChannels";
+import { ContactChannelsPanel } from "@/views/components/domain/ContactChannelsPanel";
+import { sortChannelsForDisplay } from "@/utils/contactChannels";
 import {
   SITE_BRAND_NAME,
   SITE_DEFAULT_DESCRIPTION,
   SITE_DEFAULT_KEYWORDS,
 } from "@/config/site-defaults";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
+import { SplitText } from "@/components/SplitText/SplitText";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
+import { SkillMarquee } from "@/components/SkillMarquee/SkillMarquee";
+import { NexusSection } from "@/components/NexusSection";
+import { PageHeroFx } from "@/components/PageHeroFx";
 import type { Stat } from "@/types/domain";
 import styles from "./Home.module.css";
 
@@ -171,8 +173,17 @@ export const Home: React.FC = () => {
     careerYears,
   );
 
+  const homeExperienceRoles = [
+    ...currentRoles,
+    ...(earlierRole && !currentRoles.some((r) => r.id === earlierRole.id)
+      ? [earlierRole]
+      : []),
+  ];
+
   const heroStatCols =
     highlightStats.length >= 4 ? "pf-hero-stats--four" : "pf-hero-stats--three";
+
+  const skillNames = profile.technicalSkills.map((s) => s.name);
 
   return (
     <motion.div
@@ -183,7 +194,8 @@ export const Home: React.FC = () => {
     >
       <header className="pf-hero" aria-label="Introduction">
         <div className="pf-hero-mesh" aria-hidden="true" />
-        <div className={styles.heroGridBg} aria-hidden="true" />
+        <PageHeroFx />
+        <div className={styles.heroBeacon} aria-hidden="true" />
         <div className={`pf-hero-inner ${styles.heroInner}`}>
           <motion.div
             className={`pf-hero-copy ${styles.heroCopy}`}
@@ -192,7 +204,9 @@ export const Home: React.FC = () => {
             {profile.title ? (
               <p className="pf-eyebrow">{profile.title}</p>
             ) : null}
-            <h1 className="pf-hero-title">{profile.name}</h1>
+            <h1 className="pf-hero-title">
+              <SplitText text={profile.name} stagger={0.032} />
+            </h1>
 
             <div className={styles.heroMeta}>
               {profile.location?.trim() ? (
@@ -206,30 +220,29 @@ export const Home: React.FC = () => {
             <p className={`pf-hero-lead ${styles.heroBio}`}>{heroBio}</p>
 
             <div className={styles.heroActions}>
-              <LinkButton to="/projects" variant="primary" size="lg">
-                View projects
-              </LinkButton>
-              <LinkButton to="/contact" variant="outline" size="lg">
-                Contact
-              </LinkButton>
+              <Magnetic strength={0.22}>
+                <LinkButton to="/projects" variant="primary" size="lg">
+                  View projects
+                </LinkButton>
+              </Magnetic>
+              <Magnetic strength={0.18}>
+                <LinkButton to="/contact" variant="outline" size="lg">
+                  Contact
+                </LinkButton>
+              </Magnetic>
             </div>
           </motion.div>
 
-          {profile.avatarUrl ? (
-            <motion.figure
-              className={styles.portrait}
-              {...fadeUp(reduced, 0.1)}
-            >
-              <img
-                src={profile.avatarUrl}
-                alt={`${profile.name} — portrait`}
-                width={520}
-                height={650}
-                decoding="async"
-                fetchPriority="high"
-              />
-            </motion.figure>
-          ) : null}
+          <figure className={styles.heroSignal} aria-hidden="true">
+            <span
+              className={`${styles.heroSignalOrb} ${styles.heroSignalOrbCyan}`}
+            />
+            <span
+              className={`${styles.heroSignalOrb} ${styles.heroSignalOrbMagenta}`}
+            />
+            <span className={styles.heroSignalGrid} />
+            <span className={styles.heroSignalCore} />
+          </figure>
         </div>
 
         <ul
@@ -238,81 +251,77 @@ export const Home: React.FC = () => {
         >
           {highlightStats.map((stat) => (
             <li key={stat.id}>
-              <span className="pf-stat-value">
-                {stat.value}
-                {stat.unit ?? ""}
-              </span>
-              <span className="pf-stat-label">{stat.label}</span>
-              {stat.description ? (
-                <span className={styles.statHint}>{stat.description}</span>
-              ) : null}
+              <TiltCard className={styles.statCard} maxTilt={8}>
+                <span className="pf-stat-value">
+                  {stat.value}
+                  {stat.unit ?? ""}
+                </span>
+                <span className="pf-stat-label">{stat.label}</span>
+                {stat.description ? (
+                  <span className={styles.statHint}>{stat.description}</span>
+                ) : null}
+              </TiltCard>
             </li>
           ))}
         </ul>
+
+        <motion.div
+          className={styles.scrollHint}
+          aria-hidden="true"
+          animate={reduced ? {} : { y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <span className={styles.scrollLine} />
+          <span className={styles.scrollText}>Scroll</span>
+        </motion.div>
       </header>
 
+      {skillNames.length > 0 ? (
+        <SkillMarquee skills={skillNames} className={styles.skillMarquee} />
+      ) : null}
+
       <div className={`pf-workspace ${styles.workspace}`}>
-        <div className="pf-workspace-inner">
+        <div className={`pf-workspace-inner ${styles.workspaceInner}`}>
           {featuredProjects.length > 0 ? (
-            <section id="work" className="pf-block">
-              <header className="pf-block-head">
-                <div>
-                  <p className="pf-block-eyebrow">Portfolio</p>
-                  <h2 className="pf-block-title">Selected work</h2>
-                  <p className="pf-block-lead">
-                    AI tools, client platforms, and shipped products with
-                    measurable outcomes.
-                  </p>
-                </div>
+            <NexusSection
+              id="work"
+              eyebrow="Portfolio"
+              title={
+                <>
+                  Selected <span className="nx-gradient-text">work</span>
+                </>
+              }
+              lead="AI tools, client platforms, and shipped products with measurable outcomes."
+              action={
                 <LinkButton to="/projects" variant="outline">
                   All {profile.projects.length} projects
                 </LinkButton>
-              </header>
+              }
+            >
               <ProjectSpotlight projects={featuredProjects} />
-            </section>
+            </NexusSection>
           ) : null}
 
-          {currentRoles.length > 0 || earlierRole ? (
-            <section id="experience" className="pf-block">
-              <header className="pf-block-head">
-                <div>
-                  <p className="pf-block-eyebrow">Experience</p>
-                  <h2 className="pf-block-title">Where I&apos;ve built</h2>
-                  <p className="pf-block-lead">
-                    IT intern at Decode Capital, founder at Web Architech, and
-                    earlier engineering at scale.
-                  </p>
-                </div>
-                <LinkButton to="/experience" variant="outline">
-                  Full timeline
-                </LinkButton>
-              </header>
-              <ul className={styles.roleList}>
-                {currentRoles.map((role) => (
-                  <li key={role.id}>
-                    <ExperienceRoleCard experience={role} emphasis />
-                  </li>
-                ))}
-                {earlierRole ? (
-                  <li>
-                    <ExperienceRoleCard experience={earlierRole} />
-                  </li>
-                ) : null}
-              </ul>
-            </section>
+          {homeExperienceRoles.length > 0 ? (
+            <HomeExperienceSection
+              roles={homeExperienceRoles}
+              companiesCount={companiesCount}
+              careerYears={careerYears}
+              currentCount={currentRoles.length}
+            />
           ) : null}
 
           {homeTestimonials.length > 0 ? (
-            <section id="testimonials" className="pf-block">
-              <header className="pf-block-head">
-                <div>
-                  <p className="pf-block-eyebrow">Endorsements</p>
-                  <h2 className="pf-block-title">What people say</h2>
-                  <p className="pf-block-lead">
-                    Feedback from collaborators and clients.
-                  </p>
-                </div>
-              </header>
+            <NexusSection
+              id="testimonials"
+              eyebrow="Endorsements"
+              title={
+                <>
+                  What people <span className="nx-gradient-text">say</span>
+                </>
+              }
+              lead="Feedback from collaborators and clients."
+            >
               <ul className={styles.testimonials}>
                 {homeTestimonials.map((t) => (
                   <li key={t.id}>
@@ -320,94 +329,69 @@ export const Home: React.FC = () => {
                   </li>
                 ))}
               </ul>
-            </section>
+            </NexusSection>
           ) : null}
 
-          <section id="explore" className="pf-block">
-            <header className="pf-block-head">
-              <div>
-                <p className="pf-block-eyebrow">Explore</p>
-                <h2 className="pf-block-title">Jump into the portfolio</h2>
-                <p className="pf-block-lead">
-                  Projects, experience, contact, and resume — pick a
-                  destination.
-                </p>
-              </div>
-            </header>
+          <NexusSection
+            id="explore"
+            eyebrow="Explore"
+            title={
+              <>
+                Jump into the{" "}
+                <span className="nx-gradient-text">portfolio</span>
+              </>
+            }
+            lead="Projects, experience, contact, and resume — pick a destination."
+          >
             <ul className={styles.exploreGrid}>
               {EXPLORE_LINKS.map(({ to, title, description }) => (
                 <li key={to}>
-                  <Link
-                    to={to}
-                    className={styles.exploreCard}
-                    data-link-kind="card"
-                  >
-                    <span className={styles.exploreCardBody}>
-                      <span className={styles.exploreCardTitle}>{title}</span>
-                      <span className={styles.exploreCardDesc}>
-                        {description}
+                  <TiltCard className={styles.exploreCardWrap}>
+                    <Link
+                      to={to}
+                      className={styles.exploreCard}
+                      data-link-kind="card"
+                    >
+                      <span className={styles.exploreCardBody}>
+                        <span className={styles.exploreCardTitle}>{title}</span>
+                        <span className={styles.exploreCardDesc}>
+                          {description}
+                        </span>
                       </span>
-                    </span>
-                    <span className={styles.exploreCardFooter} aria-hidden>
-                      <span className={styles.exploreCardCta}>View</span>
-                      <span className={styles.exploreCardArrow}>→</span>
-                    </span>
-                  </Link>
+                      <span className={styles.exploreCardFooter} aria-hidden>
+                        <span className={styles.exploreCardCta}>View</span>
+                        <span className={styles.exploreCardArrow}>→</span>
+                      </span>
+                    </Link>
+                  </TiltCard>
                 </li>
               ))}
             </ul>
-          </section>
+          </NexusSection>
 
           {contactChannels.length > 0 ? (
-            <section id="contact" className="pf-block">
-              <header className="pf-block-head">
-                <div>
-                  <p className="pf-block-eyebrow">Contact</p>
-                  <h2 className="pf-block-title">Let&apos;s talk</h2>
-                  <p className="pf-block-lead">
-                    Hiring, internships, or collaborations — I usually reply
-                    within one to two business days.
-                  </p>
-                </div>
+            <NexusSection
+              id="contact"
+              eyebrow="Contact"
+              title={
+                <>
+                  Let&apos;s <span className="nx-gradient-text">talk</span>
+                </>
+              }
+              lead="Hiring, internships, or collaborations — I usually reply within one to two business days."
+              action={
                 <LinkButton to="/contact" variant="primary">
                   Open contact page
                 </LinkButton>
-              </header>
-              <ul className={styles.contactRow}>
-                {contactChannels.map((channel) => {
-                  const { href, external } = contactHref(channel);
-                  return (
-                    <li key={channel.id}>
-                      <a
-                        href={href}
-                        data-link-kind="card"
-                        className={
-                          channel.isPrimary
-                            ? styles.contactCardPrimary
-                            : styles.contactCard
-                        }
-                        {...(external
-                          ? {
-                              target: "_blank",
-                              rel: "noopener noreferrer",
-                            }
-                          : {})}
-                      >
-                        <span className={styles.contactIcon} aria-hidden>
-                          <ContactChannelIcon type={channel.type} />
-                        </span>
-                        <span className={styles.contactLabel}>
-                          {channel.label}
-                        </span>
-                        <span className={styles.contactValue}>
-                          {formatChannelDisplay(channel.type, channel.value)}
-                        </span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
+              }
+            >
+              <ContactChannelsPanel
+                channels={contactChannels}
+                variant="compact"
+                hideHeader
+                className={styles.contactEmbed}
+              />
+            </NexusSection>
           ) : null}
         </div>
       </div>
@@ -423,12 +407,16 @@ export const Home: React.FC = () => {
             days.
           </p>
           <div className="page-cta-actions">
-            <LinkButton to="/contact" variant="primary" size="lg">
-              Get in touch
-            </LinkButton>
-            <LinkButton to="/resume" variant="outline" size="lg">
-              View resume
-            </LinkButton>
+            <Magnetic strength={0.2}>
+              <LinkButton to="/contact" variant="primary" size="lg">
+                Get in touch
+              </LinkButton>
+            </Magnetic>
+            <Magnetic strength={0.16}>
+              <LinkButton to="/resume" variant="outline" size="lg">
+                View resume
+              </LinkButton>
+            </Magnetic>
           </div>
         </div>
       </section>

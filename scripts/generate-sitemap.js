@@ -25,27 +25,6 @@ const getBaseUrl = () => {
   return "http://localhost:3000";
 };
 
-// Learning section slugs (must match backend/src/seed/learningSeed.ts section slugs)
-const LEARNING_SECTION_SLUGS = [
-  "how-to-learn",
-  "competitive-programming",
-  "nodejs",
-  "database-sql",
-  "react",
-  "interview-preparation",
-  "system-design-devops",
-  "cs-theory",
-  "computer-networks",
-  "operating-systems-concurrency",
-  "security-testing",
-  "software-design",
-  "english-learning",
-  "data-analytics",
-  "ai-ml",
-  "programming-languages",
-  "backend",
-];
-
 // Define all routes
 const routes = [
   { path: "/", priority: "1.0", changefreq: "daily" },
@@ -53,12 +32,6 @@ const routes = [
   { path: "/experience", priority: "0.9", changefreq: "weekly" },
   { path: "/contact", priority: "0.8", changefreq: "monthly" },
   { path: "/resume", priority: "0.8", changefreq: "weekly" },
-  { path: "/learning", priority: "0.8", changefreq: "weekly" },
-  ...LEARNING_SECTION_SLUGS.map((slug) => ({
-    path: `/learning/${slug}`,
-    priority: "0.75",
-    changefreq: "weekly",
-  })),
   { path: "/privacy", priority: "0.5", changefreq: "monthly" },
   { path: "/terms", priority: "0.5", changefreq: "monthly" },
 ];

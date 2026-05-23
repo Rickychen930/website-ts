@@ -2,7 +2,7 @@
  * ProjectDetail — editorial case study page.
  */
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useProfile } from "@/contexts/ProfileContext";
@@ -13,12 +13,18 @@ import { PageError } from "@/views/components/ui/PageError";
 import { ProjectSpotlight } from "@/views/components/domain/ProjectSpotlight";
 import { EmptyStateArt } from "@/components/PortfolioVisuals";
 import { formatDateRange, getDuration } from "@/utils/dateUtils";
-import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
+import { PageHeroFx } from "@/components/PageHeroFx";
+import { NexusSection } from "@/components/NexusSection";
+import { formatProjectCategory } from "@/utils/projectFormat";
+import { useProjectImage } from "@/hooks/useProjectImage";
 import { sortProjectsByRecency } from "@/utils/projectSort";
 import {
   SITE_BRAND_NAME,
   SITE_DEFAULT_DESCRIPTION,
 } from "@/config/site-defaults";
+import { TiltCard } from "@/components/TiltCard/TiltCard";
+import { SplitText } from "@/components/SplitText/SplitText";
+import { Magnetic } from "@/components/Magnetic/Magnetic";
 import type { Project } from "@/types/domain";
 import styles from "./ProjectDetail.module.css";
 
@@ -30,11 +36,6 @@ const fadeUp = (reduced: boolean, delay = 0) =>
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
       };
-
-function formatCategory(category: string): string {
-  if (!category.trim()) return "Project";
-  return category.charAt(0).toUpperCase() + category.slice(1);
-}
 
 function adjacentProjects(
   projects: readonly Project[],
@@ -53,15 +54,14 @@ export const ProjectDetail: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const { profile, isLoading, error, refetch } = useProfile();
   const reduced = useReducedMotion() ?? false;
-  const [imageFailed, setImageFailed] = useState(false);
 
   const project = profile?.projects.find((p) => p.id === projectId);
 
-  useEffect(() => {
-    setImageFailed(false);
-  }, [project?.id, project?.imageUrl]);
-
-  const resolvedImageSrc = resolveProjectImageSrc(project?.imageUrl);
+  const {
+    src: resolvedImageSrc,
+    showImage: showProjectImage,
+    onError: onProjectImageError,
+  } = useProjectImage(project?.imageUrl, project?.id ?? projectId ?? "");
 
   const relatedProjects = useMemo(() => {
     if (!profile || !project) return [];
@@ -146,8 +146,7 @@ export const ProjectDetail: React.FC = () => {
     );
   }
 
-  const showProjectImage = Boolean(resolvedImageSrc) && !imageFailed;
-  const categoryLabel = formatCategory(project.category);
+  const categoryLabel = formatProjectCategory(project.category);
   const duration = getDuration(project.startDate, project.endDate);
   const overview =
     project.longDescription?.trim() || project.description?.trim() || "";
@@ -164,9 +163,8 @@ export const ProjectDetail: React.FC = () => {
     >
       <header className="pf-hero" aria-labelledby="project-detail-title">
         <motion.div className="pf-hero-mesh" aria-hidden="true" />
-        <div
-          className={`pf-hero-inner pf-hero-inner--visual ${styles.heroInner}`}
-        >
+        <PageHeroFx />
+        <div className={`pf-hero-inner ${styles.heroInner}`}>
           <motion.div className="pf-hero-main">
             <motion.div className={styles.heroCopy} {...fadeUp(reduced)}>
               <nav className={styles.breadcrumb} aria-label="Breadcrumb">
@@ -177,7 +175,7 @@ export const ProjectDetail: React.FC = () => {
 
               <p className="pf-eyebrow">Case study</p>
               <h1 id="project-detail-title" className="pf-hero-title">
-                {project.title}
+                <SplitText text={project.title} stagger={0.022} />
               </h1>
 
               <div className={styles.metaRow}>
@@ -198,63 +196,77 @@ export const ProjectDetail: React.FC = () => {
 
               <div className={styles.heroActions}>
                 {project.liveUrl ? (
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    onClick={() =>
-                      window.open(
-                        project.liveUrl,
-                        "_blank",
-                        "noopener,noreferrer",
-                      )
-                    }
-                  >
-                    Live demo
-                  </Button>
+                  <Magnetic strength={0.2}>
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      onClick={() =>
+                        window.open(
+                          project.liveUrl,
+                          "_blank",
+                          "noopener,noreferrer",
+                        )
+                      }
+                    >
+                      Live demo
+                    </Button>
+                  </Magnetic>
                 ) : null}
                 {project.githubUrl ? (
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() =>
-                      window.open(
-                        project.githubUrl,
-                        "_blank",
-                        "noopener,noreferrer",
-                      )
-                    }
-                  >
-                    View code
-                  </Button>
+                  <Magnetic strength={0.18}>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() =>
+                        window.open(
+                          project.githubUrl,
+                          "_blank",
+                          "noopener,noreferrer",
+                        )
+                      }
+                    >
+                      View code
+                    </Button>
+                  </Magnetic>
                 ) : null}
-                <LinkButton to="/projects" variant="ghost" size="lg">
-                  All projects
-                </LinkButton>
+                <Magnetic strength={0.14}>
+                  <LinkButton to="/projects" variant="ghost" size="lg">
+                    All projects
+                  </LinkButton>
+                </Magnetic>
               </div>
             </motion.div>
 
             <motion.ul
-              className={`pf-hero-stats pf-hero-stats--four ${styles.heroStats}`}
+              className={`pf-hero-stats pf-hero-stats--four ${styles.heroStats} ${styles.heroStatsBar}`}
               aria-label="Project snapshot"
               {...fadeUp(reduced, 0.08)}
             >
               <li>
-                <span className="pf-stat-value">{stackCount || "—"}</span>
-                <span className="pf-stat-label">Technologies</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{stackCount || "—"}</span>
+                  <span className="pf-stat-label">Technologies</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">{outcomeCount || "—"}</span>
-                <span className="pf-stat-label">Outcomes</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{outcomeCount || "—"}</span>
+                  <span className="pf-stat-label">Outcomes</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">{duration}</span>
-                <span className="pf-stat-label">Timeline</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">{duration}</span>
+                  <span className="pf-stat-label">Timeline</span>
+                </TiltCard>
               </li>
               <li>
-                <span className="pf-stat-value">
-                  {project.isActive ? "Active" : "Done"}
-                </span>
-                <span className="pf-stat-label">Status</span>
+                <TiltCard className={styles.statCard} maxTilt={8}>
+                  <span className="pf-stat-value">
+                    {project.isActive ? "Active" : "Done"}
+                  </span>
+                  <span className="pf-stat-label">Status</span>
+                </TiltCard>
               </li>
             </motion.ul>
           </motion.div>
@@ -273,7 +285,7 @@ export const ProjectDetail: React.FC = () => {
                 decoding="async"
                 fetchPriority="high"
                 referrerPolicy="no-referrer"
-                onError={() => setImageFailed(true)}
+                onError={onProjectImageError}
               />
             ) : (
               <span className={styles.coverFallback} aria-hidden="true">
@@ -286,133 +298,155 @@ export const ProjectDetail: React.FC = () => {
 
       <div className={`pf-workspace ${styles.workspace}`}>
         <div className={`pf-workspace-inner ${styles.caseInner}`}>
-          <aside className={styles.facts} aria-label="Project details">
-            <motion.div className={styles.factsCard} {...fadeUp(reduced, 0.04)}>
-              <h2 className={styles.factsTitle}>At a glance</h2>
-              <dl className={styles.factsList}>
-                <div>
-                  <dt>Category</dt>
-                  <dd>{categoryLabel}</dd>
-                </div>
-                <div>
-                  <dt>Timeline</dt>
-                  <dd>
-                    <time dateTime={project.startDate}>
-                      {formatDateRange(project.startDate, project.endDate)}
-                    </time>
-                    <span className={styles.factsMuted}> · {duration}</span>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Status</dt>
-                  <dd>{project.isActive ? "In progress" : "Shipped"}</dd>
-                </div>
-              </dl>
+          <NexusSection
+            id="project-case"
+            eyebrow="Case study"
+            title={
+              <>
+                Project <span className="nx-gradient-text">story</span>
+              </>
+            }
+            lead={overview || project.description}
+            contentClassName={styles.caseLayout}
+          >
+            <aside className={styles.facts} aria-label="Project details">
+              <div className={styles.factsCard}>
+                <h2 className={styles.factsTitle}>At a glance</h2>
+                <dl className={styles.factsList}>
+                  <div>
+                    <dt>Category</dt>
+                    <dd>{categoryLabel}</dd>
+                  </div>
+                  <div>
+                    <dt>Timeline</dt>
+                    <dd>
+                      <time dateTime={project.startDate}>
+                        {formatDateRange(project.startDate, project.endDate)}
+                      </time>
+                      <span className={styles.factsMuted}> · {duration}</span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Status</dt>
+                    <dd>{project.isActive ? "In progress" : "Shipped"}</dd>
+                  </div>
+                </dl>
 
-              {hasLinks ? (
-                <div className={styles.factsLinks}>
-                  <p className={styles.factsLinksLabel}>Links</p>
-                  <ul>
-                    {project.liveUrl ? (
-                      <li>
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Live demo →
-                        </a>
-                      </li>
-                    ) : null}
-                    {project.githubUrl ? (
-                      <li>
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Repository →
-                        </a>
-                      </li>
-                    ) : null}
-                  </ul>
-                </div>
-              ) : null}
+                {hasLinks ? (
+                  <div className={styles.factsLinks}>
+                    <p className={styles.factsLinksLabel}>Links</p>
+                    <ul>
+                      {project.liveUrl ? (
+                        <li>
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Live demo →
+                          </a>
+                        </li>
+                      ) : null}
+                      {project.githubUrl ? (
+                        <li>
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Repository →
+                          </a>
+                        </li>
+                      ) : null}
+                    </ul>
+                  </div>
+                ) : null}
 
-              {stackCount > 0 ? (
-                <div className={styles.factsStack}>
-                  <p className={styles.factsLinksLabel}>Stack</p>
-                  <ul className={styles.stackPills}>
-                    {project.technologies.map((tech) => (
-                      <li key={tech}>{tech}</li>
+                {stackCount > 0 ? (
+                  <div className={styles.factsStack}>
+                    <p className={styles.factsLinksLabel}>Stack</p>
+                    <ul className={styles.stackPills}>
+                      {project.technologies.map((tech) => (
+                        <li key={tech}>{tech}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            </aside>
+
+            <div className={styles.story}>
+              {overview ? (
+                <section
+                  className={styles.section}
+                  aria-labelledby="overview-title"
+                >
+                  <header className={styles.sectionHead}>
+                    <p className={styles.sectionEyebrow}>Overview</p>
+                    <h2 id="overview-title" className={styles.sectionTitle}>
+                      What we built
+                    </h2>
+                  </header>
+                  <div className={styles.prose}>
+                    {overview.split(/\n\n+/).map((paragraph, i) => (
+                      <p key={i}>{paragraph.trim()}</p>
                     ))}
-                  </ul>
-                </div>
+                  </div>
+                </section>
               ) : null}
-            </motion.div>
-          </aside>
 
-          <motion.div className={styles.story} {...fadeUp(reduced, 0.05)}>
-            {overview ? (
-              <section
-                className={styles.section}
-                aria-labelledby="overview-title"
-              >
-                <header className={styles.sectionHead}>
-                  <p className="pf-block-eyebrow">Overview</p>
-                  <h2 id="overview-title" className={styles.sectionTitle}>
-                    What we built
-                  </h2>
-                </header>
-                <div className={styles.prose}>
-                  {overview.split(/\n\n+/).map((paragraph, i) => (
-                    <p key={i}>{paragraph.trim()}</p>
-                  ))}
-                </div>
-              </section>
-            ) : null}
+              {outcomeCount > 0 ? (
+                <section
+                  className={styles.section}
+                  aria-labelledby="outcomes-title"
+                >
+                  <header className={styles.sectionHead}>
+                    <p className={styles.sectionEyebrow}>Outcomes</p>
+                    <h2 id="outcomes-title" className={styles.sectionTitle}>
+                      Impact & results
+                    </h2>
+                  </header>
+                  <ol className={styles.outcomeGrid}>
+                    {project.achievements.map((item, index) => (
+                      <li key={index}>
+                        <TiltCard
+                          className={styles.outcomeCardWrap}
+                          maxTilt={6}
+                        >
+                          <div className={styles.outcomeCard}>
+                            <span
+                              className={styles.outcomeIndex}
+                              aria-hidden="true"
+                            >
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <p>{item}</p>
+                          </div>
+                        </TiltCard>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              ) : null}
 
-            {outcomeCount > 0 ? (
-              <section
-                className={styles.section}
-                aria-labelledby="outcomes-title"
-              >
-                <header className={styles.sectionHead}>
-                  <p className="pf-block-eyebrow">Outcomes</p>
-                  <h2 id="outcomes-title" className={styles.sectionTitle}>
-                    Impact & results
-                  </h2>
-                </header>
-                <ol className={styles.outcomeGrid}>
-                  {project.achievements.map((item, index) => (
-                    <li key={index} className={styles.outcomeCard}>
-                      <span className={styles.outcomeIndex} aria-hidden="true">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <p>{item}</p>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            ) : null}
-
-            {project.architecture?.trim() ? (
-              <section
-                className={styles.section}
-                aria-labelledby="architecture-title"
-              >
-                <header className={styles.sectionHead}>
-                  <p className="pf-block-eyebrow">Technical</p>
-                  <h2 id="architecture-title" className={styles.sectionTitle}>
-                    Architecture notes
-                  </h2>
-                </header>
-                <pre className={styles.architecture}>
-                  {project.architecture}
-                </pre>
-              </section>
-            ) : null}
-          </motion.div>
+              {project.architecture?.trim() ? (
+                <section
+                  className={styles.section}
+                  aria-labelledby="architecture-title"
+                >
+                  <header className={styles.sectionHead}>
+                    <p className={styles.sectionEyebrow}>Technical</p>
+                    <h2 id="architecture-title" className={styles.sectionTitle}>
+                      Architecture notes
+                    </h2>
+                  </header>
+                  <pre className={styles.architecture}>
+                    {project.architecture}
+                  </pre>
+                </section>
+              ) : null}
+            </div>
+          </NexusSection>
         </div>
       </div>
 
@@ -455,17 +489,18 @@ export const ProjectDetail: React.FC = () => {
       {relatedProjects.length > 0 ? (
         <div className={`pf-workspace ${styles.relatedWorkspace}`}>
           <div className="pf-workspace-inner">
-            <header className="pf-block-head">
-              <div>
-                <p className="pf-block-eyebrow">More work</p>
-                <h2 className="pf-block-title">Related projects</h2>
-                <p className="pf-block-lead">
-                  More {categoryLabel.toLowerCase()} builds from the same
-                  catalog.
-                </p>
-              </div>
-            </header>
-            <ProjectSpotlight projects={relatedProjects} />
+            <NexusSection
+              id="related-projects"
+              eyebrow="More work"
+              title={
+                <>
+                  Related <span className="nx-gradient-text">projects</span>
+                </>
+              }
+              lead={`More ${categoryLabel.toLowerCase()} builds from the same catalog.`}
+            >
+              <ProjectSpotlight projects={relatedProjects} />
+            </NexusSection>
           </div>
         </div>
       ) : null}
@@ -480,12 +515,16 @@ export const ProjectDetail: React.FC = () => {
           </h2>
           <p className="page-cta-body">{SITE_DEFAULT_DESCRIPTION}</p>
           <div className="page-cta-actions">
-            <LinkButton to="/contact" variant="primary" size="lg">
-              Start a conversation
-            </LinkButton>
-            <LinkButton to="/projects" variant="outline" size="lg">
-              More projects
-            </LinkButton>
+            <Magnetic strength={0.2}>
+              <LinkButton to="/contact" variant="primary" size="lg">
+                Start a conversation
+              </LinkButton>
+            </Magnetic>
+            <Magnetic strength={0.16}>
+              <LinkButton to="/projects" variant="outline" size="lg">
+                More projects
+              </LinkButton>
+            </Magnetic>
           </div>
         </div>
       </section>

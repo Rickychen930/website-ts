@@ -2,11 +2,12 @@
  * ProjectCatalogRow — horizontal catalog row for the projects page.
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import type { Project } from "@/types/domain";
 import { formatDateRange } from "@/utils/dateUtils";
-import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
+import { formatProjectCategory } from "@/utils/projectFormat";
+import { ProjectMedia } from "@/views/components/domain/ProjectMedia";
 import styles from "./ProjectCatalogRow.module.css";
 
 export interface ProjectCatalogRowProps {
@@ -18,14 +19,6 @@ export const ProjectCatalogRow: React.FC<ProjectCatalogRowProps> = ({
   project,
   index = 0,
 }) => {
-  const [imageFailed, setImageFailed] = useState(false);
-
-  useEffect(() => {
-    setImageFailed(false);
-  }, [project.id, project.imageUrl]);
-
-  const resolvedSrc = resolveProjectImageSrc(project.imageUrl);
-  const showImage = Boolean(resolvedSrc) && !imageFailed;
   const tech = project.technologies.slice(0, 5);
 
   return (
@@ -38,28 +31,22 @@ export const ProjectCatalogRow: React.FC<ProjectCatalogRowProps> = ({
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <div className={styles.thumb} aria-hidden={!showImage}>
-        {showImage ? (
-          <img
-            src={resolvedSrc}
-            alt=""
-            width={160}
-            height={120}
-            loading="lazy"
-            decoding="async"
-            referrerPolicy="no-referrer"
-            onError={() => setImageFailed(true)}
-          />
-        ) : (
-          <span className={styles.thumbFallback}>
-            {project.title.trim().charAt(0).toUpperCase() || "·"}
-          </span>
-        )}
+      <div className={styles.thumb}>
+        <ProjectMedia
+          projectId={project.id}
+          imageUrl={project.imageUrl}
+          title={project.title}
+          width={160}
+          height={120}
+          fallbackClassName={styles.thumbFallback}
+        />
       </div>
 
       <div className={styles.body}>
         <div className={styles.meta}>
-          <span className={styles.category}>{project.category}</span>
+          <span className={styles.category}>
+            {formatProjectCategory(project.category)}
+          </span>
           {project.isActive ? (
             <span className={styles.active}>Active</span>
           ) : null}

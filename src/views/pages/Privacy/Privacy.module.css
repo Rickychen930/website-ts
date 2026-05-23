@@ -1,16 +1,62 @@
-/* Privacy — legal page shell */
+/* Privacy — Nexus legal clause cards */
 
 .privacy {
   position: relative;
-  width: 100%;
+  background: transparent;
 }
 
-.prose {
+.heroInner {
+  max-width: var(--container-lg);
+}
+
+.clauseGrid {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
+  margin: 0 0 var(--spacing-2xl);
+  padding: 0;
+  list-style: none;
 }
 
-.prose p {
+.clause {
+  display: flex;
+  position: relative;
+  padding: var(--spacing-xl);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-card);
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.clause::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-holographic);
+  opacity: 0.85;
+  content: "";
+}
+
+.clauseTitle {
   margin: 0;
+  background: var(--gradient-text);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: var(--theme-font-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.clauseBody {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
 }
