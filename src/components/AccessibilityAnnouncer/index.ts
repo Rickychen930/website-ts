@@ -1,1 +1,0 @@
-export { AccessibilityAnnouncer } from "./AccessibilityAnnouncer";

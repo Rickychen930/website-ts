@@ -1,0 +1,90 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.sectionLabel {
+  display: block;
+  color: var(--accent-2);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-6);
+}
+
+.bio {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: var(--space-9);
+}
+
+.highlight {
+  background: none;
+  color: var(--accent-2);
+  font-style: normal;
+}
+
+.whatTitle {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.01em;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.item {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.itemIcon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.itemTitle {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  margin-bottom: var(--space-1);
+}
+
+.itemDesc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (width <= 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-9);
+  }
+}
+
+@media (width <= 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

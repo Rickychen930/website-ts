@@ -1,101 +1,14 @@
-/**
- * Dark Mode – global overrides only.
- *
- * CSS Modules hashes all local class names, so rules targeting bare class
- * names like `.hero`, `.card`, `.navLink` etc. WILL NOT match the DOM.
- * Keep only selectors that work globally:
- *   - Element selectors  (body, input, code, pre, a …)
- *   - Pseudo-elements    (::selection, ::-webkit-scrollbar-*)
- *   - Truly global utility classes defined outside CSS Modules
- *     (.error-state, .success-state from base.css)
- *
- * Per-component dark tweaks live in each *.module.css as `.dark .localClass`.
- * Token re-mapping is handled entirely in design-tokens.css (.dark { … }).
- */
+/* Light mode — overrides applied via .light class on <body> */
 
-/* ── Base ─────────────────────────────────────────────────────────────────── */
-.dark {
-  color-scheme: dark;
+/* Tokens are already defined in design-tokens.css under .light selector */
+
+/* This file handles component-level light overrides that can't use CSS vars */
+
+.light body {
+  color-scheme: light;
 }
 
-.dark body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-}
-
-/* ── Form elements ─────────────────────────────────────────────────────────── */
-.dark input[type="text"],
-.dark input[type="email"],
-.dark input[type="tel"],
-.dark input[type="url"],
-.dark textarea {
-  background: var(--bg-overlay);
-  border-color: var(--border-secondary);
-  color: var(--text-primary);
-}
-
-.dark input[type="text"]:focus,
-.dark input[type="email"]:focus,
-.dark input[type="tel"]:focus,
-.dark input[type="url"]:focus,
-.dark textarea:focus {
-  border-color: var(--color-primary-500);
-  box-shadow:
-    0 0 0 3px var(--color-primary-alpha-20),
-    var(--shadow-md);
-}
-
-/* ── Inline code / pre ─────────────────────────────────────────────────────── */
-.dark code {
-  background-color: var(--bg-secondary);
-  color: var(--color-primary-400);
-}
-
-.dark pre {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  border-color: var(--color-primary-alpha-30);
-}
-
-/* ── Native anchors (non-interactive elements, non-button links) ────────────── */
-.dark a:not([class]) {
-  color: var(--color-primary-400);
-}
-
-.dark a:not([class]):hover {
-  color: var(--color-primary-300);
-}
-
-/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
-.dark ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  border: 2px solid var(--bg-primary);
-  background: var(--gradient-primary);
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: var(--gradient-primary);
-  filter: brightness(1.2);
-}
-
-/* ── Selection ──────────────────────────────────────────────────────────────── */
-.dark ::selection {
-  background: var(--color-accent-alpha-20);
-  color: var(--text-primary);
-}
-
-/* ── Global utility classes (base.css) ──────────────────────────────────────── */
-.dark .error-state {
-  background-color: var(--color-error-50);
-  border-color: var(--color-error-500);
-  color: var(--color-error-600);
-}
-
-.dark .success-state {
-  background-color: var(--color-success-50);
-  border-color: var(--color-success-500);
-  color: var(--color-success-600);
+/* Scrollbar in light mode */
+.light ::-webkit-scrollbar-track {
+  background: var(--bg-surface);
 }

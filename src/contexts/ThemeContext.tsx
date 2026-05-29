@@ -1,80 +1,52 @@
-/**
- * Theme Context - Dark mode management
- */
-
 import React, {
   createContext,
   useContext,
-  useState,
   useEffect,
-  useMemo,
-  useCallback,
+  useState,
   ReactNode,
 } from "react";
 
-type Theme = "light" | "dark";
+type Theme = "dark" | "light";
 
 interface ThemeContextType {
   theme: Theme;
-  toggleTheme: () => void;
-  isDark: boolean;
+  toggle: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within ThemeProvider");
-  }
-  return context;
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error("useTheme must be used inside ThemeProvider");
+  return ctx;
 };
 
-interface ThemeProviderProps {
-  children: ReactNode;
-}
-
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [theme, setTheme] = useState<Theme>(() => {
     try {
-      const saved = localStorage.getItem("theme");
-      if (saved === "light" || saved === "dark") return saved;
+      return (localStorage.getItem("theme") as Theme) ?? "dark";
     } catch {
-      /* private browsing / blocked storage */
+      return "dark";
     }
-    return "dark";
   });
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    const body = document.body;
+    body.classList.remove("dark", "light");
+    body.classList.add(theme);
+    document.documentElement.classList.remove("dark", "light");
+    document.documentElement.classList.add(theme);
     try {
       localStorage.setItem("theme", theme);
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   }, [theme]);
 
-  const toggleTheme = useCallback(() => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  }, []);
-
-  // Memoize context value to prevent unnecessary re-renders
-  const contextValue = useMemo(
-    () => ({
-      theme,
-      toggleTheme,
-      isDark: theme === "dark",
-    }),
-    [theme, toggleTheme],
-  );
+  const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <ThemeContext.Provider value={contextValue}>
+    <ThemeContext.Provider value={{ theme, toggle }}>
       {children}
     </ThemeContext.Provider>
   );

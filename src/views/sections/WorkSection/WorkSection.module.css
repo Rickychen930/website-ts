@@ -1,0 +1,245 @@
+.sectionLabel {
+  display: block;
+  color: var(--accent-1);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-10);
+  letter-spacing: -0.03em;
+}
+
+.timeline {
+  display: grid;
+  position: relative;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0 var(--space-6);
+}
+
+.lineTrack {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lineTrack::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: var(--border);
+}
+
+.lineFill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: var(--accent-1);
+  opacity: 0.5;
+  transform-origin: top;
+}
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.entry {
+  display: contents;
+}
+
+.dotWrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-6);
+  position: relative;
+  z-index: 1;
+}
+
+.dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--text-dim);
+  background: var(--bg-base);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotActive {
+  background: var(--accent-1);
+  border-color: var(--accent-1);
+}
+
+.pulseRing {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-1);
+  animation: pulse-ring 2s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+.card {
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-8);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.cardCurrent {
+  border-left: 3px solid var(--accent-1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.role {
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  margin-bottom: var(--space-1);
+  letter-spacing: -0.02em;
+}
+
+.company {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.currentBadge {
+  display: inline-flex;
+  padding: 2px 8px;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  background: rgba(6, 182, 212, 0.1);
+  color: var(--accent-2);
+  font-size: 0.65rem;
+  align-items: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+}
+
+.currentDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.dates {
+  display: flex;
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dur {
+  padding: 1px 6px;
+  background: var(--bg-elevated);
+  font-size: 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: var(--space-4);
+}
+
+.achievements {
+  list-style: none;
+  margin-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.achievements li {
+  position: relative;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding-left: var(--space-4);
+}
+
+.achievements li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent-1);
+  font-size: 0.75rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (width <= 640px) {
+  .timeline {
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0 var(--space-4);
+  }
+
+  .cardHeader {
+    flex-direction: column;
+  }
+
+  .meta {
+    align-items: flex-start;
+  }
+}

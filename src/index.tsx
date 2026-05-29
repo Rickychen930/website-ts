@@ -4,6 +4,9 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./styles/base.css";
+import "./styles/animations.css";
+import "./styles/dark-mode.css";
 import { App } from "./App";
 
 // Handle chunk loading errors (CSS/JS chunks)

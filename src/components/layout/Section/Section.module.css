@@ -1,0 +1,32 @@
+.section {
+  position: relative;
+  padding: var(--space-14) 0;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.sectionNumber {
+  position: absolute;
+  top: -0.1em;
+  right: -0.05em;
+  color: var(--text-dim);
+  font-size: clamp(8rem, 18vw, 16rem);
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.12;
+  font-family: var(--font-display);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
+}
+
+@media (width <= 768px) {
+  .section {
+    padding: var(--space-12) 0;
+  }
+}

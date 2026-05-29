@@ -1,0 +1,14 @@
+.card {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.glow:hover {
+  box-shadow: var(--shadow-glow);
+}

@@ -1,101 +1,83 @@
-/**
- * Admin Login – Full-screen centered panel, modern design
- */
-
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAdminAuth } from "@/contexts/AdminAuthContext";
-import { useSEO } from "@/hooks/useSEO";
-import { Button } from "@/views/components/ui/Button";
-import styles from "./Admin.module.css";
-
+import { useAdminAuth } from "@/contexts";
 export const AdminLogin: React.FC = () => {
+  const { login } = useAdminAuth();
   const [secret, setSecret] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { login, isAuthenticated } = useAdminAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const rawFrom = (location.state as { from?: { pathname?: string } })?.from
-    ?.pathname;
-  const from =
-    rawFrom && String(rawFrom).startsWith("/admin")
-      ? rawFrom
-      : "/admin/dashboard";
-
-  useSEO({
-    title: "Sign in | Admin",
-    description: "Admin sign in to manage portfolio content.",
-    type: "website",
-  });
-
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      navigate(from, { replace: true });
-    }
-  }, [isAuthenticated, navigate, from]);
+  const [err, setErr] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    setErr("");
     try {
       await login(secret);
-      navigate(from, { replace: true });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
-    } finally {
-      setLoading(false);
+    } catch {
+      setErr("Invalid credentials.");
     }
   };
 
   return (
-    <div className={styles.loginWrap}>
-      <div className={styles.loginBackdrop} aria-hidden="true" />
-      <div className={styles.loginCard}>
-        <div className={styles.loginBrand}>
-          <span className={styles.loginLogo} aria-hidden="true">
-            ◈
-          </span>
-          <h1 className={styles.loginTitle}>Admin</h1>
-          <p className={styles.loginSubtitle}>
-            Portfolio control panel · Sign in to continue
-          </p>
-        </div>
-        <form onSubmit={handleSubmit} className={styles.loginForm}>
-          <label htmlFor="admin-secret" className={styles.loginLabel}>
-            Secret key
-          </label>
-          <input
-            id="admin-secret"
-            type="password"
-            value={secret}
-            onChange={(e) => setSecret(e.target.value)}
-            className={styles.loginInput}
-            placeholder="Enter your secret"
-            autoComplete="current-password"
-            autoFocus
-            disabled={loading}
-            aria-invalid={!!error}
-            aria-describedby={error ? "login-error" : undefined}
-          />
-          {error && (
-            <p id="login-error" className={styles.loginError} role="alert">
-              {error}
-            </p>
-          )}
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            disabled={loading}
-            fullWidth
-            className={styles.loginSubmit}
-          >
-            {loading ? "Signing in…" : "Sign in"}
-          </Button>
-        </form>
-      </div>
+    <div
+      style={{
+        minHeight: "100dvh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+        background: "var(--bg-base)",
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          width: "100%",
+          maxWidth: 360,
+        }}
+      >
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--text-primary)",
+            fontSize: "1.5rem",
+          }}
+        >
+          Admin
+        </h1>
+        <input
+          type="password"
+          placeholder="Secret"
+          value={secret}
+          onChange={(e) => setSecret(e.target.value)}
+          style={{
+            padding: "0.75rem 1rem",
+            background: "var(--bg-surface)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-md)",
+            color: "var(--text-primary)",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.9rem",
+          }}
+          required
+        />
+        {err && <p style={{ color: "#ef4444", fontSize: "0.8rem" }}>{err}</p>}
+        <button
+          type="submit"
+          style={{
+            padding: "0.75rem",
+            background: "var(--accent-1)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "var(--radius-md)",
+            fontFamily: "var(--font-body)",
+            fontWeight: 500,
+            cursor: "pointer",
+          }}
+        >
+          Sign in
+        </button>
+      </form>
     </div>
   );
 };

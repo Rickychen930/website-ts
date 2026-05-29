@@ -1,0 +1,13 @@
+.section {
+  overflow: hidden;
+  padding: var(--space-10) 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.strip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}

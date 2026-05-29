@@ -1,0 +1,15 @@
+.word {
+  display: inline-block;
+  white-space: pre;
+}
+
+.charWrapper {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.1;
+  vertical-align: bottom;
+}
+
+.char {
+  display: inline-block;
+}
