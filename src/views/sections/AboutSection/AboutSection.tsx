@@ -25,10 +25,10 @@ const WHAT_I_BUILD = [
 ];
 
 const STATS = [
-  { target: 5, suffix: "+", label: "Years experience", ring: 70 },
+  { target: 5, suffix: "+", label: "Years coding", ring: 65 },
   { target: 20, suffix: "+", label: "Projects shipped", ring: 80 },
-  { target: 3, suffix: "", label: "Countries worked", ring: 50 },
-  { target: 999, suffix: "+", label: "Coffees consumed", ring: 99 },
+  { target: 3, suffix: "", label: "Countries worked", ring: 45 },
+  { target: 8, suffix: "+", label: "Tech stacks mastered", ring: 72 },
 ];
 
 export const AboutSection: React.FC = () => {

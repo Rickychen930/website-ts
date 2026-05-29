@@ -26,7 +26,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     try {
-      return (localStorage.getItem("theme") as Theme) ?? "dark";
+      const stored = localStorage.getItem("theme") as Theme | null;
+      // Only allow "light" if user explicitly set it; default always dark
+      return stored === "light" ? "light" : "dark";
     } catch {
       return "dark";
     }

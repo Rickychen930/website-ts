@@ -14,34 +14,54 @@ import styles from "./HeroSection.module.css";
 
 const ROLES = ["Fullstack Engineer", "AI Engineer", "Problem Solver"];
 
-const CODE_LINES = [
-  { token: "keyword", text: "const " },
-  { token: "var", text: "ricky" },
-  { token: "plain", text: " = {" },
-  { token: "key", text: "  role" },
-  { token: "plain", text: ": " },
-  { token: "string", text: '"Fullstack + AI"' },
-  { token: "key", text: "  stack" },
-  { token: "plain", text: ": " },
-  { token: "array", text: '["React","Node","Python"]' },
-  { token: "key", text: "  location" },
-  { token: "plain", text: ": " },
-  { token: "string", text: '"Sydney, AU"' },
-  { token: "key", text: "  openToWork" },
-  { token: "plain", text: ": " },
-  { token: "bool", text: "true" },
-  { token: "plain", text: "};" },
-];
+interface CodeLine {
+  lineNum: number;
+  tokens: { color: string; text: string }[];
+}
 
-const TOKEN_COLOR: Record<string, string> = {
-  keyword: "var(--accent-1)",
-  var: "#e2e8f0",
-  plain: "var(--text-dim)",
-  key: "var(--accent-2)",
-  string: "#86efac",
-  array: "#fcd34d",
-  bool: "#fb923c",
-};
+const CODE_LINES: CodeLine[] = [
+  {
+    lineNum: 1,
+    tokens: [
+      { color: "var(--accent-1)", text: "const " },
+      { color: "#e2e8f0", text: "ricky" },
+      { color: "var(--text-dim)", text: " = {" },
+    ],
+  },
+  {
+    lineNum: 2,
+    tokens: [
+      { color: "var(--accent-2)", text: "  role" },
+      { color: "var(--text-dim)", text: ": " },
+      { color: "#86efac", text: '"Fullstack + AI",' },
+    ],
+  },
+  {
+    lineNum: 3,
+    tokens: [
+      { color: "var(--accent-2)", text: "  stack" },
+      { color: "var(--text-dim)", text: ": " },
+      { color: "#fcd34d", text: '["React","Node","Python"],' },
+    ],
+  },
+  {
+    lineNum: 4,
+    tokens: [
+      { color: "var(--accent-2)", text: "  location" },
+      { color: "var(--text-dim)", text: ": " },
+      { color: "#86efac", text: '"Sydney, AU",' },
+    ],
+  },
+  {
+    lineNum: 5,
+    tokens: [
+      { color: "var(--accent-2)", text: "  openToWork" },
+      { color: "var(--text-dim)", text: ": " },
+      { color: "#fb923c", text: "true," },
+    ],
+  },
+  { lineNum: 6, tokens: [{ color: "var(--text-dim)", text: "};" }] },
+];
 
 const GitHubIcon = () => (
   <svg
@@ -261,13 +281,17 @@ export const HeroSection: React.FC = () => {
                   className={styles.codeLine}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.9 + i * 0.06, duration: 0.3 }}
+                  transition={{ delay: 0.9 + i * 0.12, duration: 0.35 }}
                 >
                   <span className={styles.lineNum}>
-                    {String(Math.floor(i / 3) + 1).padStart(2, " ")}
+                    {String(line.lineNum).padStart(2, " ")}
                   </span>
-                  <span style={{ color: TOKEN_COLOR[line.token] }}>
-                    {line.text}
+                  <span>
+                    {line.tokens.map((t, ti) => (
+                      <span key={ti} style={{ color: t.color }}>
+                        {t.text}
+                      </span>
+                    ))}
                   </span>
                 </motion.div>
               ))}

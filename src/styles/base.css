@@ -43,10 +43,10 @@ body::before {
   background-size: 32px 32px;
 }
 
-.light body::before {
+body.light::before {
   background-image: radial-gradient(
     circle,
-    rgba(0, 0, 0, 0.04) 1px,
+    rgba(0, 0, 0, 0.05) 1px,
     transparent 1px
   );
 }
