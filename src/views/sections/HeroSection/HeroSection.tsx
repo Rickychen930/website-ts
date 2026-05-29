@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "@/lib/motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  useSpring,
+} from "@/lib/motion";
 import { SplitText } from "@/components/motion/SplitText/SplitText";
-import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
 import { Button } from "@/components/ui/Button/Button";
 import { useProfile } from "@/contexts";
 import styles from "./HeroSection.module.css";
@@ -9,15 +15,33 @@ import styles from "./HeroSection.module.css";
 const ROLES = ["Fullstack Engineer", "AI Engineer", "Problem Solver"];
 
 const CODE_LINES = [
-  { token: "const", text: " ricky = {" },
-  { token: "key", text: "  role:" },
-  { token: "string", text: ' "Fullstack + AI",' },
-  { token: "key", text: "  location:" },
-  { token: "string", text: ' "Sydney, AU",' },
-  { token: "key", text: "  available:" },
-  { token: "bool", text: " true," },
+  { token: "keyword", text: "const " },
+  { token: "var", text: "ricky" },
+  { token: "plain", text: " = {" },
+  { token: "key", text: "  role" },
+  { token: "plain", text: ": " },
+  { token: "string", text: '"Fullstack + AI"' },
+  { token: "key", text: "  stack" },
+  { token: "plain", text: ": " },
+  { token: "array", text: '["React","Node","Python"]' },
+  { token: "key", text: "  location" },
+  { token: "plain", text: ": " },
+  { token: "string", text: '"Sydney, AU"' },
+  { token: "key", text: "  openToWork" },
+  { token: "plain", text: ": " },
+  { token: "bool", text: "true" },
   { token: "plain", text: "};" },
 ];
+
+const TOKEN_COLOR: Record<string, string> = {
+  keyword: "var(--accent-1)",
+  var: "#e2e8f0",
+  plain: "var(--text-dim)",
+  key: "var(--accent-2)",
+  string: "#86efac",
+  array: "#fcd34d",
+  bool: "#fb923c",
+};
 
 const GitHubIcon = () => (
   <svg
@@ -43,20 +67,26 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-const TOKEN_COLORS: Record<string, string> = {
-  const: "var(--accent-1)",
-  key: "var(--accent-2)",
-  string: "#86efac",
-  bool: "#fb923c",
-  plain: "var(--text-muted)",
-};
-
 export const HeroSection: React.FC = () => {
   const { profile } = useProfile();
   const shouldReduce = useReducedMotion();
   const bgRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [roleIndex, setRoleIndex] = useState(0);
 
+  // Scroll-driven parallax
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const rawY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const rawOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const y = useSpring(rawY, { stiffness: 80, damping: 20 });
+  const opacity = useSpring(rawOpacity, { stiffness: 80, damping: 20 });
+  const scale = useSpring(rawScale, { stiffness: 80, damping: 20 });
+
+  // Mouse parallax mesh
   useEffect(() => {
     if (shouldReduce) return;
     const el = bgRef.current;
@@ -72,10 +102,11 @@ export const HeroSection: React.FC = () => {
     return () => window.removeEventListener("mousemove", onMove);
   }, [shouldReduce]);
 
+  // Role cycling
   useEffect(() => {
     const t = setInterval(
       () => setRoleIndex((i) => (i + 1) % ROLES.length),
-      3000,
+      3200,
     );
     return () => clearInterval(t);
   }, []);
@@ -85,6 +116,7 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section
+      ref={sectionRef}
       className={styles.hero}
       id="hero"
       aria-label="Introduction"
@@ -92,64 +124,85 @@ export const HeroSection: React.FC = () => {
     >
       <div ref={bgRef} className={styles.meshBg} aria-hidden="true" />
 
-      <div className={styles.layout}>
-        {/* Left — text content */}
-        <div className={styles.content}>
-          <FadeUp delay={0}>
-            <span className={styles.badge}>
+      {/* Parallax wrapper */}
+      <motion.div
+        className={styles.parallaxWrap}
+        style={shouldReduce ? {} : { y, opacity, scale }}
+      >
+        <div className={styles.layout}>
+          {/* Left — text */}
+          <div className={styles.content}>
+            {/* Status badge */}
+            <motion.div
+              className={styles.badge}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, ease: [0.25, 0, 0, 1], duration: 0.6 }}
+            >
               <span className={styles.badgeDot} />
-              Available for work · Sydney, AU
-            </span>
-          </FadeUp>
+              <span>Available · Sydney, AU</span>
+            </motion.div>
 
-          <h1 className={styles.name} aria-label="Ricky Chen">
-            <SplitText
-              text="RICKY"
-              className={`${styles.nameLine} gradient-text`}
-              delay={0.15}
-            />
-            <SplitText
-              text="CHEN"
-              className={`${styles.nameLineDim}`}
-              delay={0.35}
-            />
-          </h1>
+            {/* Name — massive, two lines */}
+            <h1 className={styles.name} aria-label="Ricky Chen">
+              <span className={styles.nameLine}>
+                <SplitText text="RICKY" className="gradient-text" delay={0.2} />
+              </span>
+              <span className={styles.nameLine2}>
+                <SplitText text="CHEN." delay={0.4} />
+              </span>
+            </h1>
 
-          <div className={styles.roleWrap} aria-live="polite">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={roleIndex}
-                className={styles.role}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              >
-                {ROLES[roleIndex]}
-              </motion.span>
-            </AnimatePresence>
-          </div>
+            {/* Role cycling */}
+            <div className={styles.roleWrap} aria-live="polite">
+              <span className={styles.roleArrow}>↗</span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={roleIndex}
+                  className={styles.role}
+                  initial={{ opacity: 0, clipPath: "inset(100% 0 0 0)" }}
+                  animate={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
+                  exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+                  transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                >
+                  {ROLES[roleIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
 
-          <FadeUp delay={0.5}>
-            <p className={styles.bio}>
+            {/* Bio */}
+            <motion.p
+              className={styles.bio}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, ease: [0.25, 0, 0, 1], duration: 0.6 }}
+            >
               {profile?.heroTagline ??
                 "Building fullstack products with research-grade rigor."}
-            </p>
-          </FadeUp>
+            </motion.p>
 
-          <FadeUp delay={0.6}>
-            <div className={styles.ctas}>
+            {/* CTAs */}
+            <motion.div
+              className={styles.ctas}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.85, ease: [0.25, 0, 0, 1], duration: 0.6 }}
+            >
               <Button as="a" href="#projects" variant="primary">
                 View Work
               </Button>
               <Button as="a" href="/resume" variant="ghost">
-                Resume
+                Resume →
               </Button>
-            </div>
-          </FadeUp>
+            </motion.div>
 
-          <FadeUp delay={0.7}>
-            <div className={styles.socials}>
+            {/* Socials */}
+            <motion.div
+              className={styles.socials}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+            >
               {github && (
                 <a
                   href={github.value}
@@ -174,106 +227,120 @@ export const HeroSection: React.FC = () => {
                   <LinkedInIcon />
                 </a>
               )}
-            </div>
-          </FadeUp>
-        </div>
-
-        {/* Right — animated code card */}
-        <motion.div
-          className={styles.codeCard}
-          initial={{ opacity: 0, y: 32, rotate: 2 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={{ ease: [0.25, 0, 0, 1], duration: 0.8, delay: 0.6 }}
-          aria-hidden="true"
-        >
-          <div className={styles.codeHeader}>
-            <span className={styles.dot} style={{ background: "#ef4444" }} />
-            <span className={styles.dot} style={{ background: "#f59e0b" }} />
-            <span className={styles.dot} style={{ background: "#22c55e" }} />
-            <span className={styles.fileName}>ricky.ts</span>
+            </motion.div>
           </div>
-          <div className={styles.codeBody}>
-            {CODE_LINES.map((line, i) => (
-              <motion.div
-                key={i}
-                className={styles.codeLine}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
+
+          {/* Right — code card */}
+          <motion.div
+            className={styles.codeCard}
+            initial={{ opacity: 0, y: 40, rotate: 3 }}
+            animate={{ opacity: 1, y: 0, rotate: 0 }}
+            transition={{ ease: [0.25, 0, 0, 1], duration: 0.9, delay: 0.5 }}
+            aria-hidden="true"
+          >
+            <div className={styles.codeHeader}>
+              <span
+                className={styles.trafficDot}
+                style={{ background: "#ef4444" }}
+              />
+              <span
+                className={styles.trafficDot}
+                style={{ background: "#f59e0b" }}
+              />
+              <span
+                className={styles.trafficDot}
+                style={{ background: "#22c55e" }}
+              />
+              <span className={styles.fileName}>ricky.ts</span>
+              <span className={styles.fileStatus}>● edited</span>
+            </div>
+            <div className={styles.codeBody}>
+              {CODE_LINES.map((line, i) => (
+                <motion.div
+                  key={i}
+                  className={styles.codeLine}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.9 + i * 0.06, duration: 0.3 }}
+                >
+                  <span className={styles.lineNum}>
+                    {String(Math.floor(i / 3) + 1).padStart(2, " ")}
+                  </span>
+                  <span style={{ color: TOKEN_COLOR[line.token] }}>
+                    {line.text}
+                  </span>
+                </motion.div>
+              ))}
+              <motion.span
+                className={styles.cursor}
+                animate={{ opacity: [1, 0] }}
                 transition={{
-                  delay: 0.8 + i * 0.1,
-                  ease: "easeOut",
-                  duration: 0.4,
+                  duration: 0.8,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+            </div>
+
+            {/* Floating badges */}
+            {[
+              {
+                label: "⚡ React 19",
+                color: "#06b6d4",
+                top: "-1rem",
+                right: "1rem",
+              },
+              {
+                label: "🔷 TypeScript",
+                color: "#6366f1",
+                bottom: "2rem",
+                left: "-2rem",
+              },
+              {
+                label: "🟢 Node.js",
+                color: "#22c55e",
+                top: "35%",
+                right: "-2.2rem",
+              },
+            ].map((b, i) => (
+              <motion.span
+                key={b.label}
+                className={styles.floatBadge}
+                style={{
+                  top: b.top,
+                  right: b.right,
+                  bottom: b.bottom,
+                  left: b.left,
+                  borderColor: b.color,
+                  color: b.color,
+                }}
+                animate={shouldReduce ? {} : { y: [0, -5, 0] }}
+                transition={{
+                  duration: 3 + i * 0.7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.4,
                 }}
               >
-                <span className={styles.lineNum}>{i + 1}</span>
-                <span style={{ color: TOKEN_COLORS[line.token] }}>
-                  {line.token === "key"
-                    ? ""
-                    : line.token === "plain"
-                      ? ""
-                      : line.token + " "}
-                </span>
-                <span style={{ color: TOKEN_COLORS[line.token] }}>
-                  {line.text}
-                </span>
-              </motion.div>
+                {b.label}
+              </motion.span>
             ))}
-            <motion.span
-              className={styles.cursor}
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
-            />
-          </div>
+          </motion.div>
+        </div>
+      </motion.div>
 
-          {/* Floating tech badges */}
-          {[
-            {
-              label: "React 19",
-              color: "#06b6d4",
-              top: "-1.2rem",
-              right: "1.5rem",
-            },
-            {
-              label: "TypeScript",
-              color: "#6366f1",
-              bottom: "0.5rem",
-              left: "-1.5rem",
-            },
-            { label: "Node.js", color: "#22c55e", top: "40%", right: "-2rem" },
-          ].map((badge) => (
-            <motion.span
-              key={badge.label}
-              className={styles.floatBadge}
-              style={{
-                top: badge.top,
-                right: badge.right,
-                bottom: badge.bottom,
-                left: badge.left,
-                borderColor: badge.color,
-                color: badge.color,
-              }}
-              animate={shouldReduce ? {} : { y: [0, -6, 0] }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              {badge.label}
-            </motion.span>
-          ))}
-        </motion.div>
-      </div>
-
+      {/* Scroll indicator */}
       <motion.div
         className={styles.scrollCue}
         animate={shouldReduce ? {} : { y: [0, 8, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden="true"
       >
-        ↓
+        <span className={styles.scrollLine} />
+        <span className={styles.scrollText}>scroll</span>
       </motion.div>
 
+      {/* Decorative index */}
       <span className={styles.sectionNum} aria-hidden="true">
         00
       </span>

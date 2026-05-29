@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
 import { Tag } from "@/components/ui/Tag/Tag";
 import { Section } from "@/components/layout/Section/Section";
 import { useProfile } from "@/contexts";
@@ -8,11 +7,13 @@ import styles from "./WorkSection.module.css";
 
 const formatDate = (date?: string) => {
   if (!date) return "";
-  const d = new Date(date);
-  return d.toLocaleDateString("en-AU", { month: "short", year: "numeric" });
+  return new Date(date).toLocaleDateString("en-AU", {
+    month: "short",
+    year: "numeric",
+  });
 };
 
-const duration = (start: string, end?: string) => {
+const calcDuration = (start: string, end?: string) => {
   const s = new Date(start);
   const e = end ? new Date(end) : new Date();
   const months =
@@ -26,13 +27,14 @@ const duration = (start: string, end?: string) => {
 export const WorkSection: React.FC = () => {
   const { profile } = useProfile();
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start 80%", "end 30%"],
   });
   const rawLine = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const lineH = useSpring(rawLine, { stiffness: 80, damping: 20 });
+  const lineH = useSpring(rawLine, { stiffness: 60, damping: 18 });
 
   const experiences = (profile?.experiences ?? [])
     .slice()
@@ -44,10 +46,29 @@ export const WorkSection: React.FC = () => {
 
   return (
     <Section id="work" sectionNumber="03" data-section="work">
-      <FadeUp>
-        <span className={styles.sectionLabel}>Experience</span>
-        <h2 className={styles.heading}>Where I've worked</h2>
-      </FadeUp>
+      {/* Section header — editorial large */}
+      <div className={styles.sectionHead}>
+        <motion.span
+          className={styles.sectionLabel}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ ease: [0.25, 0, 0, 1], duration: 0.6 }}
+        >
+          03 / Experience
+        </motion.span>
+        <motion.h2
+          className={styles.heading}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ ease: [0.25, 0, 0, 1], duration: 0.7, delay: 0.1 }}
+        >
+          Where I've
+          <br />
+          <em>worked.</em>
+        </motion.h2>
+      </div>
 
       <div className={styles.timeline} ref={sectionRef}>
         {/* Self-drawing line */}
@@ -62,19 +83,23 @@ export const WorkSection: React.FC = () => {
           {experiences.map((exp, i) => (
             <motion.article
               key={exp.id}
-              className={styles.entry}
-              initial={{ opacity: 0, x: 40 }}
+              className={[styles.entry, activeIdx === i && styles.entryActive]
+                .filter(Boolean)
+                .join(" ")}
+              initial={{ opacity: 0, x: 48 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{
                 ease: [0.25, 0, 0, 1],
-                duration: 0.6,
-                delay: i * 0.08,
+                duration: 0.65,
+                delay: i * 0.06,
               }}
+              onMouseEnter={() => setActiveIdx(i)}
             >
+              {/* Timeline dot */}
               <div className={styles.dotWrapper} aria-hidden="true">
                 <span
-                  className={[styles.dot, exp.isCurrent && styles.dotActive]
+                  className={[styles.dot, exp.isCurrent && styles.dotCurrent]
                     .filter(Boolean)
                     .join(" ")}
                 >
@@ -82,37 +107,34 @@ export const WorkSection: React.FC = () => {
                 </span>
               </div>
 
-              <div
-                className={[styles.card, exp.isCurrent && styles.cardCurrent]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
-                <div className={styles.cardHeader}>
-                  <div>
-                    <h3 className={styles.role}>{exp.position}</h3>
-                    <span className={styles.company}>
-                      {exp.company} · {exp.location}
-                    </span>
-                  </div>
-                  <div className={styles.meta}>
+              <div className={styles.card}>
+                {/* Top row */}
+                <div className={styles.cardTop}>
+                  <div className={styles.cardLeft}>
                     {exp.isCurrent && (
                       <span className={styles.currentBadge}>
                         <span className={styles.currentDot} />
                         Current
                       </span>
                     )}
-                    <span className={styles.dates}>
-                      {formatDate(exp.startDate)} –{" "}
-                      {exp.isCurrent ? "Present" : formatDate(exp.endDate)}
-                      <span className={styles.dur}>
-                        {duration(exp.startDate, exp.endDate)}
-                      </span>
-                    </span>
+                    <span className={styles.company}>{exp.company}</span>
+                    <span className={styles.location}>{exp.location}</span>
                   </div>
+                  <span className={styles.dates}>
+                    {formatDate(exp.startDate)} →{" "}
+                    {exp.isCurrent ? "Now" : formatDate(exp.endDate)}
+                    <span className={styles.dur}>
+                      {calcDuration(exp.startDate, exp.endDate)}
+                    </span>
+                  </span>
                 </div>
+
+                {/* Role — large */}
+                <h3 className={styles.role}>{exp.position}</h3>
 
                 <p className={styles.desc}>{exp.description}</p>
 
+                {/* Achievements */}
                 {exp.achievements.length > 0 && (
                   <ul className={styles.achievements}>
                     {exp.achievements.slice(0, 3).map((a, j) => (
@@ -121,9 +143,10 @@ export const WorkSection: React.FC = () => {
                   </ul>
                 )}
 
+                {/* Tech tags */}
                 {exp.technologies.length > 0 && (
                   <div className={styles.tags}>
-                    {exp.technologies.slice(0, 6).map((t) => (
+                    {exp.technologies.slice(0, 7).map((t) => (
                       <Tag key={t} variant="accent">
                         {t}
                       </Tag>
