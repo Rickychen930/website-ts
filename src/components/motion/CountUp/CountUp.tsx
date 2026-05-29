@@ -44,7 +44,7 @@ export const CountUp: React.FC<CountUpProps> = ({
     requestAnimationFrame(step);
   }, [isInView, target, duration, ringPercent, shouldReduce]);
 
-  const size = 80;
+  const size = 100;
   const strokeWidth = 3;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;

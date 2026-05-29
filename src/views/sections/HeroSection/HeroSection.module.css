@@ -8,25 +8,24 @@
   overflow: hidden;
 }
 
-/* Animated mesh background with mouse parallax */
 .meshBg {
   position: absolute;
   inset: -20%;
-  pointer-events: none;
   z-index: 0;
   background:
     radial-gradient(
       ellipse 60% 50% at calc(var(--mx, 30%)) calc(var(--my, 40%)),
-      rgba(99, 102, 241, 0.18) 0%,
+      rgba(99, 102, 241, 0.22) 0%,
       transparent 70%
     ),
     radial-gradient(
       ellipse 50% 60% at calc(100% - var(--mx, 70%)) calc(100% - var(--my, 60%)),
-      rgba(6, 182, 212, 0.12) 0%,
+      rgba(6, 182, 212, 0.14) 0%,
       transparent 70%
     );
   transition: background 0.3s ease;
   animation: mesh-drift-1 12s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -36,16 +35,24 @@
   }
 }
 
-.content {
-  display: flex;
+/* Two-column layout */
+.layout {
+  display: grid;
   position: relative;
   z-index: 1;
   width: 100%;
-  margin: 0 auto;
   max-width: var(--container-max);
+  margin: 0 auto;
+  padding-top: 5rem;
+  grid-template-columns: 1fr 420px;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.content {
+  display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  padding-top: 6rem;
 }
 
 .badge {
@@ -64,12 +71,11 @@
   height: 7px;
   border-radius: 50%;
   background: var(--accent-2);
-  animation: pulse-ring 2s ease-out infinite;
-  box-shadow: 0 0 0 0 var(--accent-2);
   flex-shrink: 0;
+  animation: pulse-badge 2s ease-out infinite;
 }
 
-@keyframes pulse-ring {
+@keyframes pulse-badge {
   0% {
     box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.6);
   }
@@ -83,16 +89,26 @@
 
 .name {
   display: block;
-  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-size: clamp(3rem, 8vw, 7.5rem);
   font-weight: 800;
-  line-height: 0.95;
+  line-height: 0.92;
   font-family: var(--font-display);
   letter-spacing: -0.04em;
 }
 
+.nameLine {
+  display: block;
+}
+
+.nameLineDim {
+  display: block;
+  color: var(--text-primary);
+  opacity: 0.5;
+}
+
 .roleWrap {
   display: flex;
-  height: clamp(2rem, 5vw, 3.5rem);
+  height: clamp(2rem, 4vw, 3rem);
   overflow: hidden;
   align-items: center;
 }
@@ -100,7 +116,7 @@
 .role {
   display: block;
   color: var(--text-muted);
-  font-size: clamp(1.25rem, 3.5vw, 2.75rem);
+  font-size: clamp(1.1rem, 2.5vw, 2rem);
   font-weight: 400;
   font-family: var(--font-display);
   letter-spacing: -0.02em;
@@ -110,7 +126,7 @@
   color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.7;
-  max-width: 520px;
+  max-width: 460px;
 }
 
 .ctas {
@@ -121,26 +137,113 @@
 
 .socials {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .socialLink {
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 44px;
   height: 44px;
+  border: 1px solid var(--border);
   color: var(--text-dim);
-  border-radius: var(--radius-md);
   transition:
     color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    border-color 0.2s ease;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
   text-decoration: none;
 }
 
 .socialLink:hover {
+  border-color: var(--border-hover);
   background: var(--bg-elevated);
   color: var(--text-primary);
+}
+
+/* Code card */
+.codeCard {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  overflow: visible;
+  box-shadow:
+    var(--shadow-md),
+    0 0 60px rgba(99, 102, 241, 0.08);
+}
+
+.codeHeader {
+  display: flex;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fileName {
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  margin-left: auto;
+}
+
+.codeBody {
+  display: flex;
+  padding: var(--space-5);
+  flex-direction: column;
+  gap: 4px;
+}
+
+.codeLine {
+  display: flex;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  align-items: baseline;
+}
+
+.lineNum {
+  width: 1.2rem;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  text-align: right;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1rem;
+  background: var(--accent-1);
+  margin-left: var(--space-4);
+  border-radius: 1px;
+  vertical-align: middle;
+}
+
+/* Floating tech badges */
+.floatBadge {
+  position: absolute;
+  padding: 4px 10px;
+  border: 1px solid;
+  border-radius: var(--radius-full);
+  background: var(--bg-base);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
 }
 
 .scrollCue {
@@ -157,19 +260,35 @@
   position: absolute;
   top: 0;
   right: -0.05em;
+  z-index: 0;
   color: var(--text-dim);
   font-size: clamp(8rem, 20vw, 18rem);
   font-weight: 800;
   line-height: 1;
-  opacity: 0.1;
+  opacity: 0.06;
   font-family: var(--font-display);
   pointer-events: none;
   user-select: none;
   letter-spacing: -0.05em;
 }
 
+@media (width <= 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .codeCard {
+    max-width: 480px;
+  }
+}
+
 @media (width <= 640px) {
   .content {
     gap: var(--space-5);
+  }
+
+  .codeCard {
+    display: none;
   }
 }

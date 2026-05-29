@@ -36,6 +36,24 @@ const MoonIcon = () => (
   </svg>
 );
 
+const LogoMark = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    fill="none"
+    aria-hidden="true"
+    width="32"
+    height="32"
+  >
+    <rect width="32" height="32" rx="8" fill="#1e1b4b" />
+    <path
+      d="M10 8h3c1.7 0 3 1.3 3 3 0 1-.5 1.8-1.2 2.3.8.5 1.3 1.3 1.3 2.2 0 1.7-1.3 2.9-3 2.9h-1.1V8zm2 4.2h1.2c.7 0 1.2-.5 1.2-1.2 0-.7-.5-1.2-1.2-1.2H12v2.4zm0 5.5h1.4c.9 0 1.5-.6 1.5-1.5s-.6-1.5-1.5-1.5H12v3z"
+      fill="#6366f1"
+    />
+    <path d="M13.5 14L20 24h2L15 15z" fill="#06b6d4" />
+  </svg>
+);
+
 const MenuIcon = () => (
   <svg
     width="20"
@@ -103,7 +121,7 @@ export const Header: React.FC = () => {
     >
       <div className={styles.inner}>
         <a href="/" className={styles.logo} aria-label="Home">
-          RC
+          <LogoMark />
         </a>
 
         <nav className={styles.nav} aria-label="Main navigation">

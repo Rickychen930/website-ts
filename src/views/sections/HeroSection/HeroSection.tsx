@@ -8,6 +8,17 @@ import styles from "./HeroSection.module.css";
 
 const ROLES = ["Fullstack Engineer", "AI Engineer", "Problem Solver"];
 
+const CODE_LINES = [
+  { token: "const", text: " ricky = {" },
+  { token: "key", text: "  role:" },
+  { token: "string", text: ' "Fullstack + AI",' },
+  { token: "key", text: "  location:" },
+  { token: "string", text: ' "Sydney, AU",' },
+  { token: "key", text: "  available:" },
+  { token: "bool", text: " true," },
+  { token: "plain", text: "};" },
+];
+
 const GitHubIcon = () => (
   <svg
     width="20"
@@ -32,29 +43,35 @@ const LinkedInIcon = () => (
   </svg>
 );
 
+const TOKEN_COLORS: Record<string, string> = {
+  const: "var(--accent-1)",
+  key: "var(--accent-2)",
+  string: "#86efac",
+  bool: "#fb923c",
+  plain: "var(--text-muted)",
+};
+
 export const HeroSection: React.FC = () => {
   const { profile } = useProfile();
   const shouldReduce = useReducedMotion();
   const bgRef = useRef<HTMLDivElement>(null);
   const [roleIndex, setRoleIndex] = useState(0);
 
-  // Mouse parallax mesh
   useEffect(() => {
     if (shouldReduce) return;
     const el = bgRef.current;
     if (!el) return;
-
     const onMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      el.style.setProperty("--mx", `${x}%`);
-      el.style.setProperty("--my", `${y}%`);
+      el.style.setProperty("--mx", `${(e.clientX / window.innerWidth) * 100}%`);
+      el.style.setProperty(
+        "--my",
+        `${(e.clientY / window.innerHeight) * 100}%`,
+      );
     };
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
   }, [shouldReduce]);
 
-  // Role cycling
   useEffect(() => {
     const t = setInterval(
       () => setRoleIndex((i) => (i + 1) % ROLES.length),
@@ -75,79 +92,177 @@ export const HeroSection: React.FC = () => {
     >
       <div ref={bgRef} className={styles.meshBg} aria-hidden="true" />
 
-      <div className={styles.content}>
-        <FadeUp delay={0}>
-          <span className={styles.badge}>
-            <span className={styles.badgeDot} />
-            Available for work · Sydney, AU
-          </span>
-        </FadeUp>
+      <div className={styles.layout}>
+        {/* Left — text content */}
+        <div className={styles.content}>
+          <FadeUp delay={0}>
+            <span className={styles.badge}>
+              <span className={styles.badgeDot} />
+              Available for work · Sydney, AU
+            </span>
+          </FadeUp>
 
-        <h1 className={styles.name} aria-label="Ricky Chen">
-          <SplitText text="RICKY CHEN" className="gradient-text" delay={0.15} />
-        </h1>
+          <h1 className={styles.name} aria-label="Ricky Chen">
+            <SplitText
+              text="RICKY"
+              className={`${styles.nameLine} gradient-text`}
+              delay={0.15}
+            />
+            <SplitText
+              text="CHEN"
+              className={`${styles.nameLineDim}`}
+              delay={0.35}
+            />
+          </h1>
 
-        <div className={styles.roleWrap} aria-live="polite">
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={roleIndex}
-              className={styles.role}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              {ROLES[roleIndex]}
-            </motion.span>
-          </AnimatePresence>
+          <div className={styles.roleWrap} aria-live="polite">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={roleIndex}
+                className={styles.role}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {ROLES[roleIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+
+          <FadeUp delay={0.5}>
+            <p className={styles.bio}>
+              {profile?.heroTagline ??
+                "Building fullstack products with research-grade rigor."}
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.6}>
+            <div className={styles.ctas}>
+              <Button as="a" href="#projects" variant="primary">
+                View Work
+              </Button>
+              <Button as="a" href="/resume" variant="ghost">
+                Resume
+              </Button>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.7}>
+            <div className={styles.socials}>
+              {github && (
+                <a
+                  href={github.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className={styles.socialLink}
+                  data-cursor="open"
+                >
+                  <GitHubIcon />
+                </a>
+              )}
+              {linkedin && (
+                <a
+                  href={linkedin.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className={styles.socialLink}
+                  data-cursor="open"
+                >
+                  <LinkedInIcon />
+                </a>
+              )}
+            </div>
+          </FadeUp>
         </div>
 
-        <FadeUp delay={0.5}>
-          <p className={styles.bio}>
-            {profile?.heroTagline ??
-              "Building fullstack products with research-grade rigor."}
-          </p>
-        </FadeUp>
-
-        <FadeUp delay={0.6}>
-          <div className={styles.ctas}>
-            <Button as="a" href="#projects" variant="primary">
-              View Work
-            </Button>
-            <Button as="a" href="/resume" variant="ghost">
-              Resume
-            </Button>
+        {/* Right — animated code card */}
+        <motion.div
+          className={styles.codeCard}
+          initial={{ opacity: 0, y: 32, rotate: 2 }}
+          animate={{ opacity: 1, y: 0, rotate: 0 }}
+          transition={{ ease: [0.25, 0, 0, 1], duration: 0.8, delay: 0.6 }}
+          aria-hidden="true"
+        >
+          <div className={styles.codeHeader}>
+            <span className={styles.dot} style={{ background: "#ef4444" }} />
+            <span className={styles.dot} style={{ background: "#f59e0b" }} />
+            <span className={styles.dot} style={{ background: "#22c55e" }} />
+            <span className={styles.fileName}>ricky.ts</span>
           </div>
-        </FadeUp>
-
-        <FadeUp delay={0.7}>
-          <div className={styles.socials}>
-            {github && (
-              <a
-                href={github.value}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className={styles.socialLink}
-                data-cursor="open"
+          <div className={styles.codeBody}>
+            {CODE_LINES.map((line, i) => (
+              <motion.div
+                key={i}
+                className={styles.codeLine}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: 0.8 + i * 0.1,
+                  ease: "easeOut",
+                  duration: 0.4,
+                }}
               >
-                <GitHubIcon />
-              </a>
-            )}
-            {linkedin && (
-              <a
-                href={linkedin.value}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className={styles.socialLink}
-                data-cursor="open"
-              >
-                <LinkedInIcon />
-              </a>
-            )}
+                <span className={styles.lineNum}>{i + 1}</span>
+                <span style={{ color: TOKEN_COLORS[line.token] }}>
+                  {line.token === "key"
+                    ? ""
+                    : line.token === "plain"
+                      ? ""
+                      : line.token + " "}
+                </span>
+                <span style={{ color: TOKEN_COLORS[line.token] }}>
+                  {line.text}
+                </span>
+              </motion.div>
+            ))}
+            <motion.span
+              className={styles.cursor}
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
           </div>
-        </FadeUp>
+
+          {/* Floating tech badges */}
+          {[
+            {
+              label: "React 19",
+              color: "#06b6d4",
+              top: "-1.2rem",
+              right: "1.5rem",
+            },
+            {
+              label: "TypeScript",
+              color: "#6366f1",
+              bottom: "0.5rem",
+              left: "-1.5rem",
+            },
+            { label: "Node.js", color: "#22c55e", top: "40%", right: "-2rem" },
+          ].map((badge) => (
+            <motion.span
+              key={badge.label}
+              className={styles.floatBadge}
+              style={{
+                top: badge.top,
+                right: badge.right,
+                bottom: badge.bottom,
+                left: badge.left,
+                borderColor: badge.color,
+                color: badge.color,
+              }}
+              animate={shouldReduce ? {} : { y: [0, -6, 0] }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              {badge.label}
+            </motion.span>
+          ))}
+        </motion.div>
       </div>
 
       <motion.div
