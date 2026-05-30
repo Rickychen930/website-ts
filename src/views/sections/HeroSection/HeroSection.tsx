@@ -144,6 +144,11 @@ export const HeroSection: React.FC = () => {
     >
       <div ref={bgRef} className={styles.meshBg} aria-hidden="true" />
 
+      {/* Floating abstract orbs */}
+      <div className={styles.orb1} aria-hidden="true" />
+      <div className={styles.orb2} aria-hidden="true" />
+      <div className={styles.gridLines} aria-hidden="true" />
+
       {/* Parallax wrapper */}
       <motion.div
         className={styles.parallaxWrap}

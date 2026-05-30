@@ -25,12 +25,217 @@ const FILTERS: { key: Filter; label: string }[] = [
 ];
 
 const GRADIENTS: Record<string, string> = {
-  ai: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
-  web: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)",
-  fullstack: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
-  backend: "linear-gradient(135deg, #059669 0%, #06b6d4 100%)",
-  mobile: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
-  other: "linear-gradient(135deg, #52525b 0%, #3f3f46 100%)",
+  ai: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%)",
+  web: "linear-gradient(135deg, #0369a1 0%, #0891b2 50%, #06b6d4 100%)",
+  fullstack: "linear-gradient(135deg, #4f46e5 0%, #2563eb 50%, #06b6d4 100%)",
+  backend: "linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%)",
+  mobile: "linear-gradient(135deg, #92400e 0%, #d97706 50%, #f59e0b 100%)",
+  other: "linear-gradient(135deg, #3f3f46 0%, #52525b 100%)",
+};
+
+/* Generate a CSS "UI mockup" pattern per category */
+const MockupContent: React.FC<{
+  category: string;
+  title: string;
+  imageUrl?: string;
+}> = ({ category, title, imageUrl }) => {
+  if (imageUrl) {
+    return (
+      <img
+        src={imageUrl}
+        alt={title}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          opacity: 0.7,
+        }}
+        loading="lazy"
+      />
+    );
+  }
+
+  const isMobile = category === "mobile";
+  const isAI = category === "ai";
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        padding: "1rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+        justifyContent: isMobile ? "center" : "flex-start",
+        alignItems: isMobile ? "center" : "flex-start",
+      }}
+    >
+      {isMobile ? (
+        /* Phone mockup */
+        <div
+          style={{
+            width: 80,
+            height: 140,
+            border: "2px solid rgba(255,255,255,0.4)",
+            borderRadius: 12,
+            background: "rgba(0,0,0,0.3)",
+            padding: 8,
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
+          }}
+        >
+          <div
+            style={{
+              width: "60%",
+              height: 6,
+              background: "rgba(255,255,255,0.5)",
+              borderRadius: 4,
+            }}
+          />
+          <div
+            style={{
+              width: "90%",
+              height: 6,
+              background: "rgba(255,255,255,0.3)",
+              borderRadius: 4,
+            }}
+          />
+          <div
+            style={{
+              flex: 1,
+              background: "rgba(255,255,255,0.1)",
+              borderRadius: 4,
+              marginTop: 4,
+            }}
+          />
+          <div
+            style={{
+              width: "100%",
+              height: 20,
+              background: "rgba(255,255,255,0.2)",
+              borderRadius: 6,
+            }}
+          />
+        </div>
+      ) : isAI ? (
+        /* AI / data viz mockup */
+        <>
+          <div style={{ display: "flex", gap: 6, alignItems: "flex-end" }}>
+            {[40, 70, 55, 90, 65, 80, 50].map((h, i) => (
+              <div
+                key={i}
+                style={{
+                  width: 12,
+                  height: h * 0.6,
+                  background: "rgba(255,255,255,0.4)",
+                  borderRadius: "3px 3px 0 0",
+                }}
+              />
+            ))}
+          </div>
+          <div
+            style={{
+              width: "70%",
+              height: 2,
+              background: "rgba(255,255,255,0.2)",
+              borderRadius: 2,
+            }}
+          />
+          <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+            {["GPT", "API", "ML"].map((l) => (
+              <span
+                key={l}
+                style={{
+                  padding: "2px 6px",
+                  background: "rgba(255,255,255,0.2)",
+                  borderRadius: 4,
+                  fontSize: "0.55rem",
+                  color: "rgba(255,255,255,0.9)",
+                  fontFamily: "monospace",
+                }}
+              >
+                {l}
+              </span>
+            ))}
+          </div>
+        </>
+      ) : (
+        /* Generic web/fullstack/backend mockup */
+        <>
+          <div style={{ display: "flex", gap: 4, marginBottom: 4 }}>
+            {["#ef4444", "#f59e0b", "#22c55e"].map((c, i) => (
+              <div
+                key={i}
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: c,
+                }}
+              />
+            ))}
+          </div>
+          <div
+            style={{
+              width: "80%",
+              height: 5,
+              background: "rgba(255,255,255,0.4)",
+              borderRadius: 3,
+            }}
+          />
+          <div
+            style={{
+              width: "60%",
+              height: 5,
+              background: "rgba(255,255,255,0.25)",
+              borderRadius: 3,
+            }}
+          />
+          <div style={{ display: "flex", gap: 6, marginTop: 4 }}>
+            <div
+              style={{
+                flex: 1,
+                height: 30,
+                background: "rgba(0,0,0,0.25)",
+                borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
+            />
+            <div
+              style={{
+                flex: 2,
+                height: 30,
+                background: "rgba(0,0,0,0.2)",
+                borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: 16,
+              background: "rgba(255,255,255,0.15)",
+              borderRadius: 4,
+              marginTop: 4,
+            }}
+          />
+          <div
+            style={{
+              width: "90%",
+              height: 16,
+              background: "rgba(255,255,255,0.1)",
+              borderRadius: 4,
+            }}
+          />
+        </>
+      )}
+    </div>
+  );
 };
 
 const GitHubIcon = () => (
@@ -111,16 +316,13 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({
         onMouseEnter={() => setHovered(true)}
       >
         <div className={styles.imgArea} style={{ background: gradient }}>
-          <span className={styles.catLabel}>{project.category}</span>
-          {project.imageUrl && (
-            <img
-              src={project.imageUrl}
-              alt={project.title}
-              className={styles.projectImg}
-              loading="lazy"
-            />
-          )}
+          <MockupContent
+            category={project.category}
+            title={project.title}
+            imageUrl={project.imageUrl}
+          />
           <div className={styles.imgOverlay} />
+          <span className={styles.catLabel}>{project.category}</span>
         </div>
         <div className={styles.cardBody}>
           <h3 className={styles.projectTitle}>{project.title}</h3>
