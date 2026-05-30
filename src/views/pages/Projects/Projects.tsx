@@ -261,12 +261,12 @@ export const Projects: React.FC = () => {
                     ))}
                   </div>
 
-                  <Link
-                    to={`/projects/${project.id}`}
+                  <a
+                    href={`/projects/${project.id}`}
                     className={styles.caseLink}
                   >
                     View case study →
-                  </Link>
+                  </a>
                 </div>
               </article>
             </motion.div>

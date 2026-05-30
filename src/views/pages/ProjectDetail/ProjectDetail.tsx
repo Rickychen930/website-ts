@@ -1,7 +1,6 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { motion } from "@/lib/motion";
-import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
 import { Tag } from "@/components/ui/Tag/Tag";
 import { Card } from "@/components/ui/Card/Card";
 import { useProfile } from "@/contexts";
@@ -104,7 +103,7 @@ export const ProjectDetail: React.FC = () => {
     return (
       <div className={styles.notFound}>
         <h1>Project not found</h1>
-        <Link to="/#projects">← Back to projects</Link>
+        <a href="/#projects">← Back to projects</a>
       </div>
     );
   }
@@ -124,61 +123,83 @@ export const ProjectDetail: React.FC = () => {
           />
         </div>
         <div className={styles.heroInner}>
-          <FadeUp>
-            <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-              <Link to="/#projects" className={styles.breadLink}>
-                Projects
-              </Link>
-              <span aria-hidden="true"> / </span>
-              <span>{project.title}</span>
-            </nav>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <div className={styles.heroMeta}>
-              <Tag variant="default">{project.category}</Tag>
-              <span className={styles.year}>
-                {new Date(project.startDate).getFullYear()}
-                {project.endDate
-                  ? ` – ${new Date(project.endDate).getFullYear()}`
-                  : " – Present"}
-              </span>
-            </div>
-          </FadeUp>
-          <FadeUp delay={0.2}>
-            <h1 className={styles.title}>{project.title}</h1>
-          </FadeUp>
+          {/* Use animate (not whileInView) — hero is always in viewport on load */}
+          <motion.nav
+            className={styles.breadcrumb}
+            aria-label="Breadcrumb"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ease: [0.25, 0, 0, 1], duration: 0.5, delay: 0.15 }}
+          >
+            <a href="/#projects" className={styles.breadLink}>
+              Projects
+            </a>
+            <span aria-hidden="true"> / </span>
+            <span>{project.title}</span>
+          </motion.nav>
+          <motion.div
+            className={styles.heroMeta}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ease: [0.25, 0, 0, 1], duration: 0.5, delay: 0.25 }}
+          >
+            <Tag variant="default">{project.category}</Tag>
+            <span className={styles.year}>
+              {new Date(project.startDate).getFullYear()}
+              {project.endDate
+                ? ` – ${new Date(project.endDate).getFullYear()}`
+                : " – Present"}
+            </span>
+          </motion.div>
+          <motion.h1
+            className={styles.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ease: [0.25, 0, 0, 1], duration: 0.6, delay: 0.35 }}
+          >
+            {project.title}
+          </motion.h1>
         </div>
       </div>
 
       {/* Body */}
       <div className={styles.body}>
         <div className={styles.main}>
-          <FadeUp>
-            <p className={styles.description}>
-              {project.longDescription ?? project.description}
-            </p>
-          </FadeUp>
+          <motion.p
+            className={styles.description}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ease: [0.25, 0, 0, 1], duration: 0.5, delay: 0.45 }}
+          >
+            {project.longDescription ?? project.description}
+          </motion.p>
 
           {project.achievements.length > 0 && (
-            <FadeUp delay={0.1}>
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Outcomes</h2>
-                <ul className={styles.list}>
-                  {project.achievements.map((a, i) => (
-                    <li key={i}>{a}</li>
-                  ))}
-                </ul>
-              </section>
-            </FadeUp>
+            <motion.section
+              className={styles.section}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ease: [0.25, 0, 0, 1], duration: 0.5, delay: 0.55 }}
+            >
+              <h2 className={styles.sectionTitle}>Outcomes</h2>
+              <ul className={styles.list}>
+                {project.achievements.map((a, i) => (
+                  <li key={i}>{a}</li>
+                ))}
+              </ul>
+            </motion.section>
           )}
 
           {project.architecture && (
-            <FadeUp delay={0.15}>
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Architecture</h2>
-                <p className={styles.description}>{project.architecture}</p>
-              </section>
-            </FadeUp>
+            <motion.section
+              className={styles.section}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ease: [0.25, 0, 0, 1], duration: 0.5, delay: 0.6 }}
+            >
+              <h2 className={styles.sectionTitle}>Architecture</h2>
+              <p className={styles.description}>{project.architecture}</p>
+            </motion.section>
           )}
         </div>
 
@@ -236,14 +257,14 @@ export const ProjectDetail: React.FC = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <Link
-              to={`/projects/${next.id}`}
+            <a
+              href={`/projects/${next.id}`}
               className={styles.nextCard}
               data-cursor="view"
             >
               <span className={styles.nextTitle}>{next.title}</span>
               <Tag variant="default">{next.category}</Tag>
-            </Link>
+            </a>
           </motion.div>
         </div>
       )}

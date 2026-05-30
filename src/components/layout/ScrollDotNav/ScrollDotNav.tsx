@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import styles from "./ScrollDotNav.module.css";
 
 interface NavSection {
