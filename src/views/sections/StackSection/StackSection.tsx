@@ -320,6 +320,7 @@ export const StackSection: React.FC = () => {
 
   return (
     <section
+      id="stack"
       className={styles.section}
       aria-label="Tech stack"
       data-section="stack"

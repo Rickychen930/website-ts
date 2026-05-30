@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "@/lib/motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import styles from "./Header.module.css";
 
 const NAV_LINKS = [
-  { href: "#work", label: "Work" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#work", label: "Work" },
+  { href: "/projects", label: "Projects" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const SunIcon = () => (
@@ -74,6 +75,7 @@ const CloseIcon = () => (
 
 export const Header: React.FC = () => {
   const { theme, toggle } = useTheme();
+  const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -84,7 +86,18 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Pathname-based active state for non-home routes
   useEffect(() => {
+    if (pathname === "/projects" || pathname.startsWith("/projects/")) {
+      setActive("/projects");
+    } else if (pathname === "/") {
+      setActive("");
+    }
+  }, [pathname]);
+
+  // Intersection-based active state for home page sections
+  useEffect(() => {
+    if (pathname !== "/") return;
     const sections = ["work", "projects", "contact"];
     const observers: IntersectionObserver[] = [];
 
@@ -93,7 +106,8 @@ export const Header: React.FC = () => {
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActive(`#${id}`);
+          if (entry.isIntersecting)
+            setActive(id === "projects" ? "/projects" : `/#${id}`);
         },
         { rootMargin: "-30% 0px -50% 0px" },
       );
@@ -102,7 +116,7 @@ export const Header: React.FC = () => {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [pathname]);
 
   return (
     <header
@@ -175,9 +189,9 @@ export const Header: React.FC = () => {
         {menuOpen && (
           <motion.div
             className={styles.mobileMenu}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ maxHeight: 0, opacity: 0 }}
+            animate={{ maxHeight: 240, opacity: 1 }}
+            exit={{ maxHeight: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
             {NAV_LINKS.map(({ href, label }) => (

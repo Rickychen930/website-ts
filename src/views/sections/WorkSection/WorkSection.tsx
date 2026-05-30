@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "@/lib/motion";
 import { Tag } from "@/components/ui/Tag/Tag";
 import { Section } from "@/components/layout/Section/Section";
 import { useProfile } from "@/contexts";
@@ -86,7 +86,7 @@ export const WorkSection: React.FC = () => {
               .join(" ")}
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, margin: "-40px" }}
             transition={{
               ease: [0.25, 0, 0, 1],
               duration: 0.6,

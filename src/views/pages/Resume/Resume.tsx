@@ -4,6 +4,30 @@ import { Tag } from "@/components/ui/Tag/Tag";
 import { useProfile } from "@/contexts";
 import styles from "./Resume.module.css";
 
+const Skeleton: React.FC = () => (
+  <div className={styles.page}>
+    <div className={styles.inner}>
+      <div className={styles.skeletonHeader}>
+        <div className={styles.skeletonName} />
+        <div className={styles.skeletonSub} />
+        <div className={styles.skeletonSub} style={{ width: "40%" }} />
+      </div>
+      {[1, 2, 3].map((i) => (
+        <div key={i} className={styles.skeletonSection}>
+          <div className={styles.skeletonLabel} />
+          {[80, 60, 70].map((w, j) => (
+            <div
+              key={j}
+              className={styles.skeletonLine}
+              style={{ width: `${w}%` }}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 const formatDate = (date?: string) => {
   if (!date) return "";
   return new Date(date).toLocaleDateString("en-AU", {
@@ -13,7 +37,9 @@ const formatDate = (date?: string) => {
 };
 
 export const Resume: React.FC = () => {
-  const { profile } = useProfile();
+  const { profile, isLoading } = useProfile();
+
+  if (isLoading) return <Skeleton />;
 
   return (
     <div className={styles.page}>
@@ -35,7 +61,7 @@ export const Resume: React.FC = () => {
           <FadeUp delay={0.1}>
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Experience</h2>
-              {profile!.experiences
+              {(profile?.experiences ?? [])
                 .slice()
                 .sort(
                   (a, b) =>
@@ -77,7 +103,7 @@ export const Resume: React.FC = () => {
           <FadeUp delay={0.15}>
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Education</h2>
-              {profile!.academics.map((a) => (
+              {(profile?.academics ?? []).map((a) => (
                 <div key={a.id} className={styles.entry}>
                   <div className={styles.entryHeader}>
                     <div>
@@ -105,7 +131,7 @@ export const Resume: React.FC = () => {
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Skills</h2>
               <div className={styles.skillGrid}>
-                {profile!.technicalSkills.map((s) => (
+                {(profile?.technicalSkills ?? []).map((s) => (
                   <Tag key={s.id} variant="accent">
                     {s.name}
                   </Tag>

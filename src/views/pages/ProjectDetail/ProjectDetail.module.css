@@ -1,3 +1,70 @@
+/* ── Skeleton ── */
+.skeletonWrap {
+  padding-top: 4rem;
+}
+
+.skeletonHero {
+  min-height: 50vh;
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeletonBody {
+  display: grid;
+  margin: 0 auto;
+  padding: var(--space-10) var(--container-pad);
+  max-width: var(--container-max);
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-10);
+}
+
+.skeletonMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.skeletonLine {
+  height: 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeletonSide {
+  height: 260px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .page {
   padding-top: 4rem;
 }
@@ -19,6 +86,7 @@
   align-items: flex-end;
   padding-bottom: var(--space-10);
   position: relative;
+  overflow: hidden;
 }
 
 .hero::after {
@@ -31,6 +99,129 @@
     rgba(9, 9, 11, 0.6) 100%
   );
   pointer-events: none;
+}
+
+/* Hero visual (mockup / image) */
+.heroVisual {
+  position: absolute;
+  top: 50%;
+  right: clamp(1.5rem, 8vw, 6rem);
+  z-index: 1;
+  width: 340px;
+  height: 230px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.25);
+  opacity: 0.45;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  transform: translateY(-50%) rotate(3deg);
+  pointer-events: none;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mockup patterns — reuse Projects page styles */
+.mockPhone {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 140px;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+  gap: 6px;
+  transform: translate(-50%, -50%);
+}
+
+.mockPhoneBar {
+  width: 55%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+.mockPhoneContent {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.mockPhoneBtn {
+  height: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+.mockAI {
+  display: flex;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1rem;
+  height: 80px;
+  padding: 1rem;
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.mockBar {
+  width: 14px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px 3px 0 0;
+}
+
+.mockBrowser {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  flex-direction: column;
+  gap: 6px;
+  transform: translate(-50%, -50%);
+}
+
+.mockBrowserDots {
+  display: flex;
+  gap: 5px;
+}
+
+.mockBrowserDots span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mockBrowserLine {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 3px;
+}
+
+.mockBrowserGrid {
+  display: grid;
+  margin-top: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.mockBrowserGrid div {
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
 }
 
 .heroInner {
@@ -216,6 +407,10 @@
 }
 
 @media (width <= 768px) {
+  .heroVisual {
+    display: none;
+  }
+
   .body {
     grid-template-columns: 1fr;
   }
@@ -223,5 +418,9 @@
   .metaCard {
     position: static;
     order: -1;
+  }
+
+  .skeletonBody {
+    grid-template-columns: 1fr;
   }
 }

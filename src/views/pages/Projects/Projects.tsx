@@ -49,9 +49,33 @@ const ExternalIcon = () => (
   </svg>
 );
 
+const Skeleton: React.FC = () => (
+  <div className={styles.page}>
+    <div className={styles.hero}>
+      <div
+        className={[styles.skeletonLine, styles.skeletonBreadcrumb].join(" ")}
+      />
+      <div className={[styles.skeletonLine, styles.skeletonTitle].join(" ")} />
+      <div className={[styles.skeletonLine, styles.skeletonSub].join(" ")} />
+    </div>
+    <div className={styles.filterBar}>
+      {[80, 60, 70, 90, 65].map((w, i) => (
+        <div key={i} className={styles.skeletonChip} style={{ width: w }} />
+      ))}
+    </div>
+    <div className={styles.grid}>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className={styles.skeletonCard} />
+      ))}
+    </div>
+  </div>
+);
+
 export const Projects: React.FC = () => {
-  const { profile } = useProfile();
+  const { profile, isLoading } = useProfile();
   const [filter, setFilter] = useState<Filter>("all");
+
+  if (isLoading) return <Skeleton />;
 
   const all = profile?.projects ?? [];
   const filtered =
@@ -121,7 +145,7 @@ export const Projects: React.FC = () => {
       <div className={styles.grid}>
         <AnimatePresence mode="popLayout">
           {filtered.map((project, i) => (
-            <motion.article
+            <motion.div
               key={project.id}
               layout
               initial={{ opacity: 0, y: 24 }}
@@ -133,118 +157,119 @@ export const Projects: React.FC = () => {
                 damping: 28,
                 delay: i * 0.04,
               }}
-              className={styles.card}
-              data-cursor="view"
+              className={styles.cardLayout}
             >
-              {/* Gradient header with mockup overlay */}
-              <div
-                className={styles.cardImg}
-                style={{
-                  background: GRADIENTS[project.category] ?? GRADIENTS.other,
-                }}
-              >
-                {project.imageUrl ? (
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className={styles.cardImgPhoto}
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className={styles.mockup} aria-hidden="true">
-                    {project.category === "mobile" ? (
-                      <div className={styles.mockPhone}>
-                        <div className={styles.mockPhoneBar} />
-                        <div className={styles.mockPhoneContent} />
-                        <div className={styles.mockPhoneBtn} />
-                      </div>
-                    ) : project.category === "ai" ? (
-                      <div className={styles.mockAI}>
-                        {[35, 65, 48, 82, 55, 72, 40].map((h, i) => (
-                          <div
-                            key={i}
-                            className={styles.mockBar}
-                            style={{ height: `${h}%` }}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className={styles.mockBrowser}>
-                        <div className={styles.mockBrowserDots}>
-                          <span style={{ background: "#ef4444" }} />
-                          <span style={{ background: "#f59e0b" }} />
-                          <span style={{ background: "#22c55e" }} />
-                        </div>
-                        <div
-                          className={styles.mockBrowserLine}
-                          style={{ width: "75%" }}
-                        />
-                        <div
-                          className={styles.mockBrowserLine}
-                          style={{ width: "55%" }}
-                        />
-                        <div className={styles.mockBrowserGrid}>
-                          <div />
-                          <div />
-                          <div />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-                <div className={styles.cardImgOverlay} />
-                <span className={styles.catBadge}>{project.category}</span>
-              </div>
-
-              <div className={styles.cardBody}>
-                <div className={styles.cardTop}>
-                  <h2 className={styles.title}>{project.title}</h2>
-                  <div className={styles.links}>
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.iconBtn}
-                        data-cursor="open"
-                        aria-label="GitHub"
-                      >
-                        <GitHubIcon />
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.iconBtn}
-                        data-cursor="open"
-                        aria-label="Live site"
-                      >
-                        <ExternalIcon />
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <p className={styles.desc}>{project.description}</p>
-
-                <div className={styles.tags}>
-                  {project.technologies.slice(0, 5).map((t) => (
-                    <Tag key={t} variant="accent">
-                      {t}
-                    </Tag>
-                  ))}
-                </div>
-
-                <Link
-                  to={`/projects/${project.id}`}
-                  className={styles.caseLink}
+              <article className={styles.card} data-cursor="view">
+                {/* Gradient header with mockup overlay */}
+                <div
+                  className={styles.cardImg}
+                  style={{
+                    background: GRADIENTS[project.category] ?? GRADIENTS.other,
+                  }}
                 >
-                  View case study →
-                </Link>
-              </div>
-            </motion.article>
+                  {project.imageUrl ? (
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className={styles.cardImgPhoto}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.mockup} aria-hidden="true">
+                      {project.category === "mobile" ? (
+                        <div className={styles.mockPhone}>
+                          <div className={styles.mockPhoneBar} />
+                          <div className={styles.mockPhoneContent} />
+                          <div className={styles.mockPhoneBtn} />
+                        </div>
+                      ) : project.category === "ai" ? (
+                        <div className={styles.mockAI}>
+                          {[35, 65, 48, 82, 55, 72, 40].map((h, i) => (
+                            <div
+                              key={i}
+                              className={styles.mockBar}
+                              style={{ height: `${h}%` }}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className={styles.mockBrowser}>
+                          <div className={styles.mockBrowserDots}>
+                            <span style={{ background: "#ef4444" }} />
+                            <span style={{ background: "#f59e0b" }} />
+                            <span style={{ background: "#22c55e" }} />
+                          </div>
+                          <div
+                            className={styles.mockBrowserLine}
+                            style={{ width: "75%" }}
+                          />
+                          <div
+                            className={styles.mockBrowserLine}
+                            style={{ width: "55%" }}
+                          />
+                          <div className={styles.mockBrowserGrid}>
+                            <div />
+                            <div />
+                            <div />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className={styles.cardImgOverlay} />
+                  <span className={styles.catBadge}>{project.category}</span>
+                </div>
+
+                <div className={styles.cardBody}>
+                  <div className={styles.cardTop}>
+                    <h2 className={styles.title}>{project.title}</h2>
+                    <div className={styles.links}>
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.iconBtn}
+                          data-cursor="open"
+                          aria-label="GitHub"
+                        >
+                          <GitHubIcon />
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.iconBtn}
+                          data-cursor="open"
+                          aria-label="Live site"
+                        >
+                          <ExternalIcon />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  <p className={styles.desc}>{project.description}</p>
+
+                  <div className={styles.tags}>
+                    {project.technologies.slice(0, 5).map((t) => (
+                      <Tag key={t} variant="accent">
+                        {t}
+                      </Tag>
+                    ))}
+                  </div>
+
+                  <Link
+                    to={`/projects/${project.id}`}
+                    className={styles.caseLink}
+                  >
+                    View case study →
+                  </Link>
+                </div>
+              </article>
+            </motion.div>
           ))}
         </AnimatePresence>
 

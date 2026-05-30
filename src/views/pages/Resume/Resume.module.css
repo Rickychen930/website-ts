@@ -1,3 +1,55 @@
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonHeader,
+.skeletonSection {
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--border);
+}
+
+.skeletonName,
+.skeletonSub,
+.skeletonLabel,
+.skeletonLine {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  margin-bottom: var(--space-3);
+}
+
+.skeletonName {
+  width: 220px;
+  height: 40px;
+}
+
+.skeletonSub {
+  width: 60%;
+  height: 14px;
+}
+
+.skeletonLabel {
+  width: 100px;
+  height: 10px;
+  margin-bottom: var(--space-5);
+}
+
+.skeletonLine {
+  height: 14px;
+}
+
 .page {
   min-height: 100dvh;
   padding: 6rem 0 var(--space-12);

@@ -1,7 +1,8 @@
 .section {
   position: relative;
   padding: var(--space-14) 0;
-  overflow: hidden;
+  overflow: hidden; /* fallback for Safari < 16 */
+  overflow: clip; /* no BFC — keeps whileInView IntersectionObserver reliable */
 }
 
 .inner {

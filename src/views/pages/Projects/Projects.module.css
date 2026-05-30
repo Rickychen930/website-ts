@@ -113,16 +113,22 @@
   gap: var(--space-5);
 }
 
+/* Outer layout-animation shell — no overflow so framer-motion doesn't clip corners */
+.cardLayout {
+  border-radius: var(--radius-xl);
+}
+
 .card {
   display: flex;
+  height: 100%;
   border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
   background: var(--bg-surface);
+  flex-direction: column;
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  flex-direction: column;
 }
 
 .card:hover {
@@ -135,6 +141,7 @@
   height: 160px;
   flex-shrink: 0;
   overflow: hidden;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .cardImgPhoto {
@@ -360,6 +367,57 @@
   text-align: center;
   grid-column: span 3;
   font-family: var(--font-mono);
+}
+
+/* ── Skeleton ── */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonLine,
+.skeletonChip,
+.skeletonCard {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonBreadcrumb {
+  width: 80px;
+  height: 12px;
+  margin-bottom: var(--space-6);
+}
+
+.skeletonTitle {
+  width: 280px;
+  height: 48px;
+  margin-bottom: var(--space-4);
+}
+
+.skeletonSub {
+  width: 220px;
+  height: 16px;
+}
+
+.skeletonChip {
+  height: 32px;
+  border-radius: var(--radius-full);
+}
+
+.skeletonCard {
+  height: 320px;
+  border-radius: var(--radius-xl);
 }
 
 @media (width <= 1024px) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion, Variants } from "framer-motion";
+import { motion, useReducedMotion, Variants } from "@/lib/motion";
 
 interface FadeUpProps {
   children: React.ReactNode;
@@ -47,7 +47,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true, margin: "-40px" }}
       >
         {React.Children.map(children, (child) => (
           <motion.div variants={itemVariants}>{child}</motion.div>
@@ -65,7 +65,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{ ease: [0.25, 0, 0, 1], duration, delay }}
     >
       {children}

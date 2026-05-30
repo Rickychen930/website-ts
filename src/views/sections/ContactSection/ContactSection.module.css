@@ -121,9 +121,12 @@
   border-color: var(--border-hover);
 }
 
+.formWrap {
+  width: 100%;
+}
+
 .form {
   width: 100%;
-  overflow: hidden;
 }
 
 .formInner {

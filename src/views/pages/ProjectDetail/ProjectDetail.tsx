@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
 import { Tag } from "@/components/ui/Tag/Tag";
 import { Card } from "@/components/ui/Card/Card";
@@ -16,14 +16,89 @@ const CATEGORY_GRADIENT: Record<string, string> = {
   other: "linear-gradient(135deg, #71717a 0%, #3f3f46 100%)",
 };
 
+const HeroMockup: React.FC<{
+  category: string;
+  imageUrl?: string;
+  title: string;
+}> = ({ category, imageUrl, title }) => {
+  if (imageUrl) {
+    return (
+      <img
+        src={imageUrl}
+        alt={title}
+        className={styles.heroImg}
+        loading="lazy"
+      />
+    );
+  }
+  if (category === "mobile") {
+    return (
+      <div className={styles.mockPhone}>
+        <div className={styles.mockPhoneBar} />
+        <div className={styles.mockPhoneBar} style={{ width: "70%" }} />
+        <div className={styles.mockPhoneContent} />
+        <div className={styles.mockPhoneBtn} />
+      </div>
+    );
+  }
+  if (category === "ai") {
+    return (
+      <div className={styles.mockAI}>
+        {[35, 65, 48, 82, 55, 72, 40, 60].map((h, i) => (
+          <div key={i} className={styles.mockBar} style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    );
+  }
+  return (
+    <div className={styles.mockBrowser}>
+      <div className={styles.mockBrowserDots}>
+        <span style={{ background: "#ef4444" }} />
+        <span style={{ background: "#f59e0b" }} />
+        <span style={{ background: "#22c55e" }} />
+      </div>
+      <div className={styles.mockBrowserLine} style={{ width: "75%" }} />
+      <div className={styles.mockBrowserLine} style={{ width: "50%" }} />
+      <div className={styles.mockBrowserGrid}>
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
+  );
+};
+
+const Skeleton: React.FC = () => (
+  <div className={styles.skeletonWrap}>
+    <div className={styles.skeletonHero} />
+    <div className={styles.skeletonBody}>
+      <div className={styles.skeletonMain}>
+        {[80, 60, 100, 70, 90, 55].map((w, i) => (
+          <div
+            key={i}
+            className={styles.skeletonLine}
+            style={{ width: `${w}%` }}
+          />
+        ))}
+      </div>
+      <div className={styles.skeletonSide} />
+    </div>
+  </div>
+);
+
 export const ProjectDetail: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const { profile } = useProfile();
+  const { profile, isLoading } = useProfile();
+
+  if (isLoading) {
+    return <Skeleton />;
+  }
 
   const projects = profile?.projects ?? [];
   const project = projects.find((p) => p.id === projectId);
   const currentIdx = projects.findIndex((p) => p.id === projectId);
-  const next = projects[(currentIdx + 1) % projects.length];
+  const next =
+    projects.length > 1 ? projects[(currentIdx + 1) % projects.length] : null;
 
   if (!project) {
     return (
@@ -41,6 +116,13 @@ export const ProjectDetail: React.FC = () => {
     <article className={styles.page}>
       {/* Hero */}
       <div className={styles.hero} style={{ background: gradient }}>
+        <div className={styles.heroVisual} aria-hidden="true">
+          <HeroMockup
+            category={project.category}
+            imageUrl={project.imageUrl}
+            title={project.title}
+          />
+        </div>
         <div className={styles.heroInner}>
           <FadeUp>
             <nav className={styles.breadcrumb} aria-label="Breadcrumb">
@@ -147,7 +229,7 @@ export const ProjectDetail: React.FC = () => {
       </div>
 
       {/* Next project */}
-      {next && next.id !== project.id && (
+      {next && next.id !== project.id && next !== project && (
         <div className={styles.nextWrap}>
           <span className={styles.nextLabel}>Next project</span>
           <motion.div

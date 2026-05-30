@@ -195,61 +195,65 @@ export const ContactSection: React.FC = () => {
 
         <AnimatePresence>
           {formOpen && (
-            <motion.form
-              className={styles.form}
-              onSubmit={handleSubmit}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+            <motion.div
+              className={styles.formWrap}
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <div className={styles.formInner}>
-                {formStatus === "sent" ? (
-                  <motion.p
-                    className={styles.success}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                  >
-                    Message sent! I'll get back to you soon.
-                  </motion.p>
-                ) : (
-                  <>
-                    <input
-                      type="text"
-                      placeholder="Your name"
-                      className={styles.input}
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData((d) => ({ ...d, name: e.target.value }))
-                      }
-                      required
-                    />
-                    <textarea
-                      placeholder="Your message"
-                      className={styles.textarea}
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData((d) => ({ ...d, message: e.target.value }))
-                      }
-                      required
-                    />
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      disabled={formStatus === "sending"}
+              <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.formInner}>
+                  {formStatus === "sent" ? (
+                    <motion.p
+                      className={styles.success}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
                     >
-                      {formStatus === "sending" ? "Sending…" : "Send message"}
-                    </Button>
-                    {formStatus === "error" && (
-                      <p className={styles.error}>
-                        Something went wrong. Try emailing directly.
-                      </p>
-                    )}
-                  </>
-                )}
-              </div>
-            </motion.form>
+                      Message sent! I'll get back to you soon.
+                    </motion.p>
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Your name"
+                        className={styles.input}
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData((d) => ({ ...d, name: e.target.value }))
+                        }
+                        required
+                      />
+                      <textarea
+                        placeholder="Your message"
+                        className={styles.textarea}
+                        rows={4}
+                        value={formData.message}
+                        onChange={(e) =>
+                          setFormData((d) => ({
+                            ...d,
+                            message: e.target.value,
+                          }))
+                        }
+                        required
+                      />
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={formStatus === "sending"}
+                      >
+                        {formStatus === "sending" ? "Sending…" : "Send message"}
+                      </Button>
+                      {formStatus === "error" && (
+                        <p className={styles.error}>
+                          Something went wrong. Try emailing directly.
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+              </form>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
