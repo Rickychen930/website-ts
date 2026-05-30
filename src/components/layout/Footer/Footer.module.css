@@ -1,0 +1,28 @@
+.footer {
+  border-top: 1px solid var(--border);
+  padding: var(--space-7) 0;
+}
+
+.inner {
+  display: flex;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  max-width: var(--container-max);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.copy,
+.built {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+@media (width <= 640px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,22 +1,11 @@
-/**
- * Admin Guard - Redirects to login if not authenticated
- */
-
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { useAdminAuth } from "@/contexts/AdminAuthContext";
+import { Navigate } from "react-router-dom";
+import { useAdminAuth } from "@/contexts";
 
-interface AdminGuardProps {
-  children: React.ReactNode;
-}
-
-export const AdminGuard: React.FC<AdminGuardProps> = ({ children }) => {
+export const AdminGuard: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { isAuthenticated } = useAdminAuth();
-  const location = useLocation();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/admin/login" state={{ from: location }} replace />;
-  }
-
+  if (!isAuthenticated) return <Navigate to="/admin/login" replace />;
   return <>{children}</>;
 };

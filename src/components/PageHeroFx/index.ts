@@ -1,1 +1,0 @@
-export { PageHeroFx } from "./PageHeroFx";

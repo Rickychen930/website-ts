@@ -1,1 +1,0 @@
-export { BackToHome } from "./BackToHome";

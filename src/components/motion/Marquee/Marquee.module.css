@@ -1,0 +1,62 @@
+.track {
+  overflow: hidden;
+  width: 100%;
+  cursor: default;
+}
+
+.inner {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.item {
+  display: inline-flex;
+  position: relative;
+  padding: var(--space-2) var(--space-6);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  transition: color 0.2s ease;
+  align-items: center;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  cursor: default;
+}
+
+.item:hover {
+  color: var(--text-primary);
+}
+
+.item::after {
+  content: "·";
+  margin-left: var(--space-6);
+  color: var(--text-dim);
+}
+
+.itemName {
+  transition: transform 0.2s ease;
+}
+
+.item:hover .itemName {
+  transform: scale(1.08);
+}
+
+.tooltip {
+  display: flex;
+  position: absolute;
+  top: -2.2rem;
+  left: 50%;
+  z-index: var(--z-raised);
+  padding: 3px 10px;
+  border: 1px solid var(--border-hover);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 0.7rem;
+  transform: translateX(-50%);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  pointer-events: none;
+  align-items: center;
+  gap: 4px;
+}

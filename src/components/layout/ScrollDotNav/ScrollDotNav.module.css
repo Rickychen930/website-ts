@@ -1,0 +1,61 @@
+.nav {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  z-index: var(--z-nav);
+  transform: translateY(-50%);
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dot {
+  display: flex;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dot[aria-current="true"]::before {
+  background: transparent;
+}
+
+.dot:hover::before {
+  background: var(--text-muted);
+  transform: scale(1.4);
+}
+
+.activeFill {
+  display: block;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: auto;
+  background: var(--accent-1);
+  inset: 0;
+  border-radius: 50%;
+}
+
+@media (width <= 768px) {
+  .nav {
+    display: none;
+  }
+}
