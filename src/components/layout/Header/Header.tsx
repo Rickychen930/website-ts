@@ -40,9 +40,9 @@ const LogoMark = () => (
   <img
     src="/logo192.png"
     alt="Logo"
-    width={36}
-    height={36}
-    style={{ borderRadius: 8, display: "block" }}
+    width={44}
+    height={44}
+    style={{ display: "block", objectFit: "contain" }}
   />
 );
 
