@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "@/lib/motion";
 import styles from "./SplitText.module.css";
 
 interface SplitTextProps {

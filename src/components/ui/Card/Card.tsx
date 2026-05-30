@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "@/lib/motion";
 import styles from "./Card.module.css";
 
 interface CardProps {

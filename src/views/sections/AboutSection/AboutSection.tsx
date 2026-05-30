@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
 import { CountUp } from "@/components/motion/CountUp/CountUp";
 import { Section } from "@/components/layout/Section/Section";

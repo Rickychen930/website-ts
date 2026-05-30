@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "framer-motion";
+import { useInView, useReducedMotion } from "@/lib/motion";
 import styles from "./CountUp.module.css";
 
 interface CountUpProps {
