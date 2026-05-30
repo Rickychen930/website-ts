@@ -15,6 +15,9 @@ import { CurtainTransition } from "@/components/motion/CurtainTransition/Curtain
 const Home = React.lazy(() =>
   import("@/views/pages/Home").then((m) => ({ default: m.Home })),
 );
+const Projects = React.lazy(() =>
+  import("@/views/pages/Projects").then((m) => ({ default: m.Projects })),
+);
 const ProjectDetail = React.lazy(() =>
   import("@/views/pages/ProjectDetail").then((m) => ({
     default: m.ProjectDetail,
@@ -145,6 +148,7 @@ const AppContent: React.FC = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<Navigate to="/" replace />} />
+              <Route path="/projects" element={<Projects />} />
               <Route path="/projects/:projectId" element={<ProjectDetail />} />
               <Route path="/resume" element={<Resume />} />
               <Route path="*" element={<NotFound />} />

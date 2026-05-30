@@ -7,7 +7,6 @@ import {
   useTransform,
   useSpring,
 } from "@/lib/motion";
-import { SplitText } from "@/components/motion/SplitText/SplitText";
 import { Button } from "@/components/ui/Button/Button";
 import { useProfile } from "@/contexts";
 import styles from "./HeroSection.module.css";
@@ -168,27 +167,45 @@ export const HeroSection: React.FC = () => {
               <span>Available · Sydney, AU</span>
             </motion.div>
 
-            {/* Name — massive, two lines */}
+            {/* Name — massive, two lines — NO SplitText on gradient (Safari bug) */}
             <h1 className={styles.name} aria-label="Ricky Chen">
-              <span className={styles.nameLine}>
-                <SplitText text="RICKY" className="gradient-text" delay={0.2} />
-              </span>
-              <span className={styles.nameLine2}>
-                <SplitText text="CHEN." delay={0.4} />
-              </span>
+              <motion.span
+                className={`${styles.nameLine} gradient-text`}
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  ease: [0.25, 0, 0, 1],
+                  duration: 0.7,
+                  delay: 0.2,
+                }}
+              >
+                RICKY
+              </motion.span>
+              <motion.span
+                className={styles.nameLine2}
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  ease: [0.25, 0, 0, 1],
+                  duration: 0.7,
+                  delay: 0.35,
+                }}
+              >
+                CHEN.
+              </motion.span>
             </h1>
 
-            {/* Role cycling */}
+            {/* Role cycling — use y instead of clip-path (Safari compat) */}
             <div className={styles.roleWrap} aria-live="polite">
               <span className={styles.roleArrow}>↗</span>
               <AnimatePresence mode="wait">
                 <motion.span
                   key={roleIndex}
                   className={styles.role}
-                  initial={{ opacity: 0, clipPath: "inset(100% 0 0 0)" }}
-                  animate={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
-                  exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
-                  transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.35, ease: [0.25, 0, 0, 1] }}
                 >
                   {ROLES[roleIndex]}
                 </motion.span>
