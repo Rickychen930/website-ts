@@ -35,6 +35,8 @@ Source of truth: `src/config/flowMedia.ts` (edit prompts/captions there).
 | 21 | `flora-golden-wattle.jpg` | 4:5 | Golden Wattle — Acacia pycnantha |
 | 22 | `flora-kangaroo-paw.jpg` | 4:5 | Kangaroo Paw — Anigozanthos manglesii |
 | 23 | `flora-ghost-gum.jpg` | 16:9 | Ghost Gum — Corymbia aparrerinja |
+| 24 | `mascot-kobi.jpg` | 1:1 | Kobi — Setonix brachyurus · site assistant |
+| 25 | `mascot-kobi-full.jpg` | 4:5 | Kobi — Setonix brachyurus · site assistant |
 
 ## Landmarks & places
 
@@ -180,4 +182,20 @@ Laughing kookaburra perched on a weathered grey branch, early morning light, tex
 
 ```text
 Quokka sitting among coastal scrub on Rottnest Island, soft golden light, turquoise bay blurred in the background, gentle and curious expression, architectural photography, editorial monograph, natural light, muted warm film palette, high detail, no text, no people, no watermark.
+```
+
+## Chatbot mascot — Kobi the quokka
+
+Use the **same character description** in both prompts (or generate the full-body image first and use it as a reference in Flow) so the avatar and the full-body pose match. Keep the flat navy background — the chat UI crops the avatar into a circle.
+
+### mascot-kobi (image, 1:1)
+
+```text
+Head-and-shoulders portrait of a friendly cartoon quokka mascot named Kobi, round fluffy sandy-brown fur, big warm smile, small round ears, dark curious eyes, wearing a tiny seafoam-green bandana, soft 3D Pixar-style character render, gentle rim light, facing camera and smiling, centred with space around the head so it crops cleanly into a circle, flat deep navy (#0d2b45) background, no text, no watermark.
+```
+
+### mascot-kobi-full (image, 4:5)
+
+```text
+Full-body shot of a friendly cartoon quokka mascot named Kobi, round fluffy sandy-brown fur, big warm smile, small round ears, dark curious eyes, wearing a tiny seafoam-green bandana, soft 3D Pixar-style character render, gentle rim light, sitting on a smooth sandstone rock and waving hello with one paw, flat deep navy (#0d2b45) background, whole character in frame with generous margins, no text, no watermark.
 ```

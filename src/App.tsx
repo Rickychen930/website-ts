@@ -83,6 +83,10 @@ const AdminMessages = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminMessages })),
 );
 
+const ChatWidget = React.lazy(() =>
+  import("@/components/chat").then((m) => ({ default: m.ChatWidget })),
+);
+
 const Spinner: React.FC = () => (
   <div
     style={{
@@ -161,6 +165,9 @@ const AppContent: React.FC = () => {
         </Suspense>
       </main>
       <Footer />
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
     </>
   );
 };

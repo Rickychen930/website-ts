@@ -364,3 +364,35 @@ export const SPECIES_NAMES = [
   "Kookaburra",
   "Quokka",
 ] as const;
+
+/**
+ * Chatbot mascot — "Kobi" the quokka. Generate in Google Flow with the same
+ * character description in both prompts so the two images match.
+ */
+const KOBI =
+  "a friendly cartoon quokka mascot named Kobi, round fluffy sandy-brown fur, big warm smile, small round ears, dark curious eyes, wearing a tiny seafoam-green bandana, soft 3D Pixar-style character render, gentle rim light";
+
+export const MASCOT = {
+  avatar: {
+    id: "mascot-kobi",
+    kind: "image",
+    theme: "fauna",
+    title: "Kobi",
+    subtitle: "Setonix brachyurus · site assistant",
+    caption: "Rottnest Island, WA",
+    alt: "",
+    aspect: "1:1",
+    prompt: `Head-and-shoulders portrait of ${KOBI}, facing camera and smiling, centred with space around the head so it crops cleanly into a circle, flat deep navy (#0d2b45) background, no text, no watermark.`,
+  },
+  full: {
+    id: "mascot-kobi-full",
+    kind: "image",
+    theme: "fauna",
+    title: "Kobi",
+    subtitle: "Setonix brachyurus · site assistant",
+    caption: "Rottnest Island, WA",
+    alt: "",
+    aspect: "4:5",
+    prompt: `Full-body shot of ${KOBI}, sitting on a smooth sandstone rock and waving hello with one paw, flat deep navy (#0d2b45) background, whole character in frame with generous margins, no text, no watermark.`,
+  },
+} as const satisfies Record<string, FlowMediaItem>;

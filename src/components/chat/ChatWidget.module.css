@@ -1,0 +1,593 @@
+/* Kobi — site assistant (Web Architech "Archie" pattern) */
+
+.dock {
+  --kobi-ease: var(--ease-arch);
+  --kobi-launcher: 56px;
+  --kobi-gap: 16px;
+
+  display: flex;
+  position: fixed;
+  right: var(--kobi-gap);
+  bottom: calc(var(--kobi-gap) + env(safe-area-inset-bottom, 0px));
+  z-index: calc(var(--z-nav) + 5);
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+.dock > * {
+  pointer-events: auto;
+}
+
+/* Launcher */
+.launcher {
+  position: relative;
+  width: var(--kobi-launcher);
+  height: var(--kobi-launcher);
+  border: 1.5px solid var(--media-accent);
+  border-radius: var(--radius-full);
+  background: radial-gradient(
+    circle at 35% 30%,
+    var(--bg-elevated),
+    var(--media-cta-ink)
+  );
+  color: var(--on-media);
+  box-shadow:
+    var(--shadow-md),
+    0 0 26px -8px var(--media-accent);
+  transition: transform var(--dur-fast) var(--kobi-ease);
+}
+
+.launcher:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.face,
+.closeGlyph {
+  display: flex;
+  position: absolute;
+  transition:
+    opacity 0.3s var(--kobi-ease),
+    transform 0.38s var(--kobi-ease);
+  inset: 3px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+}
+
+.closeGlyph {
+  opacity: 0;
+  transform: rotate(-35deg) scale(0.5);
+}
+
+.launcherOpen .face {
+  opacity: 0;
+  transform: rotate(35deg) scale(0.5);
+}
+
+.launcherOpen .closeGlyph {
+  opacity: 1;
+  transform: none;
+}
+
+.status {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--media-cta-ink);
+  border-radius: var(--radius-full);
+  background: var(--media-cta-bg);
+}
+
+/* Attention ping (phones — replaces the teaser bubble) */
+.ping::before,
+.ping::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--media-accent);
+  border-radius: var(--radius-full);
+  animation: kobi-ping 1.8s var(--kobi-ease) 3;
+  pointer-events: none;
+}
+
+.ping::after {
+  animation-delay: 0.6s;
+}
+
+/* Mascot */
+.mascot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  background: var(--media-cta-ink);
+}
+
+.mascot_full {
+  width: 96px;
+  height: 120px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+}
+
+.mascotSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.fur {
+  fill: var(--media-cta-bg);
+}
+
+.muzzle {
+  fill: var(--media-cta-hover);
+}
+
+.eye {
+  fill: var(--media-cta-ink);
+}
+
+.smile {
+  fill: none;
+  stroke: var(--media-cta-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.bob {
+  animation: kobi-bob 3.6s ease-in-out infinite;
+}
+
+/* Greeting teaser */
+.teaser {
+  display: flex;
+  position: relative;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill-strong);
+  color: var(--text-primary);
+  align-items: flex-start;
+  gap: var(--space-2);
+  max-width: 260px;
+  border-radius: 16px 16px 6px;
+  box-shadow: var(--shadow-md);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.teaserBody {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.teaserClose {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+}
+
+.teaserClose:hover {
+  background: var(--glass-fill);
+  color: var(--text-primary);
+}
+
+/* Panel — floats above the launcher so it never takes layout space */
+.panel {
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: calc(var(--kobi-launcher) + 12px);
+  width: 400px;
+  height: min(
+    660px,
+    calc(100dvh - var(--kobi-launcher) - 3 * var(--kobi-gap) - 12px)
+  );
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill-strong);
+  color: var(--text-primary);
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 0.3s var(--kobi-ease),
+    transform 0.38s var(--kobi-ease),
+    visibility 0s linear 0.38s;
+  flex-direction: column;
+  max-width: calc(100vw - 2 * var(--kobi-gap));
+  overflow: hidden;
+  border-radius: 22px;
+  box-shadow: var(--shadow-md);
+  transform: translateY(16px) scale(0.96);
+  transform-origin: bottom right;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.panelOpen {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 0.3s var(--kobi-ease),
+    transform 0.38s var(--kobi-ease),
+    visibility 0s;
+  transform: none;
+}
+
+.panel:focus {
+  outline: none;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.headAvatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+}
+
+.online {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--bg-base);
+  border-radius: var(--radius-full);
+  background: var(--media-cta-bg);
+}
+
+.headText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.headText strong {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.headText span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+}
+
+.iconBtn:hover {
+  background: var(--glass-fill);
+  color: var(--text-primary);
+}
+
+.list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.list a {
+  color: var(--accent-1);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  background: var(--glass-fill);
+  text-align: center;
+}
+
+.intro p {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.row_user {
+  justify-content: flex-end;
+}
+
+.rowAvatar {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}
+
+.bubble {
+  max-width: 82%;
+  padding: 10px 14px;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.bubble_bot {
+  border: 1px solid var(--glass-border);
+  border-radius: 18px 18px 18px 6px;
+  background: var(--glass-fill);
+  color: var(--text-primary);
+}
+
+.bubble_user {
+  border-radius: 18px 18px 6px;
+  background: var(--cta-bg);
+  color: var(--cta-ink);
+  font-weight: 600;
+}
+
+.bubble_user a {
+  color: inherit;
+}
+
+.typing {
+  display: inline-flex;
+  gap: 5px;
+  padding: 14px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 18px 18px 18px 6px;
+  background: var(--glass-fill);
+}
+
+.typing i {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--accent-2);
+  animation: kobi-dot 1.2s ease-in-out infinite;
+}
+
+.typing i:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.typing i:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2) 0 0 36px;
+}
+
+.chip {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--accent-glow);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  animation: kobi-pop 0.34s var(--kobi-ease) both;
+  transition:
+    background var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+}
+
+.chip:hover {
+  border-color: var(--accent-1);
+  background: var(--glass-fill);
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+.input {
+  flex: 1;
+  min-height: 44px;
+  max-height: 128px;
+  padding: 11px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: var(--glass-fill);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px; /* no iOS zoom */
+  line-height: 1.4;
+  resize: none;
+}
+
+.input::placeholder {
+  color: var(--text-dim);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-1);
+}
+
+.send {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--cta-bg);
+  color: var(--cta-ink);
+  transition:
+    background var(--dur-fast) ease,
+    opacity var(--dur-fast) ease;
+}
+
+.send:hover:not(:disabled) {
+  background: var(--cta-hover);
+}
+
+.send:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.foot {
+  padding: 0 var(--space-4) var(--space-3);
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.pop {
+  animation: kobi-pop 0.34s var(--kobi-ease) both;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.scrollLock,
+.scrollLock body {
+  overflow: hidden;
+}
+
+@keyframes kobi-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes kobi-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kobi-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes kobi-ping {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+@media (width >= 768px) {
+  .dock {
+    --kobi-launcher: 60px;
+    --kobi-gap: 24px;
+  }
+}
+
+/* Phones: opaque full-screen sheet that tracks the on-screen keyboard */
+@media (width <= 767px) {
+  .panel {
+    position: fixed;
+    inset: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    height: var(--kobi-vvh, 100dvh);
+    border: none;
+    border-radius: 0;
+    background: var(--bg-base);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    transform: translateY(24px);
+  }
+
+  .panelOpen {
+    transform: none;
+  }
+
+  .launcherOpen {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bob,
+  .pop,
+  .chip,
+  .typing i,
+  .ping::before,
+  .ping::after {
+    animation: none;
+  }
+}
