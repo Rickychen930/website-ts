@@ -360,11 +360,10 @@ const INTENTS: Intent[] = [
       "landmark",
       "images",
       "photos",
-      "google flow",
     ],
     answer: () => ({
       reply:
-        "The site's visuals are an atlas of Australia — landmarks, flora and fauna, all generated with Google Flow. Scroll to the Field Atlas (/#atlas) for the species.",
+        "The site's visuals are an atlas of Australia — landmarks, flora and fauna. Scroll to the Field Atlas (/#atlas) for the species.",
       chips: ["What does Ricky build?", "Show me recent projects"],
     }),
   },

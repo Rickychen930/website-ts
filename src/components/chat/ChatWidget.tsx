@@ -357,6 +357,11 @@ export const ChatWidget: React.FC = () => {
             placeholder="Ask about Ricky's work…"
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
+            // Keep writing-assistant extensions (e.g. Grammarly) from
+            // injecting their button over the send control
+            data-gramm="false"
+            data-gramm_editor="false"
+            data-enable-grammarly="false"
           />
           <button
             type="submit"

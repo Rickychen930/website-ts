@@ -37,9 +37,9 @@ export const AtlasSection: React.FC = () => (
               lines={["Native", <em key="s">species.</em>]}
             />
             <p className={styles.intro}>
-              Between builds, a study of what lives here. Ten specimens, each
-              rendered with Google Flow — observed the way an architect studies
-              a site before drawing a line.
+              Between builds, a study of what lives here. Ten specimens,
+              observed the way an architect studies a site before drawing a
+              line.
             </p>
           </div>
         </div>

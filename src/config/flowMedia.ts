@@ -30,7 +30,7 @@ export interface FlowMediaItem {
 export const FLOW_MEDIA_BASE = "/media/flow";
 
 const STYLE =
-  "architectural photography, editorial monograph, natural light, muted warm film palette, high detail, no text, no people, no watermark";
+  "editorial travel photography, vivid saturated colours, rich golden-hour light, deep blue sky, crisp detail, high dynamic range, no text, no people, no watermark";
 
 export const FLOW_MEDIA = {
   heroUluru: {
@@ -370,7 +370,7 @@ export const SPECIES_NAMES = [
  * character description in both prompts so the two images match.
  */
 const KOBI =
-  "a friendly cartoon quokka mascot named Kobi, round fluffy sandy-brown fur, big warm smile, small round ears, dark curious eyes, wearing a tiny seafoam-green bandana, soft 3D Pixar-style character render, gentle rim light";
+  "a friendly cartoon quokka mascot named Kobi, round fluffy sandy-brown fur, big warm smile, small round ears, dark curious eyes, wearing a tiny turquoise bandana with a golden wattle flower pin, soft 3D Pixar-style character render, gentle rim light";
 
 export const MASCOT = {
   avatar: {
@@ -382,7 +382,7 @@ export const MASCOT = {
     caption: "Rottnest Island, WA",
     alt: "",
     aspect: "1:1",
-    prompt: `Head-and-shoulders portrait of ${KOBI}, facing camera and smiling, centred with space around the head so it crops cleanly into a circle, flat deep navy (#0d2b45) background, no text, no watermark.`,
+    prompt: `Head-and-shoulders portrait of ${KOBI}, facing camera and smiling, centred with space around the head so it crops cleanly into a circle, flat deep navy (#0b2545) background, no text, no watermark.`,
   },
   full: {
     id: "mascot-kobi-full",
@@ -393,6 +393,6 @@ export const MASCOT = {
     caption: "Rottnest Island, WA",
     alt: "",
     aspect: "4:5",
-    prompt: `Full-body shot of ${KOBI}, sitting on a smooth sandstone rock and waving hello with one paw, flat deep navy (#0d2b45) background, whole character in frame with generous margins, no text, no watermark.`,
+    prompt: `Full-body shot of ${KOBI}, sitting on a smooth sandstone rock and waving hello with one paw, flat deep navy (#0b2545) background, whole character in frame with generous margins, no text, no watermark.`,
   },
 } as const satisfies Record<string, FlowMediaItem>;

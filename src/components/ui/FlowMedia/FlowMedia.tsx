@@ -58,7 +58,7 @@ export const FlowMedia: React.FC<FlowMediaProps> = ({
         <Contours />
         {showPendingLabel && (
           <span className={styles.pending}>
-            Google Flow · {item.id}.{item.kind === "video" ? "mp4" : "jpg"}
+            {item.id}.{item.kind === "video" ? "mp4" : "jpg"}
           </span>
         )}
       </div>

@@ -107,7 +107,6 @@ h3 em,
   background: var(--hl-gradient);
   font-style: normal;
   background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
 
   /* keep descenders inside the painted box */

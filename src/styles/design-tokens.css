@@ -1,78 +1,79 @@
 /* Design Tokens — "Terra Australis", built on the Web Architech (w26) language.
  * Deep Sea navy is the default; `.light` (and `.band-sand`) switch to the
- * Sandy Shore palette. Accents: seafoam, sand, Uluru terracotta, wattle gold.
+ * Sandy Shore palette. Vivid Australian accents: reef turquoise, wattle gold,
+ * Uluru sunset orange, waratah pink.
  */
 
 :root {
   /* Surfaces */
-  --bg-base: #0d2b45; /* deep sea */
-  --bg-surface: #123552; /* raised */
-  --bg-elevated: #174063;
-  --bg-deep: #0a2238;
-  --bg-inverse: #f7f1e6; /* sandy shore */
+  --bg-base: #0b2545; /* ocean navy */
+  --bg-surface: #10325c; /* raised */
+  --bg-elevated: #164173;
+  --bg-deep: #071a33;
+  --bg-inverse: #fff4e2; /* sandy shore */
 
   /* Ink */
   --text-primary: #f4f6f6;
   --text-muted: rgba(244, 246, 246, 0.78);
-  --text-dim: rgba(183, 198, 216, 0.72);
-  --text-inverse: #0d2b45;
+  --text-dim: rgba(170, 200, 235, 0.75);
+  --text-inverse: #0b2545;
 
   /* Accents */
-  --accent-1: #8dbfb7; /* seafoam — eyebrows, ticks, links */
-  --accent-2: #dcc7aa; /* sand */
-  --accent-3: #d9774a; /* Uluru terracotta */
-  --accent-4: #e2b54a; /* wattle gold */
-  --accent-glow: rgba(141, 191, 183, 0.18);
-  --accent-glow-2: rgba(220, 199, 170, 0.14);
-  --hl-gradient: linear-gradient(100deg, #dcc7aa 8%, #b9cfc0 48%, #8dbfb7 92%);
+  --accent-1: #2ec4b6; /* reef turquoise — eyebrows, ticks, links */
+  --accent-2: #ffb627; /* wattle gold */
+  --accent-3: #ff6b35; /* Uluru sunset */
+  --accent-4: #ff4f79; /* waratah pink */
+  --accent-glow: rgba(46, 196, 182, 0.22);
+  --accent-glow-2: rgba(255, 107, 53, 0.18);
+  --hl-gradient: linear-gradient(100deg, #ffd166 0%, #ff8a3d 45%, #ff4f79 100%);
   --gradient-text: var(--hl-gradient);
-  --eyebrow-rule: linear-gradient(90deg, #dcc7aa, #8dbfb7);
+  --eyebrow-rule: linear-gradient(90deg, #ffb627, #2ec4b6);
 
   /* CTA */
-  --cta-bg: #dcc7aa;
-  --cta-hover: #f7f1e6;
-  --cta-ink: #0d2b45;
-  --cta-shadow: 0 10px 30px -12px rgba(141, 191, 183, 0.55);
+  --cta-bg: #ffb627;
+  --cta-hover: #ffc857;
+  --cta-ink: #0b2545;
+  --cta-shadow: 0 12px 32px -12px rgba(255, 182, 39, 0.55);
 
   /* Glass */
-  --glass-fill: rgba(183, 198, 216, 0.07);
-  --glass-fill-strong: rgba(13, 43, 69, 0.82);
-  --glass-nav: rgba(13, 43, 69, 0.55);
-  --glass-border: rgba(183, 198, 216, 0.16);
+  --glass-fill: rgba(170, 200, 235, 0.08);
+  --glass-fill-strong: rgba(11, 37, 69, 0.86);
+  --glass-nav: rgba(11, 37, 69, 0.55);
+  --glass-border: rgba(170, 200, 235, 0.18);
   --glass-blur: blur(20px) saturate(140%);
 
   /* Lines */
-  --border: rgba(183, 198, 216, 0.14);
-  --border-hover: rgba(183, 198, 216, 0.34);
+  --border: rgba(170, 200, 235, 0.16);
+  --border-hover: rgba(170, 200, 235, 0.38);
   --border-strong: rgba(244, 246, 246, 0.6);
 
   /* Media overlays (always dark — text on photography) */
   --overlay-scrim: linear-gradient(
     180deg,
-    rgba(6, 18, 29, 0.35) 0%,
-    rgba(6, 18, 29, 0.1) 35%,
-    rgba(6, 18, 29, 0.78) 100%
+    rgba(4, 19, 38, 0.35) 0%,
+    rgba(4, 19, 38, 0.1) 35%,
+    rgba(4, 19, 38, 0.78) 100%
   );
-  --overlay-solid: rgba(6, 18, 29, 0.55);
-  --overlay-chapter: #06121d;
+  --overlay-solid: rgba(4, 19, 38, 0.55);
+  --overlay-chapter: #041326;
   --on-media: #f4f6f6;
   --on-media-muted: rgba(244, 246, 246, 0.74);
 
   /* Fixed (never remapped by bands) — chrome that sits on photography */
-  --media-accent: #8dbfb7;
-  --media-cta-bg: #dcc7aa;
-  --media-cta-hover: #f7f1e6;
-  --media-cta-ink: #0d2b45;
-  --media-glass: rgba(13, 43, 69, 0.4);
-  --media-glass-border: rgba(183, 198, 216, 0.22);
-  --media-glow: rgba(217, 119, 74, 0.35);
-  --media-accent-ring: rgba(141, 191, 183, 0.2);
+  --media-accent: #2ec4b6;
+  --media-cta-bg: #ffb627;
+  --media-cta-hover: #ffc857;
+  --media-cta-ink: #0b2545;
+  --media-glass: rgba(11, 37, 69, 0.42);
+  --media-glass-border: rgba(170, 200, 235, 0.24);
+  --media-glow: rgba(255, 107, 53, 0.45);
+  --media-accent-ring: rgba(46, 196, 182, 0.28);
 
   /* Placeholder plates (shown until Google Flow media is dropped in) */
-  --plate-landmark: linear-gradient(160deg, #c9774a 0%, #8c3a1a 55%, #3e1c10 100%);
-  --plate-fauna: linear-gradient(160deg, #b9a27c 0%, #6f5d40 60%, #2f271a 100%);
-  --plate-flora: linear-gradient(160deg, #8fa588 0%, #4f6b5a 55%, #1f2c24 100%);
-  --plate-coast: linear-gradient(160deg, #8cc0bd 0%, #2c6a6e 55%, #0d2b45 100%);
+  --plate-landmark: linear-gradient(160deg, #ff8a3d 0%, #d9481f 50%, #5c1a0a 100%);
+  --plate-fauna: linear-gradient(160deg, #f2c14e 0%, #b07a2a 55%, #4a2f12 100%);
+  --plate-flora: linear-gradient(160deg, #7ed957 0%, #2f8f4e 50%, #0f3d2a 100%);
+  --plate-coast: linear-gradient(160deg, #3ee0d0 0%, #1485a6 50%, #0b2545 100%);
 
   /* Spacing — 4px base */
   --space-1: 4px;
@@ -152,33 +153,33 @@
 /* Sandy Shore palette — light theme, and cream bands inside the navy page */
 .light,
 .band-sand {
-  --bg-base: #f7f1e6;
-  --bg-surface: #efe6d6;
-  --bg-elevated: #e6dac5;
-  --bg-deep: #efe6d6;
-  --bg-inverse: #0d2b45;
-  --text-primary: #0d2b45;
-  --text-muted: rgba(13, 43, 69, 0.78);
-  --text-dim: rgba(13, 43, 69, 0.55);
-  --text-inverse: #f7f1e6;
-  --accent-1: #2f756c;
-  --accent-2: #8a6a3f;
-  --accent-3: #b4532a;
-  --accent-4: #a8741a;
-  --accent-glow: rgba(47, 117, 108, 0.14);
-  --accent-glow-2: rgba(138, 106, 63, 0.12);
-  --hl-gradient: linear-gradient(100deg, #b4532a 8%, #8a6a3f 45%, #2f756c 92%);
-  --eyebrow-rule: linear-gradient(90deg, #b4532a, #2f756c);
-  --cta-bg: #0d2b45;
-  --cta-hover: #174063;
-  --cta-ink: #f7f1e6;
-  --cta-shadow: 0 10px 30px -12px rgba(13, 43, 69, 0.45);
-  --glass-fill: rgba(13, 43, 69, 0.05);
-  --glass-fill-strong: rgba(247, 241, 230, 0.88);
-  --glass-nav: rgba(247, 241, 230, 0.7);
-  --glass-border: rgba(13, 43, 69, 0.14);
-  --border: rgba(13, 43, 69, 0.14);
-  --border-hover: rgba(13, 43, 69, 0.34);
-  --border-strong: rgba(13, 43, 69, 0.7);
-  --shadow-md: 0 24px 60px -28px rgba(13, 43, 69, 0.35);
+  --bg-base: #fff4e2;
+  --bg-surface: #ffe9c7;
+  --bg-elevated: #ffddab;
+  --bg-deep: #ffe9c7;
+  --bg-inverse: #0b2545;
+  --text-primary: #0b2545;
+  --text-muted: rgba(11, 37, 69, 0.8);
+  --text-dim: rgba(11, 37, 69, 0.58);
+  --text-inverse: #fff4e2;
+  --accent-1: #0e9384;
+  --accent-2: #c27c0e;
+  --accent-3: #e4572e;
+  --accent-4: #d6336c;
+  --accent-glow: rgba(14, 147, 132, 0.16);
+  --accent-glow-2: rgba(228, 87, 46, 0.14);
+  --hl-gradient: linear-gradient(100deg, #ff6b35 0%, #e4572e 45%, #d6336c 100%);
+  --eyebrow-rule: linear-gradient(90deg, #ff6b35, #0e9384);
+  --cta-bg: #0b2545;
+  --cta-hover: #164173;
+  --cta-ink: #fff4e2;
+  --cta-shadow: 0 12px 32px -12px rgba(11, 37, 69, 0.45);
+  --glass-fill: rgba(11, 37, 69, 0.05);
+  --glass-fill-strong: rgba(255, 244, 226, 0.9);
+  --glass-nav: rgba(255, 244, 226, 0.72);
+  --glass-border: rgba(11, 37, 69, 0.14);
+  --border: rgba(11, 37, 69, 0.14);
+  --border-hover: rgba(11, 37, 69, 0.34);
+  --border-strong: rgba(11, 37, 69, 0.7);
+  --shadow-md: 0 24px 60px -28px rgba(11, 37, 69, 0.35);
 }

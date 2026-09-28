@@ -72,7 +72,6 @@ export const Footer: React.FC = () => {
 
         <div className={styles.bottom}>
           <span>© {new Date().getFullYear()} Ricky Chen</span>
-          <span>Imagery generated with Google Flow</span>
           <span>Built with React · TypeScript</span>
         </div>
       </div>
