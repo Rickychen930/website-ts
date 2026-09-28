@@ -1,29 +1,30 @@
 import React from "react";
 import { HeroSection } from "@/views/sections/HeroSection/HeroSection";
-import { StackSection } from "@/views/sections/StackSection/StackSection";
 import { AboutSection } from "@/views/sections/AboutSection/AboutSection";
-import { WorkSection } from "@/views/sections/WorkSection/WorkSection";
 import { ProjectsSection } from "@/views/sections/ProjectsSection/ProjectsSection";
+import { WorkSection } from "@/views/sections/WorkSection/WorkSection";
+import { AtlasSection } from "@/views/sections/AtlasSection/AtlasSection";
+import { StackSection } from "@/views/sections/StackSection/StackSection";
 import { ContactSection } from "@/views/sections/ContactSection/ContactSection";
-import { ScrollDotNav } from "@/components/layout/ScrollDotNav/ScrollDotNav";
+import { useSEO } from "@/hooks/useSEO";
 
-const SECTIONS = [
-  { id: "hero", label: "Home" },
-  { id: "stack", label: "Stack" },
-  { id: "about", label: "About" },
-  { id: "work", label: "Work" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
-];
+export const Home: React.FC = () => {
+  useSEO({
+    title: "Ricky Chen — Fullstack & AI Engineer, Sydney",
+    description:
+      "Portfolio of Ricky Chen, a Sydney-based fullstack and AI engineer. Selected works, chronology and a field atlas of Australia.",
+    type: "profile",
+  });
 
-export const Home: React.FC = () => (
-  <>
-    <ScrollDotNav sections={SECTIONS} />
-    <HeroSection />
-    <StackSection />
-    <AboutSection />
-    <WorkSection />
-    <ProjectsSection />
-    <ContactSection />
-  </>
-);
+  return (
+    <>
+      <HeroSection />
+      <AboutSection />
+      <ProjectsSection />
+      <WorkSection />
+      <AtlasSection />
+      <StackSection />
+      <ContactSection />
+    </>
+  );
+};

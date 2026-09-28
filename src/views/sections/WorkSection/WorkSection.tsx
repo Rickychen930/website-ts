@@ -1,7 +1,16 @@
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "@/lib/motion";
-import { Tag } from "@/components/ui/Tag/Tag";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
+import { RevealText } from "@/components/motion/RevealText/RevealText";
+import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
+import { sitePlateFor } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import styles from "./WorkSection.module.css";
 
@@ -16,139 +25,200 @@ const fmtDate = (d?: string) =>
 const calcDur = (start: string, end?: string) => {
   const s = new Date(start);
   const e = end ? new Date(end) : new Date();
-  const mo =
-    (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
-  if (mo < 12) return `${mo}mo`;
+  const mo = Math.max(
+    1,
+    (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth()),
+  );
+  if (mo < 12) return `${mo} mo`;
   const y = Math.floor(mo / 12);
   const m = mo % 12;
-  return m ? `${y}y ${m}mo` : `${y}y`;
+  return m ? `${y} yr ${m} mo` : `${y} yr`;
 };
 
 export const WorkSection: React.FC = () => {
   const { profile } = useProfile();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const reduce = useReducedMotion();
+  const listRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
+
+  // Cursor-following preview plate
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const px = useSpring(mx, { stiffness: 220, damping: 26, mass: 0.4 });
+  const py = useSpring(my, { stiffness: 220, damping: 26, mass: 0.4 });
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 80%", "end 30%"],
+    target: listRef,
+    offset: ["start 75%", "end 40%"],
   });
-  const rawLine = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const lineH = useSpring(rawLine, { stiffness: 60, damping: 18 });
+  const line = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
 
   const experiences = (profile?.experiences ?? [])
     .slice()
     .sort(
       (a, b) =>
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
-    )
-    .slice(0, 5);
+    );
+
+  const onMove = (e: React.MouseEvent) => {
+    const rect = listRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mx.set(e.clientX - rect.left);
+    my.set(e.clientY - rect.top);
+  };
 
   return (
-    <Section id="work" sectionNumber="03" data-section="work">
-      <div className={styles.sectionHead}>
-        <motion.span
-          className={styles.sectionLabel}
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ ease: [0.25, 0, 0, 1], duration: 0.6 }}
-        >
-          03 / Experience
-        </motion.span>
-        <motion.h2
-          className={styles.heading}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ ease: [0.25, 0, 0, 1], duration: 0.7, delay: 0.1 }}
-        >
-          Where I&apos;ve
-          <br />
-          <em>worked.</em>
-        </motion.h2>
-      </div>
-
-      <div className={styles.entries} ref={sectionRef}>
-        {/* Vertical line */}
-        <div className={styles.lineTrack} aria-hidden="true">
-          <motion.div
-            className={styles.lineFill}
-            style={{ scaleY: lineH, transformOrigin: "top" }}
+    <Section
+      id="work"
+      index="03"
+      label="Chronology"
+      meta={`${experiences.length} engagements`}
+      tone="deep"
+      stack
+    >
+      <div className={styles.layout}>
+        <div className={styles.aside}>
+          <RevealText
+            as="h2"
+            className={styles.heading}
+            lines={["Where the", <em key="w">work</em>, "happened."]}
           />
+          <div className={styles.progress} aria-hidden="true">
+            <motion.span
+              className={styles.progressFill}
+              style={{ scaleY: line }}
+            />
+          </div>
         </div>
 
-        {experiences.map((exp, i) => (
-          <motion.article
-            key={exp.id}
-            className={[styles.entry, activeIdx === i && styles.entryActive]
-              .filter(Boolean)
-              .join(" ")}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{
-              ease: [0.25, 0, 0, 1],
-              duration: 0.6,
-              delay: i * 0.07,
-            }}
-            onMouseEnter={() => setActiveIdx(i)}
-          >
-            {/* Dot on line */}
-            <div className={styles.dotCol} aria-hidden="true">
-              <span
-                className={[styles.dot, exp.isCurrent && styles.dotCurrent]
+        <div
+          ref={listRef}
+          className={styles.list}
+          onMouseMove={onMove}
+          onMouseLeave={() => setHovered(null)}
+        >
+          <div className={styles.headRow} aria-hidden="true">
+            <span>Period</span>
+            <span>Practice</span>
+            <span>Role</span>
+            <span>Location</span>
+          </div>
+
+          {experiences.map((exp, i) => {
+            const isOpen = open === i;
+            const panelId = `exp-panel-${exp.id}`;
+            return (
+              <motion.article
+                key={exp.id}
+                className={[styles.row, isOpen && styles.rowOpen]
                   .filter(Boolean)
                   .join(" ")}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: Math.min(i, 5) * 0.06,
+                }}
+                onMouseEnter={() => setHovered(i)}
               >
-                {exp.isCurrent && <span className={styles.pulseRing} />}
-              </span>
-            </div>
-
-            {/* Card */}
-            <div className={styles.card}>
-              <div className={styles.cardTop}>
-                <div className={styles.cardLeft}>
-                  {exp.isCurrent && (
-                    <span className={styles.currentBadge}>
-                      <span className={styles.currentDot} /> Current
-                    </span>
-                  )}
-                  <span className={styles.company}>{exp.company}</span>
-                  <span className={styles.location}>{exp.location}</span>
-                </div>
-                <span className={styles.dates}>
-                  {fmtDate(exp.startDate)} →{" "}
-                  {exp.isCurrent ? "Now" : fmtDate(exp.endDate)}
-                  <span className={styles.dur}>
-                    {calcDur(exp.startDate, exp.endDate)}
+                <button
+                  type="button"
+                  className={styles.rowBtn}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                >
+                  <span className={styles.period}>
+                    {fmtDate(exp.startDate)} —{" "}
+                    {exp.isCurrent ? "Now" : fmtDate(exp.endDate)}
                   </span>
-                </span>
-              </div>
+                  <span className={styles.company}>
+                    {exp.company}
+                    {exp.isCurrent && (
+                      <span className={styles.current}>Current</span>
+                    )}
+                  </span>
+                  <span className={styles.role}>{exp.position}</span>
+                  <span className={styles.location}>
+                    {exp.location}
+                    <span className={styles.toggle} aria-hidden="true">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </span>
+                </button>
 
-              <h3 className={styles.role}>{exp.position}</h3>
-              <p className={styles.desc}>{exp.description}</p>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={panelId}
+                      className={styles.panel}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <div className={styles.panelInner}>
+                        <span className={styles.duration}>
+                          {calcDur(exp.startDate, exp.endDate)}
+                        </span>
+                        <div>
+                          <p className={styles.desc}>{exp.description}</p>
+                          {exp.achievements.length > 0 && (
+                            <ul className={styles.achievements}>
+                              {exp.achievements.slice(0, 4).map((a, j) => (
+                                <li key={j}>{a}</li>
+                              ))}
+                            </ul>
+                          )}
+                          {exp.technologies.length > 0 && (
+                            <p className={styles.tech}>
+                              {exp.technologies.slice(0, 8).join(" · ")}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.article>
+            );
+          })}
 
-              {exp.achievements.length > 0 && (
-                <ul className={styles.achievements}>
-                  {exp.achievements.slice(0, 3).map((a, j) => (
-                    <li key={j}>{a}</li>
-                  ))}
-                </ul>
+          {!reduce && (
+            <AnimatePresence>
+              {hovered !== null && (
+                <motion.div
+                  className={styles.preview}
+                  style={{ x: px, y: py }}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  aria-hidden="true"
+                >
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.div
+                      key={hovered}
+                      className={styles.previewInner}
+                      initial={{ clipPath: "inset(100% 0 0 0)" }}
+                      animate={{ clipPath: "inset(0% 0 0 0)" }}
+                      exit={{ clipPath: "inset(0 0 100% 0)" }}
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <FlowMedia
+                        item={sitePlateFor(hovered + 2)}
+                        showPendingLabel={false}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.div>
               )}
-
-              {exp.technologies.length > 0 && (
-                <div className={styles.tags}>
-                  {exp.technologies.slice(0, 7).map((t) => (
-                    <Tag key={t} variant="accent">
-                      {t}
-                    </Tag>
-                  ))}
-                </div>
-              )}
-            </div>
-          </motion.article>
-        ))}
+            </AnimatePresence>
+          )}
+        </div>
       </div>
     </Section>
   );

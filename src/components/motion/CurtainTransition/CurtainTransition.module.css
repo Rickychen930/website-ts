@@ -1,7 +1,18 @@
 .curtain {
+  display: flex;
   position: fixed;
   z-index: var(--z-curtain);
-  background: var(--accent-1);
+  background: var(--bg-deep);
+  color: var(--text-primary);
   inset: 0;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
+}
+
+.label {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 800;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }

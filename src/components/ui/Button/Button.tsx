@@ -1,8 +1,12 @@
 import React from "react";
-import { motion } from "@/lib/motion";
 import styles from "./Button.module.css";
 
-type ButtonVariant = "primary" | "ghost" | "icon";
+type ButtonVariant =
+  | "primary"
+  | "ghost"
+  | "icon"
+  | "inverse"
+  | "outlineInverse";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -28,29 +32,15 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (Tag === "a") {
     return (
-      <motion.a
-        href={href}
-        target={target}
-        rel={rel}
-        className={cls}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
+      <a href={href} target={target} rel={rel} className={cls}>
         {children}
-      </motion.a>
+      </a>
     );
   }
 
   return (
-    <motion.button
-      className={cls}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      {...(rest as React.ComponentProps<typeof motion.button>)}
-    >
+    <button className={cls} {...rest}>
       {children}
-    </motion.button>
+    </button>
   );
 };

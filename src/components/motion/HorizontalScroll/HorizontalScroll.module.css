@@ -1,0 +1,70 @@
+.outer {
+  position: relative;
+}
+
+.sticky {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-7);
+}
+
+.pinned .sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  padding-top: var(--header-h);
+}
+
+.header {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.viewport {
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.pinned .viewport {
+  overflow: visible;
+  scroll-snap-type: none;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-6);
+  padding: 0 var(--container-pad);
+  will-change: transform;
+}
+
+.track > * {
+  scroll-snap-align: start;
+}
+
+.progressTrack {
+  width: calc(100% - 2 * var(--container-pad));
+  max-width: calc(var(--container-max) - 2 * var(--container-pad));
+  height: 1px;
+  margin: 0 auto;
+  background: var(--border);
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: currentcolor;
+  transform-origin: left;
+}

@@ -1,20 +1,78 @@
-/* Design Tokens — Kinetic Editorial */
+/* Design Tokens — "Terra Australis", built on the Web Architech (w26) language.
+ * Deep Sea navy is the default; `.light` (and `.band-sand`) switch to the
+ * Sandy Shore palette. Accents: seafoam, sand, Uluru terracotta, wattle gold.
+ */
 
 :root {
-  /* Colors — Dark (default) */
-  --bg-base: #09090b;
-  --bg-surface: #111113;
-  --bg-elevated: #1a1a1f;
-  --text-primary: #fafaf9;
-  --text-muted: #71717a;
-  --text-dim: #3f3f46;
-  --accent-1: #6366f1;
-  --accent-2: #06b6d4;
-  --accent-glow: rgba(99, 102, 241, 0.15);
-  --accent-glow-2: rgba(6, 182, 212, 0.12);
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --gradient-text: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  /* Surfaces */
+  --bg-base: #0d2b45; /* deep sea */
+  --bg-surface: #123552; /* raised */
+  --bg-elevated: #174063;
+  --bg-deep: #0a2238;
+  --bg-inverse: #f7f1e6; /* sandy shore */
+
+  /* Ink */
+  --text-primary: #f4f6f6;
+  --text-muted: rgba(244, 246, 246, 0.78);
+  --text-dim: rgba(183, 198, 216, 0.72);
+  --text-inverse: #0d2b45;
+
+  /* Accents */
+  --accent-1: #8dbfb7; /* seafoam — eyebrows, ticks, links */
+  --accent-2: #dcc7aa; /* sand */
+  --accent-3: #d9774a; /* Uluru terracotta */
+  --accent-4: #e2b54a; /* wattle gold */
+  --accent-glow: rgba(141, 191, 183, 0.18);
+  --accent-glow-2: rgba(220, 199, 170, 0.14);
+  --hl-gradient: linear-gradient(100deg, #dcc7aa 8%, #b9cfc0 48%, #8dbfb7 92%);
+  --gradient-text: var(--hl-gradient);
+  --eyebrow-rule: linear-gradient(90deg, #dcc7aa, #8dbfb7);
+
+  /* CTA */
+  --cta-bg: #dcc7aa;
+  --cta-hover: #f7f1e6;
+  --cta-ink: #0d2b45;
+  --cta-shadow: 0 10px 30px -12px rgba(141, 191, 183, 0.55);
+
+  /* Glass */
+  --glass-fill: rgba(183, 198, 216, 0.07);
+  --glass-fill-strong: rgba(13, 43, 69, 0.82);
+  --glass-nav: rgba(13, 43, 69, 0.55);
+  --glass-border: rgba(183, 198, 216, 0.16);
+  --glass-blur: blur(20px) saturate(140%);
+
+  /* Lines */
+  --border: rgba(183, 198, 216, 0.14);
+  --border-hover: rgba(183, 198, 216, 0.34);
+  --border-strong: rgba(244, 246, 246, 0.6);
+
+  /* Media overlays (always dark — text on photography) */
+  --overlay-scrim: linear-gradient(
+    180deg,
+    rgba(6, 18, 29, 0.35) 0%,
+    rgba(6, 18, 29, 0.1) 35%,
+    rgba(6, 18, 29, 0.78) 100%
+  );
+  --overlay-solid: rgba(6, 18, 29, 0.55);
+  --overlay-chapter: #06121d;
+  --on-media: #f4f6f6;
+  --on-media-muted: rgba(244, 246, 246, 0.74);
+
+  /* Fixed (never remapped by bands) — chrome that sits on photography */
+  --media-accent: #8dbfb7;
+  --media-cta-bg: #dcc7aa;
+  --media-cta-hover: #f7f1e6;
+  --media-cta-ink: #0d2b45;
+  --media-glass: rgba(13, 43, 69, 0.4);
+  --media-glass-border: rgba(183, 198, 216, 0.22);
+  --media-glow: rgba(217, 119, 74, 0.35);
+  --media-accent-ring: rgba(141, 191, 183, 0.2);
+
+  /* Placeholder plates (shown until Google Flow media is dropped in) */
+  --plate-landmark: linear-gradient(160deg, #c9774a 0%, #8c3a1a 55%, #3e1c10 100%);
+  --plate-fauna: linear-gradient(160deg, #b9a27c 0%, #6f5d40 60%, #2f271a 100%);
+  --plate-flora: linear-gradient(160deg, #8fa588 0%, #4f6b5a 55%, #1f2c24 100%);
+  --plate-coast: linear-gradient(160deg, #8cc0bd 0%, #2c6a6e 55%, #0d2b45 100%);
 
   /* Spacing — 4px base */
   --space-1: 4px;
@@ -32,55 +90,95 @@
   --space-13: 128px;
   --space-14: 160px;
   --space-15: 192px;
+  --section-y: clamp(72px, 9vw, 128px);
 
-  /* Border radius */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 32px;
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px; /* buttons, chips */
+  --radius-lg: 20px; /* cards, plates */
+  --radius-xl: 26px; /* popcards */
+  --radius-nav: 18px;
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
   --shadow-glow: 0 0 40px var(--accent-glow);
   --shadow-glow-2: 0 0 40px var(--accent-glow-2);
+
+  /* Motion */
+  --ease-arch: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-reveal: cubic-bezier(0.16, 0.8, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 0.24s;
+  --dur-med: 0.52s;
+  --dur-slow: 0.9s;
 
   /* Z-index */
   --z-base: 0;
   --z-raised: 10;
   --z-nav: 100;
-  --z-curtain: 300;
   --z-modal: 200;
+  --z-curtain: 300;
   --z-cursor: 999;
 
   /* Layout */
-  --container-max: 1200px;
-  --container-pad: clamp(1.25rem, 5vw, 4rem);
+  --container-max: 1180px;
+  --container-pad: 32px;
+  --header-h: 88px;
 
   /* Typography */
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-mono: "Space Mono", "IBM Plex Mono", monospace;
+  --text-xs: 0.72rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: clamp(1.5rem, 2.4vw, 2rem);
+  --text-2xl: clamp(2.1rem, 4.4vw, 3.75rem);
+  --text-3xl: clamp(2.6rem, 7vw, 6.25rem);
+  --tracking-label: 0.14em;
 }
 
-/* Light mode overrides */
-.light {
-  --bg-base: #fafaf9;
-  --bg-surface: #f4f4f5;
-  --bg-elevated: #e4e4e7;
-  --text-primary: #09090b;
-  --text-muted: #52525b;
-  --text-dim: #a1a1aa;
-  --accent-1: #4f46e5;
-  --accent-2: #0891b2;
-  --accent-glow: rgba(79, 70, 229, 0.1);
-  --accent-glow-2: rgba(8, 145, 178, 0.08);
-  --border: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 0, 0, 0.14);
-  --gradient-text: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 40px var(--accent-glow);
-  --shadow-glow-2: 0 0 40px var(--accent-glow-2);
+@media (width <= 640px) {
+  :root {
+    --container-pad: 20px;
+    --header-h: 76px;
+  }
+}
+
+/* Sandy Shore palette — light theme, and cream bands inside the navy page */
+.light,
+.band-sand {
+  --bg-base: #f7f1e6;
+  --bg-surface: #efe6d6;
+  --bg-elevated: #e6dac5;
+  --bg-deep: #efe6d6;
+  --bg-inverse: #0d2b45;
+  --text-primary: #0d2b45;
+  --text-muted: rgba(13, 43, 69, 0.78);
+  --text-dim: rgba(13, 43, 69, 0.55);
+  --text-inverse: #f7f1e6;
+  --accent-1: #2f756c;
+  --accent-2: #8a6a3f;
+  --accent-3: #b4532a;
+  --accent-4: #a8741a;
+  --accent-glow: rgba(47, 117, 108, 0.14);
+  --accent-glow-2: rgba(138, 106, 63, 0.12);
+  --hl-gradient: linear-gradient(100deg, #b4532a 8%, #8a6a3f 45%, #2f756c 92%);
+  --eyebrow-rule: linear-gradient(90deg, #b4532a, #2f756c);
+  --cta-bg: #0d2b45;
+  --cta-hover: #174063;
+  --cta-ink: #f7f1e6;
+  --cta-shadow: 0 10px 30px -12px rgba(13, 43, 69, 0.45);
+  --glass-fill: rgba(13, 43, 69, 0.05);
+  --glass-fill-strong: rgba(247, 241, 230, 0.88);
+  --glass-nav: rgba(247, 241, 230, 0.7);
+  --glass-border: rgba(13, 43, 69, 0.14);
+  --border: rgba(13, 43, 69, 0.14);
+  --border-hover: rgba(13, 43, 69, 0.34);
+  --border-strong: rgba(13, 43, 69, 0.7);
+  --shadow-md: 0 24px 60px -28px rgba(13, 43, 69, 0.35);
 }

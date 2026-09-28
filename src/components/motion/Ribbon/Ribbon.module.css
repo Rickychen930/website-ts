@@ -1,0 +1,63 @@
+.ribbon {
+  position: relative;
+  width: 104%;
+  margin-left: -2%;
+  overflow: hidden;
+  padding: 14px 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sand {
+  background: var(--media-cta-bg);
+  color: var(--media-cta-ink);
+}
+
+.navy {
+  background: var(--media-cta-ink);
+  color: var(--media-cta-bg);
+}
+
+.track {
+  display: inline-flex;
+  animation: ribbon-scroll 38s linear infinite;
+}
+
+.reverse {
+  animation-direction: reverse;
+}
+
+.ribbon:hover .track {
+  animation-play-state: paused;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px;
+}
+
+.star {
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+
+@keyframes ribbon-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

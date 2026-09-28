@@ -1,14 +1,15 @@
-/* Light mode — overrides applied via .light class on <body> */
+/* Theme — tokens live in design-tokens.css; `.dark` overrides the paper default */
 
-/* Tokens are already defined in design-tokens.css under .light selector */
+.dark body,
+body.dark {
+  color-scheme: dark;
+}
 
-/* This file handles component-level light overrides that can't use CSS vars */
-
-.light body {
+.light body,
+body.light {
   color-scheme: light;
 }
 
-/* Scrollbar in light mode */
-.light ::-webkit-scrollbar-track {
+.dark ::-webkit-scrollbar-track {
   background: var(--bg-surface);
 }

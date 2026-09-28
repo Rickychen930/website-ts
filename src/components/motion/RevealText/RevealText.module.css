@@ -1,0 +1,13 @@
+.mask {
+  display: block;
+  overflow: hidden;
+
+  /* room for serif descenders */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.line {
+  display: block;
+  will-change: transform;
+}

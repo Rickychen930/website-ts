@@ -1,34 +1,34 @@
 import React from "react";
 import { motion } from "@/lib/motion";
-import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
-import { CountUp } from "@/components/motion/CountUp/CountUp";
 import { Section } from "@/components/layout/Section/Section";
+import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
+import { RevealText } from "@/components/motion/RevealText/RevealText";
+import { ScrollWords } from "@/components/motion/ScrollWords/ScrollWords";
+import { CountUp } from "@/components/motion/CountUp/CountUp";
+import { FLOW_MEDIA, type FlowMediaItem } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import styles from "./AboutSection.module.css";
 
-const WHAT_I_BUILD = [
+const DISCIPLINES = [
   {
-    icon: "⚡",
-    title: "Fullstack Products",
-    desc: "End-to-end: React frontends, Node/Express APIs, SQL & NoSQL databases.",
+    title: "Fullstack products",
+    desc: "End-to-end delivery: React frontends, Node/Express APIs, SQL & NoSQL data models.",
   },
   {
-    icon: "🤖",
-    title: "AI Integration",
-    desc: "LLM-powered features, AI chatbots, and intelligent summarisers.",
+    title: "AI integration",
+    desc: "LLM-powered features, retrieval pipelines, assistants and intelligent summarisers.",
   },
   {
-    icon: "🏗️",
-    title: "System Architecture",
-    desc: "Scalable backend design, API contracts, caching strategies.",
+    title: "System architecture",
+    desc: "Scalable backends, API contracts, caching strategy and observability.",
   },
 ];
 
-const STATS = [
-  { target: 5, suffix: "+", label: "Years coding", ring: 65 },
-  { target: 20, suffix: "+", label: "Projects shipped", ring: 80 },
-  { target: 3, suffix: "", label: "Countries worked", ring: 45 },
-  { target: 8, suffix: "+", label: "Tech stacks mastered", ring: 72 },
+const DEFAULT_STATS = [
+  { value: 5, suffix: "+", label: "Years building" },
+  { value: 20, suffix: "+", label: "Projects shipped" },
+  { value: 3, suffix: "", label: "Countries worked" },
+  { value: 8, suffix: "+", label: "Stacks in practice" },
 ];
 
 export const AboutSection: React.FC = () => {
@@ -36,102 +36,115 @@ export const AboutSection: React.FC = () => {
 
   const bio =
     profile?.bio ??
-    "I build across backend, mobile, and web — from high-scale connected products to polished interfaces, applying a competitive-programming mindset to design, delivery, and outcomes.";
+    "I build across backend, mobile and web — from high-scale connected products to polished interfaces — applying a competitive-programming mindset to design, delivery and outcomes.";
 
-  const avatarUrl = profile?.avatarUrl ?? "/images/ricky-chen-portrait.png";
+  // Keep the scroll-lit statement to a readable length (first sentences)
+  const statement = (bio.match(/[^.!?]+[.!?]+/g) ?? [bio])
+    .reduce<string[]>(
+      (acc, sent) =>
+        acc.join("").length + sent.length <= 220 || acc.length === 0
+          ? [...acc, sent]
+          : acc,
+      [],
+    )
+    .join("")
+    .trim();
+
+  const portrait: FlowMediaItem = {
+    ...FLOW_MEDIA.blueMountains,
+    id: "portrait",
+    theme: "landmark",
+    title: profile?.name ?? "Ricky Chen",
+    subtitle: profile?.title ?? "Fullstack & AI Engineer",
+    caption: profile?.location ?? "Sydney, Australia",
+    alt: `Portrait of ${profile?.name ?? "Ricky Chen"}`,
+  };
+
+  const numericStats = (profile?.stats ?? [])
+    .map((s) => ({
+      value: Number(s.value),
+      suffix: s.unit ?? "",
+      label: s.label,
+    }))
+    .filter((s) => Number.isFinite(s.value))
+    .slice(0, 4);
+  const stats = numericStats.length >= 2 ? numericStats : DEFAULT_STATS;
 
   return (
-    <Section id="about" sectionNumber="02" data-section="about">
-      <div className={styles.topRow}>
-        {/* Photo card */}
-        <FadeUp delay={0}>
-          <div className={styles.photoWrap}>
-            <motion.div
-              className={styles.photoCard}
-              whileHover={{ rotate: 0, scale: 1.02 }}
-              initial={{ rotate: -2 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            >
-              <img
-                src={avatarUrl}
-                alt="Ricky Chen"
-                className={styles.photo}
-                loading="lazy"
-                width={320}
-                height={400}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
+    <Section
+      id="about"
+      index="01"
+      label="Practice"
+      meta="Sydney · Gadigal Country"
+      stack
+    >
+      <ScrollWords text={statement} className={styles.statement} />
+
+      <div className={styles.grid}>
+        <div className={styles.portraitCol}>
+          <RevealMedia
+            item={portrait}
+            srcOverride={
+              profile?.avatarUrl ?? "/images/ricky-chen-portrait.png"
+            }
+            frameClassName={styles.portraitFrame}
+            parallax={10}
+            caption
+            plate="P.01"
+          />
+        </div>
+
+        <div className={styles.textCol}>
+          <RevealText
+            as="h2"
+            className={styles.heading}
+            lines={["A practice built", <em key="e">on structure.</em>]}
+          />
+          <ol className={styles.disciplines}>
+            {DISCIPLINES.map((d, i) => (
+              <motion.li
+                key={d.title}
+                className={styles.discipline}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: i * 0.1,
                 }}
-              />
-              <div className={styles.photoOverlay} />
-            </motion.div>
-            <div className={styles.photoAccent} aria-hidden="true" />
-          </div>
-        </FadeUp>
-
-        {/* Bio + what I build */}
-        <div className={styles.bioCol}>
-          <FadeUp>
-            <span className={styles.sectionLabel}>About</span>
-            <h2 className={styles.heading}>Ricky Chen</h2>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <p className={styles.bio}>
-              {bio
-                .split(/(fullstack|AI|Sydney|React|Node|TypeScript|Python)/gi)
-                .map((part, i) =>
-                  /fullstack|AI|Sydney|React|Node|TypeScript|Python/i.test(
-                    part,
-                  ) ? (
-                    <mark key={i} className={styles.highlight}>
-                      {part}
-                    </mark>
-                  ) : (
-                    part
-                  ),
-                )}
-            </p>
-          </FadeUp>
-
-          <FadeUp delay={0.2}>
-            <div className={styles.items}>
-              {WHAT_I_BUILD.map((item, i) => (
-                <motion.div
-                  key={i}
-                  className={styles.item}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{
-                    ease: [0.25, 0, 0, 1],
-                    duration: 0.5,
-                    delay: 0.3 + i * 0.08,
-                  }}
-                >
-                  <span className={styles.itemIcon}>{item.icon}</span>
-                  <div>
-                    <strong className={styles.itemTitle}>{item.title}</strong>
-                    <p className={styles.itemDesc}>{item.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </FadeUp>
+              >
+                <span className={styles.discIndex}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className={styles.discTitle}>{d.title}</h3>
+                  <p className={styles.discDesc}>{d.desc}</p>
+                </div>
+              </motion.li>
+            ))}
+          </ol>
         </div>
       </div>
 
-      {/* Stats row */}
-      <div className={styles.statsRow}>
-        {STATS.map((stat, i) => (
-          <FadeUp key={i} delay={0.1 + i * 0.07}>
-            <CountUp
-              target={stat.target}
-              suffix={stat.suffix}
-              label={stat.label}
-              ringPercent={stat.ring}
-            />
-          </FadeUp>
+      <RevealMedia
+        item={FLOW_MEDIA.blueMountains}
+        frameClassName={styles.wideFrame}
+        parallax={18}
+        from="left"
+        caption
+        plate="P.02"
+        className={styles.wide}
+      />
+
+      <div className={styles.stats}>
+        {stats.map((s) => (
+          <CountUp
+            key={s.label}
+            target={s.value}
+            suffix={s.suffix}
+            label={s.label}
+          />
         ))}
       </div>
     </Section>
