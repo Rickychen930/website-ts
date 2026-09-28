@@ -30,7 +30,7 @@ export interface FlowMediaItem {
 export const FLOW_MEDIA_BASE = "/media/flow";
 
 const STYLE =
-  "editorial travel photography, vivid saturated colours, rich golden-hour light, deep blue sky, crisp detail, high dynamic range, no text, no people, no watermark";
+  "vivid saturated colours, crisp detail, high dynamic range, editorial travel photography, no text, no people, no watermark";
 
 export const FLOW_MEDIA = {
   heroUluru: {
