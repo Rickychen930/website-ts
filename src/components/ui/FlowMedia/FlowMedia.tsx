@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/lib/motion";
 import { flowPoster, flowSrc, type FlowMediaItem } from "@/config/flowMedia";
 import styles from "./FlowMedia.module.css";
@@ -15,6 +15,56 @@ interface FlowMediaProps {
 }
 
 type Stage = "video" | "image" | "placeholder";
+
+/**
+ * Video that only loads and plays while near the viewport, pausing when it
+ * leaves — saves battery and data. Priority videos load immediately.
+ */
+const FlowVideo: React.FC<{
+  item: FlowMediaItem;
+  priority: boolean;
+  onError: () => void;
+}> = ({ item, priority, onError }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [armed, setArmed] = useState(priority);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || typeof IntersectionObserver === "undefined") {
+      setArmed(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setArmed(true);
+          video.play().catch(() => undefined);
+        } else {
+          video.pause();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      className={styles.asset}
+      src={armed ? flowSrc(item) : undefined}
+      poster={flowPoster(item)}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload={priority ? "auto" : "none"}
+      aria-label={item.alt}
+      onError={onError}
+    />
+  );
+};
 
 /* Topographic contour lines — reads as a site-survey plate while media is pending */
 const Contours: React.FC = () => (
@@ -68,16 +118,9 @@ export const FlowMedia: React.FC<FlowMediaProps> = ({
   if (stage === "video") {
     return (
       <div className={cls}>
-        <video
-          className={styles.asset}
-          src={flowSrc(item)}
-          poster={flowPoster(item)}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload={priority ? "auto" : "metadata"}
-          aria-label={item.alt}
+        <FlowVideo
+          item={item}
+          priority={priority}
           onError={() => setStage("image")}
         />
       </div>

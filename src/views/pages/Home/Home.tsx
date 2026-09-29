@@ -4,6 +4,7 @@ import { HeroSection } from "@/views/sections/HeroSection/HeroSection";
 import { AboutSection } from "@/views/sections/AboutSection/AboutSection";
 import { ProjectsSection } from "@/views/sections/ProjectsSection/ProjectsSection";
 import { WorkSection } from "@/views/sections/WorkSection/WorkSection";
+import { CredentialsSection } from "@/views/sections/CredentialsSection/CredentialsSection";
 import { AtlasSection } from "@/views/sections/AtlasSection/AtlasSection";
 import { StackSection } from "@/views/sections/StackSection/StackSection";
 import { ContactSection } from "@/views/sections/ContactSection/ContactSection";
@@ -35,6 +36,7 @@ export const Home: React.FC = () => {
       <AboutSection />
       <ProjectsSection />
       <WorkSection />
+      <CredentialsSection />
       <AtlasSection />
       <StackSection />
       <ContactSection />

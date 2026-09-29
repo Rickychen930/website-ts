@@ -77,7 +77,7 @@ export const HeroSection: React.FC = () => {
     profile?.title || "Software Engineer · AI & Full-Stack Developer";
   const tagline =
     profile?.heroTagline ??
-    "I build AI-powered products and full-stack platforms — from LLM chatbots to production web apps.";
+    "I build AI products and full-stack platforms — from LLM chatbots to production web apps.";
   const socials = (profile?.contacts ?? []).filter(
     (c) => c.type === "github" || c.type === "linkedin",
   );
@@ -187,8 +187,8 @@ export const HeroSection: React.FC = () => {
                 Products people use. <em>Systems that last.</em>
               </h2>
               <p className={styles.deepText}>
-                AI features, full-stack platforms and the infrastructure
-                underneath — designed, built and shipped end to end.
+                AI features and full-stack platforms — designed, built and
+                shipped end to end.
               </p>
             </motion.div>
           </motion.div>

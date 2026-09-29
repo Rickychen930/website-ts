@@ -173,7 +173,7 @@ const INTENTS: Intent[] = [
       const fw = skillsBy(p, ["framework"], 5);
       const data = skillsBy(p, ["database", "cloud"], 5);
       return {
-        reply: `Core materials: ${list(langs)}. Frameworks: ${list(fw)}. Data & cloud: ${list(data)}. The full list is in the Skills section (/#stack).`,
+        reply: `Languages: ${list(langs)}. Frameworks: ${list(fw)}. Data & cloud: ${list(data)}. The full list is in the Skills section (/#stack).`,
         chips: ["Show me recent projects", "Does he do AI work?"],
       };
     },

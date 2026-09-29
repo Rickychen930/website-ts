@@ -16,6 +16,7 @@ import {
 import styles from "./ChatWidget.module.css";
 
 const GREETING_DELAY_MS = 6000;
+const TEASER_VISIBLE_MS = 9000;
 const SESSION_RE = /^[A-Za-z0-9_-]{8,64}$/;
 const STARTER_CHIPS = [
   "What does Ricky build?",
@@ -88,11 +89,17 @@ export const ChatWidget: React.FC = () => {
   // Greeting teaser once per session
   useEffect(() => {
     if (wasGreeted()) return;
+    let hide: ReturnType<typeof setTimeout>;
     const t = setTimeout(() => {
       setTeaser(true);
       markGreeted();
+      // Don't park over the content — tuck away after a few seconds
+      hide = setTimeout(() => setTeaser(false), TEASER_VISIBLE_MS);
     }, GREETING_DELAY_MS);
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(hide);
+    };
   }, []);
 
   // Keep the newest message in view

@@ -7,9 +7,9 @@ export const seedProfileData = {
   name: "Ricky Chen",
   title: "Software Engineer · AI & Full-Stack Developer",
   location: "Sydney, Australia",
-  bio: "Sydney-based Software Engineer and Master of Artificial Intelligence candidate with production engineering experience at Samsung R&D and current delivery across AI applications, full-stack web platforms and IT service solutions. I work across requirements, architecture, implementation, testing and deployment — with a focus on maintainable, secure and user-centred products.\n\nStrong in Python, SQL, JavaScript, TypeScript, React, Node.js, REST APIs and MongoDB. Currently building AI chatbot and summarisation workflows at Decode Capital, digital solutions for JB IT Services, and client platforms through my studio, Web Architech.",
+  bio: "Software engineer in Sydney and Master of AI candidate at UTS, with production experience from Samsung R&D. I build AI applications and full-stack platforms end to end — from requirements and architecture to testing and release.\n\nCore stack: Python, TypeScript, React, Node.js, SQL and MongoDB.",
   heroTagline:
-    "I build AI-powered products and full-stack platforms — from LLM chatbots to production web apps — with production experience from Samsung R&D.",
+    "I build AI products and full-stack platforms — from LLM chatbots to production web apps.",
   openToOpportunities: true,
   avatarUrl: "/images/ricky-chen-portrait.png",
 
@@ -21,7 +21,7 @@ export const seedProfileData = {
       startDate: "2025-07-01",
       endDate: "2027-07-31",
       description:
-        "Current GPA: 6.63/7.00. Focus areas: machine learning, deep learning, AI ethics, data-driven systems, software development and technology research practices.",
+        "Current GPA: 6.63/7.00. Machine learning, deep learning and AI ethics.",
     },
     {
       institution: "BINUS University",
@@ -29,8 +29,7 @@ export const seedProfileData = {
       field: "Computer Science (Internet of Things)",
       startDate: "2019-09-01",
       endDate: "2023-05-31",
-      description:
-        "GPA: 3.83/4.00. Specialisation in Internet of Things. Foundation in algorithms, software engineering, databases, object-oriented programming and connected systems.",
+      description: "GPA: 3.83/4.00. Specialisation in Internet of Things.",
     },
   ],
 
@@ -92,11 +91,11 @@ export const seedProfileData = {
       startDate: "2026-05-01",
       isCurrent: true,
       description:
-        "Build and maintain AI-enabled applications, including conversational chatbot and text-summarisation workflows, to improve information access and support business processes.",
+        "Build AI chatbot and text-summarisation workflows that improve information access.",
       achievements: [
-        "Deliver features across the full SDLC — requirements, solution design, implementation, testing, documentation and release",
-        "Apply structured prompting, output validation and data-handling controls to improve reliability, security and maintainability",
-        "Use Git-based workflows, reusable components and technical documentation for controlled releases and handover",
+        "Own features across the full SDLC, from design to release",
+        "Structured prompting and output validation for reliable, secure AI",
+        "Git workflows, reusable components and clear documentation",
       ],
       technologies: [
         "Python",
@@ -115,10 +114,10 @@ export const seedProfileData = {
       startDate: "2025-07-01",
       isCurrent: true,
       description:
-        "Develop and improve digital solutions for an Australian IT services business, translating service requirements into professional, responsive and conversion-focused user experiences.",
+        "Build responsive, conversion-focused digital solutions for an Australian IT services business.",
       achievements: [
-        "Implement service pages, enquiry pathways and reusable components with attention to performance, accessibility and local SEO",
-        "Support deployment, configuration, troubleshooting and ongoing technical improvements with business stakeholders",
+        "Service pages and enquiry flows tuned for performance, accessibility and local SEO",
+        "Deployment, troubleshooting and ongoing improvements with stakeholders",
       ],
       technologies: [
         "React",
@@ -137,11 +136,11 @@ export const seedProfileData = {
       startDate: "2025-01-01",
       isCurrent: true,
       description:
-        "Design and deliver full-stack websites and digital business solutions for Australian service and hospitality clients, from discovery through deployment and maintenance.",
+        "Design and ship full-stack platforms for Australian service and hospitality clients.",
       achievements: [
-        "Build responsive applications with React, TypeScript, Node.js, Express and MongoDB, including REST APIs, validation logic and reusable UI components",
-        "Improve local SEO, accessibility, performance, trust signals and enquiry conversion",
-        "Manually review AI-assisted code for architecture, security and correctness",
+        "React, TypeScript, Node.js and MongoDB apps with REST APIs and reusable UI",
+        "Better local SEO, accessibility, performance and enquiry conversion",
+        "Review AI-assisted code for architecture, security and correctness",
       ],
       technologies: [
         "React",
@@ -162,11 +161,11 @@ export const seedProfileData = {
       endDate: "2024-05-31",
       isCurrent: false,
       description:
-        "Developed and maintained SmartThings TV plugin functionality, client-side behaviour and reliable device-to-TV communication for production environments.",
+        "Built SmartThings TV plugin features and reliable device-to-TV communication in production.",
       achievements: [
-        "Contributed 300+ commits in 2024 across production features, refinements and bug fixes",
-        "Achieved Pro Level within the first year",
-        "Implemented integration flows, interface improvements and defect fixes with QA and engineering teams through code review and release readiness",
+        "300+ production commits in 2024",
+        "Promoted to Pro Level within the first year",
+        "Integration flows, UI improvements and defect fixes with QA and code review",
       ],
       technologies: [
         "TypeScript",
@@ -185,11 +184,10 @@ export const seedProfileData = {
       startDate: "2022-02-01",
       endDate: "2022-12-31",
       isCurrent: false,
-      description:
-        "Designed and built iOS applications using Swift, SwiftUI, UIKit, Xcode and Apple Human Interface Guidelines.",
+      description: "Designed and built iOS apps with Swift, SwiftUI and UIKit.",
       achievements: [
-        "Created Phowto, Reguards and Bottani — from user research and product concepts to tested functional prototypes",
-        "Worked in Agile teams across ideation, wireframing, development, usability testing and iteration",
+        "Shipped Phowto, Reguards and Bottani from research to tested prototypes",
+        "Agile teamwork from ideation to usability testing",
       ],
       technologies: ["Swift", "SwiftUI", "UIKit", "Xcode", "Git"],
       skillIds: ["Swift", "SwiftUI", "UIKit", "iOS Development"],
@@ -202,14 +200,14 @@ export const seedProfileData = {
       issuer: "Widyatama International Coding Competition",
       date: "2021-01-15",
       description:
-        "Ranked 3rd in a Southeast Asia-wide coding competition. Collaborated in a team to solve advanced algorithmic challenges using C++, Python, and Java under time pressure. Demonstrated strong problem-solving skills and algorithmic thinking.",
+        "Top 3 in a Southeast Asia-wide team contest (C++, Python, Java).",
     },
     {
       title: "Competitive Programming",
       issuer: "LeetCode · Kattis · Codeforces",
       date: "2024-01-01",
       description:
-        "Active on multiple competitive programming platforms: 84+ problems on LeetCode, 500+ on Kattis (score 220.4, rank 5510 globally), and Specialist rating (1450) with 171 problems on Codeforces. Strong in C++, Python, and Java across dynamic programming, graphs, and data structures.",
+        "Codeforces Specialist (1450) · 500+ Kattis problems · 84+ on LeetCode.",
       url: "https://codeforces.com/profile/rickychen930",
     },
   ],

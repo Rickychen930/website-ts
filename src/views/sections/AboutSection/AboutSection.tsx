@@ -25,19 +25,19 @@ const Icon: React.FC<{ d: string }> = ({ d }) => (
 const DISCIPLINES = [
   {
     title: "AI applications",
-    desc: "LLM chatbots and summarisation workflows with structured prompting and output validation.",
+    desc: "LLM chatbots and summarisation, with validated, reliable output.",
     tools: ["Python", "LLMs", "TensorFlow", "scikit-learn"],
     icon: "M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0",
   },
   {
     title: "Full-stack platforms",
-    desc: "Responsive products with REST APIs, validation logic and reusable UI — built to convert.",
+    desc: "Responsive web apps with clean APIs and reusable UI.",
     tools: ["React", "TypeScript", "Node.js", "MongoDB"],
     icon: "M3 5h18v11H3zM8 21h8M12 16v5M7 9l2 2-2 2M11 13h4",
   },
   {
     title: "Production engineering",
-    desc: "Full SDLC ownership — architecture, testing, code review and release, proven at Samsung R&D.",
+    desc: "Design to release — architecture, testing and code review.",
     tools: ["Git", "CI/CD", "Agile", "SOLID"],
     icon: "M4 7l8-4 8 4-8 4-8-4zM4 12l8 4 8-4M4 17l8 4 8-4",
   },

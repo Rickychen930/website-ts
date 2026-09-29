@@ -72,10 +72,7 @@ export const StackSection: React.FC = () => {
             className={styles.heading}
             lines={["Tools I", <em key="m">build with.</em>]}
           />
-          <p className={styles.lede}>
-            Grouped by discipline and rated by depth — from daily drivers to
-            working knowledge.
-          </p>
+          <p className={styles.lede}>What I use, and how deeply.</p>
           <p className={styles.legend} aria-hidden="true">
             {(["expert", "advanced", "intermediate"] as const).map((lvl) => (
               <span key={lvl} className={styles.legendItem}>

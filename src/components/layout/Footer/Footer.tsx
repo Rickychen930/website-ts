@@ -6,6 +6,7 @@ const INDEX_LINKS = [
   { href: "/#about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/#work", label: "Experience" },
+  { href: "/#credentials", label: "Credentials" },
   { href: "/#stack", label: "Skills" },
   { href: "/resume", label: "Résumé" },
 ];

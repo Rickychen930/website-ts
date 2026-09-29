@@ -35,12 +35,32 @@ const calcDur = (start: string, end?: string) => {
   return m ? `${yrs} ${m} month${m === 1 ? "" : "s"}` : yrs;
 };
 
+const initials = (name: string) =>
+  name
+    .replace(/[^A-Za-z0-9 &]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w && w !== "&")
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("");
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 export const WorkSection: React.FC = () => {
   const { profile } = useProfile();
   const reduce = useReducedMotion();
-  const listRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLOListElement>(null);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [open, setOpen] = useState<number | null>(0);
+  // Independent toggles: opening one role never collapses another above it,
+  // so the clicked card stays put and expands downward
+  const [open, setOpen] = useState<ReadonlySet<number>>(() => new Set([0]));
+  const toggle = (i: number) =>
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
 
   const { scrollYProgress } = useScroll({
     target: listRef,
@@ -55,11 +75,12 @@ export const WorkSection: React.FC = () => {
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
     );
 
-  // Landmark shown in the side column follows the hovered (or open) row
-  const featured = hovered ?? open ?? 0;
+  // Landmark in the side column follows the hovered (or open) role
+  const featured = hovered ?? 0;
 
   return (
-    <Section id="work" label="Experience" tone="deep" stack>
+    // Not a stacked chapter: rows expand in place, so the section must not pin
+    <Section id="work" label="Experience" tone="deep">
       <div className={styles.layout}>
         <div className={styles.aside}>
           <RevealText
@@ -67,6 +88,10 @@ export const WorkSection: React.FC = () => {
             className={styles.heading}
             lines={["Where I've", <em key="w">worked.</em>]}
           />
+          <p className={styles.lede}>
+            {experiences.length} roles in AI, full-stack and production
+            engineering.
+          </p>
           <div className={styles.plate} aria-hidden="true">
             <AnimatePresence initial={false}>
               <motion.div
@@ -75,7 +100,7 @@ export const WorkSection: React.FC = () => {
                 initial={reduce ? false : { clipPath: "inset(100% 0 0 0)" }}
                 animate={{ clipPath: "inset(0% 0 0 0)" }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.6, ease: EASE }}
               >
                 <FlowMedia
                   item={sitePlateFor(featured + 2)}
@@ -83,107 +108,135 @@ export const WorkSection: React.FC = () => {
                 />
               </motion.div>
             </AnimatePresence>
-            <motion.span
-              className={styles.progressFill}
-              style={{ scaleX: line }}
-            />
           </div>
         </div>
 
-        <div
+        <ol
           ref={listRef}
-          className={styles.list}
+          className={styles.timeline}
           onMouseLeave={() => setHovered(null)}
         >
-          <div className={styles.headRow} aria-hidden="true">
-            <span>Period</span>
-            <span>Company</span>
-            <span>Role</span>
-            <span>Location</span>
-          </div>
+          <span className={styles.rail} aria-hidden="true">
+            <motion.span className={styles.railFill} style={{ scaleY: line }} />
+          </span>
 
           {experiences.map((exp, i) => {
-            const isOpen = open === i;
+            const isOpen = open.has(i);
             const panelId = `exp-panel-${exp.id}`;
             return (
-              <motion.article
+              <motion.li
                 key={exp.id}
-                className={[styles.row, isOpen && styles.rowOpen]
+                className={[styles.item, isOpen && styles.itemOpen]
                   .filter(Boolean)
                   .join(" ")}
-                initial={{ opacity: 0, y: 24 }}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{
-                  duration: 0.8,
-                  ease: [0.22, 1, 0.36, 1],
+                  duration: 0.7,
+                  ease: EASE,
                   delay: Math.min(i, 5) * 0.06,
                 }}
                 onMouseEnter={() => setHovered(i)}
               >
-                <button
-                  type="button"
-                  className={styles.rowBtn}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                >
-                  <span className={styles.period}>
-                    {fmtDate(exp.startDate)} —{" "}
-                    {exp.isCurrent ? "Now" : fmtDate(exp.endDate)}
-                  </span>
-                  <span className={styles.company}>
-                    {exp.company}
-                    {exp.isCurrent && (
-                      <span className={styles.current}>Current</span>
-                    )}
-                  </span>
-                  <span className={styles.role}>{exp.position}</span>
-                  <span className={styles.location}>
-                    {exp.location}
-                    <span className={styles.toggle} aria-hidden="true">
-                      {isOpen ? "−" : "+"}
+                <span
+                  className={[styles.dot, exp.isCurrent && styles.dotCurrent]
+                    .filter(Boolean)
+                    .join(" ")}
+                  aria-hidden="true"
+                />
+                <div className={styles.card} data-spotlight="">
+                  <button
+                    type="button"
+                    className={styles.cardHead}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => toggle(i)}
+                  >
+                    <span className={styles.mono} aria-hidden="true">
+                      {initials(exp.company)}
                     </span>
-                  </span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={panelId}
-                      className={styles.panel}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      <div className={styles.panelInner}>
-                        <span className={styles.duration}>
-                          {calcDur(exp.startDate, exp.endDate)}
+                    <span className={styles.headMain}>
+                      <span className={styles.roleLine}>
+                        <span className={styles.role}>{exp.position}</span>
+                        {exp.isCurrent && (
+                          <span className={styles.current}>Current</span>
+                        )}
+                      </span>
+                      <span className={styles.company}>{exp.company}</span>
+                      <span className={styles.meta}>
+                        {fmtDate(exp.startDate)} —{" "}
+                        {exp.isCurrent ? "Present" : fmtDate(exp.endDate)}
+                        <span aria-hidden="true"> · </span>
+                        {calcDur(exp.startDate, exp.endDate)}
+                        <span aria-hidden="true"> · </span>
+                        {exp.location}
+                      </span>
+                      {exp.technologies.length > 0 && (
+                        <span className={styles.chips}>
+                          {exp.technologies.slice(0, 4).map((t) => (
+                            <span key={t} className={styles.chip}>
+                              {t}
+                            </span>
+                          ))}
                         </span>
-                        <div>
+                      )}
+                    </span>
+                    <span className={styles.chevron} aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path
+                          d="M6 9l6 6 6-6"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        id={panelId}
+                        className={styles.panel}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.45, ease: EASE }}
+                      >
+                        <div className={styles.panelInner}>
                           <p className={styles.desc}>{exp.description}</p>
                           {exp.achievements.length > 0 && (
                             <ul className={styles.achievements}>
-                              {exp.achievements.slice(0, 4).map((a, j) => (
-                                <li key={j}>{a}</li>
+                              {exp.achievements.map((a, j) => (
+                                <motion.li
+                                  key={j}
+                                  initial={
+                                    reduce ? false : { opacity: 0, x: -8 }
+                                  }
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{
+                                    duration: 0.4,
+                                    ease: EASE,
+                                    delay: 0.12 + j * 0.06,
+                                  }}
+                                >
+                                  {a}
+                                </motion.li>
                               ))}
                             </ul>
                           )}
-                          {exp.technologies.length > 0 && (
-                            <p className={styles.tech}>
-                              {exp.technologies.slice(0, 8).join(" · ")}
-                            </p>
-                          )}
                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.article>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.li>
             );
           })}
-        </div>
+        </ol>
       </div>
     </Section>
   );
