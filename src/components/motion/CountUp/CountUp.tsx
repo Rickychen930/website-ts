@@ -39,7 +39,7 @@ export const CountUp: React.FC<CountUpProps> = ({
   }, [inView, reduce, target, duration]);
 
   return (
-    <div ref={ref} className={styles.stat}>
+    <div ref={ref} className={styles.stat} data-spotlight="">
       <span className={styles.value}>
         {count}
         {suffix}

@@ -45,7 +45,7 @@ export const Projects: React.FC = () => {
   const [view, setView] = useState<View>("grid");
 
   useSEO({
-    title: "Index of works — Ricky Chen",
+    title: "Projects — Ricky Chen",
     description:
       "Every project by Ricky Chen: fullstack products, AI systems, backends and mobile apps.",
   });
@@ -64,22 +64,22 @@ export const Projects: React.FC = () => {
     <div className={styles.page}>
       <div className={styles.inner}>
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link to="/">Index</Link>
+          <Link to="/">Home</Link>
           <span aria-hidden="true">/</span>
-          <span aria-current="page">Works</span>
+          <span aria-current="page">Projects</span>
         </nav>
 
         <header className={styles.hero}>
           <RevealText
             as="h1"
             immediate
-            delay={0.6}
+            delay={0.35}
             className={styles.heading}
-            lines={["Index of", <em key="w">works.</em>]}
+            lines={["All", <em key="w">projects.</em>]}
           />
           <p className={styles.lede}>
-            {all.length} projects across fullstack, AI, backend and mobile —
-            each paired with an Australian site that shares its character.
+            {all.length} projects across AI, full-stack, backend and mobile —
+            filter by discipline or switch to a compact list.
           </p>
         </header>
 
@@ -88,8 +88,6 @@ export const Projects: React.FC = () => {
           frameClassName={styles.heroFrame}
           parallax={20}
           priority
-          caption
-          plate="P.00"
           delay={0.7}
         />
 
@@ -97,7 +95,7 @@ export const Projects: React.FC = () => {
           <div
             className={styles.filters}
             role="group"
-            aria-label="Filter works"
+            aria-label="Filter projects"
           >
             {available.map(({ key, label }) => (
               <button
@@ -124,17 +122,15 @@ export const Projects: React.FC = () => {
                   .join(" ")}
                 onClick={() => setView(v)}
               >
-                {v === "grid" ? "Plates" : "Index"}
+                {v === "grid" ? "Grid" : "List"}
               </button>
             ))}
-            <span className={styles.count}>
-              {String(filtered.length).padStart(2, "0")} shown
-            </span>
+            <span className={styles.count}>{filtered.length} projects</span>
           </div>
         </div>
 
         {filtered.length === 0 ? (
-          <p className={styles.empty}>No works in this category yet.</p>
+          <p className={styles.empty}>No projects in this category yet.</p>
         ) : view === "grid" ? (
           <div className={styles.grid} key={`g-${filter}`}>
             {filtered.map((project, i) => (
@@ -142,7 +138,6 @@ export const Projects: React.FC = () => {
                 key={project.id}
                 project={project}
                 plate={sitePlateForProject(ids, project.id)}
-                index={ids.indexOf(project.id)}
                 shape={SHAPES[i % SHAPES.length]}
                 className={styles[`col${i % 3}`]}
               />
@@ -165,16 +160,18 @@ export const Projects: React.FC = () => {
                 >
                   <Link to={`/projects/${project.id}`} className={styles.row}>
                     <span className={styles.rowNum}>
-                      W.{String(ids.indexOf(project.id) + 1).padStart(2, "0")}
+                      {new Date(project.startDate).getFullYear()}
                     </span>
                     <span className={styles.thumb} aria-hidden="true">
                       <FlowMedia item={plate} showPendingLabel={false} />
                     </span>
                     <span className={styles.rowTitle}>{project.title}</span>
                     <span className={styles.rowMeta}>{project.category}</span>
-                    <span className={styles.rowMeta}>{plate.title}</span>
                     <span className={styles.rowMeta}>
-                      {new Date(project.startDate).getFullYear()}
+                      {project.technologies.slice(0, 2).join(" · ")}
+                    </span>
+                    <span className={styles.rowArrow} aria-hidden="true">
+                      →
                     </span>
                   </Link>
                 </motion.li>

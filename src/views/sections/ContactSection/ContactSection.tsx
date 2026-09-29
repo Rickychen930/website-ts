@@ -91,9 +91,7 @@ export const ContactSection: React.FC = () => {
 
       <div className={styles.inner}>
         <div className={styles.panel}>
-          <span className={`eyebrow ${styles.eyebrow}`}>
-            <span className={styles.index}>06 /</span> Contact
-          </span>
+          <span className={`eyebrow ${styles.eyebrow}`}>Contact</span>
 
           <RevealText
             as="h2"
@@ -102,8 +100,8 @@ export const ContactSection: React.FC = () => {
           />
 
           <p className={styles.sub}>
-            Open to fullstack, AI engineering and freelance commissions — in
-            Sydney, across Australia, or remote.
+            Open to software engineering, AI and full-stack roles in Sydney or
+            remote — and to freelance projects.
           </p>
 
           <button
@@ -216,9 +214,6 @@ export const ContactSection: React.FC = () => {
             )}
           </AnimatePresence>
         </div>
-        <span className={styles.caption}>
-          {BG.title} · {BG.caption}
-        </span>
       </div>
     </section>
   );

@@ -3,10 +3,10 @@ import { useProfile } from "@/contexts";
 import styles from "./Footer.module.css";
 
 const INDEX_LINKS = [
-  { href: "/#about", label: "Practice" },
-  { href: "/projects", label: "All works" },
-  { href: "/#work", label: "Chronology" },
-  { href: "/#atlas", label: "Field atlas" },
+  { href: "/#about", label: "About" },
+  { href: "/projects", label: "Projects" },
+  { href: "/#work", label: "Experience" },
+  { href: "/#stack", label: "Skills" },
   { href: "/resume", label: "Résumé" },
 ];
 
@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.col}>
-            <span className="label">Index</span>
+            <span className="label">Explore</span>
             {INDEX_LINKS.map((l) => (
               <a key={l.href} href={l.href} className={styles.link}>
                 {l.label}
@@ -32,9 +32,16 @@ export const Footer: React.FC = () => {
             ))}
           </div>
           <div className={styles.col}>
-            <span className="label">Elsewhere</span>
+            <span className="label">Connect</span>
             <a href={`mailto:${email}`} className={styles.link}>
               Email
+            </a>
+            <a
+              href="/Ricky-Chen-Resume-2026.pdf"
+              download="Ricky-Chen-Resume.pdf"
+              className={styles.link}
+            >
+              Download CV
             </a>
             {socials.map((c) => (
               <a
@@ -49,11 +56,11 @@ export const Footer: React.FC = () => {
             ))}
           </div>
           <div className={styles.col}>
-            <span className="label">Studio</span>
+            <span className="label">Location</span>
             <p className={styles.text}>
-              Sydney, New South Wales
+              Sydney, NSW, Australia
               <br />
-              33.8688° S, 151.2093° E
+              Open to on-site, hybrid or remote
             </p>
           </div>
           <div className={styles.col}>

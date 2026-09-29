@@ -9,25 +9,37 @@
   display: flex;
   position: sticky;
   top: calc(var(--header-h) + var(--space-8));
-  gap: var(--space-6);
+  flex-direction: column;
+  gap: var(--space-7);
 }
 
 .heading {
   font-size: var(--text-2xl);
 }
 
-.progress {
+.plate {
   position: relative;
-  width: 1px;
-  min-height: 220px;
-  background: var(--border);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
 }
 
-.progressFill {
+.plateInner {
   position: absolute;
   inset: 0;
+}
+
+/* Scroll progress along the bottom edge of the plate */
+.progressFill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-raised);
+  height: 3px;
   background: var(--eyebrow-rule);
-  transform-origin: top;
+  transform-origin: left;
 }
 
 .list {
@@ -165,31 +177,6 @@
   font-size: var(--text-xs);
 }
 
-.preview {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: var(--z-raised);
-  width: 240px;
-  height: 300px;
-  margin: -150px 0 0 24px;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  pointer-events: none;
-  box-shadow: var(--shadow-md);
-}
-
-.previewInner {
-  position: absolute;
-  inset: 0;
-}
-
-@media (hover: none), (width <= 900px) {
-  .preview {
-    display: none;
-  }
-}
-
 @media (width <= 900px) {
   .layout {
     grid-template-columns: 1fr;
@@ -199,7 +186,7 @@
     position: static;
   }
 
-  .progress {
+  .plate {
     display: none;
   }
 }

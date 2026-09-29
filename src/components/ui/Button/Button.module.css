@@ -20,6 +20,7 @@
     color var(--dur-fast) ease,
     border-color var(--dur-fast) ease,
     transform var(--dur-fast) var(--ease-out),
+    translate 0.35s var(--ease-spring),
     box-shadow var(--dur-fast) ease;
 }
 

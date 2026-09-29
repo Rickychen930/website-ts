@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
+import { Button } from "@/components/ui/Button/Button";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { useProfile } from "@/contexts";
 import { useSEO } from "@/hooks/useSEO";
@@ -50,22 +51,36 @@ export const Resume: React.FC = () => {
     <div className={styles.page}>
       <div className={styles.inner}>
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link to="/">Index</Link>
+          <Link to="/">Home</Link>
           <span aria-hidden="true">/</span>
           <span aria-current="page">Résumé</span>
         </nav>
+
+        <div className={styles.topActions}>
+          <Button
+            as="a"
+            href="/Ricky-Chen-Resume-2026.pdf"
+            download="Ricky-Chen-Resume.pdf"
+          >
+            Download PDF
+          </Button>
+          <Button variant="ghost" onClick={() => window.print()}>
+            Print
+          </Button>
+        </div>
 
         <header className={styles.header}>
           <RevealText
             as="h1"
             immediate
-            delay={0.6}
+            delay={0.35}
             className={styles.name}
             lines={[profile?.name ?? "Ricky Chen"]}
           />
           <div className={styles.headMeta}>
             <p className={styles.title}>
-              {profile?.title ?? "Fullstack & AI Engineer"}
+              {profile?.title ??
+                "Software Engineer · AI & Full-Stack Developer"}
             </p>
             <p className={styles.location}>
               {profile?.location ?? "Sydney, Australia"}
@@ -82,9 +97,7 @@ export const Resume: React.FC = () => {
         {experiences.length > 0 && (
           <FadeUp>
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.idx}>(01)</span> Experience
-              </h2>
+              <h2 className={styles.sectionTitle}>Experience</h2>
               <div>
                 {experiences.map((exp) => (
                   <div key={exp.id} className={styles.entry}>
@@ -100,6 +113,13 @@ export const Resume: React.FC = () => {
                         {exp.company} · {exp.location}
                       </span>
                       <p className={styles.entryDesc}>{exp.description}</p>
+                      {exp.achievements.length > 0 && (
+                        <ul className={styles.achievements}>
+                          {exp.achievements.map((a, i) => (
+                            <li key={i}>{a}</li>
+                          ))}
+                        </ul>
+                      )}
                       {exp.technologies.length > 0 && (
                         <p className={styles.tech}>
                           {exp.technologies.join(" · ")}
@@ -116,15 +136,15 @@ export const Resume: React.FC = () => {
         {academics.length > 0 && (
           <FadeUp>
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.idx}>(02)</span> Education
-              </h2>
+              <h2 className={styles.sectionTitle}>Education</h2>
               <div>
                 {academics.map((a) => (
                   <div key={a.id} className={styles.entry}>
                     <span className={styles.entryDate}>
                       {formatDate(a.startDate)} —{" "}
-                      {a.endDate ? formatDate(a.endDate) : "Present"}
+                      {!a.endDate || new Date(a.endDate) > new Date()
+                        ? "Present"
+                        : formatDate(a.endDate)}
                     </span>
                     <div>
                       <strong className={styles.entryTitle}>
@@ -133,6 +153,9 @@ export const Resume: React.FC = () => {
                       <span className={styles.entryCompany}>
                         {a.institution}
                       </span>
+                      {a.description && (
+                        <p className={styles.entryDesc}>{a.description}</p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -144,9 +167,7 @@ export const Resume: React.FC = () => {
         {skills.length > 0 && (
           <FadeUp>
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
-                <span className={styles.idx}>(03)</span> Skills
-              </h2>
+              <h2 className={styles.sectionTitle}>Skills</h2>
               <ul className={styles.skills}>
                 {skills.map((s) => (
                   <li key={s.id}>{s.name}</li>
@@ -155,16 +176,6 @@ export const Resume: React.FC = () => {
             </section>
           </FadeUp>
         )}
-
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.printBtn}
-            onClick={() => window.print()}
-          >
-            Print / Save as PDF
-          </button>
-        </div>
       </div>
     </div>
   );

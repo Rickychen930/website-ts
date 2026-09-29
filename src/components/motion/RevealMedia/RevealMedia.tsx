@@ -22,8 +22,6 @@ interface RevealMediaProps {
   srcOverride?: string;
   /** Render an architectural caption under the plate */
   caption?: boolean;
-  /** Optional plate number shown in the caption, e.g. "P.04" */
-  plate?: string;
   delay?: number;
 }
 
@@ -46,7 +44,6 @@ export const RevealMedia: React.FC<RevealMediaProps> = ({
   priority,
   srcOverride,
   caption = false,
-  plate,
   delay = 0,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -92,11 +89,7 @@ export const RevealMedia: React.FC<RevealMediaProps> = ({
       </motion.div>
       {caption && (
         <figcaption className={styles.caption}>
-          <span>
-            {plate && <span className={styles.plate}>{plate}</span>}
-            {item.title} — {item.subtitle}
-          </span>
-          <span className={styles.coords}>{item.caption}</span>
+          {item.title} — {item.subtitle}
         </figcaption>
       )}
     </figure>

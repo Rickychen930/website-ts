@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/Footer/Footer";
 import { CurtainTransition } from "@/components/motion/CurtainTransition/CurtainTransition";
 import { ScrollProgress } from "@/components/motion/ScrollProgress/ScrollProgress";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { usePointerFx } from "@/hooks/usePointerFx";
 
 const Home = React.lazy(() =>
   import("@/views/pages/Home").then((m) => ({ default: m.Home })),
@@ -109,6 +110,7 @@ const AppContent: React.FC = () => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
   useSmoothScroll(!isAdmin);
+  usePointerFx(!isAdmin);
 
   if (isAdmin) {
     return (

@@ -10,13 +10,13 @@ import styles from "./StackSection.module.css";
 
 type Category = TechnicalSkill["category"];
 
-const GROUPS: { key: Category; label: string; code: string }[] = [
-  { key: "language", label: "Languages", code: "M.1" },
-  { key: "framework", label: "Frameworks", code: "M.2" },
-  { key: "database", label: "Data", code: "M.3" },
-  { key: "cloud", label: "Cloud", code: "M.4" },
-  { key: "tool", label: "Tooling", code: "M.5" },
-  { key: "other", label: "Other", code: "M.6" },
+const GROUPS: { key: Category; label: string }[] = [
+  { key: "language", label: "Languages" },
+  { key: "framework", label: "Frameworks & libraries" },
+  { key: "other", label: "AI & specialities" },
+  { key: "database", label: "Databases" },
+  { key: "cloud", label: "Cloud" },
+  { key: "tool", label: "Tools & DevOps" },
 ];
 
 const LEVEL: Record<TechnicalSkill["proficiency"], number> = {
@@ -55,12 +55,7 @@ export const StackSection: React.FC = () => {
   })).filter((g) => g.items.length > 0);
 
   return (
-    <Section
-      id="stack"
-      index="05"
-      label="Materials"
-      meta="Schedule of finishes"
-    >
+    <Section id="stack" label="Skills">
       <div className={styles.layout}>
         <div className={styles.mediaCol}>
           <RevealMedia
@@ -68,7 +63,6 @@ export const StackSection: React.FC = () => {
             frameClassName={styles.frame}
             parallax={16}
             caption
-            plate="P.05"
           />
         </div>
 
@@ -76,11 +70,26 @@ export const StackSection: React.FC = () => {
           <RevealText
             as="h2"
             className={styles.heading}
-            lines={["Honest", <em key="m">materials,</em>, "carefully joined."]}
+            lines={["Tools I", <em key="m">build with.</em>]}
           />
           <p className={styles.lede}>
-            Like timber, sandstone and steel, every tool has a grain. These are
-            the ones I build with — and how well I know them.
+            Grouped by discipline and rated by depth — from daily drivers to
+            working knowledge.
+          </p>
+          <p className={styles.legend} aria-hidden="true">
+            {(["expert", "advanced", "intermediate"] as const).map((lvl) => (
+              <span key={lvl} className={styles.legendItem}>
+                <span className={styles.level}>
+                  {[1, 2, 3, 4].map((n) => (
+                    <span
+                      key={n}
+                      className={n <= LEVEL[lvl] ? styles.pipOn : styles.pip}
+                    />
+                  ))}
+                </span>
+                {lvl}
+              </span>
+            ))}
           </p>
 
           <div className={styles.schedule}>
@@ -98,7 +107,6 @@ export const StackSection: React.FC = () => {
                 }}
               >
                 <div className={styles.groupHead}>
-                  <span className={styles.code}>{g.code}</span>
                   <span>{g.label}</span>
                 </div>
                 <ul className={styles.items}>

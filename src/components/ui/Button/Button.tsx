@@ -14,6 +14,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   target?: string;
   rel?: string;
+  /** Anchor only: suggest a download (optionally with a file name) */
+  download?: boolean | string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
   href,
   target,
   rel,
+  download,
   className,
   ...rest
 }) => {
@@ -32,14 +35,21 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (Tag === "a") {
     return (
-      <a href={href} target={target} rel={rel} className={cls}>
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        download={download}
+        className={cls}
+        data-magnetic=""
+      >
         {children}
       </a>
     );
   }
 
   return (
-    <button className={cls} {...rest}>
+    <button className={cls} data-magnetic="" {...rest}>
       {children}
     </button>
   );

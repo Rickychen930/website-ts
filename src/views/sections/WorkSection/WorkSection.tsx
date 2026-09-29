@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -29,10 +28,11 @@ const calcDur = (start: string, end?: string) => {
     1,
     (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth()),
   );
-  if (mo < 12) return `${mo} mo`;
+  if (mo < 12) return `${mo} month${mo === 1 ? "" : "s"}`;
   const y = Math.floor(mo / 12);
   const m = mo % 12;
-  return m ? `${y} yr ${m} mo` : `${y} yr`;
+  const yrs = `${y} year${y === 1 ? "" : "s"}`;
+  return m ? `${yrs} ${m} month${m === 1 ? "" : "s"}` : yrs;
 };
 
 export const WorkSection: React.FC = () => {
@@ -41,12 +41,6 @@ export const WorkSection: React.FC = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<number | null>(null);
   const [open, setOpen] = useState<number | null>(0);
-
-  // Cursor-following preview plate
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const px = useSpring(mx, { stiffness: 220, damping: 26, mass: 0.4 });
-  const py = useSpring(my, { stiffness: 220, damping: 26, mass: 0.4 });
 
   const { scrollYProgress } = useScroll({
     target: listRef,
@@ -61,33 +55,37 @@ export const WorkSection: React.FC = () => {
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
     );
 
-  const onMove = (e: React.MouseEvent) => {
-    const rect = listRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mx.set(e.clientX - rect.left);
-    my.set(e.clientY - rect.top);
-  };
+  // Landmark shown in the side column follows the hovered (or open) row
+  const featured = hovered ?? open ?? 0;
 
   return (
-    <Section
-      id="work"
-      index="03"
-      label="Chronology"
-      meta={`${experiences.length} engagements`}
-      tone="deep"
-      stack
-    >
+    <Section id="work" label="Experience" tone="deep" stack>
       <div className={styles.layout}>
         <div className={styles.aside}>
           <RevealText
             as="h2"
             className={styles.heading}
-            lines={["Where the", <em key="w">work</em>, "happened."]}
+            lines={["Where I've", <em key="w">worked.</em>]}
           />
-          <div className={styles.progress} aria-hidden="true">
+          <div className={styles.plate} aria-hidden="true">
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={featured}
+                className={styles.plateInner}
+                initial={reduce ? false : { clipPath: "inset(100% 0 0 0)" }}
+                animate={{ clipPath: "inset(0% 0 0 0)" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <FlowMedia
+                  item={sitePlateFor(featured + 2)}
+                  showPendingLabel={false}
+                />
+              </motion.div>
+            </AnimatePresence>
             <motion.span
               className={styles.progressFill}
-              style={{ scaleY: line }}
+              style={{ scaleX: line }}
             />
           </div>
         </div>
@@ -95,12 +93,11 @@ export const WorkSection: React.FC = () => {
         <div
           ref={listRef}
           className={styles.list}
-          onMouseMove={onMove}
           onMouseLeave={() => setHovered(null)}
         >
           <div className={styles.headRow} aria-hidden="true">
             <span>Period</span>
-            <span>Practice</span>
+            <span>Company</span>
             <span>Role</span>
             <span>Location</span>
           </div>
@@ -186,38 +183,6 @@ export const WorkSection: React.FC = () => {
               </motion.article>
             );
           })}
-
-          {!reduce && (
-            <AnimatePresence>
-              {hovered !== null && (
-                <motion.div
-                  className={styles.preview}
-                  style={{ x: px, y: py }}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  aria-hidden="true"
-                >
-                  <AnimatePresence mode="popLayout" initial={false}>
-                    <motion.div
-                      key={hovered}
-                      className={styles.previewInner}
-                      initial={{ clipPath: "inset(100% 0 0 0)" }}
-                      animate={{ clipPath: "inset(0% 0 0 0)" }}
-                      exit={{ clipPath: "inset(0 0 100% 0)" }}
-                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      <FlowMedia
-                        item={sitePlateFor(hovered + 2)}
-                        showPendingLabel={false}
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          )}
         </div>
       </div>
     </Section>

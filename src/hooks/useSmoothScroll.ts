@@ -31,7 +31,7 @@ export const useSmoothScroll = (enabled = true): void => {
         lerp: 0.085,
         wheelMultiplier: 0.9,
         smoothWheel: true,
-        anchors: { offset: -80, duration: 1.2 },
+        anchors: { duration: 1.2 },
       });
       window.__lenis = lenis;
       const loop = (time: number) => {

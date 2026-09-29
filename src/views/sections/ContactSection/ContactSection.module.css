@@ -59,15 +59,11 @@
 
 .eyebrow {
   margin-bottom: var(--space-5);
-  color: var(--media-accent);
+  color: var(--on-media);
 }
 
 .eyebrow::before {
   background: linear-gradient(90deg, var(--media-cta-bg), var(--media-accent));
-}
-
-.index {
-  opacity: 0.7;
 }
 
 .heading {
@@ -119,7 +115,7 @@
 }
 
 .emailHint {
-  color: var(--media-accent);
+  color: var(--on-media);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 700;
@@ -228,14 +224,6 @@
 .error {
   color: var(--media-cta-bg);
   font-size: var(--text-sm);
-}
-
-.caption {
-  color: var(--on-media-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 @media (width <= 640px) {

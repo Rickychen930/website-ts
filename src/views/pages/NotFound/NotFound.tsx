@@ -14,11 +14,11 @@ export const NotFound: React.FC = () => (
     </div>
     <div className={styles.scrim} aria-hidden="true" />
     <div className={styles.content}>
-      <span className={styles.code}>404 · Off the map</span>
+      <span className={styles.code}>404 · Page not found</span>
       <RevealText
         as="h1"
         immediate
-        delay={0.6}
+        delay={0.35}
         className={styles.title}
         lines={["Nothing out", <em key="h">here.</em>]}
       />
@@ -29,9 +29,6 @@ export const NotFound: React.FC = () => (
       <Link to="/" className={styles.link}>
         ← Head back to town
       </Link>
-      <span className={styles.coords}>
-        {ROAD.title} · {ROAD.caption}
-      </span>
     </div>
   </div>
 );

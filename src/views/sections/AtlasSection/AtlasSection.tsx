@@ -23,12 +23,7 @@ export const AtlasSection: React.FC = () => (
       header={
         <div className={styles.head}>
           <div className={styles.rule}>
-            <span className="eyebrow">
-              <span className={styles.index}>04 /</span> Field atlas
-            </span>
-            <span className={styles.ruleMeta}>
-              Flora &amp; fauna of the continent
-            </span>
+            <span className="eyebrow">Field atlas</span>
           </div>
           <div className={styles.headRow}>
             <RevealText
@@ -37,9 +32,8 @@ export const AtlasSection: React.FC = () => (
               lines={["Native", <em key="s">species.</em>]}
             />
             <p className={styles.intro}>
-              Between builds, a study of what lives here. Ten specimens,
-              observed the way an architect studies a site before drawing a
-              line.
+              Between builds — ten native species, from the reef to the red
+              centre.
             </p>
           </div>
         </div>
@@ -56,13 +50,10 @@ export const AtlasSection: React.FC = () => (
           viewport={{ once: true, margin: "0px -5% 0px 0px" }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={styles.frame}>
+          <div className={styles.frame} data-tilt="">
             <FlowMedia item={item} />
           </div>
           <figcaption className={styles.caption}>
-            <span className={styles.num}>
-              No.{String(i + 1).padStart(2, "0")}
-            </span>
             <span className={styles.title}>{item.title}</span>
             <span className={styles.latin}>{item.subtitle}</span>
             <span className={styles.where}>{item.caption}</span>

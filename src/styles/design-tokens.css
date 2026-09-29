@@ -50,9 +50,9 @@
   /* Media overlays (always dark — text on photography) */
   --overlay-scrim: linear-gradient(
     180deg,
-    rgba(4, 19, 38, 0.35) 0%,
-    rgba(4, 19, 38, 0.1) 35%,
-    rgba(4, 19, 38, 0.78) 100%
+    rgba(4, 19, 38, 0.55) 0%,
+    rgba(4, 19, 38, 0.3) 40%,
+    rgba(4, 19, 38, 0.85) 100%
   );
   --overlay-solid: rgba(4, 19, 38, 0.55);
   --overlay-chapter: #041326;
@@ -68,6 +68,8 @@
   --media-glass-border: rgba(170, 200, 235, 0.24);
   --media-glow: rgba(255, 107, 53, 0.45);
   --media-accent-ring: rgba(46, 196, 182, 0.28);
+  --media-vignette: rgba(4, 19, 38, 0.55);
+  --media-text-shadow: rgba(4, 19, 38, 0.6);
 
   /* Placeholder plates (shown until Google Flow media is dropped in) */
   --plate-landmark: linear-gradient(160deg, #ff8a3d 0%, #d9481f 50%, #5c1a0a 100%);
@@ -160,16 +162,16 @@
   --bg-inverse: #0b2545;
   --text-primary: #0b2545;
   --text-muted: rgba(11, 37, 69, 0.8);
-  --text-dim: rgba(11, 37, 69, 0.58);
+  --text-dim: rgba(11, 37, 69, 0.68);
   --text-inverse: #fff4e2;
-  --accent-1: #0e9384;
-  --accent-2: #c27c0e;
-  --accent-3: #e4572e;
-  --accent-4: #d6336c;
-  --accent-glow: rgba(14, 147, 132, 0.16);
-  --accent-glow-2: rgba(228, 87, 46, 0.14);
-  --hl-gradient: linear-gradient(100deg, #ff6b35 0%, #e4572e 45%, #d6336c 100%);
-  --eyebrow-rule: linear-gradient(90deg, #ff6b35, #0e9384);
+  --accent-1: #08705f;
+  --accent-2: #8a5200;
+  --accent-3: #c03a1c;
+  --accent-4: #b91c5c;
+  --accent-glow: rgba(8, 112, 95, 0.14);
+  --accent-glow-2: rgba(192, 58, 28, 0.12);
+  --hl-gradient: linear-gradient(100deg, #c03a1c 0%, #b91c5c 100%);
+  --eyebrow-rule: linear-gradient(90deg, #c03a1c, #08705f);
   --cta-bg: #0b2545;
   --cta-hover: #164173;
   --cta-ink: #fff4e2;

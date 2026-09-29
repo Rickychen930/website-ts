@@ -43,21 +43,18 @@ export const ProjectsSection: React.FC = () => {
   );
 
   return (
-    <Section
-      id="projects"
-      index="02"
-      label="Selected works"
-      meta={`${all.length} works · 2019 — now`}
-      tone="sand"
-      stack
-    >
+    <Section id="projects" label="Projects" tone="sand" stack>
       <div className={styles.head}>
         <RevealText
           as="h2"
           className={styles.heading}
-          lines={["Selected", <em key="w">works.</em>]}
+          lines={["Selected", <em key="w">projects.</em>]}
         />
-        <div className={styles.filters} role="group" aria-label="Filter works">
+        <div
+          className={styles.filters}
+          role="group"
+          aria-label="Filter projects"
+        >
           {available.map(({ key, label }) => (
             <button
               key={key}
@@ -75,7 +72,7 @@ export const ProjectsSection: React.FC = () => {
       </div>
 
       {shown.length === 0 ? (
-        <p className={styles.empty}>No works in this category yet.</p>
+        <p className={styles.empty}>No projects in this category yet.</p>
       ) : (
         <div className={styles.grid} key={filter}>
           {shown.map((project, i) => {
@@ -85,7 +82,6 @@ export const ProjectsSection: React.FC = () => {
                 key={project.id}
                 project={project}
                 plate={sitePlateForProject(ids, project.id)}
-                index={ids.indexOf(project.id)}
                 shape={slot.shape}
                 className={styles[slot.cls]}
               />
@@ -97,9 +93,10 @@ export const ProjectsSection: React.FC = () => {
       {all.length > 0 && (
         <div className={styles.more}>
           <Link to="/projects" className={styles.moreLink}>
-            <span>Full index of works</span>
-            <span className={styles.moreCount}>({all.length})</span>
-            <span aria-hidden="true">→</span>
+            <span>View all {all.length} projects</span>
+            <span className={styles.moreArrow} aria-hidden="true">
+              →
+            </span>
           </Link>
         </div>
       )}

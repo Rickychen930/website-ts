@@ -89,25 +89,25 @@ export const ProjectDetail: React.FC = () => {
             : `${start}`,
     },
     { k: "Status", v: project.isActive ? "Ongoing" : "Completed" },
-    { k: "Site", v: `${plate.title}` },
+    { k: "Stack", v: project.technologies.slice(0, 2).join(", ") },
   ];
 
   return (
     <article className={styles.page}>
       <div className={styles.inner}>
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link to="/">Index</Link>
+          <Link to="/">Home</Link>
           <span aria-hidden="true">/</span>
-          <Link to="/projects">Works</Link>
+          <Link to="/projects">Projects</Link>
           <span aria-hidden="true">/</span>
-          <span aria-current="page">W.{String(idx + 1).padStart(2, "0")}</span>
+          <span aria-current="page">{project.title}</span>
         </nav>
 
         <header className={styles.hero}>
           <RevealText
             as="h1"
             immediate
-            delay={0.6}
+            delay={0.35}
             className={styles.title}
             lines={[project.title]}
           />
@@ -145,11 +145,7 @@ export const ProjectDetail: React.FC = () => {
           delay={0.8}
         />
         <p className={styles.plateCaption}>
-          <span>
-            P.{String(idx + 1).padStart(2, "0")} — {plate.title},{" "}
-            {plate.subtitle}
-          </span>
-          <span>{plate.caption}</span>
+          {plate.title} — {plate.subtitle}
         </p>
       </div>
 
@@ -201,9 +197,9 @@ export const ProjectDetail: React.FC = () => {
         </div>
 
         <aside className={styles.sheet} aria-label="Project data sheet">
-          <span className="label">Data sheet</span>
+          <span className="label">Project details</span>
           <div className={styles.sheetRow}>
-            <span className={styles.sheetKey}>Materials</span>
+            <span className={styles.sheetKey}>Tech stack</span>
             <ul className={styles.stack}>
               {project.technologies.map((t) => (
                 <li key={t}>{t}</li>
@@ -242,10 +238,10 @@ export const ProjectDetail: React.FC = () => {
           </div>
           <div className={styles.nextScrim} aria-hidden="true" />
           <div className={styles.nextInner}>
-            <span className={styles.nextLabel}>Next work →</span>
+            <span className={styles.nextLabel}>Next project →</span>
             <span className={styles.nextTitle}>{next.title}</span>
             <span className={styles.nextLabel}>
-              {nextPlate.title} · {nextPlate.caption}
+              {next.technologies.slice(0, 3).join(" · ")}
             </span>
           </div>
         </Link>

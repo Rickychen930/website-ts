@@ -8,11 +8,11 @@ interface CurtainTransitionProps {
 }
 
 const routeLabel = (pathname: string): string => {
-  if (pathname === "/") return "Terra Australis";
-  if (pathname === "/projects") return "Selected Works";
-  if (pathname.startsWith("/projects/")) return "Case Study";
+  if (pathname === "/") return "Ricky Chen";
+  if (pathname === "/projects") return "Projects";
+  if (pathname.startsWith("/projects/")) return "Project";
   if (pathname === "/resume") return "Résumé";
-  return "Off the map";
+  return "Page not found";
 };
 
 /** Charcoal panel that sweeps across on every route change, naming the page */
@@ -38,9 +38,9 @@ export const CurtainTransition: React.FC<CurtainTransitionProps> = ({
             initial={{ clipPath: "inset(0% 0% 0% 0%)" }}
             animate={{ clipPath: "inset(0% 0% 100% 0%)" }}
             transition={{
-              duration: 0.9,
+              duration: 0.7,
               ease: [0.76, 0, 0.24, 1],
-              delay: 0.35,
+              delay: 0.2,
             }}
             aria-hidden="true"
           >
@@ -48,7 +48,7 @@ export const CurtainTransition: React.FC<CurtainTransitionProps> = ({
               className={styles.label}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: [0, 1, 1, 0], y: [24, 0, 0, -12] }}
-              transition={{ duration: 0.9, times: [0, 0.35, 0.7, 1] }}
+              transition={{ duration: 0.7, times: [0, 0.35, 0.7, 1] }}
             >
               {routeLabel(location.pathname)}
             </motion.span>
@@ -61,7 +61,7 @@ export const CurtainTransition: React.FC<CurtainTransitionProps> = ({
           initial={reduce ? false : { opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
         >
           {children}
         </motion.div>

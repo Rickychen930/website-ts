@@ -9,18 +9,37 @@ import { FLOW_MEDIA, type FlowMediaItem } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import styles from "./AboutSection.module.css";
 
+const Icon: React.FC<{ d: string }> = ({ d }) => (
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+    <path
+      d={d}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const DISCIPLINES = [
   {
-    title: "Fullstack products",
-    desc: "End-to-end delivery: React frontends, Node/Express APIs, SQL & NoSQL data models.",
+    title: "AI applications",
+    desc: "LLM chatbots and summarisation workflows with structured prompting and output validation.",
+    tools: ["Python", "LLMs", "TensorFlow", "scikit-learn"],
+    icon: "M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0",
   },
   {
-    title: "AI integration",
-    desc: "LLM-powered features, retrieval pipelines, assistants and intelligent summarisers.",
+    title: "Full-stack platforms",
+    desc: "Responsive products with REST APIs, validation logic and reusable UI — built to convert.",
+    tools: ["React", "TypeScript", "Node.js", "MongoDB"],
+    icon: "M3 5h18v11H3zM8 21h8M12 16v5M7 9l2 2-2 2M11 13h4",
   },
   {
-    title: "System architecture",
-    desc: "Scalable backends, API contracts, caching strategy and observability.",
+    title: "Production engineering",
+    desc: "Full SDLC ownership — architecture, testing, code review and release, proven at Samsung R&D.",
+    tools: ["Git", "CI/CD", "Agile", "SOLID"],
+    icon: "M4 7l8-4 8 4-8 4-8-4zM4 12l8 4 8-4M4 17l8 4 8-4",
   },
 ];
 
@@ -71,13 +90,7 @@ export const AboutSection: React.FC = () => {
   const stats = numericStats.length >= 2 ? numericStats : DEFAULT_STATS;
 
   return (
-    <Section
-      id="about"
-      index="01"
-      label="Practice"
-      meta="Sydney · Gadigal Country"
-      stack
-    >
+    <Section id="about" label="About" stack>
       <ScrollWords text={statement} className={styles.statement} />
 
       <div className={styles.grid}>
@@ -89,8 +102,6 @@ export const AboutSection: React.FC = () => {
             }
             frameClassName={styles.portraitFrame}
             parallax={10}
-            caption
-            plate="P.01"
           />
         </div>
 
@@ -98,13 +109,14 @@ export const AboutSection: React.FC = () => {
           <RevealText
             as="h2"
             className={styles.heading}
-            lines={["A practice built", <em key="e">on structure.</em>]}
+            lines={["Engineering", <em key="e">that ships.</em>]}
           />
           <ol className={styles.disciplines}>
             {DISCIPLINES.map((d, i) => (
               <motion.li
                 key={d.title}
                 className={styles.discipline}
+                data-spotlight=""
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
@@ -114,12 +126,17 @@ export const AboutSection: React.FC = () => {
                   delay: i * 0.1,
                 }}
               >
-                <span className={styles.discIndex}>
-                  {String(i + 1).padStart(2, "0")}
+                <span className={styles.discIcon}>
+                  <Icon d={d.icon} />
                 </span>
                 <div>
                   <h3 className={styles.discTitle}>{d.title}</h3>
                   <p className={styles.discDesc}>{d.desc}</p>
+                  <ul className={styles.tools} aria-label="Tools">
+                    {d.tools.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
                 </div>
               </motion.li>
             ))}
@@ -133,7 +150,6 @@ export const AboutSection: React.FC = () => {
         parallax={18}
         from="left"
         caption
-        plate="P.02"
         className={styles.wide}
       />
 

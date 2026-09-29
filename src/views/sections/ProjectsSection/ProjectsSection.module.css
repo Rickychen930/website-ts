@@ -109,13 +109,13 @@
   color: var(--accent-1);
 }
 
-.moreLink > span:last-child {
+.moreArrow {
   margin-left: auto;
+  transition: transform var(--dur-med) var(--ease-out);
 }
 
-.moreCount {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
+.moreLink:hover .moreArrow {
+  transform: translateX(8px);
 }
 
 @media (width <= 900px) {

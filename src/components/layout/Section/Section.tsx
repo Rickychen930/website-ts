@@ -12,12 +12,8 @@ interface SectionProps {
   children: React.ReactNode;
   id?: string;
   className?: string;
-  /** Chapter index shown in the eyebrow, e.g. "02" */
-  index?: string;
   /** Eyebrow label, e.g. "Selected works" */
   label?: string;
-  /** Right-aligned annotation, e.g. coordinates */
-  meta?: React.ReactNode;
   /** Band palette: navy (default), cream sand, or the deeper navy */
   tone?: "default" | "sand" | "deep";
   /**
@@ -34,9 +30,7 @@ export const Section: React.FC<SectionProps> = ({
   children,
   id,
   className,
-  index,
   label,
-  meta,
   tone = "default",
   stack = false,
   "aria-label": ariaLabel,
@@ -65,45 +59,45 @@ export const Section: React.FC<SectionProps> = ({
   const veil = useTransform(scrollYProgress, [0, 1], [0, 0.6]);
 
   return (
-    <section
-      ref={ref}
-      id={id}
-      className={[
-        styles.section,
-        styles[tone],
-        tone === "sand" && "band-sand",
-        stacking && styles.stacked,
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      aria-label={ariaLabel ?? label}
-      data-section={id}
-    >
-      <motion.div
-        className={styles.chapter}
-        style={stacking ? { scale } : undefined}
+    <>
+      {/* Static (non-sticky) anchor: nav jumps and active-state land on the
+          section's real position even while it is pinned */}
+      {id && <div id={id} className={styles.anchor} aria-hidden="true" />}
+      <section
+        ref={ref}
+        className={[
+          styles.section,
+          styles[tone],
+          tone === "sand" && "band-sand",
+          stacking && styles.stacked,
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        aria-label={ariaLabel ?? label}
+        data-section={id}
       >
-        <div className={styles.inner}>
-          {(index || label || meta) && (
-            <div className={styles.head}>
-              <span className="eyebrow">
-                {index && <span className={styles.index}>{index}</span>}
-                {label}
-              </span>
-              {meta && <span className={styles.meta}>{meta}</span>}
-            </div>
-          )}
-          {children}
-        </div>
-      </motion.div>
-      {stacking && (
         <motion.div
-          className={styles.veil}
-          style={{ opacity: veil }}
-          aria-hidden="true"
-        />
-      )}
-    </section>
+          className={styles.chapter}
+          style={stacking ? { scale } : undefined}
+        >
+          <div className={styles.inner}>
+            {label && (
+              <div className={styles.head}>
+                <span className="eyebrow">{label}</span>
+              </div>
+            )}
+            {children}
+          </div>
+        </motion.div>
+        {stacking && (
+          <motion.div
+            className={styles.veil}
+            style={{ opacity: veil }}
+            aria-hidden="true"
+          />
+        )}
+      </section>
+    </>
   );
 };

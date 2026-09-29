@@ -173,7 +173,7 @@ const INTENTS: Intent[] = [
       const fw = skillsBy(p, ["framework"], 5);
       const data = skillsBy(p, ["database", "cloud"], 5);
       return {
-        reply: `Core materials: ${list(langs)}. Frameworks: ${list(fw)}. Data & cloud: ${list(data)}. The full schedule is in the Materials section (/#stack).`,
+        reply: `Core materials: ${list(langs)}. Frameworks: ${list(fw)}. Data & cloud: ${list(data)}. The full list is in the Skills section (/#stack).`,
         chips: ["Show me recent projects", "Does he do AI work?"],
       };
     },
@@ -215,7 +215,7 @@ const INTENTS: Intent[] = [
     answer: (p) => {
       const top = p.projects.slice(0, 4).map((x) => x.title);
       return {
-        reply: `${p.projects.length} works so far. Recent highlights: ${list(top)}. The full index — with plates and case studies — is at /projects.`,
+        reply: `${p.projects.length} works so far. Recent highlights: ${list(top)}. Browse them all, with case studies, at /projects.`,
         chips: ["Tell me about Web Architech", "What's his tech stack?"],
       };
     },
@@ -240,7 +240,7 @@ const INTENTS: Intent[] = [
         .slice(0, 3)
         .map((e) => e.company);
       return {
-        reply: `${now.length ? `Currently: ${list(now)}. ` : ""}${past.length ? `Previously: ${list(past)}. ` : ""}The full chronology is at /#work.`,
+        reply: `${now.length ? `Currently: ${list(now)}. ` : ""}${past.length ? `Previously: ${list(past)}. ` : ""}Full details are in the Experience section (/#work) and the /resume.`,
         chips: ["Where did he study?", "Is he open to work?"],
       };
     },
