@@ -9,6 +9,7 @@ import { FLOW_MEDIA, sitePlateForProject } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import { useSEO } from "@/hooks/useSEO";
 import type { Project } from "@/types/domain";
+import { PROJECT_CATEGORY_LABEL } from "@/config/site-defaults";
 import styles from "./Projects.module.css";
 
 type Filter = "all" | Project["category"];
@@ -166,7 +167,9 @@ export const Projects: React.FC = () => {
                       <FlowMedia item={plate} showPendingLabel={false} />
                     </span>
                     <span className={styles.rowTitle}>{project.title}</span>
-                    <span className={styles.rowMeta}>{project.category}</span>
+                    <span className={styles.rowMeta}>
+                      {PROJECT_CATEGORY_LABEL[project.category]}
+                    </span>
                     <span className={styles.rowMeta}>
                       {project.technologies.slice(0, 2).join(" · ")}
                     </span>

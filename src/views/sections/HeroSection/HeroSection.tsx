@@ -12,6 +12,7 @@ import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { FLOW_MEDIA, PLACE_NAMES } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
+import { introOffset } from "@/components/motion/CurtainTransition/intro";
 import styles from "./HeroSection.module.css";
 
 const SKY = FLOW_MEDIA.heroUluru;
@@ -114,12 +115,25 @@ export const HeroSection: React.FC = () => {
         >
           <span className={styles.badge}>
             <span className={styles.statusDot} aria-hidden="true" />
-            {profile?.openToOpportunities === false
-              ? "Based in Sydney, Australia"
-              : "Open to work · Sydney · Full work rights Jul 2027"}
+            {profile?.openToOpportunities === false ? (
+              "Based in Sydney, Australia"
+            ) : (
+              <>
+                Open to work · Sydney
+                <span className={styles.badgeMore}>
+                  {" "}
+                  · Full work rights Jul 2027
+                </span>
+              </>
+            )}
           </span>
           <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
-            <RevealText lines={[name]} as="span" immediate delay={0.9} />
+            <RevealText
+              lines={[name]}
+              as="span"
+              immediate
+              delay={0.9 + introOffset()}
+            />
           </h1>
           <p className={styles.role}>{role}</p>
           <p className={styles.tagline}>{tagline}</p>

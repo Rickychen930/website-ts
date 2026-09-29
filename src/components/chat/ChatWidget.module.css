@@ -569,10 +569,12 @@
 @media (width <= 767px) {
   .panel {
     position: fixed;
-    inset: 0 0 auto;
+    inset: var(--kobi-vvt, 0) 0 auto 0;
     width: 100%;
     max-width: none;
     height: var(--kobi-vvh, 100dvh);
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
     border: none;
     border-radius: 0;
     background: var(--bg-base);
@@ -583,6 +585,16 @@
 
   .panelOpen {
     transform: none;
+  }
+
+  /* Keyboard up: it already covers the home indicator; drop the footnote */
+  .panel[data-keyboard] {
+    padding-bottom: 0;
+  }
+
+  .panel[data-keyboard] .foot,
+  .panel[data-keyboard] .intro > :first-child {
+    display: none;
   }
 
   .launcherOpen {
