@@ -1,0 +1,77 @@
+.ribbon {
+  position: relative;
+  width: 104%;
+  margin-left: -2%;
+  overflow: hidden;
+  padding: 14px 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  --ribbon-bg: var(--media-cta-bg);
+}
+
+/* Soft fade of the moving text at both ends (in the band's own colour) */
+.ribbon::before,
+.ribbon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 8%;
+  pointer-events: none;
+}
+
+.ribbon::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--ribbon-bg), transparent);
+}
+
+.ribbon::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--ribbon-bg), transparent);
+}
+
+.sand {
+  background: var(--media-cta-bg);
+  color: var(--media-cta-ink);
+}
+
+.navy {
+  --ribbon-bg: var(--media-cta-ink);
+
+  background: var(--media-cta-ink);
+  color: var(--media-cta-bg);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.run {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px;
+}
+
+.star {
+  display: inline-block;
+  font-size: 0.7em;
+  opacity: 0.7;
+  transition: transform 0.6s var(--ease-spring);
+}
+
+.item:hover .star {
+  transform: rotate(180deg) scale(1.3);
+}

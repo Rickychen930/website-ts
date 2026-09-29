@@ -1,4 +1,4 @@
-/* Base — reset, body, typography, noise overlay */
+/* Base — reset, body, typography */
 @import url("./design-tokens.css");
 
 *,
@@ -12,6 +12,7 @@
 html {
   scroll-behavior: smooth;
   text-size-adjust: 100%;
+  scroll-padding-top: var(--header-h);
 }
 
 body {
@@ -28,55 +29,45 @@ body {
   overflow-x: hidden;
 }
 
-/* Dot grid — structural, editorial, ActiveTheory-esque */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 1px
-  );
-  background-size: 32px 32px;
-}
-
-body.light::before {
-  background-image: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.05) 1px,
-    transparent 1px
-  );
-}
-
-/* Noise texture overlay — organic, non-AI feel */
+/* Film grain — subtle, filmic (Web Architech hero grain, site-wide at low strength) */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: var(--z-cursor);
-  opacity: 0.04;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* Focus ring */
 :focus-visible {
   outline: 2px solid var(--accent-1);
-  outline-offset: 4px;
+  outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
 
-/* Selection */
 ::selection {
   background: var(--accent-1);
-  color: #fff;
+  color: var(--text-inverse);
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -87,7 +78,6 @@ body::after {
 
 ::-webkit-scrollbar-thumb {
   background: var(--text-dim);
-  border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -102,10 +92,25 @@ h4,
 h5,
 h6 {
   color: var(--text-primary);
-  font-weight: 700;
-  line-height: 1.1;
+  font-weight: 800;
+  line-height: 0.98;
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* Signature highlight — the closing phrase of a heading gets gradient ink */
+h1 em,
+h2 em,
+h3 em,
+.hl {
+  background: var(--hl-gradient);
+  font-style: normal;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* keep descenders inside the painted box */
+  padding-bottom: 0.06em;
 }
 
 p {
@@ -129,6 +134,7 @@ button {
   border: none;
   background: none;
   font-family: inherit;
+  color: inherit;
 }
 
 /* Gradient text utility */
@@ -138,16 +144,83 @@ button {
   -webkit-text-fill-color: transparent;
 }
 
-/* App shell */
-.app {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
+/* Small uppercase mono label — the annotation voice */
+.label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
 }
 
-.app-main {
-  flex: 1;
+/* Eyebrow — accent label with a short gradient rule in front */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--accent-1);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--eyebrow-rule);
+}
+
+/* Cream band — remaps every token, components flip automatically */
+.band-sand {
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+/* Pointer micro-interactions (vars written by usePointerFx) */
+[data-spotlight] {
+  position: relative;
+  isolation: isolate;
+}
+
+[data-spotlight]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 50%),
+    var(--accent-glow),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-med) ease;
+  pointer-events: none;
+}
+
+[data-spotlight]:hover::before {
+  opacity: 1;
+}
+
+[data-tilt] {
+  transform: perspective(900px) rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg));
+  transition: transform 0.35s var(--ease-out);
+}
+
+[data-magnetic] {
+  translate: var(--mgx, 0) var(--mgy, 0);
+  transition:
+    translate 0.35s var(--ease-spring),
+    background var(--dur-fast) ease,
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    box-shadow var(--dur-fast) ease;
 }
 
 /* Skip link */
@@ -157,11 +230,10 @@ button {
   left: var(--space-4);
   z-index: calc(var(--z-cursor) + 1);
   padding: var(--space-2) var(--space-6);
-  background: var(--accent-1);
-  color: #fff;
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
   font-family: var(--font-mono);
   font-size: 0.875rem;
-  border-radius: var(--radius-md);
   transform: translateY(-200%);
   transition: transform 0.2s ease;
 }

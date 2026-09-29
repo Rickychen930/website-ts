@@ -1,24 +1,34 @@
 import React from "react";
-import { motion } from "@/lib/motion";
 import { Link } from "react-router-dom";
+import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
+import { RevealText } from "@/components/motion/RevealText/RevealText";
+import { FLOW_MEDIA } from "@/config/flowMedia";
 import styles from "./NotFound.module.css";
+
+const ROAD = FLOW_MEDIA.outbackRoad;
 
 export const NotFound: React.FC = () => (
   <div className={styles.page}>
-    <motion.div
-      className={styles.content}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ ease: [0.25, 0, 0, 1], duration: 0.6 }}
-    >
-      <span className={styles.code}>404</span>
-      <h1 className={styles.title}>Nothing here.</h1>
+    <div className={styles.media} aria-hidden="true">
+      <FlowMedia item={ROAD} priority showPendingLabel={false} />
+    </div>
+    <div className={styles.scrim} aria-hidden="true" />
+    <div className={styles.content}>
+      <span className={styles.code}>404 · Page not found</span>
+      <RevealText
+        as="h1"
+        immediate
+        delay={0.35}
+        className={styles.title}
+        lines={["Nothing out", <em key="h">here.</em>]}
+      />
       <p className={styles.desc}>
-        The page you're looking for doesn't exist or was moved.
+        This road doesn’t lead anywhere — the page may have moved or never
+        existed.
       </p>
       <Link to="/" className={styles.link}>
-        ← Back home
+        ← Head back to town
       </Link>
-    </motion.div>
+    </div>
   </div>
 );

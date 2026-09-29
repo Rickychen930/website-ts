@@ -9,8 +9,10 @@ import {
 import { ProfileProvider, ThemeProvider, AdminAuthProvider } from "@/contexts";
 import { Header } from "@/components/layout/Header/Header";
 import { Footer } from "@/components/layout/Footer/Footer";
-import { CustomCursor } from "@/components/layout/CustomCursor/CustomCursor";
 import { CurtainTransition } from "@/components/motion/CurtainTransition/CurtainTransition";
+import { ScrollProgress } from "@/components/motion/ScrollProgress/ScrollProgress";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { usePointerFx } from "@/hooks/usePointerFx";
 
 const Home = React.lazy(() =>
   import("@/views/pages/Home").then((m) => ({ default: m.Home })),
@@ -82,6 +84,10 @@ const AdminMessages = React.lazy(() =>
   import("@/views/pages/Admin").then((m) => ({ default: m.AdminMessages })),
 );
 
+const ChatWidget = React.lazy(() =>
+  import("@/components/chat").then((m) => ({ default: m.ChatWidget })),
+);
+
 const Spinner: React.FC = () => (
   <div
     style={{
@@ -91,16 +97,20 @@ const Spinner: React.FC = () => (
       justifyContent: "center",
       color: "var(--text-dim)",
       fontFamily: "var(--font-mono)",
-      fontSize: "0.8rem",
+      fontSize: "0.7rem",
+      letterSpacing: "0.14em",
+      textTransform: "uppercase",
     }}
   >
-    Loading…
+    Surveying the site…
   </div>
 );
 
 const AppContent: React.FC = () => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
+  useSmoothScroll(!isAdmin);
+  usePointerFx(!isAdmin);
 
   if (isAdmin) {
     return (
@@ -137,7 +147,7 @@ const AppContent: React.FC = () => {
 
   return (
     <>
-      <CustomCursor />
+      <ScrollProgress />
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -157,6 +167,9 @@ const AppContent: React.FC = () => {
         </Suspense>
       </main>
       <Footer />
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
     </>
   );
 };

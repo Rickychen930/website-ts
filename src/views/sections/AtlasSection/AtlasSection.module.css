@@ -1,0 +1,132 @@
+.section {
+  position: relative;
+  padding: 0 0 var(--section-y);
+  overflow: hidden;
+  overflow: clip;
+}
+
+.ribbons {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: var(--space-10) 0 var(--space-6);
+}
+
+.ribbons > :last-child {
+  margin-top: -6px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.rule {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.headRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+
+.heading {
+  font-size: var(--text-2xl);
+}
+
+.intro {
+  max-width: 40ch;
+  font-size: var(--text-sm);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: clamp(200px, min(22vw, 32vh), 330px);
+  flex-shrink: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill);
+  transition:
+    transform 0.35s var(--ease-out),
+    translate var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out);
+}
+
+.card:hover {
+  translate: 0 -4px;
+  box-shadow: var(--shadow-md);
+}
+
+.cardLow {
+  margin-top: var(--space-8);
+}
+
+.frame {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
+}
+
+.frame img,
+.frame video {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.card:hover .frame img,
+.card:hover .frame video {
+  transform: scale(1.05);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-1) var(--space-2) var(--space-2);
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.latin {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+}
+
+.where {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (width <= 768px) {
+  .headRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .card {
+    width: 72vw;
+  }
+
+  .cardLow {
+    margin-top: 0;
+  }
+}

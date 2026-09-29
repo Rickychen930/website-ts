@@ -5,11 +5,11 @@
 
 export const seedProfileData = {
   name: "Ricky Chen",
-  title: "Fullstack Engineer · IT Intern, Decode Capital · MSc AI (UTS)",
+  title: "Software Engineer · AI & Full-Stack Developer",
   location: "Sydney, Australia",
-  bio: "I build across backend, mobile, and web—from high-scale connected products to polished interfaces—applying a competitive-programming mindset to design, delivery, and outcomes.\n\nCurrently IT intern at Decode Capital, building an AI chatbot and AI summariser using PHP frameworks and WordPress within the firm's web stack. Also founder at Web Architech in Sydney (discovery through deployment). Previously: Samsung R&D Jakarta (SmartThings, One UI) and Apple Developer Academy (Swift/SwiftUI). MSc Artificial Intelligence at UTS (in progress).",
+  bio: "Software engineer in Sydney and Master of AI candidate at UTS, with production experience from Samsung R&D. I build AI applications and full-stack platforms end to end — from requirements and architecture to testing and release.\n\nCore stack: Python, TypeScript, React, Node.js, SQL and MongoDB.",
   heroTagline:
-    "IT intern at Decode Capital — AI chatbot & summariser on PHP and WordPress; shipping full-stack products with research-grade rigor.",
+    "I build AI products and full-stack platforms — from LLM chatbots to production web apps.",
   openToOpportunities: true,
   avatarUrl: "/images/ricky-chen-portrait.png",
 
@@ -19,18 +19,17 @@ export const seedProfileData = {
       degree: "Master of Artificial Intelligence",
       field: "Artificial Intelligence",
       startDate: "2025-07-01",
-      endDate: "2027-07-31",
+      endDate: "2027-06-30",
       description:
-        "Master of Artificial Intelligence | Specializing in machine learning, deep learning, and AI applications. Expected graduation in 2027.",
+        "Current GPA: 6.63/7.00. Machine learning, deep learning and AI ethics.",
     },
     {
-      institution: "Bina Nusantara University (Binus University)",
+      institution: "BINUS University",
       degree: "Bachelor of Computer Science",
-      field: "Computer Science",
+      field: "Computer Science (Internet of Things)",
       startDate: "2019-09-01",
       endDate: "2023-05-31",
-      description:
-        "Bachelor of Computer Science | GPA: 3.83/4.00 | Focused on software engineering, algorithms, data structures, and software development methodologies. Completed capstone project in IoT and computer vision.",
+      description: "GPA: 3.83/4.00. Specialisation in Internet of Things.",
     },
   ],
 
@@ -72,8 +71,14 @@ export const seedProfileData = {
     },
     {
       type: "github" as const,
-      value: "https://github.com/rickychen930",
+      value: "https://github.com/Rickychen930",
       label: "GitHub",
+      isPrimary: false,
+    },
+    {
+      type: "website" as const,
+      value: "https://rickychen930.cloud",
+      label: "Website",
       isPrimary: false,
     },
   ],
@@ -81,153 +86,147 @@ export const seedProfileData = {
   experiences: [
     {
       company: "Decode Capital",
-      position: "IT Intern",
+      position: "Software Engineer / AI Developer",
       location: "Sydney, Australia",
-      startDate: "2026-02-01",
+      startDate: "2026-05-01",
       isCurrent: true,
       description:
-        "IT intern at Decode Capital, delivering AI-powered features on the company's PHP and WordPress stack. Own development of an AI chatbot for guided Q&A and workflow support, plus an AI summariser that turns long-form content into concise briefs for internal and client use.",
+        "Build production web apps and AI features — LLM chat, summarisation and intelligent workflows.",
       achievements: [
-        "Built and integrated an AI chatbot into the WordPress-based site and related PHP services",
-        "Developed an AI summariser pipeline for documents and research inputs with review-friendly output",
-        "Shipped features using PHP frameworks and WordPress plugins/themes following existing architecture and security practices",
-        "Collaborated with the team on API design, testing, and deployment for production releases",
+        "Voice AI integration with ElevenLabs — system-prompt tuning lifted accuracy by 20%",
+        "Automation pipeline powered by Claude and n8n, integrated into the company website",
+        "Production web apps and internal platforms: REST APIs, auth and third-party services",
+        "Structured prompting and output validation for reliable, secure AI",
       ],
       technologies: [
-        "PHP",
+        "Python",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Claude",
+        "n8n",
+        "ElevenLabs",
         "WordPress",
-        "JavaScript",
-        "MySQL",
-        "REST APIs",
-        "LLMs",
-        "OpenAI API",
-        "Git",
       ],
-      skillIds: ["PHP", "Python", "JavaScript", "MySQL"],
+      skillIds: ["Python", "JavaScript", "Machine Learning"],
+    },
+    {
+      company: "JB IT Services",
+      position: "Software Engineer / Digital Solutions Developer",
+      location: "Sydney, Australia",
+      startDate: "2025-07-01",
+      isCurrent: true,
+      description:
+        "Build responsive, conversion-focused digital solutions for an Australian IT services business.",
+      achievements: [
+        "Designed and built an internal CRM to streamline workflows and data management",
+        "Service pages and enquiry flows tuned for performance, accessibility and local SEO",
+        "IT policies, secure environments, deployment and troubleshooting",
+      ],
+      technologies: [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "SEO",
+      ],
+      skillIds: ["React", "TypeScript", "Node.js"],
     },
     {
       company: "Web Architech",
-      position: "Fullstack Engineer | Founder",
+      position: "Founder & Full-Stack Engineer",
       location: "Sydney, Australia",
-      startDate: "2024-01-01",
+      startDate: "2025-01-01",
       isCurrent: true,
       description:
-        "Fullstack engineer and founder of Web Architech (Sydney). Own the full development lifecycle—requirements, system design, implementation, testing, deployment, and optimization—across engagements serving 1M+ users. Deliver modern, high-performance web applications with MongoDB, Node.js, and React; maintain clean codebases using OOP, SOLID, DRY, and MVC. Also ship a public portfolio of 21+ case studies and vertical demos (Vite/Next.js, full-stack dashboards, REST APIs) with discovery-through-care delivery for Australian and international clients.",
+        "Design and ship full-stack platforms for Australian service and hospitality clients.",
       achievements: [
-        "Owned end-to-end delivery across multiple projects and 100+ releases with minimal post-launch defects",
-        "Cut refactor overhead to under one hour per release through disciplined architecture and code structure",
-        "Improved client turnaround by ~15% via streamlined documentation and communication with distributed teams (Korea, India, Vietnam)",
-        "Shipped production client platforms (IT operations, e-commerce, entertainment) plus a searchable portfolio at web-architech.com.au/portfolio with public API parity",
+        "React, TypeScript, Node.js and MongoDB apps with REST APIs and reusable UI",
+        "Better local SEO, accessibility, performance and enquiry conversion",
+        "Review AI-assisted code for architecture, security and correctness",
       ],
       technologies: [
-        "MongoDB",
-        "PostgreSQL",
+        "React",
+        "TypeScript",
         "Node.js",
         "Express.js",
-        "React",
-        "Next.js",
-        "Vite",
-        "TypeScript",
-        "Firebase",
-        "Docker",
-        "Nginx",
-        "GitHub Actions",
+        "MongoDB",
         "REST APIs",
         "Git",
       ],
-      skillIds: [
-        "TypeScript",
-        "Node.js",
-        "React",
-        "MongoDB",
-        "Full-Stack Development",
-      ],
+      skillIds: ["TypeScript", "Node.js", "React", "MongoDB"],
     },
     {
-      company: "Samsung R&D Institute – Jakarta",
+      company: "Samsung R&D Institute Indonesia",
       position: "Software Engineer",
       location: "Jakarta, Indonesia",
       startDate: "2023-05-01",
       endDate: "2024-05-31",
       isCurrent: false,
       description:
-        "Software engineer at Samsung R&D Institute, Jakarta. Built the SmartThings TV Plugin for device discovery, remote control, and status monitoring; contributed to One UI 6 enhancements for UI/UX and accessibility. Delivered TypeScript and Node.js services in an Agile, cross-functional environment with impact to 1M+ SmartThings users worldwide.",
+        "Built SmartThings TV plugin features and reliable device-to-TV communication in production.",
       achievements: [
-        "Delivered 12 projects end-to-end with improvements that impacted 1M+ users globally",
-        "Shipped TV Plugin work ahead of schedule with ~10% processing-time reduction on targeted flows",
-        "Contributed 100+ commits across the TV Plugin lifecycle; strengthened SmartThings ecosystem integration",
-        "Contributed to One UI 6 enhancements improving UI/UX and accessibility for high-traffic device interactions",
+        "300+ production commits in 2024",
+        "Promoted to Pro Level within the first year",
+        "Integration flows, UI improvements and defect fixes with QA and code review",
       ],
       technologies: [
         "TypeScript",
-        "Node.js",
-        "Samsung SmartThings SDK",
+        "JavaScript",
+        "SmartThings SDK",
         "REST APIs",
         "Git",
         "Agile",
-        "Scrum",
       ],
-      skillIds: [
-        "TypeScript",
-        "Node.js",
-        "Express.js",
-        "RESTful APIs",
-        "Git",
-        "GitHub",
-        "Backend Development",
-      ],
+      skillIds: ["TypeScript", "JavaScript", "Git"],
     },
     {
-      company: "Apple Developer Academy – Tangerang",
-      position: "Software Engineer",
-      location: "Tangerang, Indonesia",
+      company: "Apple Developer Academy @ BINUS",
+      position: "iOS Developer",
+      location: "Jakarta, Indonesia",
       startDate: "2022-02-01",
-      endDate: "2023-02-28",
+      endDate: "2022-12-31",
       isCurrent: false,
-      description:
-        "Intensive Apple Developer Academy program: Swift, UIKit, SwiftUI, GitHub, and professional soft skills. Built five shipped-style projects including Phowto (photography tutorials), Reguards (women’s travel safety with real-time location and emergency alerts), and Bottani (smart agriculture with IoT). Design thinking, user research, and iterative delivery with designers and peers.",
+      description: "Designed and built iOS apps with Swift, SwiftUI and UIKit.",
       achievements: [
-        "Developed five iOS applications using Swift and SwiftUI",
-        "Mastered iOS development lifecycle, app architecture, and best practices",
-        "Participated in design thinking workshops and user research",
-        "Collaborated effectively with designers and developers in cross-functional teams",
+        "Shipped Phowto, Reguards and Bottani from research to tested prototypes",
+        "Agile teamwork from ideation to usability testing",
       ],
-      technologies: [
-        "Swift",
-        "SwiftUI",
-        "UIKit",
-        "Xcode",
-        "Git",
-        "Core Data",
-        "Core Location",
-        "AVFoundation",
-      ],
-      skillIds: [
-        "Swift",
-        "SwiftUI",
-        "UIKit",
-        "Git",
-        "GitHub",
-        "iOS Development",
-      ],
+      technologies: ["Swift", "SwiftUI", "UIKit", "Xcode", "Git"],
+      skillIds: ["Swift", "SwiftUI", "UIKit", "iOS Development"],
     },
   ],
 
   honors: [
     {
+      title:
+        "Kabisa App: iOS-Based Application for Learning Sundanese Script with Game-Based Learning",
+      issuer: "Research publication",
+      date: "",
+      description:
+        "Published research on a game-based iOS app for learning Sundanese script.",
+    },
+    {
       title: "3rd Place – Competitive Programming",
       issuer: "Widyatama International Coding Competition",
       date: "2021-01-15",
       description:
-        "Ranked 3rd in a Southeast Asia-wide coding competition. Collaborated in a team to solve advanced algorithmic challenges using C++, Python, and Java under time pressure. Demonstrated strong problem-solving skills and algorithmic thinking.",
+        "Top 3 in a Southeast Asia-wide team contest (C++, Python, Java).",
     },
     {
       title: "Competitive Programming",
       issuer: "LeetCode · Kattis · Codeforces",
       date: "2024-01-01",
       description:
-        "Active on multiple competitive programming platforms: 84+ problems on LeetCode, 500+ on Kattis (score 220.4, rank 5510 globally), and Specialist rating (1450) with 171 problems on Codeforces. Strong in C++, Python, and Java across dynamic programming, graphs, and data structures.",
+        "Codeforces Specialist (1450) · 500+ Kattis problems · 84+ on LeetCode.",
       url: "https://codeforces.com/profile/rickychen930",
+    },
+    {
+      title: "Freshmen Leader & Partner",
+      issuer: "BINUS University",
+      date: "2020-09-01",
+      description: "Mentored 8 first-year students through their first year.",
     },
   ],
 
@@ -243,6 +242,59 @@ export const seedProfileData = {
   ],
 
   projects: [
+    {
+      title: "Kobi — AI portfolio assistant",
+      description:
+        "This portfolio and its AI chatbot — answers recruiter questions about my work, skills and availability from live profile data.",
+      longDescription:
+        "Full-stack portfolio (React 19, TypeScript, Express 5, MongoDB) with Kobi, an embedded assistant. Questions run through a pipeline: input validation, per-IP sliding-window rate limits, a prompt-injection guard, intent matching against the live profile, then an LLM fallback with a daily budget and a safe canned reply if the model is unavailable.",
+      technologies: [
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "LLM APIs",
+        "Prompt engineering",
+      ],
+      category: "ai" as const,
+      startDate: "2026-01-31",
+      isActive: true,
+      liveUrl: "https://rickychen930.cloud",
+      achievements: [
+        "Answers grounded in live profile data — FAQ intents first, LLM only as fallback",
+        "Guardrails: validation, rate limiting, prompt-injection filter and a daily AI budget",
+        "Token-driven design system with WCAG AA contrast and reduced-motion support",
+        "Clean MVC architecture shared across React front end and Express API",
+      ],
+      architecture:
+        "React SPA → Express API (/api/chat) → ChatbotService: validate → rate limit → guard → profile-derived intents → OpenAI-compatible completion → canned fallback.",
+    },
+    {
+      title: "Samsung SmartThings TV Plugin",
+      description:
+        "Developed a TV control plugin for Samsung SmartThings app enabling device discovery, remote control, and status monitoring.",
+      longDescription:
+        "Production work on the SmartThings TV plugin at Samsung R&D Institute Indonesia — device discovery, remote control and status monitoring for smart TVs, shipped to SmartThings users through Samsung's review and release process.",
+      technologies: [
+        "TypeScript",
+        "Node.js",
+        "Samsung SmartThings SDK",
+        "REST APIs",
+      ],
+      category: "backend" as const,
+      startDate: "2023-05-01",
+      endDate: "2024-05-31",
+      isActive: false,
+      imageUrl:
+        "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+      achievements: [
+        "SmartThings TV plugin features: device discovery, remote commands and live status",
+        "Reliable device-to-TV communication and integration flows in production",
+        "Defect fixes and UI improvements shipped with QA through code review and release process",
+        "300+ commits in 2024; reached Pro Level within the first year",
+      ],
+    },
     {
       title: "Web Architech",
       description:
@@ -265,9 +317,9 @@ export const seedProfileData = {
       imageUrl:
         "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1200",
       achievements: [
-        "Production company website on a modern stack; ~20% load-performance improvement and support for thousands of monthly visitors",
-        "Contact and inquiry flows integrated with backend APIs; stronger lead reliability and ~15% reduction in user drop-off",
-        "Scalable RESTful API design improving core service performance with ~15% lower response latency",
+        "Production studio site on React, TypeScript, Express and MongoDB — owned from design to deployment",
+        "Validated enquiry flow backed by REST APIs, with local SEO, accessibility and performance built in",
+        "Reusable component library and API layer shared across client builds",
         "Public portfolio with search, industry filters, and 21+ case studies aligned to the live projects API",
       ],
       architecture:
@@ -299,72 +351,13 @@ export const seedProfileData = {
       imageUrl:
         "https://images.pexels.com/photos/3861964/pexels-photo-3861964.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
       achievements: [
-        "Service and storefront platform improving lead generation and ~15% higher inquiry conversion",
-        "Production deployment targeting ~99% uptime with faster customer onboarding workflows",
-        "Secure authentication and payment integration; ~20% fewer payment-related errors",
-        "RESTful API foundation streamlining service-to-service data flow and ~20% lower maintenance overhead",
+        "Service pages and enquiry pathways for an Australian IT services business",
+        "Containerised deployment with Docker, Nginx and GitHub Actions",
+        "Internal CRM to streamline client records and technician workflows",
+        "Local SEO, accessibility and performance tuned for mobile visitors",
       ],
       architecture:
         "React frontend, Node.js/Express backend, PostgreSQL, JWT auth, Docker/Nginx hosting, CI/CD via GitHub Actions.",
-    },
-    {
-      title: "Christina Sings4You",
-      description:
-        "Sydney vocalist site — profile, media, packages, and booking inquiries for weddings, corporate events, and private celebrations.",
-      longDescription:
-        "Christina – Sings4you is a Sydney-based professional vocalist for weddings, private events, corporate functions, and celebrations. The site reflects her artistic identity while giving prospects a smooth path to evaluate and enquire: profile and performance style, structured packages, rich media (photo, video, audio), and an integrated contact and booking inquiry flow — serving as both promotion and professional portfolio. Intended outcomes include stronger presence in the Sydney entertainment market, clearer service positioning, more qualified booking interest through streamlined enquiries, and credible presentation for planners, couples, and corporate clients, with room to grow content and campaigns over time. Case study: https://www.web-architech.com.au/portfolio/christina-sings4you",
-      technologies: [
-        "React",
-        "TypeScript",
-        "Express.js",
-        "MongoDB",
-        "Node.js",
-        "RESTful APIs",
-      ],
-      category: "fullstack" as const,
-      startDate: "2025-11-01",
-      isActive: true,
-      liveUrl: "https://christina-sings4you.com.au",
-      imageUrl:
-        "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "Production personal branding and booking site with ~99% uptime and stronger visibility for a growing audience",
-        "Responsive layout and clear information hierarchy improving navigation efficiency and ~15% lower drop-off",
-        "Media-rich presentation (photo, video, audio) without hurting mobile performance",
-        "Structured inquiry flow for bookings and lead capture",
-      ],
-      architecture:
-        "Full-stack architecture with React frontend and Node.js backend. RESTful API for forms and contact.",
-    },
-    {
-      title: "giftforyou.idn",
-      description:
-        "Florist e-commerce for Indonesia — catalog, ordering, promotions, and admin tooling for bouquets and gifts.",
-      longDescription:
-        "Giftforyou.idn is a professional florist and curated gift brand offering premium arrangements, personalised gifts, and packages for special occasions. The platform is built to streamline daily operations and strengthen digital presence: improved order and workflow efficiency for staff; a seamless, intuitive shopping experience; support for marketing and promotional campaigns; high-quality catalog presentation with rich descriptions; and simple updates for seasonal offers, discounts, and limited-time promotions. The result is a scalable storefront that improves engagement, operational productivity, and competitiveness in online floristry and gifting — with SEO-oriented structure for discovery and conversion. Case study: https://www.web-architech.com.au/portfolio/giftforyou-idn",
-      technologies: [
-        "React",
-        "TypeScript",
-        "Tailwind CSS",
-        "Express.js",
-        "MongoDB",
-        "Node.js",
-        "RESTful APIs",
-      ],
-      category: "fullstack" as const,
-      startDate: "2025-10-01",
-      isActive: true,
-      liveUrl: "https://giftforyou-idn.cloud",
-      imageUrl:
-        "https://images.pexels.com/photos/4389986/pexels-photo-4389986.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
-      achievements: [
-        "E-commerce platform with ~10% higher conversion via faster checkout and refined UX",
-        "Secure authentication and payments; ~20% reduction in payment-related errors",
-        "RESTful API architecture across product modules with high reliability and ~99% uptime target",
-        "Product catalog, admin tooling, and SEO-oriented structure for campaigns and seasonal promotions",
-      ],
-      architecture:
-        "Full-stack architecture with React frontend, Express.js backend, and MongoDB database. RESTful API design with JWT authentication and secure payment processing.",
     },
     {
       title: "DailyMate",
@@ -397,6 +390,116 @@ export const seedProfileData = {
         "Mobile clients (iOS & Android) with local persistence, Firebase backend, and native health SDK integrations.",
     },
     {
+      title: "M-arkir",
+      description:
+        "A license plate recognition system using Python and OpenCV with Arduino integration.",
+      longDescription:
+        "A license plate recognition system using Python and OpenCV. Integrated with Arduino for hardware control, combining C++ and Python to enable real-time image processing and automated response. Built as a university project.",
+      technologies: [
+        "Python",
+        "OpenCV",
+        "Arduino",
+        "C++",
+        "Computer Vision",
+        "OCR",
+      ],
+      category: "ai" as const,
+      startDate: "2022-01-01",
+      endDate: "2022-06-30",
+      isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Implemented real-time license plate recognition using OpenCV",
+        "Integrated computer vision with embedded systems",
+        "Created automated gate control system",
+        "Demonstrated expertise in computer vision and IoT integration",
+      ],
+    },
+    {
+      title: "Kabisa",
+      description:
+        "An educational app introducing Sundanese script through game-based learning.",
+      longDescription:
+        "An educational app introducing Sundanese script through game-based learning. Designed to preserve traditional language and culture. Published as a research paper. Built with Swift and SwiftUI, featuring interactive learning modules, gamification elements, and cultural preservation features.",
+      technologies: [
+        "Swift",
+        "SwiftUI",
+        "Game Development",
+        "Education Technology",
+      ],
+      category: "mobile" as const,
+      startDate: "2023-01-01",
+      endDate: "2023-05-31",
+      isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Game-based lessons for learning Sundanese script",
+        "Published as a research paper",
+        "Built in Swift and SwiftUI following Apple Human Interface Guidelines",
+      ],
+    },
+    {
+      title: "giftforyou.idn",
+      description:
+        "Florist e-commerce for Indonesia — catalog, ordering, promotions, and admin tooling for bouquets and gifts.",
+      longDescription:
+        "Giftforyou.idn is a professional florist and curated gift brand offering premium arrangements, personalised gifts, and packages for special occasions. The platform is built to streamline daily operations and strengthen digital presence: improved order and workflow efficiency for staff; a seamless, intuitive shopping experience; support for marketing and promotional campaigns; high-quality catalog presentation with rich descriptions; and simple updates for seasonal offers, discounts, and limited-time promotions. The result is a scalable storefront that improves engagement, operational productivity, and competitiveness in online floristry and gifting — with SEO-oriented structure for discovery and conversion. Case study: https://www.web-architech.com.au/portfolio/giftforyou-idn",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Express.js",
+        "MongoDB",
+        "Node.js",
+        "RESTful APIs",
+      ],
+      category: "fullstack" as const,
+      startDate: "2025-10-01",
+      isActive: true,
+      liveUrl: "https://giftforyou-idn.cloud",
+      imageUrl:
+        "https://images.pexels.com/photos/4389986/pexels-photo-4389986.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+      achievements: [
+        "Live e-commerce store for an Indonesian florist — catalogue, ordering and promotions",
+        "Authenticated admin for products, orders and seasonal campaigns",
+        "REST API across catalogue, order and promotion modules",
+        "Product catalog, admin tooling, and SEO-oriented structure for campaigns and seasonal promotions",
+      ],
+      architecture:
+        "Full-stack architecture with React frontend, Express.js backend, and MongoDB database. RESTful API design with JWT authentication and secure payment processing.",
+    },
+    {
+      title: "Christina Sings4You",
+      description:
+        "Sydney vocalist site — profile, media, packages, and booking inquiries for weddings, corporate events, and private celebrations.",
+      longDescription:
+        "Christina – Sings4you is a Sydney-based professional vocalist for weddings, private events, corporate functions, and celebrations. The site reflects her artistic identity while giving prospects a smooth path to evaluate and enquire: profile and performance style, structured packages, rich media (photo, video, audio), and an integrated contact and booking inquiry flow — serving as both promotion and professional portfolio. Intended outcomes include stronger presence in the Sydney entertainment market, clearer service positioning, more qualified booking interest through streamlined enquiries, and credible presentation for planners, couples, and corporate clients, with room to grow content and campaigns over time. Case study: https://www.web-architech.com.au/portfolio/christina-sings4you",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Express.js",
+        "MongoDB",
+        "Node.js",
+        "RESTful APIs",
+      ],
+      category: "fullstack" as const,
+      startDate: "2025-11-01",
+      isActive: true,
+      liveUrl: "https://christina-sings4you.com.au",
+      imageUrl:
+        "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Live branding and booking site for a Sydney vocalist, delivered end to end",
+        "Clear packages and enquiry flow for weddings and corporate events",
+        "Media-rich presentation (photo, video, audio) without hurting mobile performance",
+        "Structured inquiry flow for bookings and lead capture",
+      ],
+      architecture:
+        "Full-stack architecture with React frontend and Node.js backend. RESTful API for forms and contact.",
+    },
+    {
       title: "Memora",
       description:
         "Product and marketing presence for Memora — keeping life's moments organised and beautifully presented.",
@@ -417,8 +520,89 @@ export const seedProfileData = {
       architecture:
         "Modern marketing SPA or static site with optional Firebase for forms, analytics, or future authenticated experiences.",
     },
-
-    /* Live vertical demos and microsites listed on https://www.web-architech.com.au/portfolio */
+    {
+      title: "Bottani",
+      description:
+        "A smart agriculture app integrated with IoT devices to monitor soil parameters in real time.",
+      longDescription:
+        "A smart agriculture app integrated with IoT devices to monitor soil parameters in real time. Enables automated responses based on environmental data, helping farmers maintain optimal soil conditions and improve crop productivity. Built during Apple Developer Academy using Swift, SwiftUI, and IoT integration.",
+      technologies: ["Swift", "SwiftUI", "IoT", "Core Data", "Bluetooth"],
+      category: "mobile" as const,
+      startDate: "2022-02-01",
+      endDate: "2022-12-31",
+      isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Real-time soil monitoring from IoT sensors",
+        "Remote equipment control from the app",
+        "Designed from farmer interviews and usability testing at Apple Developer Academy",
+        "Intuitive farmer-facing mobile UI for monitoring and control",
+      ],
+    },
+    {
+      title: "Reguards",
+      description:
+        "A women's travel safety app designed to enhance safety for women travelers.",
+      longDescription:
+        "A women's travel safety app developed during Apple Developer Academy. Designed to enhance safety for women travelers through real-time location sharing, emergency contacts, and safety alerts. Built with Swift and SwiftUI, featuring GPS tracking, emergency SOS functionality, and community safety features.",
+      technologies: [
+        "Swift",
+        "SwiftUI",
+        "Core Location",
+        "AVFoundation",
+        "GPS",
+      ],
+      category: "mobile" as const,
+      startDate: "2022-02-01",
+      endDate: "2022-12-31",
+      isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Real-time location sharing with trusted contacts",
+        "Emergency SOS that broadcasts the user's location",
+        "Designed with women travellers through research and usability testing",
+      ],
+    },
+    {
+      title: "Phowto",
+      description:
+        "A photography tutorial app providing interactive tutorials and guides for photography enthusiasts.",
+      longDescription:
+        "A photography tutorial app developed during Apple Developer Academy. Provides interactive tutorials and guides for photography enthusiasts. Built with Swift and SwiftUI, featuring video tutorials, step-by-step guides, and community features.",
+      technologies: ["Swift", "SwiftUI", "AVFoundation", "Video Processing"],
+      category: "mobile" as const,
+      startDate: "2022-02-01",
+      endDate: "2022-12-31",
+      isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Interactive photography tutorial app with video and step-by-step guides (Apple Developer Academy)",
+        "Engaging learning UI and community-oriented feature patterns",
+      ],
+    },
+    {
+      title: "L-emot",
+      description:
+        "A smart lamp controller built with Arduino and custom hardware for wireless lighting control.",
+      longDescription:
+        "A smart lamp controller built with Arduino and custom hardware. Enabled wireless control of lighting through embedded systems and software integration. Demonstrates practical IoT applications in home automation.",
+      technologies: ["Arduino", "C++", "Bluetooth", "IoT", "Embedded Systems"],
+      category: "other" as const,
+      startDate: "2022-01-01",
+      endDate: "2022-06-30",
+      isActive: false,
+      imageUrl:
+        "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=800&fit=crop&auto=format",
+      achievements: [
+        "Built custom hardware solution for smart lighting",
+        "Implemented wireless control via Bluetooth",
+        "Created energy monitoring features",
+        "Demonstrated practical IoT application in home automation",
+      ],
+    },
     {
       title: "Garden & Landscape — Services & seasons",
       description:
@@ -882,194 +1066,6 @@ export const seedProfileData = {
       architecture:
         "Vite multi-route SPA with Tailwind and Framer Motion for automotive retail.",
     },
-    {
-      title: "Ricky's Portfolio",
-      description:
-        "Student-focused portfolio platform — projects, academics, skills, certificates, and progress in one responsive, SEO-aware site.",
-      longDescription:
-        "Production build (EDUCATIONAL): structured sections for education, skills, achievements, and project showcase; responsive UI for mobile and desktop; modular architecture and REST-backed content where needed. Listed on web-architech.com.au/portfolio as a shipped platform for academic and career readiness.",
-      technologies: [
-        "React",
-        "TypeScript",
-        "Tailwind CSS",
-        "Node.js",
-        "REST APIs",
-        "MongoDB",
-      ],
-      category: "fullstack" as const,
-      startDate: "2026-01-31",
-      isActive: true,
-      liveUrl: "https://rickychen930.cloud",
-      imageUrl:
-        "https://images.pexels.com/photos/5212342/pexels-photo-5212342.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
-      achievements: [
-        "Project and certificate showcase with skill progress visualisation",
-        "Organised sections for education, experience, and achievements",
-        "Responsive layout and SEO-oriented structure for recruiters and institutions",
-      ],
-      architecture:
-        "React SPA with Node/Express API and MongoDB; component-driven, continuously updatable profile surface.",
-    },
-
-    {
-      title: "TV Plugin – SmartThings",
-      description:
-        "Developed a TV control plugin for Samsung SmartThings app enabling device discovery, remote control, and status monitoring.",
-      longDescription:
-        "Developed a TV control plugin for Samsung SmartThings app. Enabled device discovery, remote control, and status monitoring for smart TVs. Contributed to One UI 6 enhancements and improved user experience for millions of users. Built with TypeScript, Node.js, and Samsung SmartThings SDK.",
-      technologies: [
-        "TypeScript",
-        "Node.js",
-        "Samsung SmartThings SDK",
-        "REST APIs",
-      ],
-      category: "backend" as const,
-      startDate: "2023-05-01",
-      endDate: "2024-05-31",
-      isActive: false,
-      imageUrl:
-        "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
-      achievements: [
-        "SmartThings TV control plugin: discovery, remote commands, and real-time status with ~15% faster control responsiveness",
-        "Discovery and remote-control flows reducing setup time ~30% and improving reliability for a growing user base",
-        "Optimized high-traffic device UI flows cutting friction for millions of global SmartThings users",
-        "Deep SmartThings integration for stable multi-device coordination and ~15% better platform responsiveness",
-      ],
-    },
-    {
-      title: "Bottani",
-      description:
-        "A smart agriculture app integrated with IoT devices to monitor soil parameters in real time.",
-      longDescription:
-        "A smart agriculture app integrated with IoT devices to monitor soil parameters in real time. Enables automated responses based on environmental data, helping farmers maintain optimal soil conditions and improve crop productivity. Built during Apple Developer Academy using Swift, SwiftUI, and IoT integration.",
-      technologies: ["Swift", "SwiftUI", "IoT", "Core Data", "Bluetooth"],
-      category: "mobile" as const,
-      startDate: "2022-02-01",
-      endDate: "2022-12-31",
-      isActive: false,
-      imageUrl:
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "IoT-backed real-time soil monitoring with continuous multi-field sensor data and ~25% better environmental insight accuracy",
-        "Automated irrigation cutting water use ~25% with real-time adjustments from sensor telemetry",
-        "Predictive crop analytics improving yield-forecast accuracy ~20% while processing thousands of readings daily",
-        "Intuitive farmer-facing mobile UI for monitoring and control",
-      ],
-    },
-    {
-      title: "Kabisa",
-      description:
-        "An educational app introducing Sundanese script through game-based learning.",
-      longDescription:
-        "An educational app introducing Sundanese script through game-based learning. Designed to preserve traditional language and culture. Presented in academic forums and published in IEEE. Built with Swift and SwiftUI, featuring interactive learning modules, gamification elements, and cultural preservation features.",
-      technologies: [
-        "Swift",
-        "SwiftUI",
-        "Game Development",
-        "Education Technology",
-      ],
-      category: "mobile" as const,
-      startDate: "2023-01-01",
-      endDate: "2023-05-31",
-      isActive: false,
-      imageUrl:
-        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "Gamified Sundanese script learning lifting completion ~25% and broadening cultural awareness",
-        "Presented at multiple academic conferences and published in an IEEE outlet",
-        "Interactive modules with gamification increasing participation and ~12% lower drop-off",
-      ],
-    },
-    {
-      title: "Reguards",
-      description:
-        "A women's travel safety app designed to enhance safety for women travelers.",
-      longDescription:
-        "A women's travel safety app developed during Apple Developer Academy. Designed to enhance safety for women travelers through real-time location sharing, emergency contacts, and safety alerts. Built with Swift and SwiftUI, featuring GPS tracking, emergency SOS functionality, and community safety features.",
-      technologies: [
-        "Swift",
-        "SwiftUI",
-        "Core Location",
-        "AVFoundation",
-        "GPS",
-      ],
-      category: "mobile" as const,
-      startDate: "2022-02-01",
-      endDate: "2022-12-31",
-      isActive: false,
-      imageUrl:
-        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "Real-time GPS tracking and location sharing supporting hundreds of active devices with ~20% better positional accuracy",
-        "Emergency SOS with instant location broadcast improving critical response times ~30%",
-        "Community safety features and real-time alerts improving incident visibility; delivered ~10% ahead of plan",
-      ],
-    },
-    {
-      title: "Phowto",
-      description:
-        "A photography tutorial app providing interactive tutorials and guides for photography enthusiasts.",
-      longDescription:
-        "A photography tutorial app developed during Apple Developer Academy. Provides interactive tutorials and guides for photography enthusiasts. Built with Swift and SwiftUI, featuring video tutorials, step-by-step guides, and community features.",
-      technologies: ["Swift", "SwiftUI", "AVFoundation", "Video Processing"],
-      category: "mobile" as const,
-      startDate: "2022-02-01",
-      endDate: "2022-12-31",
-      isActive: false,
-      imageUrl:
-        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "Interactive photography tutorial app with video and step-by-step guides (Apple Developer Academy)",
-        "Engaging learning UI and community-oriented feature patterns",
-      ],
-    },
-    {
-      title: "M-arkir",
-      description:
-        "A license plate recognition system using Python and OpenCV with Arduino integration.",
-      longDescription:
-        "A license plate recognition system using Python and OpenCV. Integrated with Arduino for hardware control, combining C++ and Python to enable real-time image processing and automated response. Built as a university project.",
-      technologies: [
-        "Python",
-        "OpenCV",
-        "Arduino",
-        "C++",
-        "Computer Vision",
-        "OCR",
-      ],
-      category: "ai" as const,
-      startDate: "2022-01-01",
-      endDate: "2022-06-30",
-      isActive: false,
-      imageUrl:
-        "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "Implemented real-time license plate recognition using OpenCV",
-        "Integrated computer vision with embedded systems",
-        "Created automated gate control system",
-        "Demonstrated expertise in computer vision and IoT integration",
-      ],
-    },
-    {
-      title: "L-emot",
-      description:
-        "A smart lamp controller built with Arduino and custom hardware for wireless lighting control.",
-      longDescription:
-        "A smart lamp controller built with Arduino and custom hardware. Enabled wireless control of lighting through embedded systems and software integration. Demonstrates practical IoT applications in home automation.",
-      technologies: ["Arduino", "C++", "Bluetooth", "IoT", "Embedded Systems"],
-      category: "other" as const,
-      startDate: "2022-01-01",
-      endDate: "2022-06-30",
-      isActive: false,
-      imageUrl:
-        "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=800&fit=crop&auto=format",
-      achievements: [
-        "Built custom hardware solution for smart lighting",
-        "Implemented wireless control via Bluetooth",
-        "Created energy monitoring features",
-        "Demonstrated practical IoT application in home automation",
-      ],
-    },
   ],
 
   softSkills: [
@@ -1101,28 +1097,54 @@ export const seedProfileData = {
 
   stats: [
     {
-      label: "Years of Experience",
-      value: "3+",
+      label: "Years building software",
+      value: 4,
+      unit: "+",
       description:
-        "Professional software development from academy training through Samsung R&D and fullstack roles",
+        "From Apple Developer Academy through Samsung R&D to AI and full-stack roles in Sydney",
     },
     {
-      label: "Projects Delivered",
-      value: 31,
+      label: "Projects built",
+      value: 30,
+      unit: "+",
       description:
-        "Shipped work across studio demos, client platforms, mobile, and research projects",
+        "Client platforms, studio demos, mobile apps and research projects",
     },
     {
-      label: "Users Impacted",
-      value: "1M+",
-      description: "Total users impacted by developed applications",
+      label: "Production commits at Samsung (2024)",
+      value: 300,
+      unit: "+",
+      description: "SmartThings TV plugin features, refinements and bug fixes",
+    },
+    {
+      label: "Live sites deployed",
+      value: 20,
+      unit: "+",
+      description: "Client, studio and product sites running in production",
     },
   ],
 
   technicalSkills: [
-    // Programming Languages
     {
       name: "Python",
+      category: "language" as const,
+      proficiency: "advanced" as const,
+      yearsOfExperience: 4,
+    },
+    {
+      name: "TypeScript",
+      category: "language" as const,
+      proficiency: "advanced" as const,
+      yearsOfExperience: 2,
+    },
+    {
+      name: "JavaScript",
+      category: "language" as const,
+      proficiency: "advanced" as const,
+      yearsOfExperience: 3,
+    },
+    {
+      name: "SQL",
       category: "language" as const,
       proficiency: "advanced" as const,
       yearsOfExperience: 4,
@@ -1134,19 +1156,7 @@ export const seedProfileData = {
       yearsOfExperience: 3,
     },
     {
-      name: "JavaScript",
-      category: "language" as const,
-      proficiency: "advanced" as const,
-      yearsOfExperience: 3,
-    },
-    {
-      name: "TypeScript",
-      category: "language" as const,
-      proficiency: "advanced" as const,
-      yearsOfExperience: 2,
-    },
-    {
-      name: "C",
+      name: "Java",
       category: "language" as const,
       proficiency: "intermediate" as const,
       yearsOfExperience: 2,
@@ -1158,7 +1168,7 @@ export const seedProfileData = {
       yearsOfExperience: 4,
     },
     {
-      name: "Java",
+      name: "C",
       category: "language" as const,
       proficiency: "intermediate" as const,
       yearsOfExperience: 2,
@@ -1169,7 +1179,6 @@ export const seedProfileData = {
       proficiency: "intermediate" as const,
       yearsOfExperience: 1,
     },
-    // Frameworks & Libraries
     {
       name: "React",
       category: "framework" as const,
@@ -1212,7 +1221,6 @@ export const seedProfileData = {
       proficiency: "intermediate" as const,
       yearsOfExperience: 1,
     },
-    // Databases
     {
       name: "MongoDB",
       category: "database" as const,
@@ -1231,7 +1239,6 @@ export const seedProfileData = {
       proficiency: "intermediate" as const,
       yearsOfExperience: 2,
     },
-    // Tools & Platforms
     {
       name: "Git",
       category: "tool" as const,
@@ -1262,7 +1269,6 @@ export const seedProfileData = {
       proficiency: "intermediate" as const,
       yearsOfExperience: 2,
     },
-    // Specialties
     {
       name: "iOS Development",
       category: "other" as const,
@@ -1298,6 +1304,54 @@ export const seedProfileData = {
       category: "other" as const,
       proficiency: "advanced" as const,
       yearsOfExperience: 2,
+    },
+    {
+      name: "LLM Applications",
+      category: "other" as const,
+      proficiency: "advanced" as const,
+      yearsOfExperience: 1,
+    },
+    {
+      name: "Prompt Engineering",
+      category: "other" as const,
+      proficiency: "advanced" as const,
+      yearsOfExperience: 1,
+    },
+    {
+      name: "Pandas / NumPy",
+      category: "framework" as const,
+      proficiency: "intermediate" as const,
+      yearsOfExperience: 2,
+    },
+    {
+      name: "scikit-learn",
+      category: "framework" as const,
+      proficiency: "intermediate" as const,
+      yearsOfExperience: 1,
+    },
+    {
+      name: "TensorFlow / Keras",
+      category: "framework" as const,
+      proficiency: "intermediate" as const,
+      yearsOfExperience: 1,
+    },
+    {
+      name: "Azure",
+      category: "cloud" as const,
+      proficiency: "beginner" as const,
+      yearsOfExperience: 1,
+    },
+    {
+      name: "Postman",
+      category: "tool" as const,
+      proficiency: "advanced" as const,
+      yearsOfExperience: 3,
+    },
+    {
+      name: "KNIME",
+      category: "tool" as const,
+      proficiency: "intermediate" as const,
+      yearsOfExperience: 1,
     },
   ],
 

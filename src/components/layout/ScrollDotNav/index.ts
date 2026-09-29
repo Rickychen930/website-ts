@@ -1,1 +1,0 @@
-export { ScrollDotNav } from "./ScrollDotNav";

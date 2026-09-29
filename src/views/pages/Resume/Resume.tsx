@@ -1,111 +1,152 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FadeUp } from "@/components/motion/FadeUp/FadeUp";
-import { Tag } from "@/components/ui/Tag/Tag";
+import { Button } from "@/components/ui/Button/Button";
+import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { useProfile } from "@/contexts";
+import { useSEO } from "@/hooks/useSEO";
+import { WORK_RIGHTS } from "@/config/site-defaults";
 import styles from "./Resume.module.css";
 
 const Skeleton: React.FC = () => (
   <div className={styles.page}>
     <div className={styles.inner}>
-      <div className={styles.skeletonHeader}>
-        <div className={styles.skeletonName} />
-        <div className={styles.skeletonSub} />
-        <div className={styles.skeletonSub} style={{ width: "40%" }} />
-      </div>
+      <div className={styles.skeletonName} />
       {[1, 2, 3].map((i) => (
-        <div key={i} className={styles.skeletonSection}>
-          <div className={styles.skeletonLabel} />
-          {[80, 60, 70].map((w, j) => (
-            <div
-              key={j}
-              className={styles.skeletonLine}
-              style={{ width: `${w}%` }}
-            />
-          ))}
-        </div>
+        <div key={i} className={styles.skeletonSection} />
       ))}
     </div>
   </div>
 );
 
-const formatDate = (date?: string) => {
-  if (!date) return "";
-  return new Date(date).toLocaleDateString("en-AU", {
-    month: "short",
-    year: "numeric",
-  });
-};
+const formatDate = (date?: string) =>
+  date
+    ? new Date(date).toLocaleDateString("en-AU", {
+        month: "short",
+        year: "numeric",
+      })
+    : "";
 
 export const Resume: React.FC = () => {
   const { profile, isLoading } = useProfile();
 
+  useSEO({
+    title: "Résumé — Ricky Chen",
+    description:
+      "Curriculum vitae of Ricky Chen, fullstack & AI engineer in Sydney.",
+  });
+
   if (isLoading) return <Skeleton />;
+
+  const experiences = (profile?.experiences ?? [])
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+    );
+  const academics = profile?.academics ?? [];
+  const skills = profile?.technicalSkills ?? [];
+  const email = profile?.contacts?.find((c) => c.type === "email")?.value;
 
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
-        <FadeUp>
-          <header className={styles.header}>
-            <h1 className={styles.name}>{profile?.name ?? "Ricky Chen"}</h1>
+        <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Résumé</span>
+        </nav>
+
+        <div className={styles.topActions}>
+          <Button
+            as="a"
+            href="/Ricky-Chen-Resume-2026.pdf"
+            download="Ricky-Chen-Resume.pdf"
+          >
+            Download PDF
+          </Button>
+          <Button variant="ghost" onClick={() => window.print()}>
+            Print
+          </Button>
+        </div>
+
+        <header className={styles.header}>
+          <RevealText
+            as="h1"
+            immediate
+            delay={0.35}
+            className={styles.name}
+            lines={[profile?.name ?? "Ricky Chen"]}
+          />
+          <div className={styles.headMeta}>
             <p className={styles.title}>
-              {profile?.title ?? "Fullstack Engineer"}
+              {profile?.title ??
+                "Software Engineer · AI & Full-Stack Developer"}
             </p>
             <p className={styles.location}>
-              {profile?.location ?? "Sydney, Australia"}
+              {profile?.location ?? "Sydney, Australia"} · {WORK_RIGHTS.short}
+              {email && (
+                <>
+                  {" · "}
+                  <a href={`mailto:${email}`}>{email}</a>
+                </>
+              )}
             </p>
-          </header>
-        </FadeUp>
+          </div>
+        </header>
 
-        {/* Experience */}
-        {(profile?.experiences ?? []).length > 0 && (
-          <FadeUp delay={0.1}>
+        {experiences.length > 0 && (
+          <FadeUp>
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Experience</h2>
-              {(profile?.experiences ?? [])
-                .slice()
-                .sort(
-                  (a, b) =>
-                    new Date(b.startDate).getTime() -
-                    new Date(a.startDate).getTime(),
-                )
-                .map((exp) => (
+              <div>
+                {experiences.map((exp) => (
                   <div key={exp.id} className={styles.entry}>
-                    <div className={styles.entryHeader}>
-                      <div>
-                        <strong className={styles.entryTitle}>
-                          {exp.position}
-                        </strong>
-                        <span className={styles.entryCompany}>
-                          {exp.company} · {exp.location}
-                        </span>
-                      </div>
-                      <span className={styles.entryDate}>
-                        {formatDate(exp.startDate)} –{" "}
-                        {exp.isCurrent ? "Present" : formatDate(exp.endDate)}
+                    <span className={styles.entryDate}>
+                      {formatDate(exp.startDate)} —{" "}
+                      {exp.isCurrent ? "Present" : formatDate(exp.endDate)}
+                    </span>
+                    <div>
+                      <strong className={styles.entryTitle}>
+                        {exp.position}
+                      </strong>
+                      <span className={styles.entryCompany}>
+                        {exp.company} · {exp.location}
                       </span>
+                      <p className={styles.entryDesc}>{exp.description}</p>
+                      {exp.achievements.length > 0 && (
+                        <ul className={styles.achievements}>
+                          {exp.achievements.map((a, i) => (
+                            <li key={i}>{a}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {exp.technologies.length > 0 && (
+                        <p className={styles.tech}>
+                          {exp.technologies.join(" · ")}
+                        </p>
+                      )}
                     </div>
-                    <p className={styles.entryDesc}>{exp.description}</p>
-                    {exp.technologies.length > 0 && (
-                      <div className={styles.tags}>
-                        {exp.technologies.map((t) => (
-                          <Tag key={t}>{t}</Tag>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 ))}
+              </div>
             </section>
           </FadeUp>
         )}
 
-        {/* Education */}
-        {(profile?.academics ?? []).length > 0 && (
-          <FadeUp delay={0.15}>
+        {academics.length > 0 && (
+          <FadeUp>
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Education</h2>
-              {(profile?.academics ?? []).map((a) => (
-                <div key={a.id} className={styles.entry}>
-                  <div className={styles.entryHeader}>
+              <div>
+                {academics.map((a) => (
+                  <div key={a.id} className={styles.entry}>
+                    <span className={styles.entryDate}>
+                      {formatDate(a.startDate)} —{" "}
+                      {!a.endDate || new Date(a.endDate) > new Date()
+                        ? "Present"
+                        : formatDate(a.endDate)}
+                    </span>
                     <div>
                       <strong className={styles.entryTitle}>
                         {a.degree} in {a.field}
@@ -113,41 +154,29 @@ export const Resume: React.FC = () => {
                       <span className={styles.entryCompany}>
                         {a.institution}
                       </span>
+                      {a.description && (
+                        <p className={styles.entryDesc}>{a.description}</p>
+                      )}
                     </div>
-                    <span className={styles.entryDate}>
-                      {formatDate(a.startDate)} –{" "}
-                      {a.endDate ? formatDate(a.endDate) : "Present"}
-                    </span>
                   </div>
-                </div>
-              ))}
-            </section>
-          </FadeUp>
-        )}
-
-        {/* Skills */}
-        {(profile?.technicalSkills ?? []).length > 0 && (
-          <FadeUp delay={0.2}>
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Skills</h2>
-              <div className={styles.skillGrid}>
-                {(profile?.technicalSkills ?? []).map((s) => (
-                  <Tag key={s.id} variant="accent">
-                    {s.name}
-                  </Tag>
                 ))}
               </div>
             </section>
           </FadeUp>
         )}
 
-        <FadeUp delay={0.25}>
-          <div className={styles.printHint}>
-            <button className={styles.printBtn} onClick={() => window.print()}>
-              Print / Save as PDF
-            </button>
-          </div>
-        </FadeUp>
+        {skills.length > 0 && (
+          <FadeUp>
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>Skills</h2>
+              <ul className={styles.skills}>
+                {skills.map((s) => (
+                  <li key={s.id}>{s.name}</li>
+                ))}
+              </ul>
+            </section>
+          </FadeUp>
+        )}
       </div>
     </div>
   );

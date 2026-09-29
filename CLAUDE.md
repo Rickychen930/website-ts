@@ -6,7 +6,7 @@ Konteks proyek untuk Claude / Cursor saat mengedit **website-ts**. Baca ini sebe
 
 ## Apa proyek ini?
 
-Portfolio fullstack **TypeScript**: React 19 (port 3000) + Express 5 + MongoDB (port 4000). Arsitektur **MVC + Clean Architecture**, UI **component-based**, styling **token-driven** (tema **Signal**).
+Portfolio fullstack **TypeScript**: React 19 (port 3000) + Express 5 + MongoDB (port 4000). Arsitektur **MVC + Clean Architecture**, UI **component-based**, styling **token-driven** (tema **Terra Australis** — bahasa visual Web Architech: navy Deep Sea + band Sandy Shore).
 
 **Owner content:** Ricky Chen — fullstack / AI engineer, Sydney.
 
@@ -53,7 +53,13 @@ backend/src/         → Express MVC mirror
 - **Single source:** `src/styles/design-tokens.css`
 - Di `*.module.css`: **hanya** `var(--…)` untuk warna, spacing, radius, shadow, font
 - **Jangan** menambah hex/rgb untuk tema di komponen
-- Dark mode: class `.dark` — jangan duplikasi palet di komponen
+- Default = navy (dark); `.light` / `.band-sand` me-remap token (jangan duplikasi palet di komponen)
+- Warna di atas foto/video: pakai token `--media-*` / `--on-media*` (tidak ikut band)
+
+### 1b. Media (Google Flow)
+
+- Semua visual publik dari `src/config/flowMedia.ts` → file di `public/media/flow/` (lihat README di sana)
+- Render lewat `FlowMedia` / `RevealMedia` (fallback placeholder otomatis)
 
 ### 2. Arsitektur
 
@@ -111,6 +117,8 @@ backend/src/         → Express MVC mirror
 | File                                   | Fungsi                           |
 | -------------------------------------- | -------------------------------- |
 | `src/styles/design-tokens.css`         | Semua CSS variables              |
+| `src/config/flowMedia.ts`              | Manifest aset Google Flow        |
+| `backend/src/services/chatbot/`        | Chatbot Kobi (FAQ → AI fallback) |
 | `src/services/ProfileService.ts`       | Fetch profile + cache + fallback |
 | `src/models/ProfileModel.ts`           | Domain class immutable           |
 | `src/controllers/ProfileController.ts` | FE orchestration                 |

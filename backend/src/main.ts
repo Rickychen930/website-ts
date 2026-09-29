@@ -11,6 +11,7 @@ import { connectDatabase } from "./config/database";
 import profileRoutes from "./routes/profileRoutes";
 import contactRoutes from "./routes/contactRoutes";
 import adminRoutes from "./routes/adminRoutes";
+import chatRoutes from "./routes/chatRoutes";
 import { apiLimiter } from "./middleware/rateLimiter";
 import { sanitizeInput } from "./middleware/sanitizeInput";
 
@@ -88,6 +89,7 @@ app.get("/api", (req, res) => {
 // Routes (frontend uses /api/profile singular)
 app.use("/api/profile", profileRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/chat", chatRoutes);
 app.use("/api/admin", adminRoutes);
 
 // Health check

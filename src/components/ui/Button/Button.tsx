@@ -1,8 +1,12 @@
 import React from "react";
-import { motion } from "@/lib/motion";
 import styles from "./Button.module.css";
 
-type ButtonVariant = "primary" | "ghost" | "icon";
+type ButtonVariant =
+  | "primary"
+  | "ghost"
+  | "icon"
+  | "inverse"
+  | "outlineInverse";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -10,6 +14,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   target?: string;
   rel?: string;
+  /** Anchor only: suggest a download (optionally with a file name) */
+  download?: boolean | string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -19,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
   href,
   target,
   rel,
+  download,
   className,
   ...rest
 }) => {
@@ -28,29 +35,22 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (Tag === "a") {
     return (
-      <motion.a
+      <a
         href={href}
         target={target}
         rel={rel}
+        download={download}
         className={cls}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        data-magnetic=""
       >
         {children}
-      </motion.a>
+      </a>
     );
   }
 
   return (
-    <motion.button
-      className={cls}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      {...(rest as React.ComponentProps<typeof motion.button>)}
-    >
+    <button className={cls} data-magnetic="" {...rest}>
       {children}
-    </motion.button>
+    </button>
   );
 };

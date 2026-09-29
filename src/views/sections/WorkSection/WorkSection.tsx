@@ -1,7 +1,15 @@
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "@/lib/motion";
-import { Tag } from "@/components/ui/Tag/Tag";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
+import { RevealText } from "@/components/motion/RevealText/RevealText";
+import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
+import { sitePlateFor } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import styles from "./WorkSection.module.css";
 
@@ -16,139 +24,219 @@ const fmtDate = (d?: string) =>
 const calcDur = (start: string, end?: string) => {
   const s = new Date(start);
   const e = end ? new Date(end) : new Date();
-  const mo =
-    (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
-  if (mo < 12) return `${mo}mo`;
+  const mo = Math.max(
+    1,
+    (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth()),
+  );
+  if (mo < 12) return `${mo} month${mo === 1 ? "" : "s"}`;
   const y = Math.floor(mo / 12);
   const m = mo % 12;
-  return m ? `${y}y ${m}mo` : `${y}y`;
+  const yrs = `${y} year${y === 1 ? "" : "s"}`;
+  return m ? `${yrs} ${m} month${m === 1 ? "" : "s"}` : yrs;
 };
+
+const initials = (name: string) =>
+  name
+    .replace(/[^A-Za-z0-9 &]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w && w !== "&")
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("");
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export const WorkSection: React.FC = () => {
   const { profile } = useProfile();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const reduce = useReducedMotion();
+  const listRef = useRef<HTMLOListElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  // Independent toggles: opening one role never collapses another above it,
+  // so the clicked card stays put and expands downward
+  const [open, setOpen] = useState<ReadonlySet<number>>(() => new Set([0]));
+  const toggle = (i: number) =>
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 80%", "end 30%"],
+    target: listRef,
+    offset: ["start 75%", "end 40%"],
   });
-  const rawLine = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const lineH = useSpring(rawLine, { stiffness: 60, damping: 18 });
+  const line = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
 
   const experiences = (profile?.experiences ?? [])
     .slice()
     .sort(
       (a, b) =>
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
-    )
-    .slice(0, 5);
+    );
+
+  // Landmark in the side column follows the hovered (or open) role
+  const featured = hovered ?? 0;
 
   return (
-    <Section id="work" sectionNumber="03" data-section="work">
-      <div className={styles.sectionHead}>
-        <motion.span
-          className={styles.sectionLabel}
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ ease: [0.25, 0, 0, 1], duration: 0.6 }}
-        >
-          03 / Experience
-        </motion.span>
-        <motion.h2
-          className={styles.heading}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ ease: [0.25, 0, 0, 1], duration: 0.7, delay: 0.1 }}
-        >
-          Where I&apos;ve
-          <br />
-          <em>worked.</em>
-        </motion.h2>
-      </div>
-
-      <div className={styles.entries} ref={sectionRef}>
-        {/* Vertical line */}
-        <div className={styles.lineTrack} aria-hidden="true">
-          <motion.div
-            className={styles.lineFill}
-            style={{ scaleY: lineH, transformOrigin: "top" }}
+    // Not a stacked chapter: rows expand in place, so the section must not pin
+    <Section id="work" label="Experience" tone="deep">
+      <div className={styles.layout}>
+        <div className={styles.aside}>
+          <RevealText
+            as="h2"
+            className={styles.heading}
+            lines={["Where I've", <em key="w">worked.</em>]}
           />
+          <p className={styles.lede}>
+            {experiences.length} roles in AI, full-stack and production
+            engineering.
+          </p>
+          <div className={styles.plate} aria-hidden="true">
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={featured}
+                className={styles.plateInner}
+                initial={reduce ? false : { clipPath: "inset(100% 0 0 0)" }}
+                animate={{ clipPath: "inset(0% 0 0 0)" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: EASE }}
+              >
+                <FlowMedia
+                  item={sitePlateFor(featured + 2)}
+                  showPendingLabel={false}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
-        {experiences.map((exp, i) => (
-          <motion.article
-            key={exp.id}
-            className={[styles.entry, activeIdx === i && styles.entryActive]
-              .filter(Boolean)
-              .join(" ")}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{
-              ease: [0.25, 0, 0, 1],
-              duration: 0.6,
-              delay: i * 0.07,
-            }}
-            onMouseEnter={() => setActiveIdx(i)}
-          >
-            {/* Dot on line */}
-            <div className={styles.dotCol} aria-hidden="true">
-              <span
-                className={[styles.dot, exp.isCurrent && styles.dotCurrent]
+        <ol
+          ref={listRef}
+          className={styles.timeline}
+          onMouseLeave={() => setHovered(null)}
+        >
+          <span className={styles.rail} aria-hidden="true">
+            <motion.span className={styles.railFill} style={{ scaleY: line }} />
+          </span>
+
+          {experiences.map((exp, i) => {
+            const isOpen = open.has(i);
+            const panelId = `exp-panel-${exp.id}`;
+            return (
+              <motion.li
+                key={exp.id}
+                className={[styles.item, isOpen && styles.itemOpen]
                   .filter(Boolean)
                   .join(" ")}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.7,
+                  ease: EASE,
+                  delay: Math.min(i, 5) * 0.06,
+                }}
+                onMouseEnter={() => setHovered(i)}
               >
-                {exp.isCurrent && <span className={styles.pulseRing} />}
-              </span>
-            </div>
-
-            {/* Card */}
-            <div className={styles.card}>
-              <div className={styles.cardTop}>
-                <div className={styles.cardLeft}>
-                  {exp.isCurrent && (
-                    <span className={styles.currentBadge}>
-                      <span className={styles.currentDot} /> Current
+                <span
+                  className={[styles.dot, exp.isCurrent && styles.dotCurrent]
+                    .filter(Boolean)
+                    .join(" ")}
+                  aria-hidden="true"
+                />
+                <div className={styles.card} data-spotlight="">
+                  <button
+                    type="button"
+                    className={styles.cardHead}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => toggle(i)}
+                  >
+                    <span className={styles.mono} aria-hidden="true">
+                      {initials(exp.company)}
                     </span>
-                  )}
-                  <span className={styles.company}>{exp.company}</span>
-                  <span className={styles.location}>{exp.location}</span>
+                    <span className={styles.headMain}>
+                      <span className={styles.roleLine}>
+                        <span className={styles.role}>{exp.position}</span>
+                        {exp.isCurrent && (
+                          <span className={styles.current}>Current</span>
+                        )}
+                      </span>
+                      <span className={styles.company}>{exp.company}</span>
+                      <span className={styles.meta}>
+                        {fmtDate(exp.startDate)} —{" "}
+                        {exp.isCurrent ? "Present" : fmtDate(exp.endDate)}
+                        <span aria-hidden="true"> · </span>
+                        {calcDur(exp.startDate, exp.endDate)}
+                        <span aria-hidden="true"> · </span>
+                        {exp.location}
+                      </span>
+                      {exp.technologies.length > 0 && (
+                        <span className={styles.chips}>
+                          {exp.technologies.slice(0, 4).map((t) => (
+                            <span key={t} className={styles.chip}>
+                              {t}
+                            </span>
+                          ))}
+                        </span>
+                      )}
+                    </span>
+                    <span className={styles.chevron} aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path
+                          d="M6 9l6 6 6-6"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        id={panelId}
+                        className={styles.panel}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.45, ease: EASE }}
+                      >
+                        <div className={styles.panelInner}>
+                          <p className={styles.desc}>{exp.description}</p>
+                          {exp.achievements.length > 0 && (
+                            <ul className={styles.achievements}>
+                              {exp.achievements.map((a, j) => (
+                                <motion.li
+                                  key={j}
+                                  initial={
+                                    reduce ? false : { opacity: 0, x: -8 }
+                                  }
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{
+                                    duration: 0.4,
+                                    ease: EASE,
+                                    delay: 0.12 + j * 0.06,
+                                  }}
+                                >
+                                  {a}
+                                </motion.li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-                <span className={styles.dates}>
-                  {fmtDate(exp.startDate)} →{" "}
-                  {exp.isCurrent ? "Now" : fmtDate(exp.endDate)}
-                  <span className={styles.dur}>
-                    {calcDur(exp.startDate, exp.endDate)}
-                  </span>
-                </span>
-              </div>
-
-              <h3 className={styles.role}>{exp.position}</h3>
-              <p className={styles.desc}>{exp.description}</p>
-
-              {exp.achievements.length > 0 && (
-                <ul className={styles.achievements}>
-                  {exp.achievements.slice(0, 3).map((a, j) => (
-                    <li key={j}>{a}</li>
-                  ))}
-                </ul>
-              )}
-
-              {exp.technologies.length > 0 && (
-                <div className={styles.tags}>
-                  {exp.technologies.slice(0, 7).map((t) => (
-                    <Tag key={t} variant="accent">
-                      {t}
-                    </Tag>
-                  ))}
-                </div>
-              )}
-            </div>
-          </motion.article>
-        ))}
+              </motion.li>
+            );
+          })}
+        </ol>
       </div>
     </Section>
   );

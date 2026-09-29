@@ -1,54 +1,76 @@
 .page {
-  min-height: 80vh;
-  min-height: 80dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--container-pad);
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: var(--on-media);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay-scrim);
 }
 
 .content {
   display: flex;
-  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  padding: var(--space-13) var(--container-pad) var(--space-10);
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: var(--space-5);
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: var(--container-max);
 }
 
-.code {
-  color: var(--text-dim);
-  font-size: clamp(6rem, 15vw, 12rem);
-  font-weight: 800;
-  line-height: 1;
-  font-family: var(--font-display);
-  letter-spacing: -0.05em;
+.code,
+.coords {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.coords {
+  opacity: 0.7;
 }
 
 .title {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--on-media);
+  font-size: var(--text-3xl);
+  line-height: 0.86;
   letter-spacing: -0.03em;
 }
 
 .desc {
-  color: var(--text-muted);
-  font-size: 0.95rem;
+  max-width: 40ch;
+  color: var(--on-media-muted);
 }
 
 .link {
-  padding: var(--space-3) var(--space-6);
-  border: 1px solid var(--border);
-  color: var(--accent-1);
-  font-size: 0.85rem;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 var(--space-6);
+  border: 1px solid var(--on-media);
   font-family: var(--font-mono);
-  text-decoration: none;
-  border-radius: var(--radius-full);
-  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  transition:
+    background var(--dur-fast) ease,
+    color var(--dur-fast) ease;
 }
 
 .link:hover {
-  border-color: var(--accent-1);
-  background: var(--bg-elevated);
+  background: var(--on-media);
+  color: var(--media-cta-ink);
 }
