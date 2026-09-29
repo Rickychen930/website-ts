@@ -10,6 +10,8 @@ import { useSEO } from "@/hooks/useSEO";
 import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
 import styles from "./ProjectDetail.module.css";
 
+const STOCK_PHOTO = /(pexels|unsplash|pixabay)\.com/i;
+
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const Skeleton: React.FC = () => (
@@ -73,7 +75,10 @@ export const ProjectDetail: React.FC = () => {
   const next =
     projects.length > 1 ? projects[(idx + 1) % projects.length] : null;
   const nextPlate = next ? sitePlateForProject(ids, next.id) : null;
-  const screenshot = resolveProjectImageSrc(project.imageUrl);
+  // Stock photos aren't real interfaces — only show genuine screenshots
+  const screenshot = STOCK_PHOTO.test(project.imageUrl ?? "")
+    ? undefined
+    : resolveProjectImageSrc(project.imageUrl);
   const start = new Date(project.startDate).getFullYear();
   const end = project.endDate ? new Date(project.endDate).getFullYear() : null;
 

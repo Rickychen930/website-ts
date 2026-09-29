@@ -38,7 +38,7 @@ const FALLBACK_PROFILE: Profile = {
       degree: "Master of Artificial Intelligence",
       field: "Artificial Intelligence",
       startDate: "2025-07-01",
-      endDate: "2027-07-31",
+      endDate: "2027-06-30",
       description:
         "Current GPA: 6.63/7.00. Machine learning, deep learning and AI ethics.",
     },
@@ -105,19 +105,22 @@ const FALLBACK_PROFILE: Profile = {
       startDate: "2026-05-01",
       isCurrent: true,
       description:
-        "Build AI chatbot and text-summarisation workflows that improve information access.",
+        "Build production web apps and AI features — LLM chat, summarisation and intelligent workflows.",
       achievements: [
-        "Own features across the full SDLC, from design to release",
+        "Voice AI integration with ElevenLabs — system-prompt tuning lifted accuracy by 20%",
+        "Automation pipeline powered by Claude and n8n, integrated into the company website",
+        "Production web apps and internal platforms: REST APIs, auth and third-party services",
         "Structured prompting and output validation for reliable, secure AI",
-        "Git workflows, reusable components and clear documentation",
       ],
       technologies: [
         "Python",
-        "JavaScript",
-        "LLMs",
-        "Prompt Engineering",
-        "REST APIs",
-        "Git",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Claude",
+        "n8n",
+        "ElevenLabs",
+        "WordPress",
       ],
       skillIds: ["Python", "JavaScript", "Machine Learning"],
     },
@@ -131,8 +134,9 @@ const FALLBACK_PROFILE: Profile = {
       description:
         "Build responsive, conversion-focused digital solutions for an Australian IT services business.",
       achievements: [
+        "Designed and built an internal CRM to streamline workflows and data management",
         "Service pages and enquiry flows tuned for performance, accessibility and local SEO",
-        "Deployment, troubleshooting and ongoing improvements with stakeholders",
+        "IT policies, secure environments, deployment and troubleshooting",
       ],
       technologies: [
         "React",
@@ -214,6 +218,15 @@ const FALLBACK_PROFILE: Profile = {
   honors: [
     {
       id: "honor-1",
+      title:
+        "Kabisa App: iOS-Based Application for Learning Sundanese Script with Game-Based Learning",
+      issuer: "Research publication",
+      date: "",
+      description:
+        "Published research on a game-based iOS app for learning Sundanese script.",
+    },
+    {
+      id: "honor-2",
       title: "3rd Place – Competitive Programming",
       issuer: "Widyatama International Coding Competition",
       date: "2021-01-15",
@@ -221,13 +234,20 @@ const FALLBACK_PROFILE: Profile = {
         "Top 3 in a Southeast Asia-wide team contest (C++, Python, Java).",
     },
     {
-      id: "honor-2",
+      id: "honor-3",
       title: "Competitive Programming",
       issuer: "LeetCode · Kattis · Codeforces",
       date: "2024-01-01",
       description:
         "Codeforces Specialist (1450) · 500+ Kattis problems · 84+ on LeetCode.",
       url: "https://codeforces.com/profile/rickychen930",
+    },
+    {
+      id: "honor-4",
+      title: "Freshmen Leader & Partner",
+      issuer: "BINUS University",
+      date: "2020-09-01",
+      description: "Mentored 8 first-year students through their first year.",
     },
   ],
   projects: [
@@ -1104,9 +1124,287 @@ const FALLBACK_PROFILE: Profile = {
       description: "Users impacted by applications I've worked on",
     },
   ],
-  languages: DUMMY_HUMAN_LANGUAGES.map((l) => ({ ...l })),
-  technicalSkills: DUMMY_TECHNICAL_SKILLS.map((s) => ({ ...s })),
-  testimonials: DUMMY_TESTIMONIALS.map((t) => ({ ...t })),
+  languages: [
+    {
+      id: "lang-1",
+      name: "Bahasa Indonesia",
+      proficiency: "native",
+    },
+    {
+      id: "lang-2",
+      name: "English",
+      proficiency: "professional",
+    },
+  ],
+  technicalSkills: [
+    {
+      id: "skill-1",
+      name: "Python",
+      category: "language",
+      proficiency: "advanced",
+      yearsOfExperience: 4,
+    },
+    {
+      id: "skill-2",
+      name: "Swift",
+      category: "language",
+      proficiency: "advanced",
+      yearsOfExperience: 3,
+    },
+    {
+      id: "skill-3",
+      name: "JavaScript",
+      category: "language",
+      proficiency: "advanced",
+      yearsOfExperience: 3,
+    },
+    {
+      id: "skill-4",
+      name: "TypeScript",
+      category: "language",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-5",
+      name: "C",
+      category: "language",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-6",
+      name: "C++",
+      category: "language",
+      proficiency: "advanced",
+      yearsOfExperience: 4,
+    },
+    {
+      id: "skill-7",
+      name: "Java",
+      category: "language",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-8",
+      name: "PHP",
+      category: "language",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-9",
+      name: "React",
+      category: "framework",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-10",
+      name: "Node.js",
+      category: "framework",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-11",
+      name: "Express.js",
+      category: "framework",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-12",
+      name: "SwiftUI",
+      category: "framework",
+      proficiency: "advanced",
+      yearsOfExperience: 3,
+    },
+    {
+      id: "skill-13",
+      name: "UIKit",
+      category: "framework",
+      proficiency: "advanced",
+      yearsOfExperience: 3,
+    },
+    {
+      id: "skill-14",
+      name: "OpenCV",
+      category: "framework",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-15",
+      name: "WordPress",
+      category: "framework",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-16",
+      name: "MongoDB",
+      category: "database",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-17",
+      name: "MySQL",
+      category: "database",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-18",
+      name: "SQLite",
+      category: "database",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-19",
+      name: "Git",
+      category: "tool",
+      proficiency: "advanced",
+      yearsOfExperience: 4,
+    },
+    {
+      id: "skill-20",
+      name: "GitHub",
+      category: "tool",
+      proficiency: "advanced",
+      yearsOfExperience: 4,
+    },
+    {
+      id: "skill-21",
+      name: "Docker",
+      category: "tool",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-22",
+      name: "RESTful APIs",
+      category: "tool",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-23",
+      name: "Arduino",
+      category: "tool",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-24",
+      name: "iOS Development",
+      category: "other",
+      proficiency: "advanced",
+      yearsOfExperience: 3,
+    },
+    {
+      id: "skill-25",
+      name: "Machine Learning",
+      category: "other",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-26",
+      name: "Computer Vision",
+      category: "other",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-27",
+      name: "IoT Development",
+      category: "other",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-28",
+      name: "Competitive Programming",
+      category: "other",
+      proficiency: "advanced",
+      yearsOfExperience: 4,
+    },
+    {
+      id: "skill-29",
+      name: "Backend Development",
+      category: "other",
+      proficiency: "advanced",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-30",
+      name: "SQL",
+      category: "language",
+      proficiency: "advanced",
+      yearsOfExperience: 4,
+    },
+    {
+      id: "skill-31",
+      name: "LLM Applications",
+      category: "other",
+      proficiency: "advanced",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-32",
+      name: "Prompt Engineering",
+      category: "other",
+      proficiency: "advanced",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-33",
+      name: "Pandas / NumPy",
+      category: "framework",
+      proficiency: "intermediate",
+      yearsOfExperience: 2,
+    },
+    {
+      id: "skill-34",
+      name: "scikit-learn",
+      category: "framework",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-35",
+      name: "TensorFlow / Keras",
+      category: "framework",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-36",
+      name: "Azure",
+      category: "cloud",
+      proficiency: "beginner",
+      yearsOfExperience: 1,
+    },
+    {
+      id: "skill-37",
+      name: "Postman",
+      category: "tool",
+      proficiency: "advanced",
+      yearsOfExperience: 3,
+    },
+    {
+      id: "skill-38",
+      name: "KNIME",
+      category: "tool",
+      proficiency: "intermediate",
+      yearsOfExperience: 1,
+    },
+  ],
+  testimonials: [],
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
@@ -1263,7 +1561,8 @@ export class ProfileService {
         }
 
         const supplementVisualLists =
-          process.env.REACT_APP_SUPPLEMENT_EMPTY_PROFILE_LISTS !== "false";
+          // Opt-in only: dummy lists must never appear on a real portfolio
+          process.env.REACT_APP_SUPPLEMENT_EMPTY_PROFILE_LISTS === "true";
         if (supplementVisualLists) {
           const missing: string[] = [];
           if (!profilePayload.technicalSkills?.length) {
@@ -1290,7 +1589,7 @@ export class ProfileService {
           if (missing.length > 0) {
             console.warn(
               `[ProfileService] Profile from API missing ${missing.join(", ")} — using bundled dummy stack, spoken languages, and/or testimonials. ` +
-                "Set REACT_APP_SUPPLEMENT_EMPTY_PROFILE_LISTS=false to keep empty lists.",
+                "Unset REACT_APP_SUPPLEMENT_EMPTY_PROFILE_LISTS to keep empty lists.",
             );
           }
         }

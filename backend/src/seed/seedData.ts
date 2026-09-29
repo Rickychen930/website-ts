@@ -19,7 +19,7 @@ export const seedProfileData = {
       degree: "Master of Artificial Intelligence",
       field: "Artificial Intelligence",
       startDate: "2025-07-01",
-      endDate: "2027-07-31",
+      endDate: "2027-06-30",
       description:
         "Current GPA: 6.63/7.00. Machine learning, deep learning and AI ethics.",
     },
@@ -91,19 +91,22 @@ export const seedProfileData = {
       startDate: "2026-05-01",
       isCurrent: true,
       description:
-        "Build AI chatbot and text-summarisation workflows that improve information access.",
+        "Build production web apps and AI features — LLM chat, summarisation and intelligent workflows.",
       achievements: [
-        "Own features across the full SDLC, from design to release",
+        "Voice AI integration with ElevenLabs — system-prompt tuning lifted accuracy by 20%",
+        "Automation pipeline powered by Claude and n8n, integrated into the company website",
+        "Production web apps and internal platforms: REST APIs, auth and third-party services",
         "Structured prompting and output validation for reliable, secure AI",
-        "Git workflows, reusable components and clear documentation",
       ],
       technologies: [
         "Python",
-        "JavaScript",
-        "LLMs",
-        "Prompt Engineering",
-        "REST APIs",
-        "Git",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Claude",
+        "n8n",
+        "ElevenLabs",
+        "WordPress",
       ],
       skillIds: ["Python", "JavaScript", "Machine Learning"],
     },
@@ -116,8 +119,9 @@ export const seedProfileData = {
       description:
         "Build responsive, conversion-focused digital solutions for an Australian IT services business.",
       achievements: [
+        "Designed and built an internal CRM to streamline workflows and data management",
         "Service pages and enquiry flows tuned for performance, accessibility and local SEO",
-        "Deployment, troubleshooting and ongoing improvements with stakeholders",
+        "IT policies, secure environments, deployment and troubleshooting",
       ],
       technologies: [
         "React",
@@ -196,6 +200,14 @@ export const seedProfileData = {
 
   honors: [
     {
+      title:
+        "Kabisa App: iOS-Based Application for Learning Sundanese Script with Game-Based Learning",
+      issuer: "Research publication",
+      date: "",
+      description:
+        "Published research on a game-based iOS app for learning Sundanese script.",
+    },
+    {
       title: "3rd Place – Competitive Programming",
       issuer: "Widyatama International Coding Competition",
       date: "2021-01-15",
@@ -209,6 +221,12 @@ export const seedProfileData = {
       description:
         "Codeforces Specialist (1450) · 500+ Kattis problems · 84+ on LeetCode.",
       url: "https://codeforces.com/profile/rickychen930",
+    },
+    {
+      title: "Freshmen Leader & Partner",
+      issuer: "BINUS University",
+      date: "2020-09-01",
+      description: "Mentored 8 first-year students through their first year.",
     },
   ],
 
