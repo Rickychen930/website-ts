@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
 import type { FlowMediaItem } from "@/config/flowMedia";
 import type { Project } from "@/types/domain";
+import { PROJECT_CATEGORY_LABEL } from "@/config/site-defaults";
 import styles from "./WorkCard.module.css";
 
 interface WorkCardProps {
@@ -40,7 +41,9 @@ export const WorkCard: React.FC<WorkCardProps> = ({
         </span>
       </div>
       <div className={styles.meta}>
-        <span className={styles.category}>{project.category}</span>
+        <span className={styles.category}>
+          {PROJECT_CATEGORY_LABEL[project.category]}
+        </span>
         <span className={styles.year}>
           {project.isActive && (
             <span className={styles.live} aria-hidden="true" />

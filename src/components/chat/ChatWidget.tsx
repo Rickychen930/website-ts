@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "@/lib/motion";
 import { chatService, CHAT_MAX_LENGTH } from "@/services/ChatService";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { ChatMessageText } from "./ChatMessageText";
+import { useChatViewport } from "./useChatViewport";
 import { MascotAvatar } from "./MascotAvatar";
 import {
   loadChat,
@@ -108,27 +109,8 @@ export const ChatWidget: React.FC = () => {
     if (list) list.scrollTo({ top: list.scrollHeight, behavior: "smooth" });
   }, [messages, busy, open]);
 
-  // Phone sheet: lock page scroll and follow the visual viewport (keyboard)
-  useEffect(() => {
-    if (!open || !phone) return;
-    const root = document.documentElement;
-    const vv = window.visualViewport;
-    const sync = () =>
-      root.style.setProperty(
-        "--kobi-vvh",
-        `${vv?.height ?? window.innerHeight}px`,
-      );
-    sync();
-    vv?.addEventListener("resize", sync);
-    root.classList.add(styles.scrollLock);
-    window.__lenis?.stop();
-    return () => {
-      vv?.removeEventListener("resize", sync);
-      root.classList.remove(styles.scrollLock);
-      root.style.removeProperty("--kobi-vvh");
-      window.__lenis?.start();
-    };
-  }, [open, phone]);
+  // Phone sheet: lock page scroll and ride on top of the on-screen keyboard
+  useChatViewport(open && phone, panelRef, listRef, styles.scrollLock);
 
   // Focus management + Esc to close
   useEffect(() => {
@@ -372,6 +354,12 @@ export const ChatWidget: React.FC = () => {
           />
           <button
             type="submit"
+            // Keep the textarea focused so the phone keyboard doesn't drop
+            // and the sheet jump between messages
+            onPointerDown={(e) => {
+              if (document.activeElement === inputRef.current)
+                e.preventDefault();
+            }}
             className={styles.send}
             disabled={busy || !input.trim()}
             aria-label="Send message"

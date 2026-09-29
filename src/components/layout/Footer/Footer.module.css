@@ -6,6 +6,7 @@
 }
 
 .inner {
+  container-type: inline-size;
   margin: 0 auto;
   padding: 0 var(--container-pad);
   max-width: var(--container-max);
@@ -51,7 +52,9 @@
 .wordmark {
   margin: var(--space-11) 0 var(--space-6);
   background: var(--hl-gradient);
-  font-size: clamp(3rem, 12.4vw, 11.5rem);
+
+  /* Sized to the container so the name always spans it without clipping */
+  font-size: 14cqi;
   font-weight: 800;
   line-height: 0.85;
   font-family: var(--font-display);
@@ -83,12 +86,23 @@
 }
 
 @media (width <= 640px) {
+  /* Link lists side by side; prose spans the full width */
   .grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-7);
+    gap: var(--space-7) var(--space-5);
   }
 
+  .col:nth-child(n + 3) {
+    grid-column: 1 / -1;
+  }
+
+  .text {
+    max-width: none;
+  }
+
+  /* Clear the chat launcher parked in the corner */
   .bottom {
     flex-direction: column;
+    gap: var(--space-2);
+    padding-bottom: calc(56px + var(--space-6));
   }
 }

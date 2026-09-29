@@ -88,22 +88,18 @@ const ChatWidget = React.lazy(() =>
   import("@/components/chat").then((m) => ({ default: m.ChatWidget })),
 );
 
+/* Same deep navy as the intro curtain, so loading hands off without a flash */
 const Spinner: React.FC = () => (
   <div
+    role="status"
+    aria-label="Loading"
     style={{
-      minHeight: "100dvh",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "var(--text-dim)",
-      fontFamily: "var(--font-mono)",
-      fontSize: "0.7rem",
-      letterSpacing: "0.14em",
-      textTransform: "uppercase",
+      position: "fixed",
+      inset: 0,
+      zIndex: "var(--z-curtain)" as unknown as number,
+      background: "var(--bg-deep)",
     }}
-  >
-    Surveying the site…
-  </div>
+  />
 );
 
 const AppContent: React.FC = () => {

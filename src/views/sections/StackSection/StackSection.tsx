@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
 import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
+import { Button } from "@/components/ui/Button/Button";
 import { FLOW_MEDIA } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import type { TechnicalSkill } from "@/types/domain";
@@ -26,6 +27,9 @@ const LEVEL: Record<TechnicalSkill["proficiency"], number> = {
   beginner: 1,
 };
 
+/** Top skills per group before "Show all" — keeps the scan short */
+const PREVIEW = 5;
+
 type Item = Pick<TechnicalSkill, "name" | "category" | "proficiency">;
 
 const FALLBACK: Item[] = [
@@ -45,6 +49,7 @@ const FALLBACK: Item[] = [
 
 export const StackSection: React.FC = () => {
   const { profile } = useProfile();
+  const [showAll, setShowAll] = useState(false);
   const skills: readonly Item[] = profile?.technicalSkills?.length
     ? profile.technicalSkills
     : FALLBACK;
@@ -53,6 +58,10 @@ export const StackSection: React.FC = () => {
     ...g,
     items: skills.filter((s) => s.category === g.key),
   })).filter((g) => g.items.length > 0);
+  const hidden = groups.reduce(
+    (n, g) => n + Math.max(0, g.items.length - PREVIEW),
+    0,
+  );
 
   return (
     <Section id="stack" label="Skills">
@@ -107,7 +116,7 @@ export const StackSection: React.FC = () => {
                   <span>{g.label}</span>
                 </div>
                 <ul className={styles.items}>
-                  {g.items.map((s) => (
+                  {(showAll ? g.items : g.items.slice(0, PREVIEW)).map((s) => (
                     <li key={s.name} className={styles.item}>
                       <span>{s.name}</span>
                       <span
@@ -133,6 +142,16 @@ export const StackSection: React.FC = () => {
               </motion.div>
             ))}
           </div>
+          {hidden > 0 && (
+            <Button
+              variant="ghost"
+              className={styles.more}
+              aria-expanded={showAll}
+              onClick={() => setShowAll((v) => !v)}
+            >
+              {showAll ? "Show fewer" : `Show all ${skills.length} skills`}
+            </Button>
+          )}
         </div>
       </div>
     </Section>

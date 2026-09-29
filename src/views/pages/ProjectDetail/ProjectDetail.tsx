@@ -8,6 +8,7 @@ import { sitePlateForProject } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import { useSEO } from "@/hooks/useSEO";
 import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
+import { PROJECT_CATEGORY_LABEL } from "@/config/site-defaults";
 import styles from "./ProjectDetail.module.css";
 
 const STOCK_PHOTO = /(pexels|unsplash|pixabay)\.com/i;
@@ -83,7 +84,7 @@ export const ProjectDetail: React.FC = () => {
   const end = project.endDate ? new Date(project.endDate).getFullYear() : null;
 
   const facts = [
-    { k: "Discipline", v: project.category },
+    { k: "Discipline", v: PROJECT_CATEGORY_LABEL[project.category] },
     {
       k: "Period",
       v:
