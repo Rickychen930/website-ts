@@ -7,33 +7,20 @@ const fs = require("fs");
 const path = require("path");
 
 // Get base URL from environment or use default.
-// Production build (prebuild) should set REACT_APP_SITE_URL or NODE_ENV=production so sitemap uses production domain.
+// Override with REACT_APP_SITE_URL for another domain.
 const getBaseUrl = () => {
   if (process.env.REACT_APP_SITE_URL) {
     return process.env.REACT_APP_SITE_URL.replace(/\/$/, "");
   }
-  if (process.env.REACT_APP_API_URL) {
-    const apiUrl = process.env.REACT_APP_API_URL;
-    if (apiUrl.includes("/api")) {
-      return apiUrl.replace("/api", "").replace(/\/$/, "");
-    }
-    return apiUrl.replace(/\/$/, "");
-  }
-  if (process.env.NODE_ENV === "production") {
-    return "https://rickychen930.cloud";
-  }
-  return "http://localhost:3000";
+  // Committed sitemap must never point at localhost
+  return "https://rickychen930.cloud";
 };
 
 // Define all routes
 const routes = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/projects", priority: "0.9", changefreq: "weekly" },
-  { path: "/experience", priority: "0.9", changefreq: "weekly" },
-  { path: "/contact", priority: "0.8", changefreq: "monthly" },
   { path: "/resume", priority: "0.8", changefreq: "weekly" },
-  { path: "/privacy", priority: "0.5", changefreq: "monthly" },
-  { path: "/terms", priority: "0.5", changefreq: "monthly" },
 ];
 
 // Generate sitemap XML

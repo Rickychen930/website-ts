@@ -37,14 +37,15 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Ricky Chen — Software Engineer · AI &amp; Full-Stack Developer, Sydney" />
     <meta property="og:description" content="Sydney-based software engineer and Master of AI candidate (UTS). Ex-Samsung R&amp;D. Builds LLM chatbots, AI workflows and full-stack platforms with React, TypeScript, Node.js and Python." />
-    <meta property="og:image" content="%PUBLIC_URL%/media/flow/hero-uluru-dawn.jpg" />
+    <meta property="og:image" content="https://rickychen930.cloud/media/flow/hero-uluru-dawn.jpg" />
+    <meta property="og:url" content="https://rickychen930.cloud/" />
     <meta property="og:site_name" content="Ricky Chen" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Ricky Chen — Software Engineer · AI &amp; Full-Stack Developer, Sydney" />
     <meta property="twitter:description" content="Sydney-based software engineer and Master of AI candidate (UTS). Ex-Samsung R&amp;D. Builds LLM chatbots, AI workflows and full-stack platforms with React, TypeScript, Node.js and Python." />
-    <meta property="twitter:image" content="%PUBLIC_URL%/media/flow/hero-uluru-dawn.jpg" />
+    <meta property="twitter:image" content="https://rickychen930.cloud/media/flow/hero-uluru-dawn.jpg" />
     
     <!-- Additional Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes" />
@@ -67,7 +68,32 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <!-- Canonical: set your production URL in deployment or use same-origin default -->
-    <link rel="canonical" href="/" />
+    <link rel="canonical" href="https://rickychen930.cloud/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ricky Chen",
+        "jobTitle": "Software Engineer · AI & Full-Stack Developer",
+        "url": "https://rickychen930.cloud/",
+        "image": "https://rickychen930.cloud/logo512.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Sydney",
+          "addressRegion": "NSW",
+          "addressCountry": "AU"
+        },
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "University of Technology Sydney" },
+          { "@type": "CollegeOrUniversity", "name": "BINUS University" }
+        ],
+        "knowsAbout": ["Software Engineering", "Artificial Intelligence", "LLM Applications", "Full-Stack Development", "TypeScript", "React", "Node.js", "Python"],
+        "sameAs": [
+          "https://www.linkedin.com/in/rickychen930",
+          "https://github.com/Rickychen930"
+        ]
+      }
+    </script>
   </head>
   <body>
     <!-- SVG filters: noise (paper grain) + paper wrinkle -->

@@ -70,11 +70,13 @@ export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
         .filter(Boolean)
         .join(" ")}
       style={pinned ? { height: `calc(100vh + ${distance}px)` } : undefined}
+      role={ariaLabel ? "region" : undefined}
       aria-label={ariaLabel}
     >
       <div className={styles.sticky}>
         {header && <div className={styles.header}>{header}</div>}
-        <div className={styles.viewport}>
+        {/* Native-scroll fallback must be keyboard reachable */}
+        <div className={styles.viewport} tabIndex={pinned ? undefined : 0}>
           <motion.div
             ref={trackRef}
             className={styles.track}

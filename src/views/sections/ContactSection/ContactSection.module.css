@@ -119,7 +119,7 @@
 
 .emailText {
   overflow-wrap: anywhere;
-  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(1rem, 4.4vw, 2rem);
   font-weight: 800;
   letter-spacing: -0.02em;
 }

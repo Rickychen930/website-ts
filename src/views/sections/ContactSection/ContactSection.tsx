@@ -97,7 +97,7 @@ export const ContactSection: React.FC = () => {
           <RevealText
             as="h2"
             className={styles.heading}
-            lines={["Let’s build something", <em key="s">worth visiting.</em>]}
+            lines={["Let’s build", <em key="s">something great.</em>]}
           />
 
           <p className={styles.sub}>

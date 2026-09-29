@@ -112,6 +112,7 @@ export const StackSection: React.FC = () => {
                       <span>{s.name}</span>
                       <span
                         className={styles.level}
+                        role="img"
                         aria-label={`Proficiency: ${s.proficiency}`}
                         title={s.proficiency}
                       >
