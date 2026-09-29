@@ -137,7 +137,7 @@ export const Projects: React.FC = () => {
               <WorkCard
                 key={project.id}
                 project={project}
-                plate={sitePlateForProject(ids, project.id)}
+                plate={sitePlateForProject(ids, project.id, project.title)}
                 shape={SHAPES[i % SHAPES.length]}
                 className={styles[`col${i % 3}`]}
               />
@@ -146,7 +146,7 @@ export const Projects: React.FC = () => {
         ) : (
           <ol className={styles.index} key={`i-${filter}`}>
             {filtered.map((project, i) => {
-              const plate = sitePlateForProject(ids, project.id);
+              const plate = sitePlateForProject(ids, project.id, project.title);
               return (
                 <motion.li
                   key={project.id}

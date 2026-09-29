@@ -336,7 +336,12 @@ export const sitePlateFor = (index: number): FlowMediaItem =>
 export const sitePlateForProject = (
   projectIds: readonly string[],
   projectId: string,
-): FlowMediaItem => sitePlateFor(Math.max(0, projectIds.indexOf(projectId)));
+  title = "",
+): FlowMediaItem =>
+  // The chatbot project wears its own mascot instead of a landscape
+  /^kobi\b/i.test(title)
+    ? MASCOT.avatar
+    : sitePlateFor(Math.max(0, projectIds.indexOf(projectId)));
 
 /** Place & species names for marquee ribbons */
 export const PLACE_NAMES = [

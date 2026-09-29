@@ -81,7 +81,7 @@ export const ProjectsSection: React.FC = () => {
               <WorkCard
                 key={project.id}
                 project={project}
-                plate={sitePlateForProject(ids, project.id)}
+                plate={sitePlateForProject(ids, project.id, project.title)}
                 shape={slot.shape}
                 className={styles[slot.cls]}
               />

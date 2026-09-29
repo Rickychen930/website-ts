@@ -71,10 +71,10 @@ export const ProjectDetail: React.FC = () => {
 
   const ids = projects.map((p) => p.id);
   const idx = ids.indexOf(project.id);
-  const plate = sitePlateForProject(ids, project.id);
+  const plate = sitePlateForProject(ids, project.id, project.title);
   const next =
     projects.length > 1 ? projects[(idx + 1) % projects.length] : null;
-  const nextPlate = next ? sitePlateForProject(ids, next.id) : null;
+  const nextPlate = next ? sitePlateForProject(ids, next.id, next.title) : null;
   // Stock photos aren't real interfaces — only show genuine screenshots
   const screenshot = STOCK_PHOTO.test(project.imageUrl ?? "")
     ? undefined

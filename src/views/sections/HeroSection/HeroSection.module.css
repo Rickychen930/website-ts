@@ -339,3 +339,15 @@
 a:hover > .arrow {
   transform: translateX(4px);
 }
+
+/* Keep proof chips to two rows on phones */
+@media (width <= 640px) {
+  .proof {
+    gap: 6px;
+  }
+
+  .proof li {
+    padding: 4px 10px;
+    font-size: var(--text-xs);
+  }
+}

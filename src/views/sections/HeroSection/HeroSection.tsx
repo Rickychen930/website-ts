@@ -16,11 +16,7 @@ import styles from "./HeroSection.module.css";
 
 const SKY = FLOW_MEDIA.heroUluru;
 const RESUME_PDF = "/Ricky-Chen-Resume-2026.pdf";
-const HIGHLIGHTS = [
-  "Ex-Samsung R&D",
-  "MSc AI · UTS · GPA 6.63/7",
-  "300+ production commits",
-];
+const HIGHLIGHTS = ["Ex-Samsung R&D", "MSc AI · UTS · GPA 6.63/7"];
 
 const GitHubIcon = () => (
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -82,6 +78,14 @@ export const HeroSection: React.FC = () => {
     (c) => c.type === "github" || c.type === "linkedin",
   );
 
+  // Latest current role leads the proof chips — the first thing recruiters look for
+  const current = (profile?.experiences ?? [])
+    .filter((e) => e.isCurrent)
+    .sort((a, b) => b.startDate.localeCompare(a.startDate))[0];
+  const highlights = current
+    ? [`Now at ${current.company}`, ...HIGHLIGHTS]
+    : [...HIGHLIGHTS, "300+ production commits"];
+
   const still = (v: unknown) => (reduce ? undefined : v);
 
   return (
@@ -120,7 +124,7 @@ export const HeroSection: React.FC = () => {
           <p className={styles.role}>{role}</p>
           <p className={styles.tagline}>{tagline}</p>
           <ul className={styles.proof} aria-label="Highlights">
-            {HIGHLIGHTS.map((h) => (
+            {highlights.map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
