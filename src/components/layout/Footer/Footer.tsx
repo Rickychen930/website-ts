@@ -1,5 +1,6 @@
 import React from "react";
 import { useProfile } from "@/contexts";
+import { WORK_RIGHTS } from "@/config/site-defaults";
 import styles from "./Footer.module.css";
 
 const INDEX_LINKS = [
@@ -62,6 +63,8 @@ export const Footer: React.FC = () => {
               Sydney, NSW, Australia
               <br />
               Open to on-site, hybrid or remote
+              <br />
+              {WORK_RIGHTS.short}
             </p>
           </div>
           <div className={styles.col}>

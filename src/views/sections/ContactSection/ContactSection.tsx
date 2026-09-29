@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { FLOW_MEDIA } from "@/config/flowMedia";
 import { contactService } from "@/services/ContactService";
 import { useProfile } from "@/contexts";
+import { WORK_RIGHTS } from "@/config/site-defaults";
 import styles from "./ContactSection.module.css";
 
 const BG = FLOW_MEDIA.harbourNight;
@@ -103,6 +104,7 @@ export const ContactSection: React.FC = () => {
             Open to software engineering, AI and full-stack roles in Sydney or
             remote — and to freelance projects.
           </p>
+          <p className={styles.rights}>{WORK_RIGHTS.detail}</p>
 
           <button
             type="button"

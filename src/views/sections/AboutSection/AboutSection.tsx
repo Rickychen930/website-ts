@@ -25,8 +25,8 @@ const Icon: React.FC<{ d: string }> = ({ d }) => (
 const DISCIPLINES = [
   {
     title: "AI applications",
-    desc: "LLM chatbots and summarisation, with validated, reliable output.",
-    tools: ["Python", "LLMs", "TensorFlow", "scikit-learn"],
+    desc: "Production LLM chatbots and summarisation — structured prompts, validated output.",
+    tools: ["Python", "LLM APIs", "Prompt engineering", "TensorFlow"],
     icon: "M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0",
   },
   {

@@ -302,6 +302,27 @@ const INTENTS: Intent[] = [
     }),
   },
   {
+    id: "work_rights",
+    patterns: [
+      "visa",
+      "work rights",
+      "sponsorship",
+      "sponsor",
+      "citizen",
+      "pr",
+      "permanent resident",
+      "485",
+      "graduate visa",
+      "eligible to work",
+      "right to work",
+    ],
+    answer: () => ({
+      reply:
+        "Ricky is on a student visa with work rights until July 2027, then moving to a Temporary Graduate visa (subclass 485) — full work rights, no sponsorship needed.",
+      chips: ["Is he open to work?", "How do I contact him?"],
+    }),
+  },
+  {
     id: "contact",
     patterns: [
       "contact",

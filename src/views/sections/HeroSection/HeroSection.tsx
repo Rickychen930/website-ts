@@ -112,7 +112,7 @@ export const HeroSection: React.FC = () => {
             <span className={styles.statusDot} aria-hidden="true" />
             {profile?.openToOpportunities === false
               ? "Based in Sydney, Australia"
-              : "Open to work · Sydney, Australia"}
+              : "Open to work · Sydney · Full work rights Jul 2027"}
           </span>
           <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
             <RevealText lines={[name]} as="span" immediate delay={0.9} />

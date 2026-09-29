@@ -81,6 +81,16 @@
   background-clip: text;
 }
 
+.rights {
+  max-width: 52ch;
+  margin: calc(-1 * var(--space-5)) auto var(--space-7);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--media-glass-border);
+  border-radius: var(--radius-md);
+  color: var(--on-media);
+  font-size: var(--text-sm);
+}
+
 .sub {
   max-width: 44ch;
   margin-bottom: var(--space-7);

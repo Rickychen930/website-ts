@@ -16,3 +16,10 @@ export const CONTACT_SEO_DESCRIPTION =
 
 export const sitePageTitle = (page: string): string =>
   `${page} | ${SITE_SEO_TITLE_SUFFIX}`;
+
+/** Australian work rights — shown where recruiters look (contact, résumé, footer) */
+export const WORK_RIGHTS = {
+  short: "Full work rights from Jul 2027 · no sponsorship needed",
+  detail:
+    "Student visa with work rights until July 2027, then moving to a Temporary Graduate visa (subclass 485) — full work rights, no sponsorship needed.",
+};

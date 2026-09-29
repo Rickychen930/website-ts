@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { useProfile } from "@/contexts";
 import { useSEO } from "@/hooks/useSEO";
+import { WORK_RIGHTS } from "@/config/site-defaults";
 import styles from "./Resume.module.css";
 
 const Skeleton: React.FC = () => (
@@ -83,7 +84,7 @@ export const Resume: React.FC = () => {
                 "Software Engineer · AI & Full-Stack Developer"}
             </p>
             <p className={styles.location}>
-              {profile?.location ?? "Sydney, Australia"}
+              {profile?.location ?? "Sydney, Australia"} · {WORK_RIGHTS.short}
               {email && (
                 <>
                   {" · "}
