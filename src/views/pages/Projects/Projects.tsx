@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "@/lib/motion";
 import { WorkCard } from "@/components/domain/WorkCard/WorkCard";
-import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
-import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
-import { FLOW_MEDIA, sitePlateForProject } from "@/config/flowMedia";
+import { ProjectCover } from "@/components/domain/ProjectCover/ProjectCover";
 import { useProfile } from "@/contexts";
 import { useSEO } from "@/hooks/useSEO";
 import type { Project } from "@/types/domain";
@@ -54,7 +52,6 @@ export const Projects: React.FC = () => {
   if (isLoading) return <Skeleton />;
 
   const all = profile?.projects ?? [];
-  const ids = all.map((p) => p.id);
   const filtered =
     filter === "all" ? all : all.filter((p) => p.category === filter);
   const available = FILTERS.filter(
@@ -83,14 +80,6 @@ export const Projects: React.FC = () => {
             filter by discipline or switch to a compact list.
           </p>
         </header>
-
-        <RevealMedia
-          item={FLOW_MEDIA.kataTjuta}
-          frameClassName={styles.heroFrame}
-          parallax={20}
-          priority
-          delay={0.7}
-        />
 
         <div className={styles.toolbar}>
           <div
@@ -138,7 +127,6 @@ export const Projects: React.FC = () => {
               <WorkCard
                 key={project.id}
                 project={project}
-                plate={sitePlateForProject(ids, project.id, project.title)}
                 shape={SHAPES[i % SHAPES.length]}
                 className={styles[`col${i % 3}`]}
               />
@@ -147,7 +135,6 @@ export const Projects: React.FC = () => {
         ) : (
           <ol className={styles.index} key={`i-${filter}`}>
             {filtered.map((project, i) => {
-              const plate = sitePlateForProject(ids, project.id, project.title);
               return (
                 <motion.li
                   key={project.id}
@@ -164,7 +151,7 @@ export const Projects: React.FC = () => {
                       {new Date(project.startDate).getFullYear()}
                     </span>
                     <span className={styles.thumb} aria-hidden="true">
-                      <FlowMedia item={plate} showPendingLabel={false} />
+                      <ProjectCover project={project} />
                     </span>
                     <span className={styles.rowTitle}>{project.title}</span>
                     <span className={styles.rowMeta}>

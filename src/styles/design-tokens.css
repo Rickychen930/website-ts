@@ -1,81 +1,97 @@
-/* Design Tokens — "Terra Australis", built on the Web Architech (w26) language.
- * Deep Sea navy is the default; `.light` (and `.band-sand`) switch to the
- * Sandy Shore palette. Vivid Australian accents: reef turquoise, wattle gold,
- * Uluru sunset orange, waratah pink.
+/* Design Tokens — "Graphite Signal".
+ * Near-black graphite is the default; `.light` (and `.band-sand`) switch to
+ * a warm paper palette. One accent per job: electric lime for CTAs and
+ * highlights, violet for links and labels, a violet→sky gradient reserved
+ * for headline emphasis.
  */
 
 :root {
   /* Surfaces */
-  --bg-base: #0b2545; /* ocean navy */
-  --bg-surface: #10325c; /* raised */
-  --bg-elevated: #164173;
-  --bg-deep: #071a33;
-  --bg-inverse: #fff4e2; /* sandy shore */
+  --bg-base: #0a0a0c; /* graphite */
+  --bg-surface: #121216; /* raised */
+  --bg-elevated: #1a1a21;
+  --bg-deep: #060608;
+  --bg-inverse: #f4f3ee; /* paper */
 
   /* Ink */
-  --text-primary: #f4f6f6;
-  --text-muted: rgba(244, 246, 246, 0.78);
-  --text-dim: rgba(170, 200, 235, 0.75);
-  --text-inverse: #0b2545;
+  --text-primary: #f5f5f4;
+  --text-muted: rgba(245, 245, 244, 0.74);
+  --text-dim: rgba(245, 245, 244, 0.56);
+  --text-inverse: #0a0a0c;
 
   /* Accents */
-  --accent-1: #2ec4b6; /* reef turquoise — eyebrows, ticks, links */
-  --accent-2: #ffb627; /* wattle gold */
-  --accent-3: #ff6b35; /* Uluru sunset */
-  --accent-4: #ff4f79; /* waratah pink */
-  --accent-glow: rgba(46, 196, 182, 0.22);
-  --accent-glow-2: rgba(255, 107, 53, 0.18);
-  --hl-gradient: linear-gradient(100deg, #ffd166 0%, #ff8a3d 45%, #ff4f79 100%);
+  --accent-1: #a78bfa; /* violet — eyebrows, links, ticks */
+  --accent-2: #c6f432; /* electric lime — CTA, highlights */
+  --accent-3: #60a5fa; /* sky */
+  --accent-4: #f472b6; /* pink */
+  --accent-glow: rgba(167, 139, 250, 0.22);
+  --accent-glow-2: rgba(198, 244, 50, 0.14);
+  --hl-gradient: linear-gradient(100deg, #d8ccff 0%, #a78bfa 40%, #60a5fa 100%);
   --gradient-text: var(--hl-gradient);
-  --eyebrow-rule: linear-gradient(90deg, #ffb627, #2ec4b6);
+  --eyebrow-rule: linear-gradient(90deg, #c6f432, #a78bfa);
 
   /* CTA */
-  --cta-bg: #ffb627;
-  --cta-hover: #ffc857;
-  --cta-ink: #0b2545;
-  --cta-shadow: 0 12px 32px -12px rgba(255, 182, 39, 0.55);
+  --cta-bg: #c6f432;
+  --cta-hover: #d6ff5c;
+  --cta-ink: #0a0a0c;
+  --cta-shadow: 0 12px 32px -12px rgba(198, 244, 50, 0.45);
 
   /* Glass */
-  --glass-fill: rgba(170, 200, 235, 0.08);
-  --glass-fill-strong: rgba(11, 37, 69, 0.86);
-  --glass-nav: rgba(11, 37, 69, 0.55);
-  --glass-border: rgba(170, 200, 235, 0.18);
+  --glass-fill: rgba(255, 255, 255, 0.04);
+  --glass-fill-strong: rgba(18, 18, 22, 0.9);
+  --glass-nav: rgba(10, 10, 12, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: blur(20px) saturate(140%);
 
   /* Lines */
-  --border: rgba(170, 200, 235, 0.16);
-  --border-hover: rgba(170, 200, 235, 0.38);
-  --border-strong: rgba(244, 246, 246, 0.6);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.22);
+  --border-strong: rgba(255, 255, 255, 0.5);
 
-  /* Media overlays (always dark — text on photography) */
+  /* Backdrop — code-drawn aurora and grid (no photography) */
+  --aurora-1: rgba(139, 92, 246, 0.35);
+  --aurora-2: rgba(59, 130, 246, 0.28);
+  --aurora-3: rgba(198, 244, 50, 0.12);
+  --grid-line: rgba(255, 255, 255, 0.05);
+
+  /* Media overlays (always dark — text on imagery) */
   --overlay-scrim: linear-gradient(
     180deg,
-    rgba(4, 19, 38, 0.55) 0%,
-    rgba(4, 19, 38, 0.3) 40%,
-    rgba(4, 19, 38, 0.85) 100%
+    rgba(6, 6, 8, 0.5) 0%,
+    rgba(6, 6, 8, 0.25) 40%,
+    rgba(6, 6, 8, 0.85) 100%
   );
-  --overlay-solid: rgba(4, 19, 38, 0.55);
-  --overlay-chapter: #041326;
-  --on-media: #f4f6f6;
-  --on-media-muted: rgba(244, 246, 246, 0.74);
+  --overlay-solid: rgba(6, 6, 8, 0.6);
+  --overlay-chapter: #060608;
+  --on-media: #f5f5f4;
+  --on-media-muted: rgba(245, 245, 244, 0.74);
 
-  /* Fixed (never remapped by bands) — chrome that sits on photography */
-  --media-accent: #2ec4b6;
-  --media-cta-bg: #ffb627;
-  --media-cta-hover: #ffc857;
-  --media-cta-ink: #0b2545;
-  --media-glass: rgba(11, 37, 69, 0.42);
-  --media-glass-border: rgba(170, 200, 235, 0.24);
-  --media-glow: rgba(255, 107, 53, 0.45);
-  --media-accent-ring: rgba(46, 196, 182, 0.28);
-  --media-vignette: rgba(4, 19, 38, 0.55);
-  --media-text-shadow: rgba(4, 19, 38, 0.6);
+  /* Fixed (never remapped by bands) — chrome that sits on imagery */
+  --media-accent: #c6f432;
+  --media-accent-2: #a78bfa;
+  --media-cta-bg: #c6f432;
+  --media-cta-hover: #d6ff5c;
+  --media-cta-ink: #0a0a0c;
+  --media-glass: rgba(10, 10, 12, 0.5);
+  --media-glass-border: rgba(255, 255, 255, 0.14);
+  --media-glow: rgba(167, 139, 250, 0.45);
+  --media-accent-ring: rgba(198, 244, 50, 0.28);
+  --media-vignette: rgba(6, 6, 8, 0.55);
+  --media-text-shadow: rgba(6, 6, 8, 0.6);
 
-  /* Placeholder plates (shown until Google Flow media is dropped in) */
-  --plate-landmark: linear-gradient(160deg, #ff8a3d 0%, #d9481f 50%, #5c1a0a 100%);
-  --plate-fauna: linear-gradient(160deg, #f2c14e 0%, #b07a2a 55%, #4a2f12 100%);
-  --plate-flora: linear-gradient(160deg, #7ed957 0%, #2f8f4e 50%, #0f3d2a 100%);
-  --plate-coast: linear-gradient(160deg, #3ee0d0 0%, #1485a6 50%, #0b2545 100%);
+  /* Placeholder plates (shown while media loads) */
+  --plate-landmark: linear-gradient(160deg, #2a1f4d 0%, #14121f 100%);
+  --plate-fauna: linear-gradient(160deg, #1d2a4d 0%, #10131f 100%);
+  --plate-flora: linear-gradient(160deg, #26331a 0%, #11140d 100%);
+  --plate-coast: linear-gradient(160deg, #1a2840 0%, #0d1119 100%);
+
+  /* Project covers — generated per project, deep hue + light glow */
+  --cover-violet: linear-gradient(140deg, #2e1f66 0%, #120d2b 100%);
+  --cover-blue: linear-gradient(140deg, #13306b 0%, #0a1430 100%);
+  --cover-lime: linear-gradient(140deg, #2b3a0c 0%, #11160a 100%);
+  --cover-pink: linear-gradient(140deg, #5a1640 0%, #1f0a18 100%);
+  --cover-slate: linear-gradient(140deg, #26262e 0%, #101014 100%);
+  --cover-ink: #f5f5f4;
 
   /* Spacing — 4px base */
   --space-1: 4px;
@@ -96,11 +112,11 @@
   --section-y: clamp(72px, 9vw, 128px);
 
   /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px; /* buttons, chips */
-  --radius-lg: 20px; /* cards, plates */
-  --radius-xl: 26px; /* popcards */
-  --radius-nav: 18px;
+  --radius-sm: 6px;
+  --radius-md: 10px; /* buttons, chips */
+  --radius-lg: 16px; /* cards, plates */
+  --radius-xl: 22px; /* popcards */
+  --radius-nav: 14px;
   --radius-full: 9999px;
 
   /* Shadows */
@@ -132,9 +148,9 @@
   --header-h: 88px;
 
   /* Typography */
-  --font-display: "Manrope", system-ui, sans-serif;
-  --font-body: "Manrope", system-ui, sans-serif;
-  --font-mono: "Space Mono", "IBM Plex Mono", monospace;
+  --font-display: "Geist", "Inter", system-ui, sans-serif;
+  --font-body: "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
   --text-xs: 0.72rem;
   --text-sm: 0.875rem;
   --text-md: 1rem;
@@ -142,7 +158,7 @@
   --text-xl: clamp(1.5rem, 2.4vw, 2rem);
   --text-2xl: clamp(2.1rem, 4.4vw, 3.75rem);
   --text-3xl: clamp(2.6rem, 7vw, 6.25rem);
-  --tracking-label: 0.14em;
+  --tracking-label: 0.12em;
 }
 
 @media (width <= 640px) {
@@ -152,36 +168,40 @@
   }
 }
 
-/* Sandy Shore palette — light theme, and cream bands inside the navy page */
+/* Paper palette — light theme, and editorial bands inside the dark page */
 .light,
 .band-sand {
-  --bg-base: #fff4e2;
-  --bg-surface: #ffe9c7;
-  --bg-elevated: #ffddab;
-  --bg-deep: #ffe9c7;
-  --bg-inverse: #0b2545;
-  --text-primary: #0b2545;
-  --text-muted: rgba(11, 37, 69, 0.8);
-  --text-dim: rgba(11, 37, 69, 0.68);
-  --text-inverse: #fff4e2;
-  --accent-1: #08705f;
-  --accent-2: #8a5200;
-  --accent-3: #c03a1c;
-  --accent-4: #b91c5c;
-  --accent-glow: rgba(8, 112, 95, 0.14);
-  --accent-glow-2: rgba(192, 58, 28, 0.12);
-  --hl-gradient: linear-gradient(100deg, #c03a1c 0%, #b91c5c 100%);
-  --eyebrow-rule: linear-gradient(90deg, #c03a1c, #08705f);
-  --cta-bg: #0b2545;
-  --cta-hover: #164173;
-  --cta-ink: #fff4e2;
-  --cta-shadow: 0 12px 32px -12px rgba(11, 37, 69, 0.45);
-  --glass-fill: rgba(11, 37, 69, 0.05);
-  --glass-fill-strong: rgba(255, 244, 226, 0.9);
-  --glass-nav: rgba(255, 244, 226, 0.72);
-  --glass-border: rgba(11, 37, 69, 0.14);
-  --border: rgba(11, 37, 69, 0.14);
-  --border-hover: rgba(11, 37, 69, 0.34);
-  --border-strong: rgba(11, 37, 69, 0.7);
-  --shadow-md: 0 24px 60px -28px rgba(11, 37, 69, 0.35);
+  --bg-base: #f4f3ee;
+  --bg-surface: #eceae3;
+  --bg-elevated: #e2dfd6;
+  --bg-deep: #eceae3;
+  --bg-inverse: #0a0a0c;
+  --text-primary: #0a0a0c;
+  --text-muted: rgba(10, 10, 12, 0.76);
+  --text-dim: rgba(10, 10, 12, 0.62);
+  --text-inverse: #f4f3ee;
+  --accent-1: #6d28d9;
+  --accent-2: #3f6212;
+  --accent-3: #1d4ed8;
+  --accent-4: #be185d;
+  --accent-glow: rgba(109, 40, 217, 0.12);
+  --accent-glow-2: rgba(101, 163, 13, 0.12);
+  --hl-gradient: linear-gradient(100deg, #6d28d9 0%, #1d4ed8 100%);
+  --eyebrow-rule: linear-gradient(90deg, #65a30d, #6d28d9);
+  --cta-bg: #0a0a0c;
+  --cta-hover: #26262e;
+  --cta-ink: #f4f3ee;
+  --cta-shadow: 0 12px 32px -12px rgba(10, 10, 12, 0.4);
+  --glass-fill: rgba(10, 10, 12, 0.04);
+  --glass-fill-strong: rgba(244, 243, 238, 0.92);
+  --glass-nav: rgba(244, 243, 238, 0.75);
+  --glass-border: rgba(10, 10, 12, 0.12);
+  --border: rgba(10, 10, 12, 0.12);
+  --border-hover: rgba(10, 10, 12, 0.3);
+  --border-strong: rgba(10, 10, 12, 0.7);
+  --aurora-1: rgba(139, 92, 246, 0.18);
+  --aurora-2: rgba(59, 130, 246, 0.14);
+  --aurora-3: rgba(132, 204, 22, 0.12);
+  --grid-line: rgba(10, 10, 12, 0.06);
+  --shadow-md: 0 24px 60px -28px rgba(10, 10, 12, 0.28);
 }

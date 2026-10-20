@@ -6,18 +6,31 @@ import {
   useSpring,
   useTransform,
 } from "@/lib/motion";
-import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { Button } from "@/components/ui/Button/Button";
+import { Backdrop } from "@/components/ui/Backdrop/Backdrop";
 import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
-import { FLOW_MEDIA, PLACE_NAMES } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import { introOffset } from "@/components/motion/CurtainTransition/intro";
 import styles from "./HeroSection.module.css";
 
-const SKY = FLOW_MEDIA.heroUluru;
+const PORTRAIT = "/images/ricky-chen-portrait.png";
 const RESUME_PDF = "/Ricky-Chen-Resume-2026.pdf";
 const HIGHLIGHTS = ["Ex-Samsung R&D", "MSc AI · UTS · GPA 6.63/7"];
+const STACK = [
+  "Python",
+  "TypeScript",
+  "React",
+  "Node.js",
+  "LLM apps",
+  "Prompt engineering",
+  "Express",
+  "MongoDB",
+  "SQL",
+  "TensorFlow",
+  "REST APIs",
+  "Docker",
+];
 
 const GitHubIcon = () => (
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -36,12 +49,10 @@ const LinkedInIcon = () => (
     />
   </svg>
 );
-const DEEP = FLOW_MEDIA.kakadu;
-
 /**
- * Pinned, scroll-scrubbed journey (Web Architech "CoastalJourney" pattern):
- * Uluru zooms in, the wordmark lifts away, then the Kakadu layer rises over
- * the lens carrying the practice statement.
+ * Typographic hero over a code-drawn aurora: copy on the left, portrait with
+ * floating proof cards on the right. On scroll the layers drift apart at
+ * different speeds and the copy dims as the next chapter arrives.
  */
 export const HeroSection: React.FC = () => {
   const { profile } = useProfile();
@@ -50,24 +61,19 @@ export const HeroSection: React.FC = () => {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"],
+    offset: ["start start", "end start"],
   });
   const p = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 26,
+    stiffness: 120,
+    damping: 28,
     mass: 0.3,
   });
-
-  // Layer transforms derived from one progress value (like w26 --p/--r)
-  const skyScale = useTransform(p, [0, 1], [1, 1.38]);
-  const fgY = useTransform(p, [0, 0.6], ["0vh", "-42vh"]);
-  const fgScale = useTransform(p, [0, 0.6], [1, 0.82]);
-  const fgOpacity = useTransform(p, [0.2, 0.55], [1, 0]);
-  const cueOpacity = useTransform(p, [0, 0.12], [1, 0]);
-  const deepY = useTransform(p, [0.38, 0.78], ["112%", "0%"]);
-  const deepScale = useTransform(p, [0.38, 1], [1.2, 1]);
-  const textY = useTransform(p, [0.6, 0.95], ["40px", "0px"]);
-  const textOpacity = useTransform(p, [0.6, 0.85], [0, 1]);
+  const copyY = useTransform(p, [0, 1], ["0px", "-90px"]);
+  const copyOpacity = useTransform(p, [0, 0.7], [1, 0.15]);
+  const visualY = useTransform(p, [0, 1], ["0px", "-180px"]);
+  const visualRotate = useTransform(p, [0, 1], [0, -4]);
+  const cardY = useTransform(p, [0, 1], ["0px", "-60px"]);
+  const cueOpacity = useTransform(p, [0, 0.15], [1, 0]);
 
   const name = profile?.name ?? "Ricky Chen";
   const role =
@@ -79,15 +85,13 @@ export const HeroSection: React.FC = () => {
     (c) => c.type === "github" || c.type === "linkedin",
   );
 
-  // Latest current role leads the proof chips — the first thing recruiters look for
+  // Latest current role leads the proof — the first thing recruiters look for
   const current = (profile?.experiences ?? [])
     .filter((e) => e.isCurrent)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))[0];
-  const highlights = current
-    ? [`Now at ${current.company}`, ...HIGHLIGHTS]
-    : [...HIGHLIGHTS, "300+ production commits"];
 
   const still = (v: unknown) => (reduce ? undefined : v);
+  const d = introOffset();
 
   return (
     <section
@@ -97,21 +101,12 @@ export const HeroSection: React.FC = () => {
       aria-label="Introduction"
       data-section="hero"
     >
-      <div className={styles.stage}>
-        {/* Sky — Uluru at dawn */}
-        <motion.div
-          className={styles.sky}
-          style={still({ scale: skyScale }) as never}
-        >
-          <FlowMedia item={SKY} priority showPendingLabel={false} />
-        </motion.div>
-        <div className={styles.scrim} aria-hidden="true" />
-        <div className={styles.grain} aria-hidden="true" />
+      <Backdrop />
 
-        {/* Foreground — wordmark & CTAs */}
+      <div className={styles.inner}>
         <motion.div
-          className={styles.fg}
-          style={still({ y: fgY, scale: fgScale, opacity: fgOpacity }) as never}
+          className={styles.copy}
+          style={still({ y: copyY, opacity: copyOpacity }) as never}
         >
           <span className={styles.badge}>
             <span className={styles.statusDot} aria-hidden="true" />
@@ -127,30 +122,33 @@ export const HeroSection: React.FC = () => {
               </>
             )}
           </span>
-          <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
-            <RevealText
-              lines={[name]}
-              as="span"
-              immediate
-              delay={0.9 + introOffset()}
-            />
+          <h1 className={styles.name} aria-label={`${name}, ${role}`}>
+            <RevealText lines={[name]} as="span" immediate delay={0.35 + d} />
           </h1>
-          <p className={styles.role}>{role}</p>
+          <p className={styles.role}>
+            {role.split(" · ")[0]}
+            {role.includes(" · ") && (
+              <>
+                {" "}
+                <em>{role.split(" · ").slice(1).join(" · ")}</em>
+              </>
+            )}
+          </p>
           <p className={styles.tagline}>{tagline}</p>
           <ul className={styles.proof} aria-label="Highlights">
-            {highlights.map((h) => (
+            {HIGHLIGHTS.map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
           <div className={styles.ctas}>
-            <Button as="a" href="#projects" variant="inverse">
+            <Button as="a" href="#projects" variant="primary">
               View projects <span className={styles.arrow}>→</span>
             </Button>
             <Button
               as="a"
               href={RESUME_PDF}
               download="Ricky-Chen-Resume.pdf"
-              variant="outlineInverse"
+              variant="ghost"
             >
               Download CV
             </Button>
@@ -170,47 +168,72 @@ export const HeroSection: React.FC = () => {
           </div>
         </motion.div>
 
-        <motion.a
-          href="#about"
-          className={styles.cue}
-          style={still({ opacity: cueOpacity }) as never}
-        >
-          <span className={styles.cueLine} aria-hidden="true" />
-          Scroll to explore
-        </motion.a>
-
         <motion.div
-          className={styles.ribbonWrap}
-          style={still({ opacity: fgOpacity }) as never}
+          className={styles.visual}
+          style={still({ y: visualY, rotate: visualRotate }) as never}
         >
-          <Ribbon items={PLACE_NAMES} speed={38} />
-        </motion.div>
+          <div className={styles.frame} data-tilt="">
+            <img
+              src={PORTRAIT}
+              alt={`Portrait of ${name}`}
+              className={styles.portrait}
+              width={682}
+              height={1024}
+              fetchPriority="high"
+            />
+            <span className={styles.frameShine} aria-hidden="true" />
+          </div>
 
-        {/* Deep — Kakadu rises over the lens */}
-        {!reduce && (
-          <motion.div className={styles.deep} style={{ y: deepY }}>
+          {current && (
             <motion.div
-              className={styles.deepMedia}
-              style={{ scale: deepScale }}
+              className={`${styles.card} ${styles.cardNow}`}
+              style={still({ y: cardY }) as never}
             >
-              <FlowMedia item={DEEP} showPendingLabel={false} />
+              <span className={styles.cardLabel}>
+                <span className={styles.liveDot} aria-hidden="true" /> Now
+              </span>
+              <span className={styles.cardTitle}>{current.position}</span>
+              <span className={styles.cardMeta}>{current.company}</span>
             </motion.div>
-            <div className={styles.deepScrim} aria-hidden="true" />
-            <motion.div
-              className={styles.deepInner}
-              style={{ y: textY, opacity: textOpacity }}
-            >
-              <span className={`eyebrow ${styles.eyebrow}`}>What I do</span>
-              <h2 className={styles.deepTitle}>
-                Products people use. <em>Systems that last.</em>
-              </h2>
-              <p className={styles.deepText}>
-                AI features and full-stack platforms — designed, built and
-                shipped end to end.
-              </p>
-            </motion.div>
+          )}
+
+          <motion.div
+            className={`${styles.card} ${styles.cardCode}`}
+            style={still({ y: cardY }) as never}
+            aria-hidden="true"
+          >
+            <span className={styles.codeLine}>
+              <span className={styles.kw}>const</span> stack = [
+            </span>
+            <span className={styles.codeLine}>
+              &nbsp;&nbsp;<span className={styles.str}>"Python"</span>,{" "}
+              <span className={styles.str}>"TypeScript"</span>,
+            </span>
+            <span className={styles.codeLine}>
+              &nbsp;&nbsp;<span className={styles.str}>"React"</span>,{" "}
+              <span className={styles.str}>"LLMs"</span>
+            </span>
+            <span className={styles.codeLine}>];</span>
           </motion.div>
-        )}
+
+          <div className={`${styles.card} ${styles.cardStat}`}>
+            <span className={styles.statNum}>300+</span>
+            <span className={styles.cardMeta}>commits · Samsung R&amp;D</span>
+          </div>
+        </motion.div>
+      </div>
+
+      <motion.a
+        href="#about"
+        className={styles.cue}
+        style={still({ opacity: cueOpacity }) as never}
+      >
+        <span className={styles.cueLine} aria-hidden="true" />
+        Scroll
+      </motion.a>
+
+      <div className={styles.ribbonWrap}>
+        <Ribbon items={STACK} speed={42} />
       </div>
     </section>
   );

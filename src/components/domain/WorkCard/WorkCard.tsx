@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
-import type { FlowMediaItem } from "@/config/flowMedia";
+import { motion } from "@/lib/motion";
+import { ProjectCover } from "@/components/domain/ProjectCover/ProjectCover";
 import type { Project } from "@/types/domain";
 import { PROJECT_CATEGORY_LABEL } from "@/config/site-defaults";
 import styles from "./WorkCard.module.css";
 
 interface WorkCardProps {
   project: Project;
-  plate: FlowMediaItem;
   /** Frame shape; parent grids alternate these for rhythm */
   shape?: "portrait" | "landscape" | "square";
   className?: string;
@@ -18,7 +17,6 @@ const yearOf = (d?: string) => (d ? new Date(d).getFullYear() : "");
 
 export const WorkCard: React.FC<WorkCardProps> = ({
   project,
-  plate,
   shape = "portrait",
   className,
 }) => (
@@ -31,11 +29,15 @@ export const WorkCard: React.FC<WorkCardProps> = ({
       aria-label={`${project.title} — view case study`}
     >
       <div className={styles.mediaWrap}>
-        <RevealMedia
-          item={plate}
-          frameClassName={styles[shape]}
-          parallax={14}
-        />
+        <motion.div
+          className={`${styles.frame} ${styles[shape]}`}
+          initial={{ clipPath: "inset(10% 10% 10% 10%)", opacity: 0.4 }}
+          whileInView={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <ProjectCover project={project} />
+        </motion.div>
         <span className={styles.view} aria-hidden="true">
           View case study →
         </span>

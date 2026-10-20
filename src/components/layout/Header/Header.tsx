@@ -118,19 +118,11 @@ export const Header: React.FC = () => {
     navigate(`/#${id}`);
   };
 
-  // Routes whose first screen is full-bleed media (home + 404)
-  const isKnownPage =
-    pathname === "/projects" ||
-    pathname === "/resume" ||
-    pathname.startsWith("/projects/");
-  const overMedia = !isKnownPage && !scrolled && !menuOpen;
-
   return (
     <header
       className={[
         styles.header,
         (scrolled || menuOpen) && styles.scrolled,
-        overMedia && styles.overMedia,
         hidden && !menuOpen && styles.hidden,
       ]
         .filter(Boolean)

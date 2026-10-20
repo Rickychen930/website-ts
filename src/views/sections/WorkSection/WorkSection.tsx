@@ -8,8 +8,6 @@ import {
 } from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
-import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
-import { sitePlateFor } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import styles from "./WorkSection.module.css";
 
@@ -75,8 +73,8 @@ export const WorkSection: React.FC = () => {
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
     );
 
-  // Landmark in the side column follows the hovered (or open) role
-  const featured = hovered ?? 0;
+  // The side card follows the hovered role (latest by default)
+  const featured = experiences[hovered ?? 0];
 
   return (
     // Not a stacked chapter: rows expand in place, so the section must not pin
@@ -95,17 +93,36 @@ export const WorkSection: React.FC = () => {
           <div className={styles.plate} aria-hidden="true">
             <AnimatePresence initial={false}>
               <motion.div
-                key={featured}
+                key={hovered ?? 0}
                 className={styles.plateInner}
                 initial={reduce ? false : { clipPath: "inset(100% 0 0 0)" }}
                 animate={{ clipPath: "inset(0% 0 0 0)" }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6, ease: EASE }}
               >
-                <FlowMedia
-                  item={sitePlateFor(featured + 2)}
-                  showPendingLabel={false}
-                />
+                {featured && (
+                  <>
+                    <span className={styles.plateGrid} />
+                    <span className={styles.plateMono}>
+                      {initials(featured.company)}
+                    </span>
+                    <span className={styles.plateBody}>
+                      <span className={styles.plateRole}>
+                        {featured.position}
+                      </span>
+                      <span className={styles.plateCompany}>
+                        {featured.company}
+                      </span>
+                      <span className={styles.plateMeta}>
+                        {fmtDate(featured.startDate)} —{" "}
+                        {featured.isCurrent
+                          ? "Present"
+                          : fmtDate(featured.endDate)}{" "}
+                        · {featured.location}
+                      </span>
+                    </span>
+                  </>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>

@@ -43,10 +43,6 @@
   max-width: 38ch;
 }
 
-.heroFrame {
-  aspect-ratio: 21 / 8;
-}
-
 .toolbar {
   display: flex;
   position: sticky;
@@ -238,10 +234,6 @@
   .grid,
   .skeletonGrid {
     grid-template-columns: 1fr;
-  }
-
-  .heroFrame {
-    aspect-ratio: 4 / 3;
   }
 }
 

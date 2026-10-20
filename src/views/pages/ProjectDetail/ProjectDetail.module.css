@@ -82,15 +82,9 @@
 
 .plate {
   aspect-ratio: 21 / 9;
-  max-height: 88vh;
-}
-
-.plateCaption {
-  max-width: var(--container-max);
-  margin: var(--space-3) auto 0;
-  padding: 0 var(--container-pad);
-  color: var(--text-dim);
-  font-size: var(--text-sm);
+  max-height: 70vh;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
 }
 
 .body {

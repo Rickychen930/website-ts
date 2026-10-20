@@ -1,17 +1,5 @@
 .layout {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: var(--space-11);
-  align-items: start;
-}
-
-.mediaCol {
-  position: sticky;
-  top: calc(var(--header-h) + var(--space-6));
-}
-
-.frame {
-  aspect-ratio: 4 / 5;
+  display: block;
 }
 
 .heading {
@@ -43,15 +31,23 @@
 
 .schedule {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-9) var(--space-8);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.group {
+  padding: var(--space-6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill);
 }
 
 .groupHead {
   display: flex;
   gap: var(--space-3);
   padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border);
+  color: var(--accent-1);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-label);
@@ -81,26 +77,18 @@
 .pip,
 .pipOn {
   width: 14px;
-  height: 3px;
+  height: 4px;
+  border-radius: 2px;
   background: var(--border);
 }
 
 .pipOn {
-  background: var(--accent-1);
+  background: var(--accent-2);
 }
 
 @media (width <= 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-    gap: var(--space-9);
-  }
-
-  .mediaCol {
-    position: static;
-  }
-
-  .frame {
-    aspect-ratio: 16 / 10;
+  .schedule {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -108,12 +96,20 @@
   .schedule {
     grid-template-columns: 1fr;
   }
+
+  .group {
+    padding: var(--space-5);
+  }
 }
 
 .item {
   transition:
     padding var(--dur-med) var(--ease-out),
     color var(--dur-fast) ease;
+}
+
+.item:last-child {
+  border-bottom: none;
 }
 
 .item:hover {
