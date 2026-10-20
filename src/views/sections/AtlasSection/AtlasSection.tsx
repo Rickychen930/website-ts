@@ -4,42 +4,45 @@ import { HorizontalScroll } from "@/components/motion/HorizontalScroll/Horizonta
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
-import { FIELD_ATLAS, PLACE_NAMES, SPECIES_NAMES } from "@/config/flowMedia";
+import {
+  HARDWARE_ATLAS,
+  STACK_NAMES,
+  HARDWARE_NAMES,
+} from "@/config/flowMedia";
 import styles from "./AtlasSection.module.css";
 
-/** Field atlas — Australian fauna & flora, pinned horizontal travel */
+/** Hardware atlas — the machine, part by part, pinned horizontal travel */
 export const AtlasSection: React.FC = () => (
   <section
     id="atlas"
     className={`${styles.section} band-sand`}
-    aria-label="Field atlas of Australian flora and fauna"
+    aria-label="Hardware atlas — the parts software runs on"
     data-section="atlas"
   >
     <div className={styles.ribbons}>
-      <Ribbon items={SPECIES_NAMES} tilt={-3} speed={40} />
-      <Ribbon items={PLACE_NAMES} tilt={2.5} speed={44} reverse tone="navy" />
+      <Ribbon items={HARDWARE_NAMES} tilt={-3} speed={40} />
+      <Ribbon items={STACK_NAMES} tilt={2.5} speed={44} reverse tone="navy" />
     </div>
     <HorizontalScroll
       header={
         <div className={styles.head}>
           <div className={styles.rule}>
-            <span className="eyebrow">Field atlas</span>
+            <span className="eyebrow">Hardware atlas</span>
           </div>
           <div className={styles.headRow}>
             <RevealText
               as="h2"
               className={styles.heading}
-              lines={["Native", <em key="s">species.</em>]}
+              lines={["Under", <em key="s">the hood.</em>]}
             />
             <p className={styles.intro}>
-              Between builds — ten native species, from the reef to the red
-              centre.
+              Ten parts of the machine my code runs on — from silicon to signal.
             </p>
           </div>
         </div>
       }
     >
-      {FIELD_ATLAS.map((item, i) => (
+      {HARDWARE_ATLAS.map((item, i) => (
         <motion.figure
           key={item.id}
           className={[styles.card, i % 2 === 1 && styles.cardLow]

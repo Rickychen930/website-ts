@@ -27,7 +27,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   const [theme, setTheme] = useState<Theme>(() => {
     try {
       const stored = localStorage.getItem("theme") as Theme | null;
-      // Deep Sea (dark) is the default; Sandy Shore (light) only when chosen
+      // Circuit Night (dark) is the default; Blueprint (light) only when chosen
       return stored === "light" ? "light" : "dark";
     } catch {
       return "dark";

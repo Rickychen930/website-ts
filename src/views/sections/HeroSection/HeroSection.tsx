@@ -10,12 +10,12 @@ import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { Button } from "@/components/ui/Button/Button";
 import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
-import { FLOW_MEDIA, PLACE_NAMES } from "@/config/flowMedia";
+import { FLOW_MEDIA, STACK_NAMES } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import { introOffset } from "@/components/motion/CurtainTransition/intro";
 import styles from "./HeroSection.module.css";
 
-const SKY = FLOW_MEDIA.heroUluru;
+const SKY = FLOW_MEDIA.heroCircuit;
 const RESUME_PDF = "/Ricky-Chen-Resume-2026.pdf";
 const HIGHLIGHTS = ["Ex-Samsung R&D", "MSc AI · UTS · GPA 6.63/7"];
 
@@ -36,11 +36,11 @@ const LinkedInIcon = () => (
     />
   </svg>
 );
-const DEEP = FLOW_MEDIA.kakadu;
+const DEEP = FLOW_MEDIA.serverHall;
 
 /**
  * Pinned, scroll-scrubbed journey (Web Architech "CoastalJourney" pattern):
- * Uluru zooms in, the wordmark lifts away, then the Kakadu layer rises over
+ * the circuit board zooms in, the wordmark lifts away, then the server hall rises over
  * the lens carrying the practice statement.
  */
 export const HeroSection: React.FC = () => {
@@ -98,7 +98,7 @@ export const HeroSection: React.FC = () => {
       data-section="hero"
     >
       <div className={styles.stage}>
-        {/* Sky — Uluru at dawn */}
+        {/* Sky — silicon at dawn */}
         <motion.div
           className={styles.sky}
           style={still({ scale: skyScale }) as never}
@@ -183,10 +183,10 @@ export const HeroSection: React.FC = () => {
           className={styles.ribbonWrap}
           style={still({ opacity: fgOpacity }) as never}
         >
-          <Ribbon items={PLACE_NAMES} speed={38} />
+          <Ribbon items={STACK_NAMES} speed={38} />
         </motion.div>
 
-        {/* Deep — Kakadu rises over the lens */}
+        {/* Deep — the server hall rises over the lens */}
         {!reduce && (
           <motion.div className={styles.deep} style={{ y: deepY }}>
             <motion.div

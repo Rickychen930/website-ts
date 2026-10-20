@@ -70,9 +70,9 @@ export const AboutSection: React.FC = () => {
     .trim();
 
   const portrait: FlowMediaItem = {
-    ...FLOW_MEDIA.blueMountains,
+    ...FLOW_MEDIA.fiberOptics,
     id: "portrait",
-    theme: "landmark",
+    theme: "city",
     title: profile?.name ?? "Ricky Chen",
     subtitle: profile?.title ?? "Fullstack & AI Engineer",
     caption: profile?.location ?? "Sydney, Australia",
@@ -145,7 +145,7 @@ export const AboutSection: React.FC = () => {
       </div>
 
       <RevealMedia
-        item={FLOW_MEDIA.blueMountains}
+        item={FLOW_MEDIA.fiberOptics}
         frameClassName={styles.wideFrame}
         parallax={18}
         from="left"

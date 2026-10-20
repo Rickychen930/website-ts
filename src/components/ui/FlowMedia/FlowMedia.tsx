@@ -66,23 +66,36 @@ const FlowVideo: React.FC<{
   );
 };
 
-/* Topographic contour lines — reads as a site-survey plate while media is pending */
-const Contours: React.FC = () => (
+/* Circuit traces — reads as a PCB plate while media is pending */
+const TRACES = [
+  "M0 60h90l20 20h120l20-20h150",
+  "M0 120h50l30 30h90l20-20h210",
+  "M0 190h120l25-25h80l30 30h145",
+  "M0 250h70l20-20h160l25 25h125",
+  "M140 0v40l20 20v40",
+  "M260 0v70l-20 20v60",
+  "M320 300v-60l20-20v-50",
+  "M80 300v-40l-20-20",
+];
+const Traces: React.FC = () => (
   <svg
     className={styles.contours}
     viewBox="0 0 400 300"
     preserveAspectRatio="xMidYMid slice"
     aria-hidden="true"
   >
-    {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-      <ellipse
-        key={i}
-        cx={250 - i * 6}
-        cy={170 + i * 3}
-        rx={40 + i * 34}
-        ry={22 + i * 20}
-        transform={`rotate(${-12 + i * 2} 250 170)`}
-      />
+    {TRACES.map((d) => (
+      <path key={d} d={d} />
+    ))}
+    {[
+      [110, 80],
+      [250, 40],
+      [200, 150],
+      [290, 165],
+      [100, 230],
+      [340, 220],
+    ].map(([cx, cy]) => (
+      <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={4} />
     ))}
   </svg>
 );
@@ -105,7 +118,7 @@ export const FlowMedia: React.FC<FlowMediaProps> = ({
   if (stage === "placeholder") {
     return (
       <div className={cls} role="img" aria-label={item.alt}>
-        <Contours />
+        <Traces />
         {showPendingLabel && (
           <span className={styles.pending}>
             {item.id}.{item.kind === "video" ? "mp4" : "jpg"}

@@ -15,7 +15,7 @@ import { useProfile } from "@/contexts";
 import { WORK_RIGHTS } from "@/config/site-defaults";
 import styles from "./ContactSection.module.css";
 
-const BG = FLOW_MEDIA.harbourNight;
+const BG = FLOW_MEDIA.sydneyOnline;
 
 type Status = "idle" | "sending" | "sent" | "error";
 

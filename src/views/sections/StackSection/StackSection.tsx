@@ -68,7 +68,7 @@ export const StackSection: React.FC = () => {
       <div className={styles.layout}>
         <div className={styles.mediaCol}>
           <RevealMedia
-            item={FLOW_MEDIA.daintree}
+            item={FLOW_MEDIA.neuralNet}
             frameClassName={styles.frame}
             parallax={16}
             caption

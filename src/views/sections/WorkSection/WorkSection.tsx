@@ -75,7 +75,7 @@ export const WorkSection: React.FC = () => {
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
     );
 
-  // Landmark in the side column follows the hovered (or open) role
+  // Plate in the side column follows the hovered (or open) role
   const featured = hovered ?? 0;
 
   return (
