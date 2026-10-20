@@ -81,7 +81,7 @@ export const CredentialsSection: React.FC = () => {
               <motion.article
                 key={a.id}
                 className={styles.eduCard}
-                data-spotlight=""
+                data-spotlight="" data-edge=""
                 {...rise(i)}
               >
                 <div className={styles.eduTop}>

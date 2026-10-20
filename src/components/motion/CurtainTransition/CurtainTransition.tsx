@@ -10,6 +10,11 @@ interface CurtainTransitionProps {
 
 const EASE = [0.76, 0, 0.24, 1] as const;
 const NAME = "Ricky Chen";
+const BOOT = [
+  "boot portfolio.sys … ok",
+  "mount projects/ … ok",
+  "connect sydney.au … ok",
+] as const;
 
 const routeLabel = (pathname: string): string => {
   if (pathname === "/") return "Home";
@@ -58,6 +63,18 @@ const Intro: React.FC = () => (
       >
         Software Engineer · AI &amp; Full-Stack
       </motion.span>
+      <span className={styles.boot} aria-hidden="true">
+        {BOOT.map((line, i) => (
+          <motion.span
+            key={line}
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 + i * 0.22 }}
+          >
+            <b>$</b> {line}
+          </motion.span>
+        ))}
+      </span>
       <span className={styles.track}>
         <motion.span
           className={styles.bar}

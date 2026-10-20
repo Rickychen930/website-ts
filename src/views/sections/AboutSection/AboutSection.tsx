@@ -117,6 +117,7 @@ export const AboutSection: React.FC = () => {
                 key={d.title}
                 className={styles.discipline}
                 data-spotlight=""
+                data-edge=""
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}

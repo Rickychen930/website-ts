@@ -42,6 +42,23 @@ body::after {
   background-size: 200px 200px;
 }
 
+/* Ambient cursor light — a soft pool of accent that follows the pointer */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-raised);
+    pointer-events: none;
+    background: radial-gradient(
+      560px circle at var(--px, 50%) var(--py, -30%),
+      var(--accent-glow),
+      transparent 62%
+    );
+    opacity: 0.9;
+  }
+}
+
 /* Lenis smooth scroll */
 html.lenis,
 html.lenis body {
@@ -204,6 +221,36 @@ button {
 }
 
 [data-spotlight]:hover::before {
+  opacity: 1;
+}
+
+/* Cards: a thin accent edge that follows the cursor */
+[data-edge] {
+  position: relative;
+}
+
+[data-edge]::after {
+  position: absolute;
+  padding: 1px;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    var(--accent-1),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-med) ease;
+  content: "";
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mask:
+    linear-gradient(currentcolor, currentcolor) content-box,
+    linear-gradient(currentcolor, currentcolor);
+  mask-composite: xor;
+  mask-composite: exclude;
+}
+
+[data-edge]:hover::after {
   opacity: 1;
 }
 

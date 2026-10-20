@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   motion,
+  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -58,6 +59,26 @@ export const HeroSection: React.FC = () => {
     mass: 0.3,
   });
 
+  // Mouse parallax: the sky drifts against the pointer, the copy follows it a little
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const smx = useSpring(mx, { stiffness: 55, damping: 18, mass: 0.4 });
+  const smy = useSpring(my, { stiffness: 55, damping: 18, mass: 0.4 });
+  const skyX = useTransform(smx, (v) => v * -34);
+  const skyY = useTransform(smy, (v) => v * -20);
+  const fgX = useTransform(smx, (v) => v * 12);
+  useEffect(() => {
+    if (reduce) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches)
+      return;
+    const onMove = (e: PointerEvent) => {
+      mx.set(e.clientX / window.innerWidth - 0.5);
+      my.set(e.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [reduce, mx, my]);
+
   // Layer transforms derived from one progress value (like w26 --p/--r)
   const skyScale = useTransform(p, [0, 1], [1, 1.38]);
   const fgY = useTransform(p, [0, 0.6], ["0vh", "-42vh"]);
@@ -101,7 +122,7 @@ export const HeroSection: React.FC = () => {
         {/* Sky — silicon at dawn */}
         <motion.div
           className={styles.sky}
-          style={still({ scale: skyScale }) as never}
+          style={still({ scale: skyScale, x: skyX, y: skyY }) as never}
         >
           <FlowMedia item={SKY} priority showPendingLabel={false} />
         </motion.div>
@@ -111,7 +132,14 @@ export const HeroSection: React.FC = () => {
         {/* Foreground — wordmark & CTAs */}
         <motion.div
           className={styles.fg}
-          style={still({ y: fgY, scale: fgScale, opacity: fgOpacity }) as never}
+          style={
+            still({
+              x: fgX,
+              y: fgY,
+              scale: fgScale,
+              opacity: fgOpacity,
+            }) as never
+          }
         >
           <span className={styles.badge}>
             <span className={styles.statusDot} aria-hidden="true" />

@@ -4,7 +4,8 @@ const TILT_MAX = 4; // degrees
 const MAGNET_PULL = 7; // px
 
 /**
- * One delegated pointer listener drives three opt-in effects via CSS vars:
+ * One delegated pointer listener drives opt-in effects via CSS vars:
+ * - <html>           → --px/--py (ambient cursor light)
  * - [data-spotlight] → --mx/--my (cursor position inside the element)
  * - [data-tilt]      → --rx/--ry (subtle 3D tilt)
  * - [data-magnetic]  → --mgx/--mgy (pull toward the cursor)
@@ -32,6 +33,11 @@ export const usePointerFx = (enabled = true): void => {
       const e = last;
       if (!e) return;
       const target = e.target as Element | null;
+
+      // Ambient cursor light (CSS reads --px/--py on <html>)
+      const rootStyle = document.documentElement.style;
+      rootStyle.setProperty("--px", `${e.clientX}px`);
+      rootStyle.setProperty("--py", `${e.clientY}px`);
 
       const spot = target?.closest<HTMLElement>("[data-spotlight]");
       if (spot) {

@@ -28,6 +28,7 @@ export const WorkCard: React.FC<WorkCardProps> = ({
       className={styles.link}
       data-tilt=""
       data-spotlight=""
+      data-edge=""
       aria-label={`${project.title} — view case study`}
     >
       <div className={styles.mediaWrap}>

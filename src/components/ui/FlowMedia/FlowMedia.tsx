@@ -34,19 +34,35 @@ const FlowVideo: React.FC<{
       setArmed(true);
       return;
     }
+    // Scrolling fast fast-forwards the footage; it eases back to 1× at rest
+    let raf = 0;
+    let rate = 1;
+    const tick = () => {
+      const v = Math.abs(window.__lenis?.velocity ?? 0);
+      const target = Math.min(2.6, 1 + v * 0.05);
+      rate += (target - rate) * 0.08;
+      video.playbackRate = Math.round(rate * 100) / 100;
+      raf = requestAnimationFrame(tick);
+    };
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setArmed(true);
           video.play().catch(() => undefined);
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(tick);
         } else {
           video.pause();
+          cancelAnimationFrame(raf);
         }
       },
       { rootMargin: "200px 0px" },
     );
     io.observe(video);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (

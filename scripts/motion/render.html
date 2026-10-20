@@ -19,7 +19,9 @@ const S = Math.min(W,H)/720; // scale unit
 
 // film grain (4 frames, cycled)
 const grains=[...Array(4)].map((_,i)=>{const g=document.createElement('canvas');g.width=g.height=256;const gx=g.getContext('2d');const id=gx.createImageData(256,256);const r=rng(99+i);for(let k=0;k<id.data.length;k+=4){const v=r()*255;id.data[k]=id.data[k+1]=id.data[k+2]=v;id.data[k+3]=255}gx.putImageData(id,0,0);return g});
-function finish(frame,{vignette=0.55,grain=0.06}={}){
+let finishOpts={};
+function finish(frame,opts={}){ if(window.__sub){finishOpts=opts;return} doFinish(frame,opts)}
+function doFinish(frame,{vignette=0.55,grain=0.06}={}){
   const g=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.3,W/2,H/2,Math.max(W,H)*0.75);
   g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,`rgba(2,6,16,${vignette})`);
   ctx.globalCompositeOperation='source-over';ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
@@ -159,14 +161,16 @@ function hall(p,frame,{move=8,dim=false}={}){
     const r=rng(1000+((idx%8)+8)%8*31+(side>0?7:0));const rows=16,cols=4;
     for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if(r()<0.25)continue;const zz=lerp(z0+0.12,z1-0.12,(i+0.5)/cols),yy=0.18+j*(RH-0.35)/rows;
       const ph=r(),col=r()<0.75?C.cyan:(r()<0.6?C.blue:C.green);
-      let on;if(dim){on=0.08}else{const wv=Math.sin(TAU*(p*2 + zz*0.09 + ph*0.3));on=clamp(0.35+0.65*wv,0,1)*(r()<0.15?wave(p,4,ph):1)}
-      const[sx,sy]=proj(x,yy,zz);const s=Math.max(1.2,5.5*S/zz*1.3);
+      let on;if(dim){on=0.08}else{const wv=Math.sin(TAU*(p*2 + zz*0.09 + ph*0.3));on=clamp(0.5+0.7*wv,0,1)*(r()<0.18?wave(p,4,ph):1)}
+      const[sx,sy]=proj(x,yy,zz);const s=Math.max(1.4,8*S/zz*1.3);
       ctx.fillStyle=rgba(col,(0.15+0.85*on)*a);ctx.fillRect(sx-s/2,sy-s/3,s,s*0.66);
-      if(on>0.6&&zz<16){ctx.globalCompositeOperation='lighter';glowDot(sx,sy,s*4,col,0.35*a*on);
+      if(on>0.6&&zz<16){ctx.globalCompositeOperation='lighter';glowDot(sx,sy,s*5,col,0.5*a*on);
         // floor reflection
         const[,ry]=proj(x,-yy,zz);glowDot(sx,ry,s*3,col,0.12*a*on);ctx.globalCompositeOperation='source-over'}
     }};
   for(let k=39;k>=0;k--){const z=k+1-(off%1);const idx=k+Math.floor(off);if(z<0.25)continue;rack(-1,z,idx);rack(1,z,idx+3)}
+  // volumetric light shafts from the ceiling strips
+  if(!dim){ctx.globalCompositeOperation='lighter';for(let k=0;k<14;k++){const z=k*2.2+1-(off*1%2.2);if(z<0.8)continue;const a=clamp(1-z/30,0,1);const[x0,y0]=proj(-0.3,RH+0.1,z),[x1]=proj(0.3,RH+0.1,z);const[xf0,yf]=proj(-1.1,0,z+0.4),[xf1]=proj(1.1,0,z+0.4);const g2=ctx.createLinearGradient(0,y0,0,yf);g2.addColorStop(0,rgba(C.cyanL,0.1*a));g2.addColorStop(1,rgba(C.cyan,0));ctx.fillStyle=g2;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y0);ctx.lineTo(xf1,yf);ctx.lineTo(xf0,yf);ctx.closePath();ctx.fill()}ctx.globalCompositeOperation='source-over'}
   // mist along floor
   ctx.globalCompositeOperation='lighter';
   for(let i=0;i<9;i++){const x=W*((i/9+p*0.5*(i%2?1:-1))%1+1)%1;glowDot(x,H*0.86+Math.sin(TAU*(p+i/9))*H*0.02,H*0.32,'#5b9dff',dim?0.03:0.06)}
@@ -471,7 +475,7 @@ function prod(p,frame,draw,{spot=C.blue}={}){
 scenes.cpu=(p,f)=>prod(p,f,()=>{const s=W*0.6,tilt=Math.sin(TAU*p)*0.12;ctx.rotate(tilt);ctx.transform(1,0,0,0.9,0,0);
   ctx.fillStyle='#0f5132';rr(-s/2,-s/2,s,s,10*S);ctx.fill();
   for(let i=0;i<14;i++){ctx.fillStyle='rgba(212,168,74,0.9)';const t=-s/2+12*S+i*(s-24*S)/13;ctx.fillRect(t-2*S,s/2-6*S,4*S,6*S);ctx.fillRect(t-2*S,-s/2,4*S,6*S)}
-  const i0=s*0.36;let g=ctx.createLinearGradient(-i0,-i0,i0,i0);g.addColorStop(0,'#d7dee8');g.addColorStop(0.5,'#8e99ab');g.addColorStop(1,'#cfd6e2');ctx.fillStyle=g;rr(-i0,-i0,i0*2,i0*2,14*S);ctx.fill();
+  const i0=s*0.36;let g=ctx.createLinearGradient(-i0,-i0,i0,i0);g.addColorStop(0,'#aab4c4');g.addColorStop(0.5,'#6c778a');g.addColorStop(1,'#a3adbd');ctx.fillStyle=g;rr(-i0,-i0,i0*2,i0*2,14*S);ctx.fill();
   ctx.beginPath();rr(-i0,-i0,i0*2,i0*2,14*S);sweep(p,-i0,-i0,i0*2,i0*2,{color:C.cyanL,a:0.7,width:0.15});
   ctx.strokeStyle=rgba(C.cyan,0.6);ctx.lineWidth=2*S;rr(-i0,-i0,i0*2,i0*2,14*S);ctx.stroke();
   ctx.fillStyle='rgba(40,50,70,0.35)';rr(-i0*0.5,-i0*0.12,i0,i0*0.24,4*S);ctx.fill();
@@ -541,6 +545,77 @@ scenes.phone=(p,f)=>prod(p,f,()=>{const sep=0.5-0.5*Math.cos(TAU*p);const w=W*0.
     if(L.name==='back'){ctx.fillStyle='#111';ctx.beginPath();ctx.arc(-w*0.25,-h*0.38,w*0.1,0,TAU);ctx.fill();glowDot(-w*0.27,-h*0.4,w*0.05,C.cyan,0.6)}
     ctx.restore();ctx.globalAlpha=1})});
 
-window.renderFrame=(i,fps)=>{const t=i/fps;const p=(t%T)/T;ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.filter='none';(scenes[SCENE])(p,i);return true};
+
+// ---------- cinema post pipeline ----------
+const mk=(w,h)=>{const c=document.createElement('canvas');c.width=Math.max(2,Math.ceil(w));c.height=Math.max(2,Math.ceil(h));return c};
+const acc=mk(W,H),ax=acc.getContext('2d');
+const hi=mk(W/4,H/4),hix=hi.getContext('2d');
+const b1=mk(W/4,H/4),b1x=b1.getContext('2d');
+const b2=mk(W/10,H/10),b2x=b2.getContext('2d');
+const st=mk(W/28,H/5),stx=st.getContext('2d');
+const tmp=mk(W,H),tx=tmp.getContext('2d');
+const ch=mk(W,H),chx=ch.getContext('2d');
+const ca=mk(W,H),cax=ca.getContext('2d');
+const DUST={hero:70,hall:60,lost:45,city:26,campus:34,fibre:22,neural:40,circuit:18,holo:44,desk:34,rack:26,mobile:24,aichip:0,cpu:0,gpu:0,ram:0,ssd:0,switch:0,sbc:0,micro:0,keyboard:0,phone:0};
+function dust(p,n){
+  const r=rng(1234);ctx.globalCompositeOperation='lighter';
+  for(let i=0;i<n;i++){
+    const depth=r(),k=1+Math.floor(r()*2),bx=r(),by=r(),ph=r();
+    const x=((bx+Math.sin(TAU*(p*1+ph))*0.03)%1)*W;
+    const y=(((by-p*k*(0.25+depth*0.5))%1)+1)%1*H;
+    const rad=(1.2+depth*depth*22)*S;                    // big = out-of-focus bokeh
+    const a=(depth>0.8?0.1:0.35)*(0.5+0.5*wave(p,2,ph));
+    const col=r()<0.7?C.cyanL:(r()<0.5?C.violet:C.white);
+    if(depth>0.8){ctx.fillStyle=rgba(col,a);ctx.beginPath();for(let q=0;q<6;q++){const an=q*TAU/6+0.5,px=x+Math.cos(an)*rad,py=y+Math.sin(an)*rad;q?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.closePath();ctx.fill()}
+    else glowDot(x,y,rad,col,a);
+  }
+  ctx.globalCompositeOperation='source-over';
+}
+const BK={cpu:0.22,gpu:0.35,ram:0.4,ssd:0.4,switch:0.4,sbc:0.35,micro:0.3,keyboard:0.5,phone:0.35,mobile:0.5,aichip:0.75}[SCENE]??1;
+function bloom(){
+  hix.globalCompositeOperation='source-over';hix.clearRect(0,0,hi.width,hi.height);
+  hix.filter='brightness(0.7) contrast(2.4) saturate(1.2)';hix.drawImage(cv,0,0,hi.width,hi.height);hix.filter='none';
+  b1x.clearRect(0,0,b1.width,b1.height);b1x.filter=`blur(${4}px)`;b1x.drawImage(hi,0,0);b1x.filter='none';
+  b2x.clearRect(0,0,b2.width,b2.height);b2x.filter='blur(5px)';b2x.drawImage(hi,0,0,b2.width,b2.height);b2x.filter='none';
+  stx.globalCompositeOperation='source-over';stx.clearRect(0,0,st.width,st.height);stx.filter='blur(1.5px)';stx.drawImage(hi,0,0,st.width,st.height);stx.filter='none';
+  stx.globalCompositeOperation='multiply';stx.fillStyle='#86e6ff';stx.fillRect(0,0,st.width,st.height);stx.globalCompositeOperation='source-over';
+  ctx.globalCompositeOperation='lighter';
+  ctx.globalAlpha=0.5*BK;ctx.drawImage(b1,0,0,W,H);
+  ctx.globalAlpha=0.55*BK;ctx.drawImage(b2,0,0,W,H);
+  ctx.globalAlpha=0.38*BK;ctx.drawImage(st,0,0,W,H);   // anamorphic horizontal streaks
+  ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+}
+function aberrate(amt){
+  tx.globalCompositeOperation='source-over';tx.drawImage(cv,0,0);
+  cax.globalCompositeOperation='source-over';cax.fillStyle='#000';cax.fillRect(0,0,W,H);cax.globalCompositeOperation='lighter';
+  const a=amt*S;[['#ff0000',-a,0],['#00ff00',0,0],['#0000ff',0,a]].forEach(([col,x0,x1])=>{chx.globalCompositeOperation='source-over';chx.drawImage(tmp,0,0);chx.globalCompositeOperation='multiply';chx.fillStyle=col;chx.fillRect(0,0,W,H);cax.drawImage(ch,0,0,W,H,x0,0,W+Math.abs(x0)+x1,H)});
+  cax.globalCompositeOperation='destination-in';
+  const g=cax.createRadialGradient(W/2,H/2,Math.min(W,H)*0.3,W/2,H/2,Math.max(W,H)*0.72);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');cax.fillStyle=g;cax.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='source-over';ctx.drawImage(ca,0,0);
+}
+window.renderFrame=(i,fps)=>{
+  const N=+Q.get('sub')||5,total=fps*T;
+  window.__sub=true;
+  for(let k=0;k<N;k++){
+    const off=N>1?(k/(N-1)-0.5)*0.75:0;               // 270° shutter → natural motion blur
+    const p=(((i+off)/total)%1+1)%1,tt=((i+off)/total);
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.filter='none';
+    // handheld micro-shake (periodic harmonics → loops cleanly)
+    const sx=(Math.sin(TAU*tt*3)*1.3+Math.sin(TAU*tt*7+1)*0.6)*S,sy=(Math.cos(TAU*tt*4)*1.0+Math.sin(TAU*tt*9)*0.5)*S;
+    ctx.save();ctx.translate(W/2+sx,H/2+sy);ctx.scale(1.03,1.03);ctx.translate(-W/2,-H/2);
+    scenes[SCENE](p,i);
+    ctx.restore();
+    ax.globalAlpha=1/(k+1);ax.globalCompositeOperation='source-over';ax.drawImage(cv,0,0);
+  }
+  window.__sub=false;
+  ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.filter='none';ctx.globalCompositeOperation='source-over';
+  ctx.drawImage(acc,0,0);
+  const p0=(i/total)%1;
+  if(DUST[SCENE]) dust(p0,DUST[SCENE]);
+  bloom();
+  aberrate(1.6);
+  doFinish(i,finishOpts);
+  return true;
+};
 window.SCENES=Object.keys(scenes);
 </script></body></html>
