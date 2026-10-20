@@ -1,5 +1,11 @@
 # Google Flow asset list — IT edition (all video)
 
+> **Current files are code-rendered motion graphics** (generative canvas
+> scenes, 8 s seamless loops, rendered to H.264). They're ready to ship. To
+> upgrade any slot to photoreal footage, generate it in Google Flow with the
+> prompt below and overwrite the MP4 with the same name — then regenerate its
+> first-frame poster `<id>.jpg`.
+
 Every visual on the site is a living 8-second loop. Generate each clip in
 [Google Flow](https://labs.google/flow) (Veo, **8 s**, **1080p**) with the prompt
 below and save the MP4 here with the **exact file name**. Until a file exists,
