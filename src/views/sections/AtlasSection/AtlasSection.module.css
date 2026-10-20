@@ -46,23 +46,30 @@
 }
 
 .card {
+  width: clamp(200px, min(22vw, 32vh), 330px);
+  flex-shrink: 0;
+}
+
+/* Coverflow: tilt and recede with distance from the centre (--cf, --cfd) */
+.cf {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  width: clamp(200px, min(22vw, 32vh), 330px);
-  flex-shrink: 0;
   padding: var(--space-3);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   background: var(--glass-fill);
+  opacity: calc(1 - var(--cfd, 0) * 0.4);
+  transform: perspective(1100px) rotateY(calc(var(--cf, 0) * 32deg))
+    translateZ(calc(34px - var(--cfd, 0) * 120px))
+    scale(calc(1.04 - var(--cfd, 0) * 0.08));
   transition:
-    transform 0.35s var(--ease-out),
     translate var(--dur-med) var(--ease-out),
     box-shadow var(--dur-med) var(--ease-out);
 }
 
-.card:hover {
-  translate: 0 -4px;
+.card:hover .cf {
+  translate: 0 -6px;
   box-shadow: var(--shadow-md);
 }
 
@@ -123,7 +130,7 @@
   }
 
   .card {
-    width: 72vw;
+    width: 68vw;
   }
 
   .cardLow {

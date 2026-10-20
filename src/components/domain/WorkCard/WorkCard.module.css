@@ -147,3 +147,34 @@
   border-radius: var(--radius-full);
   color: var(--text-muted);
 }
+
+/* Layered depth: media, title and tags float at different heights while the
+   card tilts, so the card reads as a small 3D object */
+.link {
+  transform-style: preserve-3d;
+}
+
+.mediaWrap {
+  transform: translateZ(34px);
+  box-shadow: 0 24px 40px -22px var(--overlay-solid);
+}
+
+.title {
+  transform: translateZ(22px);
+}
+
+.meta,
+.desc,
+.tags {
+  transform: translateZ(10px);
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .mediaWrap,
+  .title,
+  .meta,
+  .desc,
+  .tags {
+    transform: none;
+  }
+}

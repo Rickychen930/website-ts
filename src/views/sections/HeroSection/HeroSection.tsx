@@ -9,6 +9,7 @@ import {
 } from "@/lib/motion";
 import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { Button } from "@/components/ui/Button/Button";
+import { Chip3D } from "@/components/ui/Chip3D/Chip3D";
 import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { FLOW_MEDIA, STACK_NAMES } from "@/config/flowMedia";
@@ -67,6 +68,10 @@ export const HeroSection: React.FC = () => {
   const skyX = useTransform(smx, (v) => v * -34);
   const skyY = useTransform(smy, (v) => v * -20);
   const fgX = useTransform(smx, (v) => v * 12);
+  // 3D chip: tilts toward the pointer, explodes as you scroll
+  const still0 = useMotionValue(0);
+  const chipRx = useTransform(smy, (v) => v * -26);
+  const chipRy = useTransform(smx, (v) => v * 38);
   useEffect(() => {
     if (reduce) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches)
@@ -89,6 +94,8 @@ export const HeroSection: React.FC = () => {
   const deepScale = useTransform(p, [0.38, 1], [1.2, 1]);
   const textY = useTransform(p, [0.6, 0.95], ["40px", "0px"]);
   const textOpacity = useTransform(p, [0.6, 0.85], [0, 1]);
+  const explode = useTransform(p, [0, 0.5], [0.18, 1]);
+  const explodeStill = useMotionValue(0.35);
 
   const name = profile?.name ?? "Ricky Chen";
   const role =
@@ -141,60 +148,69 @@ export const HeroSection: React.FC = () => {
             }) as never
           }
         >
-          <span className={styles.badge}>
-            <span className={styles.statusDot} aria-hidden="true" />
-            {profile?.openToOpportunities === false ? (
-              "Based in Sydney, Australia"
-            ) : (
-              <>
-                Open to work · Sydney
-                <span className={styles.badgeMore}>
-                  {" "}
-                  · Full work rights Jul 2027
-                </span>
-              </>
-            )}
-          </span>
-          <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
-            <RevealText
-              lines={[name]}
-              as="span"
-              immediate
-              delay={0.9 + introOffset()}
-            />
-          </h1>
-          <p className={styles.role}>{role}</p>
-          <p className={styles.tagline}>{tagline}</p>
-          <ul className={styles.proof} aria-label="Highlights">
-            {highlights.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-          <div className={styles.ctas}>
-            <Button as="a" href="#projects" variant="inverse">
-              View projects <span className={styles.arrow}>→</span>
-            </Button>
-            <Button
-              as="a"
-              href={RESUME_PDF}
-              download="Ricky-Chen-Resume.pdf"
-              variant="outlineInverse"
-            >
-              Download CV
-            </Button>
-            {socials.map((c) => (
-              <a
-                key={c.type}
-                href={c.value}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.social}
-                aria-label={c.type === "github" ? "GitHub" : "LinkedIn"}
-                data-magnetic=""
+          <div className={styles.copy}>
+            <span className={styles.badge}>
+              <span className={styles.statusDot} aria-hidden="true" />
+              {profile?.openToOpportunities === false ? (
+                "Based in Sydney, Australia"
+              ) : (
+                <>
+                  Open to work · Sydney
+                  <span className={styles.badgeMore}>
+                    {" "}
+                    · Full work rights Jul 2027
+                  </span>
+                </>
+              )}
+            </span>
+            <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
+              <RevealText
+                lines={[name]}
+                as="span"
+                immediate
+                delay={0.9 + introOffset()}
+              />
+            </h1>
+            <p className={styles.role}>{role}</p>
+            <p className={styles.tagline}>{tagline}</p>
+            <ul className={styles.proof} aria-label="Highlights">
+              {highlights.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+            <div className={styles.ctas}>
+              <Button as="a" href="#projects" variant="inverse">
+                View projects <span className={styles.arrow}>→</span>
+              </Button>
+              <Button
+                as="a"
+                href={RESUME_PDF}
+                download="Ricky-Chen-Resume.pdf"
+                variant="outlineInverse"
               >
-                {c.type === "github" ? <GitHubIcon /> : <LinkedInIcon />}
-              </a>
-            ))}
+                Download CV
+              </Button>
+              {socials.map((c) => (
+                <a
+                  key={c.type}
+                  href={c.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.social}
+                  aria-label={c.type === "github" ? "GitHub" : "LinkedIn"}
+                  data-magnetic=""
+                >
+                  {c.type === "github" ? <GitHubIcon /> : <LinkedInIcon />}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className={styles.chipWrap}>
+            <Chip3D
+              rx={reduce ? still0 : chipRx}
+              ry={reduce ? still0 : chipRy}
+              explode={reduce ? explodeStill : explode}
+            />
           </div>
         </motion.div>
 

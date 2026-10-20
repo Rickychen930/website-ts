@@ -257,6 +257,7 @@ button {
 [data-tilt] {
   transform: perspective(900px) rotateX(var(--rx, 0deg))
     rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
   transition: transform 0.35s var(--ease-out);
 }
 

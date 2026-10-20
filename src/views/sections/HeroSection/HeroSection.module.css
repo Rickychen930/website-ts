@@ -363,3 +363,71 @@ a:hover > .arrow {
     letter-spacing: 0.02em;
   }
 }
+
+/* Copy column + 3D chip */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.chipWrap {
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+@media (width > 900px) {
+  .fg {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    align-items: center;
+    gap: var(--space-8);
+    padding-inline: max(
+      var(--container-pad),
+      calc((100% - var(--container-max)) / 2)
+    );
+    text-align: left;
+  }
+
+  .copy {
+    align-items: flex-start;
+  }
+
+  /* Anchor the chip to the column start so it grows toward the viewport edge */
+  .chipWrap {
+    justify-items: start;
+  }
+
+  .wordmark {
+    font-size: clamp(2.2rem, 6vw, 6.4rem);
+    letter-spacing: 0.04em;
+  }
+
+  .ctas,
+  .proof {
+    justify-content: flex-start;
+  }
+}
+
+/* Phones: the chip floats faintly behind the copy */
+@media (width <= 900px) {
+  .chipWrap {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.32;
+  }
+}
+
+@media (width <= 640px) {
+  .fg {
+    padding-bottom: 92px;
+  }
+
+  .copy {
+    gap: var(--space-4);
+  }
+}

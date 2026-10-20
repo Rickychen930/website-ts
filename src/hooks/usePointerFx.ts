@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const TILT_MAX = 4; // degrees
+const TILT_MAX = 8; // degrees
 const MAGNET_PULL = 7; // px
 
 /**
