@@ -27,66 +27,13 @@
   aspect-ratio: 4 / 5;
   margin-top: var(--space-3);
   overflow: hidden;
-  border: 1px solid var(--media-glass-border);
-  border-radius: var(--radius-xl);
-  background: var(--cover-violet);
-  color: var(--cover-ink);
+  border-radius: var(--radius-lg);
   isolation: isolate;
 }
 
 .plateInner {
-  display: flex;
   position: absolute;
   inset: 0;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-6);
-}
-
-.plateGrid {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    radial-gradient(circle at 80% 10%, var(--aurora-1), transparent 55%),
-    linear-gradient(var(--media-glass-border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--media-glass-border) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    32px 32px,
-    32px 32px;
-  opacity: 0.6;
-}
-
-.plateMono {
-  font-family: var(--font-display);
-  font-size: clamp(4.5rem, 9vw, 7rem);
-  font-weight: 700;
-  line-height: 0.85;
-  letter-spacing: -0.06em;
-}
-
-.plateBody {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.plateRole {
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.plateCompany {
-  color: var(--media-accent);
-  font-weight: 600;
-}
-
-.plateMeta {
-  color: var(--on-media-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
 }
 
 /* Timeline */

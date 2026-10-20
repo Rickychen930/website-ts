@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "@/lib/motion";
+import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
-import { ProjectCover } from "@/components/domain/ProjectCover/ProjectCover";
+import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
+import { sitePlateForProject } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import { useSEO } from "@/hooks/useSEO";
 import { resolveProjectImageSrc } from "@/utils/resolveProjectImageSrc";
@@ -70,8 +72,10 @@ export const ProjectDetail: React.FC = () => {
 
   const ids = projects.map((p) => p.id);
   const idx = ids.indexOf(project.id);
+  const plate = sitePlateForProject(ids, project.id, project.title);
   const next =
     projects.length > 1 ? projects[(idx + 1) % projects.length] : null;
+  const nextPlate = next ? sitePlateForProject(ids, next.id, next.title) : null;
   // Stock photos aren't real interfaces — only show genuine screenshots
   const screenshot = STOCK_PHOTO.test(project.imageUrl ?? "")
     ? undefined
@@ -138,15 +142,17 @@ export const ProjectDetail: React.FC = () => {
         </motion.dl>
       </div>
 
-      <div className={`${styles.inner} ${styles.plateWrap}`}>
-        <motion.div
-          className={styles.plate}
-          initial={{ clipPath: "inset(8% 8% 8% 8% round 22px)", opacity: 0 }}
-          animate={{ clipPath: "inset(0% 0% 0% 0% round 22px)", opacity: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
-        >
-          <ProjectCover project={project} />
-        </motion.div>
+      <div className={styles.plateWrap}>
+        <RevealMedia
+          item={plate}
+          frameClassName={styles.plate}
+          parallax={22}
+          priority
+          delay={0.8}
+        />
+        <p className={styles.plateCaption}>
+          {plate.title} — {plate.subtitle}
+        </p>
       </div>
 
       <div className={`${styles.inner} ${styles.body}`}>
@@ -231,10 +237,10 @@ export const ProjectDetail: React.FC = () => {
         </aside>
       </div>
 
-      {next && next.id !== project.id && (
+      {next && nextPlate && next.id !== project.id && (
         <Link to={`/projects/${next.id}`} className={styles.next}>
           <div className={styles.nextMedia} aria-hidden="true">
-            <ProjectCover project={next} />
+            <FlowMedia item={nextPlate} showPendingLabel={false} />
           </div>
           <div className={styles.nextScrim} aria-hidden="true" />
           <div className={styles.nextInner}>

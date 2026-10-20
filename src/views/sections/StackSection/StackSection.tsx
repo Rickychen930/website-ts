@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
+import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { Button } from "@/components/ui/Button/Button";
+import { FLOW_MEDIA } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import type { TechnicalSkill } from "@/types/domain";
 import styles from "./StackSection.module.css";
@@ -64,6 +66,15 @@ export const StackSection: React.FC = () => {
   return (
     <Section id="stack" label="Skills">
       <div className={styles.layout}>
+        <div className={styles.mediaCol}>
+          <RevealMedia
+            item={FLOW_MEDIA.daintree}
+            frameClassName={styles.frame}
+            parallax={16}
+            caption
+          />
+        </div>
+
         <div className={styles.body}>
           <RevealText
             as="h2"

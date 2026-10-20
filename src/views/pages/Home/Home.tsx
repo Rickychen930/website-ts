@@ -5,6 +5,7 @@ import { AboutSection } from "@/views/sections/AboutSection/AboutSection";
 import { ProjectsSection } from "@/views/sections/ProjectsSection/ProjectsSection";
 import { WorkSection } from "@/views/sections/WorkSection/WorkSection";
 import { CredentialsSection } from "@/views/sections/CredentialsSection/CredentialsSection";
+import { AtlasSection } from "@/views/sections/AtlasSection/AtlasSection";
 import { StackSection } from "@/views/sections/StackSection/StackSection";
 import { ContactSection } from "@/views/sections/ContactSection/ContactSection";
 import { useSEO } from "@/hooks/useSEO";
@@ -25,7 +26,7 @@ export const Home: React.FC = () => {
     title: "Ricky Chen — Software Engineer · AI & Full-Stack Developer, Sydney",
     description:
       "Sydney-based software engineer and Master of AI candidate (UTS). Ex-Samsung R&D. Builds LLM chatbots, AI workflows and full-stack platforms.",
-    image: "/og-image.jpg",
+    image: "/media/flow/hero-uluru-dawn.jpg",
     type: "profile",
   });
 
@@ -36,6 +37,7 @@ export const Home: React.FC = () => {
       <ProjectsSection />
       <WorkSection />
       <CredentialsSection />
+      <AtlasSection />
       <StackSection />
       <ContactSection />
     </>

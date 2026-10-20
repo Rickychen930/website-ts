@@ -6,13 +6,16 @@ import {
   useScroll,
   useTransform,
 } from "@/lib/motion";
-import { Backdrop } from "@/components/ui/Backdrop/Backdrop";
+import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { Button } from "@/components/ui/Button/Button";
+import { FLOW_MEDIA } from "@/config/flowMedia";
 import { contactService } from "@/services/ContactService";
 import { useProfile } from "@/contexts";
 import { WORK_RIGHTS } from "@/config/site-defaults";
 import styles from "./ContactSection.module.css";
+
+const BG = FLOW_MEDIA.harbourNight;
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -82,8 +85,9 @@ export const ContactSection: React.FC = () => {
           className={styles.bgInner}
           style={reduce ? undefined : { scale }}
         >
-          <Backdrop />
+          <FlowMedia item={BG} showPendingLabel={false} />
         </motion.div>
+        <div className={styles.scrim} />
       </motion.div>
 
       <div className={styles.inner}>

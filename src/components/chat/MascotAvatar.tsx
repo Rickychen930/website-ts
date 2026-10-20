@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { flowSrc, MASCOT } from "@/config/flowMedia";
+import { flowPoster, MASCOT } from "@/config/flowMedia";
 import styles from "./ChatWidget.module.css";
 
 interface MascotAvatarProps {
@@ -36,7 +36,7 @@ export const MascotAvatar: React.FC<MascotAvatarProps> = ({
 
   return (
     <img
-      src={flowSrc(variant === "full" ? MASCOT.full : MASCOT.avatar)}
+      src={flowPoster(variant === "full" ? MASCOT.full : MASCOT.avatar)}
       alt=""
       aria-hidden="true"
       className={cls}

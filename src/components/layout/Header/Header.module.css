@@ -41,6 +41,13 @@
   box-shadow: var(--shadow-md);
 }
 
+/* Over hero photography the pill always reads light-on-dark */
+.overMedia .inner {
+  border-color: var(--media-glass-border);
+  background: var(--media-glass);
+  color: var(--on-media);
+}
+
 .logo {
   display: inline-flex;
   align-items: center;
@@ -97,6 +104,11 @@
   background: var(--accent-glow);
 }
 
+.overMedia .navPill {
+  border-color: var(--media-glass-border);
+  background: var(--media-accent-ring);
+}
+
 .navLink:hover,
 .navActive {
   opacity: 1;
@@ -140,6 +152,11 @@
     background var(--dur-fast) ease,
     transform var(--dur-fast) ease,
     translate 0.35s var(--ease-spring);
+}
+
+.overMedia .resume {
+  background: var(--media-cta-bg);
+  color: var(--media-cta-ink);
 }
 
 .resume:hover {

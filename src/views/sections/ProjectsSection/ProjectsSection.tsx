@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Section } from "@/components/layout/Section/Section";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { WorkCard } from "@/components/domain/WorkCard/WorkCard";
+import { sitePlateForProject } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import type { Project } from "@/types/domain";
 import styles from "./ProjectsSection.module.css";
@@ -33,6 +34,7 @@ export const ProjectsSection: React.FC = () => {
   const [filter, setFilter] = useState<Filter>("all");
 
   const all = profile?.projects ?? [];
+  const ids = all.map((p) => p.id);
   const filtered =
     filter === "all" ? all : all.filter((p) => p.category === filter);
   const shown = filtered.slice(0, MAX_ON_HOME);
@@ -79,6 +81,7 @@ export const ProjectsSection: React.FC = () => {
               <WorkCard
                 key={project.id}
                 project={project}
+                plate={sitePlateForProject(ids, project.id, project.title)}
                 shape={slot.shape}
                 className={styles[slot.cls]}
               />

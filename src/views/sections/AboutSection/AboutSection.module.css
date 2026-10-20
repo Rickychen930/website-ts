@@ -9,36 +9,43 @@
   letter-spacing: -0.025em;
 }
 
-/* Bento: heading cell + three discipline cards on a 2×2 grid */
-.bento {
+.grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-7);
+  align-items: start;
 }
 
-.head {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: var(--space-4);
-  padding: var(--space-6) var(--space-2) var(--space-6) 0;
+.portraitCol {
+  grid-column: 1 / span 5;
+}
+
+.portraitFrame {
+  aspect-ratio: 4 / 5;
+}
+
+.textCol {
+  grid-column: 7 / span 6;
+  padding-top: var(--space-12);
 }
 
 .heading {
+  margin-bottom: var(--space-9);
   font-size: var(--text-2xl);
 }
 
-.lede {
-  max-width: 34ch;
+.disciplines {
+  list-style: none;
 }
 
 .discipline {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-7);
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-3);
+  padding: var(--space-6);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   background: var(--glass-fill);
   transition:
     translate var(--dur-med) var(--ease-out),
@@ -56,7 +63,6 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  margin-bottom: var(--space-3);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   background: var(--accent-glow);
@@ -68,21 +74,11 @@
   transform: rotate(-6deg) scale(1.08);
 }
 
-.discTitle {
-  font-size: 1.5rem;
-}
-
-.discDesc {
-  max-width: 46ch;
-  font-size: var(--text-sm);
-}
-
 .tools {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: auto;
-  padding-top: var(--space-3);
+  margin-top: var(--space-3);
   list-style: none;
 }
 
@@ -95,14 +91,41 @@
   font-size: 0.7rem;
 }
 
+.discTitle {
+  margin-bottom: var(--space-2);
+  font-size: 1.35rem;
+}
+
+.discDesc {
+  max-width: 46ch;
+  font-size: var(--text-sm);
+}
+
+.wide {
+  margin-top: var(--space-13);
+}
+
+.wideFrame {
+  aspect-ratio: 21 / 9;
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-4);
-  margin-top: var(--space-4);
+  margin-top: var(--space-12);
 }
 
 @media (width <= 900px) {
+  .portraitCol,
+  .textCol {
+    grid-column: 1 / -1;
+  }
+
+  .textCol {
+    padding-top: var(--space-8);
+  }
+
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -113,15 +136,7 @@
     margin-bottom: var(--space-11);
   }
 
-  .bento {
-    grid-template-columns: 1fr;
-  }
-
-  .head {
-    padding: 0 0 var(--space-4);
-  }
-
-  .discipline {
-    padding: var(--space-6);
+  .wideFrame {
+    aspect-ratio: 4 / 3;
   }
 }

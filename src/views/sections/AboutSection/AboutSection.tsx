@@ -1,9 +1,11 @@
 import React from "react";
 import { motion } from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
+import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { ScrollWords } from "@/components/motion/ScrollWords/ScrollWords";
 import { CountUp } from "@/components/motion/CountUp/CountUp";
+import { FLOW_MEDIA, type FlowMediaItem } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import styles from "./AboutSection.module.css";
 
@@ -67,6 +69,16 @@ export const AboutSection: React.FC = () => {
     .join("")
     .trim();
 
+  const portrait: FlowMediaItem = {
+    ...FLOW_MEDIA.blueMountains,
+    id: "portrait",
+    theme: "landmark",
+    title: profile?.name ?? "Ricky Chen",
+    subtitle: profile?.title ?? "Fullstack & AI Engineer",
+    caption: profile?.location ?? "Sydney, Australia",
+    alt: `Portrait of ${profile?.name ?? "Ricky Chen"}`,
+  };
+
   const numericStats = (profile?.stats ?? [])
     .map((s) => ({
       value: Number(s.value),
@@ -81,44 +93,65 @@ export const AboutSection: React.FC = () => {
     <Section id="about" label="About" stack>
       <ScrollWords text={statement} className={styles.statement} />
 
-      <div className={styles.bento}>
-        <div className={styles.head}>
+      <div className={styles.grid}>
+        <div className={styles.portraitCol}>
+          <RevealMedia
+            item={portrait}
+            srcOverride={
+              profile?.avatarUrl ?? "/images/ricky-chen-portrait.png"
+            }
+            frameClassName={styles.portraitFrame}
+            parallax={10}
+          />
+        </div>
+
+        <div className={styles.textCol}>
           <RevealText
             as="h2"
             className={styles.heading}
             lines={["Engineering", <em key="e">that ships.</em>]}
           />
-          <p className={styles.lede}>
-            Three things I do well — and the tools I reach for.
-          </p>
+          <ol className={styles.disciplines}>
+            {DISCIPLINES.map((d, i) => (
+              <motion.li
+                key={d.title}
+                className={styles.discipline}
+                data-spotlight=""
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: i * 0.1,
+                }}
+              >
+                <span className={styles.discIcon}>
+                  <Icon d={d.icon} />
+                </span>
+                <div>
+                  <h3 className={styles.discTitle}>{d.title}</h3>
+                  <p className={styles.discDesc}>{d.desc}</p>
+                  <ul className={styles.tools} aria-label="Tools">
+                    {d.tools.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.li>
+            ))}
+          </ol>
         </div>
-        {DISCIPLINES.map((d, i) => (
-          <motion.article
-            key={d.title}
-            className={styles.discipline}
-            data-spotlight=""
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{
-              duration: 0.8,
-              ease: [0.22, 1, 0.36, 1],
-              delay: i * 0.1,
-            }}
-          >
-            <span className={styles.discIcon}>
-              <Icon d={d.icon} />
-            </span>
-            <h3 className={styles.discTitle}>{d.title}</h3>
-            <p className={styles.discDesc}>{d.desc}</p>
-            <ul className={styles.tools} aria-label="Tools">
-              {d.tools.map((t) => (
-                <li key={t}>{t}</li>
-              ))}
-            </ul>
-          </motion.article>
-        ))}
       </div>
+
+      <RevealMedia
+        item={FLOW_MEDIA.blueMountains}
+        frameClassName={styles.wideFrame}
+        parallax={18}
+        from="left"
+        caption
+        className={styles.wide}
+      />
 
       <div className={styles.stats}>
         {stats.map((s) => (

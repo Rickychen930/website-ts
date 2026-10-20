@@ -14,13 +14,19 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: var(--overlay-chapter);
+  background: var(--bg-deep);
   will-change: clip-path;
 }
 
 .bgInner {
   position: absolute;
   inset: 0;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay-solid);
 }
 
 .inner {
@@ -57,11 +63,7 @@
 }
 
 .eyebrow::before {
-  background: linear-gradient(
-    90deg,
-    var(--media-cta-bg),
-    var(--media-accent-2)
-  );
+  background: linear-gradient(90deg, var(--media-cta-bg), var(--media-accent));
 }
 
 .heading {
@@ -74,7 +76,7 @@
   background: linear-gradient(
     100deg,
     var(--media-cta-bg) 8%,
-    var(--media-accent-2) 92%
+    var(--media-accent) 92%
   );
   background-clip: text;
 }

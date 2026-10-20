@@ -29,9 +29,15 @@
   position: relative;
 }
 
-.frame {
-  overflow: hidden;
-  border-radius: var(--radius-lg);
+.mediaWrap img,
+.mediaWrap video {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.link:hover .mediaWrap img,
+.link:hover .mediaWrap video,
+.link:focus-visible .mediaWrap img {
+  transform: scale(1.05);
 }
 
 .portrait {
@@ -140,12 +146,4 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-full);
   color: var(--text-muted);
-}
-
-/* Phones: one column, so a calmer cover ratio keeps the scroll short */
-@media (width <= 640px) {
-  .portrait,
-  .square {
-    aspect-ratio: 4 / 3;
-  }
 }

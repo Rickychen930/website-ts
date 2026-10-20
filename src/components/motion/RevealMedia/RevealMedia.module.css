@@ -1,0 +1,28 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+
+  /* keep rounded corners while children transform (Safari) */
+  isolation: isolate;
+}
+
+.parallax {
+  position: absolute;
+  inset: 0;
+}
+
+.caption {
+  color: var(--text-dim);
+  font-size: var(--text-sm);
+}
