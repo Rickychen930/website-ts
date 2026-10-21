@@ -37,12 +37,6 @@
   transform-origin: 50% 0%;
 }
 
-/* Scaled while pinned: promote once so scrolling never re-rasterises it */
-.stacked .chapter {
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
 .veil {
   position: absolute;
   inset: 0;
