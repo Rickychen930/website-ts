@@ -19,6 +19,8 @@ interface RevealMediaProps {
   /** Direction of the wipe-in reveal */
   from?: "bottom" | "left" | "right";
   priority?: boolean;
+  /** "hover" = poster until the card is hovered (see FlowMedia) */
+  play?: "visible" | "hover";
   srcOverride?: string;
   /** Render an architectural caption under the plate */
   caption?: boolean;
@@ -42,6 +44,7 @@ export const RevealMedia: React.FC<RevealMediaProps> = ({
   parallax = 12,
   from = "bottom",
   priority,
+  play,
   srcOverride,
   caption = false,
   delay = 0,
@@ -83,6 +86,7 @@ export const RevealMedia: React.FC<RevealMediaProps> = ({
           <FlowMedia
             item={item}
             priority={priority}
+            play={play}
             srcOverride={srcOverride}
           />
         </motion.div>

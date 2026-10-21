@@ -430,3 +430,51 @@ a:hover > .arrow {
     gap: var(--space-4);
   }
 }
+
+/* Staged entrance: badge → role → tagline → proof → CTAs → chip.
+   Starts as the curtain lifts (--intro-offset is 0 on a plain load). */
+.badge,
+.role,
+.tagline,
+.proof,
+.ctas,
+.chipWrap {
+  animation: hero-rise 0.9s var(--ease-out) both;
+  animation-delay: calc(var(--intro-offset, 0s) + var(--rise, 0.1s));
+}
+
+.badge {
+  --rise: 0.1s;
+}
+
+.role {
+  --rise: 0.7s;
+}
+
+.tagline {
+  --rise: 0.82s;
+}
+
+.proof {
+  --rise: 0.94s;
+}
+
+.ctas {
+  --rise: 1.06s;
+}
+
+.chipWrap {
+  --rise: 0.5s;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -13,6 +13,11 @@ interface FlowMediaProps {
   srcOverride?: string;
   /** Show the pending-asset label on the placeholder plate */
   showPendingLabel?: boolean;
+  /**
+   * "visible" plays while on screen; "hover" keeps a poster still and plays
+   * only while the card is hovered or focused (touch screens fall back to visible)
+   */
+  play?: "visible" | "hover";
 }
 
 type Stage = "video" | "image" | "placeholder";
@@ -24,10 +29,26 @@ type Stage = "video" | "image" | "placeholder";
 const FlowVideo: React.FC<{
   item: FlowMediaItem;
   priority: boolean;
+  play: "visible" | "hover";
   onError: () => void;
-}> = ({ item, priority, onError }) => {
+}> = ({ item, priority, play, onError }) => {
   const ref = useRef<HTMLVideoElement>(null);
+  // `armed` = near the viewport: poster and source may load.
   const [armed, setArmed] = useState(priority);
+  // Above-the-fold video starts its download only after the page has loaded,
+  // so scripts and the poster (already the first frame) get the bandwidth first.
+  const [pageLoaded, setPageLoaded] = useState(!priority);
+
+  useEffect(() => {
+    if (!priority) return;
+    if (document.readyState === "complete") {
+      setPageLoaded(true);
+      return;
+    }
+    const done = () => setPageLoaded(true);
+    window.addEventListener("load", done, { once: true });
+    return () => window.removeEventListener("load", done);
+  }, [priority]);
 
   useEffect(() => {
     const video = ref.current;
@@ -38,6 +59,12 @@ const FlowVideo: React.FC<{
     // Constant 1x playback: changing playbackRate while scrolling forced the
     // decoder to re-time every frame and made the footage stutter.
     let visible = false;
+    let hovering = false;
+    const hoverMode =
+      play === "hover" && window.matchMedia("(hover: hover)").matches;
+    const host = hoverMode
+      ? video.closest<HTMLElement>("a, [data-hover-host]")
+      : null;
     // A later section slides over earlier stacked ones, leaving their videos
     // "in view" but buried. Ask what is actually on top at the video's centre;
     // overlays that belong to the video's own section don't count.
@@ -57,12 +84,27 @@ const FlowVideo: React.FC<{
       return !!top && !host.contains(top);
     };
     const sync = () => {
-      if (visible && !isFastScroll() && !buried()) {
+      const wanted = !hoverMode || hovering;
+      if (wanted && visible && !isFastScroll() && !buried()) {
         video.play().catch(() => undefined);
       } else {
         video.pause();
+        // Back to the poster frame when a hover preview ends
+        if (hoverMode && !hovering && video.currentTime > 0) {
+          video.currentTime = 0;
+        }
       }
     };
+    const setHover = (on: boolean) => () => {
+      hovering = on;
+      sync();
+    };
+    const enter = setHover(true);
+    const leave = setHover(false);
+    host?.addEventListener("pointerenter", enter);
+    host?.addEventListener("pointerleave", leave);
+    host?.addEventListener("focusin", enter);
+    host?.addEventListener("focusout", leave);
 
     // Load well before the clip scrolls in, so it is ready when it arrives…
     const loader = new IntersectionObserver(
@@ -87,20 +129,24 @@ const FlowVideo: React.FC<{
       player.disconnect();
       offFast();
       offTick();
+      host?.removeEventListener("pointerenter", enter);
+      host?.removeEventListener("pointerleave", leave);
+      host?.removeEventListener("focusin", enter);
+      host?.removeEventListener("focusout", leave);
     };
-  }, []);
+  }, [play]);
 
   return (
     <video
       ref={ref}
       className={styles.asset}
-      src={armed ? flowSrc(item) : undefined}
-      poster={flowPoster(item)}
-      autoPlay
+      src={armed && pageLoaded ? flowSrc(item) : undefined}
+      poster={armed ? flowPoster(item) : undefined}
+      autoPlay={play === "visible"}
       muted
       loop
       playsInline
-      preload="auto"
+      preload={play === "hover" ? "metadata" : "auto"}
       aria-label={item.alt}
       onError={onError}
     />
@@ -147,6 +193,7 @@ export const FlowMedia: React.FC<FlowMediaProps> = ({
   priority = false,
   srcOverride,
   showPendingLabel = true,
+  play = "visible",
 }) => {
   const reduceMotion = useReducedMotion();
   const wantsVideo = item.kind === "video" && !srcOverride && !reduceMotion;
@@ -175,6 +222,7 @@ export const FlowMedia: React.FC<FlowMediaProps> = ({
         <FlowVideo
           item={item}
           priority={priority}
+          play={play}
           onError={() => setStage("image")}
         />
       </div>
