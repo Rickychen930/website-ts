@@ -447,6 +447,9 @@
   font-size: 16px; /* no iOS zoom */
   line-height: 1.4;
   resize: none;
+  overflow-y: hidden; /* ChatWidget switches to auto only past the max height */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) transparent;
 }
 
 .input::placeholder {

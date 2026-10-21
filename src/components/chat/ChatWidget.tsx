@@ -16,6 +16,9 @@ import {
 } from "./chatStorage";
 import styles from "./ChatWidget.module.css";
 
+/** Composer grows to about five lines, then scrolls */
+const CHAT_INPUT_MAX_PX = 128;
+
 const GREETING_DELAY_MS = 6000;
 const TEASER_VISIBLE_MS = 9000;
 const SESSION_RE = /^[A-Za-z0-9_-]{8,64}$/;
@@ -184,7 +187,12 @@ export const ChatWidget: React.FC = () => {
     const el = inputRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 128)}px`;
+    // scrollHeight excludes the border; without it the box is 2px short and
+    // always shows a scrollbar, even for a single line
+    const border = el.offsetHeight - el.clientHeight;
+    const wanted = el.scrollHeight + border;
+    el.style.height = `${Math.min(wanted, CHAT_INPUT_MAX_PX)}px`;
+    el.style.overflowY = wanted > CHAT_INPUT_MAX_PX ? "auto" : "hidden";
   }, [input]);
 
   const remaining = CHAT_MAX_LENGTH - input.length;
