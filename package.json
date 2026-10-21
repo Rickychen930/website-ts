@@ -50,6 +50,8 @@
     "verify-data": "node scripts/verify-data.js",
     "verify:production": "node scripts/verify-production-connection.js",
     "diagnose:502": "bash scripts/diagnose-502.sh",
+    "sync:chat": "node scripts/sync-chat-profile.js",
+    "prebackend:build": "npm run sync:chat",
     "backend:build": "npx tsc -p backend/tsconfig.backend.json",
     "backend:start": "node backend/dist/main.js",
     "backend:pm2": "pm2 start backend/ecosystem.config.js --env production",

@@ -19,6 +19,7 @@ export interface ChatProfile {
     endDate?: string | Date;
     isCurrent: boolean;
     description: string;
+    achievements?: readonly string[];
     technologies: readonly string[];
   }>;
   projects: ReadonlyArray<{
@@ -41,6 +42,9 @@ export interface ChatProfile {
     field: string;
     endDate?: string | Date;
   }>;
+  certifications?: ReadonlyArray<{ name: string; issuer: string }>;
+  honors?: ReadonlyArray<{ title: string; issuer?: string }>;
+  languages?: ReadonlyArray<{ name: string; proficiency: string }>;
 }
 
 export interface LocalAnswer {
@@ -82,6 +86,21 @@ const list = (items: string[]) =>
     ? items.join("")
     : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 
+const CATEGORY_LABEL: Record<string, string> = {
+  ai: "AI",
+  fullstack: "full-stack",
+  web: "web",
+  backend: "backend",
+  mobile: "mobile",
+};
+
+/** "Garden & Landscape — Services & seasons" → "garden & landscape" */
+const headline = (title: string) =>
+  title
+    .split(/\s[—–-]\s/)[0]
+    .trim()
+    .toLowerCase();
+
 const skillsBy = (p: ChatProfile, cats: string[], limit = 6) =>
   p.technicalSkills
     .filter((s) => cats.includes(s.category))
@@ -119,9 +138,9 @@ const INTENTS: Intent[] = [
   {
     id: "about",
     patterns: [
-      "about",
+      "about ricky",
+      "about him",
       "who is",
-      "tell me about",
       "background",
       "introduce",
       "summary",
@@ -214,8 +233,16 @@ const INTENTS: Intent[] = [
     ],
     answer: (p) => {
       const top = p.projects.slice(0, 4).map((x) => x.title);
+      const counts = new Map<string, number>();
+      p.projects.forEach((x) =>
+        counts.set(x.category, (counts.get(x.category) ?? 0) + 1),
+      );
+      const mix = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4)
+        .map(([c, n]) => `${n} ${CATEGORY_LABEL[c] ?? c}`);
       return {
-        reply: `${p.projects.length} works so far. Recent highlights: ${list(top)}. Browse them all, with case studies, at /projects.`,
+        reply: `${p.projects.length} projects so far (${list(mix)}). Recent highlights: ${list(top)}. Browse them all, with case studies, at /projects.`,
         chips: ["Tell me about Web Architech", "What's his tech stack?"],
       };
     },
@@ -232,6 +259,14 @@ const INTENTS: Intent[] = [
       "companies",
       "current role",
       "currently",
+      "where does he work",
+      "where does ricky work",
+      "where do you work",
+      "where is he working",
+      "who does he work for",
+      "works at",
+      "work at",
+      "work for",
     ],
     answer: (p) => {
       const now = currentRoles(p).map((e) => `${e.position} at ${e.company}`);
@@ -242,6 +277,53 @@ const INTENTS: Intent[] = [
       return {
         reply: `${now.length ? `Currently: ${list(now)}. ` : ""}${past.length ? `Previously: ${list(past)}. ` : ""}Full details are in the Experience section (/#work) and the /resume.`,
         chips: ["Where did he study?", "Is he open to work?"],
+      };
+    },
+  },
+  {
+    id: "tenure",
+    patterns: [
+      "years of experience",
+      "how many years",
+      "how long has he",
+      "how experienced",
+      "seniority",
+      "junior or senior",
+    ],
+    answer: (p) => {
+      const first = p.experiences
+        .map((e) => new Date(e.startDate).getTime())
+        .filter((t) => !Number.isNaN(t))
+        .sort((a, b) => a - b)[0];
+      const years = first
+        ? Math.max(1, Math.round((Date.now() - first) / (365.25 * 864e5)))
+        : null;
+      return {
+        reply: `${years ? `About ${years} years of hands-on engineering since ${new Date(first).getUTCFullYear()}` : "Hands-on engineering experience"} — from an Apple Developer Academy programme and Samsung R&D to a current AI developer role, plus running Web Architech. Timeline: /#work.`,
+        chips: ["Where has he worked?", "Is he open to work?"],
+      };
+    },
+  },
+  {
+    id: "mobile",
+    patterns: [
+      "mobile",
+      "ios",
+      "android",
+      "swift",
+      "swiftui",
+      "react native",
+      "iphone",
+      "app store",
+      "apps",
+    ],
+    answer: (p) => {
+      const apps = p.projects
+        .filter((x) => x.category === "mobile")
+        .map((x) => x.title);
+      return {
+        reply: `Yes — mobile is part of the toolkit: Swift/SwiftUI and React Native, from the Apple Developer Academy onwards.${apps.length ? ` Mobile projects: ${list(apps.slice(0, 4))}.` : ""} See /projects.`,
+        chips: ["Show me recent projects", "What's his tech stack?"],
       };
     },
   },
@@ -370,23 +452,103 @@ const INTENTS: Intent[] = [
     }),
   },
   {
-    id: "australia",
+    id: "atlas",
     patterns: [
-      "uluru",
-      "kangaroo",
-      "koala",
-      "animals",
-      "flora",
-      "fauna",
-      "landmark",
-      "images",
-      "photos",
+      "atlas",
+      "hardware",
+      "cpu",
+      "gpu",
+      "ram",
+      "ssd",
+      "chip",
+      "motherboard",
+      "under the hood",
+      "iot",
+      "electronics",
+    ],
+    answer: (p) => ({
+      reply: `The Hardware atlas (/#atlas) walks through ten parts of the machine the code runs on — CPU, GPU, RAM, SSD, fibre, network switch and more. It nods to ${firstName(p)}'s Internet of Things background from his BINUS degree.`,
+      chips: ["What's his tech stack?", "Where did he study?"],
+    }),
+  },
+  {
+    id: "site",
+    patterns: [
+      "this site",
+      "this website",
+      "the website",
+      "how was this built",
+      "how is this site built",
+      "built this",
+      "made this",
+      "sections",
+      "navigate",
+      "what's on this site",
+      "tech behind",
     ],
     answer: () => ({
       reply:
-        "The site's visuals are an atlas of Australia — landmarks, flora and fauna. Scroll to the Field Atlas (/#atlas) for the species.",
-      chips: ["What does Ricky build?", "Show me recent projects"],
+        "This site is a React 19 + TypeScript app with Framer Motion and Lenis for the motion, and an Express/Node backend behind me and the contact form. Sections: About, Projects, Experience (/#work), Credentials, Skills (/#stack), the Hardware atlas (/#atlas) and Contact (/#contact).",
+      chips: ["Show me recent projects", "What's his tech stack?"],
     }),
+  },
+  {
+    id: "certifications",
+    patterns: [
+      "certification",
+      "certifications",
+      "certificate",
+      "certificates",
+      "certified",
+      "courses",
+      "award",
+      "awards",
+      "honours",
+      "honors",
+      "publication",
+      "publications",
+      "paper",
+      "papers",
+      "research",
+    ],
+    answer: (p) => {
+      const certs = (p.certifications ?? []).map(
+        (c) => `${c.name} (${c.issuer})`,
+      );
+      const honors = (p.honors ?? []).map((h) => h.title.split(":")[0]);
+      const parts = [
+        certs.length ? `Certifications: ${list(certs)}.` : "",
+        honors.length ? `Research & honours: ${list(honors)}.` : "",
+      ].filter(Boolean);
+      return {
+        reply: `${parts.join(" ") || "See the Credentials section for details."} More in Credentials (/#credentials).`,
+        chips: ["Where did he study?", "Where has he worked?"],
+      };
+    },
+  },
+  {
+    id: "spoken",
+    patterns: [
+      "speak",
+      "spoken languages",
+      "languages does he speak",
+      "language does he speak",
+      "english",
+      "indonesian",
+      "bilingual",
+      "native language",
+    ],
+    answer: (p) => {
+      const langs = (p.languages ?? []).map(
+        (l) => `${l.name} (${l.proficiency})`,
+      );
+      return {
+        reply: langs.length
+          ? `Spoken languages: ${list(langs)}.`
+          : `${firstName(p)} works in English day to day.`,
+        chips: ["Is he open to work?", "How do I contact him?"],
+      };
+    },
   },
 ];
 
@@ -405,9 +567,14 @@ const COMPILED = INTENTS.map((intent) => ({
 /** Also match a project by name, e.g. "tell me about DailyMate" */
 const matchProject = (p: ChatProfile, text: string): LocalAnswer | null => {
   const lower = text.toLowerCase();
-  const hit = p.projects.find(
-    (x) => x.title.length > 3 && lower.includes(x.title.toLowerCase()),
-  );
+  const hit = p.projects.find((x) => {
+    const full = x.title.toLowerCase();
+    const short = headline(x.title);
+    return (
+      (full.length > 3 && lower.includes(full)) ||
+      (short.length >= 4 && lower.includes(short))
+    );
+  });
   if (!hit) return null;
   const path = hit.id ? `/projects/${hit.id}` : "/projects";
   return {
@@ -417,12 +584,60 @@ const matchProject = (p: ChatProfile, text: string): LocalAnswer | null => {
   };
 };
 
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const monthYear = (d: string | Date | undefined) => {
+  if (!d) return "";
+  const date = new Date(d);
+  return Number.isNaN(date.getTime())
+    ? ""
+    : `${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+};
+
+/** Match an employer by name, e.g. "what did he do at Samsung" */
+const matchExperience = (p: ChatProfile, text: string): LocalAnswer | null => {
+  const lower = text.toLowerCase();
+  const hit = p.experiences.find((e) => {
+    const full = e.company.toLowerCase();
+    const short = full.split(/\s[–—@-]\s/)[0].trim();
+    const first = short.split(/\s+/)[0];
+    return (
+      lower.includes(short) ||
+      (first.length > 4 && !["decode", "apple"].includes(first)
+        ? lower.includes(first)
+        : lower.includes(short))
+    );
+  });
+  if (!hit) return null;
+  const when = `${monthYear(hit.startDate)} — ${hit.isCurrent ? "present" : monthYear(hit.endDate)}`;
+  const wins = (hit.achievements ?? []).slice(0, 2).join("; ");
+  return {
+    intent: "experience_detail",
+    reply: `${hit.position} at ${hit.company} (${when}). ${hit.description.slice(0, 220)}${wins ? ` Highlights: ${wins}.` : ""} Full timeline: /#work.`,
+    chips: ["Where did he study?", "Show me recent projects"],
+  };
+};
+
 export const matchLocal = (
   profile: ChatProfile,
   message: string,
 ): LocalAnswer | null => {
   const project = matchProject(profile, message);
   if (project) return project;
+  const company = matchExperience(profile, message);
+  if (company) return company;
 
   let best: { intent: Intent; score: number } | null = null;
   for (const { intent, tests } of COMPILED) {

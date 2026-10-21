@@ -18,7 +18,7 @@ const SENSITIVE = [
 
 /** Words that make a message plausibly about the portfolio / hiring */
 const ON_TOPIC =
-  /\b(ricky|he|his|him|you|work|project|portfolio|skill|stack|experience|hire|job|role|contact|resume|cv|build|react|node|ai|web|app|site|freelance|studio|salary|rate|price|available|study|uni|sydney|australia)\b/i;
+  /\b(ricky|he|his|him|you|work|project|portfolio|skill|stack|experience|hire|job|role|contact|resume|cv|build|react|node|ai|web|app|site|freelance|studio|salary|rate|price|available|study|uni|sydney|australia|mobile|ios|swift|certification|certifications|publication|publications|degree|visa|kobi|site|website)\b/i;
 
 export type GuardReason = "injection" | "sensitive" | "off_topic";
 
