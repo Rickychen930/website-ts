@@ -97,20 +97,36 @@ html.lenis body {
   color: var(--text-inverse);
 }
 
+/* Scrollbars: slim, rounded, no track. `scrollbar-color` is limited to
+   browsers without ::-webkit-scrollbar because Chrome would let it override
+   the rounded thumb below. */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-base);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-dim);
+  border: 3px solid transparent;
+  border-radius: var(--radius-full);
+  background: var(--border-hover);
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  border-width: 2px;
+  background: var(--text-dim);
+  background-clip: padding-box;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-hover) transparent;
+  }
 }
 
 /* Typography scale */
