@@ -109,11 +109,16 @@ export const ContactSection: React.FC = () => {
           <button
             type="button"
             className={styles.email}
+            data-copied={copied}
             onClick={copyEmail}
             aria-label={`Copy email address ${email}`}
           >
             <span className={styles.emailText}>{email}</span>
-            <span className={styles.emailHint} aria-live="polite">
+            <span
+              key={copied ? "copied" : "copy"}
+              className={styles.emailHint}
+              aria-live="polite"
+            >
               {copied ? "Copied ✓" : "Copy"}
             </span>
           </button>

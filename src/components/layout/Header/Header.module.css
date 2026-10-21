@@ -84,7 +84,8 @@
   opacity: 0.72;
   transition:
     opacity var(--dur-fast) ease,
-    background var(--dur-fast) ease;
+    background var(--dur-fast) ease,
+    scale var(--dur-press) var(--ease-spring);
 }
 
 .navLink:hover {
@@ -127,7 +128,9 @@
   width: 44px;
   height: 44px;
   border-radius: var(--radius-md);
-  transition: background var(--dur-fast) ease;
+  transition:
+    background var(--dur-fast) ease,
+    scale var(--dur-press) var(--ease-spring);
 }
 
 .iconBtn:hover {
@@ -151,7 +154,8 @@
   transition:
     background var(--dur-fast) ease,
     transform var(--dur-fast) ease,
-    translate 0.35s var(--ease-spring);
+    translate 0.35s var(--ease-spring),
+    scale var(--dur-press) var(--ease-spring);
 }
 
 .overMedia .resume {
@@ -252,4 +256,10 @@
   .menuBtn {
     display: flex;
   }
+}
+
+.navLink:active,
+.iconBtn:active,
+.resume:active {
+  scale: var(--press-scale);
 }

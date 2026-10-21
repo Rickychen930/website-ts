@@ -4,7 +4,6 @@ import {
   motion,
   useReducedMotion,
   useScroll,
-  useSpring,
 } from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
@@ -66,7 +65,7 @@ export const WorkSection: React.FC = () => {
     target: listRef,
     offset: ["start 75%", "end 40%"],
   });
-  const line = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
+  const line = scrollYProgress;
 
   const experiences = (profile?.experiences ?? [])
     .slice()

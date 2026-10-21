@@ -29,11 +29,16 @@
   --gradient-text: var(--hl-gradient);
   --eyebrow-rule: linear-gradient(90deg, #22d3ee, #a78bfa);
 
+  /* Status */
+  --danger: #f87171;
+  --shine: rgba(255, 255, 255, 0.35); /* button sweep highlight */
+
   /* CTA */
   --cta-bg: #22d3ee;
   --cta-hover: #67e8f9;
   --cta-ink: #04121f;
   --cta-shadow: 0 12px 32px -12px rgba(34, 211, 238, 0.55);
+  --cta-shadow-hover: 0 18px 40px -12px rgba(34, 211, 238, 0.75);
 
   /* Glass */
   --glass-fill: rgba(140, 190, 255, 0.07);
@@ -117,6 +122,8 @@
   --dur-fast: 0.24s;
   --dur-med: 0.52s;
   --dur-slow: 0.9s;
+  --dur-press: 0.16s;
+  --press-scale: 0.97;
 
   /* Z-index */
   --z-base: 0;
@@ -172,10 +179,12 @@
   --accent-glow-2: rgba(109, 40, 217, 0.12);
   --hl-gradient: linear-gradient(100deg, #155e75 0%, #1d4ed8 55%, #6d28d9 100%);
   --eyebrow-rule: linear-gradient(90deg, #155e75, #6d28d9);
+  --danger: #b91c1c;
   --cta-bg: #07152c;
   --cta-hover: #132b54;
   --cta-ink: #eef5ff;
   --cta-shadow: 0 12px 32px -12px rgba(7, 21, 44, 0.45);
+  --cta-shadow-hover: 0 18px 40px -12px rgba(7, 21, 44, 0.6);
   --glass-fill: rgba(7, 21, 44, 0.05);
   --glass-fill-strong: rgba(238, 245, 255, 0.9);
   --glass-nav: rgba(238, 245, 255, 0.72);

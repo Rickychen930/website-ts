@@ -54,11 +54,8 @@ export const HeroSection: React.FC = () => {
     target: ref,
     offset: ["start start", "end end"],
   });
-  const p = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 26,
-    mass: 0.3,
-  });
+  // Lenis (desktop) / the browser (touch) already ease the scroll — no extra spring
+  const p = scrollYProgress;
 
   // Mouse parallax: the sky drifts against the pointer, the copy follows it a little
   const mx = useMotionValue(0);

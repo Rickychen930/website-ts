@@ -28,12 +28,19 @@ const useCoverflow = (
     const tick = () => {
       raf = 0;
       const vw = window.innerWidth;
-      el.querySelectorAll<HTMLElement>("[data-cf]").forEach((card) => {
+      const cards = el.querySelectorAll<HTMLElement>("[data-cf]");
+      // Read every rect first, then write — interleaving forces a layout per card
+      const cfs = Array.from(cards, (card) => {
         const r = card.getBoundingClientRect();
         const d = (r.left + r.width / 2 - vw / 2) / (vw * 0.42);
-        const cf = Math.max(-1.3, Math.min(1.3, d));
-        card.style.setProperty("--cf", cf.toFixed(3));
-        card.style.setProperty("--cfd", Math.min(1, Math.abs(cf)).toFixed(3));
+        return Math.max(-1.3, Math.min(1.3, d));
+      });
+      cards.forEach((card, i) => {
+        card.style.setProperty("--cf", cfs[i].toFixed(3));
+        card.style.setProperty(
+          "--cfd",
+          Math.min(1, Math.abs(cfs[i])).toFixed(3),
+        );
       });
       if (visible) raf = requestAnimationFrame(tick);
     };

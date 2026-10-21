@@ -60,6 +60,8 @@ backend/src/         → Express MVC mirror
 
 - Semua visual publik (tema IT: silicon, server, signal) dari `src/config/flowMedia.ts` → file di `public/media/flow/` (lihat README di sana)
 - Render lewat `FlowMedia` / `RevealMedia` (fallback placeholder otomatis)
+- **Video wajib Full HD:** 16:9 = 1920×1080, 9:16 = 1080×1920, **30 fps** (24 fps judder di layar 60 Hz). Jangan diturunkan; re-render lewat `scripts/motion/render-videos.js` (`jobs.txt`)
+- Jangan ubah `playbackRate` video saat scroll — bikin patah-patah
 
 ### 2. Arsitektur
 

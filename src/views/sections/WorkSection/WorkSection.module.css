@@ -241,6 +241,7 @@
   color: var(--text-muted);
   transition:
     transform var(--dur-med) var(--ease-out),
+    scale var(--dur-press) var(--ease-spring),
     background var(--dur-fast) ease,
     color var(--dur-fast) ease;
 }

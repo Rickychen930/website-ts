@@ -10,12 +10,15 @@
 const path = require("path");
 const fs = require("fs");
 const { spawn, spawnSync } = require("child_process");
-const { chromium } = require("playwright");
+// `playwright` if installed, else `playwright-core` driving a local Chrome
+// (CHROME=/path/to/chrome, PW=/path/to/playwright-core)
+const { chromium } = require(process.env.PW || "playwright");
 
 const FF = process.env.FFMPEG || "ffmpeg";
 const OUT = path.resolve(__dirname, "../../public/media/flow");
 const PAGE = "file://" + path.resolve(__dirname, "render.html");
-const FPS = 24;
+// 30 fps divides evenly into 60 Hz screens; 24 fps judders (3:2 pulldown)
+const FPS = 30;
 const FRAMES = FPS * 8;
 
 const jobs = fs
@@ -26,7 +29,9 @@ const jobs = fs
   .filter(([, , , id]) => process.argv.length < 3 || process.argv.includes(id));
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(
+    process.env.CHROME ? { executablePath: process.env.CHROME } : {},
+  );
   for (const [scene, w, h, id, crf] of jobs) {
     const mp4 = path.join(OUT, `${id}.mp4`);
     const ff = spawn(FF, [
@@ -45,6 +50,10 @@ const jobs = fs
       "slow",
       "-crf",
       crf,
+      "-profile:v",
+      "high",
+      "-g",
+      String(FPS * 2),
       "-pix_fmt",
       "yuv420p",
       "-movflags",
@@ -55,8 +64,8 @@ const jobs = fs
     const page = await browser.newPage({ viewport: { width: +w, height: +h } });
     await page.goto(`${PAGE}?scene=${scene}&w=${w}&h=${h}`);
     for (let i = 0; i < FRAMES; i++) {
-      await page.evaluate((n) => window.renderFrame(n, 24), i);
-      const buf = await page.screenshot({ type: "jpeg", quality: 93 });
+      await page.evaluate(([n, f]) => window.renderFrame(n, f), [i, FPS]);
+      const buf = await page.screenshot({ type: "jpeg", quality: 96 });
       if (!ff.stdin.write(buf))
         await new Promise((r) => ff.stdin.once("drain", r));
     }

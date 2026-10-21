@@ -5,7 +5,7 @@ const MAGNET_PULL = 7; // px
 
 /**
  * One delegated pointer listener drives opt-in effects via CSS vars:
- * - <html>           → --px/--py (ambient cursor light)
+ * - .cursor-light    → transform (ambient cursor light, compositor only)
  * - [data-spotlight] → --mx/--my (cursor position inside the element)
  * - [data-tilt]      → --rx/--ry (subtle 3D tilt)
  * - [data-magnetic]  → --mgx/--mgy (pull toward the cursor)
@@ -18,6 +18,11 @@ export const usePointerFx = (enabled = true): void => {
       "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
     );
     if (!ok.matches) return;
+
+    const light = document.createElement("div");
+    light.className = "cursor-light";
+    light.setAttribute("aria-hidden", "true");
+    document.body.appendChild(light);
 
     let raf = 0;
     let last: PointerEvent | null = null;
@@ -34,10 +39,8 @@ export const usePointerFx = (enabled = true): void => {
       if (!e) return;
       const target = e.target as Element | null;
 
-      // Ambient cursor light (CSS reads --px/--py on <html>)
-      const rootStyle = document.documentElement.style;
-      rootStyle.setProperty("--px", `${e.clientX}px`);
-      rootStyle.setProperty("--py", `${e.clientY}px`);
+      light.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      light.dataset.on = "true";
 
       const spot = target?.closest<HTMLElement>("[data-spotlight]");
       if (spot) {
@@ -74,6 +77,7 @@ export const usePointerFx = (enabled = true): void => {
       if (!raf) raf = requestAnimationFrame(frame);
     };
     const onLeave = () => {
+      light.dataset.on = "false";
       reset(tiltEl, ["--rx", "--ry"]);
       reset(magnetEl, ["--mgx", "--mgy"]);
       tiltEl = magnetEl = null;
@@ -86,6 +90,7 @@ export const usePointerFx = (enabled = true): void => {
       document.removeEventListener("pointermove", onMove);
       document.documentElement.removeEventListener("pointerleave", onLeave);
       onLeave();
+      light.remove();
     };
   }, [enabled]);
 };

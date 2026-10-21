@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/lib/motion";
+import { isFastScroll, onFastScroll, onScrollTick } from "@/lib/scrollActivity";
 import { flowPoster, flowSrc, type FlowMediaItem } from "@/config/flowMedia";
 import styles from "./FlowMedia.module.css";
 
@@ -34,34 +35,58 @@ const FlowVideo: React.FC<{
       setArmed(true);
       return;
     }
-    // Scrolling fast fast-forwards the footage; it eases back to 1× at rest
-    let raf = 0;
-    let rate = 1;
-    const tick = () => {
-      const v = Math.abs(window.__lenis?.velocity ?? 0);
-      const target = Math.min(2.6, 1 + v * 0.05);
-      rate += (target - rate) * 0.08;
-      video.playbackRate = Math.round(rate * 100) / 100;
-      raf = requestAnimationFrame(tick);
+    // Constant 1x playback: changing playbackRate while scrolling forced the
+    // decoder to re-time every frame and made the footage stutter.
+    let visible = false;
+    // A later section slides over earlier stacked ones, leaving their videos
+    // "in view" but buried. Ask what is actually on top at the video's centre;
+    // overlays that belong to the video's own section don't count.
+    const buried = () => {
+      const host = video.closest("section");
+      if (!host) return false;
+      const r = video.getBoundingClientRect();
+      const x = Math.min(
+        Math.max(r.left + r.width / 2, 0),
+        window.innerWidth - 1,
+      );
+      const y = Math.min(
+        Math.max(r.top + r.height / 2, 0),
+        window.innerHeight - 1,
+      );
+      const top = document.elementFromPoint(x, y);
+      return !!top && !host.contains(top);
     };
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setArmed(true);
-          video.play().catch(() => undefined);
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(tick);
-        } else {
-          video.pause();
-          cancelAnimationFrame(raf);
-        }
-      },
-      { rootMargin: "200px 0px" },
+    const sync = () => {
+      if (visible && !isFastScroll() && !buried()) {
+        video.play().catch(() => undefined);
+      } else {
+        video.pause();
+      }
+    };
+
+    // Load well before the clip scrolls in, so it is ready when it arrives…
+    const loader = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setArmed(true),
+      { rootMargin: "600px 0px" },
     );
-    io.observe(video);
+    // …but only decode while it is on screen, and for side-scrolling rows
+    // (the atlas) only the cards in the middle of the viewport
+    const player = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      },
+      { rootMargin: "0px -22% 0px -22%", threshold: 0.01 },
+    );
+    loader.observe(video);
+    player.observe(video);
+    const offFast = onFastScroll(sync);
+    const offTick = onScrollTick(sync);
     return () => {
-      io.disconnect();
-      cancelAnimationFrame(raf);
+      loader.disconnect();
+      player.disconnect();
+      offFast();
+      offTick();
     };
   }, []);
 
@@ -75,7 +100,7 @@ const FlowVideo: React.FC<{
       muted
       loop
       playsInline
-      preload={priority ? "auto" : "none"}
+      preload="auto"
       aria-label={item.alt}
       onError={onError}
     />

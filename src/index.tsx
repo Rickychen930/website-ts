@@ -6,6 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/base.css";
 import "./styles/animations.css";
+import "./styles/interactions.css";
 import "./styles/dark-mode.css";
 import { App } from "./App";
 

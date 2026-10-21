@@ -1,0 +1,52 @@
+/* Micro-interaction layer — press, focus and form feedback.
+ * Compositor-only properties (scale / translate / opacity), token timing.
+ * `scale` is an individual property, so it composes with every component's
+ * own `transform` / `translate` instead of overwriting them.
+ */
+
+:where(button, [role="button"], summary, [data-press]):not(
+  :disabled,
+  [aria-disabled="true"]
+) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  user-select: none;
+}
+
+/* Press: dips on contact, springs back on release */
+:where(button, [role="button"], [data-press]):not(
+    :disabled,
+    [aria-disabled="true"]
+  ):active {
+  scale: var(--press-scale);
+}
+
+:where(button, [role="button"], [data-press]) {
+  transition: scale var(--dur-press) var(--ease-spring);
+}
+
+/* Native form controls pick up the accent */
+:root {
+  accent-color: var(--accent-1);
+  caret-color: var(--accent-1);
+}
+
+/* Text links inside copy: underline draws in from the left */
+:where(p, li, dd) > a:not([class]) {
+  background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 1px
+    no-repeat;
+  text-decoration: none;
+  transition: background-size var(--dur-med) var(--ease-out);
+}
+
+:where(p, li, dd) > a:not([class]):hover,
+:where(p, li, dd) > a:not([class]):focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (hover: none) {
+  :where(button, [role="button"], [data-press]):not(:disabled):active {
+    scale: 0.94;
+  }
+}

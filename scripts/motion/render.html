@@ -575,9 +575,9 @@ const BK={cpu:0.22,gpu:0.35,ram:0.4,ssd:0.4,switch:0.4,sbc:0.35,micro:0.3,keyboa
 function bloom(){
   hix.globalCompositeOperation='source-over';hix.clearRect(0,0,hi.width,hi.height);
   hix.filter='brightness(0.7) contrast(2.4) saturate(1.2)';hix.drawImage(cv,0,0,hi.width,hi.height);hix.filter='none';
-  b1x.clearRect(0,0,b1.width,b1.height);b1x.filter=`blur(${4}px)`;b1x.drawImage(hi,0,0);b1x.filter='none';
-  b2x.clearRect(0,0,b2.width,b2.height);b2x.filter='blur(5px)';b2x.drawImage(hi,0,0,b2.width,b2.height);b2x.filter='none';
-  stx.globalCompositeOperation='source-over';stx.clearRect(0,0,st.width,st.height);stx.filter='blur(1.5px)';stx.drawImage(hi,0,0,st.width,st.height);stx.filter='none';
+  b1x.clearRect(0,0,b1.width,b1.height);b1x.filter=`blur(${4*S}px)`;b1x.drawImage(hi,0,0);b1x.filter='none';
+  b2x.clearRect(0,0,b2.width,b2.height);b2x.filter=`blur(${5*S}px)`;b2x.drawImage(hi,0,0,b2.width,b2.height);b2x.filter='none';
+  stx.globalCompositeOperation='source-over';stx.clearRect(0,0,st.width,st.height);stx.filter=`blur(${1.5*S}px)`;stx.drawImage(hi,0,0,st.width,st.height);stx.filter='none';
   stx.globalCompositeOperation='multiply';stx.fillStyle='#86e6ff';stx.fillRect(0,0,st.width,st.height);stx.globalCompositeOperation='source-over';
   ctx.globalCompositeOperation='lighter';
   ctx.globalAlpha=0.5*BK;ctx.drawImage(b1,0,0,W,H);

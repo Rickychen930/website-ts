@@ -61,6 +61,7 @@ export const Header: React.FC = () => {
   // and the active section = last anchor that crossed the nav line.
   useEffect(() => {
     let raf = 0;
+    let activeY = Number.NEGATIVE_INFINITY;
     const update = () => {
       raf = 0;
       const y = window.scrollY;
@@ -71,6 +72,10 @@ export const Header: React.FC = () => {
       lastY.current = y;
 
       if (pathname !== "/") return;
+      // Rect reads force layout while scroll-linked transforms are animating,
+      // so re-evaluate the active section only after ~48px of travel
+      if (Math.abs(y - activeY) < 48) return;
+      activeY = y;
       const line = NAV_OFFSET + window.innerHeight * 0.25;
       let current = "";
       for (const { id } of NAV_LINKS) {

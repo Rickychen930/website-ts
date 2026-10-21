@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { frame, cancelFrame } from "framer-motion";
 import type Lenis from "lenis";
 
 declare global {
@@ -21,29 +22,29 @@ export const useSmoothScroll = (enabled = true): void => {
     );
     if (!ok.matches) return;
 
-    let raf = 0;
     let lenis: Lenis | null = null;
     let cancelled = false;
+    const tick = ({ timestamp }: { timestamp: number }) =>
+      lenis?.raf(timestamp);
 
     void import("lenis").then(({ default: LenisCtor }) => {
       if (cancelled) return;
       lenis = new LenisCtor({
-        lerp: 0.085,
+        lerp: 0.1,
         wheelMultiplier: 0.9,
+        autoRaf: false,
         smoothWheel: true,
         anchors: { duration: 1.2 },
       });
       window.__lenis = lenis;
-      const loop = (time: number) => {
-        lenis?.raf(time);
-        raf = requestAnimationFrame(loop);
-      };
-      raf = requestAnimationFrame(loop);
+      // Step Lenis inside framer-motion's own frame loop so scroll position and
+      // scroll-linked transforms update in the same frame (no 1-frame lag/jitter)
+      frame.update(tick, true);
     });
 
     return () => {
       cancelled = true;
-      cancelAnimationFrame(raf);
+      cancelFrame(tick);
       lenis?.destroy();
       if (window.__lenis === lenis) delete window.__lenis;
     };

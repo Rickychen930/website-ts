@@ -7,6 +7,8 @@
 > photoreal footage, generate it in Google Flow with the prompt below and
 > overwrite the MP4 with the same name, then regenerate its poster `<id>.jpg`.
 > Re-render the built-in versions with `scripts/motion/render-videos.js`.
+> **Output spec: Full HD — 1920×1080 (16:9) and 1080×1920 (9:16), 30 fps,
+> H.264 High, no audio. Never ship below this.**
 
 Every visual on the site is a living 8-second loop. Generate each clip in
 [Google Flow](https://labs.google/flow) (Veo, **8 s**, **1080p**) with the prompt
@@ -14,7 +16,7 @@ below and save the MP4 here with the **exact file name**. Until a file exists,
 the site shows a circuit-trace placeholder — nothing breaks.
 
 - Upload just `<id>.mp4` — the poster `<id>.jpg` (first frame) and compression
-  (H.264, no audio, ≤ 4 MB hero / ≤ 2 MB cards) are done for you afterwards
+  (H.264, no audio, Full HD 30 fps — about 5 MB hero / 1–3 MB cards) are done for you afterwards
 - Aspect: **16:9** for wide plates, **9:16** for portrait cards (cropped to fit)
 - Tip: if a loop "jumps", generate with Flow's *Extend* or pick the take whose
   last frame is closest to the first

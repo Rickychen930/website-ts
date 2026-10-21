@@ -15,7 +15,12 @@
     transform 0.35s var(--ease-out),
     translate var(--dur-med) var(--ease-out),
     border-color var(--dur-fast) ease,
+    scale var(--dur-press) var(--ease-spring),
     box-shadow var(--dur-med) var(--ease-out);
+}
+
+.link:active {
+  scale: 0.985;
 }
 
 .link:hover,

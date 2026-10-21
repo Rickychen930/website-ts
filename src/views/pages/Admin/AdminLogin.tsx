@@ -61,13 +61,15 @@ export const AdminLogin: React.FC = () => {
           }}
           required
         />
-        {err && <p style={{ color: "#ef4444", fontSize: "0.8rem" }}>{err}</p>}
+        {err && (
+          <p style={{ color: "var(--danger)", fontSize: "0.8rem" }}>{err}</p>
+        )}
         <button
           type="submit"
           style={{
             padding: "0.75rem",
-            background: "var(--accent-1)",
-            color: "#fff",
+            background: "var(--cta-bg)",
+            color: "var(--cta-ink)",
             border: "none",
             borderRadius: "var(--radius-md)",
             fontFamily: "var(--font-body)",
