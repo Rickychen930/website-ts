@@ -1,17 +1,9 @@
 /**
  * Profile Context - Global state management for profile data
- * Uses singleton profileService so admin updates and public site stay in sync.
+ * Content is bundled (see @/data/profile), so it is available synchronously.
  */
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useMemo, ReactNode } from "react";
 import { ProfileModel } from "@/models/ProfileModel";
 import { profileService } from "@/services/ProfileService";
 
@@ -42,48 +34,17 @@ interface ProfileProviderProps {
 export const ProfileProvider: React.FC<ProfileProviderProps> = ({
   children,
 }) => {
-  const [profile, setProfile] = useState<ProfileModel | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  const loadProfile = useCallback(async (): Promise<void> => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const loadedProfile = await profileService.fetchProfile();
-      setProfile(loadedProfile);
-    } catch (err) {
-      const errObj =
-        err instanceof Error ? err : new Error("Failed to load profile");
-      setError(errObj);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const refetch = useCallback(async (): Promise<void> => {
-    profileService.clearCache();
-    await loadProfile();
-  }, [loadProfile]);
-
-  const clearError = useCallback((): void => {
-    setError(null);
-  }, []);
-
-  useEffect(() => {
-    loadProfile();
-  }, [loadProfile]);
-
-  const contextValue = useMemo(
+  // Bundled content: available on the very first render, never loading or failing
+  const contextValue = useMemo<ProfileContextType>(
     () => ({
-      profile,
-      isLoading,
-      error,
-      loadProfile,
-      refetch,
-      clearError,
+      profile: profileService.getProfile(),
+      isLoading: false,
+      error: null,
+      loadProfile: async () => undefined,
+      refetch: async () => undefined,
+      clearError: () => undefined,
     }),
-    [profile, isLoading, error, loadProfile, refetch, clearError],
+    [],
   );
 
   return (

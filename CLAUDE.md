@@ -36,7 +36,8 @@ src/views/components/layout/   → Section, Header, Footer
 src/views/components/domain/   → ProjectCard, ExperienceItem, …
 src/components/      → shared non-MVC (effects, a11y widgets)
 src/contexts/        → state + data loading (ProfileContext → ProfileService)
-src/services/        → API, cache, retry
+src/services/        → ProfileService (konten bundel), chat/kontak/admin API
+src/data/            → profile.ts = konten portfolio statis (tanpa DB)
 src/models/          → ProfileModel (immutable domain class)
 src/types/domain.ts  → semua tipe profil
 backend/src/         → Express MVC mirror
@@ -116,17 +117,18 @@ backend/src/         → Express MVC mirror
 
 ## File kunci
 
-| File                              | Fungsi                           |
-| --------------------------------- | -------------------------------- |
-| `src/styles/design-tokens.css`    | Semua CSS variables              |
-| `src/config/flowMedia.ts`         | Manifest aset Google Flow        |
-| `backend/src/services/chatbot/`   | Chatbot Kobi (FAQ → AI fallback) |
-| `src/services/ProfileService.ts`  | Fetch profile + cache + fallback |
-| `src/models/ProfileModel.ts`      | Domain class immutable           |
-| `src/contexts/ProfileContext.tsx` | Load profile → ProfileService    |
-| `src/contexts/ThemeContext.tsx`   | Light/dark toggle                |
-| `src/routes/`                     | React Router + lazy pages        |
-| `backend/src/main.ts`             | Express entry                    |
+| File                              | Fungsi                               |
+| --------------------------------- | ------------------------------------ |
+| `src/styles/design-tokens.css`    | Semua CSS variables                  |
+| `src/config/flowMedia.ts`         | Manifest aset Google Flow            |
+| `backend/src/services/chatbot/`   | Chatbot Kobi (FAQ → AI fallback)     |
+| `src/data/profile.ts`             | **Konten portfolio (edit di sini)**  |
+| `src/services/ProfileService.ts`  | Menyajikan konten bundel (tanpa API) |
+| `src/models/ProfileModel.ts`      | Domain class immutable               |
+| `src/contexts/ProfileContext.tsx` | Load profile → ProfileService        |
+| `src/contexts/ThemeContext.tsx`   | Light/dark toggle                    |
+| `src/routes/`                     | React Router + lazy pages            |
+| `backend/src/main.ts`             | Express entry                        |
 
 ---
 
