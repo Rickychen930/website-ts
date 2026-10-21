@@ -1,3 +1,4 @@
+import { spawnSync } from "child_process";
 import fs from "fs";
 import path from "path";
 import { PROFILE } from "@/data/profile";
@@ -55,6 +56,21 @@ describe("media manifest", () => {
       expect(fs.existsSync(path.join(MEDIA_DIR, `${id}.jpg`))).toBe(true);
     },
   );
+});
+
+describe("media is committable", () => {
+  test("no file in public/media/flow matches .gitignore", () => {
+    // e.g. `*key*` (secrets) once swallowed atlas-keyboard.mp4, so it never
+    // reached production even though it existed on disk
+    const files = fs
+      .readdirSync(MEDIA_DIR)
+      .map((f) => path.join("public/media/flow", f));
+    const res = spawnSync("git", ["check-ignore", ...files], {
+      cwd: path.resolve(__dirname, "../.."),
+      encoding: "utf8",
+    });
+    expect(res.stdout.trim().split("\n").filter(Boolean)).toEqual([]);
+  });
 });
 
 describe("chatbot snapshot", () => {
