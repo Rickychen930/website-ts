@@ -3,16 +3,15 @@
  *
  * Pipeline (Web Architech "Archie" pattern):
  *   validate → rate limit → guard → local FAQ → AI fallback → canned fallback.
- * FAQ answers work without MongoDB or an AI key; AI is optional
+ * Knowledge is the site's own bundled content (data/siteProfile.ts, synced
+ * from src/data/profile.ts) — no database, so answers are instant and match
+ * what visitors see. AI is optional
  * (OPENAI_API_KEY, OpenAI-compatible — see utils/ai.ts).
  */
 
 import crypto from "crypto";
-import mongoose from "mongoose";
-import { ProfileModel } from "../../models/Profile";
-import { seedProfileData } from "../../seed/seedData";
+import { siteProfile } from "../../data/siteProfile";
 import { chatCompletion, isAiConfigured } from "../../utils/ai";
-import { transformProfile } from "../../utils/transformProfile";
 import {
   buildFactSheet,
   FALLBACK_CHIPS,
@@ -36,7 +35,6 @@ const SESSION_LIMIT = 20;
 const IP_LIMIT = 60;
 const AI_SESSION_LIMIT = 8;
 const AI_DAILY_LIMIT = Number(process.env.CHATBOT_AI_DAILY_LIMIT) || 300;
-const PROFILE_TTL_MS = 5 * 60 * 1000;
 const SESSION_RE = /^[A-Za-z0-9_-]{8,64}$/;
 const ALLOWED_HOSTS = ["linkedin.com", "github.com", "web-architech.com.au"];
 
@@ -95,7 +93,6 @@ export class ChatbotService {
   private readonly sessionLimiter = new SlidingWindow(SESSION_LIMIT, WINDOW_MS);
   private readonly aiLimiter = new SlidingWindow(AI_SESSION_LIMIT, WINDOW_MS);
   private aiDay = { date: "", count: 0 };
-  private profileCache: { at: number; profile: ChatProfile } | null = null;
 
   public async handleMessage(input: {
     message: unknown;
@@ -130,7 +127,7 @@ export class ChatbotService {
     const unsafe = checkUnsafe(message);
     if (unsafe) return this.guardReply(unsafe, sessionId);
 
-    const profile = await this.getProfile();
+    const profile = this.getProfile();
     const local = matchLocal(profile, message);
     if (local) {
       return this.reply(
@@ -183,23 +180,9 @@ export class ChatbotService {
     return true;
   }
 
-  /** Profile from MongoDB when connected, otherwise the seed data */
-  private async getProfile(): Promise<ChatProfile> {
-    const now = Date.now();
-    if (this.profileCache && now - this.profileCache.at < PROFILE_TTL_MS) {
-      return this.profileCache.profile;
-    }
-    let profile = seedProfileData as unknown as ChatProfile;
-    if (mongoose.connection.readyState === 1) {
-      try {
-        const doc = await ProfileModel.findOne();
-        if (doc) profile = transformProfile(doc) as unknown as ChatProfile;
-      } catch {
-        // fall back to seed data
-      }
-    }
-    this.profileCache = { at: now, profile };
-    return profile;
+  /** The site's bundled content — the same data visitors see */
+  private getProfile(): ChatProfile {
+    return siteProfile as unknown as ChatProfile;
   }
 
   private async askAi(
@@ -263,3 +246,7 @@ export class ChatbotService {
 }
 
 export const chatbotService = new ChatbotService();
+
+// Intent regexes compile lazily (Unicode \p{L} is costly); do it at boot so the
+// first visitor after a deploy doesn't wait ~1s.
+matchLocal(siteProfile as unknown as ChatProfile, "warm up");

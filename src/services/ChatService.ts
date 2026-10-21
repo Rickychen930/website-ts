@@ -13,11 +13,14 @@ export interface ChatResponse {
 
 export const CHAT_MAX_LENGTH = 1000;
 
+/** Never leave the typing indicator spinning: give up and say so */
+const REQUEST_TIMEOUT_MS = 15_000;
+
 const OFFLINE_REPLY: ChatResponse = {
   success: false,
   reply:
-    "I can't reach my field notes right now. You can still browse /projects or reach Ricky via /#contact.",
-  suggested_chips: [],
+    "I can't reach my field notes right now — give it a moment and try again. You can still browse /projects or reach Ricky via /#contact.",
+  suggested_chips: ["Show me recent projects", "How do I contact him?"],
   escalate: false,
 };
 
@@ -32,11 +35,17 @@ export class ChatService {
     message: string,
     sessionId?: string,
   ): Promise<ChatResponse> {
+    const controller = new AbortController();
+    const timer = window.setTimeout(
+      () => controller.abort(),
+      REQUEST_TIMEOUT_MS,
+    );
     try {
       const res = await fetch(`${this.apiUrl}/api/chat/message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, session_id: sessionId }),
+        signal: controller.signal,
       });
       const data = (await res.json().catch(() => null)) as
         | (Partial<ChatResponse> & { error?: string })
@@ -58,6 +67,8 @@ export class ChatService {
       };
     } catch {
       return OFFLINE_REPLY;
+    } finally {
+      window.clearTimeout(timer);
     }
   }
 }
