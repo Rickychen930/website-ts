@@ -5,6 +5,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { loadProfile } = require("./lib/load-profile");
 
 // Get base URL from environment or use default.
 // Override with REACT_APP_SITE_URL for another domain.
@@ -16,11 +17,16 @@ const getBaseUrl = () => {
   return "https://rickychen930.cloud";
 };
 
-// Define all routes
+// Static routes + one case-study page per project (from src/data/profile.ts)
 const routes = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/projects", priority: "0.9", changefreq: "weekly" },
   { path: "/resume", priority: "0.8", changefreq: "weekly" },
+  ...loadProfile().projects.map((p) => ({
+    path: `/projects/${encodeURIComponent(p.id)}`,
+    priority: "0.7",
+    changefreq: "monthly",
+  })),
 ];
 
 // Generate sitemap XML
