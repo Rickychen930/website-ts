@@ -1389,6 +1389,6 @@ export const siteProfile = {
     },
   ],
   testimonials: [],
-  createdAt: "2026-10-21T10:03:51.054Z",
-  updatedAt: "2026-10-21T10:03:51.055Z",
+  createdAt: "2026-10-21T11:41:59.954Z",
+  updatedAt: "2026-10-21T11:41:59.955Z",
 };
