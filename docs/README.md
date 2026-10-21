@@ -1,31 +1,27 @@
 # Documentation
 
-Folder ini berisi semua dokumentasi proyek.
+Dokumentasi operasional proyek. Konteks arsitektur & aturan kode ada di
+[CLAUDE.md](../CLAUDE.md), [project.md](../project.md), [design-system.md](../design-system.md)
+dan [coding-standard.md](../coding-standard.md).
 
-## 📋 Daftar Dokumentasi
+## Project
 
-### Project Overview
-- **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)** - Struktur proyek dan arsitektur lengkap
+- [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) — struktur proyek
+- [ENVIRONMENT_SETUP.md](./ENVIRONMENT_SETUP.md) — environment variables
+- [TESTING.md](./TESTING.md) — pengujian
 
-### Deployment & Operations
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Panduan lengkap untuk deployment aplikasi
-- **[DEPLOYMENT_WORKFLOW.md](./DEPLOYMENT_WORKFLOW.md)** - Workflow dan proses deployment
-- **[PM2_NGINX_SETUP.md](./PM2_NGINX_SETUP.md)** - Konfigurasi PM2 dan Nginx untuk production
+## Deployment & operasi
 
-### Development & Features
-- **[FEATURES_IMPLEMENTATION.md](./FEATURES_IMPLEMENTATION.md)** - Dokumentasi fitur yang telah diimplementasikan
+- [DEPLOYMENT.md](./DEPLOYMENT.md) · [DEPLOYMENT_WORKFLOW.md](./DEPLOYMENT_WORKFLOW.md)
+- [PM2_NGINX_SETUP.md](./PM2_NGINX_SETUP.md) · [NGINX_SETUP_STEP_BY_STEP.md](./NGINX_SETUP_STEP_BY_STEP.md)
+- [TROUBLESHOOTING_502_BAD_GATEWAY.md](./TROUBLESHOOTING_502_BAD_GATEWAY.md)
+- [PERFORMANCE_OPTIMIZATION.md](./PERFORMANCE_OPTIMIZATION.md)
 
-### Quality Assurance
-- **[QC_REPORT.md](./QC_REPORT.md)** - Laporan Quality Control lengkap
-- **[QC_SUMMARY.md](./QC_SUMMARY.md)** - Ringkasan Quality Control
-- **[QC_USER_TESTING_REPORT.md](./QC_USER_TESTING_REPORT.md)** - Laporan user testing
+## Fitur
 
-### Changelog
-- **[CHANGELOG.md](./CHANGELOG.md)** - Riwayat perubahan dan versi aplikasi
+- [ADMIN_DASHBOARD.md](./ADMIN_DASHBOARD.md) · [ANALYTICS_SETUP.md](./ANALYTICS_SETUP.md) · [ERROR_TRACKING_SETUP.md](./ERROR_TRACKING_SETUP.md)
 
-## 🚀 Quick Links
+## Riwayat
 
-- [Main README](../README.md) - Dokumentasi utama proyek
-- [Environment Variables](../config/env.example) - Template environment variables
-- [Scripts](../scripts/) - Deployment dan setup scripts
-
+- [CHANGELOG.md](./CHANGELOG.md)
+- [resume/](./resume/) — résumé (Markdown + HTML)

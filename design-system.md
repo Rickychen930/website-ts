@@ -372,7 +372,7 @@ npm run css:check      # arsitektur CSS / hardcoded values
 npm run lint           # ESLint frontend
 ```
 
-Dokumen tema historis: `DESIGN_THEME.md`, audit: `docs/UI_UX_DESIGN_GUIDELINES.md`.
+Sumber kebenaran token: `src/styles/design-tokens.css` (tema **Circuit Night**).
 
 ---
 
