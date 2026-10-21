@@ -7,7 +7,30 @@
   color: var(--on-media);
 }
 
+/* Soft sweep while the poster is still loading; the asset covers it once painted */
+.media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  animation: media-shimmer 1.6s ease-in-out 3;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    var(--glass-fill) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+@keyframes media-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
 .asset {
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;

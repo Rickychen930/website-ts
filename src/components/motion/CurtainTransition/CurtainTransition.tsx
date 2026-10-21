@@ -100,6 +100,13 @@ export const CurtainTransition: React.FC<CurtainTransitionProps> = ({
     introPath.current = null;
   }
   const intro = introPath.current === location.pathname;
+  // A direct visit or reload shows the page at once; the curtain is for
+  // the first-visit intro and for moving between routes
+  const loadPath = useRef<string | null>(location.pathname);
+  if (loadPath.current && loadPath.current !== location.pathname) {
+    loadPath.current = null;
+  }
+  const plainLoad = !intro && loadPath.current === location.pathname;
 
   useEffect(() => {
     if (location.hash) return;
@@ -107,13 +114,13 @@ export const CurtainTransition: React.FC<CurtainTransitionProps> = ({
     else window.scrollTo(0, 0);
   }, [location.pathname, location.hash]);
 
-  const hold = intro ? INTRO_HOLD : 0.2;
+  const hold = intro ? INTRO_HOLD : plainLoad ? 0 : 0.2;
   const wipe = intro ? 0.9 : 0.7;
   const lift = { clipPath: "inset(0% 0% 100% 0%)" };
 
   return (
     <>
-      {!reduce && (
+      {!reduce && !plainLoad && (
         <AnimatePresence mode="wait">
           <div key={location.pathname + "-curtain"} aria-hidden="true">
             <motion.div
@@ -147,7 +154,7 @@ export const CurtainTransition: React.FC<CurtainTransitionProps> = ({
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
-          initial={reduce ? false : { opacity: 0, y: 40 }}
+          initial={reduce || plainLoad ? false : { opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{

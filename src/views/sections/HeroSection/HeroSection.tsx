@@ -165,7 +165,7 @@ export const HeroSection: React.FC = () => {
                 lines={[name]}
                 as="span"
                 immediate
-                delay={0.9 + introOffset()}
+                delay={0.45 + introOffset()}
               />
             </h1>
             <p className={styles.role}>{role}</p>

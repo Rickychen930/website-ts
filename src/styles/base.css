@@ -204,6 +204,25 @@ button {
   background: var(--eyebrow-rule);
 }
 
+@supports (animation-timeline: view()) {
+  .eyebrow::before {
+    transform-origin: left;
+    animation: eyebrow-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 90%;
+  }
+
+  @keyframes eyebrow-draw {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
 /* Cream band — remaps every token, components flip automatically */
 .band-sand {
   background: var(--bg-base);

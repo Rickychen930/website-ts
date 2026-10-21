@@ -36,6 +36,7 @@ export const WorkCard: React.FC<WorkCardProps> = ({
           item={plate}
           frameClassName={styles[shape]}
           parallax={14}
+          play="hover"
         />
         <span className={styles.view} aria-hidden="true">
           View case study →
