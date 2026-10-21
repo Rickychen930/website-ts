@@ -3,7 +3,6 @@ import {
   motion,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "@/lib/motion";
 import styles from "./HorizontalScroll.module.css";
@@ -60,8 +59,8 @@ export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     offset: ["start start", "end end"],
   });
   const rawX = useTransform(scrollYProgress, [0, 1], [0, -distance]);
-  const x = useSpring(rawX, { stiffness: 120, damping: 30, mass: 0.4 });
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const x = rawX;
+  const progress = scrollYProgress;
 
   return (
     <div

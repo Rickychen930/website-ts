@@ -117,3 +117,22 @@
     transform: none;
   }
 }
+
+/* Terminal-style boot log under the role line */
+.boot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 220px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.boot b {
+  color: var(--accent-1);
+  font-weight: 700;
+}

@@ -40,8 +40,7 @@
 .grain {
   position: absolute;
   inset: 0;
-  opacity: 0.09;
-  mix-blend-mode: overlay;
+  opacity: 0.04; /* grain is already baked into the video; plain alpha, no blend */
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -361,5 +360,73 @@ a:hover > .arrow {
   .wordmark {
     font-size: 11vw;
     letter-spacing: 0.02em;
+  }
+}
+
+/* Copy column + 3D chip */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.chipWrap {
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+@media (width > 900px) {
+  .fg {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    align-items: center;
+    gap: var(--space-8);
+    padding-inline: max(
+      var(--container-pad),
+      calc((100% - var(--container-max)) / 2)
+    );
+    text-align: left;
+  }
+
+  .copy {
+    align-items: flex-start;
+  }
+
+  /* Anchor the chip to the column start so it grows toward the viewport edge */
+  .chipWrap {
+    justify-items: start;
+  }
+
+  .wordmark {
+    font-size: clamp(2.2rem, 6vw, 6.4rem);
+    letter-spacing: 0.04em;
+  }
+
+  .ctas,
+  .proof {
+    justify-content: flex-start;
+  }
+}
+
+/* Phones: the chip floats faintly behind the copy */
+@media (width <= 900px) {
+  .chipWrap {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.32;
+  }
+}
+
+@media (width <= 640px) {
+  .fg {
+    padding-bottom: 92px;
+  }
+
+  .copy {
+    gap: var(--space-4);
   }
 }

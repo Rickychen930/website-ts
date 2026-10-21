@@ -1,24 +1,24 @@
 /**
- * Google Flow media manifest — Australian flora, fauna, landmarks & places.
+ * Google Flow media manifest — the IT edition: silicon, servers, signal.
  *
- * Every visual on the public site comes from this list. Generate each asset
- * in Google Flow with its `prompt`, export it, and save it to
- * `public/media/flow/<id>.jpg` (images) or `<id>.mp4` + `<id>.jpg` poster
- * (videos). Until a file exists the UI renders a themed placeholder plate.
+ * Every visual on the public site is a living 8-second Flow (Veo) loop.
+ * Generate each with its `prompt`, save it to `public/media/flow/<id>.mp4`,
+ * and add a first-frame poster `<id>.jpg` (used before play and for reduced
+ * motion). Until a file exists the UI renders a circuit-trace placeholder.
  */
 
 export type FlowMediaKind = "image" | "video";
-export type FlowMediaTheme = "landmark" | "fauna" | "flora" | "coast";
+export type FlowMediaTheme = "infra" | "hardware" | "signal" | "city";
 
 export interface FlowMediaItem {
   readonly id: string;
   readonly kind: FlowMediaKind;
   readonly theme: FlowMediaTheme;
-  /** Display name, e.g. "Uluru" */
+  /** Display name, e.g. "The server hall" */
   readonly title: string;
-  /** Place or scientific name shown under the title */
+  /** Spec or place shown under the title */
   readonly subtitle: string;
-  /** Coordinates or region caption, architectural-plate style */
+  /** Short technical caption, plate style */
   readonly caption: string;
   readonly alt: string;
   /** Aspect used when generating in Flow */
@@ -30,294 +30,290 @@ export interface FlowMediaItem {
 export const FLOW_MEDIA_BASE = "/media/flow";
 
 const STYLE =
-  "vivid saturated colours, crisp detail, high dynamic range, editorial travel photography, no text, no people, no watermark";
+  "cinematic 8-second shot, smooth slow camera motion, seamless loop (the last frame matches the first), deep navy and electric cyan lighting with violet accents, volumetric light, shallow depth of field, photoreal detail, no readable text, no logos, no people, no watermark, no audio";
 
 export const FLOW_MEDIA = {
-  heroUluru: {
-    id: "hero-uluru-dawn",
+  heroCircuit: {
+    id: "hero-silicon-dawn",
     kind: "video",
-    theme: "landmark",
-    title: "Uluru",
-    subtitle: "Uluṟu-Kata Tjuṯa National Park, NT",
-    caption: "25.3444° S, 131.0369° E",
-    alt: "Uluru glowing ochre at dawn under a pale desert sky",
+    theme: "hardware",
+    title: "Silicon at dawn",
+    subtitle: "Motherboard, macro",
+    caption: "3 nm · 5.2 GHz",
+    alt: "A motherboard seen like a city at sunrise, chips rising like towers",
     aspect: "16:9",
-    prompt: `Slow cinematic dolly shot of Uluru at dawn, first sunlight turning the monolith deep ochre, spinifex grass in the foreground swaying gently, pale desert sky, heat haze, ${STYLE}. 8 seconds, seamless loop, locked horizon.`,
+    prompt: `Low drone-style flight skimming across a vast motherboard landscape at sunrise; chips and capacitors rise like skyscrapers, copper traces pulse with flowing cyan light like rivers of data, morning haze drifts between the components, the sun crests the horizon behind a CPU tower with a soft lens flare, ${STYLE}.`,
   },
-  operaHouse: {
-    id: "sydney-opera-house",
-    kind: "image",
-    theme: "landmark",
-    title: "Sydney Opera House",
-    subtitle: "Bennelong Point, Sydney NSW",
-    caption: "33.8568° S, 151.2153° E",
-    alt: "Sydney Opera House sails photographed at blue hour",
-    aspect: "4:5",
-    prompt: `Close architectural study of the Sydney Opera House sails at blue hour, chevron tile texture visible, calm harbour water, soft reflections, minimalist composition, ${STYLE}.`,
-  },
-  harbourNight: {
-    id: "sydney-harbour-night",
+  serverHall: {
+    id: "server-hall",
     kind: "video",
-    theme: "coast",
-    title: "Sydney Harbour",
-    subtitle: "Port Jackson, NSW",
-    caption: "33.8523° S, 151.2108° E",
-    alt: "Sydney Harbour Bridge and Opera House at night with ferry lights",
+    theme: "infra",
+    title: "The server hall",
+    subtitle: "Hyperscale data centre",
+    caption: "Row 07 · 22 °C",
+    alt: "A long data-centre aisle lined with glowing server racks",
     aspect: "16:9",
-    prompt: `Wide slow pan across Sydney Harbour at night, Harbour Bridge and Opera House lit softly, a ferry leaving light trails on dark water, gentle ripples, ${STYLE}. 8 seconds, seamless loop.`,
+    prompt: `Steady dolly forward down an endless hyperscale data-centre aisle; the server racks on both sides blink with cascading blue and cyan LEDs that ripple in waves toward the camera, cold mist rolls along the floor, mirror-polished floor reflections, ${STYLE}.`,
   },
-  twelveApostles: {
-    id: "twelve-apostles",
-    kind: "image",
-    theme: "coast",
-    title: "The Twelve Apostles",
-    subtitle: "Great Ocean Road, VIC",
-    caption: "38.6662° S, 143.1049° E",
-    alt: "Limestone sea stacks of the Twelve Apostles at golden hour",
-    aspect: "16:9",
-    prompt: `Limestone sea stacks of the Twelve Apostles on the Great Ocean Road at golden hour, Southern Ocean swell, sea mist, layered cliffs, ${STYLE}.`,
-  },
-  barrierReef: {
-    id: "great-barrier-reef",
-    kind: "image",
-    theme: "coast",
-    title: "Great Barrier Reef",
-    subtitle: "Coral Sea, QLD",
-    caption: "18.2871° S, 147.6992° E",
-    alt: "Aerial view of turquoise reef patterns in the Coral Sea",
-    aspect: "4:5",
-    prompt: `Top-down aerial view of the Great Barrier Reef, Heart Reef style coral formations, turquoise and deep blue gradients, abstract graphic patterns like an architectural site plan, ${STYLE}.`,
-  },
-  blueMountains: {
-    id: "blue-mountains",
-    kind: "image",
-    theme: "landmark",
-    title: "The Three Sisters",
-    subtitle: "Blue Mountains, NSW",
-    caption: "33.7320° S, 150.3120° E",
-    alt: "Three Sisters rock formation above a blue eucalyptus haze",
-    aspect: "16:9",
-    prompt: `The Three Sisters sandstone formation in the Blue Mountains, valley filled with blue eucalyptus haze, morning light, layered ridgelines receding, ${STYLE}.`,
-  },
-  bondiIcebergs: {
-    id: "bondi-icebergs",
-    kind: "image",
-    theme: "coast",
-    title: "Bondi Icebergs",
-    subtitle: "Bondi Beach, NSW",
-    caption: "33.8950° S, 151.2743° E",
-    alt: "Ocean pool at Bondi with waves breaking over its edge",
-    aspect: "4:5",
-    prompt: `Bondi Icebergs ocean pool from above at sunrise, waves breaking over the concrete edge, strong geometry of lanes and cliff, ${STYLE}.`,
-  },
-  kingsCanyon: {
-    id: "kings-canyon",
-    kind: "image",
-    theme: "landmark",
-    title: "Kings Canyon",
-    subtitle: "Watarrka National Park, NT",
-    caption: "24.2530° S, 131.5740° E",
-    alt: "Sheer red sandstone walls of Kings Canyon",
-    aspect: "4:5",
-    prompt: `Sheer red sandstone walls of Kings Canyon, stratified rock like brutalist concrete, a lone ghost gum clinging to the rim, deep shadow and hard sun, ${STYLE}.`,
-  },
-  daintree: {
-    id: "daintree-rainforest",
+  sydneyOnline: {
+    id: "sydney-online-night",
     kind: "video",
-    theme: "flora",
-    title: "Daintree Rainforest",
-    subtitle: "Far North Queensland",
-    caption: "16.1700° S, 145.4185° E",
-    alt: "Morning mist drifting through ancient Daintree rainforest canopy",
+    theme: "city",
+    title: "Sydney, online",
+    subtitle: "Harbour City at night",
+    caption: "33.86° S · 151.21° E",
+    alt: "Sydney Harbour skyline at night with streams of light like data",
     aspect: "16:9",
-    prompt: `Mist drifting slowly through the ancient Daintree rainforest canopy, tree ferns and fan palms, shafts of soft light, dew, ${STYLE}. 8 seconds, seamless loop, static camera.`,
+    prompt: `Slow aerial push-in toward the Sydney Harbour skyline at night; glowing threads of cyan and violet data arc between the towers and stream across the water like light trails, ferries leave luminous wakes, city lights twinkle, ${STYLE}.`,
   },
-  outbackRoad: {
-    id: "outback-road",
-    kind: "image",
-    theme: "landmark",
-    title: "The Outback",
-    subtitle: "Stuart Highway, NT",
-    caption: "Somewhere past Coober Pedy",
-    alt: "Empty red dirt road stretching to the horizon in the outback",
-    aspect: "16:9",
-    prompt: `Empty straight red dirt road vanishing to the horizon in the Australian outback, low saltbush, vast sky, a single road sign, minimalist and quiet, ${STYLE}.`,
-  },
-  kakadu: {
-    id: "kakadu-wetlands",
+  dataCampus: {
+    id: "datacentre-campus",
     kind: "video",
-    theme: "landmark",
-    title: "Kakadu",
-    subtitle: "Kakadu National Park, NT",
-    caption: "12.6765° S, 132.8358° E",
-    alt: "Aerial drift over Kakadu wetlands and escarpment at golden hour",
+    theme: "infra",
+    title: "Data centre campus",
+    subtitle: "Western Sydney",
+    caption: "Tier IV · 99.995% uptime",
+    alt: "Aerial view of a data-centre campus glowing at dusk",
     aspect: "16:9",
-    prompt: `Slow aerial drift over Kakadu wetlands at golden hour, braided channels reflecting the sky, sandstone escarpment on the horizon, flocks of magpie geese, ${STYLE}. 8 seconds, seamless loop.`,
+    prompt: `Slow aerial orbit over a futuristic data-centre campus at blue hour; cooling vents on the roofs glow cyan and pulse, car light trails flow along the access roads, clouds drift quickly across the sky in gentle timelapse, ${STYLE}.`,
   },
-  kataTjuta: {
-    id: "kata-tjuta-dusk",
+  fiberOptics: {
+    id: "fibre-optics",
     kind: "video",
-    theme: "landmark",
-    title: "Kata Tjuṯa",
-    subtitle: "Uluṟu-Kata Tjuṯa National Park, NT",
-    caption: "25.3000° S, 130.7333° E",
-    alt: "Domes of Kata Tjuta under a slowly darkening dusk sky",
+    theme: "signal",
+    title: "Fibre optics",
+    subtitle: "Single-mode, 1310 nm",
+    caption: "Light-speed links",
+    alt: "Bundles of fibre-optic strands glowing with light",
     aspect: "16:9",
-    prompt: `Timelapse of the domes of Kata Tjuta at dusk, sky shifting from orange to indigo, first stars appearing, static tripod camera, ${STYLE}. 8 seconds, seamless loop.`,
+    prompt: `Macro dolly along a dense bundle of fibre-optic strands; pulses of cyan, blue and violet light race through the fibres and burst at the tips like stars, bokeh drifting in the background, ${STYLE}.`,
   },
-
-  /* Fauna */
-  kangaroo: {
-    id: "fauna-kangaroo",
-    kind: "image",
-    theme: "fauna",
-    title: "Red Kangaroo",
-    subtitle: "Osphranter rufus",
-    caption: "Arid interior",
-    alt: "Red kangaroo standing in golden grassland at dusk",
-    aspect: "4:5",
-    prompt: `Portrait of a red kangaroo standing upright in golden grassland at dusk, rim light on fur, shallow depth of field, calm and dignified, wildlife photography, ${STYLE}.`,
-  },
-  koala: {
-    id: "fauna-koala",
-    kind: "image",
-    theme: "fauna",
-    title: "Koala",
-    subtitle: "Phascolarctos cinereus",
-    caption: "Eastern eucalypt woodland",
-    alt: "Koala resting in the fork of a eucalyptus tree",
-    aspect: "4:5",
-    prompt: `Koala resting in the fork of a eucalyptus tree, soft grey fur, blue-green gum leaves, overcast diffused light, intimate wildlife portrait, ${STYLE}.`,
-  },
-  cockatoo: {
-    id: "fauna-cockatoo",
-    kind: "image",
-    theme: "fauna",
-    title: "Sulphur-crested Cockatoo",
-    subtitle: "Cacatua galerita",
-    caption: "Sydney Royal Botanic Garden",
-    alt: "Sulphur-crested cockatoo with raised yellow crest",
-    aspect: "4:5",
-    prompt: `Sulphur-crested cockatoo with crest raised, perched on a sandstone ledge, clean negative space, crisp white feathers against warm stone, ${STYLE}.`,
-  },
-  platypus: {
-    id: "fauna-platypus",
+  neuralNet: {
+    id: "neural-network",
     kind: "video",
-    theme: "fauna",
-    title: "Platypus",
-    subtitle: "Ornithorhynchus anatinus",
-    caption: "Eungella, QLD",
-    alt: "Platypus swimming through a clear freshwater creek",
+    theme: "signal",
+    title: "Neural network",
+    subtitle: "Transformer, 12 layers",
+    caption: "Attention is all you need",
+    alt: "An abstract network of luminous nodes connected by light",
+    aspect: "16:9",
+    prompt: `Camera glides through a vast three-dimensional neural network of glowing nodes; signals fire as bright pulses travelling along filaments of light, clusters light up in waves, deep navy void with fine floating particles, ${STYLE}.`,
+  },
+  signalLost: {
+    id: "signal-lost",
+    kind: "video",
+    theme: "infra",
+    title: "Signal lost",
+    subtitle: "Server corridor, after hours",
+    caption: "404",
+    alt: "An empty dark server corridor with a single rack light",
+    aspect: "16:9",
+    prompt: `Locked-off shot of a dark server corridor after hours; all racks are dim except one at the far end whose cyan light flickers like a weak signal, dust drifts through the beam, faint glitch shimmer on the floor reflections, ${STYLE}.`,
+  },
+  devDesk: {
+    id: "dev-desk-night",
+    kind: "video",
+    theme: "city",
+    title: "The workstation",
+    subtitle: "Late-night build",
+    caption: "localhost:3000",
+    alt: "A developer desk at night with monitors glowing",
     aspect: "9:16",
-    prompt: `Platypus swimming slowly through a clear freshwater creek, dappled sunlight on river stones, bubbles, gentle current, underwater wildlife cinematography, ${STYLE}. 8 seconds, seamless loop.`,
+    prompt: `Slow push-in on a developer's desk at night; the monitor scrolls abstract colourful code shapes (no readable text), mechanical keyboard keys glow softly, steam rises from a coffee mug, rain streaks the window with city-light bokeh, ${STYLE}.`,
   },
-  kookaburra: {
-    id: "fauna-kookaburra",
-    kind: "image",
-    theme: "fauna",
-    title: "Laughing Kookaburra",
-    subtitle: "Dacelo novaeguineae",
-    caption: "Blue Mountains, NSW",
-    alt: "Laughing kookaburra perched on a weathered branch",
-    aspect: "4:5",
-    prompt: `Laughing kookaburra perched on a weathered grey branch, early morning light, textured feathers, blurred eucalyptus background, ${STYLE}.`,
-  },
-  quokka: {
-    id: "fauna-quokka",
-    kind: "image",
-    theme: "fauna",
-    title: "Quokka",
-    subtitle: "Setonix brachyurus",
-    caption: "Rottnest Island, WA",
-    alt: "Quokka sitting among coastal scrub on Rottnest Island",
-    aspect: "4:5",
-    prompt: `Quokka sitting among coastal scrub on Rottnest Island, soft golden light, turquoise bay blurred in the background, gentle and curious expression, ${STYLE}.`,
-  },
-
-  /* Flora */
-  waratah: {
-    id: "flora-waratah",
-    kind: "image",
-    theme: "flora",
-    title: "Waratah",
-    subtitle: "Telopea speciosissima",
-    caption: "Floral emblem of NSW",
-    alt: "Crimson waratah flower in close-up",
-    aspect: "4:5",
-    prompt: `Macro botanical study of a crimson waratah flower, symmetrical structure like a vaulted dome, dark neutral background, studio still life lighting, ${STYLE}.`,
-  },
-  banksia: {
-    id: "flora-banksia",
-    kind: "image",
-    theme: "flora",
-    title: "Banksia",
-    subtitle: "Banksia serrata",
-    caption: "Sandstone heath",
-    alt: "Banksia cone and serrated leaves in soft light",
-    aspect: "4:5",
-    prompt: `Close study of an old man banksia cone and serrated leaves, sculptural textures, warm side light on a plain sandstone wall, botanical monograph, ${STYLE}.`,
-  },
-  wattle: {
-    id: "flora-golden-wattle",
-    kind: "image",
-    theme: "flora",
-    title: "Golden Wattle",
-    subtitle: "Acacia pycnantha",
-    caption: "National floral emblem",
-    alt: "Golden wattle blossoms glowing in sunlight",
-    aspect: "4:5",
-    prompt: `Golden wattle blossoms glowing in late sunlight, soft pom-pom flowers, shallow depth of field, gentle breeze, ${STYLE}.`,
-  },
-  kangarooPaw: {
-    id: "flora-kangaroo-paw",
-    kind: "image",
-    theme: "flora",
-    title: "Kangaroo Paw",
-    subtitle: "Anigozanthos manglesii",
-    caption: "Floral emblem of WA",
-    alt: "Red and green kangaroo paw flowers against the sky",
-    aspect: "4:5",
-    prompt: `Red and green kangaroo paw flowers against a clear pale sky, graphic silhouette, velvety texture, minimalist composition, ${STYLE}.`,
-  },
-  ghostGum: {
-    id: "flora-ghost-gum",
-    kind: "image",
-    theme: "flora",
-    title: "Ghost Gum",
-    subtitle: "Corymbia aparrerinja",
-    caption: "West MacDonnell Ranges, NT",
-    alt: "White-trunked ghost gum against red ranges",
+  circuitMacro: {
+    id: "circuit-macro",
+    kind: "video",
+    theme: "hardware",
+    title: "Printed circuit",
+    subtitle: "Four-layer PCB",
+    caption: "Traces & vias",
+    alt: "Macro of a green and gold printed circuit board",
     aspect: "16:9",
-    prompt: `A lone white-trunked ghost gum against the red West MacDonnell Ranges, strong midday light, deep blue sky, Albert Namatjira-inspired composition, ${STYLE}.`,
+    prompt: `Macro slider move across a printed circuit board; electricity visualised as tiny cyan sparks racing along gold traces into a processor chip that glows brighter as the data arrives, shallow depth of field, ${STYLE}.`,
+  },
+  serverRack: {
+    id: "server-rack",
+    kind: "video",
+    theme: "infra",
+    title: "The rack",
+    subtitle: "42U, fully populated",
+    caption: "Hot aisle / cold aisle",
+    alt: "Close-up of a server rack with blinking lights and tidy cables",
+    aspect: "9:16",
+    prompt: `Slow vertical tilt up a single server rack; rows of status LEDs blink in rhythmic patterns, a cooling fan spins behind a mesh panel, patch cables glow faintly cyan, dark room, ${STYLE}.`,
+  },
+  mobileProto: {
+    id: "mobile-prototype",
+    kind: "video",
+    theme: "city",
+    title: "Prototype",
+    subtitle: "iOS & Android",
+    caption: "Build 1.0.0",
+    alt: "Smartphones on a desk showing colourful app screens",
+    aspect: "9:16",
+    prompt: `Slow top-down rotation over two smartphones on a dark desk; their screens animate between colourful abstract app layouts (no readable text), paper wireframe sketches beside them, a stylus rolls gently, ${STYLE}.`,
+  },
+  aiChip: {
+    id: "ai-chip",
+    kind: "video",
+    theme: "signal",
+    title: "AI accelerator",
+    subtitle: "Tensor cores",
+    caption: "TOPS, not FLOPS",
+    alt: "A glowing AI chip on a circuit board",
+    aspect: "9:16",
+    prompt: `Slow orbit around a futuristic AI accelerator chip on a circuit board; waves of cyan and violet light pulse outward from the core along the traces like a heartbeat, tiny particles of light float upward, ${STYLE}.`,
+  },
+  holoInterface: {
+    id: "holo-interface",
+    kind: "video",
+    theme: "signal",
+    title: "Live dashboard",
+    subtitle: "Observability",
+    caption: "p95 < 120 ms",
+    alt: "A holographic dashboard floating in a dark room",
+    aspect: "16:9",
+    prompt: `Camera drifts through translucent holographic dashboard panels floating in a dark room; charts draw themselves, node graphs connect and metrics tick upward (no readable text), cyan and blue glow with violet highlights, ${STYLE}.`,
+  },
+  cpu: {
+    id: "atlas-cpu",
+    kind: "video",
+    theme: "hardware",
+    title: "CPU",
+    subtitle: "x86-64 · 16 cores",
+    caption: "The thinker",
+    alt: "A processor chip, macro",
+    aspect: "9:16",
+    prompt: `Slow orbit around a desktop CPU standing on its edge on a dark reflective surface; a sweep of cyan light glides across the metal heat spreader and sparkles on the gold contacts, ${STYLE}.`,
+  },
+  gpu: {
+    id: "atlas-gpu",
+    kind: "video",
+    theme: "hardware",
+    title: "GPU",
+    subtitle: "Thousands of cores",
+    caption: "Trains the models",
+    alt: "A graphics card with fans",
+    aspect: "9:16",
+    prompt: `Three-quarter orbit around a modern graphics card; its fans spin up, cyan edge lighting pulses, heat shimmer rises from the heatsink fins, ${STYLE}.`,
+  },
+  ram: {
+    id: "atlas-ram",
+    kind: "video",
+    theme: "hardware",
+    title: "Memory",
+    subtitle: "DDR5 · 6400 MT/s",
+    caption: "Short-term recall",
+    alt: "A stick of RAM",
+    aspect: "9:16",
+    prompt: `Slow push-in on a stick of DDR5 memory standing upright; light pulses race across the memory chips like data being written, soft cyan underglow, ${STYLE}.`,
+  },
+  ssd: {
+    id: "atlas-ssd",
+    kind: "video",
+    theme: "hardware",
+    title: "Storage",
+    subtitle: "NVMe · Gen 4",
+    caption: "Long-term memory",
+    alt: "An NVMe solid-state drive",
+    aspect: "9:16",
+    prompt: `Macro slider across an M.2 NVMe solid-state drive; tiny streams of light flow from the connector into the flash chips, cool blue light, shallow depth of field, ${STYLE}.`,
+  },
+  network: {
+    id: "atlas-network-switch",
+    kind: "video",
+    theme: "infra",
+    title: "Network switch",
+    subtitle: "10 GbE · 48 ports",
+    caption: "Moves every packet",
+    alt: "A network switch with patch cables",
+    aspect: "9:16",
+    prompt: `Slow pan along a network switch full of patch cables; green and amber port lights blink in busy rhythms, one cable glows as a burst of light travels through it, ${STYLE}.`,
+  },
+  sbc: {
+    id: "atlas-single-board",
+    kind: "video",
+    theme: "hardware",
+    title: "Single-board computer",
+    subtitle: "ARM · GPIO",
+    caption: "Where IoT starts",
+    alt: "A small single-board computer",
+    aspect: "9:16",
+    prompt: `Slow orbit around a small single-board computer; its status LED blinks, jumper wires lead off frame carrying faint pulses of light, cyan rim light, dark background, ${STYLE}.`,
+  },
+  keyboard: {
+    id: "atlas-keyboard",
+    kind: "video",
+    theme: "hardware",
+    title: "Mechanical keyboard",
+    subtitle: "Tactile switches",
+    caption: "Where code begins",
+    alt: "A mechanical keyboard, close-up",
+    aspect: "9:16",
+    prompt: `Low macro dolly across a mechanical keyboard as keys press themselves in a typing rhythm; the backlight ripples outward from each keypress in cyan waves, ${STYLE}.`,
+  },
+  fibre: {
+    id: "atlas-fibre",
+    kind: "video",
+    theme: "signal",
+    title: "Fibre link",
+    subtitle: "Light-speed",
+    caption: "1310 nm",
+    alt: "Fibre-optic strands with travelling light",
+    aspect: "9:16",
+    prompt: `Vertical macro of fibre-optic strands falling like a waterfall of light; pulses of cyan and violet travel downward and sparkle at the tips, ${STYLE}.`,
+  },
+  microcontroller: {
+    id: "atlas-microcontroller",
+    kind: "video",
+    theme: "hardware",
+    title: "Microcontroller",
+    subtitle: "C++ · sensors",
+    caption: "M-arkir & L-emot",
+    alt: "A microcontroller board wired to sensors",
+    aspect: "9:16",
+    prompt: `Slow push-in on a microcontroller board on a breadboard wired to a tiny camera module and an LED; the LED blinks and a data pulse travels along the jumper wires, maker workbench, cyan accent light, ${STYLE}.`,
+  },
+  smartphone: {
+    id: "atlas-smartphone",
+    kind: "video",
+    theme: "hardware",
+    title: "Smartphone",
+    subtitle: "iOS · Android",
+    caption: "Apps in pockets",
+    alt: "An exploded view of smartphone components",
+    aspect: "9:16",
+    prompt: `A smartphone slowly separates into an exploded view of floating layers — screen, logic board, battery, camera — rotates gently, then drifts back together, clean studio light on a dark background, ${STYLE}.`,
   },
 } as const satisfies Record<string, FlowMediaItem>;
 
 export type FlowMediaKey = keyof typeof FLOW_MEDIA;
 
-/** Landmarks/places cycled as "site plates" for projects without an image */
+/** Tech plates cycled for projects without their own image */
 export const PROJECT_SITE_PLATES: readonly FlowMediaItem[] = [
-  FLOW_MEDIA.operaHouse,
-  FLOW_MEDIA.twelveApostles,
-  FLOW_MEDIA.kingsCanyon,
-  FLOW_MEDIA.barrierReef,
-  FLOW_MEDIA.blueMountains,
-  FLOW_MEDIA.bondiIcebergs,
-  FLOW_MEDIA.ghostGum,
-  FLOW_MEDIA.outbackRoad,
+  FLOW_MEDIA.devDesk,
+  FLOW_MEDIA.circuitMacro,
+  FLOW_MEDIA.serverRack,
+  FLOW_MEDIA.mobileProto,
+  FLOW_MEDIA.fiberOptics,
+  FLOW_MEDIA.aiChip,
+  FLOW_MEDIA.holoInterface,
+  FLOW_MEDIA.signalLost,
 ];
 
-/** Field atlas — fauna & flora strip on the home page */
-export const FIELD_ATLAS: readonly FlowMediaItem[] = [
-  FLOW_MEDIA.kangaroo,
-  FLOW_MEDIA.waratah,
-  FLOW_MEDIA.koala,
-  FLOW_MEDIA.banksia,
-  FLOW_MEDIA.cockatoo,
-  FLOW_MEDIA.wattle,
-  FLOW_MEDIA.platypus,
-  FLOW_MEDIA.kangarooPaw,
-  FLOW_MEDIA.kookaburra,
-  FLOW_MEDIA.quokka,
+/** Hardware atlas — the machine, part by part, on the home page */
+export const HARDWARE_ATLAS: readonly FlowMediaItem[] = [
+  FLOW_MEDIA.cpu,
+  FLOW_MEDIA.gpu,
+  FLOW_MEDIA.ram,
+  FLOW_MEDIA.ssd,
+  FLOW_MEDIA.network,
+  FLOW_MEDIA.fibre,
+  FLOW_MEDIA.sbc,
+  FLOW_MEDIA.microcontroller,
+  FLOW_MEDIA.keyboard,
+  FLOW_MEDIA.smartphone,
 ];
 
 export const flowSrc = (item: FlowMediaItem): string =>
@@ -338,37 +334,26 @@ export const sitePlateForProject = (
   projectId: string,
   title = "",
 ): FlowMediaItem =>
-  // The chatbot project wears its own mascot instead of a landscape
+  // The chatbot project wears its own mascot instead of a plate
   /^kobi\b/i.test(title)
     ? MASCOT.avatar
     : sitePlateFor(Math.max(0, projectIds.indexOf(projectId)));
 
-/** Place & species names for marquee ribbons */
-export const PLACE_NAMES = [
-  "Uluṟu",
-  "Kata Tjuṯa",
-  "Kakadu",
-  "Daintree",
-  "Great Barrier Reef",
-  "Twelve Apostles",
-  "Blue Mountains",
-  "Bondi",
-  "Kings Canyon",
-  "Sydney Harbour",
+/** Marquee ribbons: the stack I ship with, and the parts it runs on */
+export const STACK_NAMES = [
+  "Python",
+  "TypeScript",
+  "React",
+  "Node.js",
+  "LLMs",
+  "Prompt engineering",
+  "MongoDB",
+  "SQL",
+  "Docker",
+  "REST APIs",
 ] as const;
 
-export const SPECIES_NAMES = [
-  "Red Kangaroo",
-  "Waratah",
-  "Koala",
-  "Banksia",
-  "Cockatoo",
-  "Golden Wattle",
-  "Platypus",
-  "Kangaroo Paw",
-  "Kookaburra",
-  "Quokka",
-] as const;
+export const HARDWARE_NAMES = HARDWARE_ATLAS.map((h) => h.title);
 
 /**
  * Chatbot mascot — "Kobi" the quokka. Generate in Google Flow with the same
@@ -381,7 +366,7 @@ export const MASCOT = {
   avatar: {
     id: "mascot-kobi",
     kind: "image",
-    theme: "fauna",
+    theme: "city",
     title: "Kobi",
     subtitle: "Setonix brachyurus · site assistant",
     caption: "Rottnest Island, WA",
@@ -392,7 +377,7 @@ export const MASCOT = {
   full: {
     id: "mascot-kobi-full",
     kind: "image",
-    theme: "fauna",
+    theme: "city",
     title: "Kobi",
     subtitle: "Setonix brachyurus · site assistant",
     caption: "Rottnest Island, WA",

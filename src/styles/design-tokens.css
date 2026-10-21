@@ -1,81 +1,86 @@
-/* Design Tokens — "Terra Australis", built on the Web Architech (w26) language.
- * Deep Sea navy is the default; `.light` (and `.band-sand`) switch to the
- * Sandy Shore palette. Vivid Australian accents: reef turquoise, wattle gold,
- * Uluru sunset orange, waratah pink.
+/* Design Tokens — "Circuit Night", built on the Web Architech (w26) language.
+ * Server-room navy is the default; `.light` (and `.band-sand`) switch to the
+ * icy Blueprint palette. Tech accents: signal cyan, electric blue, violet
+ * and magenta — the colours of LEDs, fibre and screens.
  */
 
 :root {
   /* Surfaces */
-  --bg-base: #0b2545; /* ocean navy */
-  --bg-surface: #10325c; /* raised */
-  --bg-elevated: #164173;
-  --bg-deep: #071a33;
-  --bg-inverse: #fff4e2; /* sandy shore */
+  --bg-base: #07152c; /* server-room navy */
+  --bg-surface: #0c1f3f; /* raised */
+  --bg-elevated: #132b54;
+  --bg-deep: #040c1c;
+  --bg-inverse: #eef5ff; /* blueprint */
 
   /* Ink */
-  --text-primary: #f4f6f6;
-  --text-muted: rgba(244, 246, 246, 0.78);
-  --text-dim: rgba(170, 200, 235, 0.75);
-  --text-inverse: #0b2545;
+  --text-primary: #eef5ff;
+  --text-muted: rgba(238, 245, 255, 0.78);
+  --text-dim: rgba(160, 196, 240, 0.76);
+  --text-inverse: #07152c;
 
   /* Accents */
-  --accent-1: #2ec4b6; /* reef turquoise — eyebrows, ticks, links */
-  --accent-2: #ffb627; /* wattle gold */
-  --accent-3: #ff6b35; /* Uluru sunset */
-  --accent-4: #ff4f79; /* waratah pink */
-  --accent-glow: rgba(46, 196, 182, 0.22);
-  --accent-glow-2: rgba(255, 107, 53, 0.18);
-  --hl-gradient: linear-gradient(100deg, #ffd166 0%, #ff8a3d 45%, #ff4f79 100%);
+  --accent-1: #22d3ee; /* signal cyan — eyebrows, ticks, links */
+  --accent-2: #5b9dff; /* electric blue */
+  --accent-3: #a78bfa; /* violet */
+  --accent-4: #f472b6; /* magenta */
+  --accent-glow: rgba(34, 211, 238, 0.22);
+  --accent-glow-2: rgba(167, 139, 250, 0.2);
+  --hl-gradient: linear-gradient(100deg, #67e8f9 0%, #5b9dff 50%, #a78bfa 100%);
   --gradient-text: var(--hl-gradient);
-  --eyebrow-rule: linear-gradient(90deg, #ffb627, #2ec4b6);
+  --eyebrow-rule: linear-gradient(90deg, #22d3ee, #a78bfa);
+
+  /* Status */
+  --danger: #f87171;
+  --shine: rgba(255, 255, 255, 0.35); /* button sweep highlight */
 
   /* CTA */
-  --cta-bg: #ffb627;
-  --cta-hover: #ffc857;
-  --cta-ink: #0b2545;
-  --cta-shadow: 0 12px 32px -12px rgba(255, 182, 39, 0.55);
+  --cta-bg: #22d3ee;
+  --cta-hover: #67e8f9;
+  --cta-ink: #04121f;
+  --cta-shadow: 0 12px 32px -12px rgba(34, 211, 238, 0.55);
+  --cta-shadow-hover: 0 18px 40px -12px rgba(34, 211, 238, 0.75);
 
   /* Glass */
-  --glass-fill: rgba(170, 200, 235, 0.08);
-  --glass-fill-strong: rgba(11, 37, 69, 0.86);
-  --glass-nav: rgba(11, 37, 69, 0.55);
-  --glass-border: rgba(170, 200, 235, 0.18);
+  --glass-fill: rgba(140, 190, 255, 0.07);
+  --glass-fill-strong: rgba(7, 21, 44, 0.88);
+  --glass-nav: rgba(7, 21, 44, 0.58);
+  --glass-border: rgba(140, 190, 255, 0.18);
   --glass-blur: blur(20px) saturate(140%);
 
   /* Lines */
-  --border: rgba(170, 200, 235, 0.16);
-  --border-hover: rgba(170, 200, 235, 0.38);
-  --border-strong: rgba(244, 246, 246, 0.6);
+  --border: rgba(140, 190, 255, 0.15);
+  --border-hover: rgba(140, 190, 255, 0.38);
+  --border-strong: rgba(238, 245, 255, 0.6);
 
   /* Media overlays (always dark — text on photography) */
   --overlay-scrim: linear-gradient(
     180deg,
-    rgba(4, 19, 38, 0.55) 0%,
-    rgba(4, 19, 38, 0.3) 40%,
-    rgba(4, 19, 38, 0.85) 100%
+    rgba(3, 10, 24, 0.55) 0%,
+    rgba(3, 10, 24, 0.3) 40%,
+    rgba(3, 10, 24, 0.86) 100%
   );
-  --overlay-solid: rgba(4, 19, 38, 0.55);
-  --overlay-chapter: #041326;
-  --on-media: #f4f6f6;
-  --on-media-muted: rgba(244, 246, 246, 0.74);
+  --overlay-solid: rgba(3, 10, 24, 0.58);
+  --overlay-chapter: #030a18;
+  --on-media: #eef5ff;
+  --on-media-muted: rgba(238, 245, 255, 0.76);
 
   /* Fixed (never remapped by bands) — chrome that sits on photography */
-  --media-accent: #2ec4b6;
-  --media-cta-bg: #ffb627;
-  --media-cta-hover: #ffc857;
-  --media-cta-ink: #0b2545;
-  --media-glass: rgba(11, 37, 69, 0.42);
-  --media-glass-border: rgba(170, 200, 235, 0.24);
-  --media-glow: rgba(255, 107, 53, 0.45);
-  --media-accent-ring: rgba(46, 196, 182, 0.28);
-  --media-vignette: rgba(4, 19, 38, 0.55);
-  --media-text-shadow: rgba(4, 19, 38, 0.6);
+  --media-accent: #22d3ee;
+  --media-cta-bg: #22d3ee;
+  --media-cta-hover: #67e8f9;
+  --media-cta-ink: #04121f;
+  --media-glass: rgba(7, 21, 44, 0.45);
+  --media-glass-border: rgba(140, 190, 255, 0.26);
+  --media-glow: rgba(167, 139, 250, 0.45);
+  --media-accent-ring: rgba(34, 211, 238, 0.28);
+  --media-vignette: rgba(3, 10, 24, 0.55);
+  --media-text-shadow: rgba(3, 10, 24, 0.6);
 
   /* Placeholder plates (shown until Google Flow media is dropped in) */
-  --plate-landmark: linear-gradient(160deg, #ff8a3d 0%, #d9481f 50%, #5c1a0a 100%);
-  --plate-fauna: linear-gradient(160deg, #f2c14e 0%, #b07a2a 55%, #4a2f12 100%);
-  --plate-flora: linear-gradient(160deg, #7ed957 0%, #2f8f4e 50%, #0f3d2a 100%);
-  --plate-coast: linear-gradient(160deg, #3ee0d0 0%, #1485a6 50%, #0b2545 100%);
+  --plate-infra: linear-gradient(160deg, #1d4ed8 0%, #0c1f4a 55%, #040c1c 100%);
+  --plate-hardware: linear-gradient(160deg, #0891b2 0%, #0b3a5c 55%, #040c1c 100%);
+  --plate-signal: linear-gradient(160deg, #7c3aed 0%, #2a1f6b 55%, #070b24 100%);
+  --plate-city: linear-gradient(160deg, #0ea5e9 0%, #1e3a8a 55%, #07152c 100%);
 
   /* Spacing — 4px base */
   --space-1: 4px;
@@ -117,6 +122,8 @@
   --dur-fast: 0.24s;
   --dur-med: 0.52s;
   --dur-slow: 0.9s;
+  --dur-press: 0.16s;
+  --press-scale: 0.97;
 
   /* Z-index */
   --z-base: 0;
@@ -132,7 +139,7 @@
   --header-h: 88px;
 
   /* Typography */
-  --font-display: "Manrope", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Manrope", system-ui, sans-serif;
   --font-body: "Manrope", system-ui, sans-serif;
   --font-mono: "Space Mono", "IBM Plex Mono", monospace;
   --text-xs: 0.72rem;
@@ -152,36 +159,38 @@
   }
 }
 
-/* Sandy Shore palette — light theme, and cream bands inside the navy page */
+/* Blueprint palette — light theme, and icy bands inside the navy page */
 .light,
 .band-sand {
-  --bg-base: #fff4e2;
-  --bg-surface: #ffe9c7;
-  --bg-elevated: #ffddab;
-  --bg-deep: #ffe9c7;
-  --bg-inverse: #0b2545;
-  --text-primary: #0b2545;
-  --text-muted: rgba(11, 37, 69, 0.8);
-  --text-dim: rgba(11, 37, 69, 0.68);
-  --text-inverse: #fff4e2;
-  --accent-1: #08705f;
-  --accent-2: #8a5200;
-  --accent-3: #c03a1c;
-  --accent-4: #b91c5c;
-  --accent-glow: rgba(8, 112, 95, 0.14);
-  --accent-glow-2: rgba(192, 58, 28, 0.12);
-  --hl-gradient: linear-gradient(100deg, #c03a1c 0%, #b91c5c 100%);
-  --eyebrow-rule: linear-gradient(90deg, #c03a1c, #08705f);
-  --cta-bg: #0b2545;
-  --cta-hover: #164173;
-  --cta-ink: #fff4e2;
-  --cta-shadow: 0 12px 32px -12px rgba(11, 37, 69, 0.45);
-  --glass-fill: rgba(11, 37, 69, 0.05);
-  --glass-fill-strong: rgba(255, 244, 226, 0.9);
-  --glass-nav: rgba(255, 244, 226, 0.72);
-  --glass-border: rgba(11, 37, 69, 0.14);
-  --border: rgba(11, 37, 69, 0.14);
-  --border-hover: rgba(11, 37, 69, 0.34);
-  --border-strong: rgba(11, 37, 69, 0.7);
-  --shadow-md: 0 24px 60px -28px rgba(11, 37, 69, 0.35);
+  --bg-base: #eef5ff;
+  --bg-surface: #e0ebfb;
+  --bg-elevated: #cfdff6;
+  --bg-deep: #e0ebfb;
+  --bg-inverse: #07152c;
+  --text-primary: #07152c;
+  --text-muted: rgba(7, 21, 44, 0.8);
+  --text-dim: rgba(7, 21, 44, 0.66);
+  --text-inverse: #eef5ff;
+  --accent-1: #155e75;
+  --accent-2: #1d4ed8;
+  --accent-3: #6d28d9;
+  --accent-4: #9d174d;
+  --accent-glow: rgba(21, 94, 117, 0.14);
+  --accent-glow-2: rgba(109, 40, 217, 0.12);
+  --hl-gradient: linear-gradient(100deg, #155e75 0%, #1d4ed8 55%, #6d28d9 100%);
+  --eyebrow-rule: linear-gradient(90deg, #155e75, #6d28d9);
+  --danger: #b91c1c;
+  --cta-bg: #07152c;
+  --cta-hover: #132b54;
+  --cta-ink: #eef5ff;
+  --cta-shadow: 0 12px 32px -12px rgba(7, 21, 44, 0.45);
+  --cta-shadow-hover: 0 18px 40px -12px rgba(7, 21, 44, 0.6);
+  --glass-fill: rgba(7, 21, 44, 0.05);
+  --glass-fill-strong: rgba(238, 245, 255, 0.9);
+  --glass-nav: rgba(238, 245, 255, 0.72);
+  --glass-border: rgba(7, 21, 44, 0.14);
+  --border: rgba(7, 21, 44, 0.14);
+  --border-hover: rgba(7, 21, 44, 0.34);
+  --border-strong: rgba(7, 21, 44, 0.7);
+  --shadow-md: 0 24px 60px -28px rgba(7, 21, 44, 0.35);
 }

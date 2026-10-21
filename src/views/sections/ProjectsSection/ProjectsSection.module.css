@@ -27,7 +27,9 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  transition: color var(--dur-fast) ease;
+  transition:
+    color var(--dur-fast) ease,
+    scale var(--dur-press) var(--ease-spring);
 }
 
 .filterBtn::after {
@@ -48,7 +50,12 @@
   color: var(--text-primary);
 }
 
-.active::after {
+.filterBtn:hover::after {
+  transform: scaleX(0.4);
+}
+
+.active::after,
+.active:hover::after {
   transform: scaleX(1);
 }
 

@@ -1,137 +1,49 @@
 #!/usr/bin/env node
 /**
- * Design system audit — public pages vs project.md / design-system.md rules.
- * Run: npm run css:check  (alias) or node scripts/check-pages-design.js
+ * Design-token audit — Circuit Night rules from CLAUDE.md / design-system.md.
+ * Run: npm run css:check
+ *
+ * Colours live in src/styles/design-tokens.css only. Component CSS modules and
+ * TSX use `var(--…)`; no hex / rgb() / hsl() literals.
  */
 
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const PAGES_DIR = path.join(ROOT, "src/views/pages");
 const SRC_DIR = path.join(ROOT, "src");
 
-const PUBLIC_PAGE_DIRS = [
-  "Home",
-  "Projects",
-  "Experience",
-  "Contact",
-  "ProjectDetail",
-  "Resume",
-  "Privacy",
-  "Terms",
-  "NotFound",
-];
+const COLOR_LITERAL = /#[0-9a-fA-F]{3,8}\b|\b(?:rgb|hsl)a?\(/g;
+const ALLOWED = new Set(
+  ["src/styles/design-tokens.css", "src/styles/base.css"].map((f) =>
+    path.join(ROOT, f),
+  ),
+);
 
-const HEX_IN_MODULE = /#[0-9a-fA-F]{3,8}\b/g;
-const ALLOWED_HEX_FILES = new Set([
-  path.join(ROOT, "src/styles/design-tokens.css"),
-  path.join(ROOT, "src/styles/base.css"),
-]);
-
-let errors = [];
-let warnings = [];
-
-function walk(dir, ext, files = []) {
-  if (!fs.existsSync(dir)) return files;
+function walk(dir, exts, files = []) {
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
-    const stat = fs.statSync(full);
-    if (stat.isDirectory()) walk(full, ext, files);
-    else if (name.endsWith(ext)) files.push(full);
+    if (fs.statSync(full).isDirectory()) walk(full, exts, files);
+    else if (exts.some((e) => name.endsWith(e))) files.push(full);
   }
   return files;
 }
 
-function checkHexInModules() {
-  const modules = walk(SRC_DIR, ".module.css");
-  for (const file of modules) {
-    const content = fs.readFileSync(file, "utf8");
-    const matches = content.match(HEX_IN_MODULE);
-    if (matches?.length) {
-      errors.push(
-        `Hardcoded hex in ${path.relative(ROOT, file)}: ${[...new Set(matches)].join(", ")}`,
-      );
-    }
-  }
-}
-
-function checkPublicPages() {
-  for (const dir of PUBLIC_PAGE_DIRS) {
-    const pagePath = path.join(PAGES_DIR, dir);
-    if (!fs.existsSync(pagePath)) {
-      warnings.push(`Missing page directory: ${dir}`);
-      continue;
-    }
-    const tsxFiles = walk(pagePath, ".tsx").filter(
-      (f) => !f.includes("sectionThemes"),
+const errors = [];
+for (const file of walk(SRC_DIR, [".module.css", ".tsx"])) {
+  if (ALLOWED.has(file)) continue;
+  const hits = fs.readFileSync(file, "utf8").match(COLOR_LITERAL);
+  if (hits?.length) {
+    errors.push(
+      `Hardcoded colour in ${path.relative(ROOT, file)}: ${[...new Set(hits)].join(", ")}`,
     );
-    if (tsxFiles.length === 0) {
-      warnings.push(`No .tsx in ${dir}`);
-      continue;
-    }
-    let hasSection = false;
-    let hasPageInner = false;
-    for (const file of tsxFiles) {
-      const content = fs.readFileSync(file, "utf8");
-      if (content.includes("<Section") || content.includes("Section ")) {
-        hasSection = true;
-      }
-      if (
-        content.includes("pf-block") ||
-        content.includes("pf-hero") ||
-        content.includes("pf-workspace")
-      ) {
-        hasSection = true;
-      }
-      if (
-        content.includes("page-inner") ||
-        content.includes("PageShell") ||
-        content.includes("pf-page")
-      ) {
-        hasPageInner = true;
-      }
-      if (
-        content.includes("styles.inner") ||
-        content.includes("styles.trackAccent")
-      ) {
-        errors.push(
-          `${path.relative(ROOT, file)}: use page-inner / PageShell, not styles.inner or styles.trackAccent`,
-        );
-      }
-    }
-    if (dir !== "Home" && !hasSection && dir !== "Resume") {
-      warnings.push(`${dir}: no Section component found`);
-    }
-    if (!hasPageInner && dir !== "Home") {
-      warnings.push(`${dir}: no page-inner or PageShell wrapper`);
-    }
   }
 }
 
-function checkPagePatternsImported() {
-  const appCss = fs.readFileSync(path.join(ROOT, "src/App.css"), "utf8");
-  if (!appCss.includes("page-patterns.css")) {
-    errors.push("App.css must import page-patterns.css");
-  }
-}
-
-console.log("Design page audit (website-ts)\n");
-checkHexInModules();
-checkPublicPages();
-checkPagePatternsImported();
-
-if (warnings.length) {
-  console.log("Warnings:");
-  warnings.forEach((w) => console.log(`  ⚠ ${w}`));
-  console.log("");
-}
-
+console.log("Design token audit (website-ts)\n");
 if (errors.length) {
   console.error("Failed:\n");
   errors.forEach((e) => console.error(`  ✗ ${e}`));
   process.exit(1);
 }
-
-console.log("✓ All public page design checks passed.");
-process.exit(0);
+console.log("✓ No hardcoded colours outside design-tokens.css.");

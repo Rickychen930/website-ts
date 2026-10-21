@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
     title: "Ricky Chen — Software Engineer · AI & Full-Stack Developer, Sydney",
     description:
       "Sydney-based software engineer and Master of AI candidate (UTS). Ex-Samsung R&D. Builds LLM chatbots, AI workflows and full-stack platforms.",
-    image: "/media/flow/hero-uluru-dawn.jpg",
+    image: "/media/flow/hero-silicon-dawn.jpg",
     type: "profile",
   });
 

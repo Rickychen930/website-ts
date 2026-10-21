@@ -36,11 +36,17 @@
   box-shadow:
     var(--shadow-md),
     0 0 26px -8px var(--media-accent);
-  transition: transform var(--dur-fast) var(--kobi-ease);
+  transition:
+    transform var(--dur-fast) var(--kobi-ease),
+    scale var(--dur-press) var(--ease-spring);
 }
 
 .launcher:hover {
   transform: translateY(-2px) scale(1.04);
+}
+
+.launcher:active {
+  scale: 0.93;
 }
 
 .face,
@@ -411,7 +417,8 @@
   animation: kobi-pop 0.34s var(--kobi-ease) both;
   transition:
     background var(--dur-fast) ease,
-    border-color var(--dur-fast) ease;
+    border-color var(--dur-fast) ease,
+    scale var(--dur-press) var(--ease-spring);
 }
 
 .chip:hover {
@@ -467,6 +474,7 @@
     background var(--dur-fast) ease,
     color var(--dur-fast) ease,
     box-shadow var(--dur-fast) ease,
+    scale var(--dur-press) var(--ease-spring),
     transform var(--dur-fast) var(--kobi-ease);
 }
 

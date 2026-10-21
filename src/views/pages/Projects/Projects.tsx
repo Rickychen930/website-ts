@@ -85,7 +85,7 @@ export const Projects: React.FC = () => {
         </header>
 
         <RevealMedia
-          item={FLOW_MEDIA.kataTjuta}
+          item={FLOW_MEDIA.dataCampus}
           frameClassName={styles.heroFrame}
           parallax={20}
           priority

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "@/lib/motion";
 import { Section } from "@/components/layout/Section/Section";
 import { RevealMedia } from "@/components/motion/RevealMedia/RevealMedia";
+import { SkillSphere } from "@/components/ui/SkillSphere/SkillSphere";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { Button } from "@/components/ui/Button/Button";
 import { FLOW_MEDIA } from "@/config/flowMedia";
@@ -67,12 +68,26 @@ export const StackSection: React.FC = () => {
     <Section id="stack" label="Skills">
       <div className={styles.layout}>
         <div className={styles.mediaCol}>
-          <RevealMedia
-            item={FLOW_MEDIA.daintree}
-            frameClassName={styles.frame}
-            parallax={16}
-            caption
-          />
+          <div className={styles.stage}>
+            <div className={styles.stageBg} aria-hidden="true">
+              <RevealMedia
+                item={FLOW_MEDIA.neuralNet}
+                frameClassName={styles.frame}
+                parallax={16}
+              />
+            </div>
+            <SkillSphere
+              className={styles.sphere}
+              items={skills.slice(0, 34).map((sk) => ({
+                name: sk.name,
+                level: LEVEL[sk.proficiency],
+                group: sk.category,
+              }))}
+            />
+          </div>
+          <p className={styles.sphereHint}>
+            Drag to spin · hover a tag to light up its group
+          </p>
         </div>
 
         <div className={styles.body}>

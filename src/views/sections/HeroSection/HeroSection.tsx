@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   motion,
+  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -8,14 +9,15 @@ import {
 } from "@/lib/motion";
 import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { Button } from "@/components/ui/Button/Button";
+import { Chip3D } from "@/components/ui/Chip3D/Chip3D";
 import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
-import { FLOW_MEDIA, PLACE_NAMES } from "@/config/flowMedia";
+import { FLOW_MEDIA, STACK_NAMES } from "@/config/flowMedia";
 import { useProfile } from "@/contexts";
 import { introOffset } from "@/components/motion/CurtainTransition/intro";
 import styles from "./HeroSection.module.css";
 
-const SKY = FLOW_MEDIA.heroUluru;
+const SKY = FLOW_MEDIA.heroCircuit;
 const RESUME_PDF = "/Ricky-Chen-Resume-2026.pdf";
 const HIGHLIGHTS = ["Ex-Samsung R&D", "MSc AI · UTS · GPA 6.63/7"];
 
@@ -36,11 +38,11 @@ const LinkedInIcon = () => (
     />
   </svg>
 );
-const DEEP = FLOW_MEDIA.kakadu;
+const DEEP = FLOW_MEDIA.serverHall;
 
 /**
  * Pinned, scroll-scrubbed journey (Web Architech "CoastalJourney" pattern):
- * Uluru zooms in, the wordmark lifts away, then the Kakadu layer rises over
+ * the circuit board zooms in, the wordmark lifts away, then the server hall rises over
  * the lens carrying the practice statement.
  */
 export const HeroSection: React.FC = () => {
@@ -52,11 +54,32 @@ export const HeroSection: React.FC = () => {
     target: ref,
     offset: ["start start", "end end"],
   });
-  const p = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 26,
-    mass: 0.3,
-  });
+  // Lenis (desktop) / the browser (touch) already ease the scroll — no extra spring
+  const p = scrollYProgress;
+
+  // Mouse parallax: the sky drifts against the pointer, the copy follows it a little
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const smx = useSpring(mx, { stiffness: 55, damping: 18, mass: 0.4 });
+  const smy = useSpring(my, { stiffness: 55, damping: 18, mass: 0.4 });
+  const skyX = useTransform(smx, (v) => v * -34);
+  const skyY = useTransform(smy, (v) => v * -20);
+  const fgX = useTransform(smx, (v) => v * 12);
+  // 3D chip: tilts toward the pointer, explodes as you scroll
+  const still0 = useMotionValue(0);
+  const chipRx = useTransform(smy, (v) => v * -26);
+  const chipRy = useTransform(smx, (v) => v * 38);
+  useEffect(() => {
+    if (reduce) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches)
+      return;
+    const onMove = (e: PointerEvent) => {
+      mx.set(e.clientX / window.innerWidth - 0.5);
+      my.set(e.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [reduce, mx, my]);
 
   // Layer transforms derived from one progress value (like w26 --p/--r)
   const skyScale = useTransform(p, [0, 1], [1, 1.38]);
@@ -68,6 +91,8 @@ export const HeroSection: React.FC = () => {
   const deepScale = useTransform(p, [0.38, 1], [1.2, 1]);
   const textY = useTransform(p, [0.6, 0.95], ["40px", "0px"]);
   const textOpacity = useTransform(p, [0.6, 0.85], [0, 1]);
+  const explode = useTransform(p, [0, 0.5], [0.18, 1]);
+  const explodeStill = useMotionValue(0.35);
 
   const name = profile?.name ?? "Ricky Chen";
   const role =
@@ -98,10 +123,10 @@ export const HeroSection: React.FC = () => {
       data-section="hero"
     >
       <div className={styles.stage}>
-        {/* Sky — Uluru at dawn */}
+        {/* Sky — silicon at dawn */}
         <motion.div
           className={styles.sky}
-          style={still({ scale: skyScale }) as never}
+          style={still({ scale: skyScale, x: skyX, y: skyY }) as never}
         >
           <FlowMedia item={SKY} priority showPendingLabel={false} />
         </motion.div>
@@ -111,62 +136,78 @@ export const HeroSection: React.FC = () => {
         {/* Foreground — wordmark & CTAs */}
         <motion.div
           className={styles.fg}
-          style={still({ y: fgY, scale: fgScale, opacity: fgOpacity }) as never}
+          style={
+            still({
+              x: fgX,
+              y: fgY,
+              scale: fgScale,
+              opacity: fgOpacity,
+            }) as never
+          }
         >
-          <span className={styles.badge}>
-            <span className={styles.statusDot} aria-hidden="true" />
-            {profile?.openToOpportunities === false ? (
-              "Based in Sydney, Australia"
-            ) : (
-              <>
-                Open to work · Sydney
-                <span className={styles.badgeMore}>
-                  {" "}
-                  · Full work rights Jul 2027
-                </span>
-              </>
-            )}
-          </span>
-          <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
-            <RevealText
-              lines={[name]}
-              as="span"
-              immediate
-              delay={0.9 + introOffset()}
-            />
-          </h1>
-          <p className={styles.role}>{role}</p>
-          <p className={styles.tagline}>{tagline}</p>
-          <ul className={styles.proof} aria-label="Highlights">
-            {highlights.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-          <div className={styles.ctas}>
-            <Button as="a" href="#projects" variant="inverse">
-              View projects <span className={styles.arrow}>→</span>
-            </Button>
-            <Button
-              as="a"
-              href={RESUME_PDF}
-              download="Ricky-Chen-Resume.pdf"
-              variant="outlineInverse"
-            >
-              Download CV
-            </Button>
-            {socials.map((c) => (
-              <a
-                key={c.type}
-                href={c.value}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.social}
-                aria-label={c.type === "github" ? "GitHub" : "LinkedIn"}
-                data-magnetic=""
+          <div className={styles.copy}>
+            <span className={styles.badge}>
+              <span className={styles.statusDot} aria-hidden="true" />
+              {profile?.openToOpportunities === false ? (
+                "Based in Sydney, Australia"
+              ) : (
+                <>
+                  Open to work · Sydney
+                  <span className={styles.badgeMore}>
+                    {" "}
+                    · Full work rights Jul 2027
+                  </span>
+                </>
+              )}
+            </span>
+            <h1 className={styles.wordmark} aria-label={`${name}, ${role}`}>
+              <RevealText
+                lines={[name]}
+                as="span"
+                immediate
+                delay={0.9 + introOffset()}
+              />
+            </h1>
+            <p className={styles.role}>{role}</p>
+            <p className={styles.tagline}>{tagline}</p>
+            <ul className={styles.proof} aria-label="Highlights">
+              {highlights.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+            <div className={styles.ctas}>
+              <Button as="a" href="#projects" variant="inverse">
+                View projects <span className={styles.arrow}>→</span>
+              </Button>
+              <Button
+                as="a"
+                href={RESUME_PDF}
+                download="Ricky-Chen-Resume.pdf"
+                variant="outlineInverse"
               >
-                {c.type === "github" ? <GitHubIcon /> : <LinkedInIcon />}
-              </a>
-            ))}
+                Download CV
+              </Button>
+              {socials.map((c) => (
+                <a
+                  key={c.type}
+                  href={c.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.social}
+                  aria-label={c.type === "github" ? "GitHub" : "LinkedIn"}
+                  data-magnetic=""
+                >
+                  {c.type === "github" ? <GitHubIcon /> : <LinkedInIcon />}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className={styles.chipWrap}>
+            <Chip3D
+              rx={reduce ? still0 : chipRx}
+              ry={reduce ? still0 : chipRy}
+              explode={reduce ? explodeStill : explode}
+            />
           </div>
         </motion.div>
 
@@ -183,10 +224,10 @@ export const HeroSection: React.FC = () => {
           className={styles.ribbonWrap}
           style={still({ opacity: fgOpacity }) as never}
         >
-          <Ribbon items={PLACE_NAMES} speed={38} />
+          <Ribbon items={STACK_NAMES} speed={38} />
         </motion.div>
 
-        {/* Deep — Kakadu rises over the lens */}
+        {/* Deep — the server hall rises over the lens */}
         {!reduce && (
           <motion.div className={styles.deep} style={{ y: deepY }}>
             <motion.div

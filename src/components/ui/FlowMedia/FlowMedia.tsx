@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/lib/motion";
+import { isFastScroll, onFastScroll, onScrollTick } from "@/lib/scrollActivity";
 import { flowPoster, flowSrc, type FlowMediaItem } from "@/config/flowMedia";
 import styles from "./FlowMedia.module.css";
 
@@ -34,19 +35,59 @@ const FlowVideo: React.FC<{
       setArmed(true);
       return;
     }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setArmed(true);
-          video.play().catch(() => undefined);
-        } else {
-          video.pause();
-        }
-      },
-      { rootMargin: "200px 0px" },
+    // Constant 1x playback: changing playbackRate while scrolling forced the
+    // decoder to re-time every frame and made the footage stutter.
+    let visible = false;
+    // A later section slides over earlier stacked ones, leaving their videos
+    // "in view" but buried. Ask what is actually on top at the video's centre;
+    // overlays that belong to the video's own section don't count.
+    const buried = () => {
+      const host = video.closest("section");
+      if (!host) return false;
+      const r = video.getBoundingClientRect();
+      const x = Math.min(
+        Math.max(r.left + r.width / 2, 0),
+        window.innerWidth - 1,
+      );
+      const y = Math.min(
+        Math.max(r.top + r.height / 2, 0),
+        window.innerHeight - 1,
+      );
+      const top = document.elementFromPoint(x, y);
+      return !!top && !host.contains(top);
+    };
+    const sync = () => {
+      if (visible && !isFastScroll() && !buried()) {
+        video.play().catch(() => undefined);
+      } else {
+        video.pause();
+      }
+    };
+
+    // Load well before the clip scrolls in, so it is ready when it arrives…
+    const loader = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setArmed(true),
+      { rootMargin: "600px 0px" },
     );
-    io.observe(video);
-    return () => io.disconnect();
+    // …but only decode while it is on screen, and for side-scrolling rows
+    // (the atlas) only the cards in the middle of the viewport
+    const player = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      },
+      { rootMargin: "0px -22% 0px -22%", threshold: 0.01 },
+    );
+    loader.observe(video);
+    player.observe(video);
+    const offFast = onFastScroll(sync);
+    const offTick = onScrollTick(sync);
+    return () => {
+      loader.disconnect();
+      player.disconnect();
+      offFast();
+      offTick();
+    };
   }, []);
 
   return (
@@ -59,30 +100,43 @@ const FlowVideo: React.FC<{
       muted
       loop
       playsInline
-      preload={priority ? "auto" : "none"}
+      preload="auto"
       aria-label={item.alt}
       onError={onError}
     />
   );
 };
 
-/* Topographic contour lines — reads as a site-survey plate while media is pending */
-const Contours: React.FC = () => (
+/* Circuit traces — reads as a PCB plate while media is pending */
+const TRACES = [
+  "M0 60h90l20 20h120l20-20h150",
+  "M0 120h50l30 30h90l20-20h210",
+  "M0 190h120l25-25h80l30 30h145",
+  "M0 250h70l20-20h160l25 25h125",
+  "M140 0v40l20 20v40",
+  "M260 0v70l-20 20v60",
+  "M320 300v-60l20-20v-50",
+  "M80 300v-40l-20-20",
+];
+const Traces: React.FC = () => (
   <svg
     className={styles.contours}
     viewBox="0 0 400 300"
     preserveAspectRatio="xMidYMid slice"
     aria-hidden="true"
   >
-    {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-      <ellipse
-        key={i}
-        cx={250 - i * 6}
-        cy={170 + i * 3}
-        rx={40 + i * 34}
-        ry={22 + i * 20}
-        transform={`rotate(${-12 + i * 2} 250 170)`}
-      />
+    {TRACES.map((d) => (
+      <path key={d} d={d} />
+    ))}
+    {[
+      [110, 80],
+      [250, 40],
+      [200, 150],
+      [290, 165],
+      [100, 230],
+      [340, 220],
+    ].map(([cx, cy]) => (
+      <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={4} />
     ))}
   </svg>
 );
@@ -105,7 +159,7 @@ export const FlowMedia: React.FC<FlowMediaProps> = ({
   if (stage === "placeholder") {
     return (
       <div className={cls} role="img" aria-label={item.alt}>
-        <Contours />
+        <Traces />
         {showPendingLabel && (
           <span className={styles.pending}>
             {item.id}.{item.kind === "video" ? "mp4" : "jpg"}

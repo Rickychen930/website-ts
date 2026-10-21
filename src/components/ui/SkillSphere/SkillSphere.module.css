@@ -1,0 +1,105 @@
+.sphere {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--glass-border);
+  background:
+    radial-gradient(circle at 50% 45%, var(--accent-glow), transparent 62%),
+    var(--glass-fill);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.sphere[data-drag="true"] {
+  cursor: grabbing;
+}
+
+.core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow-2), transparent 68%);
+  transform: translate(-50%, -50%);
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* Faint orbit rings give the volume a floor plan */
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  aspect-ratio: 1;
+  border: 1px dashed var(--border);
+  border-radius: 50%;
+}
+
+.ringA {
+  transform: translate(-50%, -50%) rotateX(72deg);
+}
+
+.ringB {
+  transform: translate(-50%, -50%) rotateY(72deg) rotateZ(30deg);
+  opacity: 0.6;
+}
+
+.tag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--glass-fill-strong);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transition: border-color var(--dur-fast) ease;
+}
+
+.tag:hover {
+  border-color: var(--accent-1);
+}
+
+.g_language {
+  color: var(--accent-1);
+}
+
+.g_framework {
+  color: var(--accent-2);
+}
+
+.g_other {
+  color: var(--accent-3);
+}
+
+.g_database {
+  color: var(--accent-4);
+}
+
+.g_cloud,
+.g_tool {
+  color: var(--text-primary);
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .core {
+    animation: none;
+  }
+}
