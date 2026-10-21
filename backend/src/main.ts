@@ -7,6 +7,7 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import path from "path";
+import mongoose from "mongoose";
 import { connectDatabase } from "./config/database";
 import profileRoutes from "./routes/profileRoutes";
 import contactRoutes from "./routes/contactRoutes";
@@ -166,21 +167,30 @@ const startServer = async () => {
     }
   });
 
+  // Outlive nginx's keep-alive (65s) so it never reuses a socket Node already
+  // closed — the usual cause of requests that hang until the proxy times out
+  httpServer.keepAliveTimeout = 65_000;
+  httpServer.headersTimeout = 66_000;
+
   // Graceful shutdown handler
   const gracefulShutdown = async (signal: string) => {
     console.log(`${signal} signal received: closing HTTP server gracefully`);
 
     // Close HTTP server
-    httpServer.close(() => {
+    httpServer.close(async () => {
       console.log("HTTP server closed");
 
-      // Close database connection
-      const mongoose = require("mongoose");
-      mongoose.connection.close(false, () => {
+      // Close database connection (Mongoose 7+: promise API, no callback)
+      try {
+        await mongoose.connection.close();
         console.log("MongoDB connection closed");
-        process.exit(0);
-      });
+      } catch (err) {
+        console.error("MongoDB close failed:", err);
+      }
+      process.exit(0);
     });
+    // Don't wait on idle keep-alive sockets
+    httpServer.closeIdleConnections?.();
 
     // Force close after 10 seconds
     setTimeout(() => {

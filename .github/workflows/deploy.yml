@@ -640,6 +640,13 @@ jobs:
             pm2 stop website-backend 2>/dev/null || true
             pm2 delete website-backend 2>/dev/null || true
             sleep 2
+
+            # Anything still bound to the backend port outside PM2 black-holes
+            # a share of requests (nginx round-robins across listeners)
+            echo "🧹 Freeing port 4000 of stray processes..."
+            sudo fuser -k 4000/tcp 2>/dev/null || \
+              { command -v lsof >/dev/null && sudo lsof -t -i :4000 | xargs -r sudo kill -9; } || true
+            sleep 1
             
             # Start PM2
             echo "🚀 Starting PM2 with fresh environment..."
@@ -850,6 +857,8 @@ jobs:
             pm2 restart website-backend --update-env 2>/dev/null || {
               pm2 stop website-backend 2>/dev/null || true
               pm2 delete website-backend 2>/dev/null || true
+              sudo fuser -k 4000/tcp 2>/dev/null || true
+              sleep 1
               pm2 start ecosystem.config.js --env production --update-env
               pm2 save
             }
