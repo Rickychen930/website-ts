@@ -70,6 +70,8 @@ id_rsa.pub
 # API keys and secrets (additional patterns)
 *secret*
 *key*
+# …but not media named after keyboards
+!public/media/flow/*keyboard*
 *credential*
 *token*
 *password*
