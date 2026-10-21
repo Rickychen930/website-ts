@@ -35,7 +35,7 @@ src/views/components/ui/       → atom (Button, Card, Typography)
 src/views/components/layout/   → Section, Header, Footer
 src/views/components/domain/   → ProjectCard, ExperienceItem, …
 src/components/      → shared non-MVC (effects, a11y widgets)
-src/controllers/     → orchestration (NO React)
+src/contexts/        → state + data loading (ProfileContext → ProfileService)
 src/services/        → API, cache, retry
 src/models/          → ProfileModel (immutable domain class)
 src/types/domain.ts  → semua tipe profil
@@ -116,17 +116,17 @@ backend/src/         → Express MVC mirror
 
 ## File kunci
 
-| File                                   | Fungsi                           |
-| -------------------------------------- | -------------------------------- |
-| `src/styles/design-tokens.css`         | Semua CSS variables              |
-| `src/config/flowMedia.ts`              | Manifest aset Google Flow        |
-| `backend/src/services/chatbot/`        | Chatbot Kobi (FAQ → AI fallback) |
-| `src/services/ProfileService.ts`       | Fetch profile + cache + fallback |
-| `src/models/ProfileModel.ts`           | Domain class immutable           |
-| `src/controllers/ProfileController.ts` | FE orchestration                 |
-| `src/contexts/ThemeContext.tsx`        | Light/dark toggle                |
-| `src/routes/`                          | React Router + lazy pages        |
-| `backend/src/main.ts`                  | Express entry                    |
+| File                              | Fungsi                           |
+| --------------------------------- | -------------------------------- |
+| `src/styles/design-tokens.css`    | Semua CSS variables              |
+| `src/config/flowMedia.ts`         | Manifest aset Google Flow        |
+| `backend/src/services/chatbot/`   | Chatbot Kobi (FAQ → AI fallback) |
+| `src/services/ProfileService.ts`  | Fetch profile + cache + fallback |
+| `src/models/ProfileModel.ts`      | Domain class immutable           |
+| `src/contexts/ProfileContext.tsx` | Load profile → ProfileService    |
+| `src/contexts/ThemeContext.tsx`   | Light/dark toggle                |
+| `src/routes/`                     | React Router + lazy pages        |
+| `backend/src/main.ts`             | Express entry                    |
 
 ---
 

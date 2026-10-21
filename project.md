@@ -32,18 +32,18 @@ Dokumen referensi utama proyek **website-ts**: portfolio fullstack Ricky Chen de
 
 ### SOLID (penerapan di codebase)
 
-| Prinsip                       | Penerapan                                                                               |
-| ----------------------------- | --------------------------------------------------------------------------------------- |
-| **S** — Single Responsibility | `ProfileService` = fetch/cache; `ProfileController` = orchestration; `Button` = UI saja |
-| **O** — Open/Closed           | Komponen UI punya `variant` / `size` tanpa mengubah inti komponen                       |
-| **L** — Liskov Substitution   | Props React memperluas HTML attributes (`ButtonProps extends ButtonHTMLAttributes`)     |
-| **I** — Interface Segregation | `types/domain.ts` — tipe per entitas, bukan satu god-object                             |
-| **D** — Dependency Inversion  | Controller menerima `ProfileService` via constructor; halaman memakai context/hooks     |
+| Prinsip                       | Penerapan                                                                              |
+| ----------------------------- | -------------------------------------------------------------------------------------- |
+| **S** — Single Responsibility | `ProfileService` = fetch/cache; `ProfileContext` = state + loading; `Button` = UI saja |
+| **O** — Open/Closed           | Komponen UI punya `variant` / `size` tanpa mengubah inti komponen                      |
+| **L** — Liskov Substitution   | Props React memperluas HTML attributes (`ButtonProps extends ButtonHTMLAttributes`)    |
+| **I** — Interface Segregation | `types/domain.ts` — tipe per entitas, bukan satu god-object                            |
+| **D** — Dependency Inversion  | Controller menerima `ProfileService` via constructor; halaman memakai context/hooks    |
 
 ### Prinsip pendukung
 
 - **KISS** — Satu sumber token CSS; tidak duplikasi logika fetch di banyak komponen.
-- **DRY** — `Section`, `Card`, `Button`, utility (`dateUtils`, `stringUtils`) dipakai ulang.
+- **DRY** — `Section`, `Button`, `FlowMedia`, utility di `src/utils` dipakai ulang.
 - **OOP (domain)** — `ProfileModel` class dengan factory `create()` dan method domain (`getFeaturedProjects`, `getSkillsByCategory`).
 - **Component-based** — Atomic UI → layout → domain → pages.
 - **Method-based** — Business logic di class method / service method, bukan inline di JSX.
@@ -56,9 +56,8 @@ Dokumen referensi utama proyek **website-ts**: portfolio fullstack Ricky Chen de
 website-ts/
 ├── src/                          # Frontend
 │   ├── components/               # Shared (SkipLinks, ThemeToggle, charts, …)
-│   ├── config/                   # theme.ts, site-defaults.ts
+│   ├── config/                   # flowMedia.ts, site-defaults.ts
 │   ├── contexts/                 # ThemeContext, ProfileContext, AdminAuthContext
-│   ├── controllers/              # MVC — ProfileController (frontend)
 │   ├── models/                   # Domain — ProfileModel
 │   ├── services/                 # ProfileService, ContactService, AdminService
 │   ├── types/                    # domain.ts, API types
@@ -92,8 +91,8 @@ website-ts/
 
 ```mermaid
 flowchart LR
-  Page[Page / View] --> Controller[ProfileController]
-  Controller --> Service[ProfileService]
+  Page[Page / View] --> Context[ProfileContext]
+  Context --> Service[ProfileService]
   Service --> API[Express API / Fallback]
   Service --> Model[ProfileModel]
   Model --> Page
