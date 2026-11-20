@@ -363,19 +363,13 @@ a:hover > .arrow {
   }
 }
 
-/* Copy column + 3D chip */
+/* Copy column */
 .copy {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-6);
   min-width: 0;
-}
-
-.chipWrap {
-  display: grid;
-  place-items: center;
-  pointer-events: none;
 }
 
 @media (width > 900px) {
@@ -395,11 +389,6 @@ a:hover > .arrow {
     align-items: flex-start;
   }
 
-  /* Anchor the chip to the column start so it grows toward the viewport edge */
-  .chipWrap {
-    justify-items: start;
-  }
-
   .wordmark {
     font-size: clamp(2.2rem, 6vw, 6.4rem);
     letter-spacing: 0.04em;
@@ -408,16 +397,6 @@ a:hover > .arrow {
   .ctas,
   .proof {
     justify-content: flex-start;
-  }
-}
-
-/* Phones: the chip floats faintly behind the copy */
-@media (width <= 900px) {
-  .chipWrap {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.32;
   }
 }
 
@@ -431,14 +410,13 @@ a:hover > .arrow {
   }
 }
 
-/* Staged entrance: badge → role → tagline → proof → CTAs → chip.
+/* Staged entrance: badge → role → tagline → proof → CTAs.
    Starts as the curtain lifts (--intro-offset is 0 on a plain load). */
 .badge,
 .role,
 .tagline,
 .proof,
-.ctas,
-.chipWrap {
+.ctas {
   animation: hero-rise 0.9s var(--ease-out) both;
   animation-delay: calc(var(--intro-offset, 0s) + var(--rise, 0.1s));
 }
@@ -461,10 +439,6 @@ a:hover > .arrow {
 
 .ctas {
   --rise: 1.06s;
-}
-
-.chipWrap {
-  --rise: 0.5s;
 }
 
 @keyframes hero-rise {
