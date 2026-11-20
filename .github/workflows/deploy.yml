@@ -318,7 +318,7 @@ jobs:
 
             # Ensure defaults exist
             if ! grep -q "^PORT=" "$ENV_FILE.tmp" 2>/dev/null; then
-              echo "PORT=4000" >> "$ENV_FILE.tmp"
+              echo "PORT=4100" >> "$ENV_FILE.tmp"
             fi
             if ! grep -q "^NODE_ENV=" "$ENV_FILE.tmp" 2>/dev/null; then
               echo "NODE_ENV=production" >> "$ENV_FILE.tmp"
@@ -561,7 +561,7 @@ jobs:
               fi
               
               # Create complete .env file using printf (escape % for printf)
-              printf "# Server Configuration\nPORT=4000\nNODE_ENV=production\n\n# Database\n# MongoDB Atlas\nMONGODB_URI=%s\n\n# CORS Configuration (comma-separated)\n# Production:\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\n\n# SSL Configuration (for production with Let's Encrypt)\n# These paths are used by nginx, not the Node.js backend\n# Let's Encrypt default paths:\nSSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem\nSSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem\nSSL_CHAIN_PATH=/etc/letsencrypt/live/rickychen930.cloud/chain.pem\n\n# SSL Certificate Domain (for Let's Encrypt)\nSSL_DOMAIN=rickychen930.cloud\nSSL_ALT_DOMAINS=www.rickychen930.cloud\n\n# Frontend API URL (for React app)\n# Production:\nREACT_APP_API_URL=https://rickychen930.cloud\n" "$FINAL_URI" > /root/.env
+              printf "# Server Configuration\nPORT=4100\nNODE_ENV=production\n\n# Database\n# MongoDB Atlas\nMONGODB_URI=%s\n\n# CORS Configuration (comma-separated)\n# Production:\nALLOWED_ORIGINS=https://rickychen930.cloud,https://www.rickychen930.cloud\n\n# SSL Configuration (for production with Let's Encrypt)\n# These paths are used by nginx, not the Node.js backend\n# Let's Encrypt default paths:\nSSL_CERT_PATH=/etc/letsencrypt/live/rickychen930.cloud/fullchain.pem\nSSL_KEY_PATH=/etc/letsencrypt/live/rickychen930.cloud/privkey.pem\nSSL_CHAIN_PATH=/etc/letsencrypt/live/rickychen930.cloud/chain.pem\n\n# SSL Certificate Domain (for Let's Encrypt)\nSSL_DOMAIN=rickychen930.cloud\nSSL_ALT_DOMAINS=www.rickychen930.cloud\n\n# Frontend API URL (for React app)\n# Production:\nREACT_APP_API_URL=https://rickychen930.cloud\n" "$FINAL_URI" > /root/.env
               chmod 600 /root/.env
               
               DB_NAME=$(echo "$FINAL_URI" | grep -oE '/[^?]+' | cut -d'/' -f2 | head -1)
@@ -643,9 +643,9 @@ jobs:
 
             # Anything still bound to the backend port outside PM2 black-holes
             # a share of requests (nginx round-robins across listeners)
-            echo "🧹 Freeing port 4000 of stray processes..."
-            sudo fuser -k 4000/tcp 2>/dev/null || \
-              { command -v lsof >/dev/null && sudo lsof -t -i :4000 | xargs -r sudo kill -9; } || true
+            echo "🧹 Freeing port 4100 of stray processes..."
+            sudo fuser -k 4100/tcp 2>/dev/null || \
+              { command -v lsof >/dev/null && sudo lsof -t -i :4100 | xargs -r sudo kill -9; } || true
             sleep 1
             
             # Start PM2
@@ -673,7 +673,7 @@ jobs:
             echo "🏥 Testing health endpoint..."
             for i in {1..5}; do
               sleep 2
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:4000/health 2>/dev/null || echo "000")
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:4100/health 2>/dev/null || echo "000")
               if [ "$HTTP_CODE" = "200" ]; then
                 echo "✅ Health check passed (HTTP 200)"
                 break
@@ -692,7 +692,7 @@ jobs:
             echo "🔍 Final verification before nginx restart..."
             for i in {1..3}; do
               sleep 2
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:4000/health 2>/dev/null || echo "000")
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:4100/health 2>/dev/null || echo "000")
               if [ "$HTTP_CODE" = "200" ]; then
                 echo "✅ Backend is ready (HTTP 200)"
                 break
@@ -739,10 +739,10 @@ jobs:
               sleep $backoff
               
               HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 \
-                http://localhost:4000/health 2>/dev/null || echo "000")
+                http://localhost:4100/health 2>/dev/null || echo "000")
               
               if [ "$HTTP_CODE" = "200" ]; then
-                HEALTH_BODY=$(curl -s --max-time 5 http://localhost:4000/health 2>/dev/null)
+                HEALTH_BODY=$(curl -s --max-time 5 http://localhost:4100/health 2>/dev/null)
                 if echo "$HEALTH_BODY" | grep -q -E '"status".*"ok"|"status":\s*"ok"'; then
                   echo "✅ Backend health check passed (HTTP 200)"
                   echo "Response: $(echo "$HEALTH_BODY" | head -1)"
@@ -773,7 +773,7 @@ jobs:
             pm2 logs website-backend --lines 50 --nostream 2>/dev/null || true
             echo ""
             echo "📋 Testing direct connection:"
-            curl -v http://localhost:4000/health 2>&1 | head -20 || true
+            curl -v http://localhost:4100/health 2>&1 | head -20 || true
             exit 1
 
       - name: Final verification and cleanup
@@ -857,7 +857,7 @@ jobs:
             pm2 restart website-backend --update-env 2>/dev/null || {
               pm2 stop website-backend 2>/dev/null || true
               pm2 delete website-backend 2>/dev/null || true
-              sudo fuser -k 4000/tcp 2>/dev/null || true
+              sudo fuser -k 4100/tcp 2>/dev/null || true
               sleep 1
               pm2 start ecosystem.config.js --env production --update-env
               pm2 save
@@ -884,9 +884,9 @@ jobs:
               echo "Attempt $attempt/$max_attempts (waiting ${backoff}s, total ~${total_wait}s)..."
               sleep $backoff
               total_wait=$((total_wait + backoff))
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://localhost:4000/health 2>/dev/null || echo "000")
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://localhost:4100/health 2>/dev/null || echo "000")
               if [ "$HTTP_CODE" = "200" ]; then
-                HEALTH_BODY=$(curl -s --max-time 10 http://localhost:4000/health 2>/dev/null)
+                HEALTH_BODY=$(curl -s --max-time 10 http://localhost:4100/health 2>/dev/null)
                 if echo "$HEALTH_BODY" | grep -qE '"status".*"ok"|"status":\s*"ok"'; then
                   echo "✅ Health check passed (HTTP 200)"
                   exit 0
