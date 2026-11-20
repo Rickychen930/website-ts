@@ -91,3 +91,6 @@ backend/src/seed/**/seedData.local.*
 backend/src/seed/**/seedAdmin.local.*
 .env.seed
 .env.seed.*
+
+# Local Claude Code config (dev-server launch, settings)
+.claude/
