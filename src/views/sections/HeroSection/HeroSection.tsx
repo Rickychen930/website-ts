@@ -9,7 +9,6 @@ import {
 } from "@/lib/motion";
 import { FlowMedia } from "@/components/ui/FlowMedia/FlowMedia";
 import { Button } from "@/components/ui/Button/Button";
-import { Chip3D } from "@/components/ui/Chip3D/Chip3D";
 import { Ribbon } from "@/components/motion/Ribbon/Ribbon";
 import { RevealText } from "@/components/motion/RevealText/RevealText";
 import { FLOW_MEDIA, STACK_NAMES } from "@/config/flowMedia";
@@ -65,10 +64,6 @@ export const HeroSection: React.FC = () => {
   const skyX = useTransform(smx, (v) => v * -34);
   const skyY = useTransform(smy, (v) => v * -20);
   const fgX = useTransform(smx, (v) => v * 12);
-  // 3D chip: tilts toward the pointer, explodes as you scroll
-  const still0 = useMotionValue(0);
-  const chipRx = useTransform(smy, (v) => v * -26);
-  const chipRy = useTransform(smx, (v) => v * 38);
   useEffect(() => {
     if (reduce) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches)
@@ -91,8 +86,6 @@ export const HeroSection: React.FC = () => {
   const deepScale = useTransform(p, [0.38, 1], [1.2, 1]);
   const textY = useTransform(p, [0.6, 0.95], ["40px", "0px"]);
   const textOpacity = useTransform(p, [0.6, 0.85], [0, 1]);
-  const explode = useTransform(p, [0, 0.5], [0.18, 1]);
-  const explodeStill = useMotionValue(0.35);
 
   const name = profile?.name ?? "Ricky Chen";
   const role =
@@ -201,13 +194,6 @@ export const HeroSection: React.FC = () => {
                 </a>
               ))}
             </div>
-          </div>
-          <div className={styles.chipWrap}>
-            <Chip3D
-              rx={reduce ? still0 : chipRx}
-              ry={reduce ? still0 : chipRy}
-              explode={reduce ? explodeStill : explode}
-            />
           </div>
         </motion.div>
 

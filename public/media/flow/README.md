@@ -1,12 +1,13 @@
 # Google Flow asset list — IT edition (all video)
 
-> **Current files are code-rendered cinematic motion graphics** — generative
-> scenes drawn per frame, then given a film pipeline: sub-frame motion blur,
-> bloom, anamorphic streaks, chromatic aberration, bokeh dust and handheld
-> shake. 8 s seamless loops, H.264. They're ready to ship. To upgrade a slot to
-> photoreal footage, generate it in Google Flow with the prompt below and
-> overwrite the MP4 with the same name, then regenerate its poster `<id>.jpg`.
-> Re-render the built-in versions with `scripts/motion/render-videos.js`.
+> **Current files are photoreal Google Flow footage** (Omni 1.2 Flash, downloaded
+> at 1080p), told as one story — a request's journey: keystroke → silicon →
+> signal → infrastructure → the model → home (Sydney). The prompts in
+> `src/config/flowMedia.ts` are the ones that produced them. Raw Flow downloads
+> are 24 fps and don't loop, so finish each one with
+> `scripts/motion/finalize-flow.sh <raw-dir>` (30 fps, loop cross-fade, poster).
+> The older code-rendered loops (`scripts/motion/render-videos.js`) are retired;
+> `mascot-kobi*.jpg` are still the original images.
 > **Output spec: Full HD — 1920×1080 (16:9) and 1080×1920 (9:16), 30 fps,
 > H.264 High, no audio. Never ship below this.**
 
